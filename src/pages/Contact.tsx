@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, type ChangeEvent, type FormEvent } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -13,20 +13,65 @@ const Contact = () => {
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  // Controlled form state, including honeypot field "website"
+  const [formData, setFormData] = useState({
+    name: "",
+    phone: "",
+    email: "",
+    interest: "",
+    message: "",
+    website: "",
+  });
+
+  const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { id, value } = e.target;
+    setFormData((prev) => ({ ...prev, [id]: value }));
+  };
+
+  const handleSelectChange = (value: string) => {
+    setFormData((prev) => ({ ...prev, interest: value }));
+  };
+
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsSubmitting(true);
-    
-    // Simulate API call
-    setTimeout(() => {
-      setIsSubmitting(false);
-      toast({
-        title: "Message Sent!",
-        description: "We've received your inquiry and will get back to you shortly.",
+
+    try {
+      const response = await fetch("/api/contact.php", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
       });
-      // Reset form here if needed
-      (e.target as HTMLFormElement).reset();
-    }, 1500);
+
+      const result = await response.json();
+
+      if (result.success) {
+        toast({
+          title: "Message Sent!",
+          description: "We've received your inquiry and will get back to you shortly.",
+        });
+        setFormData({
+          name: "",
+          phone: "",
+          email: "",
+          interest: "",
+          message: "",
+          website: "",
+        });
+      } else {
+        throw new Error(result.error || "Failed to send message");
+      }
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Something went wrong. Please try again or call us directly.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const contactInfo = [
@@ -123,26 +168,60 @@ const Contact = () => {
                   <p className="text-muted-foreground">Fill out the form below and we'll get back to you within 24 hours.</p>
                 </div>
 
-                <form className="space-y-6">
+                <form className="space-y-6" onSubmit={handleSubmit}>
+                  {/* Honeypot field - hidden from real users */}
+                  <div className="hidden">
+                    <input
+                      type="text"
+                      id="website"
+                      value={formData.website}
+                      onChange={handleChange}
+                      tabIndex={-1}
+                      autoComplete="off"
+                    />
+                  </div>
+
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="space-y-2">
                       <Label htmlFor="name">Full Name</Label>
-                      <Input id="name" placeholder="John Doe" className="h-12" />
+                      <Input
+                        id="name"
+                        placeholder="John Doe"
+                        className="h-12"
+                        value={formData.name}
+                        onChange={handleChange}
+                        required
+                      />
                     </div>
                     <div className="space-y-2">
                       <Label htmlFor="phone">Phone Number</Label>
-                      <Input id="phone" type="tel" placeholder="+91 XXXXX XXXXX" className="h-12" />
+                      <Input
+                        id="phone"
+                        type="tel"
+                        placeholder="+91 XXXXX XXXXX"
+                        className="h-12"
+                        value={formData.phone}
+                        onChange={handleChange}
+                      />
                     </div>
                   </div>
 
                   <div className="space-y-2">
                     <Label htmlFor="email">Email Address</Label>
-                    <Input id="email" type="email" placeholder="john@company.com" className="h-12" />
+                    <Input
+                      id="email"
+                      type="email"
+                      placeholder="john@company.com"
+                      className="h-12"
+                      value={formData.email}
+                      onChange={handleChange}
+                      required
+                    />
                   </div>
 
                   <div className="space-y-2">
                     <Label htmlFor="interest">I'm interested in...</Label>
-                    <Select>
+                    <Select value={formData.interest} onValueChange={handleSelectChange}>
                       <SelectTrigger className="h-12">
                         <SelectValue placeholder="Select a topic" />
                       </SelectTrigger>
@@ -157,15 +236,32 @@ const Contact = () => {
 
                   <div className="space-y-2">
                     <Label htmlFor="message">Message</Label>
-                    <Textarea 
-                      id="message" 
-                      placeholder="Tell us about your load requirements..." 
+                    <Textarea
+                      id="message"
+                      placeholder="Tell us about your load requirements..."
                       className="min-h-[150px] resize-none p-4"
+                      value={formData.message}
+                      onChange={handleChange}
+                      required
                     />
                   </div>
 
-                  <Button type="submit" size="lg" className="w-full h-14 text-lg font-bold bg-primary hover:bg-primary-light transition-colors">
-                    Send Message <Send className="ml-2" size={18} />
+                  <Button
+                    type="submit"
+                    size="lg"
+                    className="w-full h-14 text-lg font-bold bg-primary hover:bg-primary-light transition-colors"
+                    disabled={isSubmitting}
+                  >
+                    {isSubmitting ? (
+                      <>
+                        Sending...
+                        <Loader2 className="ml-2 h-4 w-4 animate-spin" />
+                      </>
+                    ) : (
+                      <>
+                        Send Message <Send className="ml-2" size={18} />
+                      </>
+                    )}
                   </Button>
                 </form>
               </CardContent>
