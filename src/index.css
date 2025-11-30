@@ -1,0 +1,314 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
+All colors MUST be HSL.
+*/
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 215 25% 15%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 215 25% 15%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 215 25% 15%;
+
+    /* ZAFTYS Industrial Blue - Deep Navy Anchor */
+    --primary: 220 60% 15%;
+    --primary-foreground: 0 0% 100%;
+    
+    /* Lighter blue for hover states */
+    --primary-light: 220 50% 25%;
+    
+    /* Secondary - Muted Blue/Steel for depth */
+    --secondary: 215 25% 40%;
+    --secondary-foreground: 0 0% 100%;
+    
+    /* Deep navy alias */
+    --navy: 220 60% 15%;
+    
+    /* Bright cyan accent - Usage reduced */
+    --cyan: 190 95% 40%;
+    --cyan-light: 190 80% 85%;
+    
+    /* Metallic silver */
+    --silver: 220 10% 70%;
+    --silver-dark: 220 10% 50%;
+
+    /* Vibrant orange for CTAs */
+    --accent: 25 100% 55%;
+    --accent-foreground: 0 0% 100%;
+    --accent-light: 25 100% 65%;
+    
+    /* Energetic yellow accent */
+    --yellow: 45 100% 55%;
+    --yellow-light: 45 100% 70%;
+    
+    /* Vibrant green for success */
+    --success: 145 80% 40%;
+    --success-light: 145 80% 60%;
+
+    --muted: 210 20% 96%;
+    --muted-foreground: 215 15% 40%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 214 20% 90%;
+    --input: 214 20% 90%;
+    --ring: 220 60% 15%;
+
+    --radius: 0.5rem;
+    
+    /* Gradients - More professional and subtle */
+    --gradient-primary: linear-gradient(135deg, hsl(220, 60%, 15%) 0%, hsl(215, 25%, 40%) 100%);
+    --gradient-hero: linear-gradient(135deg, hsl(220, 60%, 15%) 0%, hsl(220, 50%, 25%) 100%);
+    --gradient-overlay: linear-gradient(180deg, hsla(220, 60%, 15%, 0.8) 0%, hsla(220, 60%, 15%, 0.6) 100%);
+    --gradient-accent: linear-gradient(135deg, hsl(25, 100%, 55%) 0%, hsl(45, 100%, 55%) 100%);
+    --gradient-success: linear-gradient(135deg, hsl(145, 80%, 40%) 0%, hsl(145, 80%, 50%) 100%);
+    --gradient-card: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+    
+    /* Shadows - Cleaner, less glow */
+    --shadow-soft: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    --shadow-medium: 0 10px 15px -3px rgba(0, 0, 0, 0.08);
+    --shadow-large: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+    --shadow-glow: 0 0 15px hsla(190, 95%, 40%, 0.2);
+    --shadow-accent: 0 4px 14px 0 rgba(255, 100, 0, 0.3);
+    
+    /* Transitions */
+    --transition-base: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-smooth: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .dark {
+    --background: 220 40% 10%;
+    --foreground: 215 20% 90%;
+
+    --card: 220 35% 13%;
+    --card-foreground: 215 20% 90%;
+
+    --popover: 220 35% 13%;
+    --popover-foreground: 215 20% 90%;
+
+    --primary: 210 90% 55%;
+    --primary-foreground: 0 0% 100%;
+    
+    --primary-light: 210 90% 65%;
+    --navy: 215 50% 90%;
+    --cyan: 190 95% 60%;
+    --cyan-light: 190 95% 75%;
+    --silver: 220 10% 80%;
+    --silver-dark: 220 10% 60%;
+
+    --accent: 25 100% 60%;
+    --accent-foreground: 0 0% 100%;
+    --accent-light: 25 100% 70%;
+    
+    --secondary: 220 40% 18%;
+    --secondary-foreground: 0 0% 98%;
+    
+    --yellow: 45 100% 60%;
+    --yellow-light: 45 100% 75%;
+    --success: 145 80% 50%;
+    --success-light: 145 80% 65%;
+
+    --muted: 215 35% 25%;
+    --muted-foreground: 215 20% 65%;
+
+    --destructive: 0 63% 31%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 215 35% 25%;
+    --input: 215 35% 25%;
+    --ring: 210 65% 50%;
+    
+    --gradient-primary: linear-gradient(135deg, hsl(210, 90%, 50%) 0%, hsl(190, 95%, 55%) 100%);
+    --gradient-hero: linear-gradient(135deg, hsl(220, 50%, 10%) 0%, hsl(210, 90%, 35%) 50%, hsl(25, 100%, 50%) 100%);
+    --gradient-accent: linear-gradient(135deg, hsl(25, 100%, 60%) 0%, hsl(45, 100%, 60%) 100%);
+    --shadow-glow: 0 0 50px hsla(190, 95%, 55%, 0.5);
+    --shadow-accent: 0 10px 40px -10px hsla(25, 100%, 60%, 0.6);
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased font-sans;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-heading uppercase tracking-wide;
+  }
+  
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+@layer utilities {
+  /* Animation utilities */
+  .animate-fade-in-up {
+    animation: fadeInUp 0.6s ease-out;
+  }
+  
+  .animate-fade-in {
+    animation: fadeIn 0.6s ease-out;
+  }
+  
+  .animate-slide-in-left {
+    animation: slideInLeft 0.6s ease-out;
+  }
+  
+  .animate-slide-in-right {
+    animation: slideInRight 0.6s ease-out;
+  }
+  
+  .animate-scale-in {
+    animation: scaleIn 0.5s ease-out;
+  }
+  
+  /* Gradient text */
+  .text-gradient {
+    @apply bg-clip-text text-transparent;
+    background-image: var(--gradient-primary);
+  }
+  
+  /* Hover effects */
+  .hover-lift {
+    @apply transition-all duration-300 hover:-translate-y-1 hover:shadow-lg;
+  }
+  
+  .hover-glow {
+    @apply transition-all duration-300;
+  }
+  
+  .hover-glow:hover {
+    box-shadow: var(--shadow-glow);
+  }
+  
+  /* Section spacing */
+  .section-padding {
+    @apply py-16 md:py-24;
+  }
+  
+  .container-padding {
+    @apply px-4 sm:px-6 lg:px-8;
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes truckDrive {
+  0% {
+    transform: translateX(-100%) translateY(0);
+  }
+  50% {
+    transform: translateX(0) translateY(-5px);
+  }
+  100% {
+    transform: translateX(100%) translateY(0);
+  }
+}
+
+.animate-truck-drive {
+  animation: truckDrive 20s ease-in-out infinite;
+}
+
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 0 0 15px hsla(190, 95%, 40%, 0.1);
+  }
+  50% {
+    box-shadow: 0 0 25px hsla(190, 95%, 40%, 0.2);
+  }
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 3s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+.animate-shimmer {
+  background: linear-gradient(90deg, transparent, rgba(255,255,255, 0.5), transparent);
+  background-size: 1000px 100%;
+  animation: shimmer 3s infinite;
+}
