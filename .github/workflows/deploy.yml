@@ -32,7 +32,14 @@ jobs:
             if [ -f "public/.htaccess" ]; then
               cp public/.htaccess dist/.htaccess
             else
-              printf "RewriteEngine On\nRewriteBase /\nRewriteRule ^index\\.html$ - [L]\nRewriteCond %{REQUEST_FILENAME} !-f\nRewriteCond %{REQUEST_FILENAME} !-d\nRewriteRule . /index.html [L]\n" > dist/.htaccess
+              cat << 'EOF' > dist/.htaccess
+          RewriteEngine On
+          RewriteBase /
+          RewriteRule ^index\.html$ - [L]
+          RewriteCond %{REQUEST_FILENAME} !-f
+          RewriteCond %{REQUEST_FILENAME} !-d
+          RewriteRule . /index.html [L]
+          EOF
             fi
           fi
 
