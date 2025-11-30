@@ -116,7 +116,10 @@ const Fleet = () => {
           <div className="flex flex-col md:flex-row items-center justify-between mb-12">
             <h2 className="text-3xl font-heading font-bold">Smart Fleet Capabilities</h2>
             <Link to="/technology">
-              <Button variant="outline" className="border-white/30 text-white hover:bg-white/10 mt-4 md:mt-0">
+              <Button
+                variant="outline"
+                className="bg-transparent border-white text-white hover:bg-white/10 mt-4 md:mt-0"
+              >
                 View Our Tech Stack
               </Button>
             </Link>

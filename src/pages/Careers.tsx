@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, type ChangeEvent, type FormEvent } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -12,20 +12,62 @@ import { useToast } from "@/hooks/use-toast";
 const Careers = () => {
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    website: "",
+    resumeFileName: "",
+  });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const { id, value } = e.target;
+    setFormData((prev) => ({ ...prev, [id]: value }));
+  };
+
+  const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    setFormData((prev) => ({ ...prev, resumeFileName: file ? file.name : "" }));
+  };
+
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsSubmitting(true);
-    
-    // Simulate API call
-    setTimeout(() => {
-      setIsSubmitting(false);
-      toast({
-        title: "Application Submitted",
-        description: "Our HR team will review your profile and get in touch.",
+
+    try {
+      const response = await fetch("/api/careers.php", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
       });
-      (e.target as HTMLFormElement).reset();
-    }, 1500);
+
+      const result = await response.json();
+
+      if (result.success) {
+        toast({
+          title: "Application Submitted",
+          description: "Our HR team will review your profile and get in touch.",
+        });
+        setFormData({
+          name: "",
+          email: "",
+          website: "",
+          resumeFileName: "",
+        });
+        (e.currentTarget as HTMLFormElement).reset();
+      } else {
+        throw new Error(result.error || "Failed to submit application");
+      }
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Something went wrong. Please try again later.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const positions = [
@@ -169,20 +211,53 @@ const Careers = () => {
             <Card className="bg-white/5 border-white/10">
               <CardContent className="p-8">
                 <form className="space-y-6" onSubmit={handleSubmit}>
+                  {/* Honeypot field - hidden from real users */}
+                  <div className="hidden">
+                    <input
+                      type="text"
+                      id="website"
+                      value={formData.website}
+                      onChange={handleChange}
+                      tabIndex={-1}
+                      autoComplete="off"
+                    />
+                  </div>
+
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="space-y-2">
                       <Label htmlFor="name" className="text-gray-200">Full Name</Label>
-                      <Input id="name" placeholder="Jane Doe" className="bg-white/10 border-white/20 text-white placeholder:text-gray-500" required />
+                      <Input
+                        id="name"
+                        placeholder="Jane Doe"
+                        className="bg-white/10 border-white/20 text-white placeholder:text-gray-500"
+                        value={formData.name}
+                        onChange={handleChange}
+                        required
+                      />
                     </div>
                     <div className="space-y-2">
                       <Label htmlFor="email" className="text-gray-200">Email</Label>
-                      <Input id="email" type="email" placeholder="jane@example.com" className="bg-white/10 border-white/20 text-white placeholder:text-gray-500" required />
+                      <Input
+                        id="email"
+                        type="email"
+                        placeholder="jane@example.com"
+                        className="bg-white/10 border-white/20 text-white placeholder:text-gray-500"
+                        value={formData.email}
+                        onChange={handleChange}
+                        required
+                      />
                     </div>
                   </div>
                   
                   <div className="space-y-2">
                     <Label htmlFor="resume" className="text-gray-200">Upload Resume / CV</Label>
-                    <Input id="resume" type="file" className="bg-white/10 border-white/20 text-white file:text-white file:bg-accent file:border-0 file:mr-4 file:px-4 file:rounded-sm hover:file:bg-accent-light cursor-pointer" required />
+                    <Input
+                      id="resume"
+                      type="file"
+                      className="bg-white/10 border-white/20 text-white file:text-white file:bg-accent file:border-0 file:mr-4 file:px-4 file:rounded-sm hover:file:bg-accent-light cursor-pointer"
+                      onChange={handleFileChange}
+                      required
+                    />
                   </div>
 
                   <Button size="lg" className="w-full bg-accent hover:bg-accent-light text-white font-bold" disabled={isSubmitting}>

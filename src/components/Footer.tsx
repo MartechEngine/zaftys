@@ -1,10 +1,55 @@
+import { useState, type ChangeEvent, type FormEvent } from "react";
 import { Link } from "react-router-dom";
 import { Mail, Phone, MapPin, Facebook, Twitter, Linkedin, Youtube, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import logoFooter from "@/assets/logo-footer.png";
+import { useToast } from "@/hooks/use-toast";
 
 const Footer = () => {
+  const { toast } = useToast();
+  const [email, setEmail] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setEmail(e.target.value);
+  };
+
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (!email) return;
+    setIsSubmitting(true);
+
+    try {
+      const response = await fetch("/api/newsletter.php", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email }),
+      });
+
+      const result = await response.json();
+
+      if (result.success) {
+        toast({
+          title: "Subscribed",
+          description: "You have been added to our newsletter list.",
+        });
+        setEmail("");
+      } else {
+        throw new Error(result.error || "Subscription failed");
+      }
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Could not subscribe you right now. Please try again later.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
   const quickLinks = [
     { name: "About Us", path: "/about" },
     { name: "Our Fleet", path: "/fleet" },
@@ -40,15 +85,23 @@ const Footer = () => {
           <div>
             <h3 className="text-xl font-heading font-bold mb-4">Stay Updated</h3>
             <p className="text-gray-400 mb-4">Get the latest industry insights and company news.</p>
-            <div className="flex flex-col sm:flex-row gap-3">
-              <Input 
-                placeholder="Enter your email address" 
-                className="bg-white/5 border-white/10 text-white placeholder:text-gray-500 h-12" 
+            <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3">
+              <Input
+                type="email"
+                placeholder="Enter your email address"
+                className="bg-white/5 border-white/10 text-white placeholder:text-gray-500 h-12"
+                value={email}
+                onChange={handleChange}
+                required
               />
-              <Button className="bg-accent hover:bg-accent-light h-12 px-8 font-bold">
-                Subscribe
+              <Button
+                type="submit"
+                className="bg-accent hover:bg-accent-light h-12 px-8 font-bold"
+                disabled={isSubmitting}
+              >
+                {isSubmitting ? "Subscribing..." : "Subscribe"}
               </Button>
-            </div>
+            </form>
           </div>
         </div>
 

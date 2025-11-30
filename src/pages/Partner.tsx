@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, type ChangeEvent, type FormEvent } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -13,20 +13,63 @@ import { useToast } from "@/hooks/use-toast";
 const Partner = () => {
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [formData, setFormData] = useState({
+    company: "",
+    contact: "",
+    phone: "",
+    fleet: "",
+    website: "",
+  });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const { id, value } = e.target;
+    setFormData((prev) => ({ ...prev, [id]: value }));
+  };
+
+  const handleFleetChange = (value: string) => {
+    setFormData((prev) => ({ ...prev, fleet: value }));
+  };
+
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsSubmitting(true);
-    
-    // Simulate API call
-    setTimeout(() => {
-      setIsSubmitting(false);
-      toast({
-        title: "Application Received!",
-        description: "Our fleet manager will contact you within 24 hours for verification.",
+
+    try {
+      const response = await fetch("/api/partner.php", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
       });
-      (e.target as HTMLFormElement).reset();
-    }, 1500);
+
+      const result = await response.json();
+
+      if (result.success) {
+        toast({
+          title: "Application Received!",
+          description: "Our fleet manager will contact you within 24 hours for verification.",
+        });
+        setFormData({
+          company: "",
+          contact: "",
+          phone: "",
+          fleet: "",
+          website: "",
+        });
+        (e.currentTarget as HTMLFormElement).reset();
+      } else {
+        throw new Error(result.error || "Failed to submit application");
+      }
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Something went wrong. Please try again later.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const steps = [
@@ -130,25 +173,59 @@ const Partner = () => {
             <Card className="bg-white/5 border-white/10">
               <CardContent className="p-8">
                 <form className="space-y-6" onSubmit={handleSubmit}>
+                  {/* Honeypot field - hidden from real users */}
+                  <div className="hidden">
+                    <input
+                      type="text"
+                      id="website"
+                      value={formData.website}
+                      onChange={handleChange}
+                      tabIndex={-1}
+                      autoComplete="off"
+                    />
+                  </div>
+
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="space-y-2">
                       <Label htmlFor="company" className="text-gray-200">Company Name</Label>
-                      <Input id="company" placeholder="Transporter Name" className="bg-white/10 border-white/20 text-white" required />
+                      <Input
+                        id="company"
+                        placeholder="Transporter Name"
+                        className="bg-white/10 border-white/20 text-white"
+                        value={formData.company}
+                        onChange={handleChange}
+                        required
+                      />
                     </div>
                     <div className="space-y-2">
                       <Label htmlFor="contact" className="text-gray-200">Contact Person</Label>
-                      <Input id="contact" placeholder="Full Name" className="bg-white/10 border-white/20 text-white" required />
+                      <Input
+                        id="contact"
+                        placeholder="Full Name"
+                        className="bg-white/10 border-white/20 text-white"
+                        value={formData.contact}
+                        onChange={handleChange}
+                        required
+                      />
                     </div>
                   </div>
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="space-y-2">
                       <Label htmlFor="phone" className="text-gray-200">Mobile Number</Label>
-                      <Input id="phone" type="tel" placeholder="+91" className="bg-white/10 border-white/20 text-white" required />
+                      <Input
+                        id="phone"
+                        type="tel"
+                        placeholder="+91"
+                        className="bg-white/10 border-white/20 text-white"
+                        value={formData.phone}
+                        onChange={handleChange}
+                        required
+                      />
                     </div>
                     <div className="space-y-2">
                       <Label htmlFor="fleet" className="text-gray-200">Fleet Size</Label>
-                      <Select>
+                      <Select value={formData.fleet} onValueChange={handleFleetChange}>
                         <SelectTrigger className="bg-white/10 border-white/20 text-white">
                           <SelectValue placeholder="Select size" />
                         </SelectTrigger>

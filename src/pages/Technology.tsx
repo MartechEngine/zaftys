@@ -176,7 +176,11 @@ const Technology = () => {
                 Book a Demo
               </Button>
             </Link>
-            <Button size="lg" variant="outline" className="border-white text-white hover:bg-white/10 px-10 py-6 h-auto text-lg">
+            <Button
+              size="lg"
+              variant="outline"
+              className="bg-transparent border-white text-white hover:bg-white/10 px-10 py-6 h-auto text-lg"
+            >
               Download Feature Sheet
             </Button>
           </div>

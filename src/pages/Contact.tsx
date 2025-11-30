@@ -299,7 +299,10 @@ const Contact = () => {
                 <p className="text-gray-300 mb-6">
                   Existing clients can reach our priority dispatch desk directly.
                 </p>
-                <Button variant="outline" className="border-white text-white hover:bg-white/10 w-full">
+                <Button
+                  variant="outline"
+                  className="bg-transparent border-white text-white hover:bg-white/10 w-full"
+                >
                   Call Priority Line: +91-989-092-3581
                 </Button>
               </div>
