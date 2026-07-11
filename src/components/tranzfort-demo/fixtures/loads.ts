@@ -1,0 +1,76 @@
+import type { MarketplaceLoad } from "../types";
+
+export const HERO_LOAD: MarketplaceLoad = {
+  id: "ld-hero",
+  origin: "Pune",
+  originState: "MH",
+  destination: "Mumbai",
+  destinationState: "MH",
+  material: "Steel coils",
+  weightTonnes: 16,
+  priceInr: 28000,
+  pickupDate: "Tomorrow",
+  supplierName: "ABC Steels",
+  supplierInitial: "A",
+  listingAge: "2h ago",
+  bodyType: "Open",
+  tyres: 10,
+  advancePercent: 30,
+  distanceKm: 148,
+  isSuperLoad: true,
+  dieselEstimateInr: 9200,
+  netProfitInr: 18800,
+  priceType: "fixed",
+  trucksNeeded: 3,
+  trucksBooked: 1,
+};
+
+export const SAMPLE_LOADS: MarketplaceLoad[] = [
+  {
+    ...HERO_LOAD,
+    id: "ld-1",
+    matchScore: 96,
+  },
+  {
+    id: "ld-2",
+    origin: "Pune",
+    originState: "MH",
+    destination: "Aurangabad",
+    destinationState: "MH",
+    material: "Cement bags",
+    weightTonnes: 12,
+    priceInr: 19000,
+    pickupDate: "Tomorrow",
+    matchScore: 88,
+    supplierName: "BuildRight Logistics",
+    supplierInitial: "B",
+    listingAge: "4h ago",
+    bodyType: "Open",
+    tyres: 12,
+    advancePercent: 25,
+    distanceKm: 215,
+  },
+  {
+    id: "ld-3",
+    origin: "Pune",
+    originState: "MH",
+    destination: "Nashik",
+    destinationState: "MH",
+    material: "Textiles",
+    weightTonnes: 8,
+    priceInr: 16000,
+    pickupDate: "2 days",
+    matchScore: 82,
+    supplierName: "Western Fabrics",
+    supplierInitial: "W",
+    listingAge: "1d ago",
+    bodyType: "Trailer",
+    tyres: 10,
+    advancePercent: 20,
+    distanceKm: 210,
+  },
+];
+
+export const DEFAULT_ROUTE = { origin: "Pune", destination: "Mumbai" };
+
+export const HERO_ROUTE_PREVIEW = { distanceKm: 148, driveMins: 185 };
