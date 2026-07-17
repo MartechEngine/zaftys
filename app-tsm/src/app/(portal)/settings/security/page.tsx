@@ -3,7 +3,7 @@ import { SettingsNav } from "@/components/app/settings-nav";
 import { Card, CardContent } from "@/components/ui/card";
 import { getSecuritySettings } from "@/lib/settings/config-repository";
 import { ConfigToggleForm } from "@/components/app/config-toggle-form";
-import { ConfigFieldForm } from "@/components/app/sprint13-forms";
+import { ConfigFieldForm } from "@/components/app/sprint15-forms";
 
 export default async function SettingsSecurityPage() {
   const settings = await getSecuritySettings();
@@ -47,6 +47,20 @@ export default async function SettingsSecurityPage() {
               Min {settings.passwordMinLength} chars · rotation every{" "}
               {settings.passwordRotationDays} days
             </p>
+            <ConfigFieldForm
+              section="security"
+              field="passwordMinLength"
+              label="Min password length"
+              value={settings.passwordMinLength}
+              inputType="number"
+            />
+            <ConfigFieldForm
+              section="security"
+              field="passwordRotationDays"
+              label="Password rotation (days)"
+              value={settings.passwordRotationDays}
+              inputType="number"
+            />
           </div>
           <div>
             <p className="font-medium text-navy">Auth mode</p>

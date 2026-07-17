@@ -198,6 +198,27 @@ export function deleteStoredReportSchedule(id: string) {
   store.__tsmReportSchedules = store.__tsmReportSchedules.filter((r) => r.id !== id);
 }
 
+export function patchStoredReportSchedule(
+  id: string,
+  patch: Partial<Pick<StoredReportSchedule, "cadence" | "recipients">>,
+): StoredReportSchedule | undefined {
+  const store = globalThis as typeof globalThis & {
+    __tsmReportSchedules?: StoredReportSchedule[];
+  };
+  if (!store.__tsmReportSchedules) return undefined;
+  const row = store.__tsmReportSchedules.find((r) => r.id === id);
+  if (!row) return undefined;
+  if (patch.cadence !== undefined) row.cadence = patch.cadence.trim();
+  if (patch.recipients !== undefined) row.recipients = patch.recipients.trim();
+  logActivity({
+    shipmentId: "",
+    type: "report_schedule.updated",
+    message: row.name,
+    timestamp: new Date().toISOString(),
+  });
+  return row;
+}
+
 export function getVendorPatch(id: string) {
   return g.__tsmVendorPatches?.[id];
 }

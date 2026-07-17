@@ -922,6 +922,55 @@ export const api = {
         body: JSON.stringify({ vehicleId: vehicleId ?? "" }),
       },
     ),
+
+  patchVehicleDriver: (vehicleId: string, driverId: string | null) =>
+    fetchApi<{ id: string; driver?: string }>(`/api/fleet/vehicles/${vehicleId}`, {
+      method: "PATCH",
+      body: JSON.stringify({ driverId: driverId ?? "" }),
+    }),
+
+  patchReportSchedule: (id: string, input: { cadence?: string; recipients?: string }) =>
+    fetchApi<{ id: string; cadence: string }>("/api/settings/report-schedules", {
+      method: "PATCH",
+      body: JSON.stringify({ id, ...input }),
+    }),
+
+  deleteGeofence: (id: string) =>
+    fetchApi<{ id: string; deleted: boolean }>("/api/settings/geofences", {
+      method: "DELETE",
+      body: JSON.stringify({ id }),
+    }),
+
+  addFleetGroupMember: (groupId: string, input: { driver: string; vehicle: string }) =>
+    fetchApi<{ group: { id: string; name: string }; members: unknown[] }>(
+      `/api/fleet/groups/${groupId}`,
+      {
+        method: "POST",
+        body: JSON.stringify(input),
+      },
+    ),
+
+  checkFleetbaseHealth: () =>
+    fetchApi<{ reachable: boolean; latencyMs: number | null; lastHealthCheck: string }>(
+      "/api/integrations/fleetbase",
+      { method: "POST", body: JSON.stringify({ action: "health" }) },
+    ),
+
+  requestPasswordReset: (email: string) =>
+    fetchApi<{ email: string; requestedAt: string }>("/api/auth/forgot-password", {
+      method: "POST",
+      body: JSON.stringify({ email }),
+    }),
+
+  createLedgerAccount: (input: {
+    code: string;
+    name: string;
+    type: "Income" | "Expense" | "Asset" | "Liability";
+  }) =>
+    fetchApi<{ id: string; code: string; name: string }>("/api/billing/accounts", {
+      method: "POST",
+      body: JSON.stringify(input),
+    }),
 };
 
 export type NetworkAssignmentRow = {

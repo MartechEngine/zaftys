@@ -4,6 +4,7 @@ import { SettingsNav } from "@/components/app/settings-nav";
 import { Card, CardContent } from "@/components/ui/card";
 import { getTrackingSettings } from "@/lib/settings/config-repository";
 import { ConfigToggleForm } from "@/components/app/config-toggle-form";
+import { ConfigFieldForm } from "@/components/app/sprint15-forms";
 
 export default async function SettingsTrackingPage() {
   const settings = await getTrackingSettings();
@@ -23,6 +24,13 @@ export default async function SettingsTrackingPage() {
           <p>
             <strong>Token expiry:</strong> {settings.tokenExpiryDays} days post-delivery
           </p>
+          <ConfigFieldForm
+            section="tracking"
+            field="tokenExpiryDays"
+            label="Token expiry (days)"
+            value={settings.tokenExpiryDays}
+            inputType="number"
+          />
           <p>
             <strong>Show internal events:</strong>{" "}
             {settings.showInternalEvents ? "Visible" : "Hidden from clients"}

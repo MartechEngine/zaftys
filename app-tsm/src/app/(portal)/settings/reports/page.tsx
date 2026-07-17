@@ -4,6 +4,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { getReportSchedules } from "@/lib/settings/config-repository";
 import { CreateReportScheduleForm } from "@/components/app/sprint8-forms";
 import { DeleteReportScheduleButton } from "@/components/app/sprint13-forms";
+import { EditReportScheduleCadenceButton } from "@/components/app/sprint15-forms";
 
 export default async function SettingsReportsPage() {
   const schedules = await getReportSchedules();
@@ -20,7 +21,10 @@ export default async function SettingsReportsPage() {
                 <span className="text-muted-foreground">{s.name}</span> · {s.cadence} ·{" "}
                 {s.recipients}
               </p>
-              <DeleteReportScheduleButton id={s.id} name={s.name} />
+              <div className="flex flex-wrap gap-2">
+                <EditReportScheduleCadenceButton id={s.id} cadence={s.cadence} />
+                <DeleteReportScheduleButton id={s.id} name={s.name} />
+              </div>
             </div>
           ))}
           <CreateReportScheduleForm />

@@ -63,3 +63,8 @@ export function patchStoredGeofence(
   });
   return row;
 }
+
+export function deleteStoredGeofence(id: string) {
+  if (!g.__tsmDevGeofences) return;
+  g.__tsmDevGeofences = g.__tsmDevGeofences.filter((row) => row.id !== id);
+}

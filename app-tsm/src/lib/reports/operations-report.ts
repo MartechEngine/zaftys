@@ -122,3 +122,27 @@ export async function getDriverScorecards(): Promise<DriverScorecard[]> {
     })
     .sort((a, b) => b.trips - a.trips);
 }
+
+export function operationsReportToCsv(byCorridor: CorridorStat[]) {
+  const header = ["corridor", "trips", "on_time_pct"];
+  const rows = byCorridor.map((c) =>
+    [csvEscape(c.corridor), c.trips, c.onTime].join(","),
+  );
+  return [header.join(","), ...rows].join("\n");
+}
+
+export function driverScorecardsToCsv(scorecards: DriverScorecard[]) {
+  const header = ["driver", "trips", "on_time", "safety", "rating"];
+  const rows = scorecards.map((d) =>
+    [csvEscape(d.name), d.trips, csvEscape(d.onTime), d.safety, d.rating].join(","),
+  );
+  return [header.join(","), ...rows].join("\n");
+}
+
+function csvEscape(value: string | number) {
+  const s = String(value ?? "");
+  if (s.includes(",") || s.includes('"') || s.includes("\n")) {
+    return `"${s.replace(/"/g, '""')}"`;
+  }
+  return s;
+}

@@ -6,6 +6,7 @@ import { ModuleSubNav } from "@/components/app/module-sub-nav";
 import { Card, CardContent } from "@/components/ui/card";
 import { getFleetGroup } from "@/lib/fleet/places-repository";
 import { FLEET_NAV } from "@/lib/module-nav";
+import { AddFleetGroupMemberButton } from "@/components/app/sprint15-forms";
 
 export default async function FleetGroupDetailPage({
   params,
@@ -27,7 +28,11 @@ export default async function FleetGroupDetailPage({
           { label: group.name },
         ]}
       />
-      <PageHeader title={group.name} description={group.zone} />
+      <PageHeader
+        title={group.name}
+        description={group.zone}
+        action={<AddFleetGroupMemberButton groupId={id} />}
+      />
       <ModuleSubNav links={FLEET_NAV} />
       <div className="grid gap-4 md:grid-cols-2">
         <Card>

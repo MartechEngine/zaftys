@@ -1,5 +1,6 @@
 import { demoLedgerAccounts } from "@/lib/demo-data";
 import { listInvoices } from "@/lib/billing/invoice-repository";
+import { listStoredLedgerAccounts } from "@/lib/mutations/sprint15-store";
 
 export type LedgerAccount = {
   id: string;
@@ -46,5 +47,30 @@ export async function listLedgerAccounts(): Promise<LedgerAccount[]> {
     });
   }
 
-  return enriched;
+  return [...listStoredLedgerAccounts(), ...enriched];
+}
+
+export function validateCreateLedgerAccountInput(
+  body: unknown,
+): { code: string; name: string; type: LedgerAccount["type"] } | { error: string } {
+  if (!body || typeof body !== "object") return { error: "Body must be an object." };
+  const data = body as Record<string, unknown>;
+  const code = String(data.code ?? "").trim();
+  const name = String(data.name ?? "").trim();
+  const type = String(data.type ?? "").trim() as LedgerAccount["type"];
+  if (!code) return { error: "Account code is required." };
+  if (!name) return { error: "Account name is required." };
+  if (!["Income", "Expense", "Asset", "Liability"].includes(type)) {
+    return { error: "Invalid account type." };
+  }
+  return { code, name, type };
+}
+
+export async function createLedgerAccount(input: {
+  code: string;
+  name: string;
+  type: LedgerAccount["type"];
+}) {
+  const { createStoredLedgerAccount } = await import("@/lib/mutations/sprint15-store");
+  return createStoredLedgerAccount(input);
 }

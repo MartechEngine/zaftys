@@ -10,6 +10,7 @@ import { getVehicle } from "@/lib/data/fleet-repository";
 import { listDevices } from "@/lib/integrations/integrations-repository";
 import { FLEET_NAV } from "@/lib/module-nav";
 import { EditVehicleForm } from "@/components/app/sprint7-forms";
+import { AssignVehicleDriverButton } from "@/components/app/sprint15-forms";
 
 export default async function VehicleDetailPage({
   params,
@@ -50,7 +51,8 @@ export default async function VehicleDetailPage({
             </p>
             <p>
               <span className="text-muted-foreground">Assigned driver</span> ·{" "}
-              {vehicle.driver ?? "—"}
+              {vehicle.driver ?? "—"}{" "}
+              <AssignVehicleDriverButton vehicleId={id} driver={vehicle.driver} />
             </p>
             <p>
               <span className="text-muted-foreground">Documents</span> ·{" "}

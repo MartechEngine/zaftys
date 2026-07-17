@@ -4,13 +4,18 @@ import { ModuleSubNav } from "@/components/app/module-sub-nav";
 import { DataTable } from "@/components/app/data-table";
 import { getDriverScorecards } from "@/lib/reports/operations-report";
 import { REPORTS_NAV } from "@/lib/module-nav";
+import { ExportReportCsvButton } from "@/components/app/sprint15-forms";
 
 export default async function ReportsDriversPage() {
   const scorecards = await getDriverScorecards();
 
   return (
     <>
-      <PageHeader title="Driver scorecards" description="Performance ranking — live from shipments" />
+      <PageHeader
+        title="Driver scorecards"
+        description="Performance ranking — live from shipments"
+        action={<ExportReportCsvButton path="/api/reports/drivers" filename="drivers" />}
+      />
       <ModuleSubNav links={REPORTS_NAV} />
       {scorecards.length === 0 ? (
         <p className="text-sm text-muted-foreground">No driver trip data yet.</p>

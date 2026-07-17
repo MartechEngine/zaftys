@@ -1,5 +1,6 @@
 import {
   createGeofence,
+  deleteGeofence,
   listGeofences,
   updateGeofence,
   validateCreateGeofenceInput,
@@ -50,4 +51,20 @@ export async function PATCH(request: Request) {
   const geofence = await updateGeofence(id, patch);
   if (!geofence) return apiError("GEOFENCE_NOT_FOUND", "Geofence not found.", 404);
   return apiSuccess(geofence);
+}
+
+export async function DELETE(request: Request) {
+  let body: unknown;
+  try {
+    body = await request.json();
+  } catch {
+    return apiError("INVALID_JSON", "Request body must be valid JSON.");
+  }
+
+  const id = String((body as { id?: string }).id ?? "").trim();
+  if (!id) return apiError("VALIDATION_ERROR", "id is required.");
+
+  const deleted = await deleteGeofence(id);
+  if (!deleted) return apiError("GEOFENCE_NOT_FOUND", "Geofence not found.", 404);
+  return apiSuccess({ id, deleted: true });
 }

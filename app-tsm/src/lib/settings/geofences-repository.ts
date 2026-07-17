@@ -6,6 +6,7 @@ import {
   patchStoredGeofence,
 } from "@/lib/settings/geofences-store";
 import { getGeofencePatch, patchGeofenceFields } from "@/lib/mutations/sprint11-store";
+import { isGeofenceDeleted, markGeofenceDeleted } from "@/lib/mutations/sprint15-store";
 
 export type GeofenceRecord = {
   id: string;
@@ -58,6 +59,7 @@ export async function listGeofences(): Promise<GeofenceRecord[]> {
       const patch = getGeofencePatch(row.id);
       return patch ? { ...row, ...patch } : row;
     })
+    .filter((g) => !isGeofenceDeleted(g.id))
     .filter((g) => {
       if (seen.has(g.name)) return false;
       seen.add(g.name);
@@ -79,4 +81,15 @@ export async function updateGeofence(
   if (stored) return stored;
   patchGeofenceFields(id, input);
   return { ...existing, ...input };
+}
+
+export async function deleteGeofence(id: string): Promise<boolean> {
+  const all = await listGeofences();
+  const existing = all.find((g) => g.id === id);
+  if (!existing) return false;
+
+  const { deleteStoredGeofence } = await import("@/lib/settings/geofences-store");
+  deleteStoredGeofence(id);
+  markGeofenceDeleted(id);
+  return true;
 }

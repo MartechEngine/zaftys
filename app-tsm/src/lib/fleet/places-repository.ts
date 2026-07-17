@@ -7,6 +7,7 @@ import {
 } from "@/lib/fleet/places-store";
 import { getPlacePatch, patchPlaceFields } from "@/lib/mutations/sprint11-store";
 import { getFleetGroupPatch, patchFleetGroupFields } from "@/lib/mutations/sprint12-store";
+import { addFleetGroupMember, listFleetGroupMembers } from "@/lib/mutations/sprint15-store";
 
 export type PlaceRecord = {
   id: string;
@@ -182,10 +183,22 @@ export async function getFleetGroup(id: string) {
   if (!group) return undefined;
 
   const [drivers, vehicles] = await Promise.all([listDrivers(), listVehicles()]);
-  const members: FleetGroupMember[] = drivers.slice(0, group.drivers).map((d, i) => ({
+  const storedMembers = listFleetGroupMembers(id);
+  const derivedMembers: FleetGroupMember[] = drivers.slice(0, group.drivers).map((d, i) => ({
     driver: d.name,
     vehicle: d.vehicle ?? vehicles[i]?.registration ?? "Unassigned",
   }));
+  const members = storedMembers.length > 0 ? [...derivedMembers, ...storedMembers] : derivedMembers;
 
   return { group, members };
+}
+
+export async function addFleetGroupMemberRecord(
+  groupId: string,
+  input: { driver: string; vehicle: string },
+) {
+  const group = (await listFleetGroups()).find((g) => g.id === groupId);
+  if (!group) return undefined;
+  addFleetGroupMember(groupId, input);
+  return getFleetGroup(groupId);
 }

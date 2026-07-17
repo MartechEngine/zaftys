@@ -4,6 +4,7 @@ import { ModuleSubNav } from "@/components/app/module-sub-nav";
 import { DataTable } from "@/components/app/data-table";
 import { getOperationsReport } from "@/lib/reports/operations-report";
 import { REPORTS_NAV } from "@/lib/module-nav";
+import { ExportReportCsvButton } from "@/components/app/sprint15-forms";
 
 export default async function ReportsOperationsPage() {
   const report = await getOperationsReport();
@@ -13,6 +14,7 @@ export default async function ReportsOperationsPage() {
       <PageHeader
         title="Operations report"
         description={`${report.totalTrips} trips · ${report.onTimePercent}% on-time · ${report.exceptions} exceptions`}
+        action={<ExportReportCsvButton path="/api/reports/operations" filename="operations" />}
       />
       <ModuleSubNav links={REPORTS_NAV} />
       <DataTable

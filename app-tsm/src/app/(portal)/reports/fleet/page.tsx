@@ -4,13 +4,18 @@ import { Card, CardContent } from "@/components/ui/card";
 import { DataTable } from "@/components/app/data-table";
 import { getFleetUtilizationReport } from "@/lib/reports/fleet-report";
 import { REPORTS_NAV } from "@/lib/module-nav";
+import { ExportReportCsvButton } from "@/components/app/sprint15-forms";
 
 export default async function ReportsFleetPage() {
   const report = await getFleetUtilizationReport();
 
   return (
     <>
-      <PageHeader title="Fleet utilization" description="Asset usage and idle time" />
+      <PageHeader
+        title="Fleet utilization"
+        description="Asset usage and idle time"
+        action={<ExportReportCsvButton path="/api/reports/fleet" filename="fleet" />}
+      />
       <ModuleSubNav links={REPORTS_NAV} />
       <div className="mb-6 grid gap-4 sm:grid-cols-4">
         <Card><CardContent className="p-5"><p className="text-sm text-muted-foreground">Utilization</p><p className="text-3xl font-bold text-navy">{report.utilizationPercent}%</p></CardContent></Card>

@@ -12,6 +12,7 @@ import {
   patchConfigSection,
 } from "@/lib/mutations/entity-stores";
 import { isReportScheduleDeleted } from "@/lib/mutations/sprint13-store";
+import { getReportSchedulePatch, patchReportScheduleFields } from "@/lib/mutations/sprint15-store";
 
 function withPatch<T extends object>(section: string, base: T): T {
   const patch = getConfigPatches()[section];
@@ -373,9 +374,12 @@ export async function getReportSchedules(): Promise<ReportSchedule[]> {
       recipients: `fleet@${org.email.split("@")[1] ?? "zaftys.com"}`,
     },
   ];
-  return [...listStoredReportSchedules(), ...base].filter(
-    (s) => !isReportScheduleDeleted(s.id),
-  );
+  return [...listStoredReportSchedules(), ...base]
+    .map((s) => {
+      const patch = getReportSchedulePatch(s.id);
+      return patch ? { ...s, ...patch } : s;
+    })
+    .filter((s) => !isReportScheduleDeleted(s.id));
 }
 
 export function validateCreateReportScheduleInput(
@@ -415,6 +419,21 @@ export async function deleteReportSchedule(id: string): Promise<boolean> {
   deleteStoredReportSchedule(id);
   markReportScheduleDeleted(id);
   return true;
+}
+
+export async function updateReportSchedule(
+  id: string,
+  input: { cadence?: string; recipients?: string },
+): Promise<ReportSchedule | undefined> {
+  const existing = (await getReportSchedules()).find((s) => s.id === id);
+  if (!existing) return undefined;
+
+  const { patchStoredReportSchedule } = await import("@/lib/mutations/fleet-entity-store");
+  const stored = patchStoredReportSchedule(id, input);
+  if (stored) return stored;
+
+  patchReportScheduleFields(id, input);
+  return { ...existing, ...input };
 }
 
 export async function getTrackingSettings(): Promise<TrackingSettings> {

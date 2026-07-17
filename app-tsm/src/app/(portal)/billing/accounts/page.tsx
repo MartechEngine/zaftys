@@ -3,13 +3,18 @@ import { ModuleSubNav } from "@/components/app/module-sub-nav";
 import { DataTable } from "@/components/app/data-table";
 import { listLedgerAccounts } from "@/lib/billing/accounts-repository";
 import { BILLING_NAV } from "@/lib/module-nav";
+import { CreateLedgerAccountForm } from "@/components/app/sprint15-forms";
 
 export default async function BillingAccountsPage() {
   const accounts = await listLedgerAccounts();
 
   return (
     <>
-      <PageHeader title="Ledger accounts" description="Chart of accounts (Fleetbase Ledger)" />
+      <PageHeader
+        title="Ledger accounts"
+        description="Chart of accounts (Fleetbase Ledger)"
+        action={<CreateLedgerAccountForm />}
+      />
       <ModuleSubNav links={BILLING_NAV} />
       <DataTable
         rows={accounts}

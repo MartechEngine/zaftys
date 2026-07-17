@@ -2,11 +2,10 @@
 
 import Link from "next/link";
 import { PortalBackground } from "@/components/effects/portal-background";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { APP_NAME } from "@/lib/constants";
 import { glassCard } from "@/lib/surface";
 import { cn } from "@/lib/utils";
+import { ForgotPasswordForm } from "@/components/app/sprint15-forms";
 
 export default function ForgotPasswordPage() {
   return (
@@ -25,15 +24,7 @@ export default function ForgotPasswordPage() {
         <p className="text-sm text-muted-foreground">
           Enter your email and we&apos;ll send a reset link (demo UI).
         </p>
-        <form className="mt-8 space-y-4" onSubmit={(e) => e.preventDefault()}>
-          <label className="block text-sm">
-            <span className="text-muted-foreground">Email</span>
-            <Input type="email" className="mt-1" placeholder="you@company.com" />
-          </label>
-          <Button type="submit" className="w-full">
-            Send reset link
-          </Button>
-        </form>
+        <ForgotPasswordForm />
         <p className="mt-6 text-center text-sm">
           <Link href="/login" className="text-navy-bright hover:text-heading">
             Back to sign in

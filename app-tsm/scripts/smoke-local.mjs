@@ -695,6 +695,84 @@ async function main() {
         "/api/maintenance/schedules",
         { id: "ms1", trigger: "Every 12,000 km", nextDue: "01 Sep 2026" },
       ),
+    () =>
+      writeCheck(
+        "PATCH /api/fleet/vehicles/v1 driver",
+        cookie,
+        "PATCH",
+        "/api/fleet/vehicles/v1",
+        { driverId: "d1" },
+      ),
+    () =>
+      writeCheck(
+        "PATCH /api/settings/report-schedules cadence",
+        cookie,
+        "PATCH",
+        "/api/settings/report-schedules",
+        { id: "rs1", cadence: "Tue 08:30" },
+      ),
+    () =>
+      writeCheck(
+        "DELETE /api/settings/geofences",
+        cookie,
+        "DELETE",
+        "/api/settings/geofences",
+        { id: "gf2" },
+      ),
+    () =>
+      writeCheck(
+        "PATCH /api/settings/config security",
+        cookie,
+        "PATCH",
+        "/api/settings/config",
+        {
+          section: "security",
+          values: { passwordMinLength: 14, passwordRotationDays: 60 },
+        },
+      ),
+    () =>
+      writeCheck(
+        "PATCH /api/settings/config tracking",
+        cookie,
+        "PATCH",
+        "/api/settings/config",
+        {
+          section: "tracking",
+          values: { tokenExpiryDays: 120 },
+        },
+      ),
+    () =>
+      writeCheck(
+        "POST /api/fleet/groups/fg1 member",
+        cookie,
+        "POST",
+        "/api/fleet/groups/fg1",
+        { driver: "Smoke Driver", vehicle: "MH-27-AB-1234" },
+      ),
+    () =>
+      writeCheck(
+        "POST /api/integrations/fleetbase health",
+        cookie,
+        "POST",
+        "/api/integrations/fleetbase",
+        { action: "health" },
+      ),
+    () =>
+      writeCheck(
+        "POST /api/auth/forgot-password",
+        "",
+        "POST",
+        "/api/auth/forgot-password",
+        { email: "smoke@zaftys.com" },
+      ),
+    () =>
+      writeCheck(
+        "POST /api/billing/accounts",
+        cookie,
+        "POST",
+        "/api/billing/accounts",
+        { code: "5200", name: "Smoke expense", type: "Expense" },
+      ),
   ];
 
   for (const run of writes) {

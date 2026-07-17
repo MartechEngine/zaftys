@@ -49,3 +49,26 @@ export async function getFleetUtilizationReport(): Promise<FleetUtilizationRepor
     byVehicle,
   };
 }
+
+export function fleetUtilizationToCsv(
+  byVehicle: FleetUtilizationReport["byVehicle"],
+) {
+  const header = ["registration", "status", "trips_this_month", "utilization_pct"];
+  const rows = byVehicle.map((v) =>
+    [
+      csvEscape(v.registration),
+      v.status,
+      v.tripsThisMonth,
+      v.utilizationPercent,
+    ].join(","),
+  );
+  return [header.join(","), ...rows].join("\n");
+}
+
+function csvEscape(value: string | number) {
+  const s = String(value ?? "");
+  if (s.includes(",") || s.includes('"') || s.includes("\n")) {
+    return `"${s.replace(/"/g, '""')}"`;
+  }
+  return s;
+}
