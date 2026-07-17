@@ -5,6 +5,10 @@ import { listSettingsGroups } from "@/lib/settings/groups-repository";
 import { CreateSettingsGroupForm } from "@/components/app/module-create-forms";
 import { EditGroupPolicyButton } from "@/components/app/sprint11-forms";
 import { RenameSettingsGroupButton } from "@/components/app/sprint14-forms";
+import {
+  AddSettingsGroupMemberButton,
+  RemoveSettingsGroupMemberButton,
+} from "@/components/app/sprint16-forms";
 
 export default async function SettingsGroupsPage() {
   const groups = await listSettingsGroups();
@@ -30,6 +34,8 @@ export default async function SettingsGroupsPage() {
               <div className="flex flex-wrap gap-2">
                 <RenameSettingsGroupButton id={r.id} name={r.name} />
                 <EditGroupPolicyButton id={r.id} policy={r.policy} />
+                <AddSettingsGroupMemberButton groupId={r.id} />
+                <RemoveSettingsGroupMemberButton groupId={r.id} />
               </div>
             ),
           },

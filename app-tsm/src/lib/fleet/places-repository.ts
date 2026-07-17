@@ -8,6 +8,10 @@ import {
 import { getPlacePatch, patchPlaceFields } from "@/lib/mutations/sprint11-store";
 import { getFleetGroupPatch, patchFleetGroupFields } from "@/lib/mutations/sprint12-store";
 import { addFleetGroupMember, listFleetGroupMembers } from "@/lib/mutations/sprint15-store";
+import {
+  listRemovedFleetGroupMembers,
+  removeFleetGroupMember,
+} from "@/lib/mutations/sprint16-store";
 
 export type PlaceRecord = {
   id: string;
@@ -184,11 +188,16 @@ export async function getFleetGroup(id: string) {
 
   const [drivers, vehicles] = await Promise.all([listDrivers(), listVehicles()]);
   const storedMembers = listFleetGroupMembers(id);
+  const removed = listRemovedFleetGroupMembers(id);
   const derivedMembers: FleetGroupMember[] = drivers.slice(0, group.drivers).map((d, i) => ({
     driver: d.name,
     vehicle: d.vehicle ?? vehicles[i]?.registration ?? "Unassigned",
   }));
-  const members = storedMembers.length > 0 ? [...derivedMembers, ...storedMembers] : derivedMembers;
+  const baseMembers = storedMembers.length > 0 ? [...derivedMembers, ...storedMembers] : derivedMembers;
+  const members = baseMembers.filter(
+    (m) =>
+      !removed.some((r) => r.driver === m.driver && r.vehicle === m.vehicle),
+  );
 
   return { group, members };
 }
@@ -200,5 +209,15 @@ export async function addFleetGroupMemberRecord(
   const group = (await listFleetGroups()).find((g) => g.id === groupId);
   if (!group) return undefined;
   addFleetGroupMember(groupId, input);
+  return getFleetGroup(groupId);
+}
+
+export async function removeFleetGroupMemberRecord(
+  groupId: string,
+  input: { driver: string; vehicle: string },
+) {
+  const group = (await listFleetGroups()).find((g) => g.id === groupId);
+  if (!group) return undefined;
+  removeFleetGroupMember(groupId, input);
   return getFleetGroup(groupId);
 }

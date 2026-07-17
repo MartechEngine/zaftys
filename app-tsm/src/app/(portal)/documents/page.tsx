@@ -4,6 +4,7 @@ import { DataTable, type DataTableColumn } from "@/components/app/data-table";
 import { listAllDocuments } from "@/lib/data/shipment-repository";
 import type { DocumentLibraryEntry } from "@/lib/documents/library";
 import { Button } from "@/components/ui/button";
+import { ExportCsvButton } from "@/components/app/sprint16-forms";
 
 export const dynamic = "force-dynamic";
 
@@ -59,16 +60,13 @@ export default async function DocumentsPage({
             <Button variant="outline" asChild>
               <Link href="/documents/upload">Upload</Link>
             </Button>
-            <Button variant="outline" asChild>
-              <a
-                href={`/api/documents/export?${new URLSearchParams({
-                  ...(query ? { q: query } : {}),
-                  ...(typeKey !== "all" ? { type: typeKey } : {}),
-                }).toString()}`}
-              >
-                Export CSV
-              </a>
-            </Button>
+            <ExportCsvButton
+              path={`/api/documents/export?${new URLSearchParams({
+                ...(query ? { q: query } : {}),
+                ...(typeKey !== "all" ? { type: typeKey } : {}),
+              }).toString()}`}
+              filename="documents"
+            />
           </div>
         }
       />

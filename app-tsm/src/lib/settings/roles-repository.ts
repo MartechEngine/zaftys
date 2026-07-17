@@ -6,12 +6,20 @@ import {
   patchStoredRole,
 } from "@/lib/mutations/entity-stores";
 import { getRolePatch, patchRoleFields } from "@/lib/mutations/sprint11-store";
+import {
+  getRolePermissions,
+  patchRolePermission,
+  type RolePermissionMap,
+  type RolePermissionModule,
+  ROLE_PERMISSION_MODULES,
+} from "@/lib/mutations/sprint16-store";
 
 export type OrgRoleRecord = {
   id: string;
   name: string;
   users: number;
   type: "org" | "system";
+  permissions: RolePermissionMap;
 };
 
 function matchesRole(userRole: string, roleName: string) {
@@ -36,10 +44,17 @@ export async function listOrgRoles(): Promise<OrgRoleRecord[]> {
       ...r,
       ...patch,
       users: count > 0 ? count : r.users,
+      permissions: getRolePermissions(r.id),
     };
   });
 
-  return [...listStoredRoles(), ...demo];
+  return [
+    ...listStoredRoles().map((r) => ({
+      ...r,
+      permissions: getRolePermissions(r.id),
+    })),
+    ...demo,
+  ];
 }
 
 export function validateCreateRoleInput(
@@ -52,7 +67,8 @@ export function validateCreateRoleInput(
 }
 
 export async function createOrgRole(name: string): Promise<OrgRoleRecord> {
-  return createStoredRole({ name });
+  const row = createStoredRole({ name });
+  return { ...row, permissions: getRolePermissions(row.id) };
 }
 
 export async function getOrgRole(id: string): Promise<OrgRoleRecord | undefined> {
@@ -66,7 +82,24 @@ export async function patchOrgRole(
   const existing = await getOrgRole(id);
   if (!existing) return undefined;
   const stored = patchStoredRole(id, input);
-  if (stored) return stored;
+  if (stored) return { ...stored, permissions: getRolePermissions(id) };
   patchRoleFields(id, input);
-  return { ...existing, name: input.name };
+  return { ...existing, name: input.name, permissions: getRolePermissions(id) };
+}
+
+export async function updateRolePermissions(
+  id: string,
+  patch: Partial<RolePermissionMap>,
+): Promise<OrgRoleRecord | undefined> {
+  const existing = await getOrgRole(id);
+  if (!existing) return undefined;
+
+  for (const [key, enabled] of Object.entries(patch)) {
+    if (!ROLE_PERMISSION_MODULES.includes(key as RolePermissionModule)) continue;
+    if (typeof enabled === "boolean") {
+      patchRolePermission(id, key as RolePermissionModule, enabled);
+    }
+  }
+
+  return { ...existing, permissions: getRolePermissions(id) };
 }

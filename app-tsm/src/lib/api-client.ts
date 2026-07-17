@@ -971,6 +971,58 @@ export const api = {
       method: "POST",
       body: JSON.stringify(input),
     }),
+
+  completePasswordReset: (input: {
+    email: string;
+    password: string;
+    confirmPassword: string;
+  }) =>
+    fetchApi<{ email: string; completedAt: string }>("/api/auth/reset-password", {
+      method: "POST",
+      body: JSON.stringify(input),
+    }),
+
+  addSettingsGroupMember: (groupId: string, userId: string) =>
+    fetchApi<{ id: string; members: number }>(`/api/settings/groups/${groupId}`, {
+      method: "POST",
+      body: JSON.stringify({ userId }),
+    }),
+
+  removeSettingsGroupMember: (groupId: string, userId: string) =>
+    fetchApi<{ id: string; members: number }>(`/api/settings/groups/${groupId}`, {
+      method: "DELETE",
+      body: JSON.stringify({ userId }),
+    }),
+
+  removeFleetGroupMember: (
+    groupId: string,
+    input: { driver: string; vehicle: string },
+  ) =>
+    fetchApi<{ group: { id: string; name: string }; members: unknown[] }>(
+      `/api/fleet/groups/${groupId}`,
+      {
+        method: "DELETE",
+        body: JSON.stringify(input),
+      },
+    ),
+
+  patchRolePermissions: (
+    id: string,
+    permissions: Partial<Record<string, boolean>>,
+  ) =>
+    fetchApi<{ id: string; permissions: Record<string, boolean> }>(
+      `/api/settings/roles/${id}`,
+      {
+        method: "PATCH",
+        body: JSON.stringify({ permissions }),
+      },
+    ),
+
+  patchNotificationRecipients: (id: string, recipients: string) =>
+    fetchApi<{ id: string; recipients: string }>("/api/settings/notifications", {
+      method: "PATCH",
+      body: JSON.stringify({ id, recipients }),
+    }),
 };
 
 export type NetworkAssignmentRow = {

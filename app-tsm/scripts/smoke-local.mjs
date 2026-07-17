@@ -71,6 +71,7 @@ const PASSWORD = process.env.SMOKE_PASSWORD ?? "dev";
   "/api/reports/lanes",
   "/api/settings/config?section=payments",
   "/api/documents",
+  "/api/settings/notifications",
 ];
 
 async function login() {
@@ -712,13 +713,42 @@ async function main() {
         { id: "rs1", cadence: "Tue 08:30" },
       ),
     () =>
-      writeCheck(
-        "DELETE /api/settings/geofences",
-        cookie,
-        "DELETE",
-        "/api/settings/geofences",
-        { id: "gf2" },
-      ),
+      (async () => {
+        const res = await fetch(`${BASE}/api/settings/geofences`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            ...(cookie ? { Cookie: cookie } : {}),
+          },
+          body: JSON.stringify({
+            name: `Smoke Delete Fence ${Date.now().toString(36)}`,
+            radius: "200m",
+            triggers: "at_plant on enter",
+          }),
+        });
+        let id = "";
+        try {
+          const json = await res.json();
+          id = json.data?.id ?? "";
+        } catch {
+          /* ignore */
+        }
+        if (!res.ok || !id) {
+          return {
+            path: "DELETE /api/settings/geofences",
+            ok: false,
+            status: res.status,
+            detail: "could not create geofence to delete",
+          };
+        }
+        return writeCheck(
+          "DELETE /api/settings/geofences",
+          cookie,
+          "DELETE",
+          "/api/settings/geofences",
+          { id },
+        );
+      })(),
     () =>
       writeCheck(
         "PATCH /api/settings/config security",
@@ -772,6 +802,66 @@ async function main() {
         "POST",
         "/api/billing/accounts",
         { code: "5200", name: "Smoke expense", type: "Expense" },
+      ),
+    () =>
+      writeCheck(
+        "POST /api/auth/reset-password",
+        "",
+        "POST",
+        "/api/auth/reset-password",
+        {
+          email: "smoke@zaftys.com",
+          password: "smokepass1",
+          confirmPassword: "smokepass1",
+        },
+      ),
+    () =>
+      writeCheck(
+        "PATCH /api/settings/report-schedules recipients",
+        cookie,
+        "PATCH",
+        "/api/settings/report-schedules",
+        { id: "rs1", recipients: "ops-smoke@zaftys.com" },
+      ),
+    () =>
+      writeCheck(
+        "POST /api/settings/groups/gr1 member",
+        cookie,
+        "POST",
+        "/api/settings/groups/gr1",
+        { userId: "u2" },
+      ),
+    () =>
+      writeCheck(
+        "DELETE /api/settings/groups/gr1 member",
+        cookie,
+        "DELETE",
+        "/api/settings/groups/gr1",
+        { userId: "u2" },
+      ),
+    () =>
+      writeCheck(
+        "DELETE /api/fleet/groups/fg1 member",
+        cookie,
+        "DELETE",
+        "/api/fleet/groups/fg1",
+        { driver: "Smoke Driver", vehicle: "MH-27-AB-1234" },
+      ),
+    () =>
+      writeCheck(
+        "PATCH /api/settings/roles/r2 permissions",
+        cookie,
+        "PATCH",
+        "/api/settings/roles/r2",
+        { permissions: { billing: true } },
+      ),
+    () =>
+      writeCheck(
+        "PATCH /api/settings/notifications recipients",
+        cookie,
+        "PATCH",
+        "/api/settings/notifications",
+        { id: "n-exc", recipients: "Email + in-app · smoke team" },
       ),
   ];
 

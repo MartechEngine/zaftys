@@ -1,4 +1,4 @@
-import { getSettingsGroup, patchSettingsGroup } from "@/lib/settings/groups-repository";
+import { getSettingsGroup, patchSettingsGroup, addMemberToSettingsGroup, removeMemberFromSettingsGroup } from "@/lib/settings/groups-repository";
 import { apiError, apiSuccess } from "@/lib/api-response";
 
 export const dynamic = "force-dynamic";
@@ -32,6 +32,42 @@ export async function PATCH(
     return apiError("VALIDATION_ERROR", "Provide name or policy.");
   }
   const group = await patchSettingsGroup(id, patch);
+  if (!group) return apiError("GROUP_NOT_FOUND", "Group not found.", 404);
+  return apiSuccess(group);
+}
+
+export async function POST(
+  request: Request,
+  { params }: { params: Promise<{ id: string }> },
+) {
+  const { id } = await params;
+  let body: unknown;
+  try {
+    body = await request.json();
+  } catch {
+    return apiError("INVALID_JSON", "Request body must be valid JSON.");
+  }
+  const userId = String((body as { userId?: string }).userId ?? "").trim();
+  if (!userId) return apiError("VALIDATION_ERROR", "userId is required.");
+  const group = await addMemberToSettingsGroup(id, userId);
+  if (!group) return apiError("GROUP_NOT_FOUND", "Group not found.", 404);
+  return apiSuccess(group, { created: true });
+}
+
+export async function DELETE(
+  request: Request,
+  { params }: { params: Promise<{ id: string }> },
+) {
+  const { id } = await params;
+  let body: unknown;
+  try {
+    body = await request.json();
+  } catch {
+    return apiError("INVALID_JSON", "Request body must be valid JSON.");
+  }
+  const userId = String((body as { userId?: string }).userId ?? "").trim();
+  if (!userId) return apiError("VALIDATION_ERROR", "userId is required.");
+  const group = await removeMemberFromSettingsGroup(id, userId);
   if (!group) return apiError("GROUP_NOT_FOUND", "Group not found.", 404);
   return apiSuccess(group);
 }

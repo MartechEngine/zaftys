@@ -2,8 +2,7 @@
 
 import Link from "next/link";
 import { PortalBackground } from "@/components/effects/portal-background";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { ResetPasswordForm } from "@/components/app/sprint16-forms";
 import { glassCard } from "@/lib/surface";
 import { cn } from "@/lib/utils";
 
@@ -24,19 +23,7 @@ export default function ResetPasswordPage() {
         <p className="text-sm text-muted-foreground">
           Demo UI — no email verification required.
         </p>
-        <form className="mt-8 space-y-4" onSubmit={(e) => e.preventDefault()}>
-          <label className="block text-sm">
-            <span className="text-muted-foreground">New password</span>
-            <Input type="password" className="mt-1" />
-          </label>
-          <label className="block text-sm">
-            <span className="text-muted-foreground">Confirm password</span>
-            <Input type="password" className="mt-1" />
-          </label>
-          <Button type="submit" className="w-full">
-            Update password
-          </Button>
-        </form>
+        <ResetPasswordForm />
         <p className="mt-6 text-center text-sm">
           <Link href="/login" className="text-navy-bright hover:text-heading">
             Sign in

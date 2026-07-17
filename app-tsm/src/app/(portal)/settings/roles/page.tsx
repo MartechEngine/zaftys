@@ -4,6 +4,7 @@ import { DataTable } from "@/components/app/data-table";
 import { listOrgRoles } from "@/lib/settings/roles-repository";
 import { CreateRoleForm } from "@/components/app/module-create-forms";
 import { RenameRoleButton } from "@/components/app/sprint11-forms";
+import { RolePermissionsMatrix } from "@/components/app/sprint16-forms";
 
 export default async function SettingsRolesPage() {
   const roles = await listOrgRoles();
@@ -25,6 +26,13 @@ export default async function SettingsRolesPage() {
             key: "type",
             header: "Type",
             render: (r) => (r.type === "org" ? "Organization" : "System"),
+          },
+          {
+            key: "permissions",
+            header: "Permissions",
+            render: (r) => (
+              <RolePermissionsMatrix roleId={r.id} permissions={r.permissions} />
+            ),
           },
           {
             key: "actions",

@@ -7,6 +7,11 @@ import {
   patchStoredSettingsGroup,
 } from "@/lib/mutations/entity-stores";
 import { getGroupPatch, patchGroupFields } from "@/lib/mutations/sprint11-store";
+import {
+  addSettingsGroupMember,
+  getSettingsGroupMemberOps,
+  removeSettingsGroupMember,
+} from "@/lib/mutations/sprint16-store";
 
 export type SettingsGroupRecord = {
   id: string;
@@ -30,10 +35,12 @@ export async function listSettingsGroups(): Promise<SettingsGroupRecord[]> {
           (u) => u.role === role.name || u.role === merged.policy.split(" ")[0],
         ).length
       : 0;
+    const ops = getSettingsGroupMemberOps(group.id);
+    const memberCount = Math.max(0, merged.members + ops.added.length - ops.removed.length);
 
     return {
       ...merged,
-      members: Math.max(merged.members, membersFromUsers),
+      members: Math.max(memberCount, membersFromUsers),
       roleId: role?.id,
     };
   });
@@ -75,4 +82,24 @@ export async function patchSettingsGroup(
   if (stored) return stored;
   patchGroupFields(id, input);
   return { ...existing, ...input };
+}
+
+export async function addMemberToSettingsGroup(
+  groupId: string,
+  userId: string,
+): Promise<SettingsGroupRecord | undefined> {
+  const group = await getSettingsGroup(groupId);
+  if (!group) return undefined;
+  addSettingsGroupMember(groupId, userId);
+  return getSettingsGroup(groupId);
+}
+
+export async function removeMemberFromSettingsGroup(
+  groupId: string,
+  userId: string,
+): Promise<SettingsGroupRecord | undefined> {
+  const group = await getSettingsGroup(groupId);
+  if (!group) return undefined;
+  removeSettingsGroupMember(groupId, userId);
+  return getSettingsGroup(groupId);
 }

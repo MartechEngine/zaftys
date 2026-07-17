@@ -7,6 +7,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { getFleetGroup } from "@/lib/fleet/places-repository";
 import { FLEET_NAV } from "@/lib/module-nav";
 import { AddFleetGroupMemberButton } from "@/components/app/sprint15-forms";
+import { RemoveFleetGroupMemberButton } from "@/components/app/sprint16-forms";
 
 export default async function FleetGroupDetailPage({
   params,
@@ -46,8 +47,15 @@ export default async function FleetGroupDetailPage({
             ) : (
               <ul className="mt-3 space-y-1 text-muted-foreground">
                 {members.map((m) => (
-                  <li key={`${m.driver}-${m.vehicle}`}>
-                    {m.driver} · {m.vehicle}
+                  <li key={`${m.driver}-${m.vehicle}`} className="flex items-center justify-between gap-2">
+                    <span>
+                      {m.driver} · {m.vehicle}
+                    </span>
+                    <RemoveFleetGroupMemberButton
+                      groupId={id}
+                      driver={m.driver}
+                      vehicle={m.vehicle}
+                    />
                   </li>
                 ))}
               </ul>

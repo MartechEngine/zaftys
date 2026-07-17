@@ -1,4 +1,5 @@
-import { getOrgRole, patchOrgRole } from "@/lib/settings/roles-repository";
+import { getOrgRole, patchOrgRole, updateRolePermissions } from "@/lib/settings/roles-repository";
+import { ROLE_PERMISSION_MODULES } from "@/lib/mutations/sprint16-store";
 import { apiError, apiSuccess } from "@/lib/api-response";
 
 export const dynamic = "force-dynamic";
@@ -24,8 +25,27 @@ export async function PATCH(
   } catch {
     return apiError("INVALID_JSON", "Request body must be valid JSON.");
   }
-  const name = String((body as { name?: string }).name ?? "").trim();
-  if (!name) return apiError("VALIDATION_ERROR", "name is required.");
+  const data = body as Record<string, unknown>;
+  const name = String(data.name ?? "").trim();
+  const permissions =
+    data.permissions && typeof data.permissions === "object"
+      ? (data.permissions as Record<string, boolean>)
+      : undefined;
+
+  if (permissions) {
+    const patch: Record<string, boolean> = {};
+    for (const key of ROLE_PERMISSION_MODULES) {
+      if (typeof permissions[key] === "boolean") patch[key] = permissions[key];
+    }
+    if (Object.keys(patch).length === 0) {
+      return apiError("VALIDATION_ERROR", "Provide at least one permission flag.");
+    }
+    const role = await updateRolePermissions(id, patch);
+    if (!role) return apiError("ROLE_NOT_FOUND", "Role not found.", 404);
+    return apiSuccess(role);
+  }
+
+  if (!name) return apiError("VALIDATION_ERROR", "name or permissions is required.");
   const role = await patchOrgRole(id, { name });
   if (!role) return apiError("ROLE_NOT_FOUND", "Role not found.", 404);
   return apiSuccess(role);

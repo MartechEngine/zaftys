@@ -3,6 +3,7 @@ import { SettingsNav } from "@/components/app/settings-nav";
 import { Card, CardContent } from "@/components/ui/card";
 import { getNotificationSettings } from "@/lib/settings/config-repository";
 import { NotificationChannelToggle } from "@/components/app/config-toggle-form";
+import { EditNotificationRecipientsButton } from "@/components/app/sprint16-forms";
 
 export default async function SettingsNotificationsPage() {
   const channels = await getNotificationSettings();
@@ -21,7 +22,10 @@ export default async function SettingsNotificationsPage() {
                   {c.recipients} · {c.enabled ? "on" : "disabled"}
                 </p>
               </div>
-              <NotificationChannelToggle id={c.id} channel={c.channel} enabled={c.enabled} />
+              <div className="flex flex-wrap gap-2">
+                <EditNotificationRecipientsButton id={c.id} recipients={c.recipients} />
+                <NotificationChannelToggle id={c.id} channel={c.channel} enabled={c.enabled} />
+              </div>
             </div>
           ))}
         </CardContent>

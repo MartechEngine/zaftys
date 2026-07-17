@@ -13,6 +13,10 @@ import {
 } from "@/lib/mutations/entity-stores";
 import { isReportScheduleDeleted } from "@/lib/mutations/sprint13-store";
 import { getReportSchedulePatch, patchReportScheduleFields } from "@/lib/mutations/sprint15-store";
+import {
+  getNotificationRecipientPatch,
+  patchNotificationRecipients,
+} from "@/lib/mutations/sprint16-store";
 
 function withPatch<T extends object>(section: string, base: T): T {
   const patch = getConfigPatches()[section];
@@ -296,9 +300,22 @@ export async function getNotificationSettings(): Promise<NotificationChannelSett
 
   return channels.map((c) => {
     const override = patch[c.id];
-    if (typeof override === "boolean") return { ...c, enabled: override };
-    return c;
+    const recipientPatch = getNotificationRecipientPatch(c.id);
+    const merged = recipientPatch ? { ...c, recipients: recipientPatch } : c;
+    if (typeof override === "boolean") return { ...merged, enabled: override };
+    return merged;
   });
+}
+
+export async function updateNotificationRecipients(
+  channelId: string,
+  recipients: string,
+): Promise<NotificationChannelSettings | undefined> {
+  const channels = await getNotificationSettings();
+  const existing = channels.find((c) => c.id === channelId);
+  if (!existing) return undefined;
+  patchNotificationRecipients(channelId, recipients);
+  return { ...existing, recipients: recipients.trim() };
 }
 
 export async function getRoutingSettings(): Promise<RoutingSettings> {
