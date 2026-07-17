@@ -1069,6 +1069,37 @@ export const api = {
       method: "POST",
       body: JSON.stringify(input),
     }),
+
+  patchPartMeta: (id: string, input: { reorder?: number; location?: string }) =>
+    fetchApi<{ id: string; reorder: number; location: string }>("/api/maintenance/parts", {
+      method: "PATCH",
+      body: JSON.stringify({ id, ...input }),
+    }),
+
+  applyOrchestratorPlan: () =>
+    fetchApi<{
+      applied: { shipmentId: string; publicId: string; action: string; appliedAt: string };
+      shipment: ShipmentRecord;
+      proposal: { publicId: string; shipmentId: string; action: string };
+    }>("/api/dispatch/orchestrator", {
+      method: "POST",
+      body: JSON.stringify({ action: "apply" }),
+    }),
+
+  reviseQuote: (id: string, input: { tonnage?: number; rateInr?: number }) =>
+    fetchApi<{ id: string; tonnage: number; rate: string; rateInr: number }>(
+      `/api/shipments/quotes/${id}`,
+      {
+        method: "PATCH",
+        body: JSON.stringify(input),
+      },
+    ),
+
+  createFault: (input: { vehicle: string; driver: string; issue: string }) =>
+    fetchApi<{ id: string; vehicle: string; issue: string }>("/api/maintenance/faults", {
+      method: "POST",
+      body: JSON.stringify(input),
+    }),
 };
 
 export type NetworkAssignmentRow = {

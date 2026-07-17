@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import { api, type NetworkAssignmentRow } from "@/lib/api-client";
 import type { ShipmentStatus } from "@/lib/constants";
 import { cn } from "@/lib/utils";
+import { AssignNetworkShipmentButton } from "@/components/app/sprint18-forms";
 
 export function NetworkAssignmentsTable() {
   const [rows, setRows] = useState<NetworkAssignmentRow[]>([]);
@@ -96,7 +97,12 @@ export function NetworkAssignmentsTable() {
             {
               key: "driver",
               header: "Driver",
-              render: (r) => r.driver ?? "Unassigned",
+              render: (r) => (
+                <div className="flex flex-wrap items-center gap-2">
+                  <span>{r.driver ?? "Unassigned"}</span>
+                  <AssignNetworkShipmentButton shipmentId={r.shipmentId} driver={r.driver} />
+                </div>
+              ),
             },
           ]}
         />

@@ -249,22 +249,35 @@ export async function patchMaintenanceSchedule(
 }
 
 export async function listPartsInventory(): Promise<PartRecord[]> {
-  const { getPartStock } = await import("@/lib/maintenance/parts-store");
+  const { getPartStock, getPartDisplayMeta } = await import("@/lib/maintenance/parts-store");
   const { listCreatedParts } = await import("@/lib/mutations/sprint17-store");
+  const { getPartMetaPatch } = await import("@/lib/mutations/sprint18-store");
 
   const demoRows = demoParts.map((p) => {
     const stock = getPartStock(p.id) ?? p.stock;
+    const meta = getPartDisplayMeta(p.id);
+    const reorder = meta?.reorder ?? p.reorder;
+    const location = meta?.location ?? p.location;
     return {
       ...p,
       stock,
-      lowStock: stock <= p.reorder,
+      reorder,
+      location,
+      lowStock: stock <= reorder,
     };
   });
 
-  const created = listCreatedParts().map((p) => ({
-    ...p,
-    lowStock: p.stock <= p.reorder,
-  }));
+  const created = listCreatedParts().map((p) => {
+    const patch = getPartMetaPatch(p.id);
+    const reorder = patch?.reorder ?? p.reorder;
+    const location = patch?.location ?? p.location;
+    return {
+      ...p,
+      reorder,
+      location,
+      lowStock: p.stock <= reorder,
+    };
+  });
 
   return [...created, ...demoRows];
 }
@@ -310,4 +323,60 @@ export async function createPart(input: {
 export async function adjustPartsStock(id: string, delta: number) {
   const { adjustPartStock } = await import("@/lib/maintenance/parts-store");
   return adjustPartStock(id, delta);
+}
+
+export function validatePatchPartInput(
+  body: unknown,
+): { reorder?: number; location?: string } | { error: string } {
+  if (!body || typeof body !== "object") return { error: "Body must be an object." };
+  const data = body as Record<string, unknown>;
+  const reorder = data.reorder != null ? Number(data.reorder) : undefined;
+  const location = data.location != null ? String(data.location).trim() : undefined;
+  if (reorder == null && !location) {
+    return { error: "Provide reorder and/or location." };
+  }
+  if (reorder != null && (!Number.isFinite(reorder) || reorder < 0)) {
+    return { error: "Reorder threshold must be a non-negative number." };
+  }
+  if (location !== undefined && !location) {
+    return { error: "Location cannot be empty." };
+  }
+  return { reorder, location };
+}
+
+export async function patchPartMeta(
+  id: string,
+  input: { reorder?: number; location?: string },
+) {
+  const { demoParts } = await import("@/lib/demo-data");
+  const { getPartStock, getPartDisplayMeta } = await import("@/lib/maintenance/parts-store");
+  const { listCreatedParts } = await import("@/lib/mutations/sprint17-store");
+  const { patchPartMeta: storePatch } = await import("@/lib/mutations/sprint18-store");
+
+  const demo = demoParts.find((p) => p.id === id);
+  const created = listCreatedParts().find((p) => p.id === id);
+  if (!demo && !created) return undefined;
+
+  storePatch(id, input);
+
+  if (created) {
+    const reorder = input.reorder ?? created.reorder;
+    const location = input.location ?? created.location;
+    return {
+      ...created,
+      reorder,
+      location,
+      lowStock: created.stock <= reorder,
+    };
+  }
+
+  const stock = getPartStock(id) ?? demo!.stock;
+  const meta = getPartDisplayMeta(id)!;
+  return {
+    ...demo!,
+    stock,
+    reorder: meta.reorder,
+    location: meta.location,
+    lowStock: meta.lowStock,
+  };
 }

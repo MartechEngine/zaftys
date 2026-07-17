@@ -456,6 +456,14 @@ async function main() {
         status: "sent",
       }),
     () =>
+      writeCheck(
+        "PATCH /api/shipments/quotes/q2 revise",
+        cookie,
+        "PATCH",
+        "/api/shipments/quotes/q2",
+        { tonnage: 26, rateInr: 11200 },
+      ),
+    () =>
       writeCheck("POST /api/integrations/traccar", cookie, "POST", "/api/integrations/traccar", {}),
     () =>
       writeCheck("PATCH /api/settings/roles/r2", cookie, "PATCH", "/api/settings/roles/r2", {
@@ -962,6 +970,72 @@ async function main() {
           values: { orchestratorMode: "Auto-propose on pending queue" },
         },
       ),
+    () =>
+      writeCheck(
+        "POST /api/dispatch/orchestrator apply",
+        cookie,
+        "POST",
+        "/api/dispatch/orchestrator",
+        { action: "apply" },
+      ),
+    () =>
+      writeCheck(
+        "PATCH /api/settings/config routing engine",
+        cookie,
+        "PATCH",
+        "/api/settings/config",
+        {
+          section: "routing",
+          values: { primaryEngine: "Valhalla + OSRM fallback", maxAxleMt: 44 },
+        },
+      ),
+    () =>
+      writeCheck(
+        "PATCH /api/settings/config map provider",
+        cookie,
+        "PATCH",
+        "/api/settings/config",
+        {
+          section: "map",
+          values: { provider: "MapLibre GL + OpenFreeMap", style: "Light industrial" },
+        },
+      ),
+    () =>
+      writeCheck(
+        "PATCH /api/settings/config navigator branding",
+        cookie,
+        "PATCH",
+        "/api/settings/config",
+        {
+          section: "navigator",
+          values: { appName: "ZAFTYS Navigator Pro", primaryColor: "#0F766E" },
+        },
+      ),
+    () =>
+      writeCheck(
+        "PATCH /api/settings/config weekend dispatch",
+        cookie,
+        "PATCH",
+        "/api/settings/config",
+        {
+          section: "scheduling",
+          values: { weekendDispatch: "Blocked without ops approval" },
+        },
+      ),
+    () =>
+      writeCheck(
+        "PATCH /api/maintenance/parts reorder",
+        cookie,
+        "PATCH",
+        "/api/maintenance/parts",
+        { id: "pt1", reorder: 6, location: "Amravati depot · aisle B" },
+      ),
+    () =>
+      writeCheck("POST /api/maintenance/faults", cookie, "POST", "/api/maintenance/faults", {
+        vehicle: "MH-27-AB-1234",
+        driver: "Smoke Driver",
+        issue: "Smoke clutch slip",
+      }),
   ];
 
   for (const run of writes) {

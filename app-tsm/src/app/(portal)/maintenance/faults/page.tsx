@@ -4,6 +4,7 @@ import { DataTable, StatusPill } from "@/components/app/data-table";
 import { listFaultReports } from "@/lib/maintenance/fault-repository";
 import { MAINTENANCE_NAV } from "@/lib/module-nav";
 import { FaultStatusActions } from "@/components/app/fault-status-actions";
+import { CreateFaultForm } from "@/components/app/sprint18-forms";
 
 const faultStatus = {
   open: { label: "Open", className: "bg-amber-100 text-amber-800" },
@@ -16,7 +17,7 @@ export default async function MaintenanceFaultsPage() {
 
   return (
     <>
-      <PageHeader title="Fault reports" description="Driver-reported issues from Navigator app" />
+      <PageHeader title="Fault reports" description="Driver-reported issues from Navigator app" action={<CreateFaultForm />} />
       <ModuleSubNav links={MAINTENANCE_NAV} />
       <DataTable
         rows={faults}

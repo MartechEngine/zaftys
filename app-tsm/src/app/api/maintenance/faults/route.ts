@@ -1,4 +1,5 @@
 import {
+  createFaultReport,
   linkFaultWithWorkOrder,
   listFaultReports,
   updateFaultStatus,
@@ -16,6 +17,27 @@ export async function GET(request: Request) {
       status: status as "open" | "linked" | "resolved" | "active" | undefined,
     }),
   );
+}
+
+export async function POST(request: Request) {
+  let body: unknown;
+  try {
+    body = await request.json();
+  } catch {
+    return apiError("INVALID_JSON", "Request body must be valid JSON.");
+  }
+
+  const data = body as { vehicle?: string; driver?: string; issue?: string };
+  const vehicle = String(data.vehicle ?? "").trim();
+  const driver = String(data.driver ?? "").trim();
+  const issue = String(data.issue ?? "").trim();
+
+  if (!vehicle) return apiError("VALIDATION_ERROR", "vehicle is required.");
+  if (!driver) return apiError("VALIDATION_ERROR", "driver is required.");
+  if (!issue) return apiError("VALIDATION_ERROR", "issue is required.");
+
+  const fault = await createFaultReport({ vehicle, driver, issue });
+  return apiSuccess(fault, { created: true });
 }
 
 export async function PATCH(request: Request) {

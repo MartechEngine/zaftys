@@ -5,6 +5,7 @@ import { ModuleSubNav } from "@/components/app/module-sub-nav";
 import { Card, CardContent } from "@/components/ui/card";
 import { getDriverSchedule } from "@/lib/dispatch/calendar";
 import { FLEET_NAV } from "@/lib/module-nav";
+import { RescheduleDriverEventButton } from "@/components/app/sprint18-forms";
 
 export default async function DriverSchedulePage({
   params,
@@ -24,12 +25,15 @@ export default async function DriverSchedulePage({
       <div className="space-y-3">
         {events.map((e) => (
           <Card key={e.id}>
-            <CardContent className="p-4 text-sm">
-              <Link href={`/shipments/${e.shipmentId}`} className="font-mono font-medium text-link hover:underline">
-                {e.shipment}
-              </Link>
-              <p className="text-muted-foreground">{e.route} · {e.date} {e.time}</p>
-              <p className="mt-1 text-xs capitalize text-muted-foreground">Status: {e.status.replace(/_/g, " ")}</p>
+            <CardContent className="flex flex-col gap-2 p-4 sm:flex-row sm:items-center sm:justify-between">
+              <div>
+                <Link href={`/shipments/${e.shipmentId}`} className="font-mono font-medium text-link hover:underline">
+                  {e.shipment}
+                </Link>
+                <p className="text-muted-foreground">{e.route} · {e.date} {e.time}</p>
+                <p className="mt-1 text-xs capitalize text-muted-foreground">Status: {e.status.replace(/_/g, " ")}</p>
+              </div>
+              <RescheduleDriverEventButton shipmentId={e.shipmentId} time={e.time} />
             </CardContent>
           </Card>
         ))}

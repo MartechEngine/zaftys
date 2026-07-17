@@ -7,6 +7,7 @@ import { getOrchestratorState } from "@/lib/dispatch/orchestrator";
 import { DISPATCH_NAV } from "@/lib/module-nav";
 import { RunOrchestratorButton } from "@/components/app/module-create-forms";
 import { Button } from "@/components/ui/button";
+import { ApplyOrchestratorButton } from "@/components/app/sprint18-forms";
 
 const phaseStatus = {
   complete: { label: "Complete", className: "bg-emerald-100 text-emerald-800" },
@@ -42,6 +43,15 @@ export default async function DispatchOrchestratorPage() {
           ) : (
             <p className="mt-2 text-muted-foreground">No pending shipments to orchestrate.</p>
           )}
+          {state.applied ? (
+            <p className="mt-2 text-emerald-700">
+              Plan applied for {state.applied.publicId} at{" "}
+              {new Date(state.applied.appliedAt).toLocaleTimeString("en-IN", {
+                hour: "2-digit",
+                minute: "2-digit",
+              })}
+            </p>
+          ) : null}
         </CardContent>
       </Card>
       <DataTable
@@ -67,7 +77,11 @@ export default async function DispatchOrchestratorPage() {
               </Link>{" "}
               → {state.proposal.partner} · {state.proposal.route} · ETA {state.proposal.eta}
             </p>
-            <div className="mt-4 flex gap-2">
+            <div className="mt-4 flex flex-wrap gap-2">
+              <ApplyOrchestratorButton
+                shipmentId={state.proposal.shipmentId}
+                disabled={state.applied?.shipmentId === state.proposal.shipmentId}
+              />
               <Button variant="accent" size="sm" asChild>
                 <Link href={`/shipments/${state.proposal.shipmentId}`}>Review shipment</Link>
               </Button>

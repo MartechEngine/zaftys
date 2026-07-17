@@ -1,5 +1,6 @@
 import { demoParts } from "@/lib/demo-data";
 import { logActivity } from "@/lib/dev-store";
+import { getPartMetaPatch } from "@/lib/mutations/sprint18-store";
 
 const g = globalThis as typeof globalThis & {
   __tsmPartStock?: Record<string, number>;
@@ -27,6 +28,10 @@ export function adjustPartStock(id: string, delta: number) {
   const next = Math.max(0, current + delta);
   stock[id] = next;
 
+  const meta = getPartMetaPatch(id);
+  const reorder = meta?.reorder ?? part.reorder;
+  const location = meta?.location ?? part.location;
+
   logActivity({
     shipmentId: "",
     type: "parts.adjusted",
@@ -37,6 +42,17 @@ export function adjustPartStock(id: string, delta: number) {
   return {
     ...part,
     stock: next,
-    lowStock: next <= part.reorder,
+    reorder,
+    location,
+    lowStock: next <= reorder,
   };
+}
+
+export function getPartDisplayMeta(id: string) {
+  const part = demoParts.find((p) => p.id === id);
+  if (!part) return undefined;
+  const meta = getPartMetaPatch(id);
+  const reorder = meta?.reorder ?? part.reorder;
+  const location = meta?.location ?? part.location;
+  return { reorder, location, lowStock: (getStock()[id] ?? part.stock) <= reorder };
 }

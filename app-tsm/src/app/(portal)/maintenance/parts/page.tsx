@@ -3,6 +3,7 @@ import { ModuleSubNav } from "@/components/app/module-sub-nav";
 import { DataTable } from "@/components/app/data-table";
 import { PartStockActions } from "@/components/app/part-stock-actions";
 import { CreatePartForm } from "@/components/app/sprint17-forms";
+import { EditPartReorderButton } from "@/components/app/sprint18-forms";
 import { listPartsInventory } from "@/lib/maintenance/work-order-repository";
 import { MAINTENANCE_NAV } from "@/lib/module-nav";
 
@@ -43,7 +44,12 @@ export default async function MaintenancePartsPage() {
           {
             key: "adjust",
             header: "Adjust",
-            render: (r) => <PartStockActions id={r.id} stock={r.stock} />,
+            render: (r) => (
+              <div className="flex flex-wrap gap-2">
+                <PartStockActions id={r.id} stock={r.stock} />
+                <EditPartReorderButton id={r.id} reorder={r.reorder} location={r.location} />
+              </div>
+            ),
           },
         ]}
       />

@@ -4,10 +4,12 @@ import {
   createStoredQuote,
   linkQuoteToShipment,
   listStoredQuotes,
+  patchStoredQuoteFields,
   updateStoredQuoteStatus,
   upsertStoredQuote,
   type QuoteRecord,
 } from "@/lib/shipments/quotes-store";
+import { getQuoteFieldPatch, patchQuoteFields } from "@/lib/mutations/sprint18-store";
 
 export type { QuoteRecord };
 
@@ -92,11 +94,23 @@ export async function listQuotes(): Promise<QuoteRecord[]> {
     ...fromPending.filter((q) => !storedIds.has(q.id)),
   ];
   const seen = new Set<string>();
-  return merged.filter((q) => {
-    if (seen.has(q.id)) return false;
-    seen.add(q.id);
-    return true;
-  });
+  return merged
+    .filter((q) => {
+      if (seen.has(q.id)) return false;
+      seen.add(q.id);
+      return true;
+    })
+    .map((q) => {
+      const patch = getQuoteFieldPatch(q.id);
+      if (!patch) return q;
+      const rateInr = patch.rateInr ?? q.rateInr;
+      return {
+        ...q,
+        ...patch,
+        rate: formatInr(rateInr),
+        rateInr,
+      };
+    });
 }
 
 export async function getQuote(id: string): Promise<QuoteRecord | undefined> {
@@ -110,6 +124,35 @@ export async function createQuote(input: CreateQuoteInput): Promise<QuoteRecord>
     tonnage: input.tonnage,
     rateInr: input.rateInr,
     status: input.status,
+  });
+}
+
+export async function reviseQuote(
+  id: string,
+  input: { tonnage?: number; rateInr?: number },
+): Promise<QuoteRecord | undefined> {
+  const found = await getQuote(id);
+  if (!found) return undefined;
+  if (found.status === "accepted" || found.status === "declined") return undefined;
+
+  if (input.tonnage != null && (!Number.isFinite(input.tonnage) || input.tonnage <= 0)) {
+    return undefined;
+  }
+  if (input.rateInr != null && (!Number.isFinite(input.rateInr) || input.rateInr < 0)) {
+    return undefined;
+  }
+
+  patchQuoteFields(id, input);
+  const stored = patchStoredQuoteFields(id, input);
+  if (stored) return stored;
+
+  const rateInr = input.rateInr ?? found.rateInr;
+  const tonnage = input.tonnage ?? found.tonnage;
+  return upsertStoredQuote({
+    ...found,
+    tonnage,
+    rateInr,
+    rate: formatInr(rateInr),
   });
 }
 

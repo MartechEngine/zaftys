@@ -3,6 +3,7 @@ import { PageHeader } from "@/components/app/app-shell";
 import { SettingsNav } from "@/components/app/settings-nav";
 import { Card, CardContent } from "@/components/ui/card";
 import { getMapSettings } from "@/lib/settings/config-repository";
+import { ConfigFieldForm } from "@/components/app/sprint18-forms";
 
 export default async function SettingsMapPage() {
   const settings = await getMapSettings();
@@ -16,10 +17,17 @@ export default async function SettingsMapPage() {
           <p>
             <strong>Provider:</strong> {settings.provider}
           </p>
+          <ConfigFieldForm
+            section="map"
+            field="provider"
+            label="Map provider"
+            value={settings.provider}
+          />
           <p>
             <strong>Style:</strong> {settings.style}
             {settings.styleEnv !== "—" ? ` — override ${settings.styleEnv}` : ""}
           </p>
+          <ConfigFieldForm section="map" field="style" label="Map style" value={settings.style} />
           <p>
             <strong>Geofences:</strong> {settings.geofenceCount} active
           </p>

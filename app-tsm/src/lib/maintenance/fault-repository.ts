@@ -3,6 +3,7 @@ import {
   getFaultWorkOrderId,
   linkFaultToWorkOrder,
 } from "@/lib/mutations/sprint17-store";
+import { listCreatedFaults } from "@/lib/mutations/sprint18-store";
 import {
   createWorkOrder,
   getWorkOrder,
@@ -28,11 +29,19 @@ export type FaultReport = {
 export async function listFaultReports(filters?: {
   status?: FaultStatus | "active";
 }): Promise<FaultReport[]> {
-  let rows: FaultReport[] = demoFaultReports.map((f) => ({
+  const created: FaultReport[] = listCreatedFaults().map((f) => ({
     ...f,
-    status: getFaultStatusOverride(f.id) ?? f.status,
     workOrderId: getFaultWorkOrderId(f.id),
   }));
+
+  let rows: FaultReport[] = [
+    ...created,
+    ...demoFaultReports.map((f) => ({
+      ...f,
+      status: getFaultStatusOverride(f.id) ?? f.status,
+      workOrderId: getFaultWorkOrderId(f.id),
+    })),
+  ];
 
   if (filters?.status === "active") {
     rows = rows.filter((f) => f.status !== "resolved");
@@ -47,6 +56,15 @@ export async function getFaultReport(id: string): Promise<FaultReport | undefine
   return (await listFaultReports()).find((f) => f.id === id);
 }
 
+export async function createFaultReport(input: {
+  vehicle: string;
+  driver: string;
+  issue: string;
+}): Promise<FaultReport> {
+  const { createStoredFault } = await import("@/lib/mutations/sprint18-store");
+  return createStoredFault(input);
+}
+
 export async function updateFaultStatus(
   id: string,
   status: FaultStatus,
@@ -57,7 +75,7 @@ export async function updateFaultStatus(
 }
 
 export async function linkFaultWithWorkOrder(id: string) {
-  const fault = demoFaultReports.find((f) => f.id === id);
+  const fault = (await listFaultReports()).find((f) => f.id === id);
   if (!fault) return undefined;
 
   const existingWoId = getFaultWorkOrderId(id);

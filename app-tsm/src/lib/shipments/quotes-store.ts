@@ -89,6 +89,29 @@ export function upsertStoredQuote(quote: QuoteRecord): QuoteRecord {
   return quote;
 }
 
+export function patchStoredQuoteFields(
+  id: string,
+  patch: { tonnage?: number; rateInr?: number },
+): QuoteRecord | undefined {
+  const store = getQuoteStore();
+  let quote = store.find((q) => q.id === id);
+  if (!quote) return undefined;
+
+  if (patch.tonnage != null) quote.tonnage = patch.tonnage;
+  if (patch.rateInr != null) {
+    quote.rateInr = patch.rateInr;
+    quote.rate = formatInr(patch.rateInr);
+  }
+
+  logActivity({
+    shipmentId: "",
+    type: "quote.revised",
+    message: `${id} · ${quote.tonnage} MT · ${quote.rate}`,
+    timestamp: new Date().toISOString(),
+  });
+  return quote;
+}
+
 export function linkQuoteToShipment(id: string, shipmentId: string): QuoteRecord | undefined {
   const store = getQuoteStore();
   const quote = store.find((q) => q.id === id);

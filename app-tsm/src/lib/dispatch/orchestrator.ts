@@ -5,6 +5,7 @@ import {
   listOrchestratorRuns,
   recordOrchestratorRun,
 } from "@/lib/mutations/entity-stores";
+import { getOrchestratorApplied } from "@/lib/mutations/sprint18-store";
 
 export type OrchestratorPhase = {
   id: string;
@@ -58,8 +59,11 @@ export async function getOrchestratorState() {
       }
     : null;
 
+  const applied = getOrchestratorApplied();
+
   return {
     handsFreeMode: false,
+    applied,
     lastRun: target
       ? {
           publicId: target.publicId,
@@ -90,4 +94,31 @@ export async function runOrchestratorPipeline() {
         : { ...phase, status: "pending" as const },
     ),
   };
+}
+
+export async function applyOrchestratorProposal() {
+  const state = await getOrchestratorState();
+  if (!state.proposal) return null;
+  if (state.applied?.shipmentId === state.proposal.shipmentId) {
+    const { getShipment } = await import("@/lib/data/shipment-repository");
+    const shipment = await getShipment(state.proposal.shipmentId);
+    return shipment ? { applied: state.applied, shipment, proposal: state.proposal } : null;
+  }
+
+  const { assignShipment } = await import("@/lib/data/shipment-repository");
+  const { recordOrchestratorApply } = await import("@/lib/mutations/sprint18-store");
+
+  const shipment = await assignShipment(state.proposal.shipmentId, "d1", "v1");
+  if (!shipment) return null;
+
+  const applied = recordOrchestratorApply({
+    shipmentId: state.proposal.shipmentId,
+    publicId: state.proposal.publicId,
+    action: state.proposal.action,
+    appliedAt: new Date().toISOString(),
+    driverId: "d1",
+    vehicleId: "v1",
+  });
+
+  return { applied, shipment, proposal: state.proposal };
 }

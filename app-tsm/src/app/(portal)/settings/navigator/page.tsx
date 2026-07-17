@@ -3,6 +3,7 @@ import { SettingsNav } from "@/components/app/settings-nav";
 import { Card, CardContent } from "@/components/ui/card";
 import { getNavigatorAppSettings } from "@/lib/settings/config-repository";
 import { ConfigToggleForm } from "@/components/app/config-toggle-form";
+import { ConfigFieldForm } from "@/components/app/sprint18-forms";
 
 export default async function SettingsNavigatorPage() {
   const settings = await getNavigatorAppSettings();
@@ -16,9 +17,21 @@ export default async function SettingsNavigatorPage() {
           <p>
             <span className="text-muted-foreground">App name</span> · {settings.appName}
           </p>
+          <ConfigFieldForm
+            section="navigator"
+            field="appName"
+            label="App name"
+            value={settings.appName}
+          />
           <p>
             <span className="text-muted-foreground">Primary color</span> · {settings.primaryColor}
           </p>
+          <ConfigFieldForm
+            section="navigator"
+            field="primaryColor"
+            label="Primary color"
+            value={settings.primaryColor}
+          />
           <p>
             <span className="text-muted-foreground">Self-serve driver signup</span> ·{" "}
             {settings.selfServeSignup ? "Enabled" : "Disabled"}

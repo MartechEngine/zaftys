@@ -3,6 +3,7 @@ import { SettingsNav } from "@/components/app/settings-nav";
 import { Card, CardContent } from "@/components/ui/card";
 import { getRoutingSettings } from "@/lib/settings/config-repository";
 import { ConfigToggleForm } from "@/components/app/config-toggle-form";
+import { ConfigFieldForm } from "@/components/app/sprint18-forms";
 
 export default async function SettingsRoutingPage() {
   const settings = await getRoutingSettings();
@@ -16,13 +17,32 @@ export default async function SettingsRoutingPage() {
           <p>
             <span className="text-muted-foreground">Primary engine</span> · {settings.primaryEngine}
           </p>
+          <ConfigFieldForm
+            section="routing"
+            field="primaryEngine"
+            label="Primary engine"
+            value={settings.primaryEngine}
+          />
           <p>
             <span className="text-muted-foreground">Optimization</span> · {settings.optimization}
           </p>
+          <ConfigFieldForm
+            section="routing"
+            field="optimization"
+            label="Optimization"
+            value={settings.optimization}
+          />
           <p>
             <span className="text-muted-foreground">Truck profile</span> · {settings.truckProfile} ·{" "}
             {settings.maxAxleMt} MT max
           </p>
+          <ConfigFieldForm
+            section="routing"
+            field="maxAxleMt"
+            label="Max axle (MT)"
+            value={settings.maxAxleMt}
+            inputType="number"
+          />
           <p>
             <span className="text-muted-foreground">Avoid tolls</span> ·{" "}
             {settings.avoidTolls ? "Yes" : "No"}

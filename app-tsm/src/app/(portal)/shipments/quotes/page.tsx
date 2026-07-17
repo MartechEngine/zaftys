@@ -5,6 +5,7 @@ import { CreateQuoteForm } from "@/components/app/create-quote-form";
 import { AcceptQuoteButton } from "@/components/app/sprint10-forms";
 import { SendQuoteButton } from "@/components/app/sprint11-forms";
 import { DeclineQuoteButton } from "@/components/app/sprint17-forms";
+import { ReviseQuoteButton } from "@/components/app/sprint18-forms";
 import { listQuotes } from "@/lib/shipments/quotes-repository";
 
 const quoteStatus = {
@@ -43,6 +44,12 @@ export default async function ShipmentsQuotesPage() {
             header: "",
             render: (r) => (
               <div className="flex flex-wrap gap-2">
+                <ReviseQuoteButton
+                  quoteId={r.id}
+                  status={r.status}
+                  tonnage={r.tonnage}
+                  rateInr={r.rateInr}
+                />
                 <SendQuoteButton quoteId={r.id} status={r.status} />
                 <AcceptQuoteButton
                   quoteId={r.id}
