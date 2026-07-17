@@ -694,6 +694,16 @@ export const api = {
       lastRun?: { scanned: number; created: number; skipped: number; errors: string[] };
     }>("/api/sync/status"),
 
+  getOutboundExchangeHealth: () =>
+    fetchApi<{
+      adapter: "demo" | "supabase";
+      configured: boolean;
+      lastListingPostedAt: string | null;
+      openListingsCount: number;
+      openOffersCount: number;
+      draftListingsCount: number;
+    }>("/api/network/listings/health"),
+
   runTranZfortSync: () =>
     fetchApi<{ scanned: number; created: number; skipped: number; errors: string[] }>(
       "/api/sync/run",

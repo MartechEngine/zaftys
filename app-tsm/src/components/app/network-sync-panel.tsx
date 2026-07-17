@@ -22,6 +22,15 @@ type SyncStatus = {
   };
 };
 
+type OutboundExchangeHealth = {
+  adapter: "demo" | "supabase";
+  configured: boolean;
+  lastListingPostedAt: string | null;
+  openListingsCount: number;
+  openOffersCount: number;
+  draftListingsCount: number;
+};
+
 type SyncRunResult = {
   scanned: number;
   created: number;
@@ -31,14 +40,20 @@ type SyncRunResult = {
 
 export function NetworkSyncPanel() {
   const [status, setStatus] = useState<SyncStatus | null>(null);
+  const [outbound, setOutbound] = useState<OutboundExchangeHealth | null>(null);
   const [busy, setBusy] = useState(false);
 
   const load = useCallback(async () => {
     try {
-      const data = await api.getSyncStatus();
-      setStatus(data as SyncStatus);
+      const [syncData, outboundHealth] = await Promise.all([
+        api.getSyncStatus(),
+        api.getOutboundExchangeHealth(),
+      ]);
+      setStatus(syncData as SyncStatus);
+      setOutbound(outboundHealth as OutboundExchangeHealth);
     } catch {
       setStatus(null);
+      setOutbound(null);
     }
   }, []);
 
@@ -67,6 +82,9 @@ export function NetworkSyncPanel() {
   const lastLabel = status?.lastSyncAt
     ? new Date(status.lastSyncAt).toLocaleString("en-IN")
     : "—";
+  const lastPostedLabel = outbound?.lastListingPostedAt
+    ? new Date(outbound.lastListingPostedAt).toLocaleString("en-IN")
+    : "—";
 
   return (
     <>
@@ -84,6 +102,28 @@ export function NetworkSyncPanel() {
           <RefreshCw className={`mr-2 size-4 ${busy ? "animate-spin" : ""}`} />
           {busy ? "Running…" : "Run sync now"}
         </Button>
+      </div>
+
+      <div className="mb-4 grid gap-4 md:grid-cols-3">
+        <Card>
+          <CardContent className="p-5">
+            <h3 className="font-semibold text-navy">Outbound Load Exchange</h3>
+            <p className="mt-2 text-sm text-muted-foreground">
+              Adapter: {outbound?.adapter ?? "—"}
+              {outbound?.configured ? " · live credentials" : " · demo mode"}
+            </p>
+            <p className="mt-1 text-sm text-body">
+              {outbound?.openListingsCount ?? 0} open listings · {outbound?.openOffersCount ?? 0}{" "}
+              open offers
+            </p>
+            <p className="mt-1 text-xs text-muted-foreground">
+              Last posted: {lastPostedLabel}
+              {outbound?.draftListingsCount
+                ? ` · ${outbound.draftListingsCount} draft(s)`
+                : ""}
+            </p>
+          </CardContent>
+        </Card>
       </div>
 
       <div className="grid gap-4 md:grid-cols-2">

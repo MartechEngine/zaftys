@@ -3,10 +3,9 @@ import {
   updateShipmentFields,
   updateShipmentStatus,
 } from "@/lib/data/shipment-repository";
+import { getLoadExchangeClient } from "@/lib/network/load-exchange/client";
 import {
-  acceptOffer,
   buildListingsBoardMap,
-  createListing,
   expireStaleListings,
   getListingByShipment,
   getOutboundListingStats,
@@ -14,10 +13,7 @@ import {
   listOffersForListing,
   listOffersForShipment,
   listOutboundListings,
-  rejectOffer,
   toListingMirror,
-  updateListing,
-  withdrawListing,
 } from "@/lib/network/listing-store";
 import type { PostListingInput, UpdateListingInput } from "@/lib/network/listing-types";
 import { logActivity } from "@/lib/dev-store";
@@ -77,18 +73,20 @@ export async function postShipmentListing(input: PostListingInput) {
   const listingBefore = getListingByShipment(input.shipmentId);
   const hadOffers = listingBefore ? listOffersForListing(listingBefore.id).length : 0;
 
-  const result = createListing({
+  const lx = getLoadExchangeClient();
+  const result = await lx.listingCreate({
     ...input,
     listingTtlHours: policies.listingTtlHours,
   });
-  if ("error" in result) return result;
+  if (!result.ok) return { error: result.error };
 
-  await syncShipmentListingMirror(input.shipmentId, result);
-  const offers = listOffersForListing(result.id);
-  if (offers.length > hadOffers && result.state === "offers_received") {
+  const listing = result.data.listing;
+  await syncShipmentListingMirror(input.shipmentId, listing);
+  const offers = listOffersForListing(listing.id);
+  if (offers.length > hadOffers && listing.state === "offers_received") {
     notifyFirstOffers(input.shipmentId, shipment.publicId, offers.length);
   }
-  return { listing: result, offers };
+  return { listing, offers };
 }
 
 export async function updateShipmentListing(shipmentId: string, input: UpdateListingInput) {
@@ -96,40 +94,46 @@ export async function updateShipmentListing(shipmentId: string, input: UpdateLis
   const listingBefore = getListingByShipment(shipmentId);
   const offersBefore = listingBefore ? listOffersForListing(listingBefore.id).length : 0;
 
-  const result = updateListing(shipmentId, input);
-  if ("error" in result) return result;
+  const lx = getLoadExchangeClient();
+  const result = await lx.listingUpdate({ shipmentId, patch: input });
+  if (!result.ok) return { error: result.error };
 
-  await syncShipmentListingMirror(shipmentId, result);
-  const offers = listOffersForListing(result.id);
+  const listing = result.data.listing;
+  await syncShipmentListingMirror(shipmentId, listing);
+  const offers = listOffersForListing(listing.id);
   if (
     shipment &&
     offers.length > offersBefore &&
-    result.state === "offers_received"
+    listing.state === "offers_received"
   ) {
     notifyFirstOffers(shipmentId, shipment.publicId, offers.length);
   }
-  return { listing: result, offers };
+  return { listing, offers };
 }
 
 export async function withdrawShipmentListing(shipmentId: string) {
-  const listing = withdrawListing(shipmentId);
-  if (!listing) return { error: "No active listing to withdraw." as const };
+  const lx = getLoadExchangeClient();
+  const result = await lx.listingWithdraw({ shipmentId });
+  if (!result.ok) return { error: result.error };
+
   await syncShipmentListingMirror(shipmentId, null);
-  return { listing };
+  return { listing: result.data.listing };
 }
 
 export async function withdrawListingOnCancel(shipmentId: string) {
   const listing = getListingByShipment(shipmentId);
   if (!listing) return;
-  withdrawListing(shipmentId);
+  const lx = getLoadExchangeClient();
+  await lx.listingWithdraw({ shipmentId });
   await syncShipmentListingMirror(shipmentId, null);
 }
 
 export async function acceptNetworkOffer(offerId: string) {
-  const result = acceptOffer(offerId);
-  if ("error" in result) return result;
+  const lx = getLoadExchangeClient();
+  const result = await lx.offerAccept({ offerId });
+  if (!result.ok) return { error: result.error };
 
-  const { listing, offer } = result;
+  const { listing, offer } = result.data;
   await syncShipmentListingMirror(listing.shipmentId, listing);
 
   // Capacity source becomes network on first accept (ADR-006)
@@ -151,9 +155,10 @@ export async function acceptNetworkOffer(offerId: string) {
 }
 
 export async function rejectNetworkOffer(offerId: string, reason?: string) {
-  const offer = rejectOffer(offerId, reason);
-  if (!offer) return { error: "Offer not available." as const };
-  return { offer };
+  const lx = getLoadExchangeClient();
+  const result = await lx.offerReject({ offerId, reason });
+  if (!result.ok) return { error: result.error };
+  return { offer: result.data.offer };
 }
 
 export async function listOutboundNetworkDesk(state?: string) {

@@ -73,6 +73,7 @@ const PASSWORD = process.env.SMOKE_PASSWORD ?? "dev";
   "/api/documents",
   "/api/settings/notifications",
   "/api/network/listings",
+  "/api/network/listings/health",
   "/api/network/assignments",
 ];
 
