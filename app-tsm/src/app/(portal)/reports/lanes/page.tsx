@@ -2,7 +2,7 @@ import Link from "next/link";
 import { PageHeader } from "@/components/app/app-shell";
 import { ModuleSubNav } from "@/components/app/module-sub-nav";
 import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+import { ExportCsvButton } from "@/components/app/sprint16-forms";
 import { getLanesReport } from "@/lib/reports/lanes-report";
 import { REPORTS_NAV } from "@/lib/module-nav";
 
@@ -14,11 +14,7 @@ export default async function ReportsLanesPage() {
       <PageHeader
         title="Lane performance"
         description="Industrial corridor scorecards"
-        action={
-          <Button variant="outline" size="sm" asChild>
-            <a href="/api/reports/lanes?format=csv">Export CSV</a>
-          </Button>
-        }
+        action={<ExportCsvButton path="/api/reports/lanes?format=csv" filename="lanes" />}
       />
       <ModuleSubNav links={REPORTS_NAV} />
       <p className="mb-4 text-sm text-muted-foreground">

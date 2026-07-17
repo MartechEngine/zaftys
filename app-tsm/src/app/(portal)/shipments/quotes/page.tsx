@@ -4,12 +4,14 @@ import { DataTable, SearchFilterBar, StatusPill } from "@/components/app/data-ta
 import { CreateQuoteForm } from "@/components/app/create-quote-form";
 import { AcceptQuoteButton } from "@/components/app/sprint10-forms";
 import { SendQuoteButton } from "@/components/app/sprint11-forms";
+import { DeclineQuoteButton } from "@/components/app/sprint17-forms";
 import { listQuotes } from "@/lib/shipments/quotes-repository";
 
 const quoteStatus = {
   sent: { label: "Sent", className: "bg-blue-100 text-blue-800" },
   draft: { label: "Draft", className: "bg-muted text-muted-foreground" },
   accepted: { label: "Accepted", className: "bg-emerald-100 text-emerald-800" },
+  declined: { label: "Declined", className: "bg-red-100 text-red-800" },
 };
 
 export default async function ShipmentsQuotesPage() {
@@ -47,6 +49,7 @@ export default async function ShipmentsQuotesPage() {
                   status={r.status}
                   shipmentId={r.shipmentId}
                 />
+                <DeclineQuoteButton quoteId={r.id} status={r.status} />
               </div>
             ),
           },

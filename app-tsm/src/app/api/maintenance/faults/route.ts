@@ -1,4 +1,5 @@
 import {
+  linkFaultWithWorkOrder,
   listFaultReports,
   updateFaultStatus,
   type FaultStatus,
@@ -25,11 +26,19 @@ export async function PATCH(request: Request) {
     return apiError("INVALID_JSON", "Request body must be valid JSON.");
   }
 
-  const data = body as { id?: string; status?: string };
+  const data = body as { id?: string; status?: string; createWorkOrder?: boolean };
   const id = String(data.id ?? "").trim();
   const status = String(data.status ?? "") as FaultStatus;
+  const createWorkOrder = data.createWorkOrder === true;
 
   if (!id) return apiError("VALIDATION_ERROR", "id is required.");
+
+  if (createWorkOrder || status === "linked") {
+    const linked = await linkFaultWithWorkOrder(id);
+    if (!linked) return apiError("FAULT_NOT_FOUND", "Fault report not found.", 404);
+    return apiSuccess(linked);
+  }
+
   if (!["open", "linked", "resolved"].includes(status)) {
     return apiError("VALIDATION_ERROR", "status must be open, linked, or resolved.");
   }

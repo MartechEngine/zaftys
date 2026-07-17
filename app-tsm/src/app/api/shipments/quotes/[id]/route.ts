@@ -16,11 +16,11 @@ export async function PATCH(
   }
 
   const status = String((body as { status?: string }).status ?? "");
-  if (!["sent", "draft", "accepted"].includes(status)) {
-    return apiError("VALIDATION_ERROR", "status must be draft, sent, or accepted.");
+  if (!["sent", "draft", "accepted", "declined"].includes(status)) {
+    return apiError("VALIDATION_ERROR", "status must be draft, sent, accepted, or declined.");
   }
 
-  const quote = await updateQuoteStatus(id, status as "sent" | "draft" | "accepted");
+  const quote = await updateQuoteStatus(id, status as "sent" | "draft" | "accepted" | "declined");
   if (!quote) return apiError("QUOTE_NOT_FOUND", "Quote not found.", 404);
   return apiSuccess(quote);
 }

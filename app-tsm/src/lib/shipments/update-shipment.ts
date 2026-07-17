@@ -86,12 +86,40 @@ export type ShipmentFieldsInput = {
   commodity?: string;
   tonnageMt?: number;
   lrNumber?: string;
+  eta?: string;
+  scheduledAt?: string;
 };
+
+export type ShipmentScheduleInput = {
+  eta?: string;
+  scheduledAt?: string;
+};
+
+export function parseSchedulePatch(
+  body: unknown,
+): ShipmentScheduleInput | { error: string } | null {
+  if (!body || typeof body !== "object") return null;
+  const data = body as Record<string, unknown>;
+  const patch: ShipmentScheduleInput = {};
+  if (data.eta !== undefined) {
+    const eta = String(data.eta).trim();
+    if (!eta) return { error: "ETA cannot be empty." };
+    patch.eta = eta;
+  }
+  if (data.scheduledAt !== undefined) {
+    const scheduledAt = String(data.scheduledAt).trim();
+    if (!scheduledAt) return { error: "scheduledAt cannot be empty." };
+    patch.scheduledAt = scheduledAt;
+  }
+  if (Object.keys(patch).length === 0) return null;
+  return patch;
+}
 
 export function parseFieldsPatch(body: unknown): ShipmentFieldsInput | { error: string } | null {
   if (!body || typeof body !== "object") return null;
   const data = body as Record<string, unknown>;
-  if (typeof data.status === "string") return null; // status-only path
+  if (typeof data.status === "string") return null;
+  if (data.eta !== undefined || data.scheduledAt !== undefined) return null;
 
   const patch: ShipmentFieldsInput = {};
   if (data.client !== undefined) {

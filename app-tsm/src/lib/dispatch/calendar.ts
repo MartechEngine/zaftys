@@ -1,5 +1,6 @@
 import type { ShipmentRecord } from "@/lib/dev-store";
 import { fetchAllShipmentsRaw } from "@/lib/data/shipment-repository";
+import { getShipmentSchedulePatch } from "@/lib/mutations/sprint17-store";
 
 export type DispatchCalendarEvent = {
   id: string;
@@ -21,6 +22,13 @@ const SCHEDULE_STATUSES = new Set([
 ]);
 
 function formatDate(iso: string) {
+  return new Date(iso).toLocaleDateString("en-IN", {
+    day: "numeric",
+    month: "short",
+  });
+}
+
+function formatScheduledDate(iso: string) {
   return new Date(iso).toLocaleDateString("en-IN", {
     day: "numeric",
     month: "short",
@@ -53,16 +61,21 @@ export async function getDispatchCalendar(): Promise<DispatchCalendarEvent[]> {
   return shipments
     .filter((s) => SCHEDULE_STATUSES.has(s.status))
     .sort((a, b) => sortKey(a).localeCompare(sortKey(b)))
-    .map((s) => ({
-      id: `cal-${s.id}`,
-      shipmentId: s.id,
-      shipment: s.publicId,
-      route: `${s.origin} → ${s.destination}`,
-      date: formatDate(s.updatedAt),
-      time: extractTime(s.eta, s.updatedAt),
-      driver: s.driver ?? "Unassigned",
-      status: s.status,
-    }));
+    .map((s) => {
+      const schedule = getShipmentSchedulePatch(s.id);
+      const eta = schedule?.eta ?? s.eta;
+      const scheduledAt = schedule?.scheduledAt ?? s.updatedAt;
+      return {
+        id: `cal-${s.id}`,
+        shipmentId: s.id,
+        shipment: s.publicId,
+        route: `${s.origin} → ${s.destination}`,
+        date: schedule?.scheduledAt ? formatScheduledDate(scheduledAt) : formatDate(s.updatedAt),
+        time: extractTime(eta, scheduledAt),
+        driver: s.driver ?? "Unassigned",
+        status: s.status,
+      };
+    });
 }
 
 export async function getDriverSchedule(driverId: string) {

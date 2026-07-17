@@ -6,6 +6,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import type { ShipmentStatus } from "@/lib/constants";
 import { getDispatchCalendar } from "@/lib/dispatch/calendar";
 import { DISPATCH_NAV } from "@/lib/module-nav";
+import { RescheduleShipmentButton } from "@/components/app/sprint17-forms";
 
 export default async function DispatchCalendarPage() {
   const events = await getDispatchCalendar();
@@ -38,6 +39,7 @@ export default async function DispatchCalendarPage() {
                     <span className="font-medium">{e.date}</span> · {e.time} · {e.driver}
                   </span>
                   <ShipmentStatusChip status={e.status as ShipmentStatus} />
+                  <RescheduleShipmentButton shipmentId={e.shipmentId} eta={e.time} />
                 </div>
               </CardContent>
             </Card>

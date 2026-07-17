@@ -5,6 +5,7 @@ import { listOrgUsers } from "@/lib/settings/users-repository";
 import { InviteOrgUserForm } from "@/components/app/module-create-forms";
 import { ActivateUserButton } from "@/components/app/sprint10-forms";
 import { ChangeUserRoleButton, DeactivateUserButton } from "@/components/app/sprint13-forms";
+import { ResendOrgUserInviteButton } from "@/components/app/sprint17-forms";
 
 const userStatus = {
   active: { label: "Active", className: "bg-emerald-100 text-emerald-800" },
@@ -39,6 +40,7 @@ export default async function SettingsUsersPage() {
             render: (r) => (
               <div className="flex flex-wrap gap-2">
                 <ActivateUserButton id={r.id} status={r.status} />
+                <ResendOrgUserInviteButton id={r.id} status={r.status} />
                 <ChangeUserRoleButton id={r.id} role={r.role} />
                 <DeactivateUserButton id={r.id} status={r.status} />
               </div>

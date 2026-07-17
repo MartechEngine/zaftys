@@ -217,13 +217,32 @@ export async function getDispatchSettings(): Promise<DispatchSettings> {
   const active = shipments.filter((s) => !["delivered", "cancelled"].includes(s.status));
   const unassigned = active.filter((s) => !s.driver).length;
 
-  return withPatch("dispatch", {
+  const patched = withPatch("dispatch", {
     kanbanColumns: ["Unassigned", "Assigned", "In progress", "Completed"],
     orchestratorMode: "Manual review before dispatch",
     autoAssign: false,
     unassignedCount: unassigned,
     activeShipments: active.length,
   });
+
+  const kanbanRaw = patched.kanbanColumns as string[] | string | undefined;
+  const kanbanColumns = Array.isArray(kanbanRaw)
+    ? kanbanRaw.map(String)
+    : typeof kanbanRaw === "string"
+      ? kanbanRaw
+          .split(/\s*→\s*|\s*,\s*/)
+          .map((s) => s.trim())
+          .filter(Boolean)
+      : ["Unassigned", "Assigned", "In progress", "Completed"];
+
+  return {
+    ...patched,
+    kanbanColumns,
+    orchestratorMode: String(patched.orchestratorMode ?? "Manual review before dispatch"),
+    autoAssign: Boolean(patched.autoAssign),
+    unassignedCount: unassigned,
+    activeShipments: active.length,
+  };
 }
 
 export async function getMapSettings(): Promise<MapSettings> {
@@ -493,32 +512,80 @@ export async function patchSettingsConfig(
   return patchConfigSection(section, values);
 }
 
+export async function getPolicySettings() {
+  const policyConfig = getConfigPatches()["policies"] ?? {};
+  return {
+    requireLrBeforeTransit:
+      policyConfig.requireLrBeforeTransit !== undefined
+        ? Boolean(policyConfig.requireLrBeforeTransit)
+        : true,
+    autoOverflowNotify:
+      policyConfig.autoOverflowNotify !== undefined
+        ? Boolean(policyConfig.autoOverflowNotify)
+        : false,
+    blockDispatchOnExpiredFitness:
+      policyConfig.blockDispatchOnExpiredFitness !== undefined
+        ? Boolean(policyConfig.blockDispatchOnExpiredFitness)
+        : true,
+    alertDaysBeforeExpiry:
+      typeof policyConfig.alertDaysBeforeExpiry === "number"
+        ? policyConfig.alertDaysBeforeExpiry
+        : 30,
+    showLiveMap:
+      policyConfig.showLiveMap !== undefined ? Boolean(policyConfig.showLiveMap) : true,
+    hideDriverPhone:
+      policyConfig.hideDriverPhone !== undefined ? Boolean(policyConfig.hideDriverPhone) : true,
+  };
+}
+
 export async function getPolicyBlocks(): Promise<PolicyBlock[]> {
-  const [automation, compliance] = await Promise.all([
+  const [automation, compliance, policyConfig] = await Promise.all([
     listAutomationRules(),
     import("@/lib/fleet/compliance-repository").then((m) => m.listComplianceDocs()),
+    Promise.resolve(getConfigPatches()["policies"] ?? {}),
   ]);
 
   const overflowRule = automation.find((r) => r.id === "ar2");
   const expiring = compliance.filter((d) => d.status !== "valid").length;
 
+  const requireLr =
+    policyConfig.requireLrBeforeTransit !== undefined
+      ? Boolean(policyConfig.requireLrBeforeTransit)
+      : true;
+  const autoOverflow =
+    policyConfig.autoOverflowNotify !== undefined
+      ? Boolean(policyConfig.autoOverflowNotify)
+      : Boolean(overflowRule?.enabled);
+  const blockDispatch =
+    policyConfig.blockDispatchOnExpiredFitness !== undefined
+      ? Boolean(policyConfig.blockDispatchOnExpiredFitness)
+      : true;
+  const alertDays =
+    typeof policyConfig.alertDaysBeforeExpiry === "number"
+      ? policyConfig.alertDaysBeforeExpiry
+      : 30;
+  const showLiveMap =
+    policyConfig.showLiveMap !== undefined ? Boolean(policyConfig.showLiveMap) : true;
+  const hideDriverPhone =
+    policyConfig.hideDriverPhone !== undefined ? Boolean(policyConfig.hideDriverPhone) : true;
+
   return [
     {
       id: "pol-dispatch",
       title: "Dispatch policies",
-      summary: overflowRule?.enabled
-        ? `Auto-notify overflow partners · ${overflowRule.matchCount ?? 0} matching now · Require LR before in-transit`
-        : "Require LR before in-transit · Manual overflow review",
+      summary: autoOverflow
+        ? `Auto-notify overflow partners · ${overflowRule?.matchCount ?? 0} matching now · ${requireLr ? "Require LR before in-transit" : "LR optional before in-transit"}`
+        : `${requireLr ? "Require LR before in-transit" : "LR optional before in-transit"} · Manual overflow review`,
     },
     {
       id: "pol-docs",
       title: "Document policies",
-      summary: `Block dispatch if fitness expired · Alert 30 days before expiry · ${expiring} docs need attention`,
+      summary: `${blockDispatch ? "Block dispatch if fitness expired" : "Warn only on expired fitness"} · Alert ${alertDays} days before expiry · ${expiring} docs need attention`,
     },
     {
       id: "pol-client",
       title: "Client visibility",
-      summary: "Clients see live map + ePOD · Hide driver phone numbers",
+      summary: `${showLiveMap ? "Clients see live map + ePOD" : "Clients see status only"} · ${hideDriverPhone ? "Hide driver phone numbers" : "Show driver contact on request"}`,
     },
   ];
 }

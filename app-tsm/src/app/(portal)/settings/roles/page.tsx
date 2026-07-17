@@ -5,6 +5,7 @@ import { listOrgRoles } from "@/lib/settings/roles-repository";
 import { CreateRoleForm } from "@/components/app/module-create-forms";
 import { RenameRoleButton } from "@/components/app/sprint11-forms";
 import { RolePermissionsMatrix } from "@/components/app/sprint16-forms";
+import { DeleteOrgRoleButton } from "@/components/app/sprint17-forms";
 
 export default async function SettingsRolesPage() {
   const roles = await listOrgRoles();
@@ -37,7 +38,12 @@ export default async function SettingsRolesPage() {
           {
             key: "actions",
             header: "",
-            render: (r) => <RenameRoleButton id={r.id} name={r.name} />,
+            render: (r) => (
+              <div className="flex flex-wrap gap-2">
+                <RenameRoleButton id={r.id} name={r.name} />
+                <DeleteOrgRoleButton id={r.id} name={r.name} type={r.type} />
+              </div>
+            ),
           },
         ]}
       />

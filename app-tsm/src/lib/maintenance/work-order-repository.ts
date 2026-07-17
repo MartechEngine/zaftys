@@ -250,7 +250,9 @@ export async function patchMaintenanceSchedule(
 
 export async function listPartsInventory(): Promise<PartRecord[]> {
   const { getPartStock } = await import("@/lib/maintenance/parts-store");
-  return demoParts.map((p) => {
+  const { listCreatedParts } = await import("@/lib/mutations/sprint17-store");
+
+  const demoRows = demoParts.map((p) => {
     const stock = getPartStock(p.id) ?? p.stock;
     return {
       ...p,
@@ -258,6 +260,51 @@ export async function listPartsInventory(): Promise<PartRecord[]> {
       lowStock: stock <= p.reorder,
     };
   });
+
+  const created = listCreatedParts().map((p) => ({
+    ...p,
+    lowStock: p.stock <= p.reorder,
+  }));
+
+  return [...created, ...demoRows];
+}
+
+export function validateCreatePartInput(
+  body: unknown,
+): { sku: string; name: string; stock?: number; reorder?: number; location?: string } | { error: string } {
+  if (!body || typeof body !== "object") return { error: "Body must be an object." };
+  const data = body as Record<string, unknown>;
+  const sku = String(data.sku ?? "").trim();
+  const name = String(data.name ?? "").trim();
+  if (!sku) return { error: "SKU is required." };
+  if (!name) return { error: "Part name is required." };
+  const stock = data.stock != null ? Number(data.stock) : undefined;
+  const reorder = data.reorder != null ? Number(data.reorder) : undefined;
+  if (stock != null && (!Number.isFinite(stock) || stock < 0)) {
+    return { error: "Stock must be a non-negative number." };
+  }
+  if (reorder != null && (!Number.isFinite(reorder) || reorder < 0)) {
+    return { error: "Reorder threshold must be a non-negative number." };
+  }
+  return {
+    sku,
+    name,
+    stock,
+    reorder,
+    location: String(data.location ?? "").trim() || undefined,
+  };
+}
+
+export async function createPart(input: {
+  sku: string;
+  name: string;
+  stock?: number;
+  reorder?: number;
+  location?: string;
+}) {
+  const { createStoredPart } = await import("@/lib/mutations/sprint17-store");
+  const part = createStoredPart(input);
+  return { ...part, lowStock: part.stock <= part.reorder };
 }
 
 export async function adjustPartsStock(id: string, delta: number) {

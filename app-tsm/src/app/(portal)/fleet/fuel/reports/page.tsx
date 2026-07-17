@@ -2,7 +2,7 @@ import Link from "next/link";
 import { PageHeader } from "@/components/app/app-shell";
 import { ModuleSubNav } from "@/components/app/module-sub-nav";
 import { DataTable } from "@/components/app/data-table";
-import { Button } from "@/components/ui/button";
+import { ExportCsvButton } from "@/components/app/sprint16-forms";
 import { listFuelReports } from "@/lib/fleet/fuel-repository";
 import { FLEET_NAV } from "@/lib/module-nav";
 
@@ -15,9 +15,7 @@ export default async function FuelReportsPage() {
         title="Fuel reports"
         description="Consumption and cost per km by vehicle"
         action={
-          <Button variant="outline" size="sm" asChild>
-            <a href="/api/fleet/fuel/reports?format=csv">Export CSV</a>
-          </Button>
+          <ExportCsvButton path="/api/fleet/fuel/reports?format=csv" filename="fuel-reports" />
         }
       />
       <ModuleSubNav links={FLEET_NAV} />

@@ -333,7 +333,7 @@ export const api = {
       body: JSON.stringify(input),
     }),
 
-  updateQuoteStatus: (id: string, status: "sent" | "draft" | "accepted") =>
+  updateQuoteStatus: (id: string, status: "sent" | "draft" | "accepted" | "declined") =>
     fetchApi<{ id: string; status: string }>(`/api/shipments/quotes/${id}`, {
       method: "PATCH",
       body: JSON.stringify({ status }),
@@ -1022,6 +1022,52 @@ export const api = {
     fetchApi<{ id: string; recipients: string }>("/api/settings/notifications", {
       method: "PATCH",
       body: JSON.stringify({ id, recipients }),
+    }),
+
+  importShipmentsCsv: (csv: string) =>
+    fetchApi<{ created: number; skipped: number; errors: string[]; ids: string[] }>(
+      "/api/shipments/import",
+      { method: "POST", body: JSON.stringify({ csv }) },
+    ),
+
+  rescheduleShipment: (id: string, input: { eta?: string; scheduledAt?: string }) =>
+    fetchApi<ShipmentRecord>(`/api/shipments/${id}`, {
+      method: "PATCH",
+      body: JSON.stringify(input),
+    }),
+
+  syncPlaceGeofence: (id: string) =>
+    fetchApi<{ id: string; syncedAt?: string }>(`/api/fleet/places/${id}`, {
+      method: "PATCH",
+      body: JSON.stringify({ syncGeofence: true }),
+    }),
+
+  linkFaultWorkOrder: (id: string) =>
+    fetchApi<{ fault: { id: string; workOrderId?: string }; workOrder: { id: string } }>(
+      `/api/maintenance/faults/${id}/work-order`,
+      { method: "POST" },
+    ),
+
+  deleteOrgRole: (id: string) =>
+    fetchApi<{ id: string; deleted: boolean }>(`/api/settings/roles/${id}`, {
+      method: "DELETE",
+    }),
+
+  resendOrgUserInvite: (id: string) =>
+    fetchApi<{ id: string; lastResentAt: string }>(`/api/settings/users/${id}/invite`, {
+      method: "POST",
+    }),
+
+  createPart: (input: {
+    sku: string;
+    name: string;
+    stock?: number;
+    reorder?: number;
+    location?: string;
+  }) =>
+    fetchApi<{ id: string; sku: string; name: string }>("/api/maintenance/parts", {
+      method: "POST",
+      body: JSON.stringify(input),
     }),
 };
 

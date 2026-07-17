@@ -743,6 +743,7 @@ export type ShipmentFieldsPatch = {
   commodity?: string;
   tonnageMt?: number;
   lrNumber?: string;
+  eta?: string;
 };
 
 export function updateShipmentFields(id: string, patch: ShipmentFieldsPatch) {
@@ -756,6 +757,7 @@ export function updateShipmentFields(id: string, patch: ShipmentFieldsPatch) {
   if (patch.commodity !== undefined) shipment.commodity = patch.commodity;
   if (patch.tonnageMt !== undefined) shipment.tonnageMt = patch.tonnageMt;
   if (patch.lrNumber !== undefined) shipment.lrNumber = patch.lrNumber;
+  if (patch.eta !== undefined) shipment.eta = patch.eta;
   shipment.updatedAt = now();
 
   activities.unshift({

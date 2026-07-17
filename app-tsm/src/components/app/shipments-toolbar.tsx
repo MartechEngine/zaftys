@@ -10,7 +10,10 @@ import {
   type ShipmentListFilters,
 } from "@/lib/shipments/query-params";
 import {
-  ShipmentsExportLink,
+  ShipmentsExportButton,
+  ImportShipmentsCsvButton,
+} from "@/components/app/sprint17-forms";
+import {
   ShipmentsFilterDrawer,
 } from "@/components/app/shipments-filter-drawer";
 import { cn } from "@/lib/utils";
@@ -21,6 +24,19 @@ const TABS = [
   { key: "completed", label: "Completed" },
   { key: "exceptions", label: "Exceptions" },
 ] as const;
+
+function exportPath(filters: ShipmentListFilters) {
+  const qs = new URLSearchParams();
+  if (filters.tab && filters.tab !== "all") qs.set("tab", filters.tab);
+  if (filters.q) qs.set("q", filters.q);
+  if (filters.status) qs.set("status", filters.status);
+  if (filters.client) qs.set("client", filters.client);
+  if (filters.origin) qs.set("origin", filters.origin);
+  if (filters.destination) qs.set("destination", filters.destination);
+  if (filters.source) qs.set("source", filters.source);
+  const query = qs.toString();
+  return `/api/shipments/export${query ? `?${query}` : ""}`;
+}
 
 export function ShipmentsToolbar({
   filters,
@@ -102,7 +118,8 @@ export function ShipmentsToolbar({
             {pending ? "Searching…" : "Search"}
           </Button>
           <ShipmentsFilterDrawer filters={filters} options={filterOptions} />
-          <ShipmentsExportLink filters={filters} />
+          <ShipmentsExportButton path={exportPath(filters)} />
+          <ImportShipmentsCsvButton />
           {(query || status || filters.client || filters.origin) && (
             <Button type="button" variant="outline" size="sm" asChild>
               <Link href={tab === "all" ? "/shipments" : `/shipments?tab=${tab}`}>Clear</Link>

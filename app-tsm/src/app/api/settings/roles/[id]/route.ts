@@ -1,4 +1,9 @@
-import { getOrgRole, patchOrgRole, updateRolePermissions } from "@/lib/settings/roles-repository";
+import {
+  deleteOrgRoleById,
+  getOrgRole,
+  patchOrgRole,
+  updateRolePermissions,
+} from "@/lib/settings/roles-repository";
 import { ROLE_PERMISSION_MODULES } from "@/lib/mutations/sprint16-store";
 import { apiError, apiSuccess } from "@/lib/api-response";
 
@@ -49,4 +54,17 @@ export async function PATCH(
   const role = await patchOrgRole(id, { name });
   if (!role) return apiError("ROLE_NOT_FOUND", "Role not found.", 404);
   return apiSuccess(role);
+}
+
+export async function DELETE(
+  _request: Request,
+  { params }: { params: Promise<{ id: string }> },
+) {
+  const { id } = await params;
+  const result = await deleteOrgRoleById(id);
+  if (result === "not_found") return apiError("ROLE_NOT_FOUND", "Role not found.", 404);
+  if (result === "system") {
+    return apiError("FORBIDDEN", "System roles cannot be deleted.", 403);
+  }
+  return apiSuccess({ id, deleted: true });
 }

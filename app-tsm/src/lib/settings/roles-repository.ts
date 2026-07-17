@@ -13,6 +13,11 @@ import {
   type RolePermissionModule,
   ROLE_PERMISSION_MODULES,
 } from "@/lib/mutations/sprint16-store";
+import {
+  deleteOrgRole,
+  isRoleDeleted,
+  isSystemRole,
+} from "@/lib/mutations/sprint17-store";
 
 export type OrgRoleRecord = {
   id: string;
@@ -49,11 +54,13 @@ export async function listOrgRoles(): Promise<OrgRoleRecord[]> {
   });
 
   return [
-    ...listStoredRoles().map((r) => ({
-      ...r,
-      permissions: getRolePermissions(r.id),
-    })),
-    ...demo,
+    ...listStoredRoles()
+      .filter((r) => !isRoleDeleted(r.id))
+      .map((r) => ({
+        ...r,
+        permissions: getRolePermissions(r.id),
+      })),
+    ...demo.filter((r) => !isRoleDeleted(r.id)),
   ];
 }
 
@@ -102,4 +109,15 @@ export async function updateRolePermissions(
   }
 
   return { ...existing, permissions: getRolePermissions(id) };
+}
+
+export async function deleteOrgRoleById(
+  id: string,
+): Promise<"deleted" | "system" | "not_found"> {
+  const role = await getOrgRole(id);
+  if (!role) return "not_found";
+  if (role.type === "system" || isSystemRole(id)) return "system";
+  const stored = listStoredRoles().find((r) => r.id === id);
+  if (!stored) return "not_found";
+  return deleteOrgRole(id) ? "deleted" : "not_found";
 }

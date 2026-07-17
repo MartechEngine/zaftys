@@ -12,6 +12,7 @@ import {
   listRemovedFleetGroupMembers,
   removeFleetGroupMember,
 } from "@/lib/mutations/sprint16-store";
+import { recordPlaceGeofenceSync } from "@/lib/mutations/sprint17-store";
 
 export type PlaceRecord = {
   id: string;
@@ -117,6 +118,14 @@ export async function updatePlace(
 
   patchPlaceFields(id, input);
   return { ...existing, ...input };
+}
+
+export async function syncPlaceGeofence(id: string) {
+  const existing = (await listPlaces()).find((p) => p.id === id);
+  if (!existing) return undefined;
+
+  recordPlaceGeofenceSync(id, existing.geofence);
+  return { ...existing, syncedAt: new Date().toISOString() };
 }
 
 export async function getPlace(id: string) {

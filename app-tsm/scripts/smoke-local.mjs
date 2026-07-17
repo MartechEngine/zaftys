@@ -863,6 +863,105 @@ async function main() {
         "/api/settings/notifications",
         { id: "n-exc", recipients: "Email + in-app · smoke team" },
       ),
+    () =>
+      writeCheck("POST /api/shipments/import", cookie, "POST", "/api/shipments/import", {
+        rows: [
+          {
+            client: "Smoke Import Co",
+            origin: "Amravati",
+            destination: "Nagpur",
+            commodity: "Cement",
+            tonnageMt: 28,
+          },
+        ],
+      }),
+    () =>
+      writeCheck(
+        "PATCH /api/settings/config policies",
+        cookie,
+        "PATCH",
+        "/api/settings/config",
+        { section: "policies", values: { requireLrBeforeTransit: false, alertDaysBeforeExpiry: 21 } },
+      ),
+    () =>
+      writeCheck(
+        "PATCH /api/fleet/places/pl1 sync geofence",
+        cookie,
+        "PATCH",
+        "/api/fleet/places/pl1",
+        { syncGeofence: true },
+      ),
+    () =>
+      writeCheck(
+        "POST /api/maintenance/faults/fr1/work-order",
+        cookie,
+        "POST",
+        "/api/maintenance/faults/fr1/work-order",
+        {},
+      ),
+    () =>
+      writeCheck("PATCH /api/shipments/1 reschedule", cookie, "PATCH", "/api/shipments/1", {
+        eta: "Tomorrow, 11:00 AM",
+        scheduledAt: new Date(Date.now() + 86400000).toISOString(),
+      }),
+    () =>
+      writeCheck("PATCH /api/shipments/quotes/q2 decline", cookie, "PATCH", "/api/shipments/quotes/q2", {
+        status: "declined",
+      }),
+    async () => {
+      const createRes = await fetch(`${BASE}/api/settings/roles`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          ...(cookie ? { Cookie: cookie } : {}),
+        },
+        body: JSON.stringify({ name: `Smoke Delete Role ${Date.now().toString(36)}` }),
+      });
+      const createJson = await createRes.json();
+      const roleId = createJson.data?.id;
+      if (!createRes.ok || !roleId) {
+        return {
+          path: "DELETE /api/settings/roles/[id]",
+          ok: false,
+          status: createRes.status,
+          detail: "create role failed",
+        };
+      }
+      return writeCheck(
+        "DELETE /api/settings/roles/[id]",
+        cookie,
+        "DELETE",
+        `/api/settings/roles/${roleId}`,
+        {},
+      );
+    },
+    () =>
+      writeCheck(
+        "POST /api/settings/users/u2/invite",
+        cookie,
+        "POST",
+        "/api/settings/users/u2/invite",
+        {},
+      ),
+    () =>
+      writeCheck("POST /api/maintenance/parts", cookie, "POST", "/api/maintenance/parts", {
+        sku: `SMK-${Date.now().toString().slice(-5)}`,
+        name: "Smoke test filter",
+        stock: 6,
+        reorder: 2,
+        location: "Amravati depot",
+      }),
+    () =>
+      writeCheck(
+        "PATCH /api/settings/config dispatch scalar",
+        cookie,
+        "PATCH",
+        "/api/settings/config",
+        {
+          section: "dispatch",
+          values: { orchestratorMode: "Auto-propose on pending queue" },
+        },
+      ),
   ];
 
   for (const run of writes) {

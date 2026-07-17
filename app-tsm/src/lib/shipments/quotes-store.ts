@@ -8,7 +8,7 @@ export type QuoteRecord = {
   rate: string;
   rateInr: number;
   validUntil: string;
-  status: "sent" | "draft" | "accepted";
+  status: "sent" | "draft" | "accepted" | "declined";
   shipmentId?: string;
 };
 
@@ -34,7 +34,7 @@ export function createStoredQuote(input: {
   route: string;
   tonnage: number;
   rateInr?: number;
-  status?: "sent" | "draft" | "accepted";
+  status?: "sent" | "draft" | "accepted" | "declined";
   validDays?: number;
 }): QuoteRecord {
   const store = getQuoteStore();

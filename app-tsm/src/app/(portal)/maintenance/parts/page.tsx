@@ -2,6 +2,7 @@ import { PageHeader } from "@/components/app/app-shell";
 import { ModuleSubNav } from "@/components/app/module-sub-nav";
 import { DataTable } from "@/components/app/data-table";
 import { PartStockActions } from "@/components/app/part-stock-actions";
+import { CreatePartForm } from "@/components/app/sprint17-forms";
 import { listPartsInventory } from "@/lib/maintenance/work-order-repository";
 import { MAINTENANCE_NAV } from "@/lib/module-nav";
 
@@ -18,6 +19,7 @@ export default async function MaintenancePartsPage() {
             ? `${lowStock} SKU${lowStock === 1 ? "" : "s"} at or below reorder threshold`
             : "Stock levels and reorder thresholds"
         }
+        action={<CreatePartForm />}
       />
       <ModuleSubNav links={MAINTENANCE_NAV} />
       <DataTable

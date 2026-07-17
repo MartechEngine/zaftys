@@ -1,10 +1,12 @@
 import {
   getShipment,
+  rescheduleShipment,
   updateShipmentStatus,
   updateShipmentFields,
 } from "@/lib/data/shipment-repository";
 import { apiError, apiSuccess } from "@/lib/api-response";
 import {
+  parseSchedulePatch,
   parseStatusPatch,
   parseFieldsPatch,
   validateStatusTransition,
@@ -28,6 +30,23 @@ export async function PATCH(
 ) {
   const { id } = await params;
   const body = await request.json().catch(() => null);
+
+  const schedulePatch = parseSchedulePatch(body);
+  if (schedulePatch) {
+    if ("error" in schedulePatch) {
+      return apiError("VALIDATION_ERROR", schedulePatch.error, 400);
+    }
+    const existing = await getShipment(id);
+    if (!existing) return apiError("SHIPMENT_NOT_FOUND", "Shipment not found.", 404);
+    try {
+      const shipment = await rescheduleShipment(id, schedulePatch);
+      if (!shipment) return apiError("UPDATE_FAILED", "Could not reschedule shipment.", 500);
+      return apiSuccess(shipment);
+    } catch (e) {
+      const message = e instanceof Error ? e.message : "Update failed.";
+      return apiError("UPDATE_FAILED", message, 400);
+    }
+  }
 
   const statusPatch = parseStatusPatch(body);
   if (statusPatch) {

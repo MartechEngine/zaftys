@@ -24,6 +24,16 @@ export function FaultStatusActions({
     }
   }
 
+  async function linkWorkOrder() {
+    try {
+      const result = await api.linkFaultWorkOrder(id);
+      toast.success(`Work order ${result.workOrder.id} created`);
+      router.refresh();
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : "Could not link work order.");
+    }
+  }
+
   if (status === "resolved") {
     return (
       <Button variant="outline" size="sm" onClick={() => setStatus("open")}>
@@ -35,7 +45,7 @@ export function FaultStatusActions({
   return (
     <div className="flex gap-1">
       {status === "open" && (
-        <Button variant="outline" size="sm" onClick={() => setStatus("linked")}>
+        <Button variant="outline" size="sm" onClick={linkWorkOrder}>
           Link WO
         </Button>
       )}

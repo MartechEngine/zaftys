@@ -4,6 +4,7 @@ import {
   listStoredOrgUsers,
 } from "@/lib/mutations/entity-stores";
 import { getOrgUserPatch, patchOrgUserFields } from "@/lib/mutations/sprint10-store";
+import { resendOrgUserInvite as recordOrgUserInviteResend } from "@/lib/mutations/sprint17-store";
 
 export type OrgUserRecord = {
   id: string;
@@ -85,4 +86,10 @@ export async function patchOrgUser(
 
   patchOrgUserFields(id, input);
   return { ...user, ...input };
+}
+
+export async function resendOrgUserInvite(id: string) {
+  const user = await getOrgUser(id);
+  if (!user || user.status !== "pending") return undefined;
+  return recordOrgUserInviteResend(id);
 }

@@ -1,4 +1,9 @@
-import { getPlace, updatePlace, validateCreatePlaceInput } from "@/lib/fleet/places-repository";
+import {
+  getPlace,
+  syncPlaceGeofence,
+  updatePlace,
+  validateCreatePlaceInput,
+} from "@/lib/fleet/places-repository";
 import { apiError, apiSuccess } from "@/lib/api-response";
 
 export const dynamic = "force-dynamic";
@@ -28,6 +33,12 @@ export async function PATCH(
   const data = body as Record<string, unknown>;
   const existing = await getPlace(id);
   if (!existing) return apiError("PLACE_NOT_FOUND", "Place not found.", 404);
+
+  if (data.syncGeofence === true) {
+    const synced = await syncPlaceGeofence(id);
+    if (!synced) return apiError("PLACE_NOT_FOUND", "Place not found.", 404);
+    return apiSuccess(synced);
+  }
 
   const merged = {
     name: data.name ?? existing.place.name,

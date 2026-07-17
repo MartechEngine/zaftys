@@ -250,6 +250,27 @@ export async function updateShipmentFields(id: string, patch: ShipmentFieldsPatc
   return devUpdateFields(id, patch);
 }
 
+export async function rescheduleShipment(
+  id: string,
+  patch: { eta?: string; scheduledAt?: string },
+) {
+  const existing = await getShipment(id);
+  if (!existing) return null;
+  if (["delivered", "cancelled"].includes(existing.status)) {
+    throw new Error(`Cannot reschedule a ${existing.status} shipment.`);
+  }
+
+  const { patchShipmentSchedule } = await import("@/lib/mutations/sprint17-store");
+  patchShipmentSchedule(id, patch);
+
+  if (patch.eta) {
+    const updated = await devUpdateFields(id, { eta: patch.eta });
+    if (updated) return updated;
+  }
+
+  return { ...existing, eta: patch.eta ?? existing.eta };
+}
+
 export async function listAllDocuments(filters?: {
   q?: string;
   type?: string;
