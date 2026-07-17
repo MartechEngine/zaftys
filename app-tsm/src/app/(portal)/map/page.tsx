@@ -23,7 +23,9 @@ export default async function LiveMapPage({
         description={
           dispatchMode
             ? "Unassigned and in-progress orders on the map"
-            : "Real-time fleet positions — Fleetbase GPS when connected"
+            : process.env.TSM_DEMO_UI === "0"
+              ? "Fleet positions from Fleetbase when GPS is available; no simulated motion"
+              : "Demo GPS along corridor routes — set TSM_DEMO_UI=0 for live Fleetbase positions"
         }
         action={
           <div className="flex gap-2">

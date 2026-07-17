@@ -37,14 +37,17 @@ const columns: DataTableColumn<DocumentLibraryEntry>[] = [
   {
     key: "download",
     header: "",
-    render: (r) => (
-      <a
-        href={`/api/documents/${r.id}/download`}
-        className="text-xs text-link hover:underline"
-      >
-        Download
-      </a>
-    ),
+    render: (r) =>
+      r.downloadable ? (
+        <a
+          href={`/api/documents/${r.id}/download`}
+          className="text-xs text-link hover:underline"
+        >
+          Download
+        </a>
+      ) : (
+        <span className="text-[10px] text-muted-foreground">Metadata only</span>
+      ),
   },
 ];
 

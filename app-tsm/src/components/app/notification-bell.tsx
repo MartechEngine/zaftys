@@ -8,10 +8,24 @@ export function NotificationBell() {
   const [unread, setUnread] = useState(0);
 
   useEffect(() => {
-    fetch("/api/notifications")
-      .then((r) => r.json())
-      .then((json) => setUnread(json.meta?.unread ?? 0))
-      .catch(() => setUnread(0));
+    let cancelled = false;
+
+    async function load() {
+      try {
+        const res = await fetch("/api/notifications", { cache: "no-store" });
+        const json = await res.json();
+        if (!cancelled) setUnread(json.meta?.unread ?? 0);
+      } catch {
+        if (!cancelled) setUnread(0);
+      }
+    }
+
+    void load();
+    const id = window.setInterval(load, 30_000);
+    return () => {
+      cancelled = true;
+      window.clearInterval(id);
+    };
   }, []);
 
   return (

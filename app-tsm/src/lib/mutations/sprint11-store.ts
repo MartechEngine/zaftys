@@ -64,6 +64,12 @@ export function getPlacePatch(id: string) {
   return g.__tsmPlacePatches?.[id];
 }
 
+export function replacePlacePatches(
+  next: Record<string, { name?: string; type?: string; city?: string; geofence?: string }>,
+) {
+  g.__tsmPlacePatches = { ...next };
+}
+
 export function patchPlaceFields(
   id: string,
   patch: { name?: string; type?: string; city?: string; geofence?: string },
@@ -100,6 +106,15 @@ export function patchGeofenceFields(
 
 export function getEquipmentPatch(id: string) {
   return g.__tsmEquipmentPatches?.[id];
+}
+
+export function replaceEquipmentPatches(
+  next: Record<
+    string,
+    { location?: string; status?: "active" | "stored" | "maintenance" }
+  >,
+) {
+  g.__tsmEquipmentPatches = { ...next };
 }
 
 export function patchEquipmentFields(

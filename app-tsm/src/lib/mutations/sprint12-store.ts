@@ -83,6 +83,12 @@ export function getFleetGroupPatch(id: string) {
   return g.__tsmFleetGroupPatches?.[id];
 }
 
+export function replaceFleetGroupPatches(
+  next: Record<string, { name?: string; zone?: string }>,
+) {
+  g.__tsmFleetGroupPatches = { ...next };
+}
+
 export function patchFleetGroupFields(id: string, patch: { name?: string; zone?: string }) {
   if (!g.__tsmFleetGroupPatches) g.__tsmFleetGroupPatches = {};
   g.__tsmFleetGroupPatches[id] = { ...g.__tsmFleetGroupPatches[id], ...patch };

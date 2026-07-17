@@ -78,6 +78,10 @@ export function ShipmentDetailClient({ shipment }: { shipment: ShipmentRecord })
       const link = await api.generateTrackLink(current.id);
       const full = `${window.location.origin}${link.url}`;
       await navigator.clipboard.writeText(full);
+      setCurrent((prev) => ({
+        ...prev,
+        trackToken: link.token ?? prev.trackToken,
+      }));
       toast.success("Tracking link copied to clipboard.");
     } catch {
       toast.error("Could not generate track link.");
@@ -348,10 +352,24 @@ export function ShipmentDetailClient({ shipment }: { shipment: ShipmentRecord })
                   {current.documents.map((doc) => (
                     <li
                       key={doc.id}
-                      className="flex items-center justify-between rounded-lg border border-white/10 bg-white/[0.03] px-3 py-2 text-sm"
+                      className="flex items-center justify-between gap-2 rounded-lg border border-white/10 bg-white/[0.03] px-3 py-2 text-sm"
                     >
                       <span className="text-xs text-label uppercase">{doc.type}</span>
-                      <span className="font-medium text-heading">{doc.name}</span>
+                      <span className="min-w-0 flex-1 truncate font-medium text-heading">
+                        {doc.name}
+                      </span>
+                      {doc.storageKey ? (
+                        <a
+                          href={`/api/documents/${doc.id}/download`}
+                          className="shrink-0 text-xs text-link hover:underline"
+                        >
+                          Download
+                        </a>
+                      ) : (
+                        <span className="shrink-0 text-[10px] text-muted-foreground">
+                          Metadata
+                        </span>
+                      )}
                     </li>
                   ))}
                 </ul>

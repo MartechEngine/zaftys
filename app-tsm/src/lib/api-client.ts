@@ -1009,7 +1009,12 @@ export const api = {
   },
 
   rotateFleetbaseKey: () =>
-    fetchApi<{ apiKeyMasked: string; connection: string }>("/api/integrations/fleetbase", {
+    fetchApi<{
+      apiKeyMasked: string;
+      connection: string;
+      stub?: boolean;
+      message?: string;
+    }>("/api/integrations/fleetbase", {
       method: "POST",
     }),
 

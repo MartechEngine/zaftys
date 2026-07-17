@@ -24,6 +24,10 @@ export function listStoredEquipment(): EquipmentRecord[] {
   return [...getStore()];
 }
 
+export function replaceStoredEquipment(items: EquipmentRecord[]) {
+  g.__tsmDevEquipment = [...items];
+}
+
 export function createStoredEquipment(input: {
   name: string;
   type: string;

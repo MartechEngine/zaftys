@@ -29,7 +29,7 @@ export function ResetPasswordForm() {
         confirmPassword,
       });
       setDone(true);
-      toast.success("Password updated (demo stub)");
+      toast.success("Password updated — you can sign in now");
     } catch (err) {
       toast.error(err instanceof Error ? err.message : "Could not reset password.");
     } finally {
@@ -40,7 +40,7 @@ export function ResetPasswordForm() {
   if (done) {
     return (
       <p className="mt-4 text-sm text-emerald-700">
-        Password updated for {email}. You can sign in with your new password (local demo).
+        Password updated for {email}. You can sign in with your new password.
       </p>
     );
   }
@@ -65,7 +65,7 @@ export function ResetPasswordForm() {
           className="mt-1"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          minLength={8}
+          minLength={12}
           required
         />
       </label>
@@ -76,7 +76,7 @@ export function ResetPasswordForm() {
           className="mt-1"
           value={confirmPassword}
           onChange={(e) => setConfirmPassword(e.target.value)}
-          minLength={8}
+          minLength={12}
           required
         />
       </label>

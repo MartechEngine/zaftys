@@ -234,7 +234,13 @@ export async function getFleetbaseIntegrationDetail(): Promise<FleetbaseIntegrat
 
 export async function rotateFleetbaseKey() {
   rotateFleetbaseKeyMask();
-  return getFleetbaseIntegrationDetail();
+  const detail = await getFleetbaseIntegrationDetail();
+  return {
+    ...detail,
+    stub: true as const,
+    message:
+      "Local mask rotated only — set FLEETBASE_API_KEY in the environment to change the real key.",
+  };
 }
 
 export async function runFleetbaseHealthCheck() {

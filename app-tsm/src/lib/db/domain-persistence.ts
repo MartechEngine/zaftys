@@ -396,6 +396,159 @@ export async function persistConfigSection(
   await persistPatchMap("config_patches", section, patch);
 }
 
+// --- Fleet aux (places / equipment / groups) + partners + reports ---
+export async function ensureFleetAuxHydrated() {
+  const {
+    listStoredPlaces,
+    replaceStoredPlaces,
+  } = await import("@/lib/fleet/places-store");
+  const {
+    listStoredEquipment,
+    replaceStoredEquipment,
+  } = await import("@/lib/fleet/equipment-store");
+  const {
+    listStoredFleetGroups,
+    replaceStoredFleetGroups,
+    listStoredPartners,
+    replaceStoredPartners,
+  } = await import("@/lib/mutations/entity-stores");
+  const {
+    listStoredCustomReports,
+    replaceStoredCustomReports,
+    listStoredReportSchedules,
+    replaceStoredReportSchedules,
+    replaceVendorPatches,
+  } = await import("@/lib/mutations/fleet-entity-store");
+  const {
+    replacePlacePatches,
+    replaceEquipmentPatches,
+  } = await import("@/lib/mutations/sprint11-store");
+  const { replaceFleetGroupPatches } = await import("@/lib/mutations/sprint12-store");
+
+  await Promise.all([
+    ensureArrayHydrated({
+      collection: "fleet_places",
+      list: listStoredPlaces,
+      replace: replaceStoredPlaces,
+    }),
+    ensureArrayHydrated({
+      collection: "fleet_equipment",
+      list: listStoredEquipment,
+      replace: replaceStoredEquipment,
+    }),
+    ensureArrayHydrated({
+      collection: "fleet_groups",
+      list: listStoredFleetGroups,
+      replace: replaceStoredFleetGroups,
+    }),
+    ensureArrayHydrated({
+      collection: "network_partners",
+      list: listStoredPartners,
+      replace: replaceStoredPartners,
+    }),
+    ensureArrayHydrated({
+      collection: "custom_reports",
+      list: listStoredCustomReports,
+      replace: replaceStoredCustomReports,
+    }),
+    ensureArrayHydrated({
+      collection: "report_schedules",
+      list: listStoredReportSchedules,
+      replace: replaceStoredReportSchedules,
+    }),
+  ]);
+
+  if (isDatabaseConfigured()) {
+    const { loadCollection, isCollectionHydrated, markCollectionHydrated } =
+      await import("@/lib/db/collections");
+    if (!isCollectionHydrated("place_patches")) {
+      const rows = await loadCollection<{
+        id: string;
+        value: { name?: string; type?: string; city?: string; geofence?: string };
+      }>("place_patches");
+      if (rows.length > 0) {
+        replacePlacePatches(Object.fromEntries(rows.map((r) => [r.id, r.value])));
+      }
+      markCollectionHydrated("place_patches");
+    }
+    if (!isCollectionHydrated("equipment_patches")) {
+      const rows = await loadCollection<{
+        id: string;
+        value: {
+          location?: string;
+          status?: "active" | "stored" | "maintenance";
+        };
+      }>("equipment_patches");
+      if (rows.length > 0) {
+        replaceEquipmentPatches(
+          Object.fromEntries(rows.map((r) => [r.id, r.value])),
+        );
+      }
+      markCollectionHydrated("equipment_patches");
+    }
+    if (!isCollectionHydrated("fleet_group_patches")) {
+      const rows = await loadCollection<{
+        id: string;
+        value: { name?: string; zone?: string };
+      }>("fleet_group_patches");
+      if (rows.length > 0) {
+        replaceFleetGroupPatches(
+          Object.fromEntries(rows.map((r) => [r.id, r.value])),
+        );
+      }
+      markCollectionHydrated("fleet_group_patches");
+    }
+    if (!isCollectionHydrated("vendor_patches")) {
+      const rows = await loadCollection<{
+        id: string;
+        value: {
+          name?: string;
+          type?: string;
+          city?: string;
+          contact?: string;
+        };
+      }>("vendor_patches");
+      if (rows.length > 0) {
+        replaceVendorPatches(
+          Object.fromEntries(rows.map((r) => [r.id, r.value])),
+        );
+      }
+      markCollectionHydrated("vendor_patches");
+    }
+  }
+}
+
+export async function persistPlace(p: { id: string }) {
+  await persistItem("fleet_places", p.id, p);
+}
+export async function persistPlacePatch(id: string, value: unknown) {
+  await persistPatchMap("place_patches", id, value);
+}
+export async function persistEquipment(e: { id: string }) {
+  await persistItem("fleet_equipment", e.id, e);
+}
+export async function persistEquipmentPatch(id: string, value: unknown) {
+  await persistPatchMap("equipment_patches", id, value);
+}
+export async function persistFleetGroup(g: { id: string }) {
+  await persistItem("fleet_groups", g.id, g);
+}
+export async function persistFleetGroupPatch(id: string, value: unknown) {
+  await persistPatchMap("fleet_group_patches", id, value);
+}
+export async function persistPartner(p: { id: string }) {
+  await persistItem("network_partners", p.id, p);
+}
+export async function persistCustomReport(r: { id: string }) {
+  await persistItem("custom_reports", r.id, r);
+}
+export async function persistReportSchedule(r: { id: string }) {
+  await persistItem("report_schedules", r.id, r);
+}
+export async function persistVendorPatch(id: string, value: unknown) {
+  await persistPatchMap("vendor_patches", id, value);
+}
+
 /** Convenience: hydrate everything used by portal list pages. */
 export async function ensurePortalDomainsHydrated() {
   await Promise.all([
@@ -406,5 +559,6 @@ export async function ensurePortalDomainsHydrated() {
     ensureQuotesHydrated(),
     ensureWorkOrdersHydrated(),
     ensureSettingsHydrated(),
+    ensureFleetAuxHydrated(),
   ]);
 }

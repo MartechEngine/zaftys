@@ -533,6 +533,7 @@ export function createShipment(input: {
     originType: input.originType ?? "fleet",
     lrNumber: input.lrNumber,
     documents: [],
+    trackToken: `demo-${id}`,
     updatedAt: now(),
   };
 
@@ -547,7 +548,9 @@ export function createShipment(input: {
   });
 
   if (input.driverId && input.vehicleId) {
-    return assignShipment(id, input.driverId, input.vehicleId);
+    const assigned = assignShipment(id, input.driverId, input.vehicleId);
+    if (assigned) return assigned;
+    // Keep created shipment even if assign ids are unknown (stored-only fleet, etc.)
   }
 
   return attachGeo(shipment);
@@ -560,8 +563,31 @@ export function assignShipment(
 ) {
   const shipments = getShipmentsStore();
   const shipment = shipments.find((s) => s.id === id);
-  const driver = drivers.find((d) => d.id === driverId);
-  const vehicle = vehicles.find((v) => v.id === vehicleId);
+
+  // Prefer seeded demo fleet, then session-created overlays
+  let driver = drivers.find((d) => d.id === driverId);
+  let vehicle = vehicles.find((v) => v.id === vehicleId);
+  try {
+    const g = globalThis as typeof globalThis & {
+      __tsmDrivers?: Driver[];
+      __tsmVehicles?: Vehicle[];
+      __tsmDriverPatches?: Record<string, Partial<Driver>>;
+      __tsmVehiclePatches?: Record<string, Partial<Vehicle>>;
+    };
+    if (!driver) {
+      driver = g.__tsmDrivers?.find((d) => d.id === driverId);
+      const patch = g.__tsmDriverPatches?.[driverId];
+      if (driver && patch) driver = { ...driver, ...patch, id: driver.id };
+    }
+    if (!vehicle) {
+      vehicle = g.__tsmVehicles?.find((v) => v.id === vehicleId);
+      const patch = g.__tsmVehiclePatches?.[vehicleId];
+      if (vehicle && patch) vehicle = { ...vehicle, ...patch, id: vehicle.id };
+    }
+  } catch {
+    /* ignore */
+  }
+
   if (!shipment || !driver || !vehicle) return null;
 
   shipment.driverId = driverId;
@@ -753,7 +779,9 @@ export type ShipmentFieldsPatch = {
   eta?: string;
   originType?: OriginType;
   driver?: string;
+  driverId?: string;
   vehicle?: string;
+  vehicleId?: string;
   networkListing?: NetworkListingMirror | null;
 };
 

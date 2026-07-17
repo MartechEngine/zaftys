@@ -35,7 +35,7 @@ export async function PATCH(request: Request) {
     return apiError("VALIDATION_ERROR", "Provide { ids: string[] } or { all: true }.");
   }
 
-  const marked = all ? await markAllNotificationsRead() : markNotificationsRead(ids);
+  const marked = all ? await markAllNotificationsRead() : await markNotificationsRead(ids);
   const items = await listNotifications(25);
   const unread = items.filter((n) => !n.read).length;
 

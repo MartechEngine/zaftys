@@ -24,24 +24,33 @@ export async function upsertListingToDb(listing: NetworkListing): Promise<void> 
   if (!db || !isDatabaseConfigured()) return;
 
   const now = new Date().toISOString();
-  await db
-    .insert(networkListings)
-    .values({
-      id: listing.id,
-      shipmentId: listing.shipmentId,
-      state: listing.state,
-      payload: listing,
-      updatedAt: now,
-    })
-    .onConflictDoUpdate({
-      target: networkListings.id,
-      set: {
-        shipmentId: listing.shipmentId,
+  // Unique on shipment_id — update that row even if listing.id changed in-memory
+  const existing = await db
+    .select({ id: networkListings.id })
+    .from(networkListings)
+    .where(eq(networkListings.shipmentId, listing.shipmentId))
+    .limit(1);
+
+  if (existing[0]) {
+    await db
+      .update(networkListings)
+      .set({
+        id: listing.id,
         state: listing.state,
         payload: listing,
         updatedAt: now,
-      },
-    });
+      })
+      .where(eq(networkListings.shipmentId, listing.shipmentId));
+    return;
+  }
+
+  await db.insert(networkListings).values({
+    id: listing.id,
+    shipmentId: listing.shipmentId,
+    state: listing.state,
+    payload: listing,
+    updatedAt: now,
+  });
 }
 
 export async function upsertOfferToDb(offer: NetworkOffer): Promise<void> {

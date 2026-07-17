@@ -54,7 +54,13 @@ export function RotateFleetbaseKeyButton() {
     setBusy(true);
     try {
       const detail = await api.rotateFleetbaseKey();
-      toast.success(`Key rotated · ${detail.apiKeyMasked}`);
+      toast.message("Local key mask updated", {
+        description:
+          ("message" in detail && typeof detail.message === "string"
+            ? detail.message
+            : undefined) ??
+          `Display mask · ${detail.apiKeyMasked}. Real key still comes from FLEETBASE_API_KEY.`,
+      });
       router.refresh();
     } catch (err) {
       toast.error(err instanceof Error ? err.message : "Could not rotate key.");
@@ -65,7 +71,7 @@ export function RotateFleetbaseKeyButton() {
 
   return (
     <Button variant="outline" size="sm" onClick={onClick} disabled={busy}>
-      {busy ? "…" : "Rotate key"}
+      {busy ? "…" : "Rotate display mask"}
     </Button>
   );
 }
@@ -74,12 +80,18 @@ export function ChangePasswordButton() {
   const [busy, setBusy] = useState(false);
 
   async function onClick() {
-    const next = window.prompt("New password (min 6 characters)")?.trim();
+    const current = window.prompt("Current password")?.trim();
+    if (current == null) return;
+    const next = window.prompt("New password (must meet security policy minimum length)")?.trim();
     if (!next) return;
+    if (next.length < 12) {
+      toast.error("Password must be at least 12 characters.");
+      return;
+    }
     setBusy(true);
     try {
-      await api.changePassword({ newPassword: next });
-      toast.success("Password updated");
+      await api.changePassword({ currentPassword: current, newPassword: next });
+      toast.success("Password updated — use it on next sign-in");
     } catch (err) {
       toast.error(err instanceof Error ? err.message : "Could not change password.");
     } finally {

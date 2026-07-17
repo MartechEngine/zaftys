@@ -288,7 +288,6 @@ export async function getSecuritySettings(): Promise<SecuritySettings> {
 }
 
 export async function getNotificationSettings(): Promise<NotificationChannelSettings[]> {
-  const sync = await getSyncStatus();
   const patch = getConfigPatches()["notifications"] ?? {};
   const channels = [
     {
@@ -300,8 +299,8 @@ export async function getNotificationSettings(): Promise<NotificationChannelSett
     {
       id: "n-sync",
       channel: "Sync failures",
-      recipients: "Email · admins",
-      enabled: Boolean(sync.tranzfortConfigured),
+      recipients: "Email · admins (stub)",
+      enabled: true,
     },
     {
       id: "n-docs",
@@ -388,6 +387,8 @@ export async function getPaymentsSettings(): Promise<PaymentsSettings> {
 }
 
 export async function getReportSchedules(): Promise<ReportSchedule[]> {
+  const { ensureFleetAuxHydrated } = await import("@/lib/db/domain-persistence");
+  await ensureFleetAuxHydrated();
   const org = await getOrgProfile();
   const { listStoredReportSchedules } = await import("@/lib/mutations/fleet-entity-store");
   const base = [
@@ -438,7 +439,10 @@ export async function createReportSchedule(input: {
   recipients: string;
 }) {
   const { createStoredReportSchedule } = await import("@/lib/mutations/fleet-entity-store");
-  return createStoredReportSchedule(input);
+  const row = createStoredReportSchedule(input);
+  const { persistReportSchedule } = await import("@/lib/db/domain-persistence");
+  await persistReportSchedule(row);
+  return row;
 }
 
 export async function deleteReportSchedule(id: string): Promise<boolean> {

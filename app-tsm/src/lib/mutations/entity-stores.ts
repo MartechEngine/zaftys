@@ -117,6 +117,10 @@ export function listStoredFleetGroups(): StoredFleetGroup[] {
   return [...g.__tsmFleetGroups];
 }
 
+export function replaceStoredFleetGroups(items: StoredFleetGroup[]) {
+  g.__tsmFleetGroups = [...items];
+}
+
 export function createStoredFleetGroup(input: {
   name: string;
   zone?: string;
@@ -283,6 +287,10 @@ export function patchStoredSettingsGroup(
 export function listStoredPartners(): StoredPartner[] {
   if (!g.__tsmPartners) g.__tsmPartners = [];
   return [...g.__tsmPartners];
+}
+
+export function replaceStoredPartners(items: StoredPartner[]) {
+  g.__tsmPartners = [...items];
 }
 
 export function createStoredPartner(input: {

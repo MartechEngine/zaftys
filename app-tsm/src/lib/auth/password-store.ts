@@ -66,6 +66,21 @@ export async function setPasswordHash(email: string, newPassword: string): Promi
   }
 }
 
+/** Remove override so DEV_USERS default password applies again. */
+export async function clearPasswordHash(email: string): Promise<void> {
+  const key = normalizeEmail(email);
+  delete memoryStore()[key];
+
+  if (isDatabaseConfigured()) {
+    try {
+      const { deleteDocument } = await import("@/lib/db/collections");
+      await deleteDocument("user_passwords", key);
+    } catch (err) {
+      console.error("[password-store] clear failed", err);
+    }
+  }
+}
+
 export async function hydratePasswordHashes(): Promise<void> {
   if (!isDatabaseConfigured() || g.__tsmPasswordsHydrated) return;
   try {

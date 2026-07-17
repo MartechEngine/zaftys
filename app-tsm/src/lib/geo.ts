@@ -1,4 +1,4 @@
-/** Approximate city centroids for dev mock routes (Maharashtra corridor). */
+/** Approximate city centroids for demo routes (Maharashtra corridor). */
 export interface GeoPoint {
   lat: number;
   lng: number;
@@ -11,6 +11,8 @@ const CITY_COORDS: Record<string, GeoPoint> = {
   Pune: { lat: 18.5204, lng: 73.8567 },
   Chandrapur: { lat: 19.9615, lng: 79.2961 },
 };
+
+export const DEFAULT_GPS_STALE_MINUTES = 15;
 
 export function cityCoords(city: string): GeoPoint | undefined {
   const key = Object.keys(CITY_COORDS).find(
@@ -36,12 +38,25 @@ export interface ShipmentGeo {
   gpsStale?: boolean;
 }
 
+/** True when last GPS fix is older than threshold (or missing). */
+export function isGpsStale(
+  gpsUpdatedAt: string | undefined,
+  thresholdMinutes = DEFAULT_GPS_STALE_MINUTES,
+): boolean {
+  if (!gpsUpdatedAt) return true;
+  const ts = Date.parse(gpsUpdatedAt);
+  if (!Number.isFinite(ts)) return true;
+  return Date.now() - ts > thresholdMinutes * 60_000;
+}
+
 export function geoForShipment(input: {
   origin: string;
   destination: string;
   status: string;
   updatedAt: string;
   id: string;
+  /** When set, use for age-based staleness instead of status-only. */
+  gpsUpdatedAt?: string;
 }): ShipmentGeo | undefined {
   const origin = cityCoords(input.origin);
   const destination = cityCoords(input.destination);
@@ -58,13 +73,15 @@ export function geoForShipment(input: {
   const seed = input.id.split("").reduce((n, c) => n + c.charCodeAt(0), 0);
   const t = 0.35 + (seed % 40) / 100;
   const current = interpolateRoute(origin, destination, t);
-  const gpsStale = input.status === "exception";
+  const gpsUpdatedAt = input.gpsUpdatedAt ?? input.updatedAt;
+  const gpsStale =
+    input.status === "exception" || isGpsStale(gpsUpdatedAt, DEFAULT_GPS_STALE_MINUTES);
 
   return {
     origin,
     destination,
     current,
-    gpsUpdatedAt: input.updatedAt,
+    gpsUpdatedAt,
     gpsStale,
   };
 }

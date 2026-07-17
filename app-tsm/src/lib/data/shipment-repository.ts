@@ -49,16 +49,89 @@ import { pushTranZfortStatus, isTranZfortConfigured } from "@/lib/sync/tranzfort
 import type { ShipmentRecord } from "@/lib/dev-store";
 
 function withGeo(record: ShipmentRecord): ShipmentRecord {
-  return {
-    ...record,
-    geo: geoForShipment({
-      id: record.id,
-      origin: record.origin,
-      destination: record.destination,
-      status: record.status,
-      updatedAt: record.updatedAt,
-    }),
-  };
+  const live = getActiveDataSource() === "fleetbase";
+  // Keep real GPS from Fleetbase mapper / positions overlay
+  if (live && record.geo?.current) return record;
+
+  const synthetic = geoForShipment({
+    id: record.id,
+    origin: record.origin,
+    destination: record.destination,
+    status: record.status,
+    updatedAt: record.updatedAt,
+  });
+
+  if (live) {
+    // Live mode: route endpoints only — never invent a moving current
+    if (!synthetic) return record;
+    return {
+      ...record,
+      geo: {
+        origin: synthetic.origin,
+        destination: synthetic.destination,
+        gpsStale: true,
+      },
+    };
+  }
+
+  return { ...record, geo: synthetic };
+}
+
+async function applyFleetbasePositions(
+  shipments: ShipmentRecord[],
+): Promise<ShipmentRecord[]> {
+  if (getActiveDataSource() !== "fleetbase" || shipments.length === 0) {
+    return shipments;
+  }
+  try {
+    const positions = await getFleetbaseClient().listPositions(100);
+    if (!positions.length) return shipments;
+    const byOrder = new Map(
+      positions
+        .filter(
+          (p) =>
+            p.orderId &&
+            p.latitude != null &&
+            p.longitude != null &&
+            Number.isFinite(p.latitude) &&
+            Number.isFinite(p.longitude),
+        )
+        .map((p) => [p.orderId!, p]),
+    );
+    if (byOrder.size === 0) return shipments;
+
+    return shipments.map((s) => {
+      const pos = byOrder.get(s.id);
+      if (!pos?.latitude || !pos?.longitude) return s;
+      const fallback = geoForShipment({
+        id: s.id,
+        origin: s.origin,
+        destination: s.destination,
+        status: s.status,
+        updatedAt: s.updatedAt,
+      });
+      const origin = s.geo?.origin ?? fallback?.origin ?? {
+        lat: pos.latitude,
+        lng: pos.longitude,
+      };
+      const destination = s.geo?.destination ?? fallback?.destination ?? {
+        lat: pos.latitude,
+        lng: pos.longitude,
+      };
+      return {
+        ...s,
+        geo: {
+          origin,
+          destination,
+          current: { lat: pos.latitude, lng: pos.longitude },
+          gpsUpdatedAt: new Date().toISOString(),
+          gpsStale: false,
+        },
+      };
+    });
+  } catch {
+    return shipments;
+  }
 }
 
 function recordShipmentActivity(shipmentId: string, type: string, message: string) {
@@ -84,7 +157,8 @@ export async function fetchAllShipmentsRaw(): Promise<ShipmentRecord[]> {
     try {
       const client = getFleetbaseClient();
       const orders = await client.listOrders(100);
-      return orders.map(mapFleetbaseOrder).map(withGeo);
+      const mapped = orders.map(mapFleetbaseOrder).map(withGeo);
+      return applyFleetbasePositions(mapped);
     } catch (e) {
       console.warn("[shipments] Fleetbase fallback to dev-store:", e);
       return devListShipments();
@@ -134,7 +208,10 @@ export async function getShipment(id: string) {
   if (getActiveDataSource() === "fleetbase") {
     try {
       const order = await getFleetbaseClient().getOrder(id);
-      return withGeo(mapFleetbaseOrder(order));
+      const [withPos] = await applyFleetbasePositions([
+        withGeo(mapFleetbaseOrder(order)),
+      ]);
+      return withPos;
     } catch (e) {
       console.warn("[shipment] Fleetbase fallback:", e);
     }
@@ -259,6 +336,48 @@ export async function updateShipmentFields(id: string, patch: ShipmentFieldsPatc
   if (["delivered", "cancelled"].includes(existing.status)) {
     throw new Error(`Cannot edit a ${existing.status} shipment.`);
   }
+
+  if (getActiveDataSource() === "fleetbase") {
+    try {
+      const fbPatch: Record<string, unknown> = {};
+      if (patch.client !== undefined || patch.commodity !== undefined || patch.tonnageMt !== undefined || patch.lrNumber !== undefined || patch.originType !== undefined) {
+        fbPatch.meta = {
+          ...(patch.client !== undefined ? { client: patch.client } : {}),
+          ...(patch.commodity !== undefined ? { commodity: patch.commodity } : {}),
+          ...(patch.tonnageMt !== undefined
+            ? { tonnage: patch.tonnageMt, tonnage_mt: patch.tonnageMt }
+            : {}),
+          ...(patch.lrNumber !== undefined ? { lr_number: patch.lrNumber } : {}),
+          ...(patch.originType !== undefined ? { origin_type: patch.originType } : {}),
+        };
+      }
+      if (patch.origin !== undefined) {
+        fbPatch.pickup = { name: patch.origin, city: patch.origin };
+      }
+      if (patch.destination !== undefined) {
+        fbPatch.dropoff = { name: patch.destination, city: patch.destination };
+      }
+      if (patch.eta !== undefined) fbPatch.eta = patch.eta;
+      if (patch.driver !== undefined || patch.driverId !== undefined) {
+        if (patch.driverId) fbPatch.driver = patch.driverId;
+      }
+      if (patch.vehicle !== undefined || patch.vehicleId !== undefined) {
+        if (patch.vehicleId) fbPatch.vehicle = patch.vehicleId;
+      }
+      if (Object.keys(fbPatch).length > 0) {
+        const order = await getFleetbaseClient().updateOrder(id, fbPatch);
+        const mapped = withGeo(mapFleetbaseOrder(order));
+        // Local-only overlays (network listing mirror, etc.)
+        if (patch.networkListing !== undefined) {
+          return { ...mapped, networkListing: patch.networkListing };
+        }
+        return mapped;
+      }
+    } catch (e) {
+      console.warn("[updateShipmentFields] Fleetbase failed, using local store:", e);
+    }
+  }
+
   return devUpdateFields(id, patch);
 }
 
@@ -275,6 +394,18 @@ export async function rescheduleShipment(
   const { patchShipmentSchedule } = await import("@/lib/mutations/sprint17-store");
   patchShipmentSchedule(id, patch);
 
+  if (getActiveDataSource() === "fleetbase" && patch.eta) {
+    try {
+      const order = await getFleetbaseClient().updateOrder(id, {
+        eta: patch.eta,
+        meta: patch.scheduledAt ? { scheduled_at: patch.scheduledAt } : undefined,
+      });
+      return withGeo(mapFleetbaseOrder(order));
+    } catch (e) {
+      console.warn("[rescheduleShipment] Fleetbase failed, using local store:", e);
+    }
+  }
+
   if (patch.eta) {
     const updated = await devUpdateFields(id, { eta: patch.eta });
     if (updated) return updated;
@@ -289,6 +420,47 @@ export async function listAllDocuments(filters?: {
 }): Promise<DocumentLibraryEntry[]> {
   const shipments = await listShipments();
   const entries = flattenShipmentDocuments(shipments);
+
+  // Merge DB-backed docs (MinIO uploads) so library sees storageKey even if shipment seed lacks it
+  try {
+    const { isDatabaseConfigured } = await import("@/lib/db/client");
+    if (isDatabaseConfigured()) {
+      const { listAllDocumentsFromDb } = await import("@/lib/db/documents-repository");
+      const fromDb = await listAllDocumentsFromDb();
+      if (fromDb?.length) {
+        const byId = new Map(entries.map((e) => [e.id, e]));
+        for (const row of fromDb) {
+          const shipment = shipments.find((s) => s.id === row.shipmentId);
+          const existing = byId.get(row.id);
+          if (existing) {
+            byId.set(row.id, {
+              ...existing,
+              storageKey: row.storageKey ?? existing.storageKey,
+              downloadable: Boolean(row.storageKey ?? existing.storageKey),
+            });
+          } else if (shipment) {
+            byId.set(row.id, {
+              id: row.id,
+              name: row.name,
+              type: row.type as DocumentLibraryEntry["type"],
+              typeLabel: row.type.toUpperCase(),
+              shipmentId: row.shipmentId,
+              shipmentPublicId: shipment.publicId,
+              client: shipment.client,
+              uploadedAt: row.uploadedAt,
+              uploadedLabel: row.uploadedAt.slice(0, 10),
+              storageKey: row.storageKey,
+              downloadable: Boolean(row.storageKey),
+            });
+          }
+        }
+        return filterDocumentLibrary([...byId.values()], filters);
+      }
+    }
+  } catch (err) {
+    console.warn("[documents] DB merge skipped:", err);
+  }
+
   return filterDocumentLibrary(entries, filters);
 }
 
@@ -352,7 +524,10 @@ export async function listDrivers() {
   const {
     listStoredDrivers,
     getDriverPatch,
+    ensureFleetEntitiesHydrated,
   } = await import("@/lib/mutations/fleet-entity-store");
+
+  await ensureFleetEntitiesHydrated();
 
   let base: Awaited<ReturnType<typeof devListDrivers>>;
   if (getActiveDataSource() === "fleetbase") {
@@ -378,7 +553,10 @@ export async function listVehicles() {
   const {
     listStoredVehicles,
     getVehiclePatch,
+    ensureFleetEntitiesHydrated,
   } = await import("@/lib/mutations/fleet-entity-store");
+
+  await ensureFleetEntitiesHydrated();
 
   let base: Awaited<ReturnType<typeof devListVehicles>>;
   if (getActiveDataSource() === "fleetbase") {

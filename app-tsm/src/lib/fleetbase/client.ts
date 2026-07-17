@@ -153,6 +153,86 @@ export class FleetbaseClient {
     if (data && "data" in data && data.data) return data.data;
     return data as FleetbaseOrder;
   }
+
+  async updateOrder(orderId: string, patch: Record<string, unknown>) {
+    const data = await this.request<{ data?: FleetbaseOrder } | FleetbaseOrder>(
+      `/orders/${orderId}`,
+      { method: "PATCH", body: JSON.stringify(patch) },
+    );
+    if (data && "data" in data && data.data) return data.data;
+    return data as FleetbaseOrder;
+  }
+
+  async createDriver(payload: Record<string, unknown>) {
+    const data = await this.request<{ data?: unknown } | unknown>("/drivers", {
+      method: "POST",
+      body: JSON.stringify(payload),
+    });
+    if (data && typeof data === "object" && "data" in data && (data as { data?: unknown }).data) {
+      return (data as { data: unknown }).data;
+    }
+    return data;
+  }
+
+  async updateDriver(id: string, patch: Record<string, unknown>) {
+    const data = await this.request<{ data?: unknown } | unknown>(`/drivers/${id}`, {
+      method: "PATCH",
+      body: JSON.stringify(patch),
+    });
+    if (data && typeof data === "object" && "data" in data && (data as { data?: unknown }).data) {
+      return (data as { data: unknown }).data;
+    }
+    return data;
+  }
+
+  async createVehicle(payload: Record<string, unknown>) {
+    const data = await this.request<{ data?: unknown } | unknown>("/vehicles", {
+      method: "POST",
+      body: JSON.stringify(payload),
+    });
+    if (data && typeof data === "object" && "data" in data && (data as { data?: unknown }).data) {
+      return (data as { data: unknown }).data;
+    }
+    return data;
+  }
+
+  async updateVehicle(id: string, patch: Record<string, unknown>) {
+    const data = await this.request<{ data?: unknown } | unknown>(`/vehicles/${id}`, {
+      method: "PATCH",
+      body: JSON.stringify(patch),
+    });
+    if (data && typeof data === "object" && "data" in data && (data as { data?: unknown }).data) {
+      return (data as { data: unknown }).data;
+    }
+    return data;
+  }
+
+  /** Best-effort last known positions (Fleetbase /positions or embedded order coords). */
+  async listPositions(limit = 50): Promise<
+    Array<{ id?: string; orderId?: string; latitude?: number; longitude?: number }>
+  > {
+    try {
+      const data = await this.request<{ data?: unknown[] } | unknown[]>(
+        `/positions?limit=${limit}`,
+      );
+      const rows = Array.isArray(data) ? data : (data.data ?? []);
+      return rows.map((row) => {
+        const r = row as Record<string, unknown>;
+        const lat = Number(r.latitude ?? r.lat ?? (r.location as { lat?: number })?.lat);
+        const lng = Number(
+          r.longitude ?? r.lng ?? r.lon ?? (r.location as { lng?: number })?.lng,
+        );
+        return {
+          id: String(r.uuid ?? r.id ?? ""),
+          orderId: String(r.order_uuid ?? r.order_id ?? r.order ?? ""),
+          latitude: Number.isFinite(lat) ? lat : undefined,
+          longitude: Number.isFinite(lng) ? lng : undefined,
+        };
+      });
+    } catch {
+      return [];
+    }
+  }
 }
 
 export function getFleetbaseClient() {

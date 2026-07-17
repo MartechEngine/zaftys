@@ -38,6 +38,8 @@ export function validateCreateEquipmentInput(
 }
 
 export async function listEquipment(): Promise<EquipmentRecord[]> {
+  const { ensureFleetAuxHydrated } = await import("@/lib/db/domain-persistence");
+  await ensureFleetAuxHydrated();
   const places = await listPlaces();
   const fromPlaces: EquipmentRecord[] = places
     .filter((p) => /plant|depot/i.test(p.type))
@@ -66,10 +68,13 @@ export async function listEquipment(): Promise<EquipmentRecord[]> {
 export async function createEquipment(input: CreateEquipmentInput): Promise<EquipmentRecord> {
   const places = await listPlaces();
   const place = places.find((p) => p.name === input.location);
-  return createStoredEquipment({
+  const created = createStoredEquipment({
     ...input,
     placeId: place?.id,
   });
+  const { persistEquipment } = await import("@/lib/db/domain-persistence");
+  await persistEquipment(created);
+  return created;
 }
 
 export async function updateEquipment(
@@ -79,7 +84,13 @@ export async function updateEquipment(
   const existing = (await listEquipment()).find((e) => e.id === id);
   if (!existing) return undefined;
   const stored = patchStoredEquipment(id, input);
-  if (stored) return stored;
-  patchEquipmentFields(id, input);
+  if (stored) {
+    const { persistEquipment } = await import("@/lib/db/domain-persistence");
+    await persistEquipment(stored);
+    return stored;
+  }
+  const patched = patchEquipmentFields(id, input);
+  const { persistEquipmentPatch } = await import("@/lib/db/domain-persistence");
+  if (patched) await persistEquipmentPatch(id, patched);
   return { ...existing, ...input };
 }

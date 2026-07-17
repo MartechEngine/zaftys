@@ -16,6 +16,8 @@ export type CustomReportDefinition = {
 };
 
 export async function listCustomReportDefinitions(): Promise<CustomReportDefinition[]> {
+  const { ensureFleetAuxHydrated } = await import("@/lib/db/domain-persistence");
+  await ensureFleetAuxHydrated();
   const [ops, drivers, fleet, invoices] = await Promise.all([
     getOperationsReport(),
     getDriverScorecards(),
@@ -86,7 +88,10 @@ export async function createCustomReport(input: {
   name: string;
   description?: string;
 }) {
-  return createStoredCustomReport(input);
+  const report = createStoredCustomReport(input);
+  const { persistCustomReport } = await import("@/lib/db/domain-persistence");
+  await persistCustomReport(report);
+  return report;
 }
 
 export async function runCustomReport(id: string) {

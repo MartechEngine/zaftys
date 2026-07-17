@@ -54,6 +54,18 @@ export async function findDocumentById(
   return rows[0] ? mapRow(rows[0]) : null;
 }
 
+export async function listAllDocumentsFromDb(): Promise<ShipmentDocumentRow[]> {
+  const db = getDb();
+  if (!db || !isDatabaseConfigured()) return [];
+
+  const rows = await db
+    .select()
+    .from(shipmentDocuments)
+    .orderBy(desc(shipmentDocuments.uploadedAt));
+
+  return rows.map(mapRow);
+}
+
 export async function insertDocumentToDb(
   shipmentId: string,
   doc: ShipmentDocument,

@@ -3,7 +3,10 @@ import { vehicleMarkersFromShipment } from "@/lib/map-markers";
 import { apiSuccess } from "@/lib/api-response";
 
 export async function GET() {
-  tickMapGeo();
+  // Simulated GPS motion only in demo UI — match /api/map/stream
+  if (process.env.TSM_DEMO_UI !== "0") {
+    tickMapGeo();
+  }
   const active = await listShipments({ tab: "active" });
   const markers = active
     .map((s) =>

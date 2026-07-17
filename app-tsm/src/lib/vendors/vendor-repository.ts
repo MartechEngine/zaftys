@@ -132,7 +132,9 @@ export async function patchVendor(
   const existing = await getVendor(id);
   if (!existing) return undefined;
   const { patchStoredVendor } = await import("@/lib/mutations/fleet-entity-store");
-  patchStoredVendor(id, input);
+  const patched = patchStoredVendor(id, input);
+  const { persistVendorPatch } = await import("@/lib/db/domain-persistence");
+  if (patched) await persistVendorPatch(id, patched);
   const stored = listStoredVendors().find((v) => v.id === id);
   if (stored) {
     Object.assign(stored, input);

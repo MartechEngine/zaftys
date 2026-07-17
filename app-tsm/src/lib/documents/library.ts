@@ -10,6 +10,8 @@ export type DocumentLibraryEntry = {
   client: string;
   uploadedAt: string;
   uploadedLabel: string;
+  storageKey?: string;
+  downloadable: boolean;
 };
 
 const TYPE_LABELS: Record<ShipmentDocument["type"], string> = {
@@ -46,6 +48,8 @@ export function flattenShipmentDocuments(shipments: ShipmentRecord[]): DocumentL
         client: shipment.client,
         uploadedAt: doc.uploadedAt,
         uploadedLabel: formatUploadedLabel(doc.uploadedAt),
+        storageKey: doc.storageKey,
+        downloadable: Boolean(doc.storageKey),
       });
     }
   }

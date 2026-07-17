@@ -21,6 +21,10 @@ export function listStoredPlaces(): StoredPlace[] {
   return [...getStore()];
 }
 
+export function replaceStoredPlaces(items: StoredPlace[]) {
+  g.__tsmDevPlaces = [...items];
+}
+
 export function createStoredPlace(input: {
   name: string;
   type: string;

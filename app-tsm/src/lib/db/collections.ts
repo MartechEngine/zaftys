@@ -38,7 +38,23 @@ export type CollectionName =
   | "quote_patches"
   | "user_passwords"
   | "sync_state"
-  | "invite_tokens";
+  | "invite_tokens"
+  | "fleet_drivers"
+  | "fleet_vehicles"
+  | "driver_patches"
+  | "vehicle_patches"
+  | "custom_reports"
+  | "report_schedules"
+  | "fleet_places"
+  | "fleet_equipment"
+  | "fleet_groups"
+  | "network_partners"
+  | "place_patches"
+  | "equipment_patches"
+  | "fleet_group_patches"
+  | "sync_dlq"
+  | "notification_reads"
+  | "notification_items";
 
 const g = globalThis as typeof globalThis & {
   __tsmCollectionHydrated?: Set<string>;

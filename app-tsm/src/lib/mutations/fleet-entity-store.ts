@@ -23,8 +23,16 @@ export function listStoredDrivers(): Driver[] {
   return [...g.__tsmDrivers];
 }
 
+export function replaceStoredDrivers(items: Driver[]) {
+  g.__tsmDrivers = [...items];
+}
+
 export function getDriverPatch(id: string) {
   return g.__tsmDriverPatches?.[id];
+}
+
+export function replaceDriverPatches(next: Record<string, Partial<Driver>>) {
+  g.__tsmDriverPatches = { ...next };
 }
 
 export function createStoredDriver(input: {
@@ -68,8 +76,16 @@ export function listStoredVehicles(): Vehicle[] {
   return [...g.__tsmVehicles];
 }
 
+export function replaceStoredVehicles(items: Vehicle[]) {
+  g.__tsmVehicles = [...items];
+}
+
 export function getVehiclePatch(id: string) {
   return g.__tsmVehiclePatches?.[id];
+}
+
+export function replaceVehiclePatches(next: Record<string, Partial<Vehicle>>) {
+  g.__tsmVehiclePatches = { ...next };
 }
 
 export function createStoredVehicle(input: {
@@ -127,6 +143,12 @@ export function listStoredCustomReports() {
   return [...g.__tsmCustomReports];
 }
 
+export function replaceStoredCustomReports(
+  items: ReturnType<typeof listStoredCustomReports>,
+) {
+  g.__tsmCustomReports = [...items];
+}
+
 export function createStoredCustomReport(input: {
   name: string;
   description?: string;
@@ -163,6 +185,13 @@ export function listStoredReportSchedules(): StoredReportSchedule[] {
   };
   if (!store.__tsmReportSchedules) store.__tsmReportSchedules = [];
   return [...store.__tsmReportSchedules];
+}
+
+export function replaceStoredReportSchedules(items: StoredReportSchedule[]) {
+  const store = globalThis as typeof globalThis & {
+    __tsmReportSchedules?: StoredReportSchedule[];
+  };
+  store.__tsmReportSchedules = [...items];
 }
 
 export function createStoredReportSchedule(input: {
@@ -223,6 +252,15 @@ export function getVendorPatch(id: string) {
   return g.__tsmVendorPatches?.[id];
 }
 
+export function replaceVendorPatches(
+  next: Record<
+    string,
+    { name?: string; type?: string; city?: string; contact?: string }
+  >,
+) {
+  g.__tsmVendorPatches = { ...next };
+}
+
 export function patchStoredVendor(
   id: string,
   patch: { name?: string; type?: string; city?: string; contact?: string },
@@ -236,4 +274,75 @@ export function patchStoredVendor(
     timestamp: new Date().toISOString(),
   });
   return g.__tsmVendorPatches[id];
+}
+
+/** Hydrate created drivers/vehicles (+ patches) from Postgres once. */
+export async function ensureFleetEntitiesHydrated() {
+  const { isDatabaseConfigured } = await import("@/lib/db/client");
+  if (!isDatabaseConfigured()) return;
+  const gHydrate = globalThis as typeof globalThis & {
+    __tsmFleetEntitiesHydrated?: boolean;
+  };
+  if (gHydrate.__tsmFleetEntitiesHydrated) return;
+
+  const {
+    ensureArrayHydrated,
+    loadCollection,
+    isCollectionHydrated,
+    markCollectionHydrated,
+  } = await import("@/lib/db/collections");
+
+  await ensureArrayHydrated({
+    collection: "fleet_drivers",
+    list: listStoredDrivers,
+    replace: replaceStoredDrivers,
+  });
+  await ensureArrayHydrated({
+    collection: "fleet_vehicles",
+    list: listStoredVehicles,
+    replace: replaceStoredVehicles,
+  });
+
+  if (!isCollectionHydrated("driver_patches")) {
+    const rows = await loadCollection<{ id: string; value: Partial<Driver> }>(
+      "driver_patches",
+    );
+    if (rows.length > 0) {
+      replaceDriverPatches(Object.fromEntries(rows.map((r) => [r.id, r.value])));
+    }
+    markCollectionHydrated("driver_patches");
+  }
+  if (!isCollectionHydrated("vehicle_patches")) {
+    const rows = await loadCollection<{ id: string; value: Partial<Vehicle> }>(
+      "vehicle_patches",
+    );
+    if (rows.length > 0) {
+      replaceVehiclePatches(Object.fromEntries(rows.map((r) => [r.id, r.value])));
+    }
+    markCollectionHydrated("vehicle_patches");
+  }
+
+  gHydrate.__tsmFleetEntitiesHydrated = true;
+}
+
+export async function persistFleetEntities() {
+  const { isDatabaseConfigured } = await import("@/lib/db/client");
+  if (!isDatabaseConfigured()) return;
+  const { upsertDocument, persistMapEntry } = await import("@/lib/db/collections");
+  try {
+    for (const d of listStoredDrivers()) {
+      await upsertDocument("fleet_drivers", d.id, d);
+    }
+    for (const v of listStoredVehicles()) {
+      await upsertDocument("fleet_vehicles", v.id, v);
+    }
+    for (const [id, value] of Object.entries(g.__tsmDriverPatches ?? {})) {
+      await persistMapEntry("driver_patches", id, value);
+    }
+    for (const [id, value] of Object.entries(g.__tsmVehiclePatches ?? {})) {
+      await persistMapEntry("vehicle_patches", id, value);
+    }
+  } catch (err) {
+    console.error("[fleet-entity-store] persist failed", err);
+  }
 }

@@ -1,6 +1,15 @@
-import { getVehicle, getDriver } from "@/lib/data/fleet-repository";
-import { listDrivers } from "@/lib/data/shipment-repository";
-import { patchStoredDriver, patchStoredVehicle } from "@/lib/mutations/fleet-entity-store";
+import { getDriver, getVehicle } from "@/lib/data/fleet-repository";
+import {
+  getActiveDataSource,
+  listDrivers,
+} from "@/lib/data/shipment-repository";
+import { getFleetbaseClient } from "@/lib/fleetbase/client";
+import {
+  ensureFleetEntitiesHydrated,
+  patchStoredDriver,
+  patchStoredVehicle,
+  persistFleetEntities,
+} from "@/lib/mutations/fleet-entity-store";
 import { apiError, apiSuccess } from "@/lib/api-response";
 
 export const dynamic = "force-dynamic";
@@ -9,6 +18,7 @@ export async function GET(
   _request: Request,
   { params }: { params: Promise<{ id: string }> },
 ) {
+  await ensureFleetEntitiesHydrated();
   const { id } = await params;
   const vehicle = await getVehicle(id);
   if (!vehicle) return apiError("VEHICLE_NOT_FOUND", "Vehicle not found.", 404);
@@ -19,6 +29,7 @@ export async function PATCH(
   request: Request,
   { params }: { params: Promise<{ id: string }> },
 ) {
+  await ensureFleetEntitiesHydrated();
   const { id } = await params;
   let body: unknown;
   try {
@@ -75,6 +86,24 @@ export async function PATCH(
     return apiError("VALIDATION_ERROR", "Provide at least one field.");
   }
 
-  patchStoredVehicle(id, patch);
+  if (getActiveDataSource() === "fleetbase") {
+    try {
+      const fbPatch: Record<string, unknown> = {};
+      if (patch.registration !== undefined) fbPatch.plate_number = patch.registration;
+      if (patch.type !== undefined) fbPatch.type = patch.type;
+      if (patch.capacityMt !== undefined) {
+        fbPatch.meta = { capacity_mt: patch.capacityMt };
+      }
+      await getFleetbaseClient().updateVehicle(id, fbPatch);
+    } catch (err) {
+      console.warn("[vehicles] Fleetbase patch failed, applying local overlay:", err);
+      patchStoredVehicle(id, patch);
+      await persistFleetEntities();
+    }
+  } else {
+    patchStoredVehicle(id, patch);
+    await persistFleetEntities();
+  }
+
   return apiSuccess(await getVehicle(id));
 }

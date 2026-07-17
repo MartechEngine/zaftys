@@ -23,6 +23,8 @@ export type PartnerRecord = {
 };
 
 export async function listPartners(q?: string): Promise<PartnerRecord[]> {
+  const { ensureFleetAuxHydrated } = await import("@/lib/db/domain-persistence");
+  await ensureFleetAuxHydrated();
   const [shipments, assignments] = await Promise.all([
     fetchAllShipmentsRaw(),
     listNetworkAssignments(),
@@ -58,7 +60,10 @@ export function validateCreatePartnerInput(
 }
 
 export async function createPartner(name: string): Promise<PartnerRecord> {
-  return createStoredPartner({ name });
+  const partner = createStoredPartner({ name });
+  const { persistPartner } = await import("@/lib/db/domain-persistence");
+  await persistPartner(partner);
+  return partner;
 }
 
 export async function verifyPartner(id: string): Promise<PartnerRecord | undefined> {

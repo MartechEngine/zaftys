@@ -14,6 +14,10 @@ export default async function SettingsNotificationsPage() {
       <SettingsNav />
       <Card className="max-w-lg">
         <CardContent className="space-y-4 p-5 text-sm">
+          <p className="text-xs text-muted-foreground">
+            In-app notifications are live. Email/WhatsApp delivery is a local stub (logged to activity /
+            console) until an SMTP provider is configured.
+          </p>
           {channels.map((c) => (
             <div key={c.id} className="flex items-start justify-between gap-3">
               <div>

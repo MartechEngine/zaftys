@@ -222,9 +222,9 @@ export function ForgotPasswordForm() {
     try {
       await api.requestPasswordReset(trimmed);
       setSent(true);
-      toast.success("Reset link sent (demo stub)");
+      toast.success("Use /reset-password with your email (local — no email sent)");
     } catch (err) {
-      toast.error(err instanceof Error ? err.message : "Could not send reset link.");
+      toast.error(err instanceof Error ? err.message : "Could not start password reset.");
     } finally {
       setBusy(false);
     }
@@ -233,7 +233,11 @@ export function ForgotPasswordForm() {
   if (sent) {
     return (
       <p className="mt-4 text-sm text-emerald-700">
-        If an account exists for {email}, a reset link has been queued (local demo).
+        Continue at{" "}
+        <a href="/reset-password" className="underline">
+          /reset-password
+        </a>{" "}
+        with {email}. No email is sent in local mode.
       </p>
     );
   }

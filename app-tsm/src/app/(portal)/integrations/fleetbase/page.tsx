@@ -45,6 +45,10 @@ export default async function FleetbaseIntegrationPage() {
               <CheckFleetbaseHealthButton />
               <RotateFleetbaseKeyButton />
             </div>
+            <p className="text-xs text-muted-foreground">
+              Rotate updates the display mask only. Change the real API key via{" "}
+              <code className="text-[10px]">FLEETBASE_API_KEY</code> in the environment.
+            </p>
           </CardContent>
         </Card>
         <Card>

@@ -1,6 +1,7 @@
 import type { OriginType, ShipmentStatus } from "@/lib/constants";
 import type { Driver, ShipmentRecord, Vehicle } from "@/lib/dev-store";
 import type { CreateShipmentInput } from "@/lib/shipments/create-shipment";
+import { geoForShipment } from "@/lib/geo";
 
 export interface FleetbaseOrder {
   id: string;
@@ -104,6 +105,25 @@ export function mapFleetbaseOrder(order: FleetbaseOrder): ShipmentRecord {
   const destination =
     order.dropoff?.city ?? order.dropoff?.name ?? (meta.destination as string) ?? "—";
 
+  const lat = Number(
+    meta.latitude ?? meta.lat ?? (meta.location as { lat?: number })?.lat,
+  );
+  const lng = Number(
+    meta.longitude ??
+      meta.lng ??
+      meta.lon ??
+      (meta.location as { lng?: number })?.lng,
+  );
+  const hasLivePos = Number.isFinite(lat) && Number.isFinite(lng);
+
+  const base = geoForShipment({
+    id: order.id,
+    origin,
+    destination,
+    status: mapStatus(order.status),
+    updatedAt: new Date().toISOString(),
+  });
+
   return {
     id: order.id,
     publicId: order.public_id ?? order.id.slice(0, 12).toUpperCase(),
@@ -124,6 +144,15 @@ export function mapFleetbaseOrder(order: FleetbaseOrder): ShipmentRecord {
     documents: [],
     trackToken: meta.track_token as string | undefined,
     updatedAt: new Date().toISOString(),
+    geo: hasLivePos
+      ? {
+          origin: base?.origin ?? { lat, lng },
+          destination: base?.destination ?? { lat, lng },
+          current: { lat, lng },
+          gpsUpdatedAt: new Date().toISOString(),
+          gpsStale: false,
+        }
+      : base,
   };
 }
 

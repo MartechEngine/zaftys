@@ -68,6 +68,8 @@ const PASSWORD = process.env.SMOKE_PASSWORD ?? "dev";
   "/api/reports/custom",
   "/api/settings/report-schedules",
   "/api/notifications",
+  "/api/sync/dlq",
+  "/api/jobs/gps-stale-check",
   "/api/reports/lanes",
   "/api/settings/config?section=payments",
   "/api/documents",
@@ -405,6 +407,19 @@ async function main() {
         all: true,
       }),
     () =>
+      writeCheck("POST /api/sync/dlq enqueue", cookie, "POST", "/api/sync/dlq", {
+        action: "enqueue",
+        entityType: "integration",
+        entityId: "smoke",
+        operation: "probe",
+        error: "Smoke DLQ entry",
+      }),
+    () =>
+      writeCheck("POST /api/jobs/gps-stale-check", cookie, "POST", "/api/jobs/gps-stale-check", {
+        thresholdMinutes: 99999,
+        raiseException: false,
+      }),
+    () =>
       writeCheck("POST /api/shipments/bulk", cookie, "POST", "/api/shipments/bulk", {
         ids: ["1"],
         status: "at_weighbridge",
@@ -421,13 +436,44 @@ async function main() {
         },
       ),
     () =>
-      writeCheck(
-        "POST /api/shipments/quotes/q1/accept",
-        cookie,
-        "POST",
-        "/api/shipments/quotes/q1/accept",
-        {},
-      ),
+      (async () => {
+        const create = await fetch(`${BASE}/api/shipments/quotes`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            ...(cookie ? { Cookie: cookie } : {}),
+          },
+          body: JSON.stringify({
+            client: "Smoke Accept Client",
+            origin: "Nagpur",
+            destination: "Pune",
+            tonnage: 18,
+            status: "draft",
+          }),
+        });
+        let id = "";
+        try {
+          const json = await create.json();
+          id = json?.data?.id ?? "";
+        } catch {
+          /* ignore */
+        }
+        if (!create.ok || !id) {
+          return {
+            path: "POST /api/shipments/quotes/[id]/accept",
+            ok: false,
+            status: create.status,
+            detail: "could not create quote to accept",
+          };
+        }
+        return writeCheck(
+          "POST /api/shipments/quotes/[id]/accept",
+          cookie,
+          "POST",
+          `/api/shipments/quotes/${id}/accept`,
+          {},
+        );
+      })(),
     () =>
       writeCheck("POST /api/fleet/issues", cookie, "POST", "/api/fleet/issues", {
         vehicle: "MH-27-AB-1234",
@@ -520,7 +566,13 @@ async function main() {
       writeCheck("POST /api/integrations/fleetbase", cookie, "POST", "/api/integrations/fleetbase", {}),
     () =>
       writeCheck("POST /api/profile/password", cookie, "POST", "/api/profile/password", {
-        newPassword: "local-stub-pass",
+        currentPassword: PASSWORD,
+        newPassword: "local-stub-pass12",
+      }),
+    () =>
+      writeCheck("POST /api/profile/password restore", cookie, "POST", "/api/profile/password", {
+        currentPassword: "local-stub-pass12",
+        newPassword: PASSWORD,
       }),
     () =>
       writeCheck("PATCH /api/fleet/groups/fg1", cookie, "PATCH", "/api/fleet/groups/fg1", {
@@ -780,6 +832,17 @@ async function main() {
       ),
     () =>
       writeCheck(
+        "PATCH /api/settings/config security restore",
+        cookie,
+        "PATCH",
+        "/api/settings/config",
+        {
+          section: "security",
+          values: { passwordMinLength: 12, passwordRotationDays: 90 },
+        },
+      ),
+    () =>
+      writeCheck(
         "PATCH /api/settings/config tracking",
         cookie,
         "PATCH",
@@ -829,8 +892,8 @@ async function main() {
         "/api/auth/reset-password",
         {
           email: "smoke@zaftys.com",
-          password: "smokepass1",
-          confirmPassword: "smokepass1",
+          password: "smokepassword12",
+          confirmPassword: "smokepassword12",
         },
       ),
     () =>

@@ -64,6 +64,8 @@ export function validateCreatePlaceInput(body: unknown): CreatePlaceInput | { er
 }
 
 export async function listPlaces(q?: string): Promise<PlaceRecord[]> {
+  const { ensureFleetAuxHydrated } = await import("@/lib/db/domain-persistence");
+  await ensureFleetAuxHydrated();
   const shipments = await fetchAllShipmentsRaw();
 
   const enrich = (p: {
@@ -103,6 +105,8 @@ export async function listPlaces(q?: string): Promise<PlaceRecord[]> {
 
 export async function createPlace(input: CreatePlaceInput): Promise<PlaceRecord> {
   const place = createStoredPlace(input);
+  const { persistPlace } = await import("@/lib/db/domain-persistence");
+  await persistPlace(place);
   return { ...place, activeShipments: 0 };
 }
 
@@ -114,9 +118,15 @@ export async function updatePlace(
   if (!existing) return undefined;
 
   const stored = patchStoredPlace(id, input);
-  if (stored) return { ...stored, activeShipments: existing.activeShipments };
+  if (stored) {
+    const { persistPlace } = await import("@/lib/db/domain-persistence");
+    await persistPlace(stored);
+    return { ...stored, activeShipments: existing.activeShipments };
+  }
 
-  patchPlaceFields(id, input);
+  const patched = patchPlaceFields(id, input);
+  const { persistPlacePatch } = await import("@/lib/db/domain-persistence");
+  if (patched) await persistPlacePatch(id, patched);
   return { ...existing, ...input };
 }
 
@@ -143,6 +153,8 @@ export async function getPlace(id: string) {
 }
 
 export async function listFleetGroups(): Promise<FleetGroupRecord[]> {
+  const { ensureFleetAuxHydrated } = await import("@/lib/db/domain-persistence");
+  await ensureFleetAuxHydrated();
   const { listStoredFleetGroups } = await import("@/lib/mutations/entity-stores");
   const [drivers, vehicles] = await Promise.all([listDrivers(), listVehicles()]);
 
@@ -173,7 +185,10 @@ export function validateCreateFleetGroupInput(
 
 export async function createFleetGroup(input: { name: string; zone?: string }) {
   const { createStoredFleetGroup } = await import("@/lib/mutations/entity-stores");
-  return createStoredFleetGroup(input);
+  const group = createStoredFleetGroup(input);
+  const { persistFleetGroup } = await import("@/lib/db/domain-persistence");
+  await persistFleetGroup(group);
+  return group;
 }
 
 export async function updateFleetGroup(
@@ -185,9 +200,15 @@ export async function updateFleetGroup(
 
   const { patchStoredFleetGroup } = await import("@/lib/mutations/entity-stores");
   const stored = patchStoredFleetGroup(id, input);
-  if (stored) return stored;
+  if (stored) {
+    const { persistFleetGroup } = await import("@/lib/db/domain-persistence");
+    await persistFleetGroup(stored);
+    return stored;
+  }
 
-  patchFleetGroupFields(id, input);
+  const patched = patchFleetGroupFields(id, input);
+  const { persistFleetGroupPatch } = await import("@/lib/db/domain-persistence");
+  if (patched) await persistFleetGroupPatch(id, patched);
   return { ...existing, ...input };
 }
 
