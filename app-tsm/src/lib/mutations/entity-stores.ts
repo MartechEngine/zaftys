@@ -91,6 +91,23 @@ export function createStoredSchedule(input: {
   return row;
 }
 
+export function patchStoredSchedule(
+  id: string,
+  patch: Partial<Pick<StoredSchedule, "vehicle" | "trigger" | "nextDue" | "type">>,
+): StoredSchedule | undefined {
+  if (!g.__tsmSchedules) return undefined;
+  const row = g.__tsmSchedules.find((s) => s.id === id);
+  if (!row) return undefined;
+  Object.assign(row, patch);
+  logActivity({
+    shipmentId: "",
+    type: "schedule.updated",
+    message: `${row.type} · ${row.vehicle}`,
+    timestamp: new Date().toISOString(),
+  });
+  return row;
+}
+
 export function listStoredFleetGroups(): StoredFleetGroup[] {
   if (!g.__tsmFleetGroups) g.__tsmFleetGroups = [];
   return [...g.__tsmFleetGroups];

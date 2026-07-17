@@ -172,6 +172,28 @@ export const api = {
       body: JSON.stringify(input),
     }),
 
+  revokeClientUser: (clientId: string, userId: string) =>
+    fetchApi<{ id: string; status: string }>(`/api/clients/${clientId}/users`, {
+      method: "PATCH",
+      body: JSON.stringify({ userId, revoke: true }),
+    }),
+
+  patchClientContact: (
+    clientId: string,
+    contactId: string,
+    input: { name?: string; role?: string; phone?: string; email?: string },
+  ) =>
+    fetchApi<{ id: string; name: string }>(`/api/clients/${clientId}/contacts`, {
+      method: "PATCH",
+      body: JSON.stringify({ contactId, ...input }),
+    }),
+
+  deleteClientContact: (clientId: string, contactId: string) =>
+    fetchApi<{ contactId: string; deleted: boolean }>(`/api/clients/${clientId}/contacts`, {
+      method: "DELETE",
+      body: JSON.stringify({ contactId }),
+    }),
+
   createInvoice: (input: {
     client: string;
     description: string;
@@ -229,6 +251,15 @@ export const api = {
     fetchApi<{ id: string; vehicle: string }>("/api/maintenance/schedules", {
       method: "POST",
       body: JSON.stringify(input),
+    }),
+
+  patchMaintenanceSchedule: (
+    id: string,
+    input: { vehicle?: string; trigger?: string; nextDue?: string; type?: string },
+  ) =>
+    fetchApi<{ id: string; vehicle: string }>("/api/maintenance/schedules", {
+      method: "PATCH",
+      body: JSON.stringify({ id, ...input }),
     }),
 
   createFleetGroup: (input: { name: string; zone?: string }) =>

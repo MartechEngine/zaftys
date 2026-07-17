@@ -625,6 +625,76 @@ async function main() {
       writeCheck("POST /api/integrations/tally export", cookie, "POST", "/api/integrations/tally", {
         action: "export",
       }),
+    () =>
+      writeCheck(
+        "PATCH /api/clients/c1/users revoke",
+        cookie,
+        "PATCH",
+        "/api/clients/c1/users",
+        { userId: "cu1", revoke: true },
+      ),
+    () =>
+      writeCheck(
+        "PATCH /api/clients/c1/contacts",
+        cookie,
+        "PATCH",
+        "/api/clients/c1/contacts",
+        { contactId: "ct1", role: "Logistics director" },
+      ),
+    () =>
+      writeCheck(
+        "PATCH /api/settings/groups/gr1 rename",
+        cookie,
+        "PATCH",
+        "/api/settings/groups/gr1",
+        { name: "Dispatch team" },
+      ),
+    () =>
+      writeCheck(
+        "PATCH /api/settings/geofences rename",
+        cookie,
+        "PATCH",
+        "/api/settings/geofences",
+        { id: "gf1", name: "Amravati plant zone" },
+      ),
+    () =>
+      writeCheck(
+        "PATCH /api/fleet/equipment relocate",
+        cookie,
+        "PATCH",
+        "/api/fleet/equipment",
+        { id: "eq3", location: "Nagpur yard" },
+      ),
+    () =>
+      writeCheck(
+        "PATCH /api/settings/config billing template",
+        cookie,
+        "PATCH",
+        "/api/settings/config",
+        {
+          section: "billing",
+          values: { invoiceTemplate: "ZAFTYS GST A4 · compact" },
+        },
+      ),
+    () =>
+      writeCheck(
+        "PATCH /api/settings/config scheduling",
+        cookie,
+        "PATCH",
+        "/api/settings/config",
+        {
+          section: "scheduling",
+          values: { maxDrivingHours: 11, plantWindow: "05:00 – 21:00" },
+        },
+      ),
+    () =>
+      writeCheck(
+        "PATCH /api/maintenance/schedules",
+        cookie,
+        "PATCH",
+        "/api/maintenance/schedules",
+        { id: "ms1", trigger: "Every 12,000 km", nextDue: "01 Sep 2026" },
+      ),
   ];
 
   for (const run of writes) {

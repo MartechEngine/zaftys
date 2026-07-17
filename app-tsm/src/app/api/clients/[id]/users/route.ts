@@ -2,6 +2,7 @@ import {
   getClient,
   inviteClientUser,
   listClientUsers,
+  revokeClientPortalUser,
   validateInviteClientUserInput,
 } from "@/lib/clients/client-repository";
 import { apiError, apiSuccess } from "@/lib/api-response";
@@ -36,4 +37,28 @@ export async function POST(
   const user = await inviteClientUser(id, parsed);
   if (!user) return apiError("CLIENT_NOT_FOUND", "Client not found.", 404);
   return apiSuccess(user, { created: true });
+}
+
+export async function PATCH(
+  request: Request,
+  { params }: { params: Promise<{ id: string }> },
+) {
+  const { id } = await params;
+  let body: unknown;
+  try {
+    body = await request.json();
+  } catch {
+    return apiError("INVALID_JSON", "Request body must be valid JSON.");
+  }
+
+  const data = body as { userId?: string; id?: string; revoke?: boolean };
+  const userId = String(data.userId ?? data.id ?? "").trim();
+  if (!userId) return apiError("VALIDATION_ERROR", "userId is required.");
+  if (data.revoke !== true) {
+    return apiError("VALIDATION_ERROR", "revoke: true is required.");
+  }
+
+  const user = await revokeClientPortalUser(id, userId);
+  if (!user) return apiError("USER_NOT_FOUND", "Portal user not found.", 404);
+  return apiSuccess(user);
 }

@@ -8,11 +8,22 @@ import {
 import {
   createStoredContact,
   createStoredClientUser,
+  deleteStoredContact,
   getClientPatch,
   listStoredContacts,
   listStoredClientUsers,
   patchStoredClient,
+  patchStoredContact,
+  revokeStoredClientUser,
 } from "@/lib/clients/client-mutations";
+import {
+  getContactPatch,
+  isClientUserRevoked,
+  isContactDeleted,
+  markContactDeleted,
+  patchContactFields,
+  revokeClientUser as markClientUserRevoked,
+} from "@/lib/mutations/sprint14-store";
 
 export type ClientRecord = {
   id: string;
@@ -309,7 +320,12 @@ export async function listClientContacts(clientId: string): Promise<ClientContac
           ]
         : [];
 
-  return [...stored, ...base];
+  return [...stored, ...base]
+    .filter((c) => !isContactDeleted(c.id))
+    .map((c) => {
+      const patch = getContactPatch(c.id);
+      return patch ? { ...c, ...patch } : c;
+    });
 }
 
 export async function listClientUsers(clientId: string): Promise<ClientPortalUser[]> {
@@ -317,5 +333,91 @@ export async function listClientUsers(clientId: string): Promise<ClientPortalUse
   if (!client) return [];
   const stored = listStoredClientUsers(client.id);
   const demo = demoClientUsers.filter((u) => u.clientId === client.id);
-  return [...stored, ...demo];
+  return [...stored, ...demo].map((u) =>
+    isClientUserRevoked(u.id)
+      ? { ...u, status: "pending" as const, lastLogin: "Revoked" }
+      : u,
+  );
+}
+
+export type PatchContactInput = {
+  name?: string;
+  role?: string;
+  phone?: string;
+  email?: string;
+};
+
+export function validatePatchContactInput(
+  body: unknown,
+): ({ contactId: string } & PatchContactInput) | { error: string } {
+  if (!body || typeof body !== "object") return { error: "Body must be an object." };
+  const data = body as Record<string, unknown>;
+  const contactId = String(data.contactId ?? data.id ?? "").trim();
+  if (!contactId) return { error: "contactId is required." };
+
+  const patch: PatchContactInput = {};
+  if (data.name !== undefined) {
+    const name = String(data.name).trim();
+    if (!name) return { error: "Contact name cannot be empty." };
+    patch.name = name;
+  }
+  if (data.role !== undefined) patch.role = String(data.role).trim() || undefined;
+  if (data.phone !== undefined) patch.phone = String(data.phone).trim() || undefined;
+  if (data.email !== undefined) patch.email = String(data.email).trim() || undefined;
+
+  if (Object.keys(patch).length === 0) {
+    return { error: "Provide at least one field to update." };
+  }
+  return { contactId, ...patch };
+}
+
+export async function patchClientContact(
+  clientId: string,
+  contactId: string,
+  input: PatchContactInput,
+): Promise<ClientContact | undefined> {
+  const client = await getClient(clientId);
+  if (!client) return undefined;
+
+  const contacts = await listClientContacts(clientId);
+  const existing = contacts.find((c) => c.id === contactId);
+  if (!existing) return undefined;
+
+  const stored = patchStoredContact(contactId, input);
+  if (stored) return stored;
+
+  patchContactFields(contactId, input);
+  return { ...existing, ...input };
+}
+
+export async function deleteClientContact(
+  clientId: string,
+  contactId: string,
+): Promise<boolean> {
+  const client = await getClient(clientId);
+  if (!client) return false;
+
+  const contacts = await listClientContacts(clientId);
+  if (!contacts.some((c) => c.id === contactId)) return false;
+
+  deleteStoredContact(contactId);
+  markContactDeleted(contactId);
+  return true;
+}
+
+export async function revokeClientPortalUser(
+  clientId: string,
+  userId: string,
+): Promise<ClientPortalUser | undefined> {
+  const client = await getClient(clientId);
+  if (!client) return undefined;
+
+  const users = await listClientUsers(clientId);
+  const existing = users.find((u) => u.id === userId);
+  if (!existing) return undefined;
+  if (isClientUserRevoked(userId)) return existing;
+
+  const stored = revokeStoredClientUser(userId);
+  markClientUserRevoked(userId);
+  return stored ?? { ...existing, status: "pending", lastLogin: "Revoked" };
 }

@@ -4,6 +4,7 @@ import { DataTable } from "@/components/app/data-table";
 import { listSettingsGroups } from "@/lib/settings/groups-repository";
 import { CreateSettingsGroupForm } from "@/components/app/module-create-forms";
 import { EditGroupPolicyButton } from "@/components/app/sprint11-forms";
+import { RenameSettingsGroupButton } from "@/components/app/sprint14-forms";
 
 export default async function SettingsGroupsPage() {
   const groups = await listSettingsGroups();
@@ -25,7 +26,12 @@ export default async function SettingsGroupsPage() {
           {
             key: "actions",
             header: "",
-            render: (r) => <EditGroupPolicyButton id={r.id} policy={r.policy} />,
+            render: (r) => (
+              <div className="flex flex-wrap gap-2">
+                <RenameSettingsGroupButton id={r.id} name={r.name} />
+                <EditGroupPolicyButton id={r.id} policy={r.policy} />
+              </div>
+            ),
           },
         ]}
       />

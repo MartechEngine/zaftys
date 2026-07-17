@@ -4,6 +4,7 @@ import { DataTable } from "@/components/app/data-table";
 import { listMaintenanceSchedules } from "@/lib/maintenance/work-order-repository";
 import { MAINTENANCE_NAV } from "@/lib/module-nav";
 import { CreateScheduleForm } from "@/components/app/module-create-forms";
+import { EditMaintenanceScheduleButton } from "@/components/app/sprint14-forms";
 
 export default async function MaintenanceSchedulesPage() {
   const schedules = await listMaintenanceSchedules();
@@ -27,6 +28,19 @@ export default async function MaintenanceSchedulesPage() {
           { key: "type", header: "Type", render: (r) => r.type },
           { key: "trigger", header: "Trigger", render: (r) => r.trigger },
           { key: "nextDue", header: "Next due", render: (r) => r.nextDue },
+          {
+            key: "actions",
+            header: "",
+            render: (r) => (
+              <EditMaintenanceScheduleButton
+                id={r.id}
+                vehicle={r.vehicle}
+                trigger={r.trigger}
+                nextDue={r.nextDue}
+                type={r.type}
+              />
+            ),
+          },
         ]}
       />
     </>

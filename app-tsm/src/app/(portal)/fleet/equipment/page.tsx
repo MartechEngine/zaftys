@@ -3,6 +3,7 @@ import { ModuleSubNav } from "@/components/app/module-sub-nav";
 import { DataTable, StatusPill } from "@/components/app/data-table";
 import { CreateEquipmentForm } from "@/components/app/create-equipment-form";
 import { AssignEquipmentButton } from "@/components/app/sprint11-forms";
+import { RelocateEquipmentButton } from "@/components/app/sprint14-forms";
 import { listEquipment } from "@/lib/fleet/equipment-repository";
 import { listPlaces } from "@/lib/fleet/places-repository";
 import { FLEET_NAV } from "@/lib/module-nav";
@@ -38,7 +39,12 @@ export default async function FleetEquipmentPage() {
           {
             key: "actions",
             header: "",
-            render: (r) => <AssignEquipmentButton id={r.id} status={r.status} />,
+            render: (r) => (
+              <div className="flex flex-wrap gap-2">
+                <RelocateEquipmentButton id={r.id} location={r.location} />
+                <AssignEquipmentButton id={r.id} status={r.status} />
+              </div>
+            ),
           },
         ]}
       />

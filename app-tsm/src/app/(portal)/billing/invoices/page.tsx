@@ -5,6 +5,7 @@ import { DataTable, StatusPill } from "@/components/app/data-table";
 import { listInvoices } from "@/lib/billing/invoice-repository";
 import { BILLING_NAV } from "@/lib/module-nav";
 import { CreateInvoiceForm } from "@/components/app/create-invoice-form";
+import { InvoiceStatusActions } from "@/components/app/sprint14-forms";
 
 const invStatus = {
   pending: { label: "Pending", className: "bg-amber-100 text-amber-800" },
@@ -43,6 +44,11 @@ export default async function BillingInvoicesPage() {
             render: (r) => <StatusPill status={r.status} map={invStatus} />,
           },
           { key: "due", header: "Due", render: (r) => r.due },
+          {
+            key: "actions",
+            header: "",
+            render: (r) => <InvoiceStatusActions id={r.id} status={r.status} />,
+          },
         ]}
       />
     </>

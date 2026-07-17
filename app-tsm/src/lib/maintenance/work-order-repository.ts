@@ -147,7 +147,13 @@ export type PartRecord = {
 
 export async function listMaintenanceSchedules(): Promise<MaintenanceSchedule[]> {
   const { listStoredSchedules } = await import("@/lib/mutations/entity-stores");
-  return [...listStoredSchedules(), ...demoMaintenanceSchedules.map((s) => ({ ...s }))];
+  const { getSchedulePatch } = await import("@/lib/mutations/sprint14-store");
+  return [...listStoredSchedules(), ...demoMaintenanceSchedules.map((s) => ({ ...s }))].map(
+    (row) => {
+      const patch = getSchedulePatch(row.id);
+      return patch ? { ...row, ...patch } : row;
+    },
+  );
 }
 
 export function validateCreateScheduleInput(
@@ -175,6 +181,71 @@ export async function createMaintenanceSchedule(input: {
 }): Promise<MaintenanceSchedule> {
   const { createStoredSchedule } = await import("@/lib/mutations/entity-stores");
   return createStoredSchedule(input);
+}
+
+export function validatePatchScheduleInput(
+  body: unknown,
+):
+  | {
+      id: string;
+      vehicle?: string;
+      trigger?: string;
+      nextDue?: string;
+      type?: string;
+    }
+  | { error: string } {
+  if (!body || typeof body !== "object") return { error: "Body must be an object." };
+  const data = body as Record<string, unknown>;
+  const id = String(data.id ?? "").trim();
+  if (!id) return { error: "id is required." };
+
+  const patch: {
+    id: string;
+    vehicle?: string;
+    trigger?: string;
+    nextDue?: string;
+    type?: string;
+  } = { id };
+
+  if (data.vehicle !== undefined) {
+    const vehicle = String(data.vehicle).trim();
+    if (!vehicle) return { error: "Vehicle cannot be empty." };
+    patch.vehicle = vehicle;
+  }
+  if (data.trigger !== undefined) {
+    const trigger = String(data.trigger).trim();
+    if (!trigger) return { error: "Trigger cannot be empty." };
+    patch.trigger = trigger;
+  }
+  if (data.nextDue !== undefined) {
+    patch.nextDue = String(data.nextDue).trim() || undefined;
+  }
+  if (data.type !== undefined) {
+    patch.type = String(data.type).trim() || undefined;
+  }
+
+  if (Object.keys(patch).length === 1) {
+    return { error: "Provide at least one field to update." };
+  }
+  return patch;
+}
+
+export async function patchMaintenanceSchedule(
+  id: string,
+  input: { vehicle?: string; trigger?: string; nextDue?: string; type?: string },
+): Promise<MaintenanceSchedule | undefined> {
+  const schedules = await listMaintenanceSchedules();
+  const existing = schedules.find((s) => s.id === id);
+  if (!existing) return undefined;
+
+  const { patchStoredSchedule } = await import("@/lib/mutations/entity-stores");
+  const { patchScheduleFields } = await import("@/lib/mutations/sprint14-store");
+
+  const stored = patchStoredSchedule(id, input);
+  if (stored) return stored;
+
+  patchScheduleFields(id, input);
+  return { ...existing, ...input };
 }
 
 export async function listPartsInventory(): Promise<PartRecord[]> {

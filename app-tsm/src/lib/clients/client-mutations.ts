@@ -92,3 +92,47 @@ export function patchStoredClient(id: string, patch: Partial<ClientRecord>) {
   });
   return patches()[id];
 }
+
+export function patchStoredContact(
+  contactId: string,
+  patch: { name?: string; role?: string; phone?: string; email?: string },
+): ClientContact | undefined {
+  const row = contactsStore().find((c) => c.id === contactId);
+  if (!row) return undefined;
+  Object.assign(row, patch);
+  logActivity({
+    shipmentId: "",
+    type: "contact.updated",
+    message: `${row.name} (${contactId})`,
+    timestamp: new Date().toISOString(),
+  });
+  return row;
+}
+
+export function deleteStoredContact(contactId: string): boolean {
+  const store = contactsStore();
+  const index = store.findIndex((c) => c.id === contactId);
+  if (index === -1) return false;
+  store.splice(index, 1);
+  logActivity({
+    shipmentId: "",
+    type: "contact.deleted",
+    message: contactId,
+    timestamp: new Date().toISOString(),
+  });
+  return true;
+}
+
+export function revokeStoredClientUser(userId: string): ClientPortalUser | undefined {
+  const row = usersStore().find((u) => u.id === userId);
+  if (!row) return undefined;
+  row.status = "pending";
+  row.lastLogin = "Revoked";
+  logActivity({
+    shipmentId: "",
+    type: "client_user.revoked",
+    message: row.email,
+    timestamp: new Date().toISOString(),
+  });
+  return row;
+}

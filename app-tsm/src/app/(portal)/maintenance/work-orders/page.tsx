@@ -7,6 +7,7 @@ import { listWorkOrders } from "@/lib/maintenance/work-order-repository";
 import { listVendors } from "@/lib/vendors/vendor-repository";
 import { listVehicles } from "@/lib/data/shipment-repository";
 import { MAINTENANCE_NAV } from "@/lib/module-nav";
+import { WorkOrderStatusActions } from "@/components/app/sprint14-forms";
 
 const woStatus = {
   open: { label: "Open", className: "bg-amber-100 text-amber-800" },
@@ -55,6 +56,11 @@ export default async function WorkOrdersPage() {
           },
           { key: "due", header: "Due", render: (r) => r.due },
           { key: "cost", header: "Est. cost", render: (r) => r.cost },
+          {
+            key: "actions",
+            header: "",
+            render: (r) => <WorkOrderStatusActions id={r.id} status={r.status} />,
+          },
         ]}
       />
     </>

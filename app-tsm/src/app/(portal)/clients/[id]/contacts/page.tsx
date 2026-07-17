@@ -6,6 +6,7 @@ import { ModuleSubNav } from "@/components/app/module-sub-nav";
 import { DataTable } from "@/components/app/data-table";
 import { getClient, listClientContacts } from "@/lib/clients/client-repository";
 import { CreateContactForm } from "@/components/app/create-contact-form";
+import { DeleteContactButton, EditContactButton } from "@/components/app/sprint14-forms";
 import { CLIENTS_NAV } from "@/lib/module-nav";
 
 export default async function ClientContactsPage({
@@ -41,6 +42,23 @@ export default async function ClientContactsPage({
           { key: "role", header: "Role", render: (r) => r.role },
           { key: "phone", header: "Phone", render: (r) => r.phone },
           { key: "email", header: "Email", render: (r) => r.email },
+          {
+            key: "actions",
+            header: "",
+            render: (r) => (
+              <div className="flex flex-wrap gap-2">
+                <EditContactButton
+                  clientId={id}
+                  contactId={r.id}
+                  name={r.name}
+                  role={r.role}
+                  phone={r.phone}
+                  email={r.email}
+                />
+                <DeleteContactButton clientId={id} contactId={r.id} name={r.name} />
+              </div>
+            ),
+          },
         ]}
       />
       <p className="mt-4 text-sm">

@@ -4,7 +4,7 @@ import { SettingsNav } from "@/components/app/settings-nav";
 import { Card, CardContent } from "@/components/ui/card";
 import { getBillingTemplateSettings } from "@/lib/settings/config-repository";
 import { ConfigToggleForm } from "@/components/app/config-toggle-form";
-import { ConfigFieldForm } from "@/components/app/sprint13-forms";
+import { ConfigFieldForm } from "@/components/app/sprint14-forms";
 
 export default async function SettingsBillingPage() {
   const settings = await getBillingTemplateSettings();
@@ -18,6 +18,12 @@ export default async function SettingsBillingPage() {
           <p>
             <span className="text-muted-foreground">Invoice template</span> · {settings.invoiceTemplate}
           </p>
+          <ConfigFieldForm
+            section="billing"
+            field="invoiceTemplate"
+            label="Invoice template"
+            value={settings.invoiceTemplate}
+          />
           <p>
             <span className="text-muted-foreground">Payment terms</span> · {settings.paymentTerms}
           </p>
@@ -34,6 +40,12 @@ export default async function SettingsBillingPage() {
           <p>
             <span className="text-muted-foreground">HSN/SAC</span> · {settings.hsnSac}
           </p>
+          <ConfigFieldForm
+            section="billing"
+            field="hsnSac"
+            label="HSN/SAC"
+            value={settings.hsnSac}
+          />
           <p>
             <span className="text-muted-foreground">Org GSTIN</span> · {settings.orgGstin}
           </p>

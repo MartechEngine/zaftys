@@ -6,6 +6,7 @@ import { ModuleSubNav } from "@/components/app/module-sub-nav";
 import { DataTable, StatusPill } from "@/components/app/data-table";
 import { getClient, listClientUsers } from "@/lib/clients/client-repository";
 import { InviteClientUserForm } from "@/components/app/invite-client-user-form";
+import { RevokeClientUserButton } from "@/components/app/sprint14-forms";
 import { CLIENTS_NAV } from "@/lib/module-nav";
 
 const userStatus = {
@@ -50,6 +51,13 @@ export default async function ClientUsersPage({
             render: (r) => <StatusPill status={r.status} map={userStatus} />,
           },
           { key: "lastLogin", header: "Last login", render: (r) => r.lastLogin },
+          {
+            key: "actions",
+            header: "",
+            render: (r) => (
+              <RevokeClientUserButton clientId={id} userId={r.id} status={r.status} />
+            ),
+          },
         ]}
       />
       <p className="mt-4 text-sm">

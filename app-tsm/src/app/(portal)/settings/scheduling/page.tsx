@@ -3,6 +3,7 @@ import { SettingsNav } from "@/components/app/settings-nav";
 import { Card, CardContent } from "@/components/ui/card";
 import { getSchedulingSettings } from "@/lib/settings/config-repository";
 import { ConfigToggleForm } from "@/components/app/config-toggle-form";
+import { ConfigFieldForm } from "@/components/app/sprint14-forms";
 
 export default async function SettingsSchedulingPage() {
   const settings = await getSchedulingSettings();
@@ -17,10 +18,23 @@ export default async function SettingsSchedulingPage() {
             <span className="text-muted-foreground">Max driving hours</span> ·{" "}
             {settings.maxDrivingHours} hr / day
           </p>
+          <ConfigFieldForm
+            section="scheduling"
+            field="maxDrivingHours"
+            label="Max driving hours"
+            value={settings.maxDrivingHours}
+            inputType="number"
+          />
           <p>
             <span className="text-muted-foreground">Plant loading window</span> ·{" "}
             {settings.plantWindow}
           </p>
+          <ConfigFieldForm
+            section="scheduling"
+            field="plantWindow"
+            label="Plant loading window"
+            value={settings.plantWindow}
+          />
           <p>
             <span className="text-muted-foreground">Weekend dispatch</span> ·{" "}
             {settings.weekendDispatch}
