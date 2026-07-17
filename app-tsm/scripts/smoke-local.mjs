@@ -74,6 +74,13 @@ const PASSWORD = process.env.SMOKE_PASSWORD ?? "dev";
   "/api/settings/notifications",
   "/api/network/listings",
   "/api/network/listings/health",
+  "/api/analytics/command-center",
+  "/api/analytics/operations",
+  "/api/analytics/drivers",
+  "/api/analytics/fleet",
+  "/api/analytics/lanes",
+  "/api/analytics/network",
+  "/api/analytics/billing",
   "/api/network/assignments",
 ];
 

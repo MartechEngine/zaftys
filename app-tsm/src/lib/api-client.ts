@@ -1215,6 +1215,33 @@ export const api = {
       method: "POST",
       body: JSON.stringify(input),
     }),
+
+  getAnalyticsCommandCenter: () =>
+    fetchApi<import("@/lib/analytics/series").CommandCenterAnalytics>(
+      "/api/analytics/command-center",
+    ),
+
+  getAnalyticsOperations: (days?: number) => {
+    const qs = days ? `?days=${days}` : "";
+    return fetchApi<import("@/lib/analytics/series").OperationsAnalytics>(
+      `/api/analytics/operations${qs}`,
+    );
+  },
+
+  getAnalyticsDrivers: () =>
+    fetchApi<import("@/lib/analytics/series").DriversAnalytics>("/api/analytics/drivers"),
+
+  getAnalyticsFleet: () =>
+    fetchApi<import("@/lib/analytics/series").FleetAnalytics>("/api/analytics/fleet"),
+
+  getAnalyticsLanes: () =>
+    fetchApi<import("@/lib/analytics/series").LanesAnalytics>("/api/analytics/lanes"),
+
+  getAnalyticsNetwork: () =>
+    fetchApi<import("@/lib/analytics/series").NetworkAnalytics>("/api/analytics/network"),
+
+  getAnalyticsBilling: () =>
+    fetchApi<import("@/lib/analytics/series").BillingAnalytics>("/api/analytics/billing"),
 };
 
 export type NetworkAssignmentRow = {

@@ -2,12 +2,17 @@ import Link from "next/link";
 import { PageHeader } from "@/components/app/app-shell";
 import { ModuleSubNav } from "@/components/app/module-sub-nav";
 import { DataTable } from "@/components/app/data-table";
+import { DriversCharts } from "@/components/app/charts/drivers-charts";
+import { getDriversAnalytics } from "@/lib/analytics/series";
 import { getDriverScorecards } from "@/lib/reports/operations-report";
 import { REPORTS_NAV } from "@/lib/module-nav";
 import { ExportReportCsvButton } from "@/components/app/sprint15-forms";
 
 export default async function ReportsDriversPage() {
-  const scorecards = await getDriverScorecards();
+  const [scorecards, analytics] = await Promise.all([
+    getDriverScorecards(),
+    getDriversAnalytics(),
+  ]);
 
   return (
     <>
@@ -17,6 +22,7 @@ export default async function ReportsDriversPage() {
         action={<ExportReportCsvButton path="/api/reports/drivers" filename="drivers" />}
       />
       <ModuleSubNav links={REPORTS_NAV} />
+      <DriversCharts initialData={analytics} />
       {scorecards.length === 0 ? (
         <p className="text-sm text-muted-foreground">No driver trip data yet.</p>
       ) : (

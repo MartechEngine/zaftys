@@ -8,6 +8,7 @@ import { UserMenu } from "@/components/app/user-menu";
 import { DataSourceBadge } from "@/components/app/data-source-badge";
 import { OrgSwitcher } from "@/components/app/org-switcher";
 import type { SessionUser } from "@/lib/auth/types";
+import { ActiveSparkline } from "@/components/app/charts/charts";
 import { glassCardHover } from "@/lib/surface";
 import { cn } from "@/lib/utils";
 
@@ -103,8 +104,6 @@ export function SectionCard({
   );
 }
 
-const SPARKLINE = [30, 45, 38, 60, 52, 70, 65, 82, 74, 90, 85, 100];
-
 export function KpiCard({
   label,
   value,
@@ -113,6 +112,7 @@ export function KpiCard({
   delta,
   deltaUp,
   showSparkline = true,
+  sparklineValues,
 }: {
   label: string;
   value: number | string;
@@ -121,6 +121,7 @@ export function KpiCard({
   delta?: string;
   deltaUp?: boolean;
   showSparkline?: boolean;
+  sparklineValues?: number[];
 }) {
   const inner = (
     <>
@@ -148,15 +149,9 @@ export function KpiCard({
           </span>
         )}
       </div>
-      {showSparkline && (
-        <div className="relative mt-4 flex h-8 items-end gap-1">
-          {SPARKLINE.map((h, i) => (
-            <div
-              key={i}
-              style={{ height: `${h}%` }}
-              className="flex-1 rounded-sm bg-gradient-to-t from-primary/10 to-primary/70"
-            />
-          ))}
+      {showSparkline && sparklineValues && sparklineValues.length > 0 && (
+        <div className="relative mt-4">
+          <ActiveSparkline values={sparklineValues} />
         </div>
       )}
     </>

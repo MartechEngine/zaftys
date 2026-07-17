@@ -4,11 +4,17 @@ import { PageHeader, KpiCard, SectionCard } from "@/components/app/app-shell";
 import { SyncStatusBanner } from "@/components/app/sync-status-banner";
 import { CommandCenterMap } from "@/components/app/command-center-map";
 import { AlertRow } from "@/components/app/ui-primitives";
+import { getCommandCenterAnalytics } from "@/lib/analytics/series";
+import { CommandCenterCharts } from "@/components/app/charts/command-center-charts";
 import { getExceptions, getKpis, listActivities, listShipments } from "@/lib/data/shipment-repository";
 import { Button } from "@/components/ui/button";
 
 export default async function CommandCenterPage() {
-  const [kpis, exceptions] = await Promise.all([getKpis(), getExceptions()]);
+  const [kpis, exceptions, analytics] = await Promise.all([
+    getKpis(),
+    getExceptions(),
+    getCommandCenterAnalytics(),
+  ]);
   const activities = listActivities();
   const activeShipments = await listShipments({ tab: "active" });
 
@@ -49,7 +55,14 @@ export default async function CommandCenterPage() {
       </div>
 
       <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-        <KpiCard label="Active trips" value={kpis.activeTrips} href="/shipments?tab=active" delta="+12%" deltaUp />
+        <KpiCard
+          label="Active trips"
+          value={kpis.activeTrips}
+          href="/shipments?tab=active"
+          delta="+12%"
+          deltaUp
+          sparklineValues={analytics.activeTripsSpark.values}
+        />
         <KpiCard
           label="Exceptions"
           value={kpis.exceptions}
@@ -57,13 +70,14 @@ export default async function CommandCenterPage() {
           variant="warning"
           delta={kpis.exceptions > 0 ? `${kpis.exceptions} open` : undefined}
           deltaUp={false}
+          sparklineValues={analytics.exceptionsSpark.values}
         />
-        <KpiCard label="At plant" value={kpis.atPlant} />
+        <KpiCard label="At plant" value={kpis.atPlant} showSparkline={false} />
         <KpiCard
           label="TranZfort posts"
           value={kpis.outboundOpenPosts || kpis.networkOverflow}
           href="/network/overflow"
-          showSparkline={(kpis.outboundOpenPosts || kpis.networkOverflow) > 0}
+          showSparkline={false}
           delta={
             kpis.outboundOffersWaiting > 0
               ? `${kpis.outboundOffersWaiting} offers waiting`
@@ -73,6 +87,8 @@ export default async function CommandCenterPage() {
           }
         />
       </div>
+
+      <CommandCenterCharts initialData={analytics} />
 
       <div className="mt-6 grid gap-5 lg:grid-cols-5">
         <SectionCard

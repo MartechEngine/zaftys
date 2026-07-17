@@ -34,6 +34,7 @@ Central index for the TSM / LOS app. Start with [app-overview.md](./app-overview
 | [ui-ux-features.md](./ui-ux-features.md) | UI/UX spec for all screens |
 | [Master-TODO.md](./Master-TODO.md) | Master checklist by wave |
 | [TODO-11-july.md](./TODO-11-july.md) | **All tasks — completed + pending** |
+| [product/analytics-charts-brainstorm.md](./product/analytics-charts-brainstorm.md) | **Charts & analytics backlog** (MUI X, CC + Reports) |
 
 ### Product (`product/`)
 
@@ -48,6 +49,7 @@ Central index for the TSM / LOS app. Start with [app-overview.md](./app-overview
 | [india-compliance-fields.md](./product/india-compliance-fields.md) | P1 |
 | [non-goals.md](./product/non-goals.md) | P1 |
 | [success-metrics.md](./product/success-metrics.md) | P2 |
+| [analytics-charts-brainstorm.md](./product/analytics-charts-brainstorm.md) | P1 — charts & analytics backlog (MUI X) |
 | ~~mvp-scope.md~~ | Deprecated → product-scope |
 
 ### Design (`design/`)

@@ -2,12 +2,14 @@ import Link from "next/link";
 import { PageHeader } from "@/components/app/app-shell";
 import { ModuleSubNav } from "@/components/app/module-sub-nav";
 import { Card, CardContent } from "@/components/ui/card";
+import { LanesCharts } from "@/components/app/charts/lanes-charts";
 import { ExportCsvButton } from "@/components/app/sprint16-forms";
+import { getLanesAnalytics } from "@/lib/analytics/series";
 import { getLanesReport } from "@/lib/reports/lanes-report";
 import { REPORTS_NAV } from "@/lib/module-nav";
 
 export default async function ReportsLanesPage() {
-  const report = await getLanesReport();
+  const [report, analytics] = await Promise.all([getLanesReport(), getLanesAnalytics()]);
 
   return (
     <>
@@ -21,6 +23,7 @@ export default async function ReportsLanesPage() {
         {report.totalCorridors} corridors
         {report.topCorridor ? ` · top: ${report.topCorridor}` : ""}
       </p>
+      <LanesCharts initialData={analytics} />
       {report.corridors.length === 0 ? (
         <p className="text-sm text-muted-foreground">No corridor data yet.</p>
       ) : (

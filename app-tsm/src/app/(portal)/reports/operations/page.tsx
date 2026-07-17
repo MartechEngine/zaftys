@@ -2,12 +2,17 @@ import Link from "next/link";
 import { PageHeader } from "@/components/app/app-shell";
 import { ModuleSubNav } from "@/components/app/module-sub-nav";
 import { DataTable } from "@/components/app/data-table";
+import { OperationsCharts } from "@/components/app/charts/operations-charts";
+import { getOperationsAnalytics } from "@/lib/analytics/series";
 import { getOperationsReport } from "@/lib/reports/operations-report";
 import { REPORTS_NAV } from "@/lib/module-nav";
 import { ExportReportCsvButton } from "@/components/app/sprint15-forms";
 
 export default async function ReportsOperationsPage() {
-  const report = await getOperationsReport();
+  const [report, analytics] = await Promise.all([
+    getOperationsReport(),
+    getOperationsAnalytics(),
+  ]);
 
   return (
     <>
@@ -17,6 +22,7 @@ export default async function ReportsOperationsPage() {
         action={<ExportReportCsvButton path="/api/reports/operations" filename="operations" />}
       />
       <ModuleSubNav links={REPORTS_NAV} />
+      <OperationsCharts initialData={analytics} />
       <DataTable
         rows={report.byCorridor.map((c, i) => ({ id: String(i), ...c }))}
         columns={[

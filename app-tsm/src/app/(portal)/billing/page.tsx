@@ -2,6 +2,8 @@ import Link from "next/link";
 import { PageHeader, KpiCard } from "@/components/app/app-shell";
 import { ModuleSubNav } from "@/components/app/module-sub-nav";
 import { DataTable, HubCard, StatusPill } from "@/components/app/data-table";
+import { BillingCharts } from "@/components/app/charts/billing-charts";
+import { getBillingAnalytics } from "@/lib/analytics/series";
 import { getBillingSummary } from "@/lib/billing/billing-summary";
 import { BILLING_NAV } from "@/lib/module-nav";
 import { CreateInvoiceForm } from "@/components/app/create-invoice-form";
@@ -12,7 +14,7 @@ const invStatus = {
 };
 
 export default async function BillingPage() {
-  const summary = await getBillingSummary();
+  const [summary, analytics] = await Promise.all([getBillingSummary(), getBillingAnalytics()]);
 
   return (
     <>
@@ -26,8 +28,9 @@ export default async function BillingPage() {
         <KpiCard label="Total invoices" value={summary.invoiceCount} />
         <KpiCard label="Pending" value={summary.pendingCount} variant="warning" />
         <KpiCard label="Outstanding" value={summary.pendingTotal} />
-        <KpiCard label="Collected" value={summary.paidTotal} />
+        <KpiCard label="Collected" value={summary.paidTotal} showSparkline={false} />
       </div>
+      <BillingCharts initialData={analytics} />
       <div className="mb-6 grid gap-4 md:grid-cols-3">
         <HubCard
           href="/billing/invoices"
