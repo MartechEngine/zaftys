@@ -7,6 +7,19 @@ export type ShipmentDocumentRow = ShipmentDocument & {
   shipmentId: string;
 };
 
+function mapRow(r: typeof shipmentDocuments.$inferSelect): ShipmentDocumentRow {
+  return {
+    id: r.id,
+    shipmentId: r.shipmentId,
+    type: r.type as ShipmentDocument["type"],
+    name: r.name,
+    uploadedAt: r.uploadedAt,
+    storageKey: r.storageKey ?? undefined,
+    contentType: r.contentType ?? undefined,
+    sizeBytes: r.sizeBytes != null ? Number(r.sizeBytes) : undefined,
+  };
+}
+
 export async function listDocumentsFromDb(
   shipmentId: string,
 ): Promise<ShipmentDocument[] | null> {
@@ -19,15 +32,26 @@ export async function listDocumentsFromDb(
     .where(eq(shipmentDocuments.shipmentId, shipmentId))
     .orderBy(desc(shipmentDocuments.uploadedAt));
 
-  return rows.map((r) => ({
-    id: r.id,
-    type: r.type as ShipmentDocument["type"],
-    name: r.name,
-    uploadedAt: r.uploadedAt,
-    storageKey: r.storageKey ?? undefined,
-    contentType: r.contentType ?? undefined,
-    sizeBytes: r.sizeBytes != null ? Number(r.sizeBytes) : undefined,
-  }));
+  return rows.map((r) => {
+    const mapped = mapRow(r);
+    const { shipmentId: _, ...doc } = mapped;
+    return doc;
+  });
+}
+
+export async function findDocumentById(
+  docId: string,
+): Promise<ShipmentDocumentRow | null> {
+  const db = getDb();
+  if (!db || !isDatabaseConfigured()) return null;
+
+  const rows = await db
+    .select()
+    .from(shipmentDocuments)
+    .where(eq(shipmentDocuments.id, docId))
+    .limit(1);
+
+  return rows[0] ? mapRow(rows[0]) : null;
 }
 
 export async function insertDocumentToDb(

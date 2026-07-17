@@ -1,5 +1,6 @@
 import {
   DeleteObjectCommand,
+  GetObjectCommand,
   HeadBucketCommand,
   PutObjectCommand,
   S3Client,
@@ -57,6 +58,29 @@ export async function putObject(
       ContentType: contentType,
     }),
   );
+}
+
+export async function getObject(key: string): Promise<{
+  body: Uint8Array;
+  contentType?: string;
+  contentLength?: number;
+}> {
+  const client = getS3Client();
+  const result = await client.send(
+    new GetObjectCommand({
+      Bucket: getBucket(),
+      Key: key,
+    }),
+  );
+  if (!result.Body) {
+    throw new Error(`S3 object empty: ${key}`);
+  }
+  const body = await result.Body.transformToByteArray();
+  return {
+    body,
+    contentType: result.ContentType ?? undefined,
+    contentLength: result.ContentLength ?? undefined,
+  };
 }
 
 /** Public / path-style object URL (not signed). */

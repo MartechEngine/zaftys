@@ -37,7 +37,7 @@ export async function POST(
 
   const user = await inviteClientUser(id, parsed);
   if (!user) return apiError("CLIENT_NOT_FOUND", "Client not found.", 404);
-  return apiSuccess(user, { created: true });
+  return apiSuccess(user, { created: true, invitePath: user.invitePath });
 }
 
 export async function PATCH(
@@ -65,7 +65,7 @@ export async function PATCH(
         400,
       );
     }
-    return apiSuccess(user);
+    return apiSuccess(user, { invitePath: user.invitePath });
   }
 
   if (data.revoke !== true) {

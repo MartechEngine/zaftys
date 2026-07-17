@@ -14,7 +14,7 @@ export async function POST(request: Request) {
     return apiError("VALIDATION_ERROR", "Email and password are required.");
   }
 
-  const user = verifyDevCredentials(email, password);
+  const user = await verifyDevCredentials(email, password);
   if (!user) {
     return apiError("INVALID_CREDENTIALS", "Email or password is incorrect.", 401);
   }

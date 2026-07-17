@@ -35,7 +35,10 @@ export type CollectionName =
   | "parts_stock"
   | "maintenance_schedules"
   | "quotes"
-  | "quote_patches";
+  | "quote_patches"
+  | "user_passwords"
+  | "sync_state"
+  | "invite_tokens";
 
 const g = globalThis as typeof globalThis & {
   __tsmCollectionHydrated?: Set<string>;

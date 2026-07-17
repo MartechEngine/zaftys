@@ -36,6 +36,8 @@ export interface LiveMapProps {
   onSelect?: (id: string | null) => void;
   showPlaceholderLegend?: boolean;
   clusterVehicles?: boolean;
+  /** When false, skip fitBounds after marker updates (useful for animated replay). Default true. */
+  fitBoundsOnUpdate?: boolean;
 }
 
 /** Free vector tiles — no API key or signup (OpenFreeMap / OpenStreetMap data) */
@@ -90,6 +92,7 @@ export function LiveMap({
   onSelect,
   showPlaceholderLegend = true,
   clusterVehicles = true,
+  fitBoundsOnUpdate = true,
 }: LiveMapProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const mapRef = useRef<MaplibreMap | null>(null);
@@ -184,8 +187,10 @@ export function LiveMap({
       markerRefs.current.push(marker);
     }
 
-    fitBounds(mapRef.current, displayMarkers);
-  }, [displayMarkers, ready, selectedId, onSelect]);
+    if (fitBoundsOnUpdate) {
+      fitBounds(mapRef.current, displayMarkers);
+    }
+  }, [displayMarkers, ready, selectedId, onSelect, fitBoundsOnUpdate]);
 
   useEffect(() => {
     const map = mapRef.current;

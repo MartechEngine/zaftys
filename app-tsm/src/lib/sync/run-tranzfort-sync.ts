@@ -29,14 +29,14 @@ export async function runTranZfortSync(): Promise<SyncRunResult> {
 
   if (!isTranZfortConfigured()) {
     result.errors.push("TRANZFORT_SUPABASE_URL / TRANZFORT_SERVICE_KEY not configured");
-    recordSyncRun({ ...result, success: false, source: "none" });
+    await recordSyncRun({ ...result, success: false, source: "none" });
     return result;
   }
 
   const client = getFleetbaseClient();
   if (!client.isConfigured) {
     result.errors.push("FLEETBASE_API_KEY not configured");
-    recordSyncRun({ ...result, success: false, source: "tranzfort" });
+    await recordSyncRun({ ...result, success: false, source: "tranzfort" });
     return result;
   }
 
@@ -45,7 +45,7 @@ export async function runTranZfortSync(): Promise<SyncRunResult> {
     trips = await fetchTranZfortTrips(50);
   } catch (e) {
     result.errors.push(e instanceof Error ? e.message : "TranZfort fetch failed");
-    recordSyncRun({ ...result, success: false, source: "tranzfort" });
+    await recordSyncRun({ ...result, success: false, source: "tranzfort" });
     return result;
   }
 
@@ -60,7 +60,7 @@ export async function runTranZfortSync(): Promise<SyncRunResult> {
     }
   } catch (e) {
     result.errors.push(e instanceof Error ? e.message : "Fleetbase list orders failed");
-    recordSyncRun({ ...result, success: false, source: "tranzfort" });
+    await recordSyncRun({ ...result, success: false, source: "tranzfort" });
     return result;
   }
 
@@ -80,7 +80,7 @@ export async function runTranZfortSync(): Promise<SyncRunResult> {
     }
   }
 
-  recordSyncRun({
+  await recordSyncRun({
     scanned: result.scanned,
     created: result.created,
     skipped: result.skipped,

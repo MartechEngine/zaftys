@@ -13,6 +13,7 @@ const connStatus = {
 
 export default async function TelematicsPage() {
   const providers = await listTelematicsProviders();
+  const demoUi = process.env.TSM_DEMO_UI !== "0";
 
   return (
     <>
@@ -22,20 +23,35 @@ export default async function TelematicsPage() {
         action={<CreateTelematicsForm />}
       />
       <ModuleSubNav links={INTEGRATIONS_NAV} />
-      <DataTable
-        rows={providers}
-        columns={[
-          { key: "name", header: "Provider", render: (r) => r.name },
-          { key: "vehicles", header: "Vehicles", render: (r) => r.vehicles },
-          { key: "lastPing", header: "Last ping", render: (r) => r.lastPing },
-          { key: "status", header: "Status", render: (r) => <StatusPill status={r.status} map={connStatus} /> },
-          {
-            key: "actions",
-            header: "",
-            render: (r) => <TestTelematicsButton id={r.id} />,
-          },
-        ]}
-      />
+      {!demoUi && providers.length === 0 ? (
+        <div className="rounded-xl border border-dashed border-white/15 bg-white/[0.02] px-4 py-10 text-center text-sm text-muted-foreground">
+          No telematics providers connected. Add a provider above or set integration credentials.
+        </div>
+      ) : (
+        <DataTable
+          rows={providers}
+          emptyMessage="No telematics providers configured."
+          columns={[
+            {
+              key: "name",
+              header: "Provider",
+              render: (r) => r.name,
+            },
+            { key: "vehicles", header: "Vehicles", render: (r) => r.vehicles },
+            { key: "lastPing", header: "Last ping", render: (r) => r.lastPing },
+            {
+              key: "status",
+              header: "Status",
+              render: (r) => <StatusPill status={r.status} map={connStatus} />,
+            },
+            {
+              key: "actions",
+              header: "",
+              render: (r) => <TestTelematicsButton id={r.id} />,
+            },
+          ]}
+        />
+      )}
     </>
   );
 }

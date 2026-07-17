@@ -233,6 +233,13 @@ export async function ensureOrgHydrated() {
   if (profile) {
     const { id: _id, ...fields } = profile as OrgProfileFields & { id: string };
     replaceStoredOrgProfile(fields);
+    if (fields.logoFilename || fields.logoStorageKey) {
+      const { setOrgLogoMeta } = await import("@/lib/mutations/sprint12-store");
+      setOrgLogoMeta({
+        filename: fields.logoFilename,
+        storageKey: fields.logoStorageKey,
+      });
+    }
   }
   markCollectionHydrated("org_profile");
 }

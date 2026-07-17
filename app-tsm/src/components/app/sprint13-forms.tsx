@@ -400,8 +400,21 @@ export function ExportTallyNowButton({ connected }: { connected: boolean }) {
   async function onClick() {
     setBusy(true);
     try {
-      const result = await api.exportTallyNow();
-      toast.success(`Exported ${result.invoiceCount} invoices · ${result.lastExport}`);
+      const res = await fetch("/api/integrations/tally", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ action: "export" }),
+        cache: "no-store",
+      });
+      if (!res.ok) throw new Error("Tally export failed");
+      const blob = await res.blob();
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `tally-export-${new Date().toISOString().slice(0, 10)}.csv`;
+      a.click();
+      URL.revokeObjectURL(url);
+      toast.success("Tally CSV downloaded");
       router.refresh();
     } catch (err) {
       toast.error(err instanceof Error ? err.message : "Export failed.");

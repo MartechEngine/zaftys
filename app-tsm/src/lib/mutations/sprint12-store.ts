@@ -3,6 +3,7 @@ import type { AutomationRuleRecord } from "@/lib/settings/automation-repository"
 
 const g = globalThis as typeof globalThis & {
   __tsmOrgLogo?: string;
+  __tsmOrgLogoStorageKey?: string;
   __tsmFleetbaseKeyMask?: string;
   __tsmPasswordChangedAt?: string;
   __tsmFleetGroupPatches?: Record<string, { name?: string; zone?: string }>;
@@ -18,6 +19,10 @@ export function getOrgLogoFilename() {
   return g.__tsmOrgLogo;
 }
 
+export function getOrgLogoStorageKey() {
+  return g.__tsmOrgLogoStorageKey;
+}
+
 export function setOrgLogoFilename(name: string) {
   g.__tsmOrgLogo = name.trim() || "zaftys-logo.png";
   logActivity({
@@ -27,6 +32,24 @@ export function setOrgLogoFilename(name: string) {
     timestamp: new Date().toISOString(),
   });
   return g.__tsmOrgLogo;
+}
+
+export function setOrgLogoMeta(input: { filename?: string; storageKey?: string }) {
+  if (input.filename != null) {
+    g.__tsmOrgLogo = input.filename.trim() || "zaftys-logo.png";
+  } else if (!g.__tsmOrgLogo) {
+    g.__tsmOrgLogo = "zaftys-logo.png";
+  }
+  if (input.storageKey !== undefined) {
+    g.__tsmOrgLogoStorageKey = input.storageKey?.trim() || undefined;
+  }
+  logActivity({
+    shipmentId: "",
+    type: "org.logo_uploaded",
+    message: g.__tsmOrgLogo ?? "logo",
+    timestamp: new Date().toISOString(),
+  });
+  return { filename: g.__tsmOrgLogo, storageKey: g.__tsmOrgLogoStorageKey };
 }
 
 export function getFleetbaseKeyMask() {
@@ -50,7 +73,7 @@ export function recordPasswordChange() {
   logActivity({
     shipmentId: "",
     type: "profile.password_changed",
-    message: "Password updated (local stub)",
+    message: "Password updated",
     timestamp: new Date().toISOString(),
   });
   return { changedAt: g.__tsmPasswordChangedAt };

@@ -34,6 +34,30 @@ function seedSeries(base: number, days: string[], salt: number): number[] {
   });
 }
 
+/**
+ * Prefer real day-bucket counts from shipment.updatedAt; fall back to seeded
+ * values when a day has no matching shipments.
+ */
+function dayBucketSeries<T extends { updatedAt: string }>(
+  shipments: T[],
+  days: string[],
+  predicate: (s: T) => boolean,
+  fallbackBase: number,
+  salt: number,
+): number[] {
+  const seeded = seedSeries(fallbackBase, days, salt);
+  const byDay = new Map(days.map((d) => [d, 0]));
+  for (const s of shipments) {
+    if (!predicate(s)) continue;
+    const key = dayKey(new Date(s.updatedAt));
+    if (byDay.has(key)) byDay.set(key, (byDay.get(key) ?? 0) + 1);
+  }
+  return days.map((d, i) => {
+    const count = byDay.get(d) ?? 0;
+    return count > 0 ? count : seeded[i];
+  });
+}
+
 export async function getCommandCenterAnalytics() {
   const { ensureNetworkHydrated } = await import("@/lib/network/network-persistence");
   await ensureNetworkHydrated();
@@ -43,11 +67,24 @@ export async function getCommandCenterAnalytics() {
   );
   const pending = shipments.filter((s) => s.status === "pending");
   const days = lastNDays(14);
-  const activeSpark = seedSeries(Math.max(active.length, 3), days, 2);
+  const activeSpark = dayBucketSeries(
+    shipments,
+    days,
+    (s) =>
+      ["dispatched", "at_plant", "in_transit", "at_weighbridge"].includes(s.status),
+    Math.max(active.length, 3),
+    2,
+  );
   activeSpark[activeSpark.length - 1] = active.length;
 
   const exceptionCount = shipments.filter(isExceptionShipment).length;
-  const exceptionSpark = seedSeries(Math.max(exceptionCount, 1), days, 5);
+  const exceptionSpark = dayBucketSeries(
+    shipments,
+    days,
+    isExceptionShipment,
+    Math.max(exceptionCount, 1),
+    5,
+  );
   exceptionSpark[exceptionSpark.length - 1] = exceptionCount;
 
   const statusCounts = new Map<string, number>();

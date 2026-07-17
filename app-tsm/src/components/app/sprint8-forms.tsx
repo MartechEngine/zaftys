@@ -140,7 +140,7 @@ export function InvoicePdfButton({
       const url = URL.createObjectURL(blob);
       const a = document.createElement("a");
       a.href = url;
-      a.download = `${number}.html`;
+      a.download = `${number}.pdf`;
       a.click();
       URL.revokeObjectURL(url);
       toast.success("Invoice PDF downloaded");

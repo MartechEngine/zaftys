@@ -1,4 +1,5 @@
 import { getSession } from "@/lib/auth/session";
+import { setPasswordHash } from "@/lib/auth/password-store";
 import { recordPasswordChange } from "@/lib/mutations/sprint12-store";
 import { apiError, apiSuccess } from "@/lib/api-response";
 
@@ -21,6 +22,7 @@ export async function POST(request: Request) {
     return apiError("VALIDATION_ERROR", "newPassword must be at least 6 characters.", 400);
   }
 
+  await setPasswordHash(session.email, newPassword);
   const result = recordPasswordChange();
   return apiSuccess({ ok: true, ...result });
 }

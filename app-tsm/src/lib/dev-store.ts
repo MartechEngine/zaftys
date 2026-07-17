@@ -38,6 +38,8 @@ export interface ShipmentRecord extends Shipment {
   driverId?: string;
   vehicleId?: string;
   tranzfortId?: string;
+  /** Multiple TranZfort trip ids (e.g. multi-truck network assignments). */
+  tranzfortTripIds?: string[];
   networkListing?: NetworkListingMirror;
   documents: ShipmentDocument[];
   trackToken?: string;

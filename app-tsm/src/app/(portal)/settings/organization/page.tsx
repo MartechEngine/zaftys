@@ -44,6 +44,9 @@ export default async function SettingsOrganizationPage() {
             <div>
               <span className="text-muted-foreground">Logo</span>
               <p className="font-mono text-xs">{org.logoFilename}</p>
+              {org.logoStorageKey ? (
+                <p className="font-mono text-[10px] text-muted-foreground">{org.logoStorageKey}</p>
+              ) : null}
             </div>
           ) : null}
           <div className="flex flex-wrap gap-2">

@@ -449,12 +449,13 @@ export function InviteOrgUserForm() {
     e.preventDefault();
     setSubmitting(true);
     try {
-      await api.inviteOrgUser({
+      const result = await api.inviteOrgUser({
         name: name.trim(),
         email: email.trim(),
         role: role.trim() || undefined,
       });
-      toast.success("Invite sent");
+      const { toastInviteLink } = await import("@/lib/invite-toast");
+      toastInviteLink("Invite sent", result.invitePath);
       setOpen(false);
       setName("");
       setEmail("");

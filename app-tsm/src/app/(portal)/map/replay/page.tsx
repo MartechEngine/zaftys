@@ -2,7 +2,7 @@ import Link from "next/link";
 import { PageHeader } from "@/components/app/app-shell";
 import { Card, CardContent } from "@/components/ui/card";
 import { getJourneyReplay, listReplayCandidates } from "@/lib/map/replay-repository";
-import { JourneyReplayControls } from "@/components/app/journey-replay-controls";
+import { JourneyReplayMap } from "@/components/app/journey-replay-map";
 
 export default async function MapReplayPage({
   searchParams,
@@ -21,16 +21,24 @@ export default async function MapReplayPage({
       {replay ? (
         <>
           <Card>
-            <CardContent className="flex h-96 flex-col items-center justify-center gap-4 p-8 text-center">
-              <div className="h-48 w-full max-w-2xl rounded-lg bg-primary/5 flex flex-col items-center justify-center gap-2 text-sm text-muted-foreground">
+            <CardContent className="flex flex-col gap-4 p-5">
+              <div className="text-center text-sm text-muted-foreground">
                 <p className="font-medium text-navy">{replay.publicId} · {replay.route}</p>
-                <p>{replay.vehicle}{replay.driver ? ` · ${replay.driver}` : ""}</p>
-                <p>{replay.pointCount} GPS points · {replay.distanceKm} km · {replay.durationMinutes} min</p>
+                <p>
+                  {replay.vehicle}
+                  {replay.driver ? ` · ${replay.driver}` : ""}
+                </p>
+                <p>
+                  {replay.pointCount} GPS points · {replay.distanceKm} km · {replay.durationMinutes}{" "}
+                  min
+                </p>
               </div>
-              <JourneyReplayControls publicId={replay.publicId} pointCount={replay.pointCount} />
-              <p className="text-xs text-muted-foreground">
-                Track loaded from dev-store · first point {replay.points[0]?.lat.toFixed(4)}, {replay.points[0]?.lng.toFixed(4)}
-              </p>
+              <JourneyReplayMap
+                publicId={replay.publicId}
+                vehicle={replay.vehicle}
+                driver={replay.driver}
+                points={replay.points}
+              />
             </CardContent>
           </Card>
           {candidates.length > 1 && (

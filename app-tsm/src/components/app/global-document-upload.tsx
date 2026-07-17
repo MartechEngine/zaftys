@@ -22,7 +22,7 @@ export function GlobalDocumentUpload({
   const router = useRouter();
   const [shipmentId, setShipmentId] = useState(shipments[0]?.id ?? "");
   const [type, setType] = useState<(typeof TYPES)[number]["value"]>("lr");
-  const [fileName, setFileName] = useState("");
+  const [file, setFile] = useState<File | null>(null);
   const [busy, setBusy] = useState(false);
 
   async function handleSubmit(e: React.FormEvent) {
@@ -31,15 +31,14 @@ export function GlobalDocumentUpload({
       toast.error("Select a shipment.");
       return;
     }
-    const name = fileName.trim();
-    if (!name) {
-      toast.error("Enter a file name.");
+    if (!file) {
+      toast.error("Choose a file to upload.");
       return;
     }
     setBusy(true);
     try {
-      await api.uploadShipmentDocument(shipmentId, { type, name });
-      toast.success("Document added.");
+      await api.uploadShipmentDocumentFile(shipmentId, { type, file });
+      toast.success("Document uploaded.");
       router.push("/documents");
       router.refresh();
     } catch (err) {
@@ -86,18 +85,17 @@ export function GlobalDocumentUpload({
       </label>
 
       <label className="block text-sm">
-        <span className="text-muted-foreground">File name</span>
+        <span className="text-muted-foreground">File</span>
         <input
-          value={fileName}
-          onChange={(e) => setFileName(e.target.value)}
-          placeholder="LR-2026-8891.pdf"
-          className="mt-1 w-full rounded-lg border border-white/10 bg-white/[0.05] px-3 py-2 text-sm outline-none placeholder:text-subtle focus:border-primary/40"
+          type="file"
+          required
+          onChange={(e) => setFile(e.target.files?.[0] ?? null)}
+          className="mt-1 w-full rounded-lg border border-white/10 bg-white/[0.05] px-3 py-2 text-sm outline-none file:mr-3 file:rounded file:border-0 file:bg-white/10 file:px-3 file:py-1 file:text-sm focus:border-primary/40"
         />
+        {file ? (
+          <p className="mt-1 text-xs text-muted-foreground">{file.name}</p>
+        ) : null}
       </label>
-
-      <div className="rounded-lg border border-dashed border-white/15 px-6 py-10 text-center text-sm text-muted-foreground">
-        Drop file here or enter a file name above (blob storage in P3).
-      </div>
 
       <div className="flex gap-2">
         <Button type="submit" variant="accent" disabled={busy || !shipments.length}>

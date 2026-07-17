@@ -19,11 +19,12 @@ export function InviteClientUserForm({ clientId }: { clientId: string }) {
     e.preventDefault();
     setSubmitting(true);
     try {
-      await api.inviteClientUser(clientId, {
+      const result = await api.inviteClientUser(clientId, {
         name: name.trim(),
         email: email.trim(),
       });
-      toast.success("Invite sent");
+      const { toastInviteLink } = await import("@/lib/invite-toast");
+      toastInviteLink("Invite sent", result.invitePath);
       setOpen(false);
       setName("");
       setEmail("");

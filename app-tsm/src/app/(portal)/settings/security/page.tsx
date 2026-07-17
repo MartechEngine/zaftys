@@ -17,7 +17,8 @@ export default async function SettingsSecurityPage() {
           <div>
             <p className="font-medium text-navy">Two-factor authentication</p>
             <p className="text-muted-foreground">
-              TOTP via authenticator app · {settings.twoFactorEnabled ? "Enabled" : "Disabled"}
+              Preference stored for rollout · TOTP not enforced at login yet ·{" "}
+              {settings.twoFactorEnabled ? "Marked enabled" : "Disabled"}
             </p>
             <div className="mt-2">
               <ConfigToggleForm
@@ -31,7 +32,8 @@ export default async function SettingsSecurityPage() {
           <div>
             <p className="font-medium text-navy">Session timeout</p>
             <p className="text-muted-foreground">
-              {settings.sessionTimeoutHours} hours · sliding window
+              {settings.sessionTimeoutHours} hours · applied to new sessions (also{" "}
+              <code className="text-xs">SESSION_MAX_AGE_HOURS</code>)
             </p>
             <ConfigFieldForm
               section="security"

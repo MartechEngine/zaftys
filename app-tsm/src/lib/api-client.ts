@@ -51,7 +51,7 @@ export type ClientRecord = {
 async function fetchApiWithMeta<T>(
   path: string,
   init?: RequestInit,
-): Promise<{ data: T; meta?: { counts?: ShipmentTabCounts; total?: number } }> {
+): Promise<{ data: T; meta?: Record<string, unknown> }> {
   const res = await fetch(`${base}${path}`, {
     cache: "no-store",
     ...init,
@@ -167,10 +167,18 @@ export const api = {
     }),
 
   inviteClientUser: (id: string, input: { name: string; email: string }) =>
-    fetchApi<{ id: string; email: string }>(`/api/clients/${id}/users`, {
-      method: "POST",
-      body: JSON.stringify(input),
-    }),
+    fetchApiWithMeta<{ id: string; email: string; invitePath?: string }>(
+      `/api/clients/${id}/users`,
+      {
+        method: "POST",
+        body: JSON.stringify(input),
+      },
+    ).then((r) => ({
+      ...r.data,
+      invitePath:
+        r.data.invitePath ??
+        (typeof r.meta?.invitePath === "string" ? r.meta.invitePath : undefined),
+    })),
 
   revokeClientUser: (clientId: string, userId: string) =>
     fetchApi<{ id: string; status: string }>(`/api/clients/${clientId}/users`, {
@@ -179,13 +187,18 @@ export const api = {
     }),
 
   resendClientUserInvite: (clientId: string, userId: string) =>
-    fetchApi<{ id: string; email: string; lastResentAt?: string }>(
+    fetchApiWithMeta<{ id: string; email: string; lastResentAt?: string; invitePath?: string }>(
       `/api/clients/${clientId}/users`,
       {
         method: "PATCH",
         body: JSON.stringify({ userId, resend: true }),
       },
-    ),
+    ).then((r) => ({
+      ...r.data,
+      invitePath:
+        r.data.invitePath ??
+        (typeof r.meta?.invitePath === "string" ? r.meta.invitePath : undefined),
+    })),
 
   patchClientContact: (
     clientId: string,
@@ -284,10 +297,15 @@ export const api = {
     }),
 
   inviteOrgUser: (input: { name: string; email: string; role?: string }) =>
-    fetchApi<{ id: string; email: string }>("/api/settings/users", {
+    fetchApiWithMeta<{ id: string; email: string; invitePath?: string }>("/api/settings/users", {
       method: "POST",
       body: JSON.stringify(input),
-    }),
+    }).then((r) => ({
+      ...r.data,
+      invitePath:
+        r.data.invitePath ??
+        (typeof r.meta?.invitePath === "string" ? r.meta.invitePath : undefined),
+    })),
 
   createRole: (name: string) =>
     fetchApi<{ id: string; name: string }>("/api/settings/roles", {
@@ -521,7 +539,12 @@ export const api = {
     fetchApi<ShipmentRecord>(`/api/shipments/${id}/cancel`, { method: "POST" }),
 
   postShipmentToOverflow: (id: string) =>
-    fetchApi<{ load: OverflowLoad; cancelled: boolean }>(`/api/shipments/${id}/overflow`, {
+    fetchApi<{
+      load: OverflowLoad;
+      cancelled: boolean;
+      preferListing?: boolean;
+      message?: string;
+    }>(`/api/shipments/${id}/overflow`, {
       method: "POST",
     }),
 
@@ -683,6 +706,27 @@ export const api = {
       body: JSON.stringify(input),
     }),
 
+  /** Multipart file upload — do not set Content-Type (browser sets boundary). */
+  uploadShipmentDocumentFile: async (
+    id: string,
+    input: { type: string; file: File },
+  ): Promise<ShipmentRecord> => {
+    const form = new FormData();
+    form.append("type", input.type);
+    form.append("file", input.file);
+    const res = await fetch(`${base}/api/shipments/${id}/documents`, {
+      method: "POST",
+      body: form,
+      cache: "no-store",
+    });
+    const json = await res.json();
+    if (!res.ok) throw new Error(json.error?.message ?? "Upload failed");
+    return json.data as ShipmentRecord;
+  },
+
+  downloadDocumentUrl: (documentId: string) =>
+    `/api/documents/${documentId}/download`,
+
   getSyncStatus: () =>
     fetchApi<{
       lastSyncAt: string;
@@ -758,11 +802,17 @@ export const api = {
   configureTally: () =>
     fetchApi<{ status: string }>("/api/integrations/tally", { method: "POST" }),
 
-  exportTallyNow: () =>
-    fetchApi<{ status: string; lastExport: string; invoiceCount: number; exportCount?: number }>(
-      "/api/integrations/tally",
-      { method: "POST", body: JSON.stringify({ action: "export" }) },
-    ),
+  exportTallyNow: async () => {
+    const res = await fetch(`${base}/api/integrations/tally`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ action: "export" }),
+      cache: "no-store",
+    });
+    if (!res.ok) throw new Error("Tally export failed");
+    const blob = await res.blob();
+    return { blob, invoiceCount: 0, lastExport: new Date().toISOString(), status: "ok" };
+  },
 
   createCustomReport: (input: { name: string; description?: string }) =>
     fetchApi<{ id: string; name: string }>("/api/reports/custom", {
@@ -935,10 +985,28 @@ export const api = {
     }),
 
   uploadOrgLogo: (filename?: string) =>
-    fetchApi<{ name: string; logoFilename?: string }>("/api/settings/organization/logo", {
+    fetchApi<{ name: string; logoFilename?: string; logoStorageKey?: string }>(
+      "/api/settings/organization/logo",
+      {
+        method: "POST",
+        body: JSON.stringify({ filename: filename ?? "zaftys-logo.png" }),
+      },
+    ),
+
+  uploadOrgLogoFile: async (
+    file: File,
+  ): Promise<{ name: string; logoFilename?: string; logoStorageKey?: string }> => {
+    const form = new FormData();
+    form.append("file", file);
+    const res = await fetch(`${base}/api/settings/organization/logo`, {
       method: "POST",
-      body: JSON.stringify({ filename: filename ?? "zaftys-logo.png" }),
-    }),
+      body: form,
+      cache: "no-store",
+    });
+    const json = await res.json();
+    if (!res.ok) throw new Error(json.error?.message ?? "Logo upload failed");
+    return json.data;
+  },
 
   rotateFleetbaseKey: () =>
     fetchApi<{ apiKeyMasked: string; connection: string }>("/api/integrations/fleetbase", {
@@ -1163,9 +1231,17 @@ export const api = {
     }),
 
   resendOrgUserInvite: (id: string) =>
-    fetchApi<{ id: string; lastResentAt: string }>(`/api/settings/users/${id}/invite`, {
-      method: "POST",
-    }),
+    fetchApiWithMeta<{ id: string; lastResentAt: string; invitePath?: string }>(
+      `/api/settings/users/${id}/invite`,
+      {
+        method: "POST",
+      },
+    ).then((r) => ({
+      ...r.data,
+      invitePath:
+        r.data.invitePath ??
+        (typeof r.meta?.invitePath === "string" ? r.meta.invitePath : undefined),
+    })),
 
   createPart: (input: {
     sku: string;

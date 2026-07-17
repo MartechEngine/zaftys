@@ -229,12 +229,24 @@ export async function updateShipmentStatus(id: string, status: ShipmentStatus) {
     updated = devUpdateStatus(id, status);
   }
 
-  const tranzfortId = updated?.tranzfortId ?? existing.tranzfortId;
-  if (updated && tranzfortId && isTranZfortConfigured()) {
-    try {
-      await pushTranZfortStatus(tranzfortId, status);
-    } catch (e) {
-      console.warn("[updateStatus] TranZfort push failed:", e);
+  const tripIds =
+    (updated?.tranzfortTripIds?.length
+      ? updated.tranzfortTripIds
+      : existing.tranzfortTripIds?.length
+        ? existing.tranzfortTripIds
+        : null) ??
+    (() => {
+      const id = updated?.tranzfortId ?? existing.tranzfortId;
+      return id ? [id] : [];
+    })();
+
+  if (updated && tripIds.length > 0 && isTranZfortConfigured()) {
+    for (const tranzfortId of tripIds) {
+      try {
+        await pushTranZfortStatus(tranzfortId, status);
+      } catch (e) {
+        console.warn("[updateStatus] TranZfort push failed:", e);
+      }
     }
   }
 
@@ -439,7 +451,7 @@ export async function addShipmentDocument(
 
 export async function getSyncStatus() {
   const source = getActiveDataSource();
-  const tz = getSyncState();
+  const tz = await getSyncState();
   const base = {
     ...devSyncStatus,
     lastSyncAt: tz.lastSyncAt,

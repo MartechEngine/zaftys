@@ -17,5 +17,16 @@ export async function POST(
     return apiError("OVERFLOW_FAILED", result.error, 400);
   }
 
-  return apiSuccess({ load: result.load, cancelled: true });
+  return apiSuccess(
+    {
+      load: result.load,
+      cancelled: false,
+      preferListing: true,
+      message: result.message,
+    },
+    {
+      preferListing: true,
+      listingHint: "Use Post to TranZfort on the shipment for outbound Load Exchange.",
+    },
+  );
 }

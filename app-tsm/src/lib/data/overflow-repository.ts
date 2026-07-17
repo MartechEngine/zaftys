@@ -1,4 +1,4 @@
-import { cancelShipment, createShipment, getShipment } from "@/lib/data/shipment-repository";
+import { createShipment, getShipment, updateShipmentFields } from "@/lib/data/shipment-repository";
 import { logActivity } from "@/lib/dev-store";
 import {
   acceptOverflow,
@@ -62,6 +62,8 @@ export async function postShipmentToOverflow(shipmentId: string) {
     return { error: "Cannot post completed or cancelled shipments to overflow." as const };
   }
 
+  // Soft-deprecate: outbound posting belongs on Load Exchange via "Post to TranZfort".
+  // Keep a non-destructive mark so callers still get a booking id without cancelling the shipment.
   const created = createOverflowFromShipment({
     id: shipment.id,
     publicId: shipment.publicId,
@@ -73,17 +75,30 @@ export async function postShipmentToOverflow(shipmentId: string) {
   });
 
   if ("error" in created && created.error) {
-    return { error: created.error };
+    return {
+      error: created.error,
+      preferListing: true as const,
+      message:
+        "Outbound posting is via shipment Post to TranZfort / Load Exchange listings. Overflow desk is for inbound network bookings.",
+    };
   }
 
-  await cancelShipment(shipmentId);
+  await updateShipmentFields(shipmentId, {
+    eta: shipment.eta ? `${shipment.eta} · posted to network` : "Posted to network",
+  });
 
   logActivity({
     shipmentId,
     type: "shipment.overflow",
-    message: `${shipment.publicId} sent to TranZfort overflow · ${created.load.bookingId}`,
+    message: `${shipment.publicId} marked posted-to-network · ${created.load.bookingId} (use Post to TranZfort for Load Exchange)`,
     timestamp: new Date().toISOString(),
   });
 
-  return { load: created.load };
+  return {
+    load: created.load,
+    cancelled: false as const,
+    preferListing: true as const,
+    message:
+      "Shipment marked posted-to-network without cancel. Prefer Post to TranZfort on the shipment for outbound Load Exchange listings; this overflow desk is for inbound bookings.",
+  };
 }

@@ -15,5 +15,6 @@ export async function POST(
   }
 
   const result = await resendOrgUserInvite(id);
-  return apiSuccess({ ...user, ...result });
+  if (!result) return apiError("VALIDATION_ERROR", "Invite resend is only for pending users.", 400);
+  return apiSuccess({ ...user, ...result }, { invitePath: result.invitePath });
 }

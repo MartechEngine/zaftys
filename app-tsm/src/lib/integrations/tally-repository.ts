@@ -36,7 +36,7 @@ export async function getTallyExportStatus(): Promise<TallyExportStatus> {
 
   return {
     status: configured ? "connected" : "not_configured",
-    exportFormat: "XML (Tally Prime)",
+    exportFormat: "CSV (invoices)",
     lastExport: localExport
       ? new Date(localExport).toLocaleString("en-IN")
       : configured
@@ -56,16 +56,32 @@ export async function configureTally() {
   return getTallyExportStatus();
 }
 
+export function buildTallyInvoiceCsv(
+  invoices: Awaited<ReturnType<typeof listInvoices>>,
+): string {
+  const header = "number,client,subtotal_inr,gst_inr,amount_inr,status,due\n";
+  const rows = invoices
+    .map(
+      (i) =>
+        `${i.number},${JSON.stringify(i.client)},${i.subtotalInr},${i.gstInr},${i.amountInr},${i.status},${JSON.stringify(i.due)}`,
+    )
+    .join("\n");
+  return header + rows + (rows ? "\n" : "");
+}
+
 export async function exportTallyNow() {
   if (!isTallyConfiguredLocally()) {
     configureTallyLocal();
   }
+  const invoices = await listInvoices();
   const exportMeta = recordTallyExport();
   const status = await getTallyExportStatus();
+  const csv = buildTallyInvoiceCsv(invoices);
   return {
     ...status,
     exportedAt: exportMeta.exportedAt,
     exportCount: exportMeta.exportCount,
-    invoiceCount: status.invoiceCount,
+    invoiceCount: invoices.length,
+    csv,
   };
 }

@@ -7,6 +7,8 @@ export type OrgProfileFields = {
   address: string;
   phone: string;
   email: string;
+  logoFilename?: string;
+  logoStorageKey?: string;
 };
 
 const g = globalThis as typeof globalThis & {
@@ -34,6 +36,14 @@ export function updateStoredOrgProfile(
     address: patch.address?.trim() || current.address,
     phone: patch.phone?.trim() || current.phone,
     email: patch.email?.trim() || current.email,
+    logoFilename:
+      patch.logoFilename !== undefined
+        ? patch.logoFilename.trim() || undefined
+        : current.logoFilename,
+    logoStorageKey:
+      patch.logoStorageKey !== undefined
+        ? patch.logoStorageKey.trim() || undefined
+        : current.logoStorageKey,
   };
   g.__tsmOrgProfile = next;
   logActivity({

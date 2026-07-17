@@ -24,5 +24,6 @@ export async function POST(request: Request) {
   const parsed = validateInviteOrgUserInput(body);
   if ("error" in parsed) return apiError("VALIDATION_ERROR", parsed.error);
 
-  return apiSuccess(await inviteOrgUser(parsed), { created: true });
+  const user = await inviteOrgUser(parsed);
+  return apiSuccess(user, { created: true, invitePath: user.invitePath });
 }

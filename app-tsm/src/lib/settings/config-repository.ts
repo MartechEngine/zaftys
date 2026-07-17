@@ -283,7 +283,7 @@ export async function getSecuritySettings(): Promise<SecuritySettings> {
     passwordRotationDays: 90,
     activeUsers: users.filter((u) => u.status === "active").length,
     pendingInvites: users.filter((u) => u.status === "pending").length,
-    authMode: "Dev session (NextAuth deferred)",
+    authMode: "Dev HMAC session (NextAuth planned for prod)",
   });
 }
 

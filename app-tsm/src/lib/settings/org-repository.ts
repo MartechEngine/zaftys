@@ -6,7 +6,8 @@ import {
 } from "@/lib/settings/org-store";
 import {
   getOrgLogoFilename,
-  setOrgLogoFilename,
+  getOrgLogoStorageKey,
+  setOrgLogoMeta,
 } from "@/lib/mutations/sprint12-store";
 import { ensureOrgHydrated, persistOrgProfile } from "@/lib/db/domain-persistence";
 
@@ -14,10 +15,12 @@ export type OrgProfile = OrgProfileFields & {
   userCount: number;
   portalUrl: string;
   logoFilename?: string;
+  logoStorageKey?: string;
 };
 
 export type UpdateOrgInput = Partial<OrgProfileFields> & {
   logoFilename?: string;
+  logoStorageKey?: string;
 };
 
 export function validateUpdateOrgInput(body: unknown): UpdateOrgInput | { error: string } {
@@ -49,6 +52,9 @@ export function validateUpdateOrgInput(body: unknown): UpdateOrgInput | { error:
     if (!logoFilename) return { error: "logoFilename cannot be empty." };
     patch.logoFilename = logoFilename;
   }
+  if (data.logoStorageKey != null) {
+    patch.logoStorageKey = String(data.logoStorageKey).trim() || undefined;
+  }
 
   if (Object.keys(patch).length === 0) {
     return { error: "Provide at least one field to update." };
@@ -61,10 +67,12 @@ export async function getOrgProfile(): Promise<OrgProfile> {
   await ensureOrgHydrated();
   const users = await listOrgUsers();
   const org = getStoredOrgProfile();
-  const logoFilename = getOrgLogoFilename();
+  const logoFilename = getOrgLogoFilename() ?? org.logoFilename;
+  const logoStorageKey = getOrgLogoStorageKey() ?? org.logoStorageKey;
   return {
     ...org,
     ...(logoFilename ? { logoFilename } : {}),
+    ...(logoStorageKey ? { logoStorageKey } : {}),
     userCount: users.length,
     portalUrl: "https://app.zaftys.com",
   };
@@ -72,12 +80,19 @@ export async function getOrgProfile(): Promise<OrgProfile> {
 
 export async function updateOrgProfile(input: UpdateOrgInput): Promise<OrgProfile> {
   await ensureOrgHydrated();
-  const { logoFilename, ...profileFields } = input;
+  const { logoFilename, logoStorageKey, ...profileFields } = input;
   if (Object.keys(profileFields).length > 0) {
     updateStoredOrgProfile(profileFields);
   }
-  if (logoFilename) {
-    setOrgLogoFilename(logoFilename);
+  if (logoFilename || logoStorageKey !== undefined) {
+    setOrgLogoMeta({
+      filename: logoFilename,
+      storageKey: logoStorageKey,
+    });
+    updateStoredOrgProfile({
+      ...(logoFilename ? { logoFilename } : {}),
+      ...(logoStorageKey !== undefined ? { logoStorageKey } : {}),
+    });
   }
   const profile = await getOrgProfile();
   await persistOrgProfile({
@@ -86,13 +101,26 @@ export async function updateOrgProfile(input: UpdateOrgInput): Promise<OrgProfil
     address: profile.address,
     phone: profile.phone,
     email: profile.email,
+    logoFilename: profile.logoFilename,
+    logoStorageKey: profile.logoStorageKey,
   });
   return profile;
 }
 
-export async function uploadOrgLogo(filename?: string): Promise<OrgProfile> {
+export async function uploadOrgLogo(input?: {
+  filename?: string;
+  storageKey?: string;
+}): Promise<OrgProfile> {
   await ensureOrgHydrated();
-  setOrgLogoFilename(filename?.trim() || "zaftys-logo.png");
+  const filename = input?.filename?.trim() || "zaftys-logo.png";
+  setOrgLogoMeta({
+    filename,
+    storageKey: input?.storageKey,
+  });
+  updateStoredOrgProfile({
+    logoFilename: filename,
+    logoStorageKey: input?.storageKey,
+  });
   const profile = await getOrgProfile();
   await persistOrgProfile({
     name: profile.name,
@@ -100,6 +128,8 @@ export async function uploadOrgLogo(filename?: string): Promise<OrgProfile> {
     address: profile.address,
     phone: profile.phone,
     email: profile.email,
+    logoFilename: profile.logoFilename,
+    logoStorageKey: profile.logoStorageKey,
   });
   return profile;
 }

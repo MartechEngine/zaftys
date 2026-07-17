@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { OverflowQueue } from "@/components/app/overflow-queue";
 import { OutboundListingsDesk } from "@/components/app/outbound-listings-desk";
 import { cn } from "@/lib/utils";
@@ -8,15 +9,15 @@ import { cn } from "@/lib/utils";
 type DeskTab = "outbound" | "inbound";
 
 export function NetworkOverflowDesk() {
-  const [tab, setTab] = useState<DeskTab>("outbound");
+  const [tab, setTab] = useState<DeskTab>("inbound");
 
   return (
     <div>
       <div className="mb-4 flex gap-2 border-b border-white/10 pb-2">
         {(
           [
-            { id: "outbound" as const, label: "Outbound (ZAFTYS → TranZfort)" },
-            { id: "inbound" as const, label: "Inbound (TranZfort → ZAFTYS)" },
+            { id: "inbound" as const, label: "Inbound overflow (TranZfort → ZAFTYS)" },
+            { id: "outbound" as const, label: "Outbound listings (Load Exchange)" },
           ] as const
         ).map((t) => (
           <button
@@ -35,19 +36,25 @@ export function NetworkOverflowDesk() {
         ))}
       </div>
 
-      {tab === "outbound" ? (
+      {tab === "inbound" ? (
         <>
           <p className="mb-4 text-sm text-muted-foreground">
-            Loads you posted as ZAFTYS supplier. Approve partner offers on the shipment Offers tab.
+            Marketplace bookings synced into ZAFTYS for own-fleet or partner dispatch. This is the
+            overflow desk — not outbound posting.
           </p>
-          <OutboundListingsDesk />
+          <OverflowQueue />
         </>
       ) : (
         <>
           <p className="mb-4 text-sm text-muted-foreground">
-            Marketplace bookings synced into ZAFTYS for own-fleet or partner dispatch.
+            Loads you posted as ZAFTYS supplier via{" "}
+            <strong className="font-medium text-foreground">Post to TranZfort</strong> on a shipment.
+            Approve partner offers on the shipment Offers tab.{" "}
+            <Link href="/shipments" className="text-link hover:underline">
+              Open shipments
+            </Link>
           </p>
-          <OverflowQueue />
+          <OutboundListingsDesk />
         </>
       )}
     </div>

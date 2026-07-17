@@ -13,9 +13,27 @@ export default async function NetworkOverflowPage() {
     <>
       <PageHeader
         title="Network overflow"
-        description="Post outbound loads to TranZfort, or review inbound marketplace bookings"
+        description="Inbound marketplace bookings for own-fleet or partner dispatch"
       />
       <ModuleSubNav links={NETWORK_NAV} />
+      <div className="mb-4 rounded-xl border border-amber-500/30 bg-amber-500/10 px-4 py-3 text-sm text-amber-100">
+        <p className="font-medium text-amber-50">Outbound vs inbound</p>
+        <p className="mt-1 text-amber-100/90">
+          Outbound posting to partners is via shipment{" "}
+          <strong className="font-medium text-white">Post to TranZfort</strong> / Load Exchange
+          listings. This overflow desk is for{" "}
+          <strong className="font-medium text-white">inbound</strong> network bookings only.
+        </p>
+        <p className="mt-2">
+          <Link href="/network" className="text-link underline-offset-2 hover:underline">
+            Open Network hub
+          </Link>
+          {" · "}
+          <Link href="/shipments" className="text-link underline-offset-2 hover:underline">
+            Find a shipment to post
+          </Link>
+        </p>
+      </div>
       <NetworkCharts initialData={analytics} />
       <NetworkOverflowDesk />
       <p className="mt-4 text-sm text-muted-foreground">

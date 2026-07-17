@@ -238,20 +238,48 @@ export async function rotateFleetbaseKey() {
 }
 
 export async function runFleetbaseHealthCheck() {
-  const sync = await getSyncStatus();
   const start = Date.now();
-  const reachable = Boolean(sync.fleetbaseReachable);
-  const latencyMs = reachable ? Math.max(12, Date.now() - start + 42) : 0;
-  recordFleetbaseHealthCheck(reachable || process.env.TSM_DEMO_UI !== "0", latencyMs || 38);
-  return {
-    ...(await getFleetbaseIntegrationDetail()),
-    reachable: reachable || process.env.TSM_DEMO_UI !== "0",
-  };
+  let reachable = false;
+  try {
+    const { getFleetbaseClient } = await import("@/lib/fleetbase/client");
+    reachable = await getFleetbaseClient().healthCheck();
+  } catch {
+    reachable = false;
+  }
+  const latencyMs = reachable ? Math.max(12, Date.now() - start) : 0;
+  const demoMode = process.env.TSM_DEMO_UI !== "0";
+
+  recordFleetbaseHealthCheck(reachable, latencyMs || 0);
+
+  const detail = await getFleetbaseIntegrationDetail();
+  if (reachable) {
+    return { ...detail, reachable: true, status: "ok" as const };
+  }
+  if (demoMode) {
+    return {
+      ...detail,
+      reachable: false,
+      status: "demo" as const,
+      skipped: true,
+      message: "Fleetbase unreachable; demo mode — health check skipped for connectivity claims.",
+    };
+  }
+  return { ...detail, reachable: false, status: "down" as const };
 }
 
 export async function listTelematicsProviders(): Promise<TelematicsProvider[]> {
+  const demoMode = process.env.TSM_DEMO_UI !== "0";
   const sync = await getSyncStatus();
   const vehicleCount = sync.dataSource === "fleetbase" ? 12 : 5;
+
+  const stored = listStoredTelematics().map((provider) => {
+    const ping = getTelematicsPing(provider.id);
+    return ping ? { ...provider, lastPing: ping, status: "connected" as const } : provider;
+  });
+
+  if (!demoMode) {
+    return stored;
+  }
 
   const demo = demoTelematicsProviders.map((provider) => {
     const ping = getTelematicsPing(provider.id);
@@ -263,11 +291,6 @@ export async function listTelematicsProviders(): Promise<TelematicsProvider[]> {
       row = { ...row, lastPing: ping, status: "connected" as const };
     }
     return row;
-  });
-
-  const stored = listStoredTelematics().map((provider) => {
-    const ping = getTelematicsPing(provider.id);
-    return ping ? { ...provider, lastPing: ping, status: "connected" as const } : provider;
   });
 
   return [...stored, ...demo];
@@ -311,6 +334,7 @@ export type SensorRecord = {
   type: string;
   value: string;
   updated: string;
+  demo?: boolean;
 };
 
 export type SocketChannelRecord = {
@@ -318,6 +342,7 @@ export type SocketChannelRecord = {
   channel: string;
   subscribers: number;
   lastMessage: string;
+  demo?: boolean;
 };
 
 export type FuelProviderRecord = {
@@ -404,6 +429,9 @@ export async function updateDevice(
 }
 
 export async function listSensors(): Promise<SensorRecord[]> {
+  const demoMode = process.env.TSM_DEMO_UI !== "0";
+  if (!demoMode) return [];
+
   const devices = await listDevices();
   const online = devices.filter((d) => d.status === "online");
   const live: SensorRecord[] = online.flatMap((device, index) => [
@@ -413,6 +441,7 @@ export async function listSensors(): Promise<SensorRecord[]> {
       type: "GPS",
       value: `${(20.9 + index * 0.05).toFixed(4)}°N, ${(77.7 + index * 0.08).toFixed(4)}°E`,
       updated: "30s ago",
+      demo: true,
     },
     {
       id: `sn-live-${device.id}-speed`,
@@ -420,11 +449,15 @@ export async function listSensors(): Promise<SensorRecord[]> {
       type: "Speed",
       value: `${48 + index * 7} km/h`,
       updated: "30s ago",
+      demo: true,
     },
   ]);
 
   const seen = new Set<string>();
-  return [...live, ...demoSensors].filter((s) => {
+  return [
+    ...live,
+    ...demoSensors.map((s) => ({ ...s, demo: true as const })),
+  ].filter((s) => {
     if (seen.has(s.id)) return false;
     seen.add(s.id);
     return true;
@@ -464,6 +497,9 @@ export async function deleteWebhook(id: string): Promise<boolean> {
 }
 
 export async function listSocketChannels(): Promise<SocketChannelRecord[]> {
+  const demoMode = process.env.TSM_DEMO_UI !== "0";
+  if (!demoMode) return [];
+
   const sync = await getSyncStatus();
   const live: SocketChannelRecord[] = [];
 
@@ -473,6 +509,7 @@ export async function listSocketChannels(): Promise<SocketChannelRecord[]> {
       channel: "sync.completed",
       subscribers: 2,
       lastMessage: formatRelative(sync.lastSyncAt),
+      demo: true,
     });
   }
 
@@ -481,10 +518,14 @@ export async function listSocketChannels(): Promise<SocketChannelRecord[]> {
     channel: "driver.location",
     subscribers: 5,
     lastMessage: "15s ago",
+    demo: true,
   });
 
   const seen = new Set<string>();
-  return [...live, ...demoSocketChannels].filter((c) => {
+  return [
+    ...live,
+    ...demoSocketChannels.map((c) => ({ ...c, demo: true as const })),
+  ].filter((c) => {
     if (seen.has(c.id)) return false;
     seen.add(c.id);
     return true;
@@ -520,21 +561,34 @@ export async function updateFuelProviderStatus(
 }
 
 export async function getTraccarBridgeDetail(): Promise<TraccarBridgeDetail> {
+  const demoMode = process.env.TSM_DEMO_UI !== "0";
+  const configuredUrl = process.env.TRACCAR_SERVER_URL?.trim();
   const devices = await listDevices();
   const traccarCount = devices.filter((d) => d.provider === "Traccar").length;
   const sync = await getSyncStatus();
   const { getTraccarTestState } = await import("@/lib/mutations/sprint11-store");
   const test = getTraccarTestState();
 
+  if (!demoMode && !configuredUrl) {
+    return {
+      serverUrl: "Not configured",
+      devicesSynced: 0,
+      lastSync: "—",
+      status: "disconnected",
+    };
+  }
+
   return {
-    serverUrl: process.env.TRACCAR_SERVER_URL ?? "https://gps.zaftys.internal",
-    devicesSynced: traccarCount,
+    serverUrl: configuredUrl ?? "https://gps.zaftys.internal",
+    devicesSynced: demoMode ? traccarCount : configuredUrl ? traccarCount : 0,
     lastSync: test
       ? formatRelative(test.lastTestAt)
       : sync.tranzfortConfigured
         ? formatRelative(sync.lastSyncAt)
-        : "3 min ago",
-    status: test?.status ?? (traccarCount > 0 ? "connected" : "disconnected"),
+        : demoMode
+          ? "3 min ago"
+          : "—",
+    status: test?.status ?? (configuredUrl && traccarCount > 0 ? "connected" : "disconnected"),
   };
 }
 

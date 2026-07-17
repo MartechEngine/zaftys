@@ -12,10 +12,13 @@ export function UploadLogoButton() {
   const router = useRouter();
   const [busy, setBusy] = useState(false);
 
-  async function onClick() {
+  async function onFileChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+    e.target.value = "";
+    if (!file) return;
     setBusy(true);
     try {
-      await api.uploadOrgLogo("zaftys-logo.png");
+      await api.uploadOrgLogoFile(file);
       toast.success("Logo uploaded");
       router.refresh();
     } catch (err) {
@@ -26,9 +29,20 @@ export function UploadLogoButton() {
   }
 
   return (
-    <Button variant="outline" className="mt-2" onClick={onClick} disabled={busy}>
-      {busy ? "…" : "Upload logo"}
-    </Button>
+    <label className="mt-2 inline-flex cursor-pointer items-center">
+      <input
+        type="file"
+        accept="image/*"
+        className="sr-only"
+        onChange={onFileChange}
+        disabled={busy}
+      />
+      <span
+        className={`inline-flex h-9 items-center justify-center rounded-md border border-white/15 bg-transparent px-4 text-sm font-medium ${busy ? "opacity-60" : "hover:bg-white/5"}`}
+      >
+        {busy ? "…" : "Upload logo"}
+      </span>
+    </label>
   );
 }
 

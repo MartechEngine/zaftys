@@ -7,7 +7,10 @@ export const runtime = "nodejs";
 const INTERVAL_MS = 5_000;
 
 async function buildPayload() {
-  tickMapGeo();
+  // Simulated GPS motion only in demo UI — live mode should use telematics ingest later
+  if (process.env.TSM_DEMO_UI !== "0") {
+    tickMapGeo();
+  }
   const active = await listShipments({ tab: "active" });
   const markers = active
     .map((s) =>

@@ -64,11 +64,17 @@ export async function inviteOrgUser(input: {
   name: string;
   email: string;
   role?: string;
-}): Promise<OrgUserRecord> {
+}): Promise<OrgUserRecord & { invitePath?: string }> {
   await ensureSettingsHydrated();
   const user = inviteStoredOrgUser(input);
   await persistOrgUser(user);
-  return user;
+  const { createInviteToken } = await import("@/lib/auth/invite-tokens");
+  const { invitePath } = await createInviteToken({
+    kind: "org_user",
+    email: user.email,
+    subjectId: user.id,
+  });
+  return { ...user, invitePath };
 }
 
 export async function getOrgUser(id: string): Promise<OrgUserRecord | undefined> {
@@ -101,5 +107,12 @@ export async function patchOrgUser(
 export async function resendOrgUserInvite(id: string) {
   const user = await getOrgUser(id);
   if (!user || user.status !== "pending") return undefined;
-  return recordOrgUserInviteResend(id);
+  const resent = recordOrgUserInviteResend(id);
+  const { createInviteToken } = await import("@/lib/auth/invite-tokens");
+  const { invitePath } = await createInviteToken({
+    kind: "org_user",
+    email: user.email,
+    subjectId: user.id,
+  });
+  return { ...resent, invitePath };
 }

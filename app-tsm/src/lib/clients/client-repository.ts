@@ -301,13 +301,20 @@ export function validateInviteClientUserInput(
 export async function inviteClientUser(
   clientId: string,
   input: InviteClientUserInput,
-): Promise<ClientPortalUser | undefined> {
+): Promise<(ClientPortalUser & { invitePath?: string }) | undefined> {
   await ensureClientsHydrated();
   const client = await getClient(clientId);
   if (!client) return undefined;
   const user = createStoredClientUser({ clientId: client.id, ...input });
   await persistClientUser(user);
-  return user;
+  const { createInviteToken } = await import("@/lib/auth/invite-tokens");
+  const { invitePath } = await createInviteToken({
+    kind: "client_user",
+    email: user.email,
+    subjectId: user.id,
+    clientId: client.id,
+  });
+  return { ...user, invitePath };
 }
 
 export async function listClientShipments(clientName: string, limit = 10) {
@@ -437,7 +444,9 @@ export async function deleteClientContact(
 export async function resendClientPortalUserInvite(
   clientId: string,
   userId: string,
-): Promise<(ClientPortalUser & { lastResentAt?: string; resentCount?: number }) | undefined> {
+): Promise<
+  (ClientPortalUser & { lastResentAt?: string; resentCount?: number; invitePath?: string }) | undefined
+> {
   const client = await getClient(clientId);
   if (!client) return undefined;
 
@@ -448,7 +457,14 @@ export async function resendClientPortalUserInvite(
 
   const { resendClientUserInvite } = await import("@/lib/mutations/sprint19-store");
   const { lastResentAt, count } = resendClientUserInvite(userId);
-  return { ...existing, lastResentAt, resentCount: count };
+  const { createInviteToken } = await import("@/lib/auth/invite-tokens");
+  const { invitePath } = await createInviteToken({
+    kind: "client_user",
+    email: existing.email,
+    subjectId: existing.id,
+    clientId: client.id,
+  });
+  return { ...existing, lastResentAt, resentCount: count, invitePath };
 }
 
 export async function getClientPortalUserResendMeta(userId: string) {

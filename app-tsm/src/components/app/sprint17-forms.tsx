@@ -204,8 +204,9 @@ export function ResendOrgUserInviteButton({
   async function onClick() {
     setBusy(true);
     try {
-      await api.resendOrgUserInvite(id);
-      toast.success("Invite resent");
+      const result = await api.resendOrgUserInvite(id);
+      const { toastInviteLink } = await import("@/lib/invite-toast");
+      toastInviteLink("Invite resent", result.invitePath);
       router.refresh();
     } catch (err) {
       toast.error(err instanceof Error ? err.message : "Could not resend invite.");

@@ -34,6 +34,18 @@ const columns: DataTableColumn<DocumentLibraryEntry>[] = [
   },
   { key: "client", header: "Client", render: (r) => r.client },
   { key: "date", header: "Uploaded", render: (r) => r.uploadedLabel },
+  {
+    key: "download",
+    header: "",
+    render: (r) => (
+      <a
+        href={`/api/documents/${r.id}/download`}
+        className="text-xs text-link hover:underline"
+      >
+        Download
+      </a>
+    ),
+  },
 ];
 
 export default async function DocumentsPage({
