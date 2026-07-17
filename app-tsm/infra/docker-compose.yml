@@ -1,0 +1,16 @@
+# Fleetbase — local development stack
+
+# Placeholder for P0 spike. Replace with official Fleetbase docker-compose
+# from https://github.com/fleetbase/fleetbase or zaftys-lab/infra/fleetbase/
+
+# Usage (when compose file is added):
+#   docker compose up -d
+#   API: http://localhost:8000
+#   Console (dev only): http://localhost:4200
+
+services:
+  fleetbase-placeholder:
+    image: alpine:3.20
+    command: ["sleep", "infinity"]
+    profiles:
+      - placeholder

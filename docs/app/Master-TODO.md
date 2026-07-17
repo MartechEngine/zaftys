@@ -1,0 +1,235 @@
+# Master TODO — ZAFTYS TSM (Full Product)
+
+| Field | Value |
+|-------|-------|
+| **Branch** | `app-dev-mode` |
+| **App path** | `app-tsm/` |
+| **Portal target** | `https://app.zaftys.com` |
+| **Strategy** | [architecture/build-strategy.md](./architecture/build-strategy.md) |
+| **Feature map** | [sitemap-tsm.md](./sitemap-tsm.md) |
+| **Scope** | [product/product-scope.md](./product/product-scope.md) |
+| **Detailed tasks** | [TODO-11-july.md](./TODO-11-july.md) |
+
+**We are building the final product** — full Fleetbase parity UI + TranZfort sync. **Frontend first**, then BFF wiring per module.
+
+Use `[x]` done · `[ ]` pending · `[~]` in progress
+
+---
+
+## 0. Project setup & repo
+
+- [x] Branch `app-dev-mode`, Next.js 16 scaffold
+- [x] Build passes locally (106 routes, Jul 17)
+- [x] Commit `app-tsm/` + `docs/app/` (Jul 17)
+- [ ] Push branch to remote
+- [ ] CI: lint + build on PR
+- [ ] Monorepo vs split repo decision
+
+---
+
+## 1. Documentation
+
+- [x] Full docs tree + sitemap (~151 FB features)
+- [x] Architecture expanded (build-strategy + all architecture/*.md)
+- [x] product-scope.md, bff-endpoints.md
+- [x] TODO-11-july expanded with all module tasks
+- [ ] feature-backlog.md statuses synced with app-tsm
+- [ ] ui-ux-features.md updated for full product (drop MVP sections)
+- [ ] Figma links when design starts
+
+---
+
+## 2. P1 Foundation — DONE
+
+- [x] App shell, design tokens, 8 core route scaffolds
+- [x] Dev auth + RBAC nav + middleware
+- [x] Repository pattern + FleetbaseClient
+- [x] Live map component (MapLibre + OpenFreeMap — no API key)
+- [x] TranZfort sync scaffold
+- [x] Fleetbase Docker + API key connected
+- [x] Dark glass UI theme (zaftys-lab parity)
+
+---
+
+## 3. Wave 1 — Operations core (P2) — **CURRENT**
+
+**Frontend first** — see [TODO-11-july.md § Wave 1](./TODO-11-july.md)
+
+### UI (build all screens before full BFF wire)
+
+- [~] Command Center — live KPIs, mini map (SSE 5s + poll fallback), exceptions
+- [~] Shipments — filter drawer, CSV export, pagination 25/50/100, detail map + docs
+- [x] Dispatch — Kanban DnD, table view, status path validation, shared dev-store
+- [~] Live map — SSE GPS, route polylines, marker clustering, side panel
+- [~] Public track — HMAC tokens + rate limit; live map on track page
+- [x] App shell — collapsible sidebar, brand logos, ⌘K search, notification bell
+- [~] Auth — dev session + profile PATCH; NextAuth + forgot password pending
+
+### BFF + backend (wire after UI exists)
+
+- [~] Live Fleetbase on Wave 1 read endpoints (orders, drivers, vehicles, KPIs, exceptions, assign)
+- [x] POST create shipment
+- [x] PATCH shipment status + POST cancel
+- [x] Document upload → proofs API (BFF metadata upload; blob storage P3)
+- [x] HMAC track tokens + rate limits
+- [~] WebSocket GPS + status (SSE stream prototype; full WS pending)
+- [x] Test data script — `npm run seed:fleetbase` for QA
+- [x] Map provider — MapLibre/OpenFreeMap (Mapbox token no longer required)
+
+---
+
+## 4. Wave 2 — Resources & network (P3)
+
+- [~] Fleet — detail pages, places, groups, compliance (shells exist)
+- [ ] Clients — shippers, contacts, portal users (shells exist)
+- [x] Documents — global proofs library + upload wired
+- [~] Network — overflow queue, assignments, partners, sync UI
+- [~] TranZfort live sync (env + two-way status push)
+- [~] BFF: network overflow accept/reject; fleet lists live
+
+---
+
+## 5. Wave 3 — Enterprise (P3–P4)
+
+- [~] Reports hub — operations, lanes, fleet shells
+- [~] Settings — org, IAM, dispatch, map shells (~20 routes)
+- [~] Integrations — webhooks, logs, events, sockets shells
+- [~] Maintenance — schedules, work orders, parts, faults shells
+- [ ] Dispatch calendar + orchestrator workbench (shells exist)
+- [ ] Order type configuration UI (shells exist)
+- [~] Vendors registry — list + detail
+
+---
+
+## 6. Wave 4 — Connectivity & telematics (P4)
+
+- [ ] Telematics providers UI (shell exists)
+- [ ] Devices + sensors registry (shells exist)
+- [ ] Connectivity events inbox
+- [ ] Fuel providers + fuel reports/transactions (shells exist)
+- [ ] Traccar bridge (shell exists)
+- [ ] Journey replay on map (shell exists)
+
+---
+
+## 7. Wave 5 — India & billing (P5)
+
+- [~] Billing — invoices list + detail, rates, accounts, GST shells
+- [ ] GST reports + Tally export (live)
+- [ ] e-way bill integration
+- [ ] WhatsApp notifications
+- [ ] Hindi UI
+
+---
+
+## 8. Wave 6 — Intelligence (P6)
+
+- [ ] AI engine integration
+- [ ] Predictive delay, smart ETA, OCR
+
+---
+
+## 9. Cross-cutting (all waves)
+
+### Realtime & jobs
+- [~] Map GPS SSE stream every 5s (WebSocket production pending)
+- [ ] Stale GPS + exception automation
+- [ ] Sync cron + dead letter queue
+- [ ] Notification inbox + email alerts
+
+### Design & QA
+- [x] Dark glass design system applied portal-wide
+- [x] zaftys-lab bluish gradients — h1 `text-gradient-brand`, button `btn-fill-gradient` (CTA navy)
+- [x] Collapsible sidebar — icon mode, brand logos, chevron toggle in header
+- [~] Skeletons (shipments, documents, dispatch); portal error boundary
+- [x] Global search ⌘K
+- [ ] WCAG AA audit
+- [ ] Playwright E2E north star flow
+- [ ] Vitest API route tests
+
+### DevOps
+- [ ] Staging + production deploy
+- [ ] TLS, monitoring, backups
+- [ ] AGPL decision documented
+
+---
+
+## 10. Progress snapshot (17 Jul 2026 — Sprints 1–5 committed)
+
+| Area | Done | Notes |
+|------|------|-------|
+| Docs | ~98% | Full product scope locked |
+| P1 Foundation | ~99% | Theme, MapLibre, FB, shell + dispatch polish |
+| Wave 1 UI | ~84% | Filters, ⌘K, notifications, profile, breadcrumbs |
+| Wave 1 BFF | ~68% | Export, profile, search, SSE map, TZ status push |
+| Wave 2 | ~45% | Documents library; network sync panel |
+| Wave 3–5 | ~25% | Module shells + sub-nav; demo data |
+| Realtime | ~32% | SSE GPS + polylines + clustering |
+| Production deploy | 0% | Local dev; branch committed, push + CI pending |
+
+---
+
+## 11. Suggested sprint order
+
+### Sprint 1 — Operations depth ✅ complete
+1. ~~Live FB data Wave 1 lists~~ ✅
+2. ~~Map provider (MapLibre) + GPS poll~~ ✅ (WS next)
+3. ~~Shipment filters + create wizard~~ ✅
+4. ~~Status PATCH + cancel~~ ✅
+5. ~~App shell UX — logos, collapsible sidebar, zaftys-lab gradients~~ ✅
+6. ~~Dispatch DnD + Kanban/table view + dev-store persistence~~ ✅
+
+### Sprint 2 — Track + documents ✅ complete
+7. ~~Document metadata upload API + shipment detail UI~~ ✅
+8. ~~HMAC track tokens + rate limits~~ ✅
+9. ~~Shipment detail embedded map~~ ✅
+
+### Sprint 3 — Documents library + TranZfort sync ✅ complete
+10. ~~Global documents library + upload~~ ✅
+11. ~~TranZfort two-way status push + sync panel~~ ✅
+12. ~~Shipments status filter + pagination~~ ✅
+13. ~~Fleetbase seed script~~ ✅
+
+### Sprint 4 — Search + notifications + SSE map ✅ complete
+14. ~~Global ⌘K search~~ ✅
+15. ~~Notifications inbox + bell~~ ✅
+16. ~~SSE GPS stream + loading skeletons~~ ✅
+
+### Sprint 5 — Filters + profile + map polish ✅ complete
+17. ~~Shipment filter drawer + CSV export~~ ✅
+18. ~~Profile PATCH + role-safe login~~ ✅
+19. ~~Map polylines + marker clustering~~ ✅
+
+### Sprint 6 (current) — Next priorities
+20. NextAuth production auth
+21. WebSocket GPS (replace SSE prototype)
+22. Clients module BFF
+23. Invoice create / mark paid
+24. Reports hub live data
+25. Webhooks CRUD
+26. Playwright E2E
+
+---
+
+## Related
+
+| Resource | Path |
+|----------|------|
+| All module tasks | [TODO-11-july.md](./TODO-11-july.md) |
+| App code | `../../app-tsm/` |
+| Completed log | [TODO-11-july.md § Completed](./TODO-11-july.md) |
+
+---
+
+## Document history
+
+| Date | Change |
+|------|--------|
+| 11 Jul 2026 | Initial master TODO |
+| 11 Jul 2026 | Full product waves; frontend-first; references TODO-11-july |
+| 12 Jul 2026 | Progress update: MapLibre, create shipment, overflow, live FB, status PATCH, map poll, billing/vendor detail |
+| 12 Jul 2026 | UI polish: brand logos, collapsible sidebar, zaftys-lab gradient tokens (h1 + buttons), DataTable RSC fix |
+| 12 Jul 2026 | Dispatch DnD/table, status path engine, globalThis dev-store, CC map poll, Fleetbase status map |
+| 12 Jul 2026 | Sprint 2: HMAC track tokens, rate limit, document upload API, shipment detail live map |
+| 12 Jul 2026 | Sprints 3–5: documents, TZ sync, search, SSE map, filters, profile, CSV export |
+| 17 Jul 2026 | Initial commit: `app-tsm/` (106 routes) + `docs/app/` on `app-dev-mode` |
