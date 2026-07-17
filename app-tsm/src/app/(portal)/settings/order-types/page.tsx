@@ -4,6 +4,7 @@ import { SettingsNav } from "@/components/app/settings-nav";
 import { DataTable } from "@/components/app/data-table";
 import { listOrderTypes } from "@/lib/settings/order-types-repository";
 import { CreateOrderTypeForm } from "@/components/app/module-create-forms";
+import { RenameOrderTypeButton } from "@/components/app/sprint12-forms";
 
 export default async function SettingsOrderTypesPage() {
   const orderTypes = await listOrderTypes();
@@ -32,6 +33,11 @@ export default async function SettingsOrderTypesPage() {
           { key: "fields", header: "Custom fields", render: (r) => r.fields },
           { key: "active", header: "Active trips", render: (r) => r.activeShipments },
           { key: "default", header: "Default", render: (r) => (r.default ? "Yes" : "—") },
+          {
+            key: "actions",
+            header: "",
+            render: (r) => <RenameOrderTypeButton id={r.id} name={r.name} />,
+          },
         ]}
       />
     </>

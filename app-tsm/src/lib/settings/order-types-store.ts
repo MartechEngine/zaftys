@@ -53,6 +53,19 @@ export function createStoredOrderType(name: string): StoredOrderType {
   return ot;
 }
 
+export function renameStoredOrderType(id: string, name: string): StoredOrderType | null {
+  const ot = types().find((t) => t.id === id);
+  if (!ot) return null;
+  ot.name = name.trim();
+  logActivity({
+    shipmentId: "",
+    type: "order_type.renamed",
+    message: ot.name,
+    timestamp: new Date().toISOString(),
+  });
+  return ot;
+}
+
 export function listStoredOrderFields(orderTypeId: string): StoredOrderField[] {
   return fields().filter((f) => f.orderTypeId === orderTypeId);
 }

@@ -6,6 +6,7 @@ import {
   patchStoredPlace,
 } from "@/lib/fleet/places-store";
 import { getPlacePatch, patchPlaceFields } from "@/lib/mutations/sprint11-store";
+import { getFleetGroupPatch, patchFleetGroupFields } from "@/lib/mutations/sprint12-store";
 
 export type PlaceRecord = {
   id: string;
@@ -134,8 +135,10 @@ export async function listFleetGroups(): Promise<FleetGroupRecord[]> {
   const demo = demoFleetGroups.map((g, index) => {
     const driverSlice = Math.max(1, Math.floor(drivers.length / demoFleetGroups.length));
     const vehicleSlice = Math.max(1, Math.floor(vehicles.length / demoFleetGroups.length));
+    const patch = getFleetGroupPatch(g.id);
     return {
       ...g,
+      ...patch,
       drivers: Math.min(g.drivers, driverSlice + (index === 0 ? 1 : 0)),
       vehicles: Math.min(g.vehicles, vehicleSlice + (index === 0 ? 1 : 0)),
     };
@@ -157,6 +160,21 @@ export function validateCreateFleetGroupInput(
 export async function createFleetGroup(input: { name: string; zone?: string }) {
   const { createStoredFleetGroup } = await import("@/lib/mutations/entity-stores");
   return createStoredFleetGroup(input);
+}
+
+export async function updateFleetGroup(
+  id: string,
+  input: { name?: string; zone?: string },
+): Promise<FleetGroupRecord | undefined> {
+  const existing = (await listFleetGroups()).find((g) => g.id === id);
+  if (!existing) return undefined;
+
+  const { patchStoredFleetGroup } = await import("@/lib/mutations/entity-stores");
+  const stored = patchStoredFleetGroup(id, input);
+  if (stored) return stored;
+
+  patchFleetGroupFields(id, input);
+  return { ...existing, ...input };
 }
 
 export async function getFleetGroup(id: string) {

@@ -489,6 +489,55 @@ async function main() {
             "pending → dispatched → at_plant → in_transit → at_weighbridge → delivered",
         },
       ),
+    () =>
+      writeCheck(
+        "POST /api/settings/organization/logo",
+        cookie,
+        "POST",
+        "/api/settings/organization/logo",
+        { filename: "zaftys-logo.png" },
+      ),
+    () =>
+      writeCheck("POST /api/integrations/fleetbase", cookie, "POST", "/api/integrations/fleetbase", {}),
+    () =>
+      writeCheck("POST /api/profile/password", cookie, "POST", "/api/profile/password", {
+        newPassword: "local-stub-pass",
+      }),
+    () =>
+      writeCheck("PATCH /api/fleet/groups/fg1", cookie, "PATCH", "/api/fleet/groups/fg1", {
+        name: "Vidarbha cement fleet",
+        zone: "Amravati – Nagpur",
+      }),
+    () =>
+      writeCheck(
+        "PATCH /api/integrations/fuel-providers",
+        cookie,
+        "PATCH",
+        "/api/integrations/fuel-providers",
+        { id: "fp2", status: "connected" },
+      ),
+    () =>
+      writeCheck("POST /api/integrations/telematics", cookie, "POST", "/api/integrations/telematics", {
+        id: "tp1",
+      }),
+    () =>
+      writeCheck("POST /api/settings/automation", cookie, "POST", "/api/settings/automation", {
+        trigger: "status → delivered",
+        action: "Notify ops channel",
+      }),
+    () =>
+      writeCheck("PATCH /api/settings/order-types/ot1", cookie, "PATCH", "/api/settings/order-types/ot1", {
+        name: "Standard freight",
+      }),
+    () =>
+      writeCheck("DELETE /api/integrations/webhooks", cookie, "DELETE", "/api/integrations/webhooks", {
+        id: "wh3",
+      }),
+    () =>
+      writeCheck("PATCH /api/integrations/devices", cookie, "PATCH", "/api/integrations/devices", {
+        id: "dv1",
+        vehicle: "Unassigned",
+      }),
   ];
 
   for (const run of writes) {

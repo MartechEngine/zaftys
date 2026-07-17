@@ -4,6 +4,7 @@ import { useState } from "react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { ChangePasswordButton } from "@/components/app/sprint12-forms";
 
 export function ProfileForm({
   initial,
@@ -67,9 +68,7 @@ export function ProfileForm({
             <Button type="submit" variant="accent" disabled={busy}>
               {busy ? "Saving…" : "Save changes"}
             </Button>
-            <Button type="button" variant="outline" disabled>
-              Change password
-            </Button>
+            <ChangePasswordButton />
           </div>
         </form>
       </CardContent>

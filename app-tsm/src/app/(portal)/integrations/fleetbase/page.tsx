@@ -4,7 +4,7 @@ import { ModuleSubNav } from "@/components/app/module-sub-nav";
 import { Card, CardContent } from "@/components/ui/card";
 import { getFleetbaseIntegrationDetail } from "@/lib/integrations/integrations-repository";
 import { INTEGRATIONS_NAV } from "@/lib/module-nav";
-import { Button } from "@/components/ui/button";
+import { RotateFleetbaseKeyButton } from "@/components/app/sprint12-forms";
 
 const connectionLabel = {
   connected: { text: "Connected", className: "bg-emerald-100 text-emerald-800" },
@@ -40,7 +40,7 @@ export default async function FleetbaseIntegrationPage() {
               <span className="text-muted-foreground">Last health check</span>
               <p>{detail.latencyMs != null ? `${detail.latencyMs}ms · ${detail.lastHealthCheck}` : detail.lastHealthCheck}</p>
             </div>
-            <Button variant="outline" size="sm" disabled>Rotate key</Button>
+            <RotateFleetbaseKeyButton />
           </CardContent>
         </Card>
         <Card>

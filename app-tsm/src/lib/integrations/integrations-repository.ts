@@ -4,10 +4,24 @@ import {
   createStoredDevice,
   createStoredTelematics,
   createStoredWebhook,
+  deleteStoredWebhook,
   listStoredDevices,
   listStoredTelematics,
   listStoredWebhooks,
+  patchStoredDevice,
 } from "@/lib/integrations/integrations-mutations";
+import {
+  getDevicePatch,
+  getFleetbaseKeyMask,
+  getFuelProviderStatus,
+  getTelematicsPing,
+  isWebhookDeleted,
+  markWebhookDeleted,
+  patchDeviceFields,
+  recordTelematicsPing,
+  rotateFleetbaseKeyMask,
+  setFuelProviderStatus,
+} from "@/lib/mutations/sprint12-store";
 
 export type IntegrationStatus = "connected" | "disconnected";
 
@@ -178,10 +192,14 @@ export async function getFleetbaseIntegrationDetail(): Promise<FleetbaseIntegrat
     sync.fleetbaseReachable ||
     Boolean(process.env.FLEETBASE_API_KEY);
 
+  const rotated = getFleetbaseKeyMask();
+
   return {
     connection: live ? "connected" : process.env.TSM_DEMO_UI === "0" ? "disconnected" : "demo",
     apiUrl: process.env.FLEETBASE_API_URL ?? "http://localhost:8000/v1",
-    apiKeyMasked: process.env.FLEETBASE_API_KEY ? "••••••••••••live" : "••••••••••••demo",
+    apiKeyMasked:
+      rotated ??
+      (process.env.FLEETBASE_API_KEY ? "••••••••••••live" : "••••••••••••demo"),
     dataSource: sync.dataSource ?? "dev-store",
     lastHealthCheck: sync.fleetbaseReachable ? "2 min ago" : "—",
     latencyMs: sync.fleetbaseReachable ? 42 : null,
@@ -205,18 +223,33 @@ export async function getFleetbaseIntegrationDetail(): Promise<FleetbaseIntegrat
   };
 }
 
+export async function rotateFleetbaseKey() {
+  rotateFleetbaseKeyMask();
+  return getFleetbaseIntegrationDetail();
+}
+
 export async function listTelematicsProviders(): Promise<TelematicsProvider[]> {
   const sync = await getSyncStatus();
   const vehicleCount = sync.dataSource === "fleetbase" ? 12 : 5;
 
   const demo = demoTelematicsProviders.map((provider) => {
+    const ping = getTelematicsPing(provider.id);
+    let row = { ...provider };
     if (provider.name.startsWith("Flespi") && sync.fleetbaseReachable) {
-      return { ...provider, vehicles: vehicleCount, lastPing: "Just now" };
+      row = { ...row, vehicles: vehicleCount, lastPing: "Just now" };
     }
-    return provider;
+    if (ping) {
+      row = { ...row, lastPing: ping, status: "connected" as const };
+    }
+    return row;
   });
 
-  return [...listStoredTelematics(), ...demo];
+  const stored = listStoredTelematics().map((provider) => {
+    const ping = getTelematicsPing(provider.id);
+    return ping ? { ...provider, lastPing: ping, status: "connected" as const } : provider;
+  });
+
+  return [...stored, ...demo];
 }
 
 export function validateCreateTelematicsInput(
@@ -230,6 +263,15 @@ export function validateCreateTelematicsInput(
 
 export async function createTelematicsProvider(name: string) {
   return createStoredTelematics({ name });
+}
+
+export async function testTelematicsProvider(id: string) {
+  const providers = await listTelematicsProviders();
+  const provider = providers.find((p) => p.id === id);
+  if (!provider) return undefined;
+  recordTelematicsPing(id);
+  const updated = (await listTelematicsProviders()).find((p) => p.id === id);
+  return updated;
 }
 
 export type DeviceRecord = {
@@ -292,7 +334,10 @@ export async function listDevices(vehicleRegistration?: string): Promise<DeviceR
       status: v.status === "on_trip" ? ("online" as const) : ("offline" as const),
     }));
 
-  const merged = [...listStoredDevices(), ...fromDemo, ...synthetic];
+  const merged = [...listStoredDevices(), ...fromDemo, ...synthetic].map((d) => {
+    const patch = getDevicePatch(d.id);
+    return patch ? { ...d, ...patch } : d;
+  });
   if (vehicleRegistration) {
     return merged.filter((d) => d.vehicle === vehicleRegistration);
   }
@@ -321,6 +366,20 @@ export async function createDevice(input: {
   provider?: string;
 }) {
   return createStoredDevice(input);
+}
+
+export async function updateDevice(
+  id: string,
+  patch: { vehicle?: string; vehicleId?: string },
+): Promise<DeviceRecord | undefined> {
+  const existing = (await listDevices()).find((d) => d.id === id);
+  if (!existing) return undefined;
+
+  const stored = patchStoredDevice(id, patch);
+  if (stored) return { ...stored, ...getDevicePatch(id) };
+
+  patchDeviceFields(id, patch);
+  return { ...existing, ...patch };
 }
 
 export async function listSensors(): Promise<SensorRecord[]> {
@@ -352,7 +411,9 @@ export async function listSensors(): Promise<SensorRecord[]> {
 }
 
 export async function listWebhooks(): Promise<WebhookRecord[]> {
-  return [...listStoredWebhooks(), ...(demoWebhooks as WebhookRecord[])];
+  return [...listStoredWebhooks(), ...(demoWebhooks as WebhookRecord[])].filter(
+    (wh) => !isWebhookDeleted(wh.id),
+  );
 }
 
 export function validateCreateWebhookInput(
@@ -371,6 +432,14 @@ export function validateCreateWebhookInput(
 
 export async function createWebhook(input: { url: string; events: string }) {
   return createStoredWebhook(input);
+}
+
+export async function deleteWebhook(id: string): Promise<boolean> {
+  const existing = (await listWebhooks()).find((w) => w.id === id);
+  if (!existing) return false;
+  if (deleteStoredWebhook(id)) return true;
+  markWebhookDeleted(id);
+  return true;
 }
 
 export async function listSocketChannels(): Promise<SocketChannelRecord[]> {
@@ -407,11 +476,26 @@ export async function listFuelProviders(): Promise<FuelProviderRecord[]> {
   const stationNames = new Set(transactions.map((t) => t.station.split(" ")[0]));
 
   return demoFuelProviders.map((provider) => {
-    if (provider.status === "connected") {
-      return { ...provider, stations: Math.max(provider.stations, stationNames.size * 12) };
+    const statusOverride = getFuelProviderStatus(provider.id);
+    const row = {
+      ...provider,
+      ...(statusOverride ? { status: statusOverride } : {}),
+    };
+    if (row.status === "connected") {
+      return { ...row, stations: Math.max(provider.stations, stationNames.size * 12) };
     }
-    return provider;
+    return row;
   });
+}
+
+export async function updateFuelProviderStatus(
+  id: string,
+  status: "connected" | "disconnected",
+): Promise<FuelProviderRecord | undefined> {
+  const existing = (await listFuelProviders()).find((p) => p.id === id);
+  if (!existing) return undefined;
+  setFuelProviderStatus(id, status);
+  return (await listFuelProviders()).find((p) => p.id === id);
 }
 
 export async function getTraccarBridgeDetail(): Promise<TraccarBridgeDetail> {

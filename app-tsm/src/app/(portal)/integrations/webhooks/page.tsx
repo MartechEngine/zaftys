@@ -6,6 +6,7 @@ import { listWebhooks } from "@/lib/integrations/integrations-repository";
 import { StatusPill } from "@/components/app/data-table";
 import { INTEGRATIONS_NAV } from "@/lib/module-nav";
 import { CreateWebhookForm } from "@/components/app/module-create-forms";
+import { DeleteWebhookButton } from "@/components/app/sprint12-forms";
 
 const whStatus = {
   active: { label: "Active", className: "bg-emerald-100 text-emerald-800" },
@@ -30,6 +31,11 @@ export default async function IntegrationsWebhooksPage() {
           { key: "events", header: "Events", render: (r) => r.events },
           { key: "status", header: "Status", render: (r) => <StatusPill status={r.status} map={whStatus} /> },
           { key: "last", header: "Last delivery", render: (r) => r.lastDelivery },
+          {
+            key: "actions",
+            header: "",
+            render: (r) => <DeleteWebhookButton id={r.id} />,
+          },
         ]}
       />
       <p className="mt-4 text-sm">

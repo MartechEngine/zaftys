@@ -4,6 +4,7 @@ import { DataTable, StatusPill } from "@/components/app/data-table";
 import { listDevices } from "@/lib/integrations/integrations-repository";
 import { INTEGRATIONS_NAV } from "@/lib/module-nav";
 import { CreateDeviceForm } from "@/components/app/module-create-forms";
+import { UnassignDeviceButton } from "@/components/app/sprint12-forms";
 
 const deviceStatus = {
   online: { label: "Online", className: "bg-emerald-100 text-emerald-800" },
@@ -29,6 +30,11 @@ export default async function DevicesPage() {
           { key: "provider", header: "Provider", render: (r) => r.provider },
           { key: "firmware", header: "Firmware", render: (r) => r.firmware },
           { key: "status", header: "Status", render: (r) => <StatusPill status={r.status} map={deviceStatus} /> },
+          {
+            key: "actions",
+            header: "",
+            render: (r) => <UnassignDeviceButton id={r.id} vehicle={r.vehicle} />,
+          },
         ]}
       />
     </>

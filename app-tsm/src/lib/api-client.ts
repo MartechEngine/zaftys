@@ -778,6 +778,65 @@ export const api = {
       method: "PATCH",
       body: JSON.stringify({ statusFlow }),
     }),
+
+  uploadOrgLogo: (filename?: string) =>
+    fetchApi<{ name: string; logoFilename?: string }>("/api/settings/organization/logo", {
+      method: "POST",
+      body: JSON.stringify({ filename: filename ?? "zaftys-logo.png" }),
+    }),
+
+  rotateFleetbaseKey: () =>
+    fetchApi<{ apiKeyMasked: string; connection: string }>("/api/integrations/fleetbase", {
+      method: "POST",
+    }),
+
+  changePassword: (input: { currentPassword?: string; newPassword: string }) =>
+    fetchApi<{ ok: boolean; changedAt: string }>("/api/profile/password", {
+      method: "POST",
+      body: JSON.stringify(input),
+    }),
+
+  patchFleetGroup: (id: string, input: { name?: string; zone?: string }) =>
+    fetchApi<{ id: string; name: string; zone: string }>(`/api/fleet/groups/${id}`, {
+      method: "PATCH",
+      body: JSON.stringify(input),
+    }),
+
+  setFuelProviderStatus: (id: string, status: "connected" | "disconnected") =>
+    fetchApi<{ id: string; status: string }>("/api/integrations/fuel-providers", {
+      method: "PATCH",
+      body: JSON.stringify({ id, status }),
+    }),
+
+  testTelematicsProvider: (id: string) =>
+    fetchApi<{ id: string; lastPing: string; status: string }>(
+      "/api/integrations/telematics",
+      { method: "POST", body: JSON.stringify({ id }) },
+    ),
+
+  createAutomationRule: (input: { trigger: string; action: string }) =>
+    fetchApi<{ id: string; trigger: string; action: string }>("/api/settings/automation", {
+      method: "POST",
+      body: JSON.stringify(input),
+    }),
+
+  renameOrderType: (id: string, name: string) =>
+    fetchApi<{ id: string; name: string }>(`/api/settings/order-types/${id}`, {
+      method: "PATCH",
+      body: JSON.stringify({ name }),
+    }),
+
+  deleteWebhook: (id: string) =>
+    fetchApi<{ id: string; deleted: boolean }>("/api/integrations/webhooks", {
+      method: "DELETE",
+      body: JSON.stringify({ id }),
+    }),
+
+  patchDevice: (id: string, input: { vehicle?: string; vehicleId?: string }) =>
+    fetchApi<{ id: string; vehicle: string }>("/api/integrations/devices", {
+      method: "PATCH",
+      body: JSON.stringify({ id, ...input }),
+    }),
 };
 
 export type NetworkAssignmentRow = {

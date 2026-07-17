@@ -18,10 +18,19 @@ const statusMap = {
   rejected: { label: "Rejected", className: "bg-red-500/15 text-red-300" },
 };
 
+const STATUS_FILTERS = [
+  { value: "all", label: "All" },
+  { value: "open", label: "Open" },
+  { value: "review", label: "Review" },
+  { value: "accepted", label: "Accepted" },
+  { value: "rejected", label: "Rejected" },
+] as const;
+
 export function OverflowQueue() {
   const router = useRouter();
   const [loads, setLoads] = useState<OverflowLoad[]>([]);
   const [query, setQuery] = useState("");
+  const [status, setStatus] = useState<(typeof STATUS_FILTERS)[number]["value"]>("all");
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
   const [busyId, setBusyId] = useState<string | null>(null);
@@ -30,7 +39,10 @@ export function OverflowQueue() {
     if (!quiet) setLoading(true);
     else setRefreshing(true);
     try {
-      const data = await api.getNetworkOverflow({ q: query || undefined });
+      const data = await api.getNetworkOverflow({
+        q: query || undefined,
+        status,
+      });
       setLoads(data);
     } catch {
       toast.error("Failed to load overflow queue");
@@ -38,7 +50,7 @@ export function OverflowQueue() {
       setLoading(false);
       setRefreshing(false);
     }
-  }, [query]);
+  }, [query, status]);
 
   useEffect(() => {
     load();
@@ -99,6 +111,20 @@ export function OverflowQueue() {
           </Button>
         </div>
       </form>
+
+      <div className="mb-4 flex flex-wrap gap-2">
+        {STATUS_FILTERS.map((chip) => (
+          <Button
+            key={chip.value}
+            type="button"
+            size="sm"
+            variant={status === chip.value ? "accent" : "outline"}
+            onClick={() => setStatus(chip.value)}
+          >
+            {chip.label}
+          </Button>
+        ))}
+      </div>
 
       {loading ? (
         <div className="rounded-xl border border-white/10 bg-white/[0.03] px-6 py-12 text-center text-sm text-muted-foreground">

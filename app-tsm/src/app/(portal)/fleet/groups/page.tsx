@@ -5,6 +5,7 @@ import { DataTable } from "@/components/app/data-table";
 import { listFleetGroups } from "@/lib/fleet/places-repository";
 import { FLEET_NAV } from "@/lib/module-nav";
 import { CreateFleetGroupForm } from "@/components/app/module-create-forms";
+import { EditFleetGroupButton } from "@/components/app/sprint12-forms";
 
 export default async function FleetGroupsPage() {
   const groups = await listFleetGroups();
@@ -32,6 +33,11 @@ export default async function FleetGroupsPage() {
           { key: "zone", header: "Zone", render: (r) => r.zone },
           { key: "drivers", header: "Drivers", render: (r) => r.drivers },
           { key: "vehicles", header: "Vehicles", render: (r) => r.vehicles },
+          {
+            key: "actions",
+            header: "",
+            render: (r) => <EditFleetGroupButton id={r.id} name={r.name} zone={r.zone} />,
+          },
         ]}
       />
     </>

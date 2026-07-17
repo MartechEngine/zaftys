@@ -2,6 +2,7 @@ import { PageHeader } from "@/components/app/app-shell";
 import { SettingsNav } from "@/components/app/settings-nav";
 import { DataTable } from "@/components/app/data-table";
 import { AutomationToggle } from "@/components/app/automation-toggle";
+import { CreateAutomationForm } from "@/components/app/sprint12-forms";
 import { listAutomationRules } from "@/lib/settings/automation-repository";
 
 export default async function SettingsAutomationPage() {
@@ -9,7 +10,11 @@ export default async function SettingsAutomationPage() {
 
   return (
     <>
-      <PageHeader title="Settings" description="Automation triggers on status and events" />
+      <PageHeader
+        title="Settings"
+        description="Automation triggers on status and events"
+        action={<CreateAutomationForm />}
+      />
       <SettingsNav />
       <DataTable
         rows={rules}

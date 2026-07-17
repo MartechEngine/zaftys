@@ -118,6 +118,24 @@ export function createStoredFleetGroup(input: {
   return row;
 }
 
+export function patchStoredFleetGroup(
+  id: string,
+  patch: { name?: string; zone?: string },
+): StoredFleetGroup | null {
+  if (!g.__tsmFleetGroups) return null;
+  const row = g.__tsmFleetGroups.find((item) => item.id === id);
+  if (!row) return null;
+  if (patch.name !== undefined) row.name = patch.name.trim();
+  if (patch.zone !== undefined) row.zone = patch.zone.trim();
+  logActivity({
+    shipmentId: "",
+    type: "fleet_group.updated",
+    message: row.name,
+    timestamp: new Date().toISOString(),
+  });
+  return row;
+}
+
 export function listStoredOrgUsers(): StoredOrgUser[] {
   if (!g.__tsmOrgUsers) g.__tsmOrgUsers = [];
   return [...g.__tsmOrgUsers];

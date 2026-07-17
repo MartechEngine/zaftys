@@ -6,6 +6,10 @@ import {
   getAutomationOverride,
   setAutomationEnabled,
 } from "@/lib/settings/automation-store";
+import {
+  createStoredAutomationRule,
+  listStoredAutomationRules,
+} from "@/lib/mutations/sprint12-store";
 
 export type AutomationRuleRecord = {
   id: string;
@@ -28,7 +32,7 @@ export async function listAutomationRules(): Promise<AutomationRuleRecord[]> {
   ).length;
   const expiringDocs = compliance.filter((d) => d.status === "expiring").length;
 
-  return demoAutomationRules.map((rule) => {
+  const demo = demoAutomationRules.map((rule) => {
     const override = getAutomationOverride(rule.id);
     const enabled = override ?? rule.enabled;
     const base = { ...rule, enabled };
@@ -40,6 +44,32 @@ export async function listAutomationRules(): Promise<AutomationRuleRecord[]> {
       matchCount: shipments.filter((s) => s.status === "at_plant").length,
     };
   });
+
+  const stored = listStoredAutomationRules().map((rule) => {
+    const override = getAutomationOverride(rule.id);
+    return { ...rule, enabled: override ?? rule.enabled };
+  });
+
+  return [...stored, ...demo];
+}
+
+export function validateCreateAutomationInput(
+  body: unknown,
+): { trigger: string; action: string } | { error: string } {
+  if (!body || typeof body !== "object") return { error: "Body must be an object." };
+  const data = body as Record<string, unknown>;
+  const trigger = String(data.trigger ?? "").trim();
+  const action = String(data.action ?? "").trim();
+  if (!trigger) return { error: "trigger is required." };
+  if (!action) return { error: "action is required." };
+  return { trigger, action };
+}
+
+export async function createAutomationRule(input: {
+  trigger: string;
+  action: string;
+}): Promise<AutomationRuleRecord> {
+  return createStoredAutomationRule(input);
 }
 
 export async function setAutomationRuleEnabled(

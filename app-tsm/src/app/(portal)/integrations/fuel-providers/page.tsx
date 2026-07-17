@@ -3,6 +3,7 @@ import { ModuleSubNav } from "@/components/app/module-sub-nav";
 import { DataTable, StatusPill } from "@/components/app/data-table";
 import { listFuelProviders } from "@/lib/integrations/integrations-repository";
 import { INTEGRATIONS_NAV } from "@/lib/module-nav";
+import { ConnectFuelProviderButton } from "@/components/app/sprint12-forms";
 
 const connStatus = {
   connected: { label: "Connected", className: "bg-emerald-100 text-emerald-800" },
@@ -22,6 +23,11 @@ export default async function FuelProvidersPage() {
           { key: "name", header: "Provider", render: (r) => r.name },
           { key: "stations", header: "Linked stations", render: (r) => r.stations },
           { key: "status", header: "Status", render: (r) => <StatusPill status={r.status} map={connStatus} /> },
+          {
+            key: "actions",
+            header: "",
+            render: (r) => <ConnectFuelProviderButton id={r.id} status={r.status} />,
+          },
         ]}
       />
     </>

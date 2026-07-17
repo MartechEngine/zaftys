@@ -5,8 +5,10 @@ import {
   createStoredOrderType,
   listStoredOrderFields,
   listStoredOrderTypes,
+  renameStoredOrderType,
   type StoredOrderField,
 } from "@/lib/settings/order-types-store";
+import { getOrderTypeNamePatch, patchOrderTypeName } from "@/lib/mutations/sprint12-store";
 
 export type OrderTypeRecord = {
   id: string;
@@ -86,14 +88,18 @@ function matchesOrderType(
 export async function listOrderTypes(): Promise<OrderTypeRecord[]> {
   const shipments = await fetchAllShipmentsRaw();
 
-  const demo = demoOrderTypes.map((ot) => ({
-    ...ot,
-    activeShipments: shipments.filter(
-      (s) =>
-        matchesOrderType(ot, s) &&
-        !["delivered", "cancelled"].includes(s.status),
-    ).length,
-  }));
+  const demo = demoOrderTypes.map((ot) => {
+    const namePatch = getOrderTypeNamePatch(ot.id);
+    return {
+      ...ot,
+      name: namePatch ?? ot.name,
+      activeShipments: shipments.filter(
+        (s) =>
+          matchesOrderType(ot, s) &&
+          !["delivered", "cancelled"].includes(s.status),
+      ).length,
+    };
+  });
 
   const stored = listStoredOrderTypes().map((ot) => ({
     ...ot,
@@ -101,6 +107,20 @@ export async function listOrderTypes(): Promise<OrderTypeRecord[]> {
   }));
 
   return [...stored, ...demo];
+}
+
+export async function renameOrderType(
+  id: string,
+  name: string,
+): Promise<OrderTypeRecord | undefined> {
+  const existing = (await listOrderTypes()).find((ot) => ot.id === id);
+  if (!existing) return undefined;
+
+  const stored = renameStoredOrderType(id, name);
+  if (stored) return { ...stored, activeShipments: existing.activeShipments };
+
+  patchOrderTypeName(id, name);
+  return { ...existing, name: name.trim() };
 }
 
 export function validateCreateOrderTypeInput(

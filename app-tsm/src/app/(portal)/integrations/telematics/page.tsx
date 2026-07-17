@@ -4,6 +4,7 @@ import { DataTable, StatusPill } from "@/components/app/data-table";
 import { listTelematicsProviders } from "@/lib/integrations/integrations-repository";
 import { INTEGRATIONS_NAV } from "@/lib/module-nav";
 import { CreateTelematicsForm } from "@/components/app/module-create-forms";
+import { TestTelematicsButton } from "@/components/app/sprint12-forms";
 
 const connStatus = {
   connected: { label: "Connected", className: "bg-emerald-100 text-emerald-800" },
@@ -28,6 +29,11 @@ export default async function TelematicsPage() {
           { key: "vehicles", header: "Vehicles", render: (r) => r.vehicles },
           { key: "lastPing", header: "Last ping", render: (r) => r.lastPing },
           { key: "status", header: "Status", render: (r) => <StatusPill status={r.status} map={connStatus} /> },
+          {
+            key: "actions",
+            header: "",
+            render: (r) => <TestTelematicsButton id={r.id} />,
+          },
         ]}
       />
     </>

@@ -34,6 +34,20 @@ export function createStoredWebhook(input: {
   return wh;
 }
 
+export function deleteStoredWebhook(id: string): boolean {
+  if (!g.__tsmWebhooks) return false;
+  const idx = g.__tsmWebhooks.findIndex((w) => w.id === id);
+  if (idx < 0) return false;
+  g.__tsmWebhooks.splice(idx, 1);
+  logActivity({
+    shipmentId: "",
+    type: "webhook.deleted",
+    message: id,
+    timestamp: new Date().toISOString(),
+  });
+  return true;
+}
+
 export function listStoredDevices(): DeviceRecord[] {
   if (!g.__tsmDevices) g.__tsmDevices = [];
   return [...g.__tsmDevices];
@@ -60,6 +74,24 @@ export function createStoredDevice(input: {
     shipmentId: "",
     type: "device.registered",
     message: `${device.imei} → ${device.vehicle}`,
+    timestamp: new Date().toISOString(),
+  });
+  return device;
+}
+
+export function patchStoredDevice(
+  id: string,
+  patch: { vehicle?: string; vehicleId?: string },
+): DeviceRecord | null {
+  if (!g.__tsmDevices) return null;
+  const device = g.__tsmDevices.find((d) => d.id === id);
+  if (!device) return null;
+  if (patch.vehicle !== undefined) device.vehicle = patch.vehicle.trim();
+  if (patch.vehicleId !== undefined) device.vehicleId = patch.vehicleId;
+  logActivity({
+    shipmentId: "",
+    type: "device.updated",
+    message: device.imei,
     timestamp: new Date().toISOString(),
   });
   return device;

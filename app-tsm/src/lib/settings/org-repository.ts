@@ -4,13 +4,20 @@ import {
   updateStoredOrgProfile,
   type OrgProfileFields,
 } from "@/lib/settings/org-store";
+import {
+  getOrgLogoFilename,
+  setOrgLogoFilename,
+} from "@/lib/mutations/sprint12-store";
 
 export type OrgProfile = OrgProfileFields & {
   userCount: number;
   portalUrl: string;
+  logoFilename?: string;
 };
 
-export type UpdateOrgInput = Partial<OrgProfileFields>;
+export type UpdateOrgInput = Partial<OrgProfileFields> & {
+  logoFilename?: string;
+};
 
 export function validateUpdateOrgInput(body: unknown): UpdateOrgInput | { error: string } {
   if (!body || typeof body !== "object") return { error: "Body must be an object." };
@@ -36,6 +43,11 @@ export function validateUpdateOrgInput(body: unknown): UpdateOrgInput | { error:
     if (email && !email.includes("@")) return { error: "Email looks invalid." };
     patch.email = email;
   }
+  if (data.logoFilename != null) {
+    const logoFilename = String(data.logoFilename).trim();
+    if (!logoFilename) return { error: "logoFilename cannot be empty." };
+    patch.logoFilename = logoFilename;
+  }
 
   if (Object.keys(patch).length === 0) {
     return { error: "Provide at least one field to update." };
@@ -47,14 +59,27 @@ export function validateUpdateOrgInput(body: unknown): UpdateOrgInput | { error:
 export async function getOrgProfile(): Promise<OrgProfile> {
   const users = await listOrgUsers();
   const org = getStoredOrgProfile();
+  const logoFilename = getOrgLogoFilename();
   return {
     ...org,
+    ...(logoFilename ? { logoFilename } : {}),
     userCount: users.length,
     portalUrl: "https://app.zaftys.com",
   };
 }
 
 export async function updateOrgProfile(input: UpdateOrgInput): Promise<OrgProfile> {
-  updateStoredOrgProfile(input);
+  const { logoFilename, ...profileFields } = input;
+  if (Object.keys(profileFields).length > 0) {
+    updateStoredOrgProfile(profileFields);
+  }
+  if (logoFilename) {
+    setOrgLogoFilename(logoFilename);
+  }
+  return getOrgProfile();
+}
+
+export async function uploadOrgLogo(filename?: string): Promise<OrgProfile> {
+  setOrgLogoFilename(filename?.trim() || "zaftys-logo.png");
   return getOrgProfile();
 }

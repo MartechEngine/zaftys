@@ -2,8 +2,8 @@ import { PageHeader } from "@/components/app/app-shell";
 import { SettingsNav } from "@/components/app/settings-nav";
 import { Card, CardContent } from "@/components/ui/card";
 import { OrgProfileEditor } from "@/components/app/org-profile-editor";
+import { UploadLogoButton } from "@/components/app/sprint12-forms";
 import { getOrgProfile } from "@/lib/settings/org-repository";
-import { Button } from "@/components/ui/button";
 
 export default async function SettingsOrganizationPage() {
   const org = await getOrgProfile();
@@ -40,6 +40,12 @@ export default async function SettingsOrganizationPage() {
             <span className="text-muted-foreground">Org users</span>
             <p>{org.userCount} active accounts</p>
           </div>
+          {org.logoFilename ? (
+            <div>
+              <span className="text-muted-foreground">Logo</span>
+              <p className="font-mono text-xs">{org.logoFilename}</p>
+            </div>
+          ) : null}
           <div className="flex flex-wrap gap-2">
             <OrgProfileEditor
               initial={{
@@ -50,9 +56,7 @@ export default async function SettingsOrganizationPage() {
                 email: org.email,
               }}
             />
-            <Button variant="outline" className="mt-2" disabled>
-              Upload logo
-            </Button>
+            <UploadLogoButton />
           </div>
         </CardContent>
       </Card>
