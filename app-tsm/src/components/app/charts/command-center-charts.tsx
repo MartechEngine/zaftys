@@ -3,11 +3,11 @@
 import { useEffect, useState } from "react";
 import { ChartCard } from "@/components/app/charts/chart-card";
 import {
+  AgingColumnChart,
   FillGauge,
-  HorizontalBars,
+  RankedBarList,
   StatusDonut,
 } from "@/components/app/charts/charts";
-import { CHART } from "@/lib/analytics/chart-theme";
 import type { CommandCenterAnalytics } from "@/lib/analytics/series";
 import { api } from "@/lib/api-client";
 
@@ -30,21 +30,19 @@ export function CommandCenterCharts({
       <ChartCard title="Trip status mix" description="Live shipment states" demo={data.demoSeries}>
         <StatusDonut items={data.statusMix} height={200} />
       </ChartCard>
-      <ChartCard title="Unassigned aging" description="Pending without driver" demo={data.demoSeries}>
-        <HorizontalBars
-          labels={data.unassignedAging.map((b) => b.bucket)}
-          values={data.unassignedAging.map((b) => b.count)}
-          height={200}
-          color={CHART.warning}
-        />
+      <ChartCard
+        title="Unassigned aging"
+        description="Pending loads without a driver"
+        demo={data.demoSeries}
+      >
+        <AgingColumnChart buckets={data.unassignedAging} />
       </ChartCard>
-      <ChartCard title="Exception reasons" description="Top open issues" demo={data.demoSeries}>
-        <HorizontalBars
-          labels={data.exceptionReasons.map((r) => r.label)}
-          values={data.exceptionReasons.map((r) => r.value)}
-          height={200}
-          color={CHART.danger}
-        />
+      <ChartCard
+        title="Exception reasons"
+        description="Top open issues by count"
+        demo={data.demoSeries}
+      >
+        <RankedBarList items={data.exceptionReasons} />
       </ChartCard>
       <ChartCard
         title="Network fill rate"

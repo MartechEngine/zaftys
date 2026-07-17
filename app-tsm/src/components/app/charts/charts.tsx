@@ -96,15 +96,129 @@ export function HorizontalBars({
       <BarChart
         layout="horizontal"
         height={height}
-        yAxis={[{ data: labels, scaleType: "band", ...axisSx }]}
+        yAxis={[{ data: labels, scaleType: "band", width: 100, ...axisSx }]}
         series={[{ data: values, color, type: "bar" }]}
-        margin={{ left: 120, right: 16, top: 8, bottom: 24 }}
+        margin={{ left: 8, right: 24, top: 8, bottom: 24 }}
         grid={{ vertical: true }}
         sx={{
           "& .MuiChartsGrid-line": { stroke: CHART.grid },
         }}
       />
     </ChartThemeProvider>
+  );
+}
+
+/** Unassigned aging — time buckets left→right with escalating severity colors. */
+export function AgingColumnChart({
+  buckets,
+}: {
+  buckets: { bucket: string; count: number }[];
+}) {
+  if (!buckets.length || buckets.every((b) => b.count === 0)) {
+    return (
+      <p className="flex h-[200px] items-center justify-center text-center text-sm text-muted-foreground">
+        No unassigned loads waiting
+      </p>
+    );
+  }
+
+  const max = Math.max(...buckets.map((b) => b.count), 1);
+  const ramp = [CHART.success, CHART.primary, CHART.warning, CHART.danger];
+  const labelMap: Record<string, string> = {
+    "<1h": "< 1h",
+    "1–4h": "1–4h",
+    "4–24h": "4–24h",
+    ">24h": "> 24h",
+  };
+
+  return (
+    <div className="flex h-[200px] flex-col">
+      <div className="flex flex-1 items-end gap-2.5 px-1 pb-1 pt-2">
+        {buckets.map((b, i) => {
+          const h = Math.max((b.count / max) * 100, b.count > 0 ? 8 : 0);
+          const color = ramp[Math.min(i, ramp.length - 1)];
+          return (
+            <div key={b.bucket} className="flex min-w-0 flex-1 flex-col items-center gap-1.5">
+              <span className="text-xs font-semibold tabular-nums text-heading">
+                {b.count > 0 ? b.count : "·"}
+              </span>
+              <div className="flex h-[120px] w-full items-end justify-center">
+                <div
+                  className="w-full max-w-[44px] rounded-t-lg transition-[height] duration-500 ease-out"
+                  style={{
+                    height: `${h}%`,
+                    background: `linear-gradient(180deg, ${color}, ${color}99)`,
+                    boxShadow: b.count > 0 ? `0 4px 14px ${color}44` : undefined,
+                  }}
+                  title={`${labelMap[b.bucket] ?? b.bucket}: ${b.count}`}
+                />
+              </div>
+              <span className="truncate text-[11px] font-medium text-muted-foreground">
+                {labelMap[b.bucket] ?? b.bucket}
+              </span>
+            </div>
+          );
+        })}
+      </div>
+      <div className="mt-1 flex justify-between gap-1 border-t border-white/[0.06] px-1 pt-2 text-[10px] text-subtle-foreground">
+        <span>Fresh</span>
+        <span>Aging → escalate</span>
+      </div>
+    </div>
+  );
+}
+
+/** Exception reasons — ranked proportional bars (better for long labels than MUI h-bars). */
+export function RankedBarList({
+  items,
+  emptyLabel = "No open exceptions",
+  accent = CHART.danger,
+}: {
+  items: { label: string; value: number }[];
+  emptyLabel?: string;
+  accent?: string;
+}) {
+  if (!items.length || items.every((i) => i.value === 0)) {
+    return (
+      <p className="flex h-[200px] items-center justify-center text-center text-sm text-muted-foreground">
+        {emptyLabel}
+      </p>
+    );
+  }
+
+  const max = Math.max(...items.map((i) => i.value), 1);
+  const total = items.reduce((s, i) => s + i.value, 0);
+
+  return (
+    <ul className="flex min-h-[200px] flex-col justify-center gap-3 py-1">
+      {items.map((item, index) => {
+        const pct = Math.round((item.value / max) * 100);
+        const share = total > 0 ? Math.round((item.value / total) * 100) : 0;
+        return (
+          <li key={`${item.label}-${index}`} className="space-y-1.5">
+            <div className="flex items-baseline justify-between gap-2">
+              <span className="min-w-0 truncate text-xs font-medium text-heading" title={item.label}>
+                <span className="mr-1.5 tabular-nums text-muted-foreground">{index + 1}.</span>
+                {item.label}
+              </span>
+              <span className="shrink-0 text-xs tabular-nums text-muted-foreground">
+                <span className="font-semibold text-heading">{item.value}</span>
+                <span className="ml-1 text-[10px]">({share}%)</span>
+              </span>
+            </div>
+            <div className="h-2 overflow-hidden rounded-full bg-white/[0.06]">
+              <div
+                className="h-full rounded-full transition-[width] duration-500 ease-out"
+                style={{
+                  width: `${Math.max(pct, item.value > 0 ? 6 : 0)}%`,
+                  background: `linear-gradient(90deg, ${accent}aa, ${accent})`,
+                }}
+              />
+            </div>
+          </li>
+        );
+      })}
+    </ul>
   );
 }
 
