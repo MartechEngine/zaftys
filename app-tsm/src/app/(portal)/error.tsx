@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
+import Link from "next/link";
 import { Button } from "@/components/ui/button";
 
 export default function PortalError({
@@ -25,7 +26,7 @@ export default function PortalError({
           Try again
         </Button>
         <Button variant="outline" asChild>
-          <a href="/">Command Center</a>
+          <Link href="/">Command Center</Link>
         </Button>
       </div>
     </div>

@@ -24,7 +24,7 @@ Use `[x]` done · `[ ]` pending · `[~]` in progress · `[—]` deferred
 - [x] Build passes locally (106 routes, Jul 17)
 - [x] Commit `app-tsm/` + `docs/app/` (Jul 17)
 - [—] Push branch to remote (after local app stable)
-- [—] CI: lint + build on PR (after local app stable)
+- [—] CI: lint + build on PR (after local app stable) → **now:** `app-tsm` CI workflow added
 - [ ] Monorepo vs split repo decision
 
 ---
@@ -135,9 +135,9 @@ Use `[x]` done · `[ ]` pending · `[~]` in progress · `[—]` deferred
 
 ### Realtime & jobs
 - [~] Map GPS SSE stream every 5s (WebSocket production pending)
-- [ ] Stale GPS + exception automation
-- [ ] Sync cron + dead letter queue
-- [ ] Notification inbox + email alerts
+- [x] Stale GPS + exception automation (`/api/jobs/gps-stale-check`)
+- [x] Sync dead letter queue (`/api/sync/dlq`) + cron Bearer auth
+- [~] Notification inbox + email alerts (in-app + email stub)
 
 ### Design & QA
 - [x] Dark glass design system applied portal-wide
@@ -146,10 +146,11 @@ Use `[x]` done · `[ ]` pending · `[~]` in progress · `[—]` deferred
 - [~] Skeletons (shipments, documents, dispatch); portal error boundary
 - [x] Global search ⌘K
 - [ ] WCAG AA audit
-- [ ] Playwright E2E north star flow
+- [x] Playwright E2E north star flow
 - [ ] Vitest API route tests
 
 ### DevOps
+- [x] CI: lint/typecheck/build/smoke/Playwright for `app-tsm` (`.github/workflows/app-tsm-ci.yml`)
 - [ ] Staging + production deploy
 - [ ] TLS, monitoring, backups
 - [ ] AGPL decision documented

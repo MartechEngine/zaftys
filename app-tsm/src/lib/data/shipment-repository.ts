@@ -153,18 +153,23 @@ export function getActiveDataSource(): DataSource {
 }
 
 export async function fetchAllShipmentsRaw(): Promise<ShipmentRecord[]> {
+  const { ensurePositionsHydrated, applyLiveGeo } = await import(
+    "@/lib/map/live-positions"
+  );
+  await ensurePositionsHydrated();
+
   if (getActiveDataSource() === "fleetbase") {
     try {
       const client = getFleetbaseClient();
       const orders = await client.listOrders(100);
       const mapped = orders.map(mapFleetbaseOrder).map(withGeo);
-      return applyFleetbasePositions(mapped);
+      return applyLiveGeo(await applyFleetbasePositions(mapped));
     } catch (e) {
       console.warn("[shipments] Fleetbase fallback to dev-store:", e);
-      return devListShipments();
+      return applyLiveGeo(devListShipments());
     }
   }
-  return devListShipments();
+  return applyLiveGeo(devListShipments());
 }
 
 export async function listShipments(filters?: {

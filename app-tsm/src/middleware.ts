@@ -30,6 +30,14 @@ function isPublicPath(pathname: string) {
   return false;
 }
 
+/** Cron/webhook routes — session optional; route handlers enforce Bearer secret. */
+function isCronCandidatePath(pathname: string) {
+  if (pathname.startsWith("/api/jobs/")) return true;
+  if (pathname === "/api/sync/dlq") return true;
+  if (pathname === "/api/integrations/telematics/positions") return true;
+  return false;
+}
+
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
@@ -48,6 +56,10 @@ export async function middleware(request: NextRequest) {
   const session = token ? await parseSessionToken(token) : null;
 
   if (!session) {
+    // Allow unauthenticated request through — handler validates TSM_CRON_SECRET
+    if (isCronCandidatePath(pathname)) {
+      return NextResponse.next();
+    }
     if (pathname.startsWith("/api/")) {
       return NextResponse.json(
         { error: { code: "UNAUTHORIZED", message: "Sign in required." } },

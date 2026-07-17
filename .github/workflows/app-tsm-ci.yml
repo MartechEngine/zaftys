@@ -1,0 +1,90 @@
+name: app-tsm CI
+
+on:
+  push:
+    paths:
+      - "app-tsm/**"
+      - ".github/workflows/app-tsm-ci.yml"
+  pull_request:
+    paths:
+      - "app-tsm/**"
+      - ".github/workflows/app-tsm-ci.yml"
+  workflow_dispatch:
+
+defaults:
+  run:
+    working-directory: app-tsm
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_USER: tsm
+          POSTGRES_PASSWORD: tsm
+          POSTGRES_DB: zaftys_tsm
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U tsm -d zaftys_tsm"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+
+    env:
+      DATABASE_URL: postgresql://tsm:tsm@localhost:5432/zaftys_tsm
+      TSM_DEMO_UI: "1"
+      TSM_CRON_SECRET: ci-cron-secret
+      PLAYWRIGHT_SKIP_WEBSERVER: "1"
+      CI: "true"
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+          cache-dependency-path: app-tsm/package-lock.json
+
+      - name: Install
+        run: npm ci
+
+      - name: Typecheck
+        run: npx tsc --noEmit
+
+      - name: Lint
+        run: npm run lint
+        continue-on-error: true
+
+      - name: Migrate
+        run: npm run db:migrate
+
+      - name: Build
+        run: npm run build
+
+      - name: Start server
+        run: |
+          npm run start &
+          for i in $(seq 1 60); do
+            if curl -sf http://localhost:3000/api/health >/dev/null; then
+              echo "ready"
+              exit 0
+            fi
+            sleep 2
+          done
+          echo "server failed to become ready"
+          exit 1
+
+      - name: Smoke
+        run: npm run smoke
+
+      - name: Install Playwright Chromium
+        run: npx playwright install chromium --with-deps
+
+      - name: Playwright (smoke + north-star)
+        run: npx playwright test e2e/smoke.spec.ts e2e/shipment-flow.spec.ts

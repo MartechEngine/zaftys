@@ -1,5 +1,6 @@
 import { listShipments, tickMapGeo } from "@/lib/data/shipment-repository";
 import { vehicleMarkersFromShipment } from "@/lib/map-markers";
+import { ensurePositionsHydrated } from "@/lib/map/live-positions";
 
 export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
@@ -7,7 +8,8 @@ export const runtime = "nodejs";
 const INTERVAL_MS = 5_000;
 
 async function buildPayload() {
-  // Simulated GPS motion only in demo UI — live mode should use telematics ingest later
+  await ensurePositionsHydrated();
+  // Simulated GPS motion only in demo UI — live mode uses telematics ingest
   if (process.env.TSM_DEMO_UI !== "0") {
     tickMapGeo();
   }

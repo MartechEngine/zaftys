@@ -1,8 +1,10 @@
 import { listShipments, tickMapGeo } from "@/lib/data/shipment-repository";
 import { vehicleMarkersFromShipment } from "@/lib/map-markers";
+import { ensurePositionsHydrated } from "@/lib/map/live-positions";
 import { apiSuccess } from "@/lib/api-response";
 
 export async function GET() {
+  await ensurePositionsHydrated();
   // Simulated GPS motion only in demo UI — match /api/map/stream
   if (process.env.TSM_DEMO_UI !== "0") {
     tickMapGeo();

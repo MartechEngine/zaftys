@@ -70,6 +70,7 @@ const PASSWORD = process.env.SMOKE_PASSWORD ?? "dev";
   "/api/notifications",
   "/api/sync/dlq",
   "/api/jobs/gps-stale-check",
+  "/api/integrations/telematics/positions",
   "/api/reports/lanes",
   "/api/settings/config?section=payments",
   "/api/documents",
@@ -415,10 +416,22 @@ async function main() {
         error: "Smoke DLQ entry",
       }),
     () =>
+      writeCheck("POST /api/sync/dlq process", cookie, "POST", "/api/sync/dlq", {
+        action: "process",
+      }),
+    () =>
       writeCheck("POST /api/jobs/gps-stale-check", cookie, "POST", "/api/jobs/gps-stale-check", {
         thresholdMinutes: 99999,
         raiseException: false,
       }),
+    () =>
+      writeCheck(
+        "POST /api/integrations/telematics/positions",
+        cookie,
+        "POST",
+        "/api/integrations/telematics/positions",
+        { shipmentId: "1", lat: 21.15, lng: 79.09, source: "smoke" },
+      ),
     () =>
       writeCheck("POST /api/shipments/bulk", cookie, "POST", "/api/shipments/bulk", {
         ids: ["1"],

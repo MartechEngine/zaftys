@@ -5,6 +5,7 @@ import {
 } from "@/lib/data/shipment-repository";
 import { logActivity } from "@/lib/dev-store";
 import { enqueueNotification } from "@/lib/notifications/dispatch";
+import { setGeoOverlay } from "@/lib/map/live-positions";
 
 export type GpsStaleCheckResult = {
   scanned: number;
@@ -52,9 +53,11 @@ export async function runGpsStaleCheck(input?: {
 
     flagged.push(s.id);
 
-    if (s.geo) {
-      s.geo = { ...s.geo, gpsStale: true };
-    }
+    setGeoOverlay(s.id, {
+      gpsStale: true,
+      gpsUpdatedAt: updatedAt,
+      current: s.geo?.current,
+    });
 
     logActivity({
       shipmentId: s.id,

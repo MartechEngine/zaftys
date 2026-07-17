@@ -1,3 +1,5 @@
+import { getSession } from "@/lib/auth/session";
+import { isCronAuthorized, isCronConfigured } from "@/lib/jobs/authorize-cron";
 import {
   dismissSyncDlq,
   enqueueSyncFailure,
@@ -9,7 +11,16 @@ import { apiError, apiSuccess } from "@/lib/api-response";
 
 export const dynamic = "force-dynamic";
 
+async function authorize(request: Request) {
+  if (await getSession()) return true;
+  if (isCronAuthorized(request)) return true;
+  return false;
+}
+
 export async function GET(request: Request) {
+  if (!(await authorize(request))) {
+    return apiError("UNAUTHORIZED", "Sign in or cron Bearer required.", 401);
+  }
   const url = new URL(request.url);
   const status = url.searchParams.get("status") as
     | "open"
@@ -22,6 +33,16 @@ export async function GET(request: Request) {
 }
 
 export async function POST(request: Request) {
+  if (!(await authorize(request))) {
+    return apiError(
+      "UNAUTHORIZED",
+      isCronConfigured()
+        ? "Sign in or provide Authorization: Bearer <TSM_CRON_SECRET>."
+        : "Sign in required.",
+      401,
+    );
+  }
+
   let body: unknown;
   try {
     body = await request.json();
@@ -50,6 +71,10 @@ export async function POST(request: Request) {
 }
 
 export async function PATCH(request: Request) {
+  if (!(await authorize(request))) {
+    return apiError("UNAUTHORIZED", "Sign in or cron Bearer required.", 401);
+  }
+
   let body: unknown;
   try {
     body = await request.json();

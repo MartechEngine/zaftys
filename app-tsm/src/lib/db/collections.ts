@@ -54,7 +54,8 @@ export type CollectionName =
   | "fleet_group_patches"
   | "sync_dlq"
   | "notification_reads"
-  | "notification_items";
+  | "notification_items"
+  | "live_positions";
 
 const g = globalThis as typeof globalThis & {
   __tsmCollectionHydrated?: Set<string>;
