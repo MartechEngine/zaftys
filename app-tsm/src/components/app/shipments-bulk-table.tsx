@@ -7,6 +7,7 @@ import { Calendar, MapPin, Package } from "lucide-react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { OriginBadge, ShipmentStatusChip } from "@/components/app/status-chip";
+import { NetworkListingChip } from "@/components/app/network-offers-panel";
 import { api } from "@/lib/api-client";
 import type { ShipmentRecord } from "@/lib/dev-store";
 
@@ -118,6 +119,9 @@ export function ShipmentsBulkTable({
                 Status
               </th>
               <th className="px-4 py-3 text-left text-[11px] font-medium tracking-[0.16em] text-muted-foreground uppercase">
+                Network
+              </th>
+              <th className="px-4 py-3 text-left text-[11px] font-medium tracking-[0.16em] text-muted-foreground uppercase">
                 Load
               </th>
               <th className="px-4 py-3 text-left text-[11px] font-medium tracking-[0.16em] text-muted-foreground uppercase">
@@ -164,6 +168,13 @@ export function ShipmentsBulkTable({
                 </td>
                 <td className="px-4 py-3">
                   <ShipmentStatusChip status={s.status} />
+                </td>
+                <td className="px-4 py-3">
+                  {s.networkListing ? (
+                    <NetworkListingChip listing={s.networkListing} />
+                  ) : (
+                    <span className="text-xs text-muted-foreground">—</span>
+                  )}
                 </td>
                 <td className="px-4 py-3">
                   <span className="inline-flex items-center gap-1 rounded-md bg-white/5 px-2 py-0.5 font-mono text-[11px]">

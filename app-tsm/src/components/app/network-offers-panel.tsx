@@ -10,6 +10,7 @@ import type { ShipmentRecord } from "@/lib/dev-store";
 import {
   LISTING_STATE_LABEL,
   type NetworkListing,
+  type NetworkListingMirror,
   type NetworkOffer,
 } from "@/lib/network/listing-types";
 import { cn } from "@/lib/utils";
@@ -21,7 +22,11 @@ type Props = {
   onChanged?: () => void;
 };
 
-export function NetworkListingChip({ listing }: { listing: NetworkListing | null }) {
+export function NetworkListingChip({
+  listing,
+}: {
+  listing: NetworkListing | NetworkListingMirror | null;
+}) {
   if (!listing) return null;
   return (
     <span
@@ -95,10 +100,11 @@ export function NetworkOffersPanel({
   }
 
   async function reject(id: string) {
+    const reason = window.prompt("Rejection reason (optional):")?.trim();
     setBusyId(id);
     try {
-      await api.rejectNetworkOffer(id);
-      toast.success("Offer rejected");
+      await api.rejectNetworkOffer(id, reason || undefined);
+      toast.success(reason ? "Offer rejected with reason" : "Offer rejected");
       await load();
       onChanged?.();
     } catch (e) {
@@ -239,12 +245,18 @@ export function NetworkOffersPanel({
       )}
 
       {offers.filter((o) => o.status !== "open").length > 0 && (
-        <div className="text-xs text-muted-foreground">
-          Closed:{" "}
-          {offers
-            .filter((o) => o.status !== "open")
-            .map((o) => `${o.partnerName} (${o.status})`)
-            .join(" · ")}
+        <div className="space-y-1 text-xs text-muted-foreground">
+          <p className="font-medium text-foreground/80">Closed offers</p>
+          <ul className="space-y-1">
+            {offers
+              .filter((o) => o.status !== "open")
+              .map((o) => (
+                <li key={o.id}>
+                  {o.partnerName} ({o.status})
+                  {o.rejectReason ? ` — ${o.rejectReason}` : ""}
+                </li>
+              ))}
+          </ul>
         </div>
       )}
     </div>

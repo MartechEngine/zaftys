@@ -69,6 +69,17 @@ export default async function SettingsPoliciesPage() {
               inputType="number"
             />
           </div>
+
+          <div className="border-t border-border pt-4">
+            <h3 className="font-semibold text-navy">TranZfort network</h3>
+            <ConfigFieldForm
+              section="policies"
+              field="listingTtlHours"
+              label="Listing TTL (hours)"
+              value={settings.listingTtlHours}
+              inputType="number"
+            />
+          </div>
         </CardContent>
       </Card>
     </>

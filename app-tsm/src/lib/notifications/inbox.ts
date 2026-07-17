@@ -33,6 +33,10 @@ function formatTimeLabel(iso: string) {
 
 function titleForActivity(type: string, message: string) {
   if (type.includes("exception")) return "Exception alert";
+  if (type === "network.offer.received") {
+    const match = message.match(/TranZfort offer on ([^·]+)/);
+    return match ? `TranZfort offer on ${match[1].trim()}` : "TranZfort offer received";
+  }
   if (type.includes("document")) return "Document uploaded";
   if (type.includes("created")) return "New shipment";
   if (type.includes("cancelled")) return "Shipment cancelled";

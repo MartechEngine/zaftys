@@ -1,4 +1,5 @@
 import { NextRequest } from "next/server";
+import { requireDispatcherOrAdmin } from "@/lib/auth/require-role";
 import { apiError, apiSuccess } from "@/lib/api-response";
 import {
   getShipmentNetworkContext,
@@ -18,6 +19,9 @@ export async function GET(_req: NextRequest, ctx: Ctx) {
 }
 
 export async function PATCH(req: NextRequest, ctx: Ctx) {
+  const auth = await requireDispatcherOrAdmin();
+  if (!auth.ok) return auth.response;
+
   const { shipmentId } = await ctx.params;
   let body: unknown;
   try {
@@ -38,6 +42,7 @@ export async function PATCH(req: NextRequest, ctx: Ctx) {
     pickupWindowEnd: typeof b.pickupWindowEnd === "string" ? b.pickupWindowEnd : undefined,
     plantNotes: typeof b.plantNotes === "string" ? b.plantNotes : undefined,
     publish: b.publish === true,
+    expiresAt: typeof b.expiresAt === "string" ? b.expiresAt : undefined,
   });
 
   if ("error" in result && result.error) {
@@ -47,6 +52,9 @@ export async function PATCH(req: NextRequest, ctx: Ctx) {
 }
 
 export async function DELETE(_req: NextRequest, ctx: Ctx) {
+  const auth = await requireDispatcherOrAdmin();
+  if (!auth.ok) return auth.response;
+
   const { shipmentId } = await ctx.params;
   const result = await withdrawShipmentListing(shipmentId);
   if ("error" in result && result.error) {

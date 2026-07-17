@@ -73,6 +73,7 @@ const PASSWORD = process.env.SMOKE_PASSWORD ?? "dev";
   "/api/documents",
   "/api/settings/notifications",
   "/api/network/listings",
+  "/api/network/assignments",
 ];
 
 async function login() {
@@ -1112,6 +1113,35 @@ async function main() {
         headers: { Cookie: cookie },
       });
       const listingJson = await listingRes.json();
+      const openOffers = (listingJson?.data?.offers ?? []).filter((o) => o.status === "open");
+      const rejectId = openOffers[0]?.id;
+      if (!rejectId) {
+        return {
+          path: "PATCH /api/network/offers reject+reason",
+          ok: false,
+          status: listingRes.status,
+          detail: `no open offer to reject`,
+        };
+      }
+      const rejectRes = await fetch(`${BASE}/api/network/offers/${rejectId}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json", Cookie: cookie },
+        body: JSON.stringify({ action: "reject", reason: "Smoke — rate mismatch" }),
+      });
+      const rejectJson = await rejectRes.json();
+      const reasonOk = rejectJson?.data?.offer?.rejectReason === "Smoke — rate mismatch";
+      return {
+        path: "PATCH /api/network/offers reject+reason",
+        ok: rejectRes.ok && reasonOk,
+        status: rejectRes.status,
+        detail: reasonOk ? "reason stored" : JSON.stringify(rejectJson).slice(0, 120),
+      };
+    },
+    async () => {
+      const listingRes = await fetch(`${BASE}/api/network/listings/12`, {
+        headers: { Cookie: cookie },
+      });
+      const listingJson = await listingRes.json();
       const offerId = listingJson?.data?.offers?.find((o) => o.status === "open")?.id;
       if (!offerId) {
         return {
@@ -1129,6 +1159,23 @@ async function main() {
         { action: "accept" },
       );
     },
+    async () => {
+      const res = await fetch(`${BASE}/api/network/assignments`, {
+        headers: { Cookie: cookie },
+        cache: "no-store",
+      });
+      const json = await res.json();
+      const rows = Array.isArray(json.data) ? json.data : [];
+      const outbound = rows.find((r) => r.source === "outbound" && r.shipmentId === "12");
+      return {
+        path: "GET /api/network/assignments outbound",
+        ok: res.ok && Boolean(outbound?.truck),
+        status: res.status,
+        detail: outbound
+          ? `outbound slot · ${outbound.truck}`
+          : `${rows.length} rows · no outbound for 12`,
+      };
+    },
     () =>
       writeCheck(
         "DELETE /api/network/listings/12 withdraw",
@@ -1136,6 +1183,37 @@ async function main() {
         "DELETE",
         "/api/network/listings/12",
       ),
+    () =>
+      writeCheck("POST /api/network/listings/9 publish", cookie, "POST", "/api/network/listings", {
+        shipmentId: "9",
+        trucksNeeded: 1,
+        priceType: "fixed",
+        rateInr: 42000,
+        advancePercent: 20,
+        publish: true,
+      }),
+    () =>
+      writeCheck(
+        "PATCH /api/network/listings/9 expire",
+        cookie,
+        "PATCH",
+        "/api/network/listings/9",
+        { expiresAt: new Date(Date.now() - 60_000).toISOString() },
+      ),
+    async () => {
+      const res = await fetch(`${BASE}/api/network/listings/9`, {
+        headers: { Cookie: cookie },
+        cache: "no-store",
+      });
+      const json = await res.json();
+      const listing = json?.data?.listing;
+      return {
+        path: "GET /api/network/listings/9 expired",
+        ok: res.ok && listing === null,
+        status: res.status,
+        detail: listing === null ? "listing self-healed to expired" : `still active: ${listing?.state}`,
+      };
+    },
   ];
 
   for (const run of writes) {

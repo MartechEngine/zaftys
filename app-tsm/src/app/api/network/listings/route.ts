@@ -1,4 +1,5 @@
 import { NextRequest } from "next/server";
+import { requireDispatcherOrAdmin } from "@/lib/auth/require-role";
 import { apiError, apiSuccess } from "@/lib/api-response";
 import {
   listOutboundNetworkDesk,
@@ -13,6 +14,9 @@ export async function GET(req: NextRequest) {
 }
 
 export async function POST(req: NextRequest) {
+  const auth = await requireDispatcherOrAdmin();
+  if (!auth.ok) return auth.response;
+
   let body: unknown;
   try {
     body = await req.json();

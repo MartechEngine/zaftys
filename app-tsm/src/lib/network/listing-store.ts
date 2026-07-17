@@ -22,9 +22,11 @@ function offers(): NetworkOffer[] {
   return g.__tsmNetworkOffers;
 }
 
-function seedDemoOffers(listing: NetworkListing) {
+const EXPIRABLE_STATES = ["posted", "offers_received", "partially_assigned"] as const;
+
+function seedDemoOffers(listing: NetworkListing): boolean {
   const existing = offers().filter((o) => o.listingId === listing.id);
-  if (existing.length > 0) return;
+  if (existing.length > 0) return false;
   const demos: Omit<NetworkOffer, "id" | "listingId" | "shipmentId" | "submittedAt" | "status">[] = [
     {
       partnerName: "Rajesh K.",
@@ -66,6 +68,34 @@ function seedDemoOffers(listing: NetworkListing) {
     });
   }
   listing.state = "offers_received";
+  return true;
+}
+
+/** Self-heal: mark active listings past expiresAt as expired. Returns affected shipment IDs. */
+export function expireStaleListings(): string[] {
+  const now = Date.now();
+  const expiredShipmentIds: string[] = [];
+  for (const listing of listings()) {
+    if (!listing.expiresAt) continue;
+    if (new Date(listing.expiresAt).getTime() > now) continue;
+    if (!EXPIRABLE_STATES.includes(listing.state as (typeof EXPIRABLE_STATES)[number])) {
+      continue;
+    }
+    listing.state = "expired";
+    for (const o of offers().filter(
+      (x) => x.listingId === listing.id && x.status === "open",
+    )) {
+      o.status = "withdrawn";
+    }
+    logActivity({
+      shipmentId: listing.shipmentId,
+      type: "network.listing.expired",
+      message: `TranZfort listing ${listing.id} expired`,
+      timestamp: new Date().toISOString(),
+    });
+    expiredShipmentIds.push(listing.shipmentId);
+  }
+  return expiredShipmentIds;
 }
 
 export function toListingMirror(listing: NetworkListing): NetworkListingMirror {
@@ -82,6 +112,7 @@ export function toListingMirror(listing: NetworkListing): NetworkListingMirror {
 const OUTBOUND_KPI_STATES = ["posted", "offers_received", "partially_assigned"] as const;
 
 export function getOutboundListingStats() {
+  expireStaleListings();
   const active = listings().filter((l) =>
     OUTBOUND_KPI_STATES.includes(l.state as (typeof OUTBOUND_KPI_STATES)[number]),
   );
@@ -112,6 +143,7 @@ export function buildListingsBoardMap(): Record<
   string,
   { listing: NetworkListing; openOffers: number }
 > {
+  expireStaleListings();
   const map: Record<string, { listing: NetworkListing; openOffers: number }> = {};
   for (const listing of listings()) {
     if (["withdrawn", "expired"].includes(listing.state)) continue;
@@ -124,6 +156,7 @@ export function buildListingsBoardMap(): Record<
 }
 
 export function getListingByShipment(shipmentId: string): NetworkListing | null {
+  expireStaleListings();
   return (
     listings().find(
       (l) =>
@@ -136,6 +169,7 @@ export function getListingByShipment(shipmentId: string): NetworkListing | null 
 export function listOutboundListings(opts?: {
   state?: string;
 }): NetworkListing[] {
+  expireStaleListings();
   let rows = [...listings()];
   if (opts?.state && opts.state !== "all") {
     rows = rows.filter((l) => l.state === opts.state);
@@ -149,6 +183,16 @@ export function listOffersForListing(listingId: string): NetworkOffer[] {
 
 export function listOffersForShipment(shipmentId: string): NetworkOffer[] {
   return offers().filter((o) => o.shipmentId === shipmentId);
+}
+
+export function listAcceptedListingAssignments(): NetworkOffer[] {
+  expireStaleListings();
+  return offers().filter((o) => o.status === "accepted");
+}
+
+function listingTtlMs(hours?: number) {
+  const h = hours && hours > 0 ? hours : 48;
+  return h * 60 * 60 * 1000;
 }
 
 export function createListing(input: PostListingInput): NetworkListing | { error: string } {
@@ -180,7 +224,7 @@ export function createListing(input: PostListingInput): NetworkListing | { error
     plantNotes: input.plantNotes?.trim() || undefined,
     postedAt: publish ? new Date().toISOString() : undefined,
     expiresAt: publish
-      ? new Date(Date.now() + 48 * 60 * 60 * 1000).toISOString()
+      ? new Date(Date.now() + listingTtlMs(input.listingTtlHours)).toISOString()
       : undefined,
     tranzfortTripIds: [],
   };
@@ -240,11 +284,16 @@ export function updateListing(
   if (input.plantNotes !== undefined) {
     listing.plantNotes = input.plantNotes.trim() || undefined;
   }
+  if (input.expiresAt !== undefined) {
+    listing.expiresAt = input.expiresAt || undefined;
+  }
 
   if (input.publish === true && listing.state === "draft") {
     listing.state = "posted";
     listing.postedAt = new Date().toISOString();
-    listing.expiresAt = new Date(Date.now() + 48 * 60 * 60 * 1000).toISOString();
+    if (!listing.expiresAt) {
+      listing.expiresAt = new Date(Date.now() + listingTtlMs()).toISOString();
+    }
     seedDemoOffers(listing);
     logActivity({
       shipmentId,
@@ -320,14 +369,17 @@ export function acceptOffer(
   return { listing, offer };
 }
 
-export function rejectOffer(offerId: string): NetworkOffer | null {
+export function rejectOffer(offerId: string, reason?: string): NetworkOffer | null {
   const offer = offers().find((o) => o.id === offerId);
   if (!offer || offer.status !== "open") return null;
   offer.status = "rejected";
+  if (reason?.trim()) offer.rejectReason = reason.trim();
   logActivity({
     shipmentId: offer.shipmentId,
     type: "network.offer.rejected",
-    message: `Rejected ${offer.partnerName}`,
+    message: reason?.trim()
+      ? `Rejected ${offer.partnerName}: ${reason.trim()}`
+      : `Rejected ${offer.partnerName}`,
     timestamp: new Date().toISOString(),
   });
   return offer;

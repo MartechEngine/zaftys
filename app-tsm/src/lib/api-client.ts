@@ -603,10 +603,13 @@ export const api = {
       body: JSON.stringify({ action: "accept" }),
     }),
 
-  rejectNetworkOffer: (id: string) =>
+  rejectNetworkOffer: (id: string, reason?: string) =>
     fetchApi<{ offer: import("@/lib/network/listing-types").NetworkOffer }>(
       `/api/network/offers/${id}`,
-      { method: "PATCH", body: JSON.stringify({ action: "reject" }) },
+      {
+        method: "PATCH",
+        body: JSON.stringify({ action: "reject", ...(reason ? { reason } : {}) }),
+      },
     ),
 
   getMapVehicles: () =>
@@ -1206,6 +1209,7 @@ export const api = {
 
 export type NetworkAssignmentRow = {
   id: string;
+  source: "overflow" | "outbound";
   bookingId: string;
   route: string;
   commodity: string;
@@ -1214,4 +1218,6 @@ export type NetworkAssignmentRow = {
   publicId?: string;
   status?: string;
   driver?: string;
+  truck?: string;
+  partner?: string;
 };

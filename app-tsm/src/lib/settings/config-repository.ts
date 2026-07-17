@@ -531,6 +531,10 @@ export async function getPolicySettings() {
       typeof policyConfig.alertDaysBeforeExpiry === "number"
         ? policyConfig.alertDaysBeforeExpiry
         : 30,
+    listingTtlHours:
+      typeof policyConfig.listingTtlHours === "number"
+        ? policyConfig.listingTtlHours
+        : 48,
     showLiveMap:
       policyConfig.showLiveMap !== undefined ? Boolean(policyConfig.showLiveMap) : true,
     hideDriverPhone:

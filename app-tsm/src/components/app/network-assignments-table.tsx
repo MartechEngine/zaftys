@@ -57,8 +57,17 @@ export function NetworkAssignmentsTable() {
       ) : (
         <DataTable
           rows={rows}
-          emptyMessage="No accepted network loads yet. Accept overflow loads to create assignments."
+          emptyMessage="No network assignments yet. Accept outbound offers or inbound overflow loads."
           columns={[
+            {
+              key: "source",
+              header: "Source",
+              render: (r) => (
+                <span className="text-xs uppercase tracking-wide text-muted-foreground">
+                  {r.source === "outbound" ? "Outbound" : "Overflow"}
+                </span>
+              ),
+            },
             {
               key: "booking",
               header: "Booking",
@@ -96,10 +105,13 @@ export function NetworkAssignmentsTable() {
             },
             {
               key: "driver",
-              header: "Driver",
+              header: "Partner / driver",
               render: (r) => (
                 <div className="flex flex-wrap items-center gap-2">
-                  <span>{r.driver ?? "Unassigned"}</span>
+                  <span>{r.driver ?? r.partner ?? "Unassigned"}</span>
+                  {r.truck ? (
+                    <span className="font-mono text-[11px] text-muted-foreground">{r.truck}</span>
+                  ) : null}
                   <AssignNetworkShipmentButton shipmentId={r.shipmentId} driver={r.driver} />
                 </div>
               ),

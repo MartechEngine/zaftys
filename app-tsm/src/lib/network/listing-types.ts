@@ -28,6 +28,7 @@ export type NetworkOffer = {
   submittedAt: string;
   status: "open" | "accepted" | "rejected" | "withdrawn";
   slotIndex?: number;
+  rejectReason?: string;
 };
 
 /** Lightweight mirror stored on ShipmentRecord for board/KPI reads. */
@@ -72,6 +73,7 @@ export type PostListingInput = {
   pickupWindowEnd?: string;
   plantNotes?: string;
   publish?: boolean;
+  listingTtlHours?: number;
 };
 
 export type UpdateListingInput = {
@@ -83,6 +85,7 @@ export type UpdateListingInput = {
   pickupWindowEnd?: string;
   plantNotes?: string;
   publish?: boolean;
+  expiresAt?: string;
 };
 
 export const LISTING_STATE_LABEL: Record<NetworkListingState, string> = {

@@ -9,7 +9,7 @@ export default function NetworkAssignmentsPage() {
     <>
       <PageHeader
         title="Network assignments"
-        description="Overflow loads accepted into your fleet — linked to live shipments"
+        description="Outbound accepted slots and inbound overflow loads linked to live shipments"
       />
       <ModuleSubNav links={NETWORK_NAV} />
       <NetworkAssignmentsTable />
