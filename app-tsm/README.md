@@ -8,11 +8,24 @@ Built on branch `app-dev-mode` with mock data for UI development. Connects to Fl
 
 See [`../docs/app/`](../docs/app/) for product, UX, architecture, and API specs.
 
-## Quick start
+## Quick start (local Docker — recommended)
+
+```powershell
+cd app-tsm
+copy .env.example .env.local
+npm install
+npm run docker:up          # postgres + redis + minio
+npm run db:migrate
+npm run dev
+```
+
+See [`docs/app/ops/local-docker.md`](../docs/app/ops/local-docker.md) and [ADR-007](../docs/app/decisions/007-local-docker-and-app-db.md).
+
+Host-only (no Docker — memory stores, data lost on restart):
 
 ```bash
 cd app-tsm
-cp .env.example .env.local   # optional — demo mode works without Fleetbase
+# leave DATABASE_URL unset in .env.local
 npm install
 npm run dev
 ```
@@ -21,7 +34,8 @@ npm run dev
 
 | Mode | Env | Behavior |
 |------|-----|----------|
-| **Demo UI** (default) | `TSM_DEMO_UI=1` or unset | Rich in-memory dev-store — full Wave 1 flows |
+| **Demo + Postgres** (recommended) | `TSM_DEMO_UI=1` + `DATABASE_URL` | Seed UI + durable notes/listings |
+| **Demo memory only** | `TSM_DEMO_UI=1`, no `DATABASE_URL` | In-memory — fine for UI, not durable |
 | **Live Fleetbase** | `TSM_DEMO_UI=0` + `FLEETBASE_API_KEY` | Orders/drivers/vehicles from Fleetbase API |
 
 Demo login accounts (dev session, not NextAuth):
@@ -100,6 +114,12 @@ Or `POST /api/sync/run` while the dev server is running.
 
 | Command | Description |
 |---------|-------------|
+| `npm run docker:up` | Start Postgres + Redis + MinIO |
+| `npm run docker:down` | Stop Compose stack |
+| `npm run docker:full` | Full stack including app container |
+| `npm run db:migrate` | Apply Drizzle migrations |
+| `npm run db:generate` | Generate migrations from schema |
+| `npm run db:studio` | Drizzle Studio |
 | `npm run dev` | Dev server :3000 |
 | `npm run build` | Production build |
 | `npm run start` | Start production server |

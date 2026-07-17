@@ -8,6 +8,7 @@ import {
   getOrgLogoFilename,
   setOrgLogoFilename,
 } from "@/lib/mutations/sprint12-store";
+import { ensureOrgHydrated, persistOrgProfile } from "@/lib/db/domain-persistence";
 
 export type OrgProfile = OrgProfileFields & {
   userCount: number;
@@ -57,6 +58,7 @@ export function validateUpdateOrgInput(body: unknown): UpdateOrgInput | { error:
 }
 
 export async function getOrgProfile(): Promise<OrgProfile> {
+  await ensureOrgHydrated();
   const users = await listOrgUsers();
   const org = getStoredOrgProfile();
   const logoFilename = getOrgLogoFilename();
@@ -69,6 +71,7 @@ export async function getOrgProfile(): Promise<OrgProfile> {
 }
 
 export async function updateOrgProfile(input: UpdateOrgInput): Promise<OrgProfile> {
+  await ensureOrgHydrated();
   const { logoFilename, ...profileFields } = input;
   if (Object.keys(profileFields).length > 0) {
     updateStoredOrgProfile(profileFields);
@@ -76,10 +79,27 @@ export async function updateOrgProfile(input: UpdateOrgInput): Promise<OrgProfil
   if (logoFilename) {
     setOrgLogoFilename(logoFilename);
   }
-  return getOrgProfile();
+  const profile = await getOrgProfile();
+  await persistOrgProfile({
+    name: profile.name,
+    gstin: profile.gstin,
+    address: profile.address,
+    phone: profile.phone,
+    email: profile.email,
+  });
+  return profile;
 }
 
 export async function uploadOrgLogo(filename?: string): Promise<OrgProfile> {
+  await ensureOrgHydrated();
   setOrgLogoFilename(filename?.trim() || "zaftys-logo.png");
-  return getOrgProfile();
+  const profile = await getOrgProfile();
+  await persistOrgProfile({
+    name: profile.name,
+    gstin: profile.gstin,
+    address: profile.address,
+    phone: profile.phone,
+    email: profile.email,
+  });
+  return profile;
 }

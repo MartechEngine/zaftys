@@ -21,6 +21,10 @@ export function listStoredVendors(): StoredVendor[] {
   return [...getStore()];
 }
 
+export function replaceStoredVendors(items: StoredVendor[]) {
+  g.__tsmDevVendors = [...items];
+}
+
 export function createStoredVendor(input: {
   name: string;
   type: string;

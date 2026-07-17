@@ -10,6 +10,7 @@ import type {
 const g = globalThis as typeof globalThis & {
   __tsmNetworkListings?: NetworkListing[];
   __tsmNetworkOffers?: NetworkOffer[];
+  __tsmNetworkHydrated?: boolean;
 };
 
 function listings(): NetworkListing[] {
@@ -20,6 +21,31 @@ function listings(): NetworkListing[] {
 function offers(): NetworkOffer[] {
   if (!g.__tsmNetworkOffers) g.__tsmNetworkOffers = [];
   return g.__tsmNetworkOffers;
+}
+
+/** Replace in-memory network state (used after Postgres hydrate). */
+export function replaceNetworkStore(next: {
+  listings: NetworkListing[];
+  offers: NetworkOffer[];
+}) {
+  g.__tsmNetworkListings = [...next.listings];
+  g.__tsmNetworkOffers = [...next.offers];
+  g.__tsmNetworkHydrated = true;
+}
+
+export function isNetworkStoreHydrated() {
+  return Boolean(g.__tsmNetworkHydrated);
+}
+
+export function markNetworkStoreHydrated() {
+  g.__tsmNetworkHydrated = true;
+}
+
+export function snapshotNetworkStore() {
+  return {
+    listings: [...listings()],
+    offers: [...offers()],
+  };
 }
 
 const EXPIRABLE_STATES = ["posted", "offers_received", "partially_assigned"] as const;

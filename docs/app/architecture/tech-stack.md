@@ -36,9 +36,10 @@
 | Runtime | Node.js 20 LTS | |
 | API | Next.js Route Handlers | Co-located with portal |
 | Auth | HMAC session (dev) → **NextAuth** (prod) | ADR 005 |
+| ORM / App DB | **Drizzle + PostgreSQL** | ADR-007 — portal-owned durable data |
 | Validation | Zod | Shared with frontend |
 | Fleetbase client | Custom `FleetbaseClient` | REST + file upload |
-| File storage | Fleetbase proofs API | LR, ePOD, RC scans |
+| File storage | MinIO (local) → S3 (prod); Fleetbase proofs API | LR, ePOD, RC scans |
 
 ---
 
@@ -78,8 +79,10 @@
 
 | Layer | Choice |
 |-------|--------|
-| Hosting | VPS India region |
-| CI/CD | GitHub Actions — lint, build, deploy |
+| Hosting | VPS India region → Compose/K8s later |
+| Local stack | Docker Compose: Postgres + Redis + MinIO (+ optional app) — [ADR-007](../decisions/007-local-docker-and-app-db.md) |
+| App DB | PostgreSQL (ZAFTYS-owned durable data) |
+| CI/CD | GitHub Actions — lint, build, migrate, deploy |
 | Secrets | `.env.local` / host env — never client |
 | CDN | Cloudflare for static |
 | Monitoring | Uptime + sync lag + FB health |

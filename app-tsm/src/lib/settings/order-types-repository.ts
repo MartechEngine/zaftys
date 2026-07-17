@@ -19,6 +19,11 @@ import {
   deleteStoredOrderField,
   patchStoredOrderField,
 } from "@/lib/settings/order-types-store";
+import {
+  ensureSettingsHydrated,
+  persistOrderField,
+  persistOrderType,
+} from "@/lib/db/domain-persistence";
 
 export type OrderTypeRecord = {
   id: string;
@@ -96,6 +101,7 @@ function matchesOrderType(
 }
 
 export async function listOrderTypes(): Promise<OrderTypeRecord[]> {
+  await ensureSettingsHydrated();
   const shipments = await fetchAllShipmentsRaw();
 
   const demo = demoOrderTypes.map((ot) => {
@@ -123,14 +129,26 @@ export async function renameOrderType(
   id: string,
   name: string,
 ): Promise<OrderTypeRecord | undefined> {
+  await ensureSettingsHydrated();
   const existing = (await listOrderTypes()).find((ot) => ot.id === id);
   if (!existing) return undefined;
 
   const stored = renameStoredOrderType(id, name);
-  if (stored) return { ...stored, activeShipments: existing.activeShipments };
+  if (stored) {
+    await persistOrderType(stored);
+    return { ...stored, activeShipments: existing.activeShipments };
+  }
 
   patchOrderTypeName(id, name);
-  return { ...existing, name: name.trim() };
+  const merged = { ...existing, name: name.trim() };
+  await persistOrderType({
+    id: merged.id,
+    name: merged.name,
+    statuses: merged.statuses,
+    fields: merged.fields,
+    default: merged.default,
+  });
+  return merged;
 }
 
 export function validateCreateOrderTypeInput(
@@ -143,7 +161,9 @@ export function validateCreateOrderTypeInput(
 }
 
 export async function createOrderType(name: string): Promise<OrderTypeRecord> {
+  await ensureSettingsHydrated();
   const ot = createStoredOrderType(name);
+  await persistOrderType(ot);
   return { ...ot, activeShipments: 0 };
 }
 
@@ -164,9 +184,11 @@ export async function createOrderTypeField(
   orderTypeId: string,
   input: { name: string; type: StoredOrderField["type"]; required?: boolean },
 ) {
+  await ensureSettingsHydrated();
   const orderType = (await listOrderTypes()).find((ot) => ot.id === orderTypeId);
   if (!orderType) return undefined;
   const field = createStoredOrderField({ orderTypeId, ...input });
+  await persistOrderField(field);
   return { orderType, field };
 }
 
@@ -237,15 +259,27 @@ export async function updateOrderTypeField(
   fieldId: string,
   input: { required?: boolean },
 ) {
+  await ensureSettingsHydrated();
   const result = await getOrderTypeFields(orderTypeId);
   if (!result) return undefined;
   const field = result.fields.find((f) => f.id === fieldId);
   if (!field) return undefined;
 
   const stored = patchStoredOrderField(fieldId, input);
-  if (stored) return stored;
+  if (stored) {
+    await persistOrderField(stored);
+    return stored;
+  }
 
   patchOrderField(fieldId, input);
+  const merged = { ...field, ...input, orderTypeId };
+  await persistOrderField({
+    id: merged.id,
+    orderTypeId,
+    name: merged.name,
+    type: merged.type,
+    required: merged.required,
+  });
   return { ...field, ...input };
 }
 

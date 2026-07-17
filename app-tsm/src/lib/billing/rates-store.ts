@@ -21,6 +21,10 @@ export function listStoredRates(): StoredServiceRate[] {
   return [...getStore()];
 }
 
+export function replaceStoredRates(items: StoredServiceRate[]) {
+  g.__tsmDevRates = [...items];
+}
+
 export function createStoredRate(input: {
   name: string;
   basis: string;
@@ -50,6 +54,16 @@ const gPatches = globalThis as typeof globalThis & {
 
 export function getRatePatch(id: string) {
   return gPatches.__tsmRatePatches?.[id];
+}
+
+export function getRatePatchesSnapshot() {
+  return { ...(gPatches.__tsmRatePatches ?? {}) };
+}
+
+export function replaceRatePatches(
+  next: Record<string, Partial<StoredServiceRate>>,
+) {
+  gPatches.__tsmRatePatches = { ...next };
 }
 
 export function patchStoredRate(

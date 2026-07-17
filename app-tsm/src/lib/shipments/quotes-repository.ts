@@ -10,6 +10,7 @@ import {
   type QuoteRecord,
 } from "@/lib/shipments/quotes-store";
 import { getQuoteFieldPatch, patchQuoteFields } from "@/lib/mutations/sprint18-store";
+import { ensureQuotesHydrated, persistQuote } from "@/lib/db/domain-persistence";
 
 export type { QuoteRecord };
 
@@ -61,6 +62,7 @@ export function validateCreateQuoteInput(body: unknown): CreateQuoteInput | { er
 }
 
 export async function listQuotes(): Promise<QuoteRecord[]> {
+  await ensureQuotesHydrated();
   const shipments = await fetchAllShipmentsRaw();
 
   const fromPending: QuoteRecord[] = shipments
@@ -114,23 +116,28 @@ export async function listQuotes(): Promise<QuoteRecord[]> {
 }
 
 export async function getQuote(id: string): Promise<QuoteRecord | undefined> {
+  await ensureQuotesHydrated();
   return (await listQuotes()).find((q) => q.id === id);
 }
 
 export async function createQuote(input: CreateQuoteInput): Promise<QuoteRecord> {
-  return createStoredQuote({
+  await ensureQuotesHydrated();
+  const quote = createStoredQuote({
     client: input.client,
     route: `${input.origin} → ${input.destination}`,
     tonnage: input.tonnage,
     rateInr: input.rateInr,
     status: input.status,
   });
+  await persistQuote(quote);
+  return quote;
 }
 
 export async function reviseQuote(
   id: string,
   input: { tonnage?: number; rateInr?: number },
 ): Promise<QuoteRecord | undefined> {
+  await ensureQuotesHydrated();
   const found = await getQuote(id);
   if (!found) return undefined;
   if (found.status === "accepted" || found.status === "declined") return undefined;
@@ -144,37 +151,49 @@ export async function reviseQuote(
 
   patchQuoteFields(id, input);
   const stored = patchStoredQuoteFields(id, input);
-  if (stored) return stored;
+  if (stored) {
+    await persistQuote(stored);
+    return stored;
+  }
 
   const rateInr = input.rateInr ?? found.rateInr;
   const tonnage = input.tonnage ?? found.tonnage;
-  return upsertStoredQuote({
+  const quote = upsertStoredQuote({
     ...found,
     tonnage,
     rateInr,
     rate: formatInr(rateInr),
   });
+  await persistQuote(quote);
+  return quote;
 }
 
 export async function updateQuoteStatus(
   id: string,
   status: QuoteRecord["status"],
 ): Promise<QuoteRecord | undefined> {
+  await ensureQuotesHydrated();
   if (status === "accepted") {
     const result = await acceptQuote(id);
     return result?.quote;
   }
 
   const stored = updateStoredQuoteStatus(id, status);
-  if (stored) return stored;
+  if (stored) {
+    await persistQuote(stored);
+    return stored;
+  }
 
   const found = await getQuote(id);
   if (!found) return undefined;
 
-  return upsertStoredQuote({ ...found, status });
+  const quote = upsertStoredQuote({ ...found, status });
+  await persistQuote(quote);
+  return quote;
 }
 
 export async function acceptQuote(id: string) {
+  await ensureQuotesHydrated();
   const existing = await getQuote(id);
   if (!existing) return null;
 
@@ -191,6 +210,7 @@ export async function acceptQuote(id: string) {
       status: "accepted",
       shipmentId: shipment.id,
     });
+    await persistQuote(quote);
     return { quote, shipment };
   }
 
@@ -211,5 +231,6 @@ export async function acceptQuote(id: string) {
     status: "accepted" as const,
     shipmentId: shipment.id,
   };
+  await persistQuote(quote);
   return { quote, shipment };
 }

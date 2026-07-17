@@ -2,6 +2,7 @@ import { demoGstSummary, demoServiceRates } from "@/lib/demo-data";
 import { listInvoices } from "@/lib/billing/invoice-repository";
 import { fetchAllShipmentsRaw } from "@/lib/data/shipment-repository";
 import { createStoredRate, listStoredRates, getRatePatch, patchStoredRate } from "@/lib/billing/rates-store";
+import { ensureBillingHydrated, persistServiceRate } from "@/lib/db/domain-persistence";
 
 export type ServiceRate = {
   id: string;
@@ -63,6 +64,7 @@ export function validateCreateServiceRateInput(
 }
 
 export async function listServiceRates(): Promise<ServiceRate[]> {
+  await ensureBillingHydrated();
   const shipments = await fetchAllShipmentsRaw();
   const stored = listStoredRates().map((rate) => ({
     ...rate,
@@ -80,11 +82,14 @@ export async function listServiceRates(): Promise<ServiceRate[]> {
 }
 
 export async function createServiceRate(input: CreateServiceRateInput): Promise<ServiceRate> {
+  await ensureBillingHydrated();
   const rate = createStoredRate(input);
+  await persistServiceRate(rate);
   return { ...rate, shipmentCount: 0 };
 }
 
 export async function getServiceRate(id: string) {
+  await ensureBillingHydrated();
   const rate = (await listServiceRates()).find((r) => r.id === id);
   if (!rate) return undefined;
 
@@ -104,13 +109,21 @@ export async function patchServiceRate(
   id: string,
   input: CreateServiceRateInput,
 ): Promise<ServiceRate | undefined> {
+  await ensureBillingHydrated();
   const existing = await getServiceRate(id);
   if (!existing) return undefined;
-  patchStoredRate(id, {
+  const stored = patchStoredRate(id, {
     name: input.name,
     basis: input.basis,
     rate: input.rate,
     minCharge: input.minCharge ?? "—",
+  });
+  await persistServiceRate({
+    id: stored.id,
+    name: stored.name ?? input.name,
+    basis: stored.basis ?? input.basis,
+    rate: stored.rate ?? input.rate,
+    minCharge: stored.minCharge ?? input.minCharge ?? "—",
   });
   const updated = await getServiceRate(id);
   return updated?.rate;

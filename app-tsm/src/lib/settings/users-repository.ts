@@ -5,6 +5,7 @@ import {
 } from "@/lib/mutations/entity-stores";
 import { getOrgUserPatch, patchOrgUserFields } from "@/lib/mutations/sprint10-store";
 import { resendOrgUserInvite as recordOrgUserInviteResend } from "@/lib/mutations/sprint17-store";
+import { ensureSettingsHydrated, persistOrgUser } from "@/lib/db/domain-persistence";
 
 export type OrgUserRecord = {
   id: string;
@@ -15,6 +16,7 @@ export type OrgUserRecord = {
 };
 
 export async function listOrgUsers(q?: string): Promise<OrgUserRecord[]> {
+  await ensureSettingsHydrated();
   let users: OrgUserRecord[] = [
     ...listStoredOrgUsers(),
     ...demoUsers.map((u) => ({
@@ -63,10 +65,14 @@ export async function inviteOrgUser(input: {
   email: string;
   role?: string;
 }): Promise<OrgUserRecord> {
-  return inviteStoredOrgUser(input);
+  await ensureSettingsHydrated();
+  const user = inviteStoredOrgUser(input);
+  await persistOrgUser(user);
+  return user;
 }
 
 export async function getOrgUser(id: string): Promise<OrgUserRecord | undefined> {
+  await ensureSettingsHydrated();
   return (await listOrgUsers()).find((u) => u.id === id);
 }
 
@@ -74,6 +80,7 @@ export async function patchOrgUser(
   id: string,
   input: { status?: "active" | "pending"; role?: string },
 ): Promise<OrgUserRecord | undefined> {
+  await ensureSettingsHydrated();
   const user = await getOrgUser(id);
   if (!user) return undefined;
 
@@ -81,11 +88,14 @@ export async function patchOrgUser(
   if (stored) {
     if (input.status) stored.status = input.status;
     if (input.role) stored.role = input.role;
+    await persistOrgUser(stored);
     return { ...stored };
   }
 
   patchOrgUserFields(id, input);
-  return { ...user, ...input };
+  const merged = { ...user, ...input };
+  await persistOrgUser(merged);
+  return merged;
 }
 
 export async function resendOrgUserInvite(id: string) {

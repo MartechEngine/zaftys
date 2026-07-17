@@ -14,6 +14,7 @@ import {
   isAutomationDeleted,
   markAutomationDeleted,
 } from "@/lib/mutations/sprint13-store";
+import { ensureSettingsHydrated, persistAutomationRule } from "@/lib/db/domain-persistence";
 
 export type AutomationRuleRecord = {
   id: string;
@@ -24,6 +25,7 @@ export type AutomationRuleRecord = {
 };
 
 export async function listAutomationRules(): Promise<AutomationRuleRecord[]> {
+  await ensureSettingsHydrated();
   const [shipments, overflow, compliance] = await Promise.all([
     fetchAllShipmentsRaw(),
     listNetworkOverflow(undefined, "active"),
@@ -73,18 +75,24 @@ export async function createAutomationRule(input: {
   trigger: string;
   action: string;
 }): Promise<AutomationRuleRecord> {
-  return createStoredAutomationRule(input);
+  await ensureSettingsHydrated();
+  const rule = createStoredAutomationRule(input);
+  await persistAutomationRule(rule);
+  return rule;
 }
 
 export async function setAutomationRuleEnabled(
   id: string,
   enabled: boolean,
 ): Promise<AutomationRuleRecord | undefined> {
+  await ensureSettingsHydrated();
   const rules = await listAutomationRules();
   const rule = rules.find((r) => r.id === id);
   if (!rule) return undefined;
   setAutomationEnabled(id, enabled);
-  return { ...rule, enabled };
+  const updated = { ...rule, enabled };
+  await persistAutomationRule(updated);
+  return updated;
 }
 
 export async function deleteAutomationRule(id: string): Promise<boolean> {

@@ -33,8 +33,22 @@ export function listStoredWorkOrders(): StoredWorkOrder[] {
   return [...getCreatedStore()];
 }
 
+export function replaceStoredWorkOrders(items: StoredWorkOrder[]) {
+  g.__tsmDevWorkOrders = [...items];
+}
+
 export function getWorkOrderStatusOverride(id: string): WorkOrderStatus | undefined {
   return getStatusOverrides()[id];
+}
+
+export function getWorkOrderStatusOverridesSnapshot() {
+  return { ...getStatusOverrides() };
+}
+
+export function replaceWorkOrderStatusOverrides(
+  next: Record<string, WorkOrderStatus>,
+) {
+  g.__tsmWorkOrderStatus = { ...next };
 }
 
 export function createStoredWorkOrder(input: {

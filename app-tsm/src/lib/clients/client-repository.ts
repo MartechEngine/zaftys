@@ -24,6 +24,13 @@ import {
   patchContactFields,
   revokeClientUser as markClientUserRevoked,
 } from "@/lib/mutations/sprint14-store";
+import {
+  ensureClientsHydrated,
+  persistClient,
+  persistClientContact,
+  persistClientPatch,
+  persistClientUser,
+} from "@/lib/db/domain-persistence";
 
 export type ClientRecord = {
   id: string;
@@ -104,6 +111,7 @@ export function validateCreateClientInput(body: unknown): CreateClientInput | { 
 }
 
 export async function listClients(q?: string): Promise<ClientRecord[]> {
+  await ensureClientsHydrated();
   const shipments = await fetchAllShipmentsRaw();
   const counts = new Map<string, { active: number; total: number }>();
 
@@ -168,6 +176,7 @@ export async function listClients(q?: string): Promise<ClientRecord[]> {
 }
 
 export async function createClient(input: CreateClientInput): Promise<ClientRecord> {
+  await ensureClientsHydrated();
   const existing = (await listClients()).find(
     (c) => c.name.toLowerCase() === input.name.toLowerCase(),
   );
@@ -175,10 +184,13 @@ export async function createClient(input: CreateClientInput): Promise<ClientReco
     throw new Error(`Client "${input.name}" already exists.`);
   }
 
-  return toClientRecord(createStoredClient(input));
+  const stored = createStoredClient(input);
+  await persistClient(stored);
+  return toClientRecord(stored);
 }
 
 export async function getClient(id: string): Promise<ClientRecord | undefined> {
+  await ensureClientsHydrated();
   const clients = await listClients();
   const client = clients.find((c) => c.id === id || slugify(c.name) === id);
   if (!client) return undefined;
@@ -227,9 +239,11 @@ export async function patchClient(
   id: string,
   input: PatchClientInput,
 ): Promise<ClientRecord | undefined> {
+  await ensureClientsHydrated();
   const client = await getClient(id);
   if (!client) return undefined;
   patchStoredClient(client.id, input);
+  await persistClientPatch(client.id, input);
   return getClient(client.id);
 }
 
@@ -259,9 +273,12 @@ export async function createClientContact(
   clientId: string,
   input: CreateContactInput,
 ): Promise<ClientContact | undefined> {
+  await ensureClientsHydrated();
   const client = await getClient(clientId);
   if (!client) return undefined;
-  return createStoredContact({ clientId: client.id, ...input });
+  const contact = createStoredContact({ clientId: client.id, ...input });
+  await persistClientContact(contact);
+  return contact;
 }
 
 export type InviteClientUserInput = {
@@ -285,12 +302,16 @@ export async function inviteClientUser(
   clientId: string,
   input: InviteClientUserInput,
 ): Promise<ClientPortalUser | undefined> {
+  await ensureClientsHydrated();
   const client = await getClient(clientId);
   if (!client) return undefined;
-  return createStoredClientUser({ clientId: client.id, ...input });
+  const user = createStoredClientUser({ clientId: client.id, ...input });
+  await persistClientUser(user);
+  return user;
 }
 
 export async function listClientShipments(clientName: string, limit = 10) {
+  await ensureClientsHydrated();
   const shipments = await fetchAllShipmentsRaw();
   return shipments
     .filter((s) => s.client === clientName)
@@ -299,6 +320,7 @@ export async function listClientShipments(clientName: string, limit = 10) {
 }
 
 export async function listClientContacts(clientId: string): Promise<ClientContact[]> {
+  await ensureClientsHydrated();
   const client = await getClient(clientId);
   if (!client) return [];
 
@@ -329,6 +351,7 @@ export async function listClientContacts(clientId: string): Promise<ClientContac
 }
 
 export async function listClientUsers(clientId: string): Promise<ClientPortalUser[]> {
+  await ensureClientsHydrated();
   const client = await getClient(clientId);
   if (!client) return [];
   const stored = listStoredClientUsers(client.id);
@@ -376,6 +399,7 @@ export async function patchClientContact(
   contactId: string,
   input: PatchContactInput,
 ): Promise<ClientContact | undefined> {
+  await ensureClientsHydrated();
   const client = await getClient(clientId);
   if (!client) return undefined;
 
@@ -384,10 +408,15 @@ export async function patchClientContact(
   if (!existing) return undefined;
 
   const stored = patchStoredContact(contactId, input);
-  if (stored) return stored;
+  if (stored) {
+    await persistClientContact(stored);
+    return stored;
+  }
 
   patchContactFields(contactId, input);
-  return { ...existing, ...input };
+  const merged = { ...existing, ...input };
+  await persistClientContact(merged);
+  return merged;
 }
 
 export async function deleteClientContact(
@@ -431,6 +460,7 @@ export async function revokeClientPortalUser(
   clientId: string,
   userId: string,
 ): Promise<ClientPortalUser | undefined> {
+  await ensureClientsHydrated();
   const client = await getClient(clientId);
   if (!client) return undefined;
 
@@ -441,5 +471,7 @@ export async function revokeClientPortalUser(
 
   const stored = revokeStoredClientUser(userId);
   markClientUserRevoked(userId);
-  return stored ?? { ...existing, status: "pending", lastLogin: "Revoked" };
+  const result = stored ?? { ...existing, status: "pending" as const, lastLogin: "Revoked" };
+  await persistClientUser(result);
+  return result;
 }

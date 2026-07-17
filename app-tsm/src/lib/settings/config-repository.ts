@@ -509,7 +509,13 @@ export async function patchSettingsConfig(
   section: string,
   values: Record<string, unknown>,
 ) {
-  return patchConfigSection(section, values);
+  const { ensureSettingsHydrated, persistConfigSection } = await import(
+    "@/lib/db/domain-persistence"
+  );
+  await ensureSettingsHydrated();
+  const patch = patchConfigSection(section, values);
+  await persistConfigSection(section, patch);
+  return patch;
 }
 
 export async function getPolicySettings() {

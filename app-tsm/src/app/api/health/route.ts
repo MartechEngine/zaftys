@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
 import { getActiveDataSource } from "@/lib/data/shipment-repository";
+import { checkDatabaseHealth, isDatabaseConfigured } from "@/lib/db/client";
 import { getFleetbaseClient } from "@/lib/fleetbase/client";
+import { checkS3Health, isS3Configured } from "@/lib/storage/s3";
 
 export async function GET() {
   const dataSource = getActiveDataSource();
@@ -11,13 +13,21 @@ export async function GET() {
     fleetbaseReachable = await getFleetbaseClient().healthCheck();
   }
 
+  const [database, s3] = await Promise.all([checkDatabaseHealth(), checkS3Health()]);
+
   return NextResponse.json({
-    status: "ok",
+    status: database === "down" || s3 === "down" ? "degraded" : "ok",
     service: "zaftys-tsm",
-    dataSource: fleetbaseReachable && process.env.TSM_DEMO_UI === "0" ? "fleetbase" : dataSource,
+    dataSource:
+      fleetbaseReachable && process.env.TSM_DEMO_UI === "0" ? "fleetbase" : dataSource,
     demoUi: process.env.TSM_DEMO_UI !== "0",
     fleetbaseConfigured,
     fleetbaseReachable,
+    database,
+    databaseConfigured: isDatabaseConfigured(),
+    redisConfigured: Boolean(process.env.REDIS_URL?.trim()),
+    s3,
+    s3Configured: isS3Configured(),
     timestamp: new Date().toISOString(),
   });
 }

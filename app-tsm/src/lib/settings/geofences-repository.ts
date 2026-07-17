@@ -7,6 +7,7 @@ import {
 } from "@/lib/settings/geofences-store";
 import { getGeofencePatch, patchGeofenceFields } from "@/lib/mutations/sprint11-store";
 import { isGeofenceDeleted, markGeofenceDeleted } from "@/lib/mutations/sprint15-store";
+import { ensureSettingsHydrated, persistGeofence } from "@/lib/db/domain-persistence";
 
 export type GeofenceRecord = {
   id: string;
@@ -40,6 +41,7 @@ export function validateCreateGeofenceInput(
 }
 
 export async function listGeofences(): Promise<GeofenceRecord[]> {
+  await ensureSettingsHydrated();
   const places = await listPlaces();
 
   const fromPlaces: GeofenceRecord[] = places
@@ -68,19 +70,35 @@ export async function listGeofences(): Promise<GeofenceRecord[]> {
 }
 
 export async function createGeofence(input: CreateGeofenceInput): Promise<GeofenceRecord> {
-  return createStoredGeofence(input);
+  await ensureSettingsHydrated();
+  const geofence = createStoredGeofence(input);
+  await persistGeofence(geofence);
+  return geofence;
 }
 
 export async function updateGeofence(
   id: string,
   input: Partial<Pick<GeofenceRecord, "name" | "radius" | "triggers">>,
 ): Promise<GeofenceRecord | undefined> {
+  await ensureSettingsHydrated();
   const existing = (await listGeofences()).find((g) => g.id === id);
   if (!existing) return undefined;
   const stored = patchStoredGeofence(id, input);
-  if (stored) return stored;
+  if (stored) {
+    await persistGeofence(stored);
+    return stored;
+  }
   patchGeofenceFields(id, input);
-  return { ...existing, ...input };
+  const merged = { ...existing, ...input };
+  await persistGeofence({
+    id: merged.id,
+    name: merged.name,
+    radius: merged.radius,
+    triggers: merged.triggers,
+    linkedPlaces: merged.linkedPlaces,
+    placeId: merged.placeId,
+  });
+  return merged;
 }
 
 export async function deleteGeofence(id: string): Promise<boolean> {

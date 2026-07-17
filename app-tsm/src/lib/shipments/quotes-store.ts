@@ -25,6 +25,10 @@ export function listStoredQuotes(): QuoteRecord[] {
   return [...getQuoteStore()];
 }
 
+export function replaceStoredQuotes(items: QuoteRecord[]) {
+  g.__tsmDevQuotes = [...items];
+}
+
 function formatInr(amount: number) {
   return `₹${amount.toLocaleString("en-IN")}`;
 }

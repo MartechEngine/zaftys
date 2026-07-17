@@ -35,6 +35,8 @@ function seedSeries(base: number, days: string[], salt: number): number[] {
 }
 
 export async function getCommandCenterAnalytics() {
+  const { ensureNetworkHydrated } = await import("@/lib/network/network-persistence");
+  await ensureNetworkHydrated();
   const shipments = await fetchAllShipmentsRaw();
   const active = shipments.filter((s) =>
     ["dispatched", "at_plant", "in_transit", "at_weighbridge"].includes(s.status),
@@ -219,6 +221,8 @@ export async function getLanesAnalytics() {
 }
 
 export async function getNetworkAnalytics() {
+  const { ensureNetworkHydrated } = await import("@/lib/network/network-persistence");
+  await ensureNetworkHydrated();
   const listings = listOutboundListings({ state: "all" });
   const pipeline: Record<string, number> = {
     draft: 0,

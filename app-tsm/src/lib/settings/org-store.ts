@@ -20,6 +20,10 @@ export function getStoredOrgProfile(): OrgProfileFields {
   return { ...g.__tsmOrgProfile };
 }
 
+export function replaceStoredOrgProfile(profile: OrgProfileFields) {
+  g.__tsmOrgProfile = { ...profile };
+}
+
 export function updateStoredOrgProfile(
   patch: Partial<OrgProfileFields>,
 ): OrgProfileFields {

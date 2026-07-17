@@ -13,6 +13,16 @@ export function getInvoiceStatusOverride(id: string): "pending" | "paid" | undef
   return getOverrides()[id];
 }
 
+export function getInvoiceStatusOverridesSnapshot() {
+  return { ...getOverrides() };
+}
+
+export function replaceInvoiceStatusOverrides(
+  next: Record<string, "pending" | "paid">,
+) {
+  g.__tsmInvoiceStatus = { ...next };
+}
+
 export function setInvoiceStatus(id: string, status: "pending" | "paid") {
   getOverrides()[id] = status;
   logActivity({

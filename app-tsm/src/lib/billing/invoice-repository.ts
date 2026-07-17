@@ -9,6 +9,11 @@ import {
   createStoredInvoice,
   listStoredInvoices,
 } from "@/lib/billing/invoice-create-store";
+import {
+  ensureBillingHydrated,
+  persistInvoice,
+  persistInvoiceStatus,
+} from "@/lib/db/domain-persistence";
 
 export type InvoiceLineItem = {
   description: string;
@@ -142,10 +147,14 @@ export function validateCreateInvoiceInput(
 }
 
 export async function createInvoice(input: CreateInvoiceInput): Promise<InvoiceRecord> {
-  return createStoredInvoice(input);
+  await ensureBillingHydrated();
+  const invoice = createStoredInvoice(input);
+  await persistInvoice(invoice);
+  return invoice;
 }
 
 export async function listInvoices(): Promise<InvoiceRecord[]> {
+  await ensureBillingHydrated();
   const shipments = await fetchAllShipmentsRaw();
   const stored = listStoredInvoices();
   const demo = demoInvoices.map(demoToRecord);
@@ -164,6 +173,7 @@ export async function listInvoices(): Promise<InvoiceRecord[]> {
 }
 
 export async function getInvoice(id: string): Promise<InvoiceRecord | undefined> {
+  await ensureBillingHydrated();
   const invoices = await listInvoices();
   return invoices.find((i) => i.id === id);
 }
@@ -172,8 +182,10 @@ export async function updateInvoiceStatus(
   id: string,
   status: "pending" | "paid",
 ): Promise<InvoiceRecord | undefined> {
+  await ensureBillingHydrated();
   const invoice = await getInvoice(id);
   if (!invoice) return undefined;
   setInvoiceStatus(id, status);
+  await persistInvoiceStatus(id, status);
   return { ...invoice, status };
 }

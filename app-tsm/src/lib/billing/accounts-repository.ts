@@ -1,6 +1,7 @@
 import { demoLedgerAccounts } from "@/lib/demo-data";
 import { listInvoices } from "@/lib/billing/invoice-repository";
 import { listStoredLedgerAccounts } from "@/lib/mutations/sprint15-store";
+import { ensureBillingHydrated, persistLedgerAccount } from "@/lib/db/domain-persistence";
 
 export type LedgerAccount = {
   id: string;
@@ -16,6 +17,7 @@ function formatInr(amount: number) {
 }
 
 export async function listLedgerAccounts(): Promise<LedgerAccount[]> {
+  await ensureBillingHydrated();
   const invoices = await listInvoices();
   const freightRevenue = invoices.reduce((sum, i) => sum + i.subtotalInr, 0);
   const gstCollected = invoices.reduce((sum, i) => sum + i.gstInr, 0);
@@ -71,6 +73,9 @@ export async function createLedgerAccount(input: {
   name: string;
   type: LedgerAccount["type"];
 }) {
+  await ensureBillingHydrated();
   const { createStoredLedgerAccount } = await import("@/lib/mutations/sprint15-store");
-  return createStoredLedgerAccount(input);
+  const account = createStoredLedgerAccount(input);
+  await persistLedgerAccount(account);
+  return account;
 }

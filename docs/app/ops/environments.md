@@ -25,6 +25,10 @@
 
 | Variable | Description |
 |----------|-------------|
+| `DATABASE_URL` | ZAFTYS App Postgres (Compose) |
+| `REDIS_URL` | Redis |
+| `S3_ENDPOINT` / `S3_*` | MinIO / S3 for documents |
+| `TSM_DEMO_UI` | `1` demo seed · `0` live Fleetbase |
 | `FLEETBASE_API_URL` | Internal Fleetbase base |
 | `FLEETBASE_API_KEY` | Server-only |
 | `TRANZFORT_SUPABASE_URL` | Sync worker |
@@ -33,7 +37,7 @@
 | `SESSION_SECRET` | Auth signing |
 | `TRACK_TOKEN_SECRET` | HMAC for public links |
 
-See `.env.example` in portal repo when scaffolded.
+See `app-tsm/.env.example` and [local-docker.md](./local-docker.md).
 
 ---
 
@@ -42,3 +46,4 @@ See `.env.example` in portal repo when scaffolded.
 | Date | Change |
 |------|--------|
 | Jul 2026 | Initial environments |
+| Jul 2026 | App DB + Docker local contract (ADR-007) |

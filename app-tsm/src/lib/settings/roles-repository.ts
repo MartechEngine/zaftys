@@ -18,6 +18,7 @@ import {
   isRoleDeleted,
   isSystemRole,
 } from "@/lib/mutations/sprint17-store";
+import { ensureSettingsHydrated, persistRole } from "@/lib/db/domain-persistence";
 
 export type OrgRoleRecord = {
   id: string;
@@ -40,6 +41,7 @@ function matchesRole(userRole: string, roleName: string) {
 }
 
 export async function listOrgRoles(): Promise<OrgRoleRecord[]> {
+  await ensureSettingsHydrated();
   const users = await listOrgUsers();
 
   const demo = demoRoles.map((r) => {
@@ -74,11 +76,14 @@ export function validateCreateRoleInput(
 }
 
 export async function createOrgRole(name: string): Promise<OrgRoleRecord> {
+  await ensureSettingsHydrated();
   const row = createStoredRole({ name });
+  await persistRole(row);
   return { ...row, permissions: getRolePermissions(row.id) };
 }
 
 export async function getOrgRole(id: string): Promise<OrgRoleRecord | undefined> {
+  await ensureSettingsHydrated();
   return (await listOrgRoles()).find((r) => r.id === id);
 }
 
@@ -86,12 +91,23 @@ export async function patchOrgRole(
   id: string,
   input: { name: string },
 ): Promise<OrgRoleRecord | undefined> {
+  await ensureSettingsHydrated();
   const existing = await getOrgRole(id);
   if (!existing) return undefined;
   const stored = patchStoredRole(id, input);
-  if (stored) return { ...stored, permissions: getRolePermissions(id) };
+  if (stored) {
+    await persistRole(stored);
+    return { ...stored, permissions: getRolePermissions(id) };
+  }
   patchRoleFields(id, input);
-  return { ...existing, name: input.name, permissions: getRolePermissions(id) };
+  const merged = { ...existing, name: input.name };
+  await persistRole({
+    id: merged.id,
+    name: merged.name,
+    users: merged.users,
+    type: merged.type,
+  });
+  return { ...merged, permissions: getRolePermissions(id) };
 }
 
 export async function updateRolePermissions(

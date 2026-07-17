@@ -67,6 +67,10 @@ export function listStoredSchedules(): StoredSchedule[] {
   return [...g.__tsmSchedules];
 }
 
+export function replaceStoredSchedules(items: StoredSchedule[]) {
+  g.__tsmSchedules = [...items];
+}
+
 export function createStoredSchedule(input: {
   vehicle: string;
   trigger: string;
@@ -158,6 +162,10 @@ export function listStoredOrgUsers(): StoredOrgUser[] {
   return [...g.__tsmOrgUsers];
 }
 
+export function replaceStoredOrgUsers(items: StoredOrgUser[]) {
+  g.__tsmOrgUsers = [...items];
+}
+
 export function inviteStoredOrgUser(input: {
   name: string;
   email: string;
@@ -184,6 +192,10 @@ export function inviteStoredOrgUser(input: {
 export function listStoredRoles(): StoredRole[] {
   if (!g.__tsmRoles) g.__tsmRoles = [];
   return [...g.__tsmRoles];
+}
+
+export function replaceStoredRoles(items: StoredRole[]) {
+  g.__tsmRoles = [...items];
 }
 
 export function createStoredRole(input: {
@@ -223,6 +235,10 @@ export function patchStoredRole(id: string, patch: { name?: string }): StoredRol
 export function listStoredSettingsGroups(): StoredSettingsGroup[] {
   if (!g.__tsmSettingsGroups) g.__tsmSettingsGroups = [];
   return [...g.__tsmSettingsGroups];
+}
+
+export function replaceStoredSettingsGroups(items: StoredSettingsGroup[]) {
+  g.__tsmSettingsGroups = [...items];
 }
 
 export function createStoredSettingsGroup(input: {
@@ -309,6 +325,14 @@ export function verifyStoredPartner(id: string): StoredPartner | null {
 export function getConfigPatches(): StoredConfigPatch {
   if (!g.__tsmConfigPatches) g.__tsmConfigPatches = {};
   return g.__tsmConfigPatches;
+}
+
+export function getConfigPatchesSnapshot(): StoredConfigPatch {
+  return { ...(g.__tsmConfigPatches ?? {}) };
+}
+
+export function replaceConfigPatches(next: StoredConfigPatch) {
+  g.__tsmConfigPatches = { ...next };
 }
 
 export function patchConfigSection(

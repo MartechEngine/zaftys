@@ -1,16 +1,104 @@
-# Fleetbase — local development stack
+# ZAFTYS TSM — local enterprise stack (ADR-007)
+#
+# Infra only (recommended for daily dev):
+#   docker compose up -d postgres redis minio
+#
+# Full stack (app in Docker):
+#   docker compose --profile full up -d --build
+#
+# From app-tsm/: set DATABASE_URL to localhost (host) or postgres (in-container).
 
-# Placeholder for P0 spike. Replace with official Fleetbase docker-compose
-# from https://github.com/fleetbase/fleetbase or zaftys-lab/infra/fleetbase/
-
-# Usage (when compose file is added):
-#   docker compose up -d
-#   API: http://localhost:8000
-#   Console (dev only): http://localhost:4200
+name: zaftys-tsm
 
 services:
-  fleetbase-placeholder:
-    image: alpine:3.20
-    command: ["sleep", "infinity"]
-    profiles:
-      - placeholder
+  postgres:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: tsm
+      POSTGRES_PASSWORD: tsm
+      POSTGRES_DB: zaftys_tsm
+    ports:
+      - "5432:5432"
+    volumes:
+      - tsm_pg_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U tsm -d zaftys_tsm"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - tsm_redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  minio:
+    image: minio/minio:latest
+    restart: unless-stopped
+    command: server /data --console-address ":9001"
+    environment:
+      MINIO_ROOT_USER: minio
+      MINIO_ROOT_PASSWORD: minioadmin
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    volumes:
+      - tsm_minio_data:/data
+
+  minio-init:
+    image: minio/mc:latest
+    depends_on:
+      minio:
+        condition: service_started
+    entrypoint: >
+      /bin/sh -c "
+      sleep 3;
+      mc alias set local http://minio:9000 minio minioadmin;
+      mc mb --ignore-existing local/zaftys-tsm-docs;
+      exit 0;
+      "
+    restart: "no"
+
+  app:
+    profiles: ["full"]
+    build:
+      context: ..
+      dockerfile: infra/Dockerfile
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      NODE_ENV: production
+      PORT: "3000"
+      HOSTNAME: "0.0.0.0"
+      DATABASE_URL: postgresql://tsm:tsm@postgres:5432/zaftys_tsm
+      REDIS_URL: redis://redis:6379
+      S3_ENDPOINT: http://minio:9000
+      S3_ACCESS_KEY: minio
+      S3_SECRET_KEY: minioadmin
+      S3_BUCKET: zaftys-tsm-docs
+      S3_FORCE_PATH_STYLE: "1"
+      TSM_DEMO_UI: "1"
+      SESSION_SECRET: local-docker-change-me-in-prod-32chars
+      TRACK_TOKEN_SECRET: local-track-token-change-me-32chars
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      minio:
+        condition: service_started
+
+volumes:
+  tsm_pg_data:
+  tsm_redis_data:
+  tsm_minio_data:

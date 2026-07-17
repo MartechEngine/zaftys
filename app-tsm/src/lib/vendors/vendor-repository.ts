@@ -4,6 +4,7 @@ import {
   getWorkOrderStatusOverride,
   listStoredWorkOrders,
 } from "@/lib/maintenance/work-order-store";
+import { ensureVendorsHydrated, persistVendor } from "@/lib/db/domain-persistence";
 
 export type VendorRecord = {
   id: string;
@@ -58,6 +59,7 @@ export function validateCreateVendorInput(body: unknown): CreateVendorInput | { 
 }
 
 export async function listVendors(q?: string): Promise<VendorRecord[]> {
+  await ensureVendorsHydrated();
   const { getVendorPatch } = await import("@/lib/mutations/fleet-entity-store");
   const stored = listStoredVendors().map((v) => ({ ...v, ...vendorStats(v.name) }));
   const demo = demoVendors.map((v) => ({ ...v, ...vendorStats(v.name) }));
@@ -80,16 +82,19 @@ export async function listVendors(q?: string): Promise<VendorRecord[]> {
 }
 
 export async function createVendor(input: CreateVendorInput): Promise<VendorRecord> {
+  await ensureVendorsHydrated();
   const existing = (await listVendors()).find(
     (v) => v.name.toLowerCase() === input.name.toLowerCase(),
   );
   if (existing) throw new Error(`Vendor "${input.name}" already exists.`);
 
   const vendor = createStoredVendor(input);
+  await persistVendor(vendor);
   return { ...vendor, openWorkOrders: 0, totalSpendInr: 0 };
 }
 
 export async function getVendor(id: string) {
+  await ensureVendorsHydrated();
   const vendor = (await listVendors()).find((v) => v.id === id);
   if (!vendor) return undefined;
 
@@ -123,9 +128,23 @@ export async function patchVendor(
   id: string,
   input: { name?: string; type?: string; city?: string; contact?: string },
 ) {
+  await ensureVendorsHydrated();
   const existing = await getVendor(id);
   if (!existing) return undefined;
   const { patchStoredVendor } = await import("@/lib/mutations/fleet-entity-store");
   patchStoredVendor(id, input);
+  const stored = listStoredVendors().find((v) => v.id === id);
+  if (stored) {
+    Object.assign(stored, input);
+    await persistVendor(stored);
+  } else {
+    await persistVendor({
+      id: existing.vendor.id,
+      name: input.name ?? existing.vendor.name,
+      type: input.type ?? existing.vendor.type,
+      city: input.city ?? existing.vendor.city,
+      contact: input.contact ?? existing.vendor.contact,
+    });
+  }
   return getVendor(id);
 }

@@ -114,6 +114,10 @@ export function listStoredLedgerAccounts(): StoredLedgerAccount[] {
   return [...g.__tsmLedgerAccounts];
 }
 
+export function replaceStoredLedgerAccounts(items: StoredLedgerAccount[]) {
+  g.__tsmLedgerAccounts = [...items];
+}
+
 export function createStoredLedgerAccount(input: {
   code: string;
   name: string;

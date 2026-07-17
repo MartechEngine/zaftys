@@ -12,6 +12,7 @@ import {
   getSettingsGroupMemberOps,
   removeSettingsGroupMember,
 } from "@/lib/mutations/sprint16-store";
+import { ensureSettingsHydrated, persistSettingsGroup } from "@/lib/db/domain-persistence";
 
 export type SettingsGroupRecord = {
   id: string;
@@ -22,6 +23,7 @@ export type SettingsGroupRecord = {
 };
 
 export async function listSettingsGroups(): Promise<SettingsGroupRecord[]> {
+  await ensureSettingsHydrated();
   const [users, roles] = await Promise.all([listOrgUsers(), listOrgRoles()]);
 
   const demo = demoGroups.map((group) => {
@@ -65,10 +67,14 @@ export async function createSettingsGroup(input: {
   name: string;
   policy?: string;
 }): Promise<SettingsGroupRecord> {
-  return createStoredSettingsGroup(input);
+  await ensureSettingsHydrated();
+  const group = createStoredSettingsGroup(input);
+  await persistSettingsGroup(group);
+  return group;
 }
 
 export async function getSettingsGroup(id: string) {
+  await ensureSettingsHydrated();
   return (await listSettingsGroups()).find((g) => g.id === id);
 }
 
@@ -76,12 +82,23 @@ export async function patchSettingsGroup(
   id: string,
   input: { name?: string; policy?: string },
 ): Promise<SettingsGroupRecord | undefined> {
+  await ensureSettingsHydrated();
   const existing = await getSettingsGroup(id);
   if (!existing) return undefined;
   const stored = patchStoredSettingsGroup(id, input);
-  if (stored) return stored;
+  if (stored) {
+    await persistSettingsGroup(stored);
+    return stored;
+  }
   patchGroupFields(id, input);
-  return { ...existing, ...input };
+  const merged = { ...existing, ...input };
+  await persistSettingsGroup({
+    id: merged.id,
+    name: merged.name,
+    members: merged.members,
+    policy: merged.policy,
+  });
+  return merged;
 }
 
 export async function addMemberToSettingsGroup(

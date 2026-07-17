@@ -75,6 +75,8 @@ export async function getPartner(id: string): Promise<PartnerRecord | undefined>
 }
 
 export async function getNetworkSummary() {
+  const { ensureNetworkHydrated } = await import("@/lib/network/network-persistence");
+  await ensureNetworkHydrated();
   const [overflow, assignments, sync, partners] = await Promise.all([
     listNetworkOverflow(undefined, "active"),
     listNetworkAssignments(),

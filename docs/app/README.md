@@ -91,6 +91,7 @@ See previous index sections — all docs updated Jul 2026 for full product scope
 | [zaftys-tranzfort-load-exchange.md](./integrations/zaftys-tranzfort-load-exchange.md) | **P0 — outbound post + offers (CPO)** |
 | [tranzfort-sync-bridge.md](./integrations/tranzfort-sync-bridge.md) | P0 — inbound sync |
 | [ADR-006](./decisions/006-zaftys-tranzfort-commercial-model.md) | Accepted |
+| [ADR-007](./decisions/007-local-docker-and-app-db.md) | Accepted — Docker-first + App Postgres |
 
 ### API (`api/`)
 

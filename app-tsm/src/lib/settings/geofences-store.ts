@@ -22,6 +22,10 @@ export function listStoredGeofences(): StoredGeofence[] {
   return [...getStore()];
 }
 
+export function replaceStoredGeofences(items: StoredGeofence[]) {
+  g.__tsmDevGeofences = [...items];
+}
+
 export function createStoredGeofence(input: {
   name: string;
   radius: string;

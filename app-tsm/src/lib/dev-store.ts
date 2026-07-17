@@ -8,6 +8,9 @@ export interface ShipmentDocument {
   type: "lr" | "epod" | "invoice" | "other";
   name: string;
   uploadedAt: string;
+  storageKey?: string;
+  contentType?: string;
+  sizeBytes?: number;
 }
 
 export interface Driver {
@@ -810,17 +813,27 @@ export function tickActiveGeo() {
 
 export function addShipmentDocument(
   id: string,
-  input: { type: ShipmentDocument["type"]; name: string },
+  input: {
+    type: ShipmentDocument["type"];
+    name: string;
+    id?: string;
+    storageKey?: string;
+    contentType?: string;
+    sizeBytes?: number;
+  },
 ) {
   const shipments = getShipmentsStore();
   const shipment = shipments.find((s) => s.id === id);
   if (!shipment) return null;
 
   const doc: ShipmentDocument = {
-    id: `doc-${Date.now()}`,
+    id: input.id ?? `doc-${Date.now()}`,
     type: input.type,
     name: input.name,
     uploadedAt: now(),
+    ...(input.storageKey ? { storageKey: input.storageKey } : {}),
+    ...(input.contentType ? { contentType: input.contentType } : {}),
+    ...(input.sizeBytes != null ? { sizeBytes: input.sizeBytes } : {}),
   };
   shipment.documents.push(doc);
   shipment.updatedAt = now();

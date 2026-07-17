@@ -22,6 +22,10 @@ export function listStoredClients(): StoredClient[] {
   return [...getClientStore()];
 }
 
+export function replaceStoredClients(items: StoredClient[]) {
+  g.__tsmDevClients = [...items];
+}
+
 export function createStoredClient(input: {
   name: string;
   gstin?: string;

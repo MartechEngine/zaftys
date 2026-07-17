@@ -12,7 +12,7 @@ export async function GET(
   const shipment = await getShipment(id);
   if (!shipment) return apiError("SHIPMENT_NOT_FOUND", "Shipment not found.", 404);
 
-  return apiSuccess(listShipmentNotes(id));
+  return apiSuccess(await listShipmentNotes(id));
 }
 
 export async function POST(
@@ -38,7 +38,7 @@ export async function POST(
     return apiError("VALIDATION_ERROR", "body is required.", 400);
   }
 
-  const note = addShipmentNote(id, session.name ?? session.email, text);
+  const note = await addShipmentNote(id, session.name ?? session.email, text);
   if (!note) return apiError("UPDATE_FAILED", "Could not add note.", 500);
 
   return apiSuccess(note);

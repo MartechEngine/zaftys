@@ -291,6 +291,8 @@ export function tickMapGeo() {
 }
 
 export async function getKpis() {
+  const { ensureNetworkHydrated } = await import("@/lib/network/network-persistence");
+  await ensureNetworkHydrated();
   const shipments = await listShipments();
   return computeKpisFromShipments(shipments);
 }
@@ -308,12 +310,30 @@ export function getShipmentActivities(shipmentId: string, limit?: number) {
   return devActivitiesForShipment(shipmentId, limit);
 }
 
-export function listShipmentNotes(shipmentId: string) {
+export async function listShipmentNotes(shipmentId: string) {
+  const { isDatabaseConfigured } = await import("@/lib/db/client");
+  if (isDatabaseConfigured()) {
+    const { listNotesFromDb } = await import("@/lib/db/notes-repository");
+    const fromDb = await listNotesFromDb(shipmentId);
+    if (fromDb) return fromDb;
+  }
   return devListShipmentNotes(shipmentId);
 }
 
-export function addShipmentNote(shipmentId: string, author: string, body: string) {
-  return devAddShipmentNote(shipmentId, author, body);
+export async function addShipmentNote(shipmentId: string, author: string, body: string) {
+  const note = devAddShipmentNote(shipmentId, author, body);
+  if (!note) return null;
+
+  const { isDatabaseConfigured } = await import("@/lib/db/client");
+  if (isDatabaseConfigured()) {
+    const { insertNoteToDb } = await import("@/lib/db/notes-repository");
+    try {
+      await insertNoteToDb(note);
+    } catch (err) {
+      console.error("[notes] failed to persist to database", err);
+    }
+  }
+  return note;
 }
 
 export async function listDrivers() {
@@ -388,11 +408,33 @@ export function generateTrackLink(id: string) {
   return devTrackLink(id);
 }
 
-export function addShipmentDocument(
+export async function addShipmentDocument(
   id: string,
-  input: { type: "lr" | "epod" | "invoice" | "other"; name: string },
+  input: {
+    type: "lr" | "epod" | "invoice" | "other";
+    name: string;
+    id?: string;
+    storageKey?: string;
+    contentType?: string;
+    sizeBytes?: number;
+  },
 ) {
-  return devAddDocument(id, input);
+  const shipment = devAddDocument(id, input);
+  if (!shipment) return null;
+
+  const doc = shipment.documents[shipment.documents.length - 1];
+  if (doc) {
+    const { isDatabaseConfigured } = await import("@/lib/db/client");
+    if (isDatabaseConfigured()) {
+      const { insertDocumentToDb } = await import("@/lib/db/documents-repository");
+      try {
+        await insertDocumentToDb(id, doc);
+      } catch (err) {
+        console.error("[documents] failed to persist to database", err);
+      }
+    }
+  }
+  return shipment;
 }
 
 export async function getSyncStatus() {

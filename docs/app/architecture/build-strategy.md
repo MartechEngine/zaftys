@@ -18,7 +18,9 @@ We are **not** shipping a cut-down portal. We are building the **final ZAFTYS TS
 3. **India + ZAFTYS differentiators** — LR, tonnage, corridors, origin badges, GST path
 4. **Headless Fleetbase** — execution API only; never ship Ember console to customers
 
-**Build order:** Frontend surfaces first (UI + routes + components + mock/live toggle), then wire BFF to Fleetbase module-by-module, then realtime + sync hardening, then billing/compliance.
+**Build order:** Frontend surfaces first (UI + routes + components + mock/live toggle), then **local Docker + App Postgres** ([ADR-007](../decisions/007-local-docker-and-app-db.md)), then wire BFF to Fleetbase module-by-module, then realtime + sync hardening, then billing/compliance.
+
+**Local before prod:** Prove durability on Compose (Postgres / Redis / MinIO) before staging or `app.zaftys.com`. See [local-docker.md](../ops/local-docker.md).
 
 ---
 
@@ -176,6 +178,7 @@ See [non-goals.md](../product/non-goals.md).
 
 ## Success criteria (full product)
 
+- [ ] Local Docker stack healthy (Postgres + Redis + MinIO); notes/listings survive restart
 - [ ] All routes in [sitemap-tsm.md](../sitemap-tsm.md) route tree exist (UI)
 - [ ] Fleetbase headless API wired for Operations + Resources modules
 - [ ] TranZfort booking → portal → assign → client track (north star)
@@ -190,3 +193,4 @@ See [non-goals.md](../product/non-goals.md).
 | Date | Change |
 |------|--------|
 | 11 Jul 2026 | Full product, frontend-first strategy (replaces MVP cut) |
+| Jul 2026 | Docker-first + App DB before prod (ADR-007) |

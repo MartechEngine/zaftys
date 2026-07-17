@@ -6,6 +6,13 @@ import {
   setWorkOrderStatus,
   type WorkOrderStatus,
 } from "@/lib/maintenance/work-order-store";
+import {
+  ensureSettingsHydrated,
+  ensureWorkOrdersHydrated,
+  persistSchedule,
+  persistWorkOrder,
+  persistWorkOrderStatus,
+} from "@/lib/db/domain-persistence";
 
 export type { WorkOrderStatus };
 
@@ -77,6 +84,7 @@ export async function listWorkOrders(filters?: {
   status?: WorkOrderStatus | "active";
   vendor?: string;
 }): Promise<WorkOrderRecord[]> {
+  await ensureWorkOrdersHydrated();
   const demo = demoWorkOrders.map((wo) =>
     toRecord({ ...wo, status: getWorkOrderStatusOverride(wo.id) ?? wo.status }),
   );
@@ -97,18 +105,26 @@ export async function listWorkOrders(filters?: {
 }
 
 export async function createWorkOrder(input: CreateWorkOrderInput): Promise<WorkOrderRecord> {
-  return toRecord(createStoredWorkOrder(input));
+  await ensureWorkOrdersHydrated();
+  const wo = createStoredWorkOrder(input);
+  await persistWorkOrder(wo);
+  return toRecord(wo);
 }
 
 export async function updateWorkOrderStatus(
   id: string,
   status: WorkOrderStatus,
 ): Promise<WorkOrderRecord | undefined> {
+  await ensureWorkOrdersHydrated();
   const updated = setWorkOrderStatus(id, status);
-  return updated ? toRecord(updated) : undefined;
+  if (!updated) return undefined;
+  await persistWorkOrderStatus(id, status);
+  await persistWorkOrder(updated);
+  return toRecord(updated);
 }
 
 export async function getWorkOrder(id: string): Promise<WorkOrderRecord | undefined> {
+  await ensureWorkOrdersHydrated();
   return (await listWorkOrders()).find((w) => w.id === id);
 }
 
@@ -146,6 +162,7 @@ export type PartRecord = {
 };
 
 export async function listMaintenanceSchedules(): Promise<MaintenanceSchedule[]> {
+  await ensureSettingsHydrated();
   const { listStoredSchedules } = await import("@/lib/mutations/entity-stores");
   const { getSchedulePatch } = await import("@/lib/mutations/sprint14-store");
   return [...listStoredSchedules(), ...demoMaintenanceSchedules.map((s) => ({ ...s }))].map(
@@ -179,8 +196,11 @@ export async function createMaintenanceSchedule(input: {
   nextDue?: string;
   type?: string;
 }): Promise<MaintenanceSchedule> {
+  await ensureSettingsHydrated();
   const { createStoredSchedule } = await import("@/lib/mutations/entity-stores");
-  return createStoredSchedule(input);
+  const schedule = createStoredSchedule(input);
+  await persistSchedule(schedule);
+  return schedule;
 }
 
 export function validatePatchScheduleInput(
@@ -234,6 +254,7 @@ export async function patchMaintenanceSchedule(
   id: string,
   input: { vehicle?: string; trigger?: string; nextDue?: string; type?: string },
 ): Promise<MaintenanceSchedule | undefined> {
+  await ensureSettingsHydrated();
   const schedules = await listMaintenanceSchedules();
   const existing = schedules.find((s) => s.id === id);
   if (!existing) return undefined;
@@ -242,10 +263,15 @@ export async function patchMaintenanceSchedule(
   const { patchScheduleFields } = await import("@/lib/mutations/sprint14-store");
 
   const stored = patchStoredSchedule(id, input);
-  if (stored) return stored;
+  if (stored) {
+    await persistSchedule(stored);
+    return stored;
+  }
 
   patchScheduleFields(id, input);
-  return { ...existing, ...input };
+  const merged = { ...existing, ...input };
+  await persistSchedule(merged);
+  return merged;
 }
 
 export async function listPartsInventory(): Promise<PartRecord[]> {

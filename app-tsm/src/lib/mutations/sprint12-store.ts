@@ -109,6 +109,10 @@ export function listStoredAutomationRules(): AutomationRuleRecord[] {
   return [...g.__tsmStoredAutomation];
 }
 
+export function replaceStoredAutomationRules(items: AutomationRuleRecord[]) {
+  g.__tsmStoredAutomation = [...items];
+}
+
 export function createStoredAutomationRule(input: {
   trigger: string;
   action: string;

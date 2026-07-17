@@ -35,6 +35,18 @@ export function listStoredOrderTypes(): StoredOrderType[] {
   return [...types()];
 }
 
+export function replaceStoredOrderTypes(items: StoredOrderType[]) {
+  g.__tsmOrderTypes = [...items];
+}
+
+export function listAllStoredOrderFields(): StoredOrderField[] {
+  return [...fields()];
+}
+
+export function replaceStoredOrderFields(items: StoredOrderField[]) {
+  g.__tsmOrderFields = [...items];
+}
+
 export function createStoredOrderType(name: string): StoredOrderType {
   const ot: StoredOrderType = {
     id: `ot-${Date.now().toString(36)}`,

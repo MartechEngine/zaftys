@@ -15,6 +15,10 @@ import {
   listOutboundListings,
   toListingMirror,
 } from "@/lib/network/listing-store";
+import {
+  ensureNetworkHydrated,
+  persistNetworkSnapshot,
+} from "@/lib/network/network-persistence";
 import type { PostListingInput, UpdateListingInput } from "@/lib/network/listing-types";
 import { logActivity } from "@/lib/dev-store";
 import { getPolicySettings } from "@/lib/settings/config-repository";
@@ -22,10 +26,12 @@ import { getPolicySettings } from "@/lib/settings/config-repository";
 export { buildListingsBoardMap, getOutboundListingStats, listAcceptedListingAssignments };
 
 async function syncExpiredListingMirrors() {
+  await ensureNetworkHydrated();
   const expiredIds = expireStaleListings();
   for (const shipmentId of expiredIds) {
     await syncShipmentListingMirror(shipmentId, null);
   }
+  if (expiredIds.length > 0) await persistNetworkSnapshot();
 }
 
 function notifyFirstOffers(shipmentId: string, publicId: string, count: number) {
@@ -60,6 +66,7 @@ export async function getShipmentNetworkContext(shipmentId: string) {
 }
 
 export async function postShipmentListing(input: PostListingInput) {
+  await ensureNetworkHydrated();
   const shipment = await getShipment(input.shipmentId);
   if (!shipment) return { error: "Shipment not found." as const };
   if (shipment.status === "delivered" || shipment.status === "cancelled") {
@@ -82,6 +89,7 @@ export async function postShipmentListing(input: PostListingInput) {
 
   const listing = result.data.listing;
   await syncShipmentListingMirror(input.shipmentId, listing);
+  await persistNetworkSnapshot();
   const offers = listOffersForListing(listing.id);
   if (offers.length > hadOffers && listing.state === "offers_received") {
     notifyFirstOffers(input.shipmentId, shipment.publicId, offers.length);
@@ -90,6 +98,7 @@ export async function postShipmentListing(input: PostListingInput) {
 }
 
 export async function updateShipmentListing(shipmentId: string, input: UpdateListingInput) {
+  await ensureNetworkHydrated();
   const shipment = await getShipment(shipmentId);
   const listingBefore = getListingByShipment(shipmentId);
   const offersBefore = listingBefore ? listOffersForListing(listingBefore.id).length : 0;
@@ -100,6 +109,7 @@ export async function updateShipmentListing(shipmentId: string, input: UpdateLis
 
   const listing = result.data.listing;
   await syncShipmentListingMirror(shipmentId, listing);
+  await persistNetworkSnapshot();
   const offers = listOffersForListing(listing.id);
   if (
     shipment &&
@@ -112,29 +122,35 @@ export async function updateShipmentListing(shipmentId: string, input: UpdateLis
 }
 
 export async function withdrawShipmentListing(shipmentId: string) {
+  await ensureNetworkHydrated();
   const lx = getLoadExchangeClient();
   const result = await lx.listingWithdraw({ shipmentId });
   if (!result.ok) return { error: result.error };
 
   await syncShipmentListingMirror(shipmentId, null);
+  await persistNetworkSnapshot();
   return { listing: result.data.listing };
 }
 
 export async function withdrawListingOnCancel(shipmentId: string) {
+  await ensureNetworkHydrated();
   const listing = getListingByShipment(shipmentId);
   if (!listing) return;
   const lx = getLoadExchangeClient();
   await lx.listingWithdraw({ shipmentId });
   await syncShipmentListingMirror(shipmentId, null);
+  await persistNetworkSnapshot();
 }
 
 export async function acceptNetworkOffer(offerId: string) {
+  await ensureNetworkHydrated();
   const lx = getLoadExchangeClient();
   const result = await lx.offerAccept({ offerId });
   if (!result.ok) return { error: result.error };
 
   const { listing, offer } = result.data;
   await syncShipmentListingMirror(listing.shipmentId, listing);
+  await persistNetworkSnapshot();
 
   // Capacity source becomes network on first accept (ADR-006)
   await updateShipmentFields(listing.shipmentId, {
@@ -155,9 +171,11 @@ export async function acceptNetworkOffer(offerId: string) {
 }
 
 export async function rejectNetworkOffer(offerId: string, reason?: string) {
+  await ensureNetworkHydrated();
   const lx = getLoadExchangeClient();
   const result = await lx.offerReject({ offerId, reason });
   if (!result.ok) return { error: result.error };
+  await persistNetworkSnapshot();
   return { offer: result.data.offer };
 }
 

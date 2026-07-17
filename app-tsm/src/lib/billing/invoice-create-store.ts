@@ -18,6 +18,10 @@ export function listStoredInvoices(): InvoiceRecord[] {
   return [...getStore()];
 }
 
+export function replaceStoredInvoices(items: InvoiceRecord[]) {
+  g.__tsmDevInvoices = [...items];
+}
+
 export function createStoredInvoice(input: {
   client: string;
   description: string;

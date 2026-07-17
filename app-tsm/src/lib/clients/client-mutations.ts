@@ -22,6 +22,30 @@ function patches(): Record<string, Partial<ClientRecord>> {
   return g.__tsmClientPatches;
 }
 
+export function listAllStoredContacts(): ClientContact[] {
+  return [...contactsStore()];
+}
+
+export function replaceStoredContacts(items: ClientContact[]) {
+  g.__tsmClientContacts = [...items];
+}
+
+export function listAllStoredClientUsers(): ClientPortalUser[] {
+  return [...usersStore()];
+}
+
+export function replaceStoredClientUsers(items: ClientPortalUser[]) {
+  g.__tsmClientUsers = [...items];
+}
+
+export function getClientPatchesSnapshot(): Record<string, Partial<ClientRecord>> {
+  return { ...patches() };
+}
+
+export function replaceClientPatches(next: Record<string, Partial<ClientRecord>>) {
+  g.__tsmClientPatches = { ...next };
+}
+
 export function listStoredContacts(clientId: string): ClientContact[] {
   return contactsStore().filter((c) => c.clientId === clientId);
 }

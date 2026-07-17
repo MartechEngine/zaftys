@@ -4,9 +4,11 @@ import {
   getListingByShipment,
   listAcceptedListingAssignments,
 } from "@/lib/network/listing-store";
+import { ensureNetworkHydrated } from "@/lib/network/network-persistence";
 import { apiSuccess } from "@/lib/api-response";
 
 export async function GET() {
+  await ensureNetworkHydrated();
   const [overflowAssignments, outboundOffers] = await Promise.all([
     Promise.resolve(listNetworkAssignments()),
     Promise.resolve(listAcceptedListingAssignments()),
