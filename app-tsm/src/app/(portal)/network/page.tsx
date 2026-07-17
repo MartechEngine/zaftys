@@ -4,13 +4,19 @@ import { PageHeader, KpiCard } from "@/components/app/app-shell";
 import { ModuleSubNav } from "@/components/app/module-sub-nav";
 import { HubCard } from "@/components/app/data-table";
 import { NetworkHero } from "@/components/app/ui-primitives";
-import { demoOverflowLoads, demoPartners } from "@/lib/demo-data";
+import { getNetworkSummary } from "@/lib/network/partners-repository";
 import { NETWORK_NAV } from "@/lib/module-nav";
 import { Button } from "@/components/ui/button";
 
-export default function NetworkPage() {
-  const openLoads = demoOverflowLoads.length;
-  const partners = demoPartners.filter((p) => p.verified).length;
+function formatRelative(iso: string) {
+  const diffMs = Date.now() - new Date(iso).getTime();
+  const mins = Math.max(1, Math.round(diffMs / 60000));
+  if (mins < 60) return `${mins}m ago`;
+  return `${Math.round(mins / 60)}h ago`;
+}
+
+export default async function NetworkPage() {
+  const summary = await getNetworkSummary();
 
   return (
     <>
@@ -29,12 +35,12 @@ export default function NetworkPage() {
       <div className="mb-6">
         <NetworkHero
           eyebrow="Overflow network"
-          title={`${openLoads} open loads · partner marketplace`}
+          title={`${summary.openOverflow} open loads · partner marketplace`}
           description="Route excess capacity to trusted partners or claim loads that match your idle fleet in real time."
           stats={[
-            { label: "Open loads", value: String(openLoads), icon: Network },
-            { label: "Partners", value: String(partners), icon: TrendingUp },
-            { label: "Fill rate", value: "94%", icon: IndianRupee },
+            { label: "Open loads", value: String(summary.openOverflow), icon: Network },
+            { label: "Partners", value: String(summary.verifiedPartners), icon: TrendingUp },
+            { label: "Fill rate", value: summary.fillRate, icon: IndianRupee },
           ]}
         />
       </div>
@@ -42,18 +48,28 @@ export default function NetworkPage() {
       <div className="mb-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         <KpiCard
           label="Open overflow"
-          value={openLoads}
+          value={summary.openOverflow}
           href="/network/overflow"
           showSparkline={false}
         />
         <KpiCard
           label="Verified partners"
-          value={partners}
+          value={summary.verifiedPartners}
           href="/network/partners"
           showSparkline={false}
         />
-        <KpiCard label="Active assignments" value={7} href="/network/assignments" showSparkline={false} />
-        <KpiCard label="Sync health" value="OK" showSparkline={false} />
+        <KpiCard
+          label="Active assignments"
+          value={summary.activeAssignments}
+          href="/network/assignments"
+          showSparkline={false}
+        />
+        <KpiCard
+          label="Sync health"
+          value={summary.syncLabel}
+          href="/network/sync"
+          showSparkline={false}
+        />
       </div>
 
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
@@ -61,25 +77,25 @@ export default function NetworkPage() {
           href="/network/overflow"
           title="Overflow queue"
           description="Unassigned TranZfort bookings"
-          stat={`${openLoads} open`}
+          stat={`${summary.openOverflow} open`}
         />
         <HubCard
           href="/network/partners"
           title="Partner registry"
           description="Verified fleet operators"
-          stat={`${demoPartners.length} partners`}
+          stat={`${summary.totalPartners} partners`}
         />
         <HubCard
           href="/network/assignments"
           title="Network assignments"
           description="Accepted overflow loads in your fleet"
-          stat="View all"
+          stat={`${summary.activeAssignments} active`}
         />
         <HubCard
           href="/network/sync"
           title="Sync dashboard"
           description="Two-way TranZfort ↔ Fleetbase"
-          stat="3m ago"
+          stat={formatRelative(summary.lastSyncAt)}
         />
       </div>
     </>

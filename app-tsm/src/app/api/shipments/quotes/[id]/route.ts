@@ -1,0 +1,26 @@
+import { updateQuoteStatus } from "@/lib/shipments/quotes-repository";
+import { apiError, apiSuccess } from "@/lib/api-response";
+
+export const dynamic = "force-dynamic";
+
+export async function PATCH(
+  request: Request,
+  { params }: { params: Promise<{ id: string }> },
+) {
+  const { id } = await params;
+  let body: unknown;
+  try {
+    body = await request.json();
+  } catch {
+    return apiError("INVALID_JSON", "Request body must be valid JSON.");
+  }
+
+  const status = String((body as { status?: string }).status ?? "");
+  if (!["sent", "draft", "accepted"].includes(status)) {
+    return apiError("VALIDATION_ERROR", "status must be draft, sent, or accepted.");
+  }
+
+  const quote = await updateQuoteStatus(id, status as "sent" | "draft" | "accepted");
+  if (!quote) return apiError("QUOTE_NOT_FOUND", "Quote not found.", 404);
+  return apiSuccess(quote);
+}

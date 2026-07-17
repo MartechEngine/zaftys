@@ -3,8 +3,9 @@ import { notFound } from "next/navigation";
 import { PageHeader } from "@/components/app/app-shell";
 import { PageBreadcrumbs } from "@/components/app/page-breadcrumbs";
 import { ModuleSubNav } from "@/components/app/module-sub-nav";
+import { RecentShipmentsList } from "@/components/app/recent-shipments-list";
 import { Card, CardContent } from "@/components/ui/card";
-import { listDrivers } from "@/lib/data/shipment-repository";
+import { getDriver } from "@/lib/data/fleet-repository";
 import { FLEET_NAV } from "@/lib/module-nav";
 import { Button } from "@/components/ui/button";
 
@@ -14,7 +15,7 @@ export default async function DriverDetailPage({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
-  const driver = (await listDrivers()).find((d) => d.id === id);
+  const driver = await getDriver(id);
   if (!driver) notFound();
 
   return (
@@ -25,20 +26,56 @@ export default async function DriverDetailPage({
           { label: driver.name },
         ]}
       />
-      <PageHeader title={driver.name} description={`License ${driver.license}`} action={<Button variant="outline">Edit</Button>} />
+      <PageHeader
+        title={driver.name}
+        description={`License ${driver.license}`}
+        action={<Button variant="outline">Edit</Button>}
+      />
       <ModuleSubNav links={FLEET_NAV} />
       <div className="mb-4 flex flex-wrap gap-2 text-sm">
-        <Link href={`/fleet/drivers/${id}/schedule`} className="rounded-md bg-muted px-3 py-1.5 hover:bg-muted/80">Schedule</Link>
-        <Link href={`/fleet/drivers/${id}/invite`} className="rounded-md bg-muted px-3 py-1.5 hover:bg-muted/80">Navigator invite</Link>
-        <Link href="/reports/drivers" className="rounded-md bg-muted px-3 py-1.5 hover:bg-muted/80">Scorecard</Link>
+        <Link
+          href={`/fleet/drivers/${id}/schedule`}
+          className="rounded-md bg-muted px-3 py-1.5 hover:bg-muted/80"
+        >
+          Schedule
+        </Link>
+        <Link
+          href={`/fleet/drivers/${id}/invite`}
+          className="rounded-md bg-muted px-3 py-1.5 hover:bg-muted/80"
+        >
+          Navigator invite
+        </Link>
+        <Link href="/reports/drivers" className="rounded-md bg-muted px-3 py-1.5 hover:bg-muted/80">
+          Scorecard
+        </Link>
       </div>
       <div className="grid gap-4 md:grid-cols-2">
         <Card>
-          <CardContent className="p-5 space-y-2 text-sm">
-            <p><span className="text-muted-foreground">Phone</span> · {driver.phone}</p>
-            <p><span className="text-muted-foreground">Status</span> · <span className="capitalize">{driver.status.replace("_", " ")}</span></p>
-            <p><span className="text-muted-foreground">Vehicle</span> · {driver.vehicle ?? "Unassigned"}</p>
-            <p><span className="text-muted-foreground">License expiry</span> · {driver.licenseExpiry}</p>
+          <CardContent className="space-y-2 p-5 text-sm">
+            <p>
+              <span className="text-muted-foreground">Phone</span> · {driver.phone}
+            </p>
+            <p>
+              <span className="text-muted-foreground">Status</span> ·{" "}
+              <span className="capitalize">{driver.status.replace("_", " ")}</span>
+            </p>
+            <p>
+              <span className="text-muted-foreground">Vehicle</span> ·{" "}
+              {driver.vehicle ? (
+                driver.vehicleId ? (
+                  <Link href={`/fleet/vehicles/${driver.vehicleId}`} className="text-link hover:underline">
+                    {driver.vehicle}
+                  </Link>
+                ) : (
+                  driver.vehicle
+                )
+              ) : (
+                "Unassigned"
+              )}
+            </p>
+            <p>
+              <span className="text-muted-foreground">License expiry</span> · {driver.licenseExpiry}
+            </p>
           </CardContent>
         </Card>
         <Card>
@@ -51,8 +88,20 @@ export default async function DriverDetailPage({
           </CardContent>
         </Card>
       </div>
+
+      <Card className="mt-6">
+        <CardContent className="p-5">
+          <h3 className="font-semibold text-navy">Recent shipments</h3>
+          <div className="mt-3">
+            <RecentShipmentsList shipments={driver.recentShipments} />
+          </div>
+        </CardContent>
+      </Card>
+
       <p className="mt-6 text-sm">
-        <Link href="/fleet" className="text-link hover:underline">← Fleet</Link>
+        <Link href="/fleet" className="text-link hover:underline">
+          ← Fleet
+        </Link>
       </p>
     </>
   );

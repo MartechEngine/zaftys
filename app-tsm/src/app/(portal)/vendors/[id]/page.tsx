@@ -1,9 +1,10 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { PageHeader } from "@/components/app/app-shell";
+import { PageBreadcrumbs } from "@/components/app/page-breadcrumbs";
 import { DataTable, StatusPill } from "@/components/app/data-table";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { demoVendors, demoWorkOrders } from "@/lib/demo-data";
+import { getVendor } from "@/lib/vendors/vendor-repository";
 import { Button } from "@/components/ui/button";
 
 const woStatus = {
@@ -12,19 +13,29 @@ const woStatus = {
   resolved: { label: "Resolved", className: "bg-emerald-500/15 text-emerald-300" },
 };
 
+function formatInr(amount: number) {
+  return `₹${amount.toLocaleString("en-IN")}`;
+}
+
 export default async function VendorDetailPage({
   params,
 }: {
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
-  const vendor = demoVendors.find((v) => v.id === id);
-  if (!vendor) notFound();
+  const result = await getVendor(id);
+  if (!result) notFound();
 
-  const workOrders = demoWorkOrders.filter((wo) => wo.vendor === vendor.name);
+  const { vendor, workOrders } = result;
 
   return (
     <>
+      <PageBreadcrumbs
+        items={[
+          { label: "Vendors", href: "/vendors" },
+          { label: vendor.name },
+        ]}
+      />
       <PageHeader
         title={vendor.name}
         description={`${vendor.type} · ${vendor.city}`}
@@ -54,10 +65,11 @@ export default async function VendorDetailPage({
           <CardContent className="space-y-2 text-sm">
             <p>
               <span className="text-muted-foreground">Open work orders</span> ·{" "}
-              {workOrders.filter((w) => w.status !== "resolved").length}
+              {vendor.openWorkOrders}
             </p>
             <p>
-              <span className="text-muted-foreground">Total spend (YTD)</span> · ₹46,600
+              <span className="text-muted-foreground">Total spend (YTD)</span> ·{" "}
+              {formatInr(vendor.totalSpendInr)}
             </p>
           </CardContent>
         </Card>
@@ -80,7 +92,10 @@ export default async function VendorDetailPage({
             key: "link",
             header: "",
             render: (r) => (
-              <Link href={`/maintenance/work-orders/${r.id}`} className="text-link text-xs hover:underline">
+              <Link
+                href={`/maintenance/work-orders/${r.id}`}
+                className="text-xs text-link hover:underline"
+              >
                 View
               </Link>
             ),

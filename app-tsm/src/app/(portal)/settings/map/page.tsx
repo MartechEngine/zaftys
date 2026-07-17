@@ -1,17 +1,33 @@
+import Link from "next/link";
 import { PageHeader } from "@/components/app/app-shell";
 import { SettingsNav } from "@/components/app/settings-nav";
 import { Card, CardContent } from "@/components/ui/card";
+import { getMapSettings } from "@/lib/settings/config-repository";
 
-export default function SettingsMapPage() {
+export default async function SettingsMapPage() {
+  const settings = await getMapSettings();
+
   return (
     <>
       <PageHeader title="Settings" description="Map provider and geofences" />
       <SettingsNav />
       <Card>
-        <CardContent className="p-6 space-y-3 text-sm">
-          <p><strong>Provider:</strong> MapLibre GL + OpenFreeMap (free, no API key)</p>
-          <p><strong>Style:</strong> Dark (default) — override with NEXT_PUBLIC_MAP_STYLE</p>
-          <p><strong>Geofences:</strong> 4 active (plants, weighbridges)</p>
+        <CardContent className="space-y-3 p-6 text-sm">
+          <p>
+            <strong>Provider:</strong> {settings.provider}
+          </p>
+          <p>
+            <strong>Style:</strong> {settings.style}
+            {settings.styleEnv !== "—" ? ` — override ${settings.styleEnv}` : ""}
+          </p>
+          <p>
+            <strong>Geofences:</strong> {settings.geofenceCount} active
+          </p>
+          <p>
+            <Link href={settings.liveMapPath} className="text-link hover:underline">
+              Open live map →
+            </Link>
+          </p>
         </CardContent>
       </Card>
     </>

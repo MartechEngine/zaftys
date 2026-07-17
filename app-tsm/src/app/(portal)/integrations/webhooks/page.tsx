@@ -2,23 +2,29 @@ import Link from "next/link";
 import { PageHeader } from "@/components/app/app-shell";
 import { ModuleSubNav } from "@/components/app/module-sub-nav";
 import { DataTable } from "@/components/app/data-table";
-import { demoWebhooks } from "@/lib/demo-data";
+import { listWebhooks } from "@/lib/integrations/integrations-repository";
 import { StatusPill } from "@/components/app/data-table";
 import { INTEGRATIONS_NAV } from "@/lib/module-nav";
-import { Button } from "@/components/ui/button";
+import { CreateWebhookForm } from "@/components/app/module-create-forms";
 
 const whStatus = {
   active: { label: "Active", className: "bg-emerald-100 text-emerald-800" },
   failed: { label: "Failed", className: "bg-red-100 text-red-800" },
 };
 
-export default function IntegrationsWebhooksPage() {
+export default async function IntegrationsWebhooksPage() {
+  const webhooks = await listWebhooks();
+
   return (
     <>
-      <PageHeader title="Webhooks" description="Outbound event subscriptions" action={<Button variant="accent">Add webhook</Button>} />
+      <PageHeader
+        title="Webhooks"
+        description="Outbound event subscriptions"
+        action={<CreateWebhookForm />}
+      />
       <ModuleSubNav links={INTEGRATIONS_NAV} />
       <DataTable
-        rows={demoWebhooks}
+        rows={webhooks}
         columns={[
           { key: "url", header: "Endpoint", render: (r) => r.url },
           { key: "events", header: "Events", render: (r) => r.events },

@@ -53,3 +53,37 @@ export async function acceptNetworkOverflow(id: string) {
 export function listNetworkAssignments() {
   return listOverflowLoads("accepted").filter((l) => l.shipmentId);
 }
+
+export async function postShipmentToOverflow(shipmentId: string) {
+  const shipment = await getShipment(shipmentId);
+  if (!shipment) return { error: "Shipment not found." as const };
+
+  if (shipment.status === "delivered" || shipment.status === "cancelled") {
+    return { error: "Cannot post completed or cancelled shipments to overflow." as const };
+  }
+
+  const created = createOverflowFromShipment({
+    id: shipment.id,
+    publicId: shipment.publicId,
+    origin: shipment.origin,
+    destination: shipment.destination,
+    commodity: shipment.commodity,
+    tonnageMt: shipment.tonnageMt,
+    client: shipment.client,
+  });
+
+  if ("error" in created && created.error) {
+    return { error: created.error };
+  }
+
+  await cancelShipment(shipmentId);
+
+  logActivity({
+    shipmentId,
+    type: "shipment.overflow",
+    message: `${shipment.publicId} sent to TranZfort overflow · ${created.load.bookingId}`,
+    timestamp: new Date().toISOString(),
+  });
+
+  return { load: created.load };
+}

@@ -3,16 +3,8 @@ import { notFound } from "next/navigation";
 import { PageHeader } from "@/components/app/app-shell";
 import { SettingsNav } from "@/components/app/settings-nav";
 import { DataTable } from "@/components/app/data-table";
-import { demoOrderTypes } from "@/lib/demo-data";
-import { Button } from "@/components/ui/button";
-
-const FIELDS = [
-  { id: "f1", name: "LR number", type: "text", required: true },
-  { id: "f2", name: "Tonnage (MT)", type: "number", required: true },
-  { id: "f3", name: "e-way bill", type: "text", required: false },
-  { id: "f4", name: "Weighbridge slip", type: "file", required: false },
-  { id: "f5", name: "Receiver signature", type: "signature", required: false },
-];
+import { getOrderTypeFields } from "@/lib/settings/order-types-repository";
+import { CreateOrderFieldForm } from "@/components/app/module-create-forms";
 
 export default async function OrderTypeFieldsPage({
   params,
@@ -20,15 +12,21 @@ export default async function OrderTypeFieldsPage({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
-  const ot = demoOrderTypes.find((o) => o.id === id);
-  if (!ot) notFound();
+  const result = await getOrderTypeFields(id);
+  if (!result) notFound();
+
+  const { orderType, fields } = result;
 
   return (
     <>
-      <PageHeader title="Custom fields" description={ot.name} action={<Button variant="accent" size="sm">Add field</Button>} />
+      <PageHeader
+        title="Custom fields"
+        description={orderType.name}
+        action={<CreateOrderFieldForm orderTypeId={id} />}
+      />
       <SettingsNav />
       <DataTable
-        rows={FIELDS}
+        rows={fields}
         columns={[
           { key: "name", header: "Field", render: (r) => r.name },
           { key: "type", header: "Type", render: (r) => r.type },

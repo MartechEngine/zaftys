@@ -1,8 +1,7 @@
-import Link from "next/link";
 import { PageHeader } from "@/components/app/app-shell";
 import { ModuleSubNav } from "@/components/app/module-sub-nav";
 import { DataTable, StatusPill } from "@/components/app/data-table";
-import { demoComplianceDocs } from "@/lib/demo-data";
+import { getComplianceSummary, listComplianceDocs } from "@/lib/fleet/compliance-repository";
 import { FLEET_NAV } from "@/lib/module-nav";
 
 const docStatus = {
@@ -11,20 +10,31 @@ const docStatus = {
   expired: { label: "Expired", className: "bg-red-100 text-red-800" },
 };
 
-export default function FleetCompliancePage() {
-  const expiring = demoComplianceDocs.filter((d) => d.status !== "valid").length;
+export default async function FleetCompliancePage() {
+  const [docs, summary] = await Promise.all([listComplianceDocs(), getComplianceSummary()]);
 
   return (
     <>
-      <PageHeader title="Compliance" description={`Vehicle documents and renewal alerts · ${expiring} need attention`} />
+      <PageHeader
+        title="Compliance"
+        description={`Vehicle documents and renewal alerts · ${summary.needsAttention} need attention`}
+      />
       <ModuleSubNav links={FLEET_NAV} />
       <DataTable
-        rows={demoComplianceDocs}
+        rows={docs}
         columns={[
-          { key: "vehicle", header: "Vehicle", render: (r) => <span className="font-mono">{r.vehicle}</span> },
+          {
+            key: "vehicle",
+            header: "Vehicle",
+            render: (r) => <span className="font-mono">{r.vehicle}</span>,
+          },
           { key: "doc", header: "Document", render: (r) => r.doc },
           { key: "expires", header: "Expires", render: (r) => r.expires },
-          { key: "status", header: "Status", render: (r) => <StatusPill status={r.status} map={docStatus} /> },
+          {
+            key: "status",
+            header: "Status",
+            render: (r) => <StatusPill status={r.status} map={docStatus} />,
+          },
         ]}
       />
     </>

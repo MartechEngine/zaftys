@@ -12,7 +12,9 @@
 
 **We are building the final product** — full Fleetbase parity UI + TranZfort sync. **Frontend first**, then BFF wiring per module.
 
-Use `[x]` done · `[ ]` pending · `[~]` in progress
+**Strategy (Jul 17):** **Local-first** — app must run perfectly on dev machine before auth, deploy, or CI. NextAuth / prod push deferred.
+
+Use `[x]` done · `[ ]` pending · `[~]` in progress · `[—]` deferred
 
 ---
 
@@ -21,8 +23,8 @@ Use `[x]` done · `[ ]` pending · `[~]` in progress
 - [x] Branch `app-dev-mode`, Next.js 16 scaffold
 - [x] Build passes locally (106 routes, Jul 17)
 - [x] Commit `app-tsm/` + `docs/app/` (Jul 17)
-- [ ] Push branch to remote
-- [ ] CI: lint + build on PR
+- [—] Push branch to remote (after local app stable)
+- [—] CI: lint + build on PR (after local app stable)
 - [ ] Monorepo vs split repo decision
 
 ---
@@ -63,7 +65,7 @@ Use `[x]` done · `[ ]` pending · `[~]` in progress
 - [~] Live map — SSE GPS, route polylines, marker clustering, side panel
 - [~] Public track — HMAC tokens + rate limit; live map on track page
 - [x] App shell — collapsible sidebar, brand logos, ⌘K search, notification bell
-- [~] Auth — dev session + profile PATCH; NextAuth + forgot password pending
+- [~] Auth — **deferred**; dev session + profile PATCH sufficient for local QA
 
 ### BFF + backend (wire after UI exists)
 
@@ -81,7 +83,7 @@ Use `[x]` done · `[ ]` pending · `[~]` in progress
 ## 4. Wave 2 — Resources & network (P3)
 
 - [~] Fleet — detail pages, places, groups, compliance (shells exist)
-- [ ] Clients — shippers, contacts, portal users (shells exist)
+- [~] Clients — list/detail/contacts/users live; **POST create client** (local store)
 - [x] Documents — global proofs library + upload wired
 - [~] Network — overflow queue, assignments, partners, sync UI
 - [~] TranZfort live sync (env + two-way status push)
@@ -91,31 +93,31 @@ Use `[x]` done · `[ ]` pending · `[~]` in progress
 
 ## 5. Wave 3 — Enterprise (P3–P4)
 
-- [~] Reports hub — operations, lanes, fleet shells
-- [~] Settings — org, IAM, dispatch, map shells (~20 routes)
-- [~] Integrations — webhooks, logs, events, sockets shells
-- [~] Maintenance — schedules, work orders, parts, faults shells
-- [ ] Dispatch calendar + orchestrator workbench (shells exist)
-- [ ] Order type configuration UI (shells exist)
+- [~] Reports hub — operations, lanes, fleet, custom catalog live
+- [~] Settings — org/IAM/config hub + automation **toggle PATCH** live
+- [~] Integrations — Fleetbase, telematics, devices, Tally status live
+- [~] Maintenance — schedules, work orders, parts, faults live
+- [x] Dispatch calendar + orchestrator workbench (local BFF)
+- [x] Order type configuration UI (list/detail/fields/flow live)
 - [~] Vendors registry — list + detail
 
 ---
 
 ## 6. Wave 4 — Connectivity & telematics (P4)
 
-- [ ] Telematics providers UI (shell exists)
-- [ ] Devices + sensors registry (shells exist)
-- [ ] Connectivity events inbox
-- [ ] Fuel providers + fuel reports/transactions (shells exist)
-- [ ] Traccar bridge (shell exists)
-- [ ] Journey replay on map (shell exists)
+- [x] Telematics providers UI (live BFF)
+- [x] Devices + sensors registry (live BFF)
+- [~] Connectivity events inbox (events API live)
+- [x] Fuel providers + fuel reports/transactions (live BFF)
+- [x] Traccar bridge (live BFF)
+- [x] Journey replay on map (dev-store GPS track)
 
 ---
 
 ## 7. Wave 5 — India & billing (P5)
 
-- [~] Billing — invoices list + detail, rates, accounts, GST shells
-- [ ] GST reports + Tally export (live)
+- [~] Billing — invoices, rates, accounts, GST live; quotes **POST create**
+- [~] GST reports + Tally export status (configure live later)
 - [ ] e-way bill integration
 - [ ] WhatsApp notifications
 - [ ] Hindi UI
@@ -165,7 +167,7 @@ Use `[x]` done · `[ ]` pending · `[~]` in progress
 | Wave 2 | ~45% | Documents library; network sync panel |
 | Wave 3–5 | ~25% | Module shells + sub-nav; demo data |
 | Realtime | ~32% | SSE GPS + polylines + clustering |
-| Production deploy | 0% | Local dev; branch committed, push + CI pending |
+| Production deploy | 0% | Deferred — local-first until Wave 1 stable |
 
 ---
 
@@ -200,14 +202,17 @@ Use `[x]` done · `[ ]` pending · `[~]` in progress
 18. ~~Profile PATCH + role-safe login~~ ✅
 19. ~~Map polylines + marker clustering~~ ✅
 
-### Sprint 6 (current) — Next priorities
-20. NextAuth production auth
-21. WebSocket GPS (replace SSE prototype)
-22. Clients module BFF
-23. Invoice create / mark paid
-24. Reports hub live data
-25. Webhooks CRUD
-26. Playwright E2E
+### Sprint 6 (current) — Local perfection (no auth / no deploy)
+20. Live Fleetbase end-to-end when `TSM_DEMO_UI=0` (lists, KPIs, create, assign)
+21. WebSocket or hardened SSE — map + dispatch refresh without manual reload
+22. Shipment timeline, notes, bulk export polish
+23. Clients module BFF (read-only first)
+24. Local QA script + README runbook (`npm run dev`, FB, seed, sync)
+25. Playwright smoke test (optional, local only)
+
+### Deferred until local app is stable
+- NextAuth, forgot password, login audit
+- Push branch, CI, staging, `app.zaftys.com` TLS
 
 ---
 
@@ -233,3 +238,4 @@ Use `[x]` done · `[ ]` pending · `[~]` in progress
 | 12 Jul 2026 | Sprint 2: HMAC track tokens, rate limit, document upload API, shipment detail live map |
 | 12 Jul 2026 | Sprints 3–5: documents, TZ sync, search, SSE map, filters, profile, CSV export |
 | 17 Jul 2026 | Initial commit: `app-tsm/` (106 routes) + `docs/app/` on `app-dev-mode` |
+| 17 Jul 2026 | Strategy: local-first — defer auth, push, CI until app runs perfectly locally |

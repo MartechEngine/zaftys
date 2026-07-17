@@ -1,11 +1,12 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { PageHeader } from "@/components/app/app-shell";
+import { PageBreadcrumbs } from "@/components/app/page-breadcrumbs";
 import { ModuleSubNav } from "@/components/app/module-sub-nav";
 import { DataTable } from "@/components/app/data-table";
-import { demoClients, demoContacts } from "@/lib/demo-data";
+import { getClient, listClientContacts } from "@/lib/clients/client-repository";
+import { CreateContactForm } from "@/components/app/create-contact-form";
 import { CLIENTS_NAV } from "@/lib/module-nav";
-import { Button } from "@/components/ui/button";
 
 export default async function ClientContactsPage({
   params,
@@ -13,14 +14,25 @@ export default async function ClientContactsPage({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
-  const client = demoClients.find((c) => c.id === id);
+  const client = await getClient(id);
   if (!client) notFound();
 
-  const contacts = demoContacts.filter((c) => c.clientId === id);
+  const contacts = await listClientContacts(id);
 
   return (
     <>
-      <PageHeader title="Contacts" description={client.name} action={<Button variant="accent" size="sm">Add contact</Button>} />
+      <PageBreadcrumbs
+        items={[
+          { label: "Clients", href: "/clients" },
+          { label: client.name, href: `/clients/${id}` },
+          { label: "Contacts" },
+        ]}
+      />
+      <PageHeader
+        title="Contacts"
+        description={client.name}
+        action={<CreateContactForm clientId={id} />}
+      />
       <ModuleSubNav links={CLIENTS_NAV(id)} />
       <DataTable
         rows={contacts}
@@ -32,7 +44,9 @@ export default async function ClientContactsPage({
         ]}
       />
       <p className="mt-4 text-sm">
-        <Link href={`/clients/${id}`} className="text-link hover:underline">← {client.name}</Link>
+        <Link href={`/clients/${id}`} className="text-link hover:underline">
+          ← {client.name}
+        </Link>
       </p>
     </>
   );

@@ -1,48 +1,46 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Copy, FileText } from "lucide-react";
 import { toast } from "sonner";
 import { AssignDriverDrawer } from "@/components/app/assign-driver-drawer";
+import { ShipmentActivityFeed } from "@/components/app/shipment-activity-feed";
 import { ShipmentDocumentUpload } from "@/components/app/shipment-document-upload";
 import { ShipmentDetailMap } from "@/components/app/shipment-detail-map";
+import { ShipmentNotesPanel } from "@/components/app/shipment-notes-panel";
 import { OriginBadge, ShipmentStatusChip } from "@/components/app/status-chip";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { api } from "@/lib/api-client";
+import { api, type ActivityEvent } from "@/lib/api-client";
 import type { ShipmentRecord } from "@/lib/dev-store";
+import { buildShipmentTimeline } from "@/lib/shipments/timeline";
 
 export function ShipmentDetailClient({ shipment }: { shipment: ShipmentRecord }) {
   const router = useRouter();
   const [assignOpen, setAssignOpen] = useState(false);
   const [current, setCurrent] = useState(shipment);
-  const [tab, setTab] = useState<"overview" | "billing">("overview");
+  const [tab, setTab] = useState<"overview" | "notes" | "billing">("overview");
   const [busy, setBusy] = useState(false);
+  const [activityRefresh, setActivityRefresh] = useState(0);
+  const [activities, setActivities] = useState<ActivityEvent[]>([]);
 
   const estCharge = current.tonnageMt * 420;
   const gst = Math.round(estCharge * 0.18);
 
-  const timeline = [
-    { label: "Booked", time: "12 Jul, 08:00", done: true },
-    {
-      label: "Dispatched",
-      time: current.driver ? "12 Jul, 09:15" : "—",
-      done: current.status !== "pending",
-    },
-    {
-      label: "In transit",
-      time: "—",
-      done: ["in_transit", "delivered", "exception"].includes(current.status),
-      current: current.status === "in_transit",
-    },
-    {
-      label: "Delivered",
-      time: current.eta ?? "—",
-      done: current.status === "delivered",
-    },
-  ];
+  useEffect(() => {
+    api
+      .getShipmentActivity(current.id)
+      .then(setActivities)
+      .catch(() => setActivities([]));
+  }, [current.id, activityRefresh]);
+
+  const timeline = buildShipmentTimeline(current, activities);
+
+  function bumpActivity() {
+    setActivityRefresh((n) => n + 1);
+  }
 
   async function copyTrackLink() {
     try {
@@ -52,6 +50,19 @@ export function ShipmentDetailClient({ shipment }: { shipment: ShipmentRecord })
       toast.success("Tracking link copied to clipboard.");
     } catch {
       toast.error("Could not generate track link.");
+    }
+  }
+
+  async function sendToOverflow() {
+    setBusy(true);
+    try {
+      const result = await api.postShipmentToOverflow(current.id);
+      toast.success(`Posted to overflow · ${result.load.bookingId}`);
+      router.push("/network/overflow");
+    } catch (e) {
+      toast.error(e instanceof Error ? e.message : "Could not post to overflow.");
+    } finally {
+      setBusy(false);
     }
   }
 
@@ -67,6 +78,7 @@ export function ShipmentDetailClient({ shipment }: { shipment: ShipmentRecord })
           : await api.updateShipmentStatus(current.id, action);
       setCurrent(updated);
       router.refresh();
+      bumpActivity();
       toast.success(successLabel);
     } catch (e) {
       toast.error(e instanceof Error ? e.message : "Action failed.");
@@ -138,10 +150,15 @@ export function ShipmentDetailClient({ shipment }: { shipment: ShipmentRecord })
             Cancel
           </Button>
         )}
+        {["pending", "dispatched"].includes(current.status) && current.originType === "fleet" && (
+          <Button variant="outline" disabled={busy} onClick={sendToOverflow}>
+            Send to overflow
+          </Button>
+        )}
       </div>
 
       <div className="mb-6 flex gap-2 border-b border-white/10 pb-2">
-        {(["overview", "billing"] as const).map((t) => (
+        {(["overview", "notes", "billing"] as const).map((t) => (
           <button
             key={t}
             type="button"
@@ -153,7 +170,12 @@ export function ShipmentDetailClient({ shipment }: { shipment: ShipmentRecord })
         ))}
       </div>
 
-      {tab === "billing" ? (
+      {tab === "notes" ? (
+        <div className="grid gap-6 lg:grid-cols-2">
+          <ShipmentNotesPanel shipmentId={current.id} refreshKey={activityRefresh} />
+          <ShipmentActivityFeed shipmentId={current.id} refreshKey={activityRefresh} />
+        </div>
+      ) : tab === "billing" ? (
         <Card className="max-w-lg">
           <CardHeader>
             <CardTitle>Trip billing</CardTitle>
@@ -196,6 +218,8 @@ export function ShipmentDetailClient({ shipment }: { shipment: ShipmentRecord })
               ))}
             </CardContent>
           </Card>
+
+          <ShipmentActivityFeed shipmentId={current.id} refreshKey={activityRefresh} />
 
           <Card>
             <CardHeader>
@@ -318,6 +342,7 @@ export function ShipmentDetailClient({ shipment }: { shipment: ShipmentRecord })
           const updated = await api.getShipment(current.id);
           setCurrent(updated);
           router.refresh();
+          bumpActivity();
         }}
       />
     </>

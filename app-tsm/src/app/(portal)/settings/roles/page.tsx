@@ -1,20 +1,30 @@
 import { PageHeader } from "@/components/app/app-shell";
 import { SettingsNav } from "@/components/app/settings-nav";
 import { DataTable } from "@/components/app/data-table";
-import { demoRoles } from "@/lib/demo-data";
-import { Button } from "@/components/ui/button";
+import { listOrgRoles } from "@/lib/settings/roles-repository";
+import { CreateRoleForm } from "@/components/app/module-create-forms";
 
-export default function SettingsRolesPage() {
+export default async function SettingsRolesPage() {
+  const roles = await listOrgRoles();
+
   return (
     <>
-      <PageHeader title="Settings" description="Roles and permissions" action={<Button variant="accent">New role</Button>} />
+      <PageHeader
+        title="Settings"
+        description="Roles and permissions"
+        action={<CreateRoleForm />}
+      />
       <SettingsNav />
       <DataTable
-        rows={demoRoles}
+        rows={roles}
         columns={[
           { key: "name", header: "Role", render: (r) => r.name },
           { key: "users", header: "Users", render: (r) => r.users },
-          { key: "type", header: "Type", render: (r) => r.type === "org" ? "Organization" : "System" },
+          {
+            key: "type",
+            header: "Type",
+            render: (r) => (r.type === "org" ? "Organization" : "System"),
+          },
         ]}
       />
     </>

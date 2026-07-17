@@ -3,9 +3,9 @@ import { notFound } from "next/navigation";
 import { PageHeader } from "@/components/app/app-shell";
 import { ModuleSubNav } from "@/components/app/module-sub-nav";
 import { Card, CardContent } from "@/components/ui/card";
-import { listDrivers } from "@/lib/data/shipment-repository";
+import { getDriverInvite } from "@/lib/fleet/invite-repository";
 import { FLEET_NAV } from "@/lib/module-nav";
-import { Button } from "@/components/ui/button";
+import { ResendInviteButton } from "@/components/app/module-create-forms";
 
 export default async function DriverInvitePage({
   params,
@@ -13,23 +13,36 @@ export default async function DriverInvitePage({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
-  const driver = (await listDrivers()).find((d) => d.id === id);
-  if (!driver) notFound();
+  const invite = await getDriverInvite(id);
+  if (!invite) notFound();
 
   return (
     <>
-      <PageHeader title="Navigator invite" description={driver.name} />
+      <PageHeader title="Navigator invite" description={invite.driverName} />
       <ModuleSubNav links={FLEET_NAV} />
       <Card className="max-w-lg">
         <CardContent className="space-y-3 p-5 text-sm">
-          <p><span className="text-muted-foreground">Phone</span> · {driver.phone}</p>
-          <p><span className="text-muted-foreground">Invite status</span> · Accepted · last active 4 min ago</p>
-          <p><span className="text-muted-foreground">App version</span> · Navigator 2.1.0</p>
-          <Button variant="accent" size="sm">Resend SMS invite</Button>
+          <p>
+            <span className="text-muted-foreground">Phone</span> · {invite.phone}
+          </p>
+          <p>
+            <span className="text-muted-foreground">Invite status</span> ·{" "}
+            <span className="capitalize">{invite.inviteStatus.replace("_", " ")}</span>
+            {invite.lastActive !== "Never" ? ` · last active ${invite.lastActive}` : ""}
+          </p>
+          <p>
+            <span className="text-muted-foreground">App version</span> · {invite.appVersion}
+          </p>
+          {invite.lastResentAt && (
+            <p className="text-xs text-muted-foreground">Last resent · just now</p>
+          )}
+          <ResendInviteButton driverId={id} disabled={!invite.canResend} />
         </CardContent>
       </Card>
       <p className="mt-4 text-sm">
-        <Link href={`/fleet/drivers/${id}`} className="text-link hover:underline">← Driver profile</Link>
+        <Link href={`/fleet/drivers/${id}`} className="text-link hover:underline">
+          ← Driver profile
+        </Link>
       </p>
     </>
   );

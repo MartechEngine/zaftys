@@ -1,10 +1,17 @@
 import Link from "next/link";
 import { PageHeader } from "@/components/app/app-shell";
 import { DataTable, SearchFilterBar } from "@/components/app/data-table";
-import { demoClients } from "@/lib/demo-data";
+import { listClients } from "@/lib/clients/client-repository";
 import { Button } from "@/components/ui/button";
 
-export default function ClientsPage() {
+export default async function ClientsPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ q?: string }>;
+}) {
+  const { q } = await searchParams;
+  const clients = await listClients(q);
+
   return (
     <>
       <PageHeader
@@ -18,7 +25,7 @@ export default function ClientsPage() {
       />
       <SearchFilterBar placeholder="Search name, GSTIN…" />
       <DataTable
-        rows={demoClients}
+        rows={clients}
         columns={[
           {
             key: "name",
@@ -29,9 +36,15 @@ export default function ClientsPage() {
               </Link>
             ),
           },
-          { key: "gstin", header: "GSTIN", render: (r) => <span className="font-mono text-xs">{r.gstin}</span> },
-          { key: "city", header: "City", render: (r) => r.city },
-          { key: "contact", header: "Contact", render: (r) => r.contact },
+          {
+            key: "gstin",
+            header: "GSTIN",
+            render: (r) => (
+              <span className="font-mono text-xs">{r.gstin ?? "—"}</span>
+            ),
+          },
+          { key: "city", header: "City", render: (r) => r.city ?? "—" },
+          { key: "contact", header: "Contact", render: (r) => r.contact ?? "—" },
           { key: "active", header: "Active trips", render: (r) => r.activeShipments },
         ]}
       />

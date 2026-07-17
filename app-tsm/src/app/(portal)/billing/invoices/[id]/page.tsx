@@ -5,29 +5,14 @@ import { PageBreadcrumbs } from "@/components/app/page-breadcrumbs";
 import { ModuleSubNav } from "@/components/app/module-sub-nav";
 import { DataTable, StatusPill } from "@/components/app/data-table";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { demoInvoices } from "@/lib/demo-data";
+import { getInvoice } from "@/lib/billing/invoice-repository";
 import { BILLING_NAV } from "@/lib/module-nav";
 import { Button } from "@/components/ui/button";
+import { InvoiceStatusActions } from "@/components/app/invoice-status-actions";
 
 const invStatus = {
   pending: { label: "Pending", className: "bg-amber-500/15 text-amber-200" },
   paid: { label: "Paid", className: "bg-emerald-500/15 text-emerald-300" },
-};
-
-const LINE_ITEMS: Record<string, { description: string; amount: string }[]> = {
-  inv1: [
-    { description: "Amravati → Mumbai · Cement 32 MT", amount: "₹1,02,400" },
-    { description: "Loading charges", amount: "₹8,000" },
-    { description: "Detention (2h)", amount: "₹14,400" },
-  ],
-  inv2: [
-    { description: "Wardha → Pune · FMCG 15 MT", amount: "₹68,400" },
-    { description: "Fuel surcharge", amount: "₹18,000" },
-  ],
-  inv3: [
-    { description: "Nagpur → Hyderabad · Steel 28 MT", amount: "₹1,86,000" },
-    { description: "Weighbridge fee", amount: "₹24,000" },
-  ],
 };
 
 export default async function BillingInvoiceDetailPage({
@@ -36,10 +21,8 @@ export default async function BillingInvoiceDetailPage({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
-  const invoice = demoInvoices.find((i) => i.id === id);
+  const invoice = await getInvoice(id);
   if (!invoice) notFound();
-
-  const lines = LINE_ITEMS[id] ?? [{ description: "Freight charges", amount: invoice.amount }];
 
   return (
     <>
@@ -58,11 +41,7 @@ export default async function BillingInvoiceDetailPage({
             <Button variant="outline" disabled>
               Download PDF
             </Button>
-            {invoice.status === "pending" && (
-              <Button variant="accent" disabled>
-                Mark paid
-              </Button>
-            )}
+            <InvoiceStatusActions id={invoice.id} status={invoice.status} />
           </div>
         }
       />
@@ -77,12 +56,19 @@ export default async function BillingInvoiceDetailPage({
           </CardHeader>
           <CardContent>
             <DataTable
-              rows={lines.map((line, idx) => ({ id: `line-${idx}`, ...line }))}
+              rows={invoice.lineItems.map((line, idx) => ({ id: `line-${idx}`, ...line }))}
               columns={[
                 { key: "description", header: "Description", render: (r) => r.description },
                 { key: "amount", header: "Amount", render: (r) => r.amount },
               ]}
             />
+            {invoice.shipmentId && (
+              <p className="mt-4 text-sm">
+                <Link href={`/shipments/${invoice.shipmentId}`} className="text-link hover:underline">
+                  View shipment →
+                </Link>
+              </p>
+            )}
           </CardContent>
         </Card>
         <Card className="max-w-md">
@@ -92,7 +78,7 @@ export default async function BillingInvoiceDetailPage({
           <CardContent className="space-y-2 text-sm">
             <div className="flex justify-between">
               <span className="text-muted-foreground">Subtotal</span>
-              <span>{invoice.amount}</span>
+              <span>₹{invoice.subtotalInr.toLocaleString("en-IN")}</span>
             </div>
             <div className="flex justify-between">
               <span className="text-muted-foreground">GST (18%)</span>

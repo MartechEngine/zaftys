@@ -9,7 +9,8 @@
     "lint": "eslint",
     "test:fleetbase": "node scripts/test-fleetbase.mjs",
     "seed:fleetbase": "node scripts/seed-fleetbase-orders.mjs",
-    "sync:tranzfort": "node scripts/sync-tranzfort.mjs"
+    "sync:tranzfort": "node scripts/sync-tranzfort.mjs",
+    "smoke": "node scripts/smoke-local.mjs"
   },
   "dependencies": {
     "@radix-ui/react-label": "^2.1.11",

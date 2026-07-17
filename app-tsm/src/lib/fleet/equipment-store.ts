@@ -1,0 +1,50 @@
+import { logActivity } from "@/lib/dev-store";
+
+export type EquipmentStatus = "active" | "stored" | "maintenance";
+
+export type EquipmentRecord = {
+  id: string;
+  name: string;
+  type: string;
+  location: string;
+  status: EquipmentStatus;
+  placeId?: string;
+};
+
+const g = globalThis as typeof globalThis & {
+  __tsmDevEquipment?: EquipmentRecord[];
+};
+
+function getStore(): EquipmentRecord[] {
+  if (!g.__tsmDevEquipment) g.__tsmDevEquipment = [];
+  return g.__tsmDevEquipment;
+}
+
+export function listStoredEquipment(): EquipmentRecord[] {
+  return [...getStore()];
+}
+
+export function createStoredEquipment(input: {
+  name: string;
+  type: string;
+  location: string;
+  status?: EquipmentStatus;
+  placeId?: string;
+}): EquipmentRecord {
+  const item: EquipmentRecord = {
+    id: `eq-${Date.now().toString(36)}`,
+    name: input.name.trim(),
+    type: input.type.trim(),
+    location: input.location.trim(),
+    status: input.status ?? "active",
+    placeId: input.placeId,
+  };
+  getStore().unshift(item);
+  logActivity({
+    shipmentId: "",
+    type: "equipment.created",
+    message: `${item.name} · ${item.type}`,
+    timestamp: new Date().toISOString(),
+  });
+  return item;
+}

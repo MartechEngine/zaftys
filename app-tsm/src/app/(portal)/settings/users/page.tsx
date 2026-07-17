@@ -1,32 +1,36 @@
-import Link from "next/link";
 import { PageHeader } from "@/components/app/app-shell";
 import { SettingsNav } from "@/components/app/settings-nav";
-import { DataTable } from "@/components/app/data-table";
-import { demoUsers } from "@/lib/demo-data";
-import { StatusPill } from "@/components/app/data-table";
-import { Button } from "@/components/ui/button";
+import { DataTable, StatusPill } from "@/components/app/data-table";
+import { listOrgUsers } from "@/lib/settings/users-repository";
+import { InviteOrgUserForm } from "@/components/app/module-create-forms";
 
 const userStatus = {
   active: { label: "Active", className: "bg-emerald-100 text-emerald-800" },
   pending: { label: "Pending", className: "bg-amber-100 text-amber-800" },
 };
 
-export default function SettingsUsersPage() {
+export default async function SettingsUsersPage() {
+  const users = await listOrgUsers();
+
   return (
     <>
-      <PageHeader title="Settings" description="User management and invites" action={
-        <Button variant="accent" asChild>
-          <Link href="/invite/demo-invite-token">Invite user</Link>
-        </Button>
-      } />
+      <PageHeader
+        title="Settings"
+        description="User management and invites"
+        action={<InviteOrgUserForm />}
+      />
       <SettingsNav />
       <DataTable
-        rows={demoUsers}
+        rows={users}
         columns={[
           { key: "name", header: "Name", render: (r) => r.name },
           { key: "email", header: "Email", render: (r) => r.email },
           { key: "role", header: "Role", render: (r) => r.role },
-          { key: "status", header: "Status", render: (r) => <StatusPill status={r.status} map={userStatus} /> },
+          {
+            key: "status",
+            header: "Status",
+            render: (r) => <StatusPill status={r.status} map={userStatus} />,
+          },
         ]}
       />
     </>

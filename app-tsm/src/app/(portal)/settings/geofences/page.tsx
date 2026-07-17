@@ -1,16 +1,22 @@
-import Link from "next/link";
 import { PageHeader } from "@/components/app/app-shell";
 import { SettingsNav } from "@/components/app/settings-nav";
 import { DataTable } from "@/components/app/data-table";
-import { demoGeofences } from "@/lib/demo-data";
+import { CreateGeofenceForm } from "@/components/app/create-geofence-form";
+import { listGeofences } from "@/lib/settings/geofences-repository";
 
-export default function SettingsGeofencesPage() {
+export default async function SettingsGeofencesPage() {
+  const geofences = await listGeofences();
+
   return (
     <>
-      <PageHeader title="Settings" description="Geofence automation rules" />
+      <PageHeader
+        title="Settings"
+        description="Geofence automation rules"
+        action={<CreateGeofenceForm />}
+      />
       <SettingsNav />
       <DataTable
-        rows={demoGeofences}
+        rows={geofences}
         columns={[
           { key: "name", header: "Geofence", render: (r) => r.name },
           { key: "radius", header: "Radius", render: (r) => r.radius },

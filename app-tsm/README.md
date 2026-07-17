@@ -12,14 +12,29 @@ See [`../docs/app/`](../docs/app/) for product, UX, architecture, and API specs.
 
 ```bash
 cd app-tsm
-cp .env.example .env.local
+cp .env.example .env.local   # optional — demo mode works without Fleetbase
 npm install
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) — Command Center (mock data).
+### Data modes
 
-- Login: [http://localhost:3000/login](http://localhost:3000/login) (any credentials in dev)
+| Mode | Env | Behavior |
+|------|-----|----------|
+| **Demo UI** (default) | `TSM_DEMO_UI=1` or unset | Rich in-memory dev-store — full Wave 1 flows |
+| **Live Fleetbase** | `TSM_DEMO_UI=0` + `FLEETBASE_API_KEY` | Orders/drivers/vehicles from Fleetbase API |
+
+Demo login accounts (dev session, not NextAuth):
+
+| Email | Password | Role |
+|-------|----------|------|
+| `dispatcher@zaftys.com` | `dev` | Dispatcher |
+| `admin@zaftys.com` | `dev` | Admin |
+| `fleet@zaftys.com` | `dev` | Fleet manager |
+
+Open [http://localhost:3000](http://localhost:3000) — Command Center (rich demo data by default).
+
+- Login: [http://localhost:3000/login](http://localhost:3000/login) — `dispatcher@zaftys.com` / `dev`
 - Public track demo: [http://localhost:3000/track/demo-1](http://localhost:3000/track/demo-1)
 - Health: [http://localhost:3000/api/health](http://localhost:3000/api/health)
 

@@ -3,9 +3,7 @@ import { notFound } from "next/navigation";
 import { PageHeader } from "@/components/app/app-shell";
 import { SettingsNav } from "@/components/app/settings-nav";
 import { Card, CardContent } from "@/components/ui/card";
-import { demoOrderTypes } from "@/lib/demo-data";
-
-const FLOW_STEPS = ["pending", "dispatched", "at_plant", "in_transit", "at_weighbridge", "delivered"];
+import { getOrderTypeFlow } from "@/lib/settings/order-types-repository";
 
 export default async function OrderTypeFlowPage({
   params,
@@ -13,24 +11,29 @@ export default async function OrderTypeFlowPage({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
-  const ot = demoOrderTypes.find((o) => o.id === id);
-  if (!ot) notFound();
+  const result = await getOrderTypeFlow(id);
+  if (!result) notFound();
+
+  const { orderType, steps } = result;
 
   return (
     <>
-      <PageHeader title="Status flow" description={ot.name} />
+      <PageHeader title="Status flow" description={orderType.name} />
       <SettingsNav />
       <Card className="max-w-2xl">
         <CardContent className="p-6">
           <div className="flex flex-wrap items-center gap-2">
-            {FLOW_STEPS.map((step, i) => (
+            {steps.map((step, i) => (
               <span key={step} className="flex items-center gap-2">
-                <span className="rounded-md border border-border bg-muted px-3 py-2 text-sm capitalize">{step.replace("_", " ")}</span>
-                {i < FLOW_STEPS.length - 1 && <span className="text-muted-foreground">→</span>}
+                <span className="rounded-md border border-border bg-muted px-3 py-2 text-sm capitalize">{step.replace(/_/g, " ")}</span>
+                {i < steps.length - 1 && <span className="text-muted-foreground">→</span>}
               </span>
             ))}
           </div>
-          <p className="mt-4 text-sm text-muted-foreground">Drag-drop flow designer — visual editor in P4.</p>
+          <p className="mt-4 text-sm text-muted-foreground">
+            {steps.length} statuses · {orderType.activeShipments} active shipment
+            {orderType.activeShipments === 1 ? "" : "s"} using this flow.
+          </p>
         </CardContent>
       </Card>
       <p className="mt-4 text-sm">

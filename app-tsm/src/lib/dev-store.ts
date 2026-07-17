@@ -61,6 +61,14 @@ export interface ActivityEvent {
   timestamp: string;
 }
 
+export interface ShipmentNote {
+  id: string;
+  shipmentId: string;
+  author: string;
+  body: string;
+  createdAt: string;
+}
+
 export interface ExceptionItem {
   id: string;
   publicId: string;
@@ -622,6 +630,63 @@ export function logActivity(event: Omit<ActivityEvent, "id">) {
     ...event,
     id: `a${Date.now()}`,
   });
+}
+
+function getNotesStore(): Map<string, ShipmentNote[]> {
+  const g = globalThis as typeof globalThis & {
+    __tsmDevNotes?: Map<string, ShipmentNote[]>;
+  };
+  if (!g.__tsmDevNotes) {
+    g.__tsmDevNotes = new Map([
+      [
+        "1",
+        [
+          {
+            id: "n1",
+            shipmentId: "1",
+            author: "Dispatcher",
+            body: "Customer requested morning delivery slot at Nagpur plant.",
+            createdAt: "2026-07-11T08:30:00Z",
+          },
+        ],
+      ],
+    ]);
+  }
+  return g.__tsmDevNotes;
+}
+
+export function listShipmentNotes(shipmentId: string, limit = 50) {
+  const notes = getNotesStore().get(shipmentId) ?? [];
+  return [...notes]
+    .sort((a, b) => b.createdAt.localeCompare(a.createdAt))
+    .slice(0, limit);
+}
+
+export function addShipmentNote(shipmentId: string, author: string, body: string) {
+  const trimmed = body.trim();
+  if (!trimmed) return null;
+
+  const note: ShipmentNote = {
+    id: `n${Date.now()}`,
+    shipmentId,
+    author,
+    body: trimmed,
+    createdAt: now(),
+  };
+
+  const store = getNotesStore();
+  const existing = store.get(shipmentId) ?? [];
+  existing.unshift(note);
+  store.set(shipmentId, existing);
+
+  logActivity({
+    shipmentId,
+    type: "shipment.note",
+    message: `Note added by ${author}`,
+    timestamp: now(),
+  });
+
+  return note;
 }
 
 export function getAvailableDrivers() {

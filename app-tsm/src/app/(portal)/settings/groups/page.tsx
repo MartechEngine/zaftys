@@ -1,16 +1,22 @@
 import { PageHeader } from "@/components/app/app-shell";
 import { SettingsNav } from "@/components/app/settings-nav";
 import { DataTable } from "@/components/app/data-table";
-import { demoGroups } from "@/lib/demo-data";
-import { Button } from "@/components/ui/button";
+import { listSettingsGroups } from "@/lib/settings/groups-repository";
+import { CreateSettingsGroupForm } from "@/components/app/module-create-forms";
 
-export default function SettingsGroupsPage() {
+export default async function SettingsGroupsPage() {
+  const groups = await listSettingsGroups();
+
   return (
     <>
-      <PageHeader title="Settings" description="Bulk policy assignment via groups" action={<Button variant="accent">Create group</Button>} />
+      <PageHeader
+        title="Settings"
+        description="Bulk policy assignment via groups"
+        action={<CreateSettingsGroupForm />}
+      />
       <SettingsNav />
       <DataTable
-        rows={demoGroups}
+        rows={groups}
         columns={[
           { key: "name", header: "Group", render: (r) => r.name },
           { key: "members", header: "Members", render: (r) => r.members },

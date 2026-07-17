@@ -7,12 +7,15 @@ import {
   getShipmentByToken as devGetByToken,
   listActivities as devActivities,
   listActivitiesForShipment as devActivitiesForShipment,
+  listShipmentNotes as devListShipmentNotes,
+  addShipmentNote as devAddShipmentNote,
   listDrivers as devListDrivers,
   listShipments as devListShipments,
   listVehicles as devListVehicles,
   syncStatus as devSyncStatus,
   tickActiveGeo as devTickGeo,
   updateShipmentStatus as devUpdateStatus,
+  logActivity,
 } from "@/lib/dev-store";
 import { getSyncState } from "@/lib/sync/sync-state";
 import { getFleetbaseClient } from "@/lib/fleetbase/client";
@@ -54,6 +57,15 @@ function withGeo(record: ShipmentRecord): ShipmentRecord {
       updatedAt: record.updatedAt,
     }),
   };
+}
+
+function recordShipmentActivity(shipmentId: string, type: string, message: string) {
+  logActivity({
+    shipmentId,
+    type,
+    message,
+    timestamp: new Date().toISOString(),
+  });
 }
 
 export type DataSource = "fleetbase" | "dev-store";
@@ -146,7 +158,13 @@ export async function assignShipment(id: string, driverId: string, vehicleId: st
   if (getActiveDataSource() === "fleetbase") {
     try {
       const order = await getFleetbaseClient().assignOrder(id, driverId, vehicleId);
-      return withGeo(mapFleetbaseOrder(order));
+      const mapped = withGeo(mapFleetbaseOrder(order));
+      recordShipmentActivity(
+        mapped.id,
+        "shipment.assigned",
+        `${mapped.publicId} assigned via Fleetbase · ${mapped.driver ?? "driver"} · ${mapped.vehicle ?? "vehicle"}`,
+      );
+      return mapped;
     } catch (e) {
       console.warn("[assign] Fleetbase failed, using dev-store:", e);
     }
@@ -168,7 +186,13 @@ export async function createShipment(input: CreateShipmentInput): Promise<Shipme
         }
       }
 
-      return withGeo(mapFleetbaseOrder(order));
+      const mapped = withGeo(mapFleetbaseOrder(order));
+      recordShipmentActivity(
+        mapped.id,
+        "shipment.created",
+        `${mapped.publicId} created via Fleetbase · ${mapped.origin} → ${mapped.destination}`,
+      );
+      return mapped;
     } catch (e) {
       console.warn("[createShipment] Fleetbase failed, using dev-store:", e);
     }
@@ -190,6 +214,11 @@ export async function updateShipmentStatus(id: string, status: ShipmentStatus) {
     try {
       const order = await getFleetbaseClient().updateOrderStatus(id, toFleetbaseStatus(status));
       updated = withGeo(mapFleetbaseOrder(order));
+      recordShipmentActivity(
+        updated.id,
+        `shipment.${status}`,
+        `${updated.publicId} · ${status.replace("_", " ")} (Fleetbase)`,
+      );
     } catch (e) {
       console.warn("[updateStatus] Fleetbase failed:", e);
       throw e instanceof Error ? e : new Error("Fleetbase status update failed.");
@@ -239,6 +268,18 @@ export async function getExceptions() {
 
 export function listActivities(limit?: number) {
   return devActivities(limit);
+}
+
+export function getShipmentActivities(shipmentId: string, limit?: number) {
+  return devActivitiesForShipment(shipmentId, limit);
+}
+
+export function listShipmentNotes(shipmentId: string) {
+  return devListShipmentNotes(shipmentId);
+}
+
+export function addShipmentNote(shipmentId: string, author: string, body: string) {
+  return devAddShipmentNote(shipmentId, author, body);
 }
 
 export async function listDrivers() {

@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import { PageHeader } from "@/components/app/app-shell";
 import { ModuleSubNav } from "@/components/app/module-sub-nav";
 import { DataTable, StatusPill } from "@/components/app/data-table";
-import { demoDevices } from "@/lib/demo-data";
+import { listDevices } from "@/lib/integrations/integrations-repository";
 import { listVehicles } from "@/lib/data/shipment-repository";
 import { FLEET_NAV } from "@/lib/module-nav";
 import { Button } from "@/components/ui/button";
@@ -22,14 +22,14 @@ export default async function VehicleDevicesPage({
   const vehicle = (await listVehicles()).find((v) => v.id === id);
   if (!vehicle) notFound();
 
-  const devices = demoDevices.filter((d) => d.vehicle === vehicle.registration);
+  const devices = await listDevices(vehicle.registration);
 
   return (
     <>
       <PageHeader title="Telematics devices" description={vehicle.registration} action={<Button variant="accent" size="sm">Assign device</Button>} />
       <ModuleSubNav links={FLEET_NAV} />
       <DataTable
-        rows={devices.length ? devices : demoDevices.slice(0, 1)}
+        rows={devices}
         columns={[
           { key: "imei", header: "IMEI", render: (r) => <span className="font-mono text-xs">{r.imei}</span> },
           { key: "provider", header: "Provider", render: (r) => r.provider },

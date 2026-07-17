@@ -2,9 +2,11 @@ import Link from "next/link";
 import { PageHeader } from "@/components/app/app-shell";
 import { ModuleSubNav } from "@/components/app/module-sub-nav";
 import { DataTable, StatusPill } from "@/components/app/data-table";
-import { demoWorkOrders } from "@/lib/demo-data";
+import { CreateWorkOrderForm } from "@/components/app/create-work-order-form";
+import { listWorkOrders } from "@/lib/maintenance/work-order-repository";
+import { listVendors } from "@/lib/vendors/vendor-repository";
+import { listVehicles } from "@/lib/data/shipment-repository";
 import { MAINTENANCE_NAV } from "@/lib/module-nav";
-import { Button } from "@/components/ui/button";
 
 const woStatus = {
   open: { label: "Open", className: "bg-amber-100 text-amber-800" },
@@ -12,18 +14,45 @@ const woStatus = {
   resolved: { label: "Resolved", className: "bg-emerald-100 text-emerald-800" },
 };
 
-export default function WorkOrdersPage() {
+export default async function WorkOrdersPage() {
+  const [workOrders, vendors, vehicles] = await Promise.all([
+    listWorkOrders(),
+    listVendors(),
+    listVehicles(),
+  ]);
+
   return (
     <>
-      <PageHeader title="Work orders" description="Maintenance jobs across the fleet" action={<Button variant="accent">New work order</Button>} />
+      <PageHeader
+        title="Work orders"
+        description="Maintenance jobs across the fleet"
+        action={
+          <CreateWorkOrderForm
+            vehicles={vehicles.map((v) => v.registration)}
+            vendors={vendors.map((v) => v.name)}
+          />
+        }
+      />
       <ModuleSubNav links={MAINTENANCE_NAV} />
       <DataTable
-        rows={demoWorkOrders}
+        rows={workOrders}
         columns={[
           { key: "vehicle", header: "Vehicle", render: (r) => r.vehicle },
-          { key: "title", header: "Job", render: (r) => <Link href={`/maintenance/work-orders/${r.id}`} className="font-medium text-link font-medium">{r.title}</Link> },
+          {
+            key: "title",
+            header: "Job",
+            render: (r) => (
+              <Link href={`/maintenance/work-orders/${r.id}`} className="font-medium text-link">
+                {r.title}
+              </Link>
+            ),
+          },
           { key: "vendor", header: "Vendor", render: (r) => r.vendor },
-          { key: "status", header: "Status", render: (r) => <StatusPill status={r.status} map={woStatus} /> },
+          {
+            key: "status",
+            header: "Status",
+            render: (r) => <StatusPill status={r.status} map={woStatus} />,
+          },
           { key: "due", header: "Due", render: (r) => r.due },
           { key: "cost", header: "Est. cost", render: (r) => r.cost },
         ]}

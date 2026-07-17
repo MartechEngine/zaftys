@@ -7,8 +7,7 @@ import { toast } from "sonner";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { api } from "@/lib/api-client";
-import { demoClients } from "@/lib/demo-data";
+import { api, type ClientRecord } from "@/lib/api-client";
 import type { Driver, Vehicle } from "@/lib/dev-store";
 import { cn } from "@/lib/utils";
 
@@ -19,8 +18,9 @@ export function CreateShipmentWizard() {
   const [step, setStep] = useState(0);
   const [submitting, setSubmitting] = useState(false);
   const [loadingFleet, setLoadingFleet] = useState(true);
+  const [clients, setClients] = useState<ClientRecord[]>([]);
 
-  const [clientId, setClientId] = useState(demoClients[0]?.id ?? "");
+  const [clientId, setClientId] = useState("");
   const [origin, setOrigin] = useState("Amravati");
   const [destination, setDestination] = useState("Nagpur");
   const [commodity, setCommodity] = useState("Cement");
@@ -32,17 +32,19 @@ export function CreateShipmentWizard() {
   const [drivers, setDrivers] = useState<Driver[]>([]);
   const [vehicles, setVehicles] = useState<Vehicle[]>([]);
 
-  const client = demoClients.find((c) => c.id === clientId);
+  const client = clients.find((c) => c.id === clientId);
   const selectedDriver = drivers.find((d) => d.id === driverId);
   const selectedVehicle = vehicles.find((v) => v.id === vehicleId);
 
   useEffect(() => {
-    Promise.all([api.getDrivers(), api.getVehicles()])
-      .then(([d, v]) => {
+    Promise.all([api.getClients(), api.getDrivers(), api.getVehicles()])
+      .then(([c, d, v]) => {
+        setClients(c);
+        if (c[0]) setClientId(c[0].id);
         setDrivers(d.filter((x) => x.status !== "off_duty"));
         setVehicles(v.filter((x) => x.status === "available" || x.status === "on_trip"));
       })
-      .catch(() => toast.error("Could not load fleet options."))
+      .catch(() => toast.error("Could not load clients or fleet options."))
       .finally(() => setLoadingFleet(false));
   }, []);
 
@@ -123,8 +125,9 @@ export function CreateShipmentWizard() {
                   className={cn(fieldClass, "rounded-lg border border-white/12 bg-white/[0.05] px-3 py-2 text-sm text-foreground")}
                   value={clientId}
                   onChange={(e) => setClientId(e.target.value)}
+                  disabled={loadingFleet || clients.length === 0}
                 >
-                  {demoClients.map((c) => (
+                  {clients.map((c) => (
                     <option key={c.id} value={c.id}>{c.name}</option>
                   ))}
                 </select>

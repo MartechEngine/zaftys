@@ -10,7 +10,9 @@
 
 **Scope:** Full ZAFTYS TSM product — entire Fleetbase parity UI + TranZfort sync. No MVP cut.
 
-Use `[x]` done · `[ ]` pending · `[~]` in progress
+**Strategy (Jul 17):** **Local-first** — perfect local dev experience before NextAuth, deploy, or CI.
+
+Use `[x]` done · `[ ]` pending · `[~]` in progress · `[—]` deferred
 
 ---
 
@@ -200,11 +202,11 @@ Use `[x]` done · `[ ]` pending · `[~]` in progress
 ## 🔲 Wave 1 — Operations core (P2) — FRONTEND FIRST
 
 ### Module 1 — Auth & account
-- [ ] NextAuth production auth (replace dev session)
-- [ ] Forgot / reset password pages (shell exists)
-- [~] `/profile` page — name, phone (password change P2)
+- [—] NextAuth production auth (deferred — dev session OK for local)
+- [—] Forgot / reset password pages (deferred)
+- [x] `/profile` page — name, phone (password change deferred)
 - [x] Role-based redirect polish (client → shipments-only)
-- [ ] Login audit log
+- [—] Login audit log (deferred)
 
 ### Module 2 — App shell & global UX
 - [x] Collapsible sidebar + width preference (`localStorage`)
@@ -428,13 +430,13 @@ Use `[x]` done · `[ ]` pending · `[~]` in progress
 
 ### DevOps & production
 - [x] Commit `app-dev-mode` — app-tsm + docs/app (Jul 17)
-- [ ] Push `app-dev-mode` to remote
-- [ ] CI lint + build on PR
-- [ ] Staging deploy
-- [ ] `app.zaftys.com` DNS + TLS
-- [ ] Production Fleetbase on VPS
+- [—] Push `app-dev-mode` to remote (after local stable)
+- [—] CI lint + build on PR (after local stable)
+- [—] Staging deploy (deferred)
+- [—] `app.zaftys.com` DNS + TLS (deferred)
+- [ ] Production Fleetbase on VPS (local Docker OK first)
 - [ ] Monitoring + sync runbook drill
-- [ ] Playwright E2E north star flow
+- [ ] Playwright E2E north star flow (local smoke first)
 - [ ] API route tests (Vitest)
 
 ### Legal / OSS
@@ -454,3 +456,4 @@ Use `[x]` done · `[ ]` pending · `[~]` in progress
 | 12 Jul 2026 | Sprint 2: HMAC track tokens, document upload API, shipment detail map, rate limits |
 | 12 Jul 2026 | Sprints 3–5: documents library, TZ sync, ⌘K search, SSE map, filter drawer, profile, CSV export |
 | 17 Jul 2026 | Initial commit: `app-tsm/` portal (106 routes) + `docs/app/` on `app-dev-mode` |
+| 17 Jul 2026 | Local-first strategy: defer auth, push, CI until app runs perfectly locally |

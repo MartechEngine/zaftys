@@ -84,12 +84,28 @@ export class FleetbaseClient {
     return data.data ?? [];
   }
 
+  async getDriver(id: string) {
+    const data = await this.request<{ data?: unknown } | unknown>(`/drivers/${id}`);
+    if (data && typeof data === "object" && "data" in data && data.data) {
+      return data.data;
+    }
+    return data;
+  }
+
   async listVehicles(limit = 50) {
     const data = await this.request<{ data?: unknown[] } | unknown[]>(
       `/vehicles?limit=${limit}`,
     );
     if (Array.isArray(data)) return data;
     return data.data ?? [];
+  }
+
+  async getVehicle(id: string) {
+    const data = await this.request<{ data?: unknown } | unknown>(`/vehicles/${id}`);
+    if (data && typeof data === "object" && "data" in data && data.data) {
+      return data.data;
+    }
+    return data;
   }
 
   async healthCheck() {

@@ -2,19 +2,33 @@ import Link from "next/link";
 import { PageHeader } from "@/components/app/app-shell";
 import { ModuleSubNav } from "@/components/app/module-sub-nav";
 import { DataTable } from "@/components/app/data-table";
-import { demoFleetGroups } from "@/lib/demo-data";
+import { listFleetGroups } from "@/lib/fleet/places-repository";
 import { FLEET_NAV } from "@/lib/module-nav";
-import { Button } from "@/components/ui/button";
+import { CreateFleetGroupForm } from "@/components/app/module-create-forms";
 
-export default function FleetGroupsPage() {
+export default async function FleetGroupsPage() {
+  const groups = await listFleetGroups();
+
   return (
     <>
-      <PageHeader title="Fleet groups" description="Logical driver and vehicle groupings by zone" action={<Button variant="accent">Create group</Button>} />
+      <PageHeader
+        title="Fleet groups"
+        description="Logical driver and vehicle groupings by zone"
+        action={<CreateFleetGroupForm />}
+      />
       <ModuleSubNav links={FLEET_NAV} />
       <DataTable
-        rows={demoFleetGroups}
+        rows={groups}
         columns={[
-          { key: "name", header: "Group", render: (r) => <Link href={`/fleet/groups/${r.id}`} className="font-medium text-link font-medium">{r.name}</Link> },
+          {
+            key: "name",
+            header: "Group",
+            render: (r) => (
+              <Link href={`/fleet/groups/${r.id}`} className="font-medium text-link">
+                {r.name}
+              </Link>
+            ),
+          },
           { key: "zone", header: "Zone", render: (r) => r.zone },
           { key: "drivers", header: "Drivers", render: (r) => r.drivers },
           { key: "vehicles", header: "Vehicles", render: (r) => r.vehicles },

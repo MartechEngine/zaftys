@@ -1,7 +1,7 @@
 import { PageHeader } from "@/components/app/app-shell";
 import { ModuleSubNav } from "@/components/app/module-sub-nav";
 import { DataTable, StatusPill } from "@/components/app/data-table";
-import { demoFuelProviders } from "@/lib/demo-data";
+import { listFuelProviders } from "@/lib/integrations/integrations-repository";
 import { INTEGRATIONS_NAV } from "@/lib/module-nav";
 
 const connStatus = {
@@ -9,13 +9,15 @@ const connStatus = {
   disconnected: { label: "Not configured", className: "bg-muted text-muted-foreground" },
 };
 
-export default function FuelProvidersPage() {
+export default async function FuelProvidersPage() {
+  const providers = await listFuelProviders();
+
   return (
     <>
       <PageHeader title="Fuel providers" description="Fuel card and pump integrations" />
       <ModuleSubNav links={INTEGRATIONS_NAV} />
       <DataTable
-        rows={demoFuelProviders}
+        rows={providers}
         columns={[
           { key: "name", header: "Provider", render: (r) => r.name },
           { key: "stations", header: "Linked stations", render: (r) => r.stations },

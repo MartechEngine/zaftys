@@ -1,21 +1,59 @@
 import { PageHeader } from "@/components/app/app-shell";
 import { SettingsNav } from "@/components/app/settings-nav";
 import { Card, CardContent } from "@/components/ui/card";
-import { demoOrg } from "@/lib/demo-data";
+import { OrgProfileEditor } from "@/components/app/org-profile-editor";
+import { getOrgProfile } from "@/lib/settings/org-repository";
 import { Button } from "@/components/ui/button";
 
-export default function SettingsOrganizationPage() {
+export default async function SettingsOrganizationPage() {
+  const org = await getOrgProfile();
+
   return (
     <>
       <PageHeader title="Settings" description="Organization profile and branding" />
       <SettingsNav />
       <Card>
-        <CardContent className="p-6 space-y-4 text-sm">
-          <div><span className="text-muted-foreground">Legal name</span><p className="font-medium text-navy">{demoOrg.name}</p></div>
-          <div><span className="text-muted-foreground">GSTIN</span><p className="font-mono">{demoOrg.gstin}</p></div>
-          <div><span className="text-muted-foreground">Address</span><p>{demoOrg.address}</p></div>
-          <div><span className="text-muted-foreground">Contact</span><p>{demoOrg.phone} · {demoOrg.email}</p></div>
-          <Button variant="outline" className="mt-2">Upload logo</Button>
+        <CardContent className="space-y-4 p-6 text-sm">
+          <div>
+            <span className="text-muted-foreground">Legal name</span>
+            <p className="font-medium text-navy">{org.name}</p>
+          </div>
+          <div>
+            <span className="text-muted-foreground">GSTIN</span>
+            <p className="font-mono">{org.gstin}</p>
+          </div>
+          <div>
+            <span className="text-muted-foreground">Address</span>
+            <p>{org.address}</p>
+          </div>
+          <div>
+            <span className="text-muted-foreground">Contact</span>
+            <p>
+              {org.phone} · {org.email}
+            </p>
+          </div>
+          <div>
+            <span className="text-muted-foreground">Portal</span>
+            <p>{org.portalUrl}</p>
+          </div>
+          <div>
+            <span className="text-muted-foreground">Org users</span>
+            <p>{org.userCount} active accounts</p>
+          </div>
+          <div className="flex flex-wrap gap-2">
+            <OrgProfileEditor
+              initial={{
+                name: org.name,
+                gstin: org.gstin,
+                address: org.address,
+                phone: org.phone,
+                email: org.email,
+              }}
+            />
+            <Button variant="outline" className="mt-2" disabled>
+              Upload logo
+            </Button>
+          </div>
         </CardContent>
       </Card>
     </>

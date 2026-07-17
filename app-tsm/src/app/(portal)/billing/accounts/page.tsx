@@ -1,16 +1,18 @@
 import { PageHeader } from "@/components/app/app-shell";
 import { ModuleSubNav } from "@/components/app/module-sub-nav";
 import { DataTable } from "@/components/app/data-table";
-import { demoLedgerAccounts } from "@/lib/demo-data";
+import { listLedgerAccounts } from "@/lib/billing/accounts-repository";
 import { BILLING_NAV } from "@/lib/module-nav";
 
-export default function BillingAccountsPage() {
+export default async function BillingAccountsPage() {
+  const accounts = await listLedgerAccounts();
+
   return (
     <>
       <PageHeader title="Ledger accounts" description="Chart of accounts (Fleetbase Ledger)" />
       <ModuleSubNav links={BILLING_NAV} />
       <DataTable
-        rows={demoLedgerAccounts}
+        rows={accounts}
         columns={[
           { key: "code", header: "Code", render: (r) => <span className="font-mono">{r.code}</span> },
           { key: "name", header: "Account", render: (r) => r.name },

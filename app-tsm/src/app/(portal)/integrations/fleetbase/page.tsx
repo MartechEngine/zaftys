@@ -2,10 +2,26 @@ import Link from "next/link";
 import { PageHeader } from "@/components/app/app-shell";
 import { ModuleSubNav } from "@/components/app/module-sub-nav";
 import { Card, CardContent } from "@/components/ui/card";
+import { getFleetbaseIntegrationDetail } from "@/lib/integrations/integrations-repository";
 import { INTEGRATIONS_NAV } from "@/lib/module-nav";
 import { Button } from "@/components/ui/button";
 
-export default function FleetbaseIntegrationPage() {
+const connectionLabel = {
+  connected: { text: "Connected", className: "bg-emerald-100 text-emerald-800" },
+  demo: { text: "Demo mode", className: "bg-emerald-100 text-emerald-800" },
+  disconnected: { text: "Disconnected", className: "bg-red-100 text-red-800" },
+};
+
+const scheduleStatus = {
+  ok: "text-emerald-700",
+  warning: "text-amber-700",
+  error: "text-red-700",
+};
+
+export default async function FleetbaseIntegrationPage() {
+  const detail = await getFleetbaseIntegrationDetail();
+  const badge = connectionLabel[detail.connection];
+
   return (
     <>
       <PageHeader title="Fleetbase" description="API keys, health, and schedule monitor" />
@@ -15,11 +31,15 @@ export default function FleetbaseIntegrationPage() {
           <CardContent className="space-y-3 p-5 text-sm">
             <div className="flex items-center justify-between">
               <span className="text-muted-foreground">Connection</span>
-              <span className="rounded-full bg-emerald-100 px-2 py-0.5 text-xs font-medium text-emerald-800">Demo mode</span>
+              <span className={`rounded-full px-2 py-0.5 text-xs font-medium ${badge.className}`}>{badge.text}</span>
             </div>
-            <div><span className="text-muted-foreground">API URL</span><p className="font-mono text-xs">http://localhost:8000/v1</p></div>
-            <div><span className="text-muted-foreground">API key</span><p className="font-mono text-xs">••••••••••••demo</p></div>
-            <div><span className="text-muted-foreground">Last health check</span><p>42ms · 2 min ago</p></div>
+            <div><span className="text-muted-foreground">API URL</span><p className="font-mono text-xs">{detail.apiUrl}</p></div>
+            <div><span className="text-muted-foreground">API key</span><p className="font-mono text-xs">{detail.apiKeyMasked}</p></div>
+            <div><span className="text-muted-foreground">Data source</span><p>{detail.dataSource}</p></div>
+            <div>
+              <span className="text-muted-foreground">Last health check</span>
+              <p>{detail.latencyMs != null ? `${detail.latencyMs}ms · ${detail.lastHealthCheck}` : detail.lastHealthCheck}</p>
+            </div>
             <Button variant="outline" size="sm" disabled>Rotate key</Button>
           </CardContent>
         </Card>
@@ -27,9 +47,11 @@ export default function FleetbaseIntegrationPage() {
           <CardContent className="p-5 text-sm">
             <h3 className="font-semibold text-navy">Schedule monitor</h3>
             <ul className="mt-3 space-y-2 text-muted-foreground">
-              <li>TranZfort sync · last run 3 min ago · OK</li>
-              <li>Document expiry scan · daily 06:00 · OK</li>
-              <li>Webhook retry queue · every 5 min · OK</li>
+              {detail.schedules.map((item) => (
+                <li key={item.name} className={scheduleStatus[item.status]}>
+                  {item.name} · last run {item.lastRun} · {item.status.toUpperCase()}
+                </li>
+              ))}
             </ul>
           </CardContent>
         </Card>
