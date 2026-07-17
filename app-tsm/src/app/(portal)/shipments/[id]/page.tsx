@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { notFound } from "next/navigation";
 import { PageHeader } from "@/components/app/app-shell";
 import { PageBreadcrumbs } from "@/components/app/page-breadcrumbs";
@@ -25,7 +26,9 @@ export default async function ShipmentDetailPage({
         title={shipment.publicId}
         description={`${shipment.origin} → ${shipment.destination}`}
       />
-      <ShipmentDetailClient shipment={shipment} />
+      <Suspense fallback={<p className="text-sm text-muted-foreground">Loading shipment…</p>}>
+        <ShipmentDetailClient shipment={shipment} />
+      </Suspense>
     </>
   );
 }

@@ -34,12 +34,20 @@ export default async function NetworkPage() {
 
       <div className="mb-6">
         <NetworkHero
-          eyebrow="Overflow network"
-          title={`${summary.openOverflow} open loads · partner marketplace`}
-          description="Route excess capacity to trusted partners or claim loads that match your idle fleet in real time."
+          eyebrow="Load exchange"
+          title={`${summary.outboundOpenPosts || summary.openOverflow} open posts · partner marketplace`}
+          description="Post outbound loads to verified partners, review offers, or claim inbound overflow capacity."
           stats={[
-            { label: "Open loads", value: String(summary.openOverflow), icon: Network },
-            { label: "Partners", value: String(summary.verifiedPartners), icon: TrendingUp },
+            {
+              label: "Outbound posts",
+              value: String(summary.outboundOpenPosts),
+              icon: Network,
+            },
+            {
+              label: "Offers waiting",
+              value: String(summary.outboundOffersWaiting),
+              icon: TrendingUp,
+            },
             { label: "Fill rate", value: summary.fillRate, icon: IndianRupee },
           ]}
         />
@@ -47,7 +55,19 @@ export default async function NetworkPage() {
 
       <div className="mb-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         <KpiCard
-          label="Open overflow"
+          label="Outbound posts"
+          value={summary.outboundOpenPosts}
+          href="/network/overflow"
+          showSparkline={false}
+        />
+        <KpiCard
+          label="Offers waiting"
+          value={summary.outboundOffersWaiting}
+          href="/network/overflow"
+          showSparkline={false}
+        />
+        <KpiCard
+          label="Inbound overflow"
           value={summary.openOverflow}
           href="/network/overflow"
           showSparkline={false}
@@ -58,26 +78,14 @@ export default async function NetworkPage() {
           href="/network/partners"
           showSparkline={false}
         />
-        <KpiCard
-          label="Active assignments"
-          value={summary.activeAssignments}
-          href="/network/assignments"
-          showSparkline={false}
-        />
-        <KpiCard
-          label="Sync health"
-          value={summary.syncLabel}
-          href="/network/sync"
-          showSparkline={false}
-        />
       </div>
 
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
         <HubCard
           href="/network/overflow"
-          title="Overflow queue"
-          description="Unassigned TranZfort bookings"
-          stat={`${summary.openOverflow} open`}
+          title="Outbound desk"
+          description="ZAFTYS-posted TranZfort listings"
+          stat={`${summary.outboundOpenPosts} open · ${summary.outboundDrafts} drafts`}
         />
         <HubCard
           href="/network/partners"

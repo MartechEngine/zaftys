@@ -2,10 +2,12 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { Copy, FileText } from "lucide-react";
 import { toast } from "sonner";
 import { AssignDriverDrawer } from "@/components/app/assign-driver-drawer";
+import { NetworkListingChip, NetworkOffersPanel } from "@/components/app/network-offers-panel";
+import { PostToTranZfortWizard } from "@/components/app/post-to-tranzfort-wizard";
 import { ShipmentActivityFeed } from "@/components/app/shipment-activity-feed";
 import { ShipmentDocumentUpload } from "@/components/app/shipment-document-upload";
 import { ShipmentDetailMap } from "@/components/app/shipment-detail-map";
@@ -16,19 +18,35 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { api, type ActivityEvent } from "@/lib/api-client";
 import type { ShipmentRecord } from "@/lib/dev-store";
+import type { NetworkListing } from "@/lib/network/listing-types";
 import { buildShipmentTimeline } from "@/lib/shipments/timeline";
 
 export function ShipmentDetailClient({ shipment }: { shipment: ShipmentRecord }) {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [assignOpen, setAssignOpen] = useState(false);
   const [current, setCurrent] = useState(shipment);
-  const [tab, setTab] = useState<"overview" | "notes" | "billing">("overview");
+  const [tab, setTab] = useState<"overview" | "offers" | "notes" | "billing">("overview");
   const [busy, setBusy] = useState(false);
+  const [showPostWizard, setShowPostWizard] = useState(false);
+  const [listing, setListing] = useState<NetworkListing | null>(null);
   const [activityRefresh, setActivityRefresh] = useState(0);
+  const [networkRefresh, setNetworkRefresh] = useState(0);
   const [activities, setActivities] = useState<ActivityEvent[]>([]);
 
   const estCharge = current.tonnageMt * 420;
   const gst = Math.round(estCharge * 0.18);
+  const canPostNetwork =
+    ["pending", "dispatched"].includes(current.status) &&
+    current.originType === "fleet" &&
+    (!listing || ["withdrawn", "expired", "not_posted"].includes(listing.state));
+
+  useEffect(() => {
+    const t = searchParams.get("tab");
+    if (t === "offers" || t === "notes" || t === "billing" || t === "overview") {
+      setTab(t);
+    }
+  }, [searchParams]);
 
   useEffect(() => {
     api
@@ -37,10 +55,22 @@ export function ShipmentDetailClient({ shipment }: { shipment: ShipmentRecord })
       .catch(() => setActivities([]));
   }, [current.id, activityRefresh]);
 
+  useEffect(() => {
+    api
+      .getShipmentNetworkListing(current.id)
+      .then((data) => setListing(data.listing))
+      .catch(() => setListing(null));
+  }, [current.id, networkRefresh]);
+
   const timeline = buildShipmentTimeline(current, activities);
 
   function bumpActivity() {
     setActivityRefresh((n) => n + 1);
+  }
+
+  function bumpNetwork() {
+    setNetworkRefresh((n) => n + 1);
+    bumpActivity();
   }
 
   async function copyTrackLink() {
@@ -51,19 +81,6 @@ export function ShipmentDetailClient({ shipment }: { shipment: ShipmentRecord })
       toast.success("Tracking link copied to clipboard.");
     } catch {
       toast.error("Could not generate track link.");
-    }
-  }
-
-  async function sendToOverflow() {
-    setBusy(true);
-    try {
-      const result = await api.postShipmentToOverflow(current.id);
-      toast.success(`Posted to overflow · ${result.load.bookingId}`);
-      router.push("/network/overflow");
-    } catch (e) {
-      toast.error(e instanceof Error ? e.message : "Could not post to overflow.");
-    } finally {
-      setBusy(false);
     }
   }
 
@@ -93,6 +110,7 @@ export function ShipmentDetailClient({ shipment }: { shipment: ShipmentRecord })
       <div className="mb-4 flex flex-wrap gap-2">
         <ShipmentStatusChip status={current.status} />
         <OriginBadge originType={current.originType} />
+        <NetworkListingChip listing={listing} />
       </div>
 
       <div className="mb-4 flex flex-wrap gap-2">
@@ -151,16 +169,45 @@ export function ShipmentDetailClient({ shipment }: { shipment: ShipmentRecord })
             Cancel
           </Button>
         )}
-        {["pending", "dispatched"].includes(current.status) && current.originType === "fleet" && (
-          <Button variant="outline" disabled={busy} onClick={sendToOverflow}>
-            Send to overflow
+        {canPostNetwork && (
+          <Button
+            variant="outline"
+            disabled={busy}
+            onClick={() => {
+              setShowPostWizard(true);
+              setTab("offers");
+            }}
+          >
+            Post to TranZfort
+          </Button>
+        )}
+        {listing && !["withdrawn", "expired", "not_posted"].includes(listing.state) && (
+          <Button variant="outline" onClick={() => setTab("offers")}>
+            Offers
+            {listing.state === "offers_received" || listing.state === "partially_assigned"
+              ? " · review"
+              : ""}
           </Button>
         )}
         <EditShipmentFieldsForm shipment={current} onUpdated={setCurrent} />
       </div>
 
+      {showPostWizard && canPostNetwork && (
+        <div className="mb-6">
+          <PostToTranZfortWizard
+            shipment={current}
+            onCancel={() => setShowPostWizard(false)}
+            onPosted={() => {
+              setShowPostWizard(false);
+              setTab("offers");
+              bumpNetwork();
+            }}
+          />
+        </div>
+      )}
+
       <div className="mb-6 flex gap-2 border-b border-white/10 pb-2">
-        {(["overview", "notes", "billing"] as const).map((t) => (
+        {(["overview", "offers", "notes", "billing"] as const).map((t) => (
           <button
             key={t}
             type="button"
@@ -172,7 +219,24 @@ export function ShipmentDetailClient({ shipment }: { shipment: ShipmentRecord })
         ))}
       </div>
 
-      {tab === "notes" ? (
+      {tab === "offers" ? (
+        <Card>
+          <CardHeader>
+            <CardTitle>TranZfort offers</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <NetworkOffersPanel
+              shipmentId={current.id}
+              shipment={current}
+              refreshKey={networkRefresh}
+              onChanged={() => {
+                bumpNetwork();
+                router.refresh();
+              }}
+            />
+          </CardContent>
+        </Card>
+      ) : tab === "notes" ? (
         <div className="grid gap-6 lg:grid-cols-2">
           <ShipmentNotesPanel
             shipmentId={current.id}

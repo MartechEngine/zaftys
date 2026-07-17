@@ -31,6 +31,7 @@ Positive and negative outcomes.
 | [003](./003-map-provider.md) | Map provider selection | Proposed |
 | [004](./004-driver-app-strategy.md) | Driver app strategy | Proposed |
 | [005](./005-auth-provider.md) | Auth provider | Proposed |
+| [006](./006-zaftys-tranzfort-commercial-model.md) | ZAFTYS–TranZfort commercial & load exchange | Accepted |
 
 ---
 

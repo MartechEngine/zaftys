@@ -1,4 +1,5 @@
 import type { Shipment, ShipmentStatus, OriginType } from "./constants";
+import type { NetworkListingMirror } from "./network/listing-types";
 import { createTrackToken, verifyTrackToken } from "./track/tokens";
 import { geoForShipment, type ShipmentGeo } from "./geo";
 
@@ -34,6 +35,7 @@ export interface ShipmentRecord extends Shipment {
   driverId?: string;
   vehicleId?: string;
   tranzfortId?: string;
+  networkListing?: NetworkListingMirror;
   documents: ShipmentDocument[];
   trackToken?: string;
   updatedAt: string;
@@ -744,6 +746,10 @@ export type ShipmentFieldsPatch = {
   tonnageMt?: number;
   lrNumber?: string;
   eta?: string;
+  originType?: OriginType;
+  driver?: string;
+  vehicle?: string;
+  networkListing?: NetworkListingMirror | null;
 };
 
 export function updateShipmentFields(id: string, patch: ShipmentFieldsPatch) {
@@ -758,6 +764,13 @@ export function updateShipmentFields(id: string, patch: ShipmentFieldsPatch) {
   if (patch.tonnageMt !== undefined) shipment.tonnageMt = patch.tonnageMt;
   if (patch.lrNumber !== undefined) shipment.lrNumber = patch.lrNumber;
   if (patch.eta !== undefined) shipment.eta = patch.eta;
+  if (patch.originType !== undefined) shipment.originType = patch.originType;
+  if (patch.driver !== undefined) shipment.driver = patch.driver;
+  if (patch.vehicle !== undefined) shipment.vehicle = patch.vehicle;
+  if (patch.networkListing !== undefined) {
+    if (patch.networkListing === null) delete shipment.networkListing;
+    else shipment.networkListing = patch.networkListing;
+  }
   shipment.updatedAt = now();
 
   activities.unshift({

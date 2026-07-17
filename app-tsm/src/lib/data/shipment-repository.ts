@@ -281,6 +281,8 @@ export async function listAllDocuments(filters?: {
 }
 
 export async function cancelShipment(id: string) {
+  const { withdrawListingOnCancel } = await import("@/lib/network/listing-repository");
+  await withdrawListingOnCancel(id);
   return updateShipmentStatus(id, "cancelled");
 }
 

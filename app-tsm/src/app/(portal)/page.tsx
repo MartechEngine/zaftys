@@ -60,10 +60,17 @@ export default async function CommandCenterPage() {
         />
         <KpiCard label="At plant" value={kpis.atPlant} />
         <KpiCard
-          label="Network overflow"
-          value={kpis.networkOverflow}
+          label="TranZfort posts"
+          value={kpis.outboundOpenPosts || kpis.networkOverflow}
           href="/network/overflow"
-          showSparkline={kpis.networkOverflow > 0}
+          showSparkline={(kpis.outboundOpenPosts || kpis.networkOverflow) > 0}
+          delta={
+            kpis.outboundOffersWaiting > 0
+              ? `${kpis.outboundOffersWaiting} offers waiting`
+              : kpis.inboundOverflow > 0
+                ? `${kpis.inboundOverflow} inbound`
+                : undefined
+          }
         />
       </div>
 
@@ -115,11 +122,25 @@ export default async function CommandCenterPage() {
               ))
             )}
           </div>
-          {kpis.networkOverflow > 0 && (
+          {kpis.outboundOpenPosts > 0 && (
             <div className="mt-4 rounded-2xl border border-primary/20 bg-gradient-to-br from-primary/10 to-transparent p-4">
               <div className="text-[10px] tracking-[0.2em] text-primary uppercase">TranZfort network</div>
               <div className="mt-1 font-display text-sm font-semibold text-heading">
-                {kpis.networkOverflow} open overflow load{kpis.networkOverflow === 1 ? "" : "s"}
+                {kpis.outboundOpenPosts} outbound post{kpis.outboundOpenPosts === 1 ? "" : "s"}
+                {kpis.outboundOffersWaiting > 0
+                  ? ` · ${kpis.outboundOffersWaiting} offer${kpis.outboundOffersWaiting === 1 ? "" : "s"} waiting`
+                  : ""}
+              </div>
+              <Button variant="accent" size="sm" className="mt-3" asChild>
+                <Link href="/network/overflow">Review outbound desk</Link>
+              </Button>
+            </div>
+          )}
+          {kpis.outboundOpenPosts === 0 && kpis.inboundOverflow > 0 && (
+            <div className="mt-4 rounded-2xl border border-primary/20 bg-gradient-to-br from-primary/10 to-transparent p-4">
+              <div className="text-[10px] tracking-[0.2em] text-primary uppercase">TranZfort network</div>
+              <div className="mt-1 font-display text-sm font-semibold text-heading">
+                {kpis.inboundOverflow} inbound overflow load{kpis.inboundOverflow === 1 ? "" : "s"}
               </div>
               <Button variant="accent" size="sm" className="mt-3" asChild>
                 <Link href="/network/overflow">Browse queue</Link>

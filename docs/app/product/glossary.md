@@ -11,12 +11,15 @@
 | **Own fleet** | ZAFTYS company-operated vehicles and drivers. |
 | **Network trip** | Capacity fulfilled via TranZfort verified partner. |
 | **Overflow** | Demand exceeding own fleet → routed to TranZfort network. |
+| **Load Exchange** | Integration contract for TSM ↔ TranZfort listing post, offers, and assignment. See [zaftys-tranzfort-load-exchange.md](../integrations/zaftys-tranzfort-load-exchange.md). |
+| **Network listing** | TranZfort marketplace post created by ZAFTYS (ZAFTYS is always the supplier). |
+| **Listing state** | Marketplace substate (`not_posted` … `assigned`); separate from shipment execution `status`. |
 | **Command Center** | Ops landing dashboard — KPIs, map, exceptions. |
 | **Dispatch board** | Kanban-style assignment workspace. |
 | **BFF** | Backend-for-frontend — API layer between portal and Fleetbase. |
 | **LOS** | Logistics Operating System — internal name for execution layer. |
 | **TSM** | Transport & Shipment Management — customer-facing product name. |
-| **TranZfort** | Verified transport network marketplace (separate product). |
+| **TranZfort** | Verified transport network marketplace (separate product). ZAFTYS is always the supplier identity when posting from TSM. |
 | **Consignor** | Party sending goods. |
 | **Consignee** | Party receiving goods. |
 | **Corridor** | Recurring origin–destination lane (e.g. Amravati → Nagpur). |

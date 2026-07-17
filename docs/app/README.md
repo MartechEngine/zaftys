@@ -17,7 +17,8 @@ Central index for the TSM / LOS app. Start with [app-overview.md](./app-overview
 4. [product/product-scope.md](./product/product-scope.md) — canonical scope
 5. [TODO-11-july.md](./TODO-11-july.md) — all build tasks by wave
 6. [architecture/system-context.md](./architecture/system-context.md) — how systems connect
-7. [flows/north-star-tranzfort-to-tracking.md](./flows/north-star-tranzfort-to-tracking.md) — primary journey
+7. [flows/north-star-tranzfort-to-tracking.md](./flows/north-star-tranzfort-to-tracking.md) — primary journey (inbound)
+8. [integrations/zaftys-tranzfort-load-exchange.md](./integrations/zaftys-tranzfort-load-exchange.md) — **outbound post-to-TranZfort** (CPO locked)
 
 ---
 
@@ -82,6 +83,12 @@ Central index for the TSM / LOS app. Start with [app-overview.md](./app-overview
 ### User flows, integrations, data, API, ops, decisions
 
 See previous index sections — all docs updated Jul 2026 for full product scope.
+
+| Integration doc | Priority |
+|-----------------|----------|
+| [zaftys-tranzfort-load-exchange.md](./integrations/zaftys-tranzfort-load-exchange.md) | **P0 — outbound post + offers (CPO)** |
+| [tranzfort-sync-bridge.md](./integrations/tranzfort-sync-bridge.md) | P0 — inbound sync |
+| [ADR-006](./decisions/006-zaftys-tranzfort-commercial-model.md) | Accepted |
 
 ### API (`api/`)
 

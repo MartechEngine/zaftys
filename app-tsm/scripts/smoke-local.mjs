@@ -72,6 +72,7 @@ const PASSWORD = process.env.SMOKE_PASSWORD ?? "dev";
   "/api/settings/config?section=payments",
   "/api/documents",
   "/api/settings/notifications",
+  "/api/network/listings",
 ];
 
 async function login() {
@@ -1062,6 +1063,78 @@ async function main() {
           section: "routing",
           values: { truckProfile: "Multi-axle · 32 MT" },
         },
+      ),
+    () =>
+      writeCheck("POST /api/network/listings draft", cookie, "POST", "/api/network/listings", {
+        shipmentId: "12",
+        trucksNeeded: 2,
+        priceType: "fixed",
+        rateInr: 46000,
+        advancePercent: 25,
+        bodyType: "Open",
+        tyres: 10,
+        plantNotes: "Smoke draft",
+        publish: false,
+      }),
+    async () => {
+      const res = await fetch(`${BASE}/api/network/listings`, {
+        headers: { Cookie: cookie },
+        cache: "no-store",
+      });
+      const json = await res.json();
+      const rows = Array.isArray(json.data) ? json.data : [];
+      const hasRow = rows.some((r) => r?.listing?.shipmentId === "12" && r?.shipment?.publicId);
+      return {
+        path: "GET /api/network/listings desk",
+        ok: res.ok && hasRow,
+        status: res.status,
+        detail: hasRow ? `${rows.length} rows · shipment joined` : `missing desk row (${rows.length})`,
+      };
+    },
+    () =>
+      writeCheck(
+        "PATCH /api/network/listings/12 update",
+        cookie,
+        "PATCH",
+        "/api/network/listings/12",
+        { rateInr: 48500, trucksNeeded: 2, plantNotes: "Smoke updated" },
+      ),
+    () =>
+      writeCheck(
+        "PATCH /api/network/listings/12 publish",
+        cookie,
+        "PATCH",
+        "/api/network/listings/12",
+        { publish: true },
+      ),
+    async () => {
+      const listingRes = await fetch(`${BASE}/api/network/listings/12`, {
+        headers: { Cookie: cookie },
+      });
+      const listingJson = await listingRes.json();
+      const offerId = listingJson?.data?.offers?.find((o) => o.status === "open")?.id;
+      if (!offerId) {
+        return {
+          path: "PATCH /api/network/offers accept",
+          ok: false,
+          status: listingRes.status,
+          detail: `no open offer: ${JSON.stringify(listingJson).slice(0, 120)}`,
+        };
+      }
+      return writeCheck(
+        "PATCH /api/network/offers accept",
+        cookie,
+        "PATCH",
+        `/api/network/offers/${offerId}`,
+        { action: "accept" },
+      );
+    },
+    () =>
+      writeCheck(
+        "DELETE /api/network/listings/12 withdraw",
+        cookie,
+        "DELETE",
+        "/api/network/listings/12",
       ),
   ];
 

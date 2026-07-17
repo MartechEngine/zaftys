@@ -10,6 +10,8 @@
 
 Mirror marketplace bookings into LOS execution layer so dispatchers see TranZfort loads in one portal.
 
+**Outbound posting** (dispatcher posts loads *to* TranZfort from TSM) is specified in [zaftys-tranzfort-load-exchange.md](./zaftys-tranzfort-load-exchange.md) and [ADR-006](../decisions/006-zaftys-tranzfort-commercial-model.md). This bridge doc remains focused on inbound mirror + status sync.
+
 ---
 
 ## Architecture

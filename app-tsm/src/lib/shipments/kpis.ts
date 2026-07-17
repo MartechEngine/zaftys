@@ -1,5 +1,6 @@
 import type { ShipmentRecord } from "@/lib/dev-store";
-import { isActiveShipment, isExceptionShipment } from "@/lib/shipments/filters";
+import { getOutboundListingStats } from "@/lib/network/listing-store";
+import { isExceptionShipment } from "@/lib/shipments/filters";
 
 export function computeKpisFromShipments(shipments: ShipmentRecord[]) {
   const active = shipments.filter((s) =>
@@ -7,11 +8,22 @@ export function computeKpisFromShipments(shipments: ShipmentRecord[]) {
   ).length;
   const exceptions = shipments.filter(isExceptionShipment).length;
   const atPlant = shipments.filter((s) => s.status === "at_plant").length;
-  const networkOverflow = shipments.filter(
+
+  const { openPosts, offersWaiting } = getOutboundListingStats();
+  const inboundOverflow = shipments.filter(
     (s) => s.status === "pending" && s.originType === "network",
   ).length;
+  const networkOverflow = openPosts > 0 ? openPosts : inboundOverflow;
 
-  return { activeTrips: active, exceptions, atPlant, networkOverflow };
+  return {
+    activeTrips: active,
+    exceptions,
+    atPlant,
+    networkOverflow,
+    outboundOpenPosts: openPosts,
+    outboundOffersWaiting: offersWaiting,
+    inboundOverflow,
+  };
 }
 
 export function computeExceptionsFromShipments(shipments: ShipmentRecord[]) {

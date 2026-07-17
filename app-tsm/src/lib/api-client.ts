@@ -525,6 +525,90 @@ export const api = {
       method: "POST",
     }),
 
+  postNetworkListing: (input: {
+    shipmentId: string;
+    trucksNeeded: number;
+    priceType: "fixed" | "per_ton";
+    rateInr: number;
+    advancePercent: number;
+    bodyType?: string;
+    tyres?: number;
+    pickupWindowStart?: string;
+    pickupWindowEnd?: string;
+    plantNotes?: string;
+    publish?: boolean;
+  }) =>
+    fetchApi<{ listing: import("@/lib/network/listing-types").NetworkListing; offers: import("@/lib/network/listing-types").NetworkOffer[] }>(
+      "/api/network/listings",
+      { method: "POST", body: JSON.stringify(input) },
+    ),
+
+  updateNetworkListing: (
+    shipmentId: string,
+    input: {
+      trucksNeeded?: number;
+      rateInr?: number;
+      bodyType?: string;
+      tyres?: number;
+      pickupWindowStart?: string;
+      pickupWindowEnd?: string;
+      plantNotes?: string;
+      publish?: boolean;
+    },
+  ) =>
+    fetchApi<{
+      listing: import("@/lib/network/listing-types").NetworkListing;
+      offers: import("@/lib/network/listing-types").NetworkOffer[];
+    }>(`/api/network/listings/${shipmentId}`, {
+      method: "PATCH",
+      body: JSON.stringify(input),
+    }),
+
+  getShipmentNetworkListing: (shipmentId: string) =>
+    fetchApi<{
+      listing: import("@/lib/network/listing-types").NetworkListing | null;
+      offers: import("@/lib/network/listing-types").NetworkOffer[];
+    }>(`/api/network/listings/${shipmentId}`),
+
+  withdrawNetworkListing: (shipmentId: string) =>
+    fetchApi<{ listing: import("@/lib/network/listing-types").NetworkListing }>(
+      `/api/network/listings/${shipmentId}`,
+      { method: "DELETE" },
+    ),
+
+  listOutboundListings: (state?: string) => {
+    const qs = state && state !== "all" ? `?state=${encodeURIComponent(state)}` : "";
+    return fetchApi<
+      {
+        listing: import("@/lib/network/listing-types").NetworkListing;
+        offers: import("@/lib/network/listing-types").NetworkOffer[];
+        openOffers: number;
+        shipment: {
+          publicId: string;
+          origin: string;
+          destination: string;
+          commodity: string;
+        } | null;
+      }[]
+    >(`/api/network/listings${qs}`);
+  },
+
+  acceptNetworkOffer: (id: string) =>
+    fetchApi<{
+      listing: import("@/lib/network/listing-types").NetworkListing;
+      offer: import("@/lib/network/listing-types").NetworkOffer;
+      shipment: ShipmentRecord | null;
+    }>(`/api/network/offers/${id}`, {
+      method: "PATCH",
+      body: JSON.stringify({ action: "accept" }),
+    }),
+
+  rejectNetworkOffer: (id: string) =>
+    fetchApi<{ offer: import("@/lib/network/listing-types").NetworkOffer }>(
+      `/api/network/offers/${id}`,
+      { method: "PATCH", body: JSON.stringify({ action: "reject" }) },
+    ),
+
   getMapVehicles: () =>
     fetchApi<
       {
@@ -552,6 +636,9 @@ export const api = {
       exceptions: number;
       atPlant: number;
       networkOverflow: number;
+      outboundOpenPosts: number;
+      outboundOffersWaiting: number;
+      inboundOverflow: number;
     }>("/api/dashboard/kpis"),
 
   getExceptions: () =>

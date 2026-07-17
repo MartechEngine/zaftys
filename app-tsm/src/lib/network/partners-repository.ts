@@ -4,6 +4,7 @@ import {
   listNetworkOverflow,
 } from "@/lib/data/overflow-repository";
 import { fetchAllShipmentsRaw, getSyncStatus } from "@/lib/data/shipment-repository";
+import { getOutboundListingStats } from "@/lib/network/listing-store";
 import {
   createStoredPartner,
   listStoredPartners,
@@ -82,6 +83,7 @@ export async function getNetworkSummary() {
   ]);
 
   const verifiedPartners = partners.filter((p) => p.verified).length;
+  const outbound = getOutboundListingStats();
   const fillRate =
     assignments.length + overflow.length > 0
       ? Math.round((assignments.length / (assignments.length + overflow.length)) * 100)
@@ -89,6 +91,9 @@ export async function getNetworkSummary() {
 
   return {
     openOverflow: overflow.length,
+    outboundOpenPosts: outbound.openPosts,
+    outboundOffersWaiting: outbound.offersWaiting,
+    outboundDrafts: outbound.drafts,
     verifiedPartners,
     totalPartners: partners.length,
     activeAssignments: assignments.length,
