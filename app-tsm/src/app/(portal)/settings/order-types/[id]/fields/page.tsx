@@ -5,6 +5,10 @@ import { SettingsNav } from "@/components/app/settings-nav";
 import { DataTable } from "@/components/app/data-table";
 import { getOrderTypeFields } from "@/lib/settings/order-types-repository";
 import { CreateOrderFieldForm } from "@/components/app/module-create-forms";
+import {
+  DeleteOrderFieldButton,
+  ToggleOrderFieldRequiredButton,
+} from "@/components/app/sprint13-forms";
 
 export default async function OrderTypeFieldsPage({
   params,
@@ -31,6 +35,20 @@ export default async function OrderTypeFieldsPage({
           { key: "name", header: "Field", render: (r) => r.name },
           { key: "type", header: "Type", render: (r) => r.type },
           { key: "required", header: "Required", render: (r) => (r.required ? "Yes" : "No") },
+          {
+            key: "actions",
+            header: "",
+            render: (r) => (
+              <div className="flex flex-wrap gap-2">
+                <ToggleOrderFieldRequiredButton
+                  orderTypeId={id}
+                  fieldId={r.id}
+                  required={r.required}
+                />
+                <DeleteOrderFieldButton orderTypeId={id} fieldId={r.id} name={r.name} />
+              </div>
+            ),
+          },
         ]}
       />
       <p className="mt-4 text-sm">

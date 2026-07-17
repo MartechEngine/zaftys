@@ -1,5 +1,6 @@
 import {
   createAutomationRule,
+  deleteAutomationRule,
   listAutomationRules,
   setAutomationRuleEnabled,
   validateCreateAutomationInput,
@@ -44,4 +45,20 @@ export async function PATCH(request: Request) {
   const rule = await setAutomationRuleEnabled(id, data.enabled);
   if (!rule) return apiError("RULE_NOT_FOUND", "Automation rule not found.", 404);
   return apiSuccess(rule);
+}
+
+export async function DELETE(request: Request) {
+  let body: unknown;
+  try {
+    body = await request.json();
+  } catch {
+    return apiError("INVALID_JSON", "Request body must be valid JSON.");
+  }
+
+  const id = String((body as { id?: string }).id ?? "").trim();
+  if (!id) return apiError("VALIDATION_ERROR", "id is required.");
+
+  const deleted = await deleteAutomationRule(id);
+  if (!deleted) return apiError("RULE_NOT_FOUND", "Automation rule not found.", 404);
+  return apiSuccess({ id, deleted: true });
 }

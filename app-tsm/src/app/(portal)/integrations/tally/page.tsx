@@ -5,6 +5,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { getTallyExportStatus } from "@/lib/integrations/tally-repository";
 import { INTEGRATIONS_NAV } from "@/lib/module-nav";
 import { ConfigureTallyButton } from "@/components/app/sprint7-forms";
+import { ExportTallyNowButton } from "@/components/app/sprint13-forms";
 
 export default async function TallyPage() {
   const status = await getTallyExportStatus();
@@ -38,7 +39,10 @@ export default async function TallyPage() {
               View invoices →
             </Link>
           </p>
-          <ConfigureTallyButton connected={status.status === "connected"} />
+          <div className="flex flex-wrap gap-2 pt-1">
+            <ConfigureTallyButton connected={status.status === "connected"} />
+            <ExportTallyNowButton connected={status.status === "connected"} />
+          </div>
         </CardContent>
       </Card>
     </>

@@ -618,6 +618,12 @@ export const api = {
   configureTally: () =>
     fetchApi<{ status: string }>("/api/integrations/tally", { method: "POST" }),
 
+  exportTallyNow: () =>
+    fetchApi<{ status: string; lastExport: string; invoiceCount: number; exportCount?: number }>(
+      "/api/integrations/tally",
+      { method: "POST", body: JSON.stringify({ action: "export" }) },
+    ),
+
   createCustomReport: (input: { name: string; description?: string }) =>
     fetchApi<{ id: string; name: string }>("/api/reports/custom", {
       method: "POST",
@@ -720,6 +726,15 @@ export const api = {
     fetchApi<{ id: string; status: string }>(`/api/settings/users/${id}`, {
       method: "PATCH",
       body: JSON.stringify({ activate: true }),
+    }),
+
+  patchOrgUser: (
+    id: string,
+    input: { role?: string; status?: "active" | "pending"; activate?: boolean },
+  ) =>
+    fetchApi<{ id: string; role: string; status: string }>(`/api/settings/users/${id}`, {
+      method: "PATCH",
+      body: JSON.stringify(input),
     }),
 
   runCustomReport: (id: string) =>
@@ -837,6 +852,45 @@ export const api = {
       method: "PATCH",
       body: JSON.stringify({ id, ...input }),
     }),
+
+  deleteAutomationRule: (id: string) =>
+    fetchApi<{ id: string; deleted: boolean }>("/api/settings/automation", {
+      method: "DELETE",
+      body: JSON.stringify({ id }),
+    }),
+
+  deleteReportSchedule: (id: string) =>
+    fetchApi<{ id: string; deleted: boolean }>("/api/settings/report-schedules", {
+      method: "DELETE",
+      body: JSON.stringify({ id }),
+    }),
+
+  patchOrderTypeField: (orderTypeId: string, fieldId: string, input: { required: boolean }) =>
+    fetchApi<{ id: string; required: boolean }>(
+      `/api/settings/order-types/${orderTypeId}/fields`,
+      {
+        method: "PATCH",
+        body: JSON.stringify({ fieldId, ...input }),
+      },
+    ),
+
+  deleteOrderTypeField: (orderTypeId: string, fieldId: string) =>
+    fetchApi<{ fieldId: string; deleted: boolean }>(
+      `/api/settings/order-types/${orderTypeId}/fields`,
+      {
+        method: "DELETE",
+        body: JSON.stringify({ fieldId }),
+      },
+    ),
+
+  patchDriverVehicle: (id: string, vehicleId: string | null) =>
+    fetchApi<{ id: string; vehicle?: string; vehicleId?: string }>(
+      `/api/fleet/drivers/${id}`,
+      {
+        method: "PATCH",
+        body: JSON.stringify({ vehicleId: vehicleId ?? "" }),
+      },
+    ),
 };
 
 export type NetworkAssignmentRow = {

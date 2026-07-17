@@ -4,6 +4,7 @@ import { SettingsNav } from "@/components/app/settings-nav";
 import { Card, CardContent } from "@/components/ui/card";
 import { getBillingTemplateSettings } from "@/lib/settings/config-repository";
 import { ConfigToggleForm } from "@/components/app/config-toggle-form";
+import { ConfigFieldForm } from "@/components/app/sprint13-forms";
 
 export default async function SettingsBillingPage() {
   const settings = await getBillingTemplateSettings();
@@ -20,6 +21,12 @@ export default async function SettingsBillingPage() {
           <p>
             <span className="text-muted-foreground">Payment terms</span> · {settings.paymentTerms}
           </p>
+          <ConfigFieldForm
+            section="billing"
+            field="paymentTerms"
+            label="Payment terms"
+            value={settings.paymentTerms}
+          />
           <p>
             <span className="text-muted-foreground">Auto-invoice on delivery</span> ·{" "}
             {settings.autoInvoiceOnDelivery ? "Enabled" : "Disabled"}

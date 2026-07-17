@@ -190,6 +190,14 @@ export function createStoredReportSchedule(input: {
   return row;
 }
 
+export function deleteStoredReportSchedule(id: string) {
+  const store = globalThis as typeof globalThis & {
+    __tsmReportSchedules?: StoredReportSchedule[];
+  };
+  if (!store.__tsmReportSchedules) return;
+  store.__tsmReportSchedules = store.__tsmReportSchedules.filter((r) => r.id !== id);
+}
+
 export function getVendorPatch(id: string) {
   return g.__tsmVendorPatches?.[id];
 }

@@ -8,6 +8,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { getPlace } from "@/lib/fleet/places-repository";
 import { FLEET_NAV } from "@/lib/module-nav";
 import { EditPlaceGeofenceButton } from "@/components/app/sprint11-forms";
+import { EditPlaceDetailsButton } from "@/components/app/sprint13-forms";
 
 export default async function PlaceDetailPage({
   params,
@@ -46,6 +47,12 @@ export default async function PlaceDetailPage({
               enter
             </p>
             <div className="flex flex-wrap gap-3 pt-1">
+              <EditPlaceDetailsButton
+                id={place.id}
+                name={place.name}
+                type={place.type}
+                city={place.city}
+              />
               <EditPlaceGeofenceButton id={place.id} geofence={place.geofence} />
               <Link href="/settings/geofences" className="text-sm text-link hover:underline">
                 Geofence rules →

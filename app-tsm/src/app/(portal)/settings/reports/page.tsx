@@ -3,6 +3,7 @@ import { SettingsNav } from "@/components/app/settings-nav";
 import { Card, CardContent } from "@/components/ui/card";
 import { getReportSchedules } from "@/lib/settings/config-repository";
 import { CreateReportScheduleForm } from "@/components/app/sprint8-forms";
+import { DeleteReportScheduleButton } from "@/components/app/sprint13-forms";
 
 export default async function SettingsReportsPage() {
   const schedules = await getReportSchedules();
@@ -14,10 +15,13 @@ export default async function SettingsReportsPage() {
       <Card className="max-w-lg">
         <CardContent className="space-y-3 p-5 text-sm">
           {schedules.map((s) => (
-            <p key={s.id}>
-              <span className="text-muted-foreground">{s.name}</span> · {s.cadence} ·{" "}
-              {s.recipients}
-            </p>
+            <div key={s.id} className="flex flex-wrap items-center justify-between gap-2">
+              <p>
+                <span className="text-muted-foreground">{s.name}</span> · {s.cadence} ·{" "}
+                {s.recipients}
+              </p>
+              <DeleteReportScheduleButton id={s.id} name={s.name} />
+            </div>
           ))}
           <CreateReportScheduleForm />
         </CardContent>

@@ -529,14 +529,101 @@ async function main() {
       writeCheck("PATCH /api/settings/order-types/ot1", cookie, "PATCH", "/api/settings/order-types/ot1", {
         name: "Standard freight",
       }),
-    () =>
-      writeCheck("DELETE /api/integrations/webhooks", cookie, "DELETE", "/api/integrations/webhooks", {
-        id: "wh3",
-      }),
+    async () => {
+      const createRes = await fetch(`${BASE}/api/integrations/webhooks`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          ...(cookie ? { Cookie: cookie } : {}),
+        },
+        body: JSON.stringify({
+          url: `https://hooks.example.com/smoke-delete-${Date.now().toString(36)}`,
+          events: "order.*",
+        }),
+      });
+      const createJson = await createRes.json();
+      const webhookId = createJson.data?.id;
+      if (!createRes.ok || !webhookId) {
+        return {
+          path: "DELETE /api/integrations/webhooks",
+          ok: false,
+          status: createRes.status,
+          detail: "create webhook failed",
+        };
+      }
+      return writeCheck(
+        "DELETE /api/integrations/webhooks",
+        cookie,
+        "DELETE",
+        "/api/integrations/webhooks",
+        { id: webhookId },
+      );
+    },
     () =>
       writeCheck("PATCH /api/integrations/devices", cookie, "PATCH", "/api/integrations/devices", {
         id: "dv1",
         vehicle: "Unassigned",
+      }),
+    () =>
+      writeCheck("PATCH /api/settings/users/u1", cookie, "PATCH", "/api/settings/users/u1", {
+        role: "Fleet Manager",
+      }),
+    () =>
+      writeCheck("PATCH /api/settings/users/u2", cookie, "PATCH", "/api/settings/users/u2", {
+        status: "pending",
+      }),
+    () =>
+      writeCheck("PATCH /api/integrations/devices assign", cookie, "PATCH", "/api/integrations/devices", {
+        id: "dv1",
+        vehicle: "MH-27-AB-1234",
+      }),
+    () =>
+      writeCheck("PATCH /api/fleet/places/pl1 details", cookie, "PATCH", "/api/fleet/places/pl1", {
+        name: "Amravati Cement Plant",
+        type: "Plant",
+        city: "Amravati",
+      }),
+    () =>
+      writeCheck("PATCH /api/settings/geofences triggers", cookie, "PATCH", "/api/settings/geofences", {
+        id: "gf1",
+        triggers: "at_plant on enter · notify ops",
+      }),
+    () =>
+      writeCheck("PATCH /api/settings/config billing scalar", cookie, "PATCH", "/api/settings/config", {
+        section: "billing",
+        values: { paymentTerms: "Net 30 days" },
+      }),
+    () =>
+      writeCheck("DELETE /api/settings/automation", cookie, "DELETE", "/api/settings/automation", {
+        id: "ar3",
+      }),
+    () =>
+      writeCheck("DELETE /api/settings/report-schedules", cookie, "DELETE", "/api/settings/report-schedules", {
+        id: "rs3",
+      }),
+    () =>
+      writeCheck(
+        "PATCH /api/settings/order-types/ot1/fields",
+        cookie,
+        "PATCH",
+        "/api/settings/order-types/ot1/fields",
+        { fieldId: "f3", required: true },
+      ),
+    () =>
+      writeCheck(
+        "DELETE /api/settings/order-types/ot1/fields",
+        cookie,
+        "DELETE",
+        "/api/settings/order-types/ot1/fields",
+        { fieldId: "f5" },
+      ),
+    () =>
+      writeCheck("PATCH /api/fleet/drivers/d1 vehicle", cookie, "PATCH", "/api/fleet/drivers/d1", {
+        vehicleId: "v2",
+      }),
+    () =>
+      writeCheck("POST /api/integrations/tally export", cookie, "POST", "/api/integrations/tally", {
+        action: "export",
       }),
   ];
 

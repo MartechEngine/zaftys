@@ -3,6 +3,7 @@ import { SettingsNav } from "@/components/app/settings-nav";
 import { DataTable } from "@/components/app/data-table";
 import { CreateGeofenceForm } from "@/components/app/create-geofence-form";
 import { EditGeofenceRadiusButton } from "@/components/app/sprint11-forms";
+import { EditGeofenceTriggersButton } from "@/components/app/sprint13-forms";
 import { listGeofences } from "@/lib/settings/geofences-repository";
 
 export default async function SettingsGeofencesPage() {
@@ -26,7 +27,12 @@ export default async function SettingsGeofencesPage() {
           {
             key: "actions",
             header: "",
-            render: (r) => <EditGeofenceRadiusButton id={r.id} radius={r.radius} />,
+            render: (r) => (
+              <div className="flex flex-wrap gap-2">
+                <EditGeofenceRadiusButton id={r.id} radius={r.radius} />
+                <EditGeofenceTriggersButton id={r.id} triggers={r.triggers} />
+              </div>
+            ),
           },
         ]}
       />

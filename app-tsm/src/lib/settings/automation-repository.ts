@@ -10,6 +10,10 @@ import {
   createStoredAutomationRule,
   listStoredAutomationRules,
 } from "@/lib/mutations/sprint12-store";
+import {
+  isAutomationDeleted,
+  markAutomationDeleted,
+} from "@/lib/mutations/sprint13-store";
 
 export type AutomationRuleRecord = {
   id: string;
@@ -50,7 +54,7 @@ export async function listAutomationRules(): Promise<AutomationRuleRecord[]> {
     return { ...rule, enabled: override ?? rule.enabled };
   });
 
-  return [...stored, ...demo];
+  return [...stored, ...demo].filter((r) => !isAutomationDeleted(r.id));
 }
 
 export function validateCreateAutomationInput(
@@ -81,4 +85,15 @@ export async function setAutomationRuleEnabled(
   if (!rule) return undefined;
   setAutomationEnabled(id, enabled);
   return { ...rule, enabled };
+}
+
+export async function deleteAutomationRule(id: string): Promise<boolean> {
+  if (isAutomationDeleted(id)) return true;
+  const known = new Set([
+    ...demoAutomationRules.map((r) => r.id),
+    ...listStoredAutomationRules().map((r) => r.id),
+  ]);
+  if (!known.has(id)) return false;
+  markAutomationDeleted(id);
+  return true;
 }

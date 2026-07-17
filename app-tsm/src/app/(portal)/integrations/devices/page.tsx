@@ -5,6 +5,7 @@ import { listDevices } from "@/lib/integrations/integrations-repository";
 import { INTEGRATIONS_NAV } from "@/lib/module-nav";
 import { CreateDeviceForm } from "@/components/app/module-create-forms";
 import { UnassignDeviceButton } from "@/components/app/sprint12-forms";
+import { AssignDeviceButton } from "@/components/app/sprint13-forms";
 
 const deviceStatus = {
   online: { label: "Online", className: "bg-emerald-100 text-emerald-800" },
@@ -33,7 +34,12 @@ export default async function DevicesPage() {
           {
             key: "actions",
             header: "",
-            render: (r) => <UnassignDeviceButton id={r.id} vehicle={r.vehicle} />,
+            render: (r) => (
+              <div className="flex flex-wrap gap-2">
+                <AssignDeviceButton id={r.id} vehicle={r.vehicle} />
+                <UnassignDeviceButton id={r.id} vehicle={r.vehicle} />
+              </div>
+            ),
           },
         ]}
       />

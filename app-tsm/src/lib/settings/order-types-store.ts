@@ -94,3 +94,35 @@ export function createStoredOrderField(input: {
   });
   return field;
 }
+
+export function patchStoredOrderField(
+  id: string,
+  patch: { required?: boolean },
+): StoredOrderField | null {
+  const field = fields().find((f) => f.id === id);
+  if (!field) return null;
+  if (patch.required !== undefined) field.required = patch.required;
+  logActivity({
+    shipmentId: "",
+    type: "order_field.updated",
+    message: `${field.name} · required=${field.required}`,
+    timestamp: new Date().toISOString(),
+  });
+  return field;
+}
+
+export function deleteStoredOrderField(id: string): boolean {
+  const list = fields();
+  const idx = list.findIndex((f) => f.id === id);
+  if (idx < 0) return false;
+  const [removed] = list.splice(idx, 1);
+  const ot = types().find((t) => t.id === removed.orderTypeId);
+  if (ot && ot.fields > 0) ot.fields -= 1;
+  logActivity({
+    shipmentId: "",
+    type: "order_field.deleted",
+    message: removed.name,
+    timestamp: new Date().toISOString(),
+  });
+  return true;
+}

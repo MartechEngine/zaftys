@@ -177,3 +177,8 @@ export function patchDeviceFields(id: string, patch: { vehicle?: string; vehicle
   });
   return g.__tsmDevicePatches[id];
 }
+
+export function deleteStoredAutomationRule(id: string) {
+  if (!g.__tsmStoredAutomation) return;
+  g.__tsmStoredAutomation = g.__tsmStoredAutomation.filter((r) => r.id !== id);
+}

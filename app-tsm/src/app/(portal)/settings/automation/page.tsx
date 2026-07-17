@@ -3,6 +3,7 @@ import { SettingsNav } from "@/components/app/settings-nav";
 import { DataTable } from "@/components/app/data-table";
 import { AutomationToggle } from "@/components/app/automation-toggle";
 import { CreateAutomationForm } from "@/components/app/sprint12-forms";
+import { DeleteAutomationButton } from "@/components/app/sprint13-forms";
 import { listAutomationRules } from "@/lib/settings/automation-repository";
 
 export default async function SettingsAutomationPage() {
@@ -38,7 +39,12 @@ export default async function SettingsAutomationPage() {
           {
             key: "toggle",
             header: "",
-            render: (r) => <AutomationToggle id={r.id} enabled={r.enabled} />,
+            render: (r) => (
+              <div className="flex flex-wrap gap-2">
+                <AutomationToggle id={r.id} enabled={r.enabled} />
+                <DeleteAutomationButton id={r.id} />
+              </div>
+            ),
           },
         ]}
       />

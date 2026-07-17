@@ -3,6 +3,7 @@ import { SettingsNav } from "@/components/app/settings-nav";
 import { Card, CardContent } from "@/components/ui/card";
 import { getSecuritySettings } from "@/lib/settings/config-repository";
 import { ConfigToggleForm } from "@/components/app/config-toggle-form";
+import { ConfigFieldForm } from "@/components/app/sprint13-forms";
 
 export default async function SettingsSecurityPage() {
   const settings = await getSecuritySettings();
@@ -32,6 +33,13 @@ export default async function SettingsSecurityPage() {
             <p className="text-muted-foreground">
               {settings.sessionTimeoutHours} hours · sliding window
             </p>
+            <ConfigFieldForm
+              section="security"
+              field="sessionTimeoutHours"
+              label="Session timeout (hours)"
+              value={settings.sessionTimeoutHours}
+              inputType="number"
+            />
           </div>
           <div>
             <p className="font-medium text-navy">Password policy</p>

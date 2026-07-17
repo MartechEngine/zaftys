@@ -4,6 +4,7 @@ import { DataTable, StatusPill } from "@/components/app/data-table";
 import { listOrgUsers } from "@/lib/settings/users-repository";
 import { InviteOrgUserForm } from "@/components/app/module-create-forms";
 import { ActivateUserButton } from "@/components/app/sprint10-forms";
+import { ChangeUserRoleButton, DeactivateUserButton } from "@/components/app/sprint13-forms";
 
 const userStatus = {
   active: { label: "Active", className: "bg-emerald-100 text-emerald-800" },
@@ -35,7 +36,13 @@ export default async function SettingsUsersPage() {
           {
             key: "actions",
             header: "",
-            render: (r) => <ActivateUserButton id={r.id} status={r.status} />,
+            render: (r) => (
+              <div className="flex flex-wrap gap-2">
+                <ActivateUserButton id={r.id} status={r.status} />
+                <ChangeUserRoleButton id={r.id} role={r.role} />
+                <DeactivateUserButton id={r.id} status={r.status} />
+              </div>
+            ),
           },
         ]}
       />

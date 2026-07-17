@@ -5,6 +5,10 @@ import {
   configureTallyLocal,
   isTallyConfiguredLocally,
 } from "@/lib/mutations/fleet-entity-store";
+import {
+  getTallyLastExport,
+  recordTallyExport,
+} from "@/lib/mutations/sprint13-store";
 
 export type TallyExportStatus = {
   status: "connected" | "not_configured";
@@ -28,14 +32,18 @@ export async function getTallyExportStatus(): Promise<TallyExportStatus> {
     Boolean(process.env.TALLY_COMPANY_NAME) ||
     process.env.TALLY_EXPORT_ENABLED === "1";
 
+  const localExport = getTallyLastExport();
+
   return {
     status: configured ? "connected" : "not_configured",
     exportFormat: "XML (Tally Prime)",
-    lastExport: configured
-      ? sync.lastSyncAt
-        ? new Date(sync.lastSyncAt).toLocaleString("en-IN")
-        : "Just now"
-      : "—",
+    lastExport: localExport
+      ? new Date(localExport).toLocaleString("en-IN")
+      : configured
+        ? sync.lastSyncAt
+          ? new Date(sync.lastSyncAt).toLocaleString("en-IN")
+          : "Just now"
+        : "—",
     invoiceCount: invoices.length,
     pendingCount: invoices.filter((i) => i.status === "pending").length,
     gstin: org.gstin,
@@ -46,4 +54,18 @@ export async function getTallyExportStatus(): Promise<TallyExportStatus> {
 export async function configureTally() {
   configureTallyLocal();
   return getTallyExportStatus();
+}
+
+export async function exportTallyNow() {
+  if (!isTallyConfiguredLocally()) {
+    configureTallyLocal();
+  }
+  const exportMeta = recordTallyExport();
+  const status = await getTallyExportStatus();
+  return {
+    ...status,
+    exportedAt: exportMeta.exportedAt,
+    exportCount: exportMeta.exportCount,
+    invoiceCount: status.invoiceCount,
+  };
 }

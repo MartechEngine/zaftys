@@ -9,6 +9,16 @@ import {
   type StoredOrderField,
 } from "@/lib/settings/order-types-store";
 import { getOrderTypeNamePatch, patchOrderTypeName } from "@/lib/mutations/sprint12-store";
+import {
+  getOrderFieldPatch,
+  isOrderFieldDeleted,
+  markOrderFieldDeleted,
+  patchOrderField,
+} from "@/lib/mutations/sprint13-store";
+import {
+  deleteStoredOrderField,
+  patchStoredOrderField,
+} from "@/lib/settings/order-types-store";
 
 export type OrderTypeRecord = {
   id: string;
@@ -189,7 +199,12 @@ export async function getOrderTypeFields(id: string) {
   const base = ORDER_TYPE_FIELDS[id] ?? (stored.length ? [] : ORDER_TYPE_FIELDS.ot1);
   return {
     orderType,
-    fields: [...stored, ...base],
+    fields: [...stored, ...base]
+      .filter((f) => !isOrderFieldDeleted(f.id))
+      .map((f) => {
+        const patch = getOrderFieldPatch(f.id);
+        return patch ? { ...f, ...patch } : f;
+      }),
   };
 }
 
@@ -215,4 +230,32 @@ export async function updateOrderTypeFlow(id: string, steps: string[]) {
   const { setOrderTypeFlowOverride } = await import("@/lib/mutations/sprint11-store");
   setOrderTypeFlowOverride(id, cleaned);
   return getOrderTypeFlow(id);
+}
+
+export async function updateOrderTypeField(
+  orderTypeId: string,
+  fieldId: string,
+  input: { required?: boolean },
+) {
+  const result = await getOrderTypeFields(orderTypeId);
+  if (!result) return undefined;
+  const field = result.fields.find((f) => f.id === fieldId);
+  if (!field) return undefined;
+
+  const stored = patchStoredOrderField(fieldId, input);
+  if (stored) return stored;
+
+  patchOrderField(fieldId, input);
+  return { ...field, ...input };
+}
+
+export async function deleteOrderTypeField(orderTypeId: string, fieldId: string) {
+  if (isOrderFieldDeleted(fieldId)) return true;
+  const result = await getOrderTypeFields(orderTypeId);
+  if (!result) return false;
+  if (!result.fields.some((f) => f.id === fieldId)) return false;
+
+  deleteStoredOrderField(fieldId);
+  markOrderFieldDeleted(fieldId);
+  return true;
 }

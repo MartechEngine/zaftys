@@ -8,6 +8,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { getDriver } from "@/lib/data/fleet-repository";
 import { FLEET_NAV } from "@/lib/module-nav";
 import { EditDriverForm } from "@/components/app/sprint7-forms";
+import { AssignDriverVehicleButton } from "@/components/app/sprint13-forms";
 import { Button } from "@/components/ui/button";
 
 export default async function DriverDetailPage({
@@ -77,6 +78,11 @@ export default async function DriverDetailPage({
             <p>
               <span className="text-muted-foreground">License expiry</span> · {driver.licenseExpiry}
             </p>
+            <AssignDriverVehicleButton
+              driverId={driver.id}
+              vehicleId={driver.vehicleId}
+              vehicle={driver.vehicle}
+            />
           </CardContent>
         </Card>
         <Card>
