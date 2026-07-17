@@ -106,6 +106,17 @@ Or `POST /api/sync/run` while the dev server is running.
 | `npm run lint` | ESLint |
 | `npm run test:fleetbase` | Verify Fleetbase API key |
 | `npm run sync:tranzfort` | TranZfort → Fleetbase sync |
+| `npm run smoke` | API smoke (dev server on :3000) |
+| `npm run test:e2e:smoke` | Playwright UI smoke (dev server on :3000) |
+
+### Smoke tests (local)
+
+With `npm run dev` running (`TSM_DEMO_UI=1`):
+
+```bash
+npm run smoke              # API route smoke
+npm run test:e2e:smoke     # Playwright UI smoke (login → portal routes)
+```
 
 ## Project structure
 

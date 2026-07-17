@@ -10,7 +10,9 @@
     "test:fleetbase": "node scripts/test-fleetbase.mjs",
     "seed:fleetbase": "node scripts/seed-fleetbase-orders.mjs",
     "sync:tranzfort": "node scripts/sync-tranzfort.mjs",
-    "smoke": "node scripts/smoke-local.mjs"
+    "smoke": "node scripts/smoke-local.mjs",
+    "test:e2e": "playwright test",
+    "test:e2e:smoke": "playwright test e2e/smoke.spec.ts"
   },
   "dependencies": {
     "@radix-ui/react-label": "^2.1.11",
@@ -27,6 +29,7 @@
     "tailwind-merge": "^3.6.0"
   },
   "devDependencies": {
+    "@playwright/test": "^1.61.1",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",
