@@ -7,6 +7,7 @@ import { DataTable, StatusPill } from "@/components/app/data-table";
 import { getClient, listClientUsers } from "@/lib/clients/client-repository";
 import { InviteClientUserForm } from "@/components/app/invite-client-user-form";
 import { RevokeClientUserButton } from "@/components/app/sprint14-forms";
+import { ResendClientUserInviteButton } from "@/components/app/sprint19-forms";
 import { CLIENTS_NAV } from "@/lib/module-nav";
 
 const userStatus = {
@@ -55,7 +56,15 @@ export default async function ClientUsersPage({
             key: "actions",
             header: "",
             render: (r) => (
-              <RevokeClientUserButton clientId={id} userId={r.id} status={r.status} />
+              <div className="flex flex-wrap gap-2">
+                <ResendClientUserInviteButton
+                  clientId={id}
+                  userId={r.id}
+                  status={r.status}
+                  lastLogin={r.lastLogin}
+                />
+                <RevokeClientUserButton clientId={id} userId={r.id} status={r.status} />
+              </div>
             ),
           },
         ]}

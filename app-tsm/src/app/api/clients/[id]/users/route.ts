@@ -2,6 +2,7 @@ import {
   getClient,
   inviteClientUser,
   listClientUsers,
+  resendClientPortalUserInvite,
   revokeClientPortalUser,
   validateInviteClientUserInput,
 } from "@/lib/clients/client-repository";
@@ -51,11 +52,24 @@ export async function PATCH(
     return apiError("INVALID_JSON", "Request body must be valid JSON.");
   }
 
-  const data = body as { userId?: string; id?: string; revoke?: boolean };
+  const data = body as { userId?: string; id?: string; revoke?: boolean; resend?: boolean };
   const userId = String(data.userId ?? data.id ?? "").trim();
   if (!userId) return apiError("VALIDATION_ERROR", "userId is required.");
+
+  if (data.resend === true) {
+    const user = await resendClientPortalUserInvite(id, userId);
+    if (!user) {
+      return apiError(
+        "VALIDATION_ERROR",
+        "Invite resend is only for pending portal users.",
+        400,
+      );
+    }
+    return apiSuccess(user);
+  }
+
   if (data.revoke !== true) {
-    return apiError("VALIDATION_ERROR", "revoke: true is required.");
+    return apiError("VALIDATION_ERROR", "revoke: true or resend: true is required.");
   }
 
   const user = await revokeClientPortalUser(id, userId);

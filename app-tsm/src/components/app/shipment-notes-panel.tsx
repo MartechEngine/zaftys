@@ -18,9 +18,11 @@ function formatWhen(iso: string) {
 export function ShipmentNotesPanel({
   shipmentId,
   refreshKey,
+  onAdded,
 }: {
   shipmentId: string;
   refreshKey?: number;
+  onAdded?: () => void;
 }) {
   const [notes, setNotes] = useState<ShipmentNote[]>([]);
   const [body, setBody] = useState("");
@@ -57,6 +59,7 @@ export function ShipmentNotesPanel({
       setNotes((prev) => [note, ...prev]);
       setBody("");
       toast.success("Note added.");
+      onAdded?.();
     } catch (err) {
       toast.error(err instanceof Error ? err.message : "Could not save note.");
     } finally {

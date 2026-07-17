@@ -8,6 +8,7 @@ import { DISPATCH_NAV } from "@/lib/module-nav";
 import { RunOrchestratorButton } from "@/components/app/module-create-forms";
 import { Button } from "@/components/ui/button";
 import { ApplyOrchestratorButton } from "@/components/app/sprint18-forms";
+import { ClearOrchestratorAppliedButton } from "@/components/app/sprint19-forms";
 
 const phaseStatus = {
   complete: { label: "Complete", className: "bg-emerald-100 text-emerald-800" },
@@ -44,13 +45,16 @@ export default async function DispatchOrchestratorPage() {
             <p className="mt-2 text-muted-foreground">No pending shipments to orchestrate.</p>
           )}
           {state.applied ? (
-            <p className="mt-2 text-emerald-700">
-              Plan applied for {state.applied.publicId} at{" "}
-              {new Date(state.applied.appliedAt).toLocaleTimeString("en-IN", {
-                hour: "2-digit",
-                minute: "2-digit",
-              })}
-            </p>
+            <div className="mt-2 flex flex-wrap items-center gap-2 text-emerald-700">
+              <p>
+                Plan applied for {state.applied.publicId} at{" "}
+                {new Date(state.applied.appliedAt).toLocaleTimeString("en-IN", {
+                  hour: "2-digit",
+                  minute: "2-digit",
+                })}
+              </p>
+              <ClearOrchestratorAppliedButton applied={state.applied} />
+            </div>
           ) : null}
         </CardContent>
       </Card>

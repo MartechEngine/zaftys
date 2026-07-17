@@ -1036,6 +1036,33 @@ async function main() {
         driver: "Smoke Driver",
         issue: "Smoke clutch slip",
       }),
+    () =>
+      writeCheck(
+        "PATCH /api/clients/c2/users resend",
+        cookie,
+        "PATCH",
+        "/api/clients/c2/users",
+        { userId: "cu3", resend: true },
+      ),
+    () =>
+      writeCheck(
+        "POST /api/dispatch/orchestrator dismiss",
+        cookie,
+        "POST",
+        "/api/dispatch/orchestrator",
+        { action: "dismiss" },
+      ),
+    () =>
+      writeCheck(
+        "PATCH /api/settings/config routing truck profile",
+        cookie,
+        "PATCH",
+        "/api/settings/config",
+        {
+          section: "routing",
+          values: { truckProfile: "Multi-axle · 32 MT" },
+        },
+      ),
   ];
 
   for (const run of writes) {

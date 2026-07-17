@@ -5,7 +5,10 @@ import {
   listOrchestratorRuns,
   recordOrchestratorRun,
 } from "@/lib/mutations/entity-stores";
-import { getOrchestratorApplied } from "@/lib/mutations/sprint18-store";
+import {
+  clearOrchestratorApplied,
+  getOrchestratorApplied,
+} from "@/lib/mutations/sprint18-store";
 
 export type OrchestratorPhase = {
   id: string;
@@ -121,4 +124,10 @@ export async function applyOrchestratorProposal() {
   });
 
   return { applied, shipment, proposal: state.proposal };
+}
+
+export function dismissOrchestratorApplied() {
+  const had = Boolean(getOrchestratorApplied());
+  clearOrchestratorApplied();
+  return had;
 }

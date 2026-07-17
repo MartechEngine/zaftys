@@ -178,6 +178,15 @@ export const api = {
       body: JSON.stringify({ userId, revoke: true }),
     }),
 
+  resendClientUserInvite: (clientId: string, userId: string) =>
+    fetchApi<{ id: string; email: string; lastResentAt?: string }>(
+      `/api/clients/${clientId}/users`,
+      {
+        method: "PATCH",
+        body: JSON.stringify({ userId, resend: true }),
+      },
+    ),
+
   patchClientContact: (
     clientId: string,
     contactId: string,
@@ -1084,6 +1093,12 @@ export const api = {
     }>("/api/dispatch/orchestrator", {
       method: "POST",
       body: JSON.stringify({ action: "apply" }),
+    }),
+
+  dismissOrchestratorApplied: () =>
+    fetchApi<{ dismissed: boolean }>("/api/dispatch/orchestrator", {
+      method: "POST",
+      body: JSON.stringify({ action: "dismiss" }),
     }),
 
   reviseQuote: (id: string, input: { tonnage?: number; rateInr?: number }) =>

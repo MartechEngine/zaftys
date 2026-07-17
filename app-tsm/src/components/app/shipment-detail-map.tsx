@@ -3,6 +3,7 @@
 import { useMemo } from "react";
 import { LiveMap, markersFromGeo, routeFromGeo } from "@/components/app/live-map";
 import type { ShipmentGeo } from "@/lib/geo";
+import { useMapGpsStream } from "@/lib/hooks/use-map-gps-stream";
 
 export function ShipmentDetailMap({
   shipmentId,
@@ -17,24 +18,36 @@ export function ShipmentDetailMap({
   driver?: string;
   geo?: ShipmentGeo;
 }) {
+  const { markers: streamMarkers, connected } = useMapGpsStream(Boolean(geo));
+  const liveMarker = streamMarkers.find((m) => m.shipmentId === shipmentId);
+
+  const liveGeo = useMemo(() => {
+    if (!geo || !liveMarker) return geo;
+    return {
+      ...geo,
+      current: { lat: liveMarker.lat, lng: liveMarker.lng },
+      gpsStale: liveMarker.stale,
+    };
+  }, [geo, liveMarker]);
+
   const markers = useMemo(
     () =>
-      geo
+      liveGeo
         ? markersFromGeo({
             id: shipmentId,
             publicId,
             vehicle,
             driver,
-            geo,
+            geo: liveGeo,
             href: `/shipments/${shipmentId}`,
           })
         : [],
-    [shipmentId, publicId, vehicle, driver, geo],
+    [shipmentId, publicId, vehicle, driver, liveGeo],
   );
 
   const routes = useMemo(
-    () => (geo ? [routeFromGeo(shipmentId, geo)] : []),
-    [shipmentId, geo],
+    () => (liveGeo ? [routeFromGeo(shipmentId, liveGeo)] : []),
+    [shipmentId, liveGeo],
   );
 
   if (!geo) {
@@ -45,5 +58,14 @@ export function ShipmentDetailMap({
     );
   }
 
-  return <LiveMap markers={markers} routes={routes} height="12rem" showPlaceholderLegend />;
+  return (
+    <div className="space-y-2">
+      {connected ? (
+        <p className="text-xs text-emerald-700">Live GPS stream connected</p>
+      ) : (
+        <p className="text-xs text-muted-foreground">Using last known position</p>
+      )}
+      <LiveMap markers={markers} routes={routes} height="12rem" showPlaceholderLegend />
+    </div>
+  );
 }

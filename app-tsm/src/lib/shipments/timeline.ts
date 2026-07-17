@@ -39,13 +39,20 @@ export function buildShipmentTimeline(
 
   const created = activities.find((a) => a.type === "shipment.created");
   const assigned = activities.find((a) => a.type === "shipment.assigned");
+  const atPlant = activities.find(
+    (a) =>
+      a.type === "shipment.at_plant" ||
+      (a.type === "shipment.status_changed" && /plant/i.test(a.message)),
+  );
   const inTransit = activities.find(
     (a) =>
       a.type === "shipment.in_transit" ||
       (a.type === "shipment.status_changed" && /transit/i.test(a.message)),
   );
   const delivered = activities.find(
-    (a) => a.type === "shipment.delivered" || a.type === "shipment.delivered",
+    (a) =>
+      a.type === "shipment.delivered" ||
+      (a.type === "shipment.status_changed" && /delivered/i.test(a.message)),
   );
 
   if (cancelled) {
@@ -64,6 +71,9 @@ export function buildShipmentTimeline(
     ];
   }
 
+  const dispatchedDone = !["pending"].includes(status);
+  const plantDone = ["at_plant", ...TRANSIT_STATUSES].includes(status);
+
   return [
     {
       label: "Booked",
@@ -74,8 +84,14 @@ export function buildShipmentTimeline(
     {
       label: "Dispatched",
       time: shipment.driver ? formatTime(assigned?.timestamp) : "—",
-      done: status !== "pending",
-      current: status === "dispatched" || status === "at_plant",
+      done: dispatchedDone,
+      current: status === "dispatched",
+    },
+    {
+      label: "At plant",
+      time: formatTime(atPlant?.timestamp),
+      done: plantDone,
+      current: status === "at_plant",
     },
     {
       label: "In transit",
@@ -90,7 +106,7 @@ export function buildShipmentTimeline(
           ? (shipment.eta ?? formatTime(delivered?.timestamp ?? shipment.updatedAt))
           : "—",
       done: status === "delivered",
-      current: false,
+      current: status === "delivered",
     },
   ];
 }

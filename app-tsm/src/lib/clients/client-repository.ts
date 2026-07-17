@@ -405,6 +405,28 @@ export async function deleteClientContact(
   return true;
 }
 
+export async function resendClientPortalUserInvite(
+  clientId: string,
+  userId: string,
+): Promise<(ClientPortalUser & { lastResentAt?: string; resentCount?: number }) | undefined> {
+  const client = await getClient(clientId);
+  if (!client) return undefined;
+
+  const users = await listClientUsers(clientId);
+  const existing = users.find((u) => u.id === userId);
+  if (!existing) return undefined;
+  if (existing.status !== "pending" || isClientUserRevoked(userId)) return undefined;
+
+  const { resendClientUserInvite } = await import("@/lib/mutations/sprint19-store");
+  const { lastResentAt, count } = resendClientUserInvite(userId);
+  return { ...existing, lastResentAt, resentCount: count };
+}
+
+export async function getClientPortalUserResendMeta(userId: string) {
+  const { getClientUserInviteResend } = await import("@/lib/mutations/sprint19-store");
+  return getClientUserInviteResend(userId);
+}
+
 export async function revokeClientPortalUser(
   clientId: string,
   userId: string,

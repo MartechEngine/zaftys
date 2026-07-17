@@ -38,6 +38,12 @@ export default async function SettingsRoutingPage() {
           </p>
           <ConfigFieldForm
             section="routing"
+            field="truckProfile"
+            label="Truck profile"
+            value={settings.truckProfile}
+          />
+          <ConfigFieldForm
+            section="routing"
             field="maxAxleMt"
             label="Max axle (MT)"
             value={settings.maxAxleMt}

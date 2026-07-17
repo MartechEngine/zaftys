@@ -174,7 +174,11 @@ export function ShipmentDetailClient({ shipment }: { shipment: ShipmentRecord })
 
       {tab === "notes" ? (
         <div className="grid gap-6 lg:grid-cols-2">
-          <ShipmentNotesPanel shipmentId={current.id} refreshKey={activityRefresh} />
+          <ShipmentNotesPanel
+            shipmentId={current.id}
+            refreshKey={activityRefresh}
+            onAdded={bumpActivity}
+          />
           <ShipmentActivityFeed shipmentId={current.id} refreshKey={activityRefresh} />
         </div>
       ) : tab === "billing" ? (
