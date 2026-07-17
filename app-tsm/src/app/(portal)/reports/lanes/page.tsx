@@ -2,21 +2,34 @@ import Link from "next/link";
 import { PageHeader } from "@/components/app/app-shell";
 import { ModuleSubNav } from "@/components/app/module-sub-nav";
 import { Card, CardContent } from "@/components/ui/card";
-import { getOperationsReport } from "@/lib/reports/operations-report";
+import { Button } from "@/components/ui/button";
+import { getLanesReport } from "@/lib/reports/lanes-report";
 import { REPORTS_NAV } from "@/lib/module-nav";
 
 export default async function ReportsLanesPage() {
-  const report = await getOperationsReport();
+  const report = await getLanesReport();
 
   return (
     <>
-      <PageHeader title="Lane performance" description="Industrial corridor scorecards" />
+      <PageHeader
+        title="Lane performance"
+        description="Industrial corridor scorecards"
+        action={
+          <Button variant="outline" size="sm" asChild>
+            <a href="/api/reports/lanes?format=csv">Export CSV</a>
+          </Button>
+        }
+      />
       <ModuleSubNav links={REPORTS_NAV} />
-      {report.byCorridor.length === 0 ? (
+      <p className="mb-4 text-sm text-muted-foreground">
+        {report.totalCorridors} corridors
+        {report.topCorridor ? ` · top: ${report.topCorridor}` : ""}
+      </p>
+      {report.corridors.length === 0 ? (
         <p className="text-sm text-muted-foreground">No corridor data yet.</p>
       ) : (
         <div className="grid gap-4 md:grid-cols-2">
-          {report.byCorridor.map((lane) => (
+          {report.corridors.map((lane) => (
             <Card key={lane.corridor}>
               <CardContent className="p-5">
                 <h3 className="font-semibold text-navy">{lane.corridor}</h3>

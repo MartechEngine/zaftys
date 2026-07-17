@@ -1,6 +1,11 @@
 import { demoFleetGroups, demoPlaces } from "@/lib/demo-data";
 import { fetchAllShipmentsRaw, listDrivers, listVehicles } from "@/lib/data/shipment-repository";
-import { createStoredPlace, listStoredPlaces } from "@/lib/fleet/places-store";
+import {
+  createStoredPlace,
+  listStoredPlaces,
+  patchStoredPlace,
+} from "@/lib/fleet/places-store";
+import { getPlacePatch, patchPlaceFields } from "@/lib/mutations/sprint11-store";
 
 export type PlaceRecord = {
   id: string;
@@ -54,12 +59,22 @@ export function validateCreatePlaceInput(body: unknown): CreatePlaceInput | { er
 export async function listPlaces(q?: string): Promise<PlaceRecord[]> {
   const shipments = await fetchAllShipmentsRaw();
 
-  const enrich = (p: { id: string; name: string; type: string; city: string; geofence: string }) => ({
-    ...p,
-    activeShipments: shipments.filter(
-      (s) => cityMatches(p.city, s.origin) || cityMatches(p.city, s.destination),
-    ).length,
-  });
+  const enrich = (p: {
+    id: string;
+    name: string;
+    type: string;
+    city: string;
+    geofence: string;
+  }) => {
+    const patch = getPlacePatch(p.id);
+    const merged = { ...p, ...patch };
+    return {
+      ...merged,
+      activeShipments: shipments.filter(
+        (s) => cityMatches(merged.city, s.origin) || cityMatches(merged.city, s.destination),
+      ).length,
+    };
+  };
 
   let places: PlaceRecord[] = [
     ...listStoredPlaces().map(enrich),
@@ -82,6 +97,20 @@ export async function listPlaces(q?: string): Promise<PlaceRecord[]> {
 export async function createPlace(input: CreatePlaceInput): Promise<PlaceRecord> {
   const place = createStoredPlace(input);
   return { ...place, activeShipments: 0 };
+}
+
+export async function updatePlace(
+  id: string,
+  input: Partial<CreatePlaceInput>,
+): Promise<PlaceRecord | undefined> {
+  const existing = (await listPlaces()).find((p) => p.id === id);
+  if (!existing) return undefined;
+
+  const stored = patchStoredPlace(id, input);
+  if (stored) return { ...stored, activeShipments: existing.activeShipments };
+
+  patchPlaceFields(id, input);
+  return { ...existing, ...input };
 }
 
 export async function getPlace(id: string) {

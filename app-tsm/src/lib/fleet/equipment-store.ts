@@ -48,3 +48,20 @@ export function createStoredEquipment(input: {
   });
   return item;
 }
+
+export function patchStoredEquipment(
+  id: string,
+  patch: Partial<Pick<EquipmentRecord, "location" | "status">>,
+): EquipmentRecord | null {
+  const item = getStore().find((e) => e.id === id);
+  if (!item) return null;
+  if (patch.location !== undefined) item.location = patch.location.trim();
+  if (patch.status !== undefined) item.status = patch.status;
+  logActivity({
+    shipmentId: "",
+    type: "equipment.updated",
+    message: item.name,
+    timestamp: new Date().toISOString(),
+  });
+  return item;
+}

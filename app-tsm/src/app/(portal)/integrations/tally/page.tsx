@@ -4,7 +4,7 @@ import { ModuleSubNav } from "@/components/app/module-sub-nav";
 import { Card, CardContent } from "@/components/ui/card";
 import { getTallyExportStatus } from "@/lib/integrations/tally-repository";
 import { INTEGRATIONS_NAV } from "@/lib/module-nav";
-import { Button } from "@/components/ui/button";
+import { ConfigureTallyButton } from "@/components/app/sprint7-forms";
 
 export default async function TallyPage() {
   const status = await getTallyExportStatus();
@@ -38,9 +38,7 @@ export default async function TallyPage() {
               View invoices →
             </Link>
           </p>
-          <Button variant="accent" size="sm">
-            Configure Tally
-          </Button>
+          <ConfigureTallyButton connected={status.status === "connected"} />
         </CardContent>
       </Card>
     </>

@@ -77,3 +77,29 @@ export function updateStoredQuoteStatus(
   quote.status = status;
   return quote;
 }
+
+export function upsertStoredQuote(quote: QuoteRecord): QuoteRecord {
+  const store = getQuoteStore();
+  const idx = store.findIndex((q) => q.id === quote.id);
+  if (idx >= 0) {
+    store[idx] = { ...store[idx], ...quote };
+    return store[idx];
+  }
+  store.unshift(quote);
+  return quote;
+}
+
+export function linkQuoteToShipment(id: string, shipmentId: string): QuoteRecord | undefined {
+  const store = getQuoteStore();
+  const quote = store.find((q) => q.id === id);
+  if (!quote) return undefined;
+  quote.status = "accepted";
+  quote.shipmentId = shipmentId;
+  logActivity({
+    shipmentId,
+    type: "quote.accepted",
+    message: `Quote ${quote.id} accepted · shipment created`,
+    timestamp: new Date().toISOString(),
+  });
+  return quote;
+}

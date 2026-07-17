@@ -736,6 +736,39 @@ export function updateShipmentStatus(id: string, status: ShipmentStatus) {
   return attachGeo(shipment);
 }
 
+export type ShipmentFieldsPatch = {
+  client?: string;
+  origin?: string;
+  destination?: string;
+  commodity?: string;
+  tonnageMt?: number;
+  lrNumber?: string;
+};
+
+export function updateShipmentFields(id: string, patch: ShipmentFieldsPatch) {
+  const shipments = getShipmentsStore();
+  const shipment = shipments.find((s) => s.id === id);
+  if (!shipment) return null;
+
+  if (patch.client !== undefined) shipment.client = patch.client;
+  if (patch.origin !== undefined) shipment.origin = patch.origin;
+  if (patch.destination !== undefined) shipment.destination = patch.destination;
+  if (patch.commodity !== undefined) shipment.commodity = patch.commodity;
+  if (patch.tonnageMt !== undefined) shipment.tonnageMt = patch.tonnageMt;
+  if (patch.lrNumber !== undefined) shipment.lrNumber = patch.lrNumber;
+  shipment.updatedAt = now();
+
+  activities.unshift({
+    id: `a${Date.now()}`,
+    shipmentId: id,
+    type: "shipment.updated",
+    message: `${shipment.publicId} · trip details updated`,
+    timestamp: now(),
+  });
+
+  return attachGeo(shipment);
+}
+
 export function cancelShipment(id: string) {
   return updateShipmentStatus(id, "cancelled");
 }

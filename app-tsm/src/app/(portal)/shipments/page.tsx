@@ -1,89 +1,20 @@
 import Link from "next/link";
-import { Calendar, MapPin, Package } from "lucide-react";
 import { PageHeader, SectionCard } from "@/components/app/app-shell";
 import { ShipmentsToolbar } from "@/components/app/shipments-toolbar";
 import { ShipmentsPagination } from "@/components/app/shipments-pagination";
-import { OriginBadge, ShipmentStatusChip } from "@/components/app/status-chip";
+import { ShipmentsBulkTable } from "@/components/app/shipments-bulk-table";
 import { StatChip } from "@/components/app/ui-primitives";
-import { DataTable, type DataTableColumn } from "@/components/app/data-table";
 import {
   getShipmentFilterOptions,
   getShipmentTabCounts,
   listShipments,
 } from "@/lib/data/shipment-repository";
-import type { ShipmentRecord } from "@/lib/dev-store";
 import { parsePageSize, type ShipmentListFilters } from "@/lib/shipments/query-params";
 import { Button } from "@/components/ui/button";
 
 export const dynamic = "force-dynamic";
 
 const tabs = ["all", "active", "completed", "exceptions"] as const;
-
-const columns: DataTableColumn<ShipmentRecord>[] = [
-  {
-    key: "id",
-    header: "Shipment ID",
-    render: (s) => (
-      <Link href={`/shipments/${s.id}`} className="font-mono font-medium text-link">
-        {s.publicId}
-      </Link>
-    ),
-  },
-  { key: "client", header: "Client", render: (s) => s.client },
-  {
-    key: "route",
-    header: "Origin → Destination",
-    render: (s) => (
-      <div className="flex items-center gap-2 text-sm">
-        <MapPin className="size-3.5 shrink-0 text-primary" />
-        <span>{s.origin}</span>
-        <span className="text-muted-foreground">→</span>
-        <span>{s.destination}</span>
-      </div>
-    ),
-  },
-  {
-    key: "status",
-    header: "Status",
-    render: (s) => <ShipmentStatusChip status={s.status} />,
-  },
-  {
-    key: "load",
-    header: "Load",
-    render: (s) => (
-      <span className="inline-flex items-center gap-1 rounded-md bg-white/5 px-2 py-0.5 font-mono text-[11px]">
-        <Package className="size-3 text-muted-foreground" />
-        {s.tonnageMt} MT
-      </span>
-    ),
-  },
-  {
-    key: "source",
-    header: "Source",
-    render: (s) => <OriginBadge originType={s.originType} />,
-  },
-  {
-    key: "eta",
-    header: "ETA",
-    className: "text-muted-foreground",
-    render: (s) => (
-      <span className="inline-flex items-center gap-1 text-xs">
-        <Calendar className="size-3" />
-        {s.eta ?? "—"}
-      </span>
-    ),
-  },
-  {
-    key: "assignment",
-    header: "Driver",
-    render: (s) =>
-      s.driver ? (
-        <span className="text-sm text-muted-foreground">{s.driver}</span>
-      ) : (
-        <span className="text-warning">Unassigned</span>
-      ),
-  },
-];
 
 export default async function ShipmentsPage({
   searchParams,
@@ -173,9 +104,7 @@ export default async function ShipmentsPage({
         eyebrow={`${total} shipment${total === 1 ? "" : "s"}`}
         title="All shipments"
       >
-        <DataTable
-          embedded
-          columns={columns}
+        <ShipmentsBulkTable
           rows={shipments}
           emptyMessage={
             hasFilters

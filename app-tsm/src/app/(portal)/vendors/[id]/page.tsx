@@ -5,7 +5,7 @@ import { PageBreadcrumbs } from "@/components/app/page-breadcrumbs";
 import { DataTable, StatusPill } from "@/components/app/data-table";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { getVendor } from "@/lib/vendors/vendor-repository";
-import { Button } from "@/components/ui/button";
+import { EditVendorForm } from "@/components/app/sprint7-forms";
 
 const woStatus = {
   open: { label: "Open", className: "bg-orange/15 text-orange" },
@@ -39,7 +39,7 @@ export default async function VendorDetailPage({
       <PageHeader
         title={vendor.name}
         description={`${vendor.type} · ${vendor.city}`}
-        action={<Button variant="outline">Edit vendor</Button>}
+        action={<EditVendorForm vendor={vendor} />}
       />
       <div className="mb-6 grid gap-4 md:grid-cols-2">
         <Card>

@@ -1,5 +1,9 @@
 import { listActivities } from "@/lib/dev-store";
 import { getExceptions } from "@/lib/data/shipment-repository";
+import {
+  isNotificationRead,
+  markNotificationsRead as markReadIds,
+} from "@/lib/notifications/read-store";
 
 export interface NotificationItem {
   id: string;
@@ -42,13 +46,14 @@ export async function listNotifications(limit = 20): Promise<NotificationItem[]>
 
   const exceptions = await getExceptions();
   for (const ex of exceptions.slice(0, 5)) {
+    const id = `ex-${ex.id}`;
     items.push({
-      id: `ex-${ex.id}`,
+      id,
       title: `Exception: ${ex.publicId}`,
       body: ex.reason,
       time: new Date().toISOString(),
       timeLabel: "Active",
-      read: false,
+      read: isNotificationRead(id),
       href: `/shipments/${ex.shipmentId}`,
       tone: "warning",
     });
@@ -61,9 +66,13 @@ export async function listNotifications(limit = 20): Promise<NotificationItem[]>
       body: a.message,
       time: a.timestamp,
       timeLabel: formatTimeLabel(a.timestamp),
-      read: false,
+      read: isNotificationRead(a.id),
       href: a.shipmentId ? `/shipments/${a.shipmentId}` : undefined,
-      tone: a.type.includes("exception") ? "warning" : a.type.includes("delivered") ? "success" : "default",
+      tone: a.type.includes("exception")
+        ? "warning"
+        : a.type.includes("delivered")
+          ? "success"
+          : "default",
     });
   }
 
@@ -73,4 +82,13 @@ export async function listNotifications(limit = 20): Promise<NotificationItem[]>
 export async function countUnreadNotifications() {
   const items = await listNotifications(10);
   return items.filter((n) => !n.read).length;
+}
+
+export function markNotificationsRead(ids: string[]) {
+  return markReadIds(ids);
+}
+
+export async function markAllNotificationsRead() {
+  const items = await listNotifications(100);
+  return markReadIds(items.map((n) => n.id));
 }

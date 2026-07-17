@@ -2,9 +2,10 @@ import Link from "next/link";
 import { PageHeader } from "@/components/app/app-shell";
 import { ModuleSubNav } from "@/components/app/module-sub-nav";
 import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 import { listCustomReportDefinitions } from "@/lib/reports/custom-reports";
 import { REPORTS_NAV } from "@/lib/module-nav";
+import { CreateCustomReportForm } from "@/components/app/sprint7-forms";
+import { RunCustomReportButton } from "@/components/app/sprint10-forms";
 
 export default async function ReportsCustomPage() {
   const reports = await listCustomReportDefinitions();
@@ -14,11 +15,7 @@ export default async function ReportsCustomPage() {
       <PageHeader
         title="Custom reports"
         description="Report catalog and builder (P5)"
-        action={
-          <Button variant="accent" disabled>
-            New report
-          </Button>
-        }
+        action={<CreateCustomReportForm />}
       />
       <ModuleSubNav links={REPORTS_NAV} />
       <div className="grid gap-4 md:grid-cols-2">
@@ -31,15 +28,18 @@ export default async function ReportsCustomPage() {
               </div>
               <p className="text-muted-foreground">{r.description}</p>
               <p className="text-xs text-muted-foreground">{r.metric}</p>
-              {r.status === "ready" ? (
-                <Link href={r.href} className="text-link hover:underline">
-                  Open →
-                </Link>
-              ) : (
-                <Link href={r.href} className="text-link hover:underline">
-                  Schedule settings →
-                </Link>
-              )}
+              <div className="flex flex-wrap items-center gap-3 pt-1">
+                <RunCustomReportButton id={r.id} status={r.status} />
+                {r.status === "ready" ? (
+                  <Link href={r.href} className="text-link hover:underline">
+                    Open →
+                  </Link>
+                ) : (
+                  <Link href={r.href} className="text-link hover:underline">
+                    Schedule settings →
+                  </Link>
+                )}
+              </div>
             </CardContent>
           </Card>
         ))}

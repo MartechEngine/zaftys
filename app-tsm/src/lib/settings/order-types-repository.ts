@@ -176,11 +176,23 @@ export async function getOrderTypeFields(id: string) {
 export async function getOrderTypeFlow(id: string) {
   const orderType = (await listOrderTypes()).find((ot) => ot.id === id);
   if (!orderType) return undefined;
-  const steps = FLOW_STEPS[id] ?? FLOW_STEPS.ot1;
+  const { getOrderTypeFlowOverride } = await import("@/lib/mutations/sprint11-store");
+  const override = getOrderTypeFlowOverride(id);
+  const steps = override ?? FLOW_STEPS[id] ?? FLOW_STEPS.ot1;
   return {
     orderType,
     steps,
-    statusFlow: STATUS_FLOWS[id] ?? STATUS_FLOWS.ot1,
+    statusFlow: steps.join(" → "),
     stepCount: steps.length,
   };
+}
+
+export async function updateOrderTypeFlow(id: string, steps: string[]) {
+  const orderType = (await listOrderTypes()).find((ot) => ot.id === id);
+  if (!orderType) return undefined;
+  const cleaned = steps.map((s) => s.trim()).filter(Boolean);
+  if (cleaned.length < 2) return { error: "Flow needs at least 2 steps." as const };
+  const { setOrderTypeFlowOverride } = await import("@/lib/mutations/sprint11-store");
+  setOrderTypeFlowOverride(id, cleaned);
+  return getOrderTypeFlow(id);
 }

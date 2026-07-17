@@ -7,6 +7,7 @@ import { ShipmentStatusChip } from "@/components/app/status-chip";
 import { Card, CardContent } from "@/components/ui/card";
 import { getPlace } from "@/lib/fleet/places-repository";
 import { FLEET_NAV } from "@/lib/module-nav";
+import { EditPlaceGeofenceButton } from "@/components/app/sprint11-forms";
 
 export default async function PlaceDetailPage({
   params,
@@ -44,9 +45,12 @@ export default async function PlaceDetailPage({
               <span className="text-muted-foreground">Automation</span> · Status → at_plant on
               enter
             </p>
-            <Link href="/settings/geofences" className="inline-block text-link hover:underline">
-              Edit geofence rules
-            </Link>
+            <div className="flex flex-wrap gap-3 pt-1">
+              <EditPlaceGeofenceButton id={place.id} geofence={place.geofence} />
+              <Link href="/settings/geofences" className="text-sm text-link hover:underline">
+                Geofence rules →
+              </Link>
+            </div>
           </CardContent>
         </Card>
         <Card>

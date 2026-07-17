@@ -43,3 +43,22 @@ export function createStoredPlace(input: {
   });
   return place;
 }
+
+export function patchStoredPlace(
+  id: string,
+  patch: Partial<Pick<StoredPlace, "name" | "type" | "city" | "geofence">>,
+): StoredPlace | null {
+  const place = getStore().find((p) => p.id === id);
+  if (!place) return null;
+  if (patch.name !== undefined) place.name = patch.name.trim();
+  if (patch.type !== undefined) place.type = patch.type.trim();
+  if (patch.city !== undefined) place.city = patch.city.trim();
+  if (patch.geofence !== undefined) place.geofence = patch.geofence.trim();
+  logActivity({
+    shipmentId: "",
+    type: "place.updated",
+    message: place.name,
+    timestamp: new Date().toISOString(),
+  });
+  return place;
+}

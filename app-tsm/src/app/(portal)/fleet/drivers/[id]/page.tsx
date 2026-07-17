@@ -7,6 +7,7 @@ import { RecentShipmentsList } from "@/components/app/recent-shipments-list";
 import { Card, CardContent } from "@/components/ui/card";
 import { getDriver } from "@/lib/data/fleet-repository";
 import { FLEET_NAV } from "@/lib/module-nav";
+import { EditDriverForm } from "@/components/app/sprint7-forms";
 import { Button } from "@/components/ui/button";
 
 export default async function DriverDetailPage({
@@ -29,7 +30,7 @@ export default async function DriverDetailPage({
       <PageHeader
         title={driver.name}
         description={`License ${driver.license}`}
-        action={<Button variant="outline">Edit</Button>}
+        action={<EditDriverForm driver={driver} />}
       />
       <ModuleSubNav links={FLEET_NAV} />
       <div className="mb-4 flex flex-wrap gap-2 text-sm">

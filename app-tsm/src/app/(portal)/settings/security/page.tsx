@@ -1,8 +1,8 @@
 import { PageHeader } from "@/components/app/app-shell";
 import { SettingsNav } from "@/components/app/settings-nav";
 import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 import { getSecuritySettings } from "@/lib/settings/config-repository";
+import { ConfigToggleForm } from "@/components/app/config-toggle-form";
 
 export default async function SettingsSecurityPage() {
   const settings = await getSecuritySettings();
@@ -18,9 +18,14 @@ export default async function SettingsSecurityPage() {
             <p className="text-muted-foreground">
               TOTP via authenticator app · {settings.twoFactorEnabled ? "Enabled" : "Disabled"}
             </p>
-            <Button className="mt-2" variant="outline" size="sm" disabled>
-              Enable 2FA
-            </Button>
+            <div className="mt-2">
+              <ConfigToggleForm
+                section="security"
+                field="twoFactorEnabled"
+                label="2FA"
+                current={settings.twoFactorEnabled}
+              />
+            </div>
           </div>
           <div>
             <p className="font-medium text-navy">Session timeout</p>

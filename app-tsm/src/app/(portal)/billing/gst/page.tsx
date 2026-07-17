@@ -4,7 +4,7 @@ import { DataTable, StatusPill } from "@/components/app/data-table";
 import { Card, CardContent } from "@/components/ui/card";
 import { getGstSummary } from "@/lib/billing/rates-repository";
 import { BILLING_NAV } from "@/lib/module-nav";
-import { Button } from "@/components/ui/button";
+import { GstExportButton } from "@/components/app/sprint7-forms";
 
 const filingStatus = {
   filed: { label: "Filed", className: "bg-emerald-100 text-emerald-800" },
@@ -19,7 +19,7 @@ export default async function BillingGstPage() {
       <PageHeader
         title="GST reports"
         description={`India compliance · ${s.invoiceCount} invoices in period`}
-        action={<Button variant="outline">Export CSV</Button>}
+        action={<GstExportButton />}
       />
       <ModuleSubNav links={BILLING_NAV} />
       <div className="mb-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">

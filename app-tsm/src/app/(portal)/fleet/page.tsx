@@ -6,6 +6,7 @@ import { IconStatCard } from "@/components/app/ui-primitives";
 import { listDrivers, listVehicles } from "@/lib/data/shipment-repository";
 import { FleetTabs } from "@/components/app/fleet-tabs";
 import { FLEET_NAV } from "@/lib/module-nav";
+import { CreateDriverForm, CreateVehicleForm } from "@/components/app/sprint8-forms";
 
 export default async function FleetPage() {
   const [vehicles, drivers] = await Promise.all([listVehicles(), listDrivers()]);
@@ -18,6 +19,12 @@ export default async function FleetPage() {
         title="Fleet"
         description="Vehicles, drivers, and compliance documents"
         eyebrow="Resources"
+        action={
+          <div className="flex gap-2">
+            <CreateDriverForm />
+            <CreateVehicleForm />
+          </div>
+        }
       />
 
       <ModuleSubNav links={FLEET_NAV} />

@@ -1,6 +1,11 @@
 import { demoGeofences } from "@/lib/demo-data";
 import { listPlaces } from "@/lib/fleet/places-repository";
-import { createStoredGeofence, listStoredGeofences } from "@/lib/settings/geofences-store";
+import {
+  createStoredGeofence,
+  listStoredGeofences,
+  patchStoredGeofence,
+} from "@/lib/settings/geofences-store";
+import { getGeofencePatch, patchGeofenceFields } from "@/lib/mutations/sprint11-store";
 
 export type GeofenceRecord = {
   id: string;
@@ -48,13 +53,30 @@ export async function listGeofences(): Promise<GeofenceRecord[]> {
     }));
 
   const seen = new Set<string>();
-  return [...listStoredGeofences(), ...demoGeofences, ...fromPlaces].filter((g) => {
-    if (seen.has(g.name)) return false;
-    seen.add(g.name);
-    return true;
-  });
+  return [...listStoredGeofences(), ...demoGeofences, ...fromPlaces]
+    .map((row) => {
+      const patch = getGeofencePatch(row.id);
+      return patch ? { ...row, ...patch } : row;
+    })
+    .filter((g) => {
+      if (seen.has(g.name)) return false;
+      seen.add(g.name);
+      return true;
+    });
 }
 
 export async function createGeofence(input: CreateGeofenceInput): Promise<GeofenceRecord> {
   return createStoredGeofence(input);
+}
+
+export async function updateGeofence(
+  id: string,
+  input: Partial<Pick<GeofenceRecord, "name" | "radius" | "triggers">>,
+): Promise<GeofenceRecord | undefined> {
+  const existing = (await listGeofences()).find((g) => g.id === id);
+  if (!existing) return undefined;
+  const stored = patchStoredGeofence(id, input);
+  if (stored) return stored;
+  patchGeofenceFields(id, input);
+  return { ...existing, ...input };
 }

@@ -171,6 +171,20 @@ export function createStoredRole(input: {
   return row;
 }
 
+export function patchStoredRole(id: string, patch: { name?: string }): StoredRole | null {
+  if (!g.__tsmRoles) return null;
+  const row = g.__tsmRoles.find((r) => r.id === id);
+  if (!row) return null;
+  if (patch.name !== undefined) row.name = patch.name.trim();
+  logActivity({
+    shipmentId: "",
+    type: "role.updated",
+    message: row.name,
+    timestamp: new Date().toISOString(),
+  });
+  return row;
+}
+
 export function listStoredSettingsGroups(): StoredSettingsGroup[] {
   if (!g.__tsmSettingsGroups) g.__tsmSettingsGroups = [];
   return [...g.__tsmSettingsGroups];
@@ -191,6 +205,24 @@ export function createStoredSettingsGroup(input: {
   logActivity({
     shipmentId: "",
     type: "settings_group.created",
+    message: row.name,
+    timestamp: new Date().toISOString(),
+  });
+  return row;
+}
+
+export function patchStoredSettingsGroup(
+  id: string,
+  patch: { name?: string; policy?: string },
+): StoredSettingsGroup | null {
+  if (!g.__tsmSettingsGroups) return null;
+  const row = g.__tsmSettingsGroups.find((item) => item.id === id);
+  if (!row) return null;
+  if (patch.name !== undefined) row.name = patch.name.trim();
+  if (patch.policy !== undefined) row.policy = patch.policy.trim();
+  logActivity({
+    shipmentId: "",
+    type: "settings_group.updated",
     message: row.name,
     timestamp: new Date().toISOString(),
   });

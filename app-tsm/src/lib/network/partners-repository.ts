@@ -9,6 +9,7 @@ import {
   listStoredPartners,
   verifyStoredPartner,
 } from "@/lib/mutations/entity-stores";
+import { isPartnerVerifiedOverride, markPartnerVerifiedOverride } from "@/lib/mutations/sprint10-store";
 
 export type PartnerRecord = {
   id: string;
@@ -32,6 +33,7 @@ export async function listPartners(q?: string): Promise<PartnerRecord[]> {
     ...listStoredPartners(),
     ...demoPartners.map((p, index) => ({
       ...p,
+      verified: p.verified || isPartnerVerifiedOverride(p.id),
       trips: p.trips + Math.max(0, Math.floor(networkTrips / demoPartners.length) - index),
       activeAssignments: Math.floor(assignments.length / demoPartners.length),
     })),
@@ -63,7 +65,7 @@ export async function verifyPartner(id: string): Promise<PartnerRecord | undefin
   if (stored) return stored;
   const partner = await getPartner(id);
   if (!partner) return undefined;
-  // Demo partners: treat verify as soft success by returning verified copy
+  markPartnerVerifiedOverride(id);
   return { ...partner, verified: true };
 }
 

@@ -1,8 +1,8 @@
 import { PageHeader } from "@/components/app/app-shell";
 import { SettingsNav } from "@/components/app/settings-nav";
 import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 import { getReportSchedules } from "@/lib/settings/config-repository";
+import { CreateReportScheduleForm } from "@/components/app/sprint8-forms";
 
 export default async function SettingsReportsPage() {
   const schedules = await getReportSchedules();
@@ -19,9 +19,7 @@ export default async function SettingsReportsPage() {
               {s.recipients}
             </p>
           ))}
-          <Button variant="outline" size="sm">
-            Add schedule
-          </Button>
+          <CreateReportScheduleForm />
         </CardContent>
       </Card>
     </>

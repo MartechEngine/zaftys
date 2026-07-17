@@ -2,6 +2,7 @@ import { PageHeader } from "@/components/app/app-shell";
 import { SettingsNav } from "@/components/app/settings-nav";
 import { Card, CardContent } from "@/components/ui/card";
 import { getRoutingSettings } from "@/lib/settings/config-repository";
+import { ConfigToggleForm } from "@/components/app/config-toggle-form";
 
 export default async function SettingsRoutingPage() {
   const settings = await getRoutingSettings();
@@ -26,6 +27,12 @@ export default async function SettingsRoutingPage() {
             <span className="text-muted-foreground">Avoid tolls</span> ·{" "}
             {settings.avoidTolls ? "Yes" : "No"}
           </p>
+          <ConfigToggleForm
+            section="routing"
+            field="avoidTolls"
+            label="avoid tolls"
+            current={settings.avoidTolls}
+          />
         </CardContent>
       </Card>
     </>

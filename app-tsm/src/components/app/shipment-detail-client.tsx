@@ -11,6 +11,7 @@ import { ShipmentDocumentUpload } from "@/components/app/shipment-document-uploa
 import { ShipmentDetailMap } from "@/components/app/shipment-detail-map";
 import { ShipmentNotesPanel } from "@/components/app/shipment-notes-panel";
 import { OriginBadge, ShipmentStatusChip } from "@/components/app/status-chip";
+import { EditShipmentFieldsForm } from "@/components/app/sprint8-forms";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { api, type ActivityEvent } from "@/lib/api-client";
@@ -155,6 +156,7 @@ export function ShipmentDetailClient({ shipment }: { shipment: ShipmentRecord })
             Send to overflow
           </Button>
         )}
+        <EditShipmentFieldsForm shipment={current} onUpdated={setCurrent} />
       </div>
 
       <div className="mb-6 flex gap-2 border-b border-white/10 pb-2">

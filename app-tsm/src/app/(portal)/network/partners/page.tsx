@@ -5,6 +5,7 @@ import { DataTable, SearchFilterBar } from "@/components/app/data-table";
 import { listPartners } from "@/lib/network/partners-repository";
 import { NETWORK_NAV } from "@/lib/module-nav";
 import { CreatePartnerForm } from "@/components/app/module-create-forms";
+import { VerifyPartnerButton } from "@/components/app/sprint10-forms";
 
 export default async function NetworkPartnersPage({
   searchParams,
@@ -34,7 +35,7 @@ export default async function NetworkPartnersPage({
           {
             key: "verified",
             header: "Verified",
-            render: (r) => (r.verified ? "✓ Yes" : "Pending"),
+            render: (r) => <VerifyPartnerButton id={r.id} verified={r.verified} />,
           },
           { key: "trips", header: "Trips (30d)", render: (r) => r.trips },
           { key: "onTime", header: "On-time", render: (r) => r.onTime },

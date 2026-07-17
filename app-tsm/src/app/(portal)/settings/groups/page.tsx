@@ -3,6 +3,7 @@ import { SettingsNav } from "@/components/app/settings-nav";
 import { DataTable } from "@/components/app/data-table";
 import { listSettingsGroups } from "@/lib/settings/groups-repository";
 import { CreateSettingsGroupForm } from "@/components/app/module-create-forms";
+import { EditGroupPolicyButton } from "@/components/app/sprint11-forms";
 
 export default async function SettingsGroupsPage() {
   const groups = await listSettingsGroups();
@@ -21,6 +22,11 @@ export default async function SettingsGroupsPage() {
           { key: "name", header: "Group", render: (r) => r.name },
           { key: "members", header: "Members", render: (r) => r.members },
           { key: "policy", header: "Policy", render: (r) => r.policy },
+          {
+            key: "actions",
+            header: "",
+            render: (r) => <EditGroupPolicyButton id={r.id} policy={r.policy} />,
+          },
         ]}
       />
     </>

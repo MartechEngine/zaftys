@@ -6,7 +6,7 @@ import { DataTable, StatusPill } from "@/components/app/data-table";
 import { listDevices } from "@/lib/integrations/integrations-repository";
 import { listVehicles } from "@/lib/data/shipment-repository";
 import { FLEET_NAV } from "@/lib/module-nav";
-import { Button } from "@/components/ui/button";
+import { AssignDeviceForm } from "@/components/app/sprint7-forms";
 
 const deviceStatus = {
   online: { label: "Online", className: "bg-emerald-100 text-emerald-800" },
@@ -26,7 +26,11 @@ export default async function VehicleDevicesPage({
 
   return (
     <>
-      <PageHeader title="Telematics devices" description={vehicle.registration} action={<Button variant="accent" size="sm">Assign device</Button>} />
+      <PageHeader
+        title="Telematics devices"
+        description={vehicle.registration}
+        action={<AssignDeviceForm defaultVehicle={vehicle.registration} />}
+      />
       <ModuleSubNav links={FLEET_NAV} />
       <DataTable
         rows={devices}

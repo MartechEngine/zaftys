@@ -1,7 +1,7 @@
 import { demoGstSummary, demoServiceRates } from "@/lib/demo-data";
 import { listInvoices } from "@/lib/billing/invoice-repository";
 import { fetchAllShipmentsRaw } from "@/lib/data/shipment-repository";
-import { createStoredRate, listStoredRates } from "@/lib/billing/rates-store";
+import { createStoredRate, listStoredRates, getRatePatch, patchStoredRate } from "@/lib/billing/rates-store";
 
 export type ServiceRate = {
   id: string;
@@ -68,10 +68,14 @@ export async function listServiceRates(): Promise<ServiceRate[]> {
     ...rate,
     shipmentCount: shipments.filter((s) => rateMatchesShipment(rate, s)).length,
   }));
-  const demo = demoServiceRates.map((rate) => ({
-    ...rate,
-    shipmentCount: shipments.filter((s) => rateMatchesShipment(rate, s)).length,
-  }));
+  const demo = demoServiceRates.map((rate) => {
+    const patch = getRatePatch(rate.id);
+    const merged = patch ? { ...rate, ...patch, id: rate.id } : rate;
+    return {
+      ...merged,
+      shipmentCount: shipments.filter((s) => rateMatchesShipment(merged, s)).length,
+    };
+  });
   return [...stored, ...demo];
 }
 
@@ -88,6 +92,28 @@ export async function getServiceRate(id: string) {
   const applied = shipments.filter((s) => rateMatchesShipment(rate, s)).slice(0, 5);
 
   return { rate, appliedShipments: applied };
+}
+
+export function validatePatchServiceRateInput(
+  body: unknown,
+): CreateServiceRateInput | { error: string } {
+  return validateCreateServiceRateInput(body);
+}
+
+export async function patchServiceRate(
+  id: string,
+  input: CreateServiceRateInput,
+): Promise<ServiceRate | undefined> {
+  const existing = await getServiceRate(id);
+  if (!existing) return undefined;
+  patchStoredRate(id, {
+    name: input.name,
+    basis: input.basis,
+    rate: input.rate,
+    minCharge: input.minCharge ?? "—",
+  });
+  const updated = await getServiceRate(id);
+  return updated?.rate;
 }
 
 export async function getGstSummary() {

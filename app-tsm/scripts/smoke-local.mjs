@@ -5,7 +5,7 @@ const BASE = process.env.SMOKE_BASE_URL ?? "http://localhost:3000";
 const EMAIL = process.env.SMOKE_EMAIL ?? "dispatcher@zaftys.com";
 const PASSWORD = process.env.SMOKE_PASSWORD ?? "dev";
 
-const routes = [
+  const routes = [
   "/api/health",
   "/api/dashboard/kpis",
   "/api/shipments?tab=active",
@@ -66,6 +66,11 @@ const routes = [
   "/api/integrations/tally",
   "/api/fleet/drivers/d1/invite",
   "/api/reports/custom",
+  "/api/settings/report-schedules",
+  "/api/notifications",
+  "/api/reports/lanes",
+  "/api/settings/config?section=payments",
+  "/api/documents",
 ];
 
 async function login() {
@@ -330,6 +335,159 @@ async function main() {
         "POST",
         "/api/fleet/drivers/d1/invite",
         {},
+      ),
+    () =>
+      writeCheck("POST /api/integrations/tally", cookie, "POST", "/api/integrations/tally", {}),
+    () =>
+      writeCheck("POST /api/reports/custom", cookie, "POST", "/api/reports/custom", {
+        name: `Smoke Report ${Date.now().toString(36)}`,
+        description: "Smoke custom report",
+      }),
+    () =>
+      writeCheck("PATCH /api/vendors/vnd1", cookie, "PATCH", "/api/vendors/vnd1", {
+        city: "Nagpur",
+      }),
+    () =>
+      writeCheck("PATCH /api/fleet/drivers/d1", cookie, "PATCH", "/api/fleet/drivers/d1", {
+        phone: "+91 90000 11111",
+      }),
+    () =>
+      writeCheck("PATCH /api/fleet/vehicles/v1", cookie, "PATCH", "/api/fleet/vehicles/v1", {
+        capacityMt: 32,
+      }),
+    () =>
+      writeCheck("PATCH /api/shipments/1", cookie, "PATCH", "/api/shipments/1", {
+        commodity: "Cement",
+        tonnageMt: 32,
+      }),
+    () =>
+      writeCheck("PATCH /api/billing/rates/sr1", cookie, "PATCH", "/api/billing/rates/sr1", {
+        name: "Amravati – Nagpur (cement)",
+        basis: "Per MT · zone",
+        rate: "₹420/MT",
+        minCharge: "₹8,400",
+      }),
+    () =>
+      writeCheck(
+        "POST /api/settings/report-schedules",
+        cookie,
+        "POST",
+        "/api/settings/report-schedules",
+        {
+          name: `Smoke Schedule ${Date.now().toString(36)}`,
+          cadence: "Daily 08:00",
+          recipients: "smoke@zaftys.com",
+        },
+      ),
+    () =>
+      writeCheck("POST /api/fleet/drivers", cookie, "POST", "/api/fleet/drivers", {
+        name: `Smoke Driver ${Date.now().toString(36)}`,
+        phone: "+91 90000 22222",
+      }),
+    () =>
+      writeCheck("POST /api/fleet/vehicles", cookie, "POST", "/api/fleet/vehicles", {
+        registration: `MH-27-SM-${Date.now().toString().slice(-4)}`,
+        type: "Multi-axle",
+      }),
+    () =>
+      writeCheck("PATCH /api/notifications", cookie, "PATCH", "/api/notifications", {
+        all: true,
+      }),
+    () =>
+      writeCheck("POST /api/shipments/bulk", cookie, "POST", "/api/shipments/bulk", {
+        ids: ["1"],
+        status: "at_weighbridge",
+      }),
+    () =>
+      writeCheck(
+        "PATCH /api/settings/config payments",
+        cookie,
+        "PATCH",
+        "/api/settings/config",
+        {
+          section: "payments",
+          values: { gatewaysEnabled: false },
+        },
+      ),
+    () =>
+      writeCheck(
+        "POST /api/shipments/quotes/q1/accept",
+        cookie,
+        "POST",
+        "/api/shipments/quotes/q1/accept",
+        {},
+      ),
+    () =>
+      writeCheck("POST /api/fleet/issues", cookie, "POST", "/api/fleet/issues", {
+        vehicle: "MH-27-AB-1234",
+        driver: "Smoke Driver",
+        issue: "Smoke tyre check",
+        severity: "low",
+      }),
+    () =>
+      writeCheck("PATCH /api/fleet/issues", cookie, "PATCH", "/api/fleet/issues", {
+        id: "fi1",
+        action: "resolve",
+      }),
+    () =>
+      writeCheck("PATCH /api/fleet/compliance", cookie, "PATCH", "/api/fleet/compliance", {
+        id: "cd1",
+        status: "valid",
+      }),
+    () =>
+      writeCheck("PATCH /api/network/partners/p3", cookie, "PATCH", "/api/network/partners/p3", {
+        verify: true,
+      }),
+    () =>
+      writeCheck("PATCH /api/settings/users/u4", cookie, "PATCH", "/api/settings/users/u4", {
+        activate: true,
+      }),
+    () =>
+      writeCheck(
+        "POST /api/reports/custom/cr-ops/run",
+        cookie,
+        "POST",
+        "/api/reports/custom/cr-ops/run",
+        {},
+      ),
+    () =>
+      writeCheck("PATCH /api/shipments/quotes/q2", cookie, "PATCH", "/api/shipments/quotes/q2", {
+        status: "sent",
+      }),
+    () =>
+      writeCheck("POST /api/integrations/traccar", cookie, "POST", "/api/integrations/traccar", {}),
+    () =>
+      writeCheck("PATCH /api/settings/roles/r2", cookie, "PATCH", "/api/settings/roles/r2", {
+        name: "Dispatcher",
+      }),
+    () =>
+      writeCheck("PATCH /api/settings/groups/gr1", cookie, "PATCH", "/api/settings/groups/gr1", {
+        policy: "Dispatcher",
+      }),
+    () =>
+      writeCheck("PATCH /api/fleet/equipment", cookie, "PATCH", "/api/fleet/equipment", {
+        id: "eq3",
+        status: "active",
+      }),
+    () =>
+      writeCheck("PATCH /api/settings/geofences", cookie, "PATCH", "/api/settings/geofences", {
+        id: "gf1",
+        radius: "550m",
+      }),
+    () =>
+      writeCheck("PATCH /api/fleet/places/pl1", cookie, "PATCH", "/api/fleet/places/pl1", {
+        geofence: "520m",
+      }),
+    () =>
+      writeCheck(
+        "PATCH /api/settings/order-types/ot1/flow",
+        cookie,
+        "PATCH",
+        "/api/settings/order-types/ot1/flow",
+        {
+          statusFlow:
+            "pending → dispatched → at_plant → in_transit → at_weighbridge → delivered",
+        },
       ),
   ];
 

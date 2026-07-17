@@ -58,9 +58,13 @@ export function validateCreateVendorInput(body: unknown): CreateVendorInput | { 
 }
 
 export async function listVendors(q?: string): Promise<VendorRecord[]> {
+  const { getVendorPatch } = await import("@/lib/mutations/fleet-entity-store");
   const stored = listStoredVendors().map((v) => ({ ...v, ...vendorStats(v.name) }));
   const demo = demoVendors.map((v) => ({ ...v, ...vendorStats(v.name) }));
-  let vendors = [...stored, ...demo];
+  let vendors = [...stored, ...demo].map((v) => {
+    const patch = getVendorPatch(v.id);
+    return patch ? { ...v, ...patch, id: v.id } : v;
+  });
 
   if (q?.trim()) {
     const needle = q.trim().toLowerCase();
@@ -89,6 +93,39 @@ export async function getVendor(id: string) {
   const vendor = (await listVendors()).find((v) => v.id === id);
   if (!vendor) return undefined;
 
-  const workOrders = allWorkOrders().filter((wo) => wo.vendor === vendor.name);
-  return { vendor, workOrders };
+  const { getVendorPatch } = await import("@/lib/mutations/fleet-entity-store");
+  const patch = getVendorPatch(id);
+  const merged = patch ? { ...vendor, ...patch, id: vendor.id } : vendor;
+
+  const workOrders = allWorkOrders().filter((wo) => wo.vendor === merged.name);
+  return { vendor: merged, workOrders };
+}
+
+export function validatePatchVendorInput(
+  body: unknown,
+): { name?: string; type?: string; city?: string; contact?: string } | { error: string } {
+  if (!body || typeof body !== "object") return { error: "Body must be an object." };
+  const data = body as Record<string, unknown>;
+  const patch: { name?: string; type?: string; city?: string; contact?: string } = {};
+  if (data.name !== undefined) {
+    const name = String(data.name).trim();
+    if (!name) return { error: "Name cannot be empty." };
+    patch.name = name;
+  }
+  if (data.type !== undefined) patch.type = String(data.type).trim() || undefined;
+  if (data.city !== undefined) patch.city = String(data.city).trim() || undefined;
+  if (data.contact !== undefined) patch.contact = String(data.contact).trim() || undefined;
+  if (Object.keys(patch).length === 0) return { error: "Provide at least one field." };
+  return patch;
+}
+
+export async function patchVendor(
+  id: string,
+  input: { name?: string; type?: string; city?: string; contact?: string },
+) {
+  const existing = await getVendor(id);
+  if (!existing) return undefined;
+  const { patchStoredVendor } = await import("@/lib/mutations/fleet-entity-store");
+  patchStoredVendor(id, input);
+  return getVendor(id);
 }

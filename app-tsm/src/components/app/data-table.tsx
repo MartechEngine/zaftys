@@ -68,26 +68,7 @@ export function DataTable<T extends { id: string }>({
   );
 }
 
-export function SearchFilterBar({
-  placeholder = "Search…",
-  children,
-}: {
-  placeholder?: string;
-  children?: ReactNode;
-}) {
-  return (
-    <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-      <input
-        type="search"
-        placeholder={placeholder}
-        className="h-9 w-full max-w-sm rounded-xl border border-white/10 bg-white/[0.05] px-3 text-sm text-body outline-none backdrop-blur-sm placeholder:text-subtle focus:border-primary/40 focus:ring-2 focus:ring-primary/20 sm:w-72"
-        readOnly
-        aria-label="Search"
-      />
-      {children}
-    </div>
-  );
-}
+export { SearchFilterBar } from "@/components/app/search-filter-bar";
 
 export function HubCard({
   href,

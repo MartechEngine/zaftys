@@ -1,6 +1,10 @@
 import { getOperationsReport, getDriverScorecards } from "@/lib/reports/operations-report";
 import { getFleetUtilizationReport } from "@/lib/reports/fleet-report";
 import { listInvoices } from "@/lib/billing/invoice-repository";
+import {
+  createStoredCustomReport,
+  listStoredCustomReports,
+} from "@/lib/mutations/fleet-entity-store";
 
 export type CustomReportDefinition = {
   id: string;
@@ -19,7 +23,7 @@ export async function listCustomReportDefinitions(): Promise<CustomReportDefinit
     listInvoices(),
   ]);
 
-  return [
+  const catalog: CustomReportDefinition[] = [
     {
       id: "cr-ops",
       name: "Operations summary",
@@ -61,4 +65,43 @@ export async function listCustomReportDefinitions(): Promise<CustomReportDefinit
       status: "planned",
     },
   ];
+
+  return [...listStoredCustomReports(), ...catalog];
+}
+
+export function validateCreateCustomReportInput(
+  body: unknown,
+): { name: string; description?: string } | { error: string } {
+  if (!body || typeof body !== "object") return { error: "Body must be an object." };
+  const data = body as Record<string, unknown>;
+  const name = String(data.name ?? "").trim();
+  if (!name) return { error: "Report name is required." };
+  return {
+    name,
+    description: String(data.description ?? "").trim() || undefined,
+  };
+}
+
+export async function createCustomReport(input: {
+  name: string;
+  description?: string;
+}) {
+  return createStoredCustomReport(input);
+}
+
+export async function runCustomReport(id: string) {
+  const reports = await listCustomReportDefinitions();
+  const report = reports.find((r) => r.id === id);
+  if (!report) return null;
+  if (report.status !== "ready") {
+    return { error: "Report is not ready to run." as const };
+  }
+
+  const { recordCustomReportRun } = await import("@/lib/mutations/sprint10-store");
+  const run = recordCustomReportRun({
+    reportId: report.id,
+    name: report.name,
+    metric: report.metric,
+  });
+  return { report, run };
 }

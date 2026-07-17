@@ -7,7 +7,7 @@ import { ShipmentStatusChip } from "@/components/app/status-chip";
 import { Card, CardContent } from "@/components/ui/card";
 import { getClient, listClientShipments } from "@/lib/clients/client-repository";
 import { CLIENTS_NAV } from "@/lib/module-nav";
-import { Button } from "@/components/ui/button";
+import { EditClientForm } from "@/components/app/config-toggle-form";
 
 export default async function ClientDetailPage({
   params,
@@ -31,7 +31,7 @@ export default async function ClientDetailPage({
       <PageHeader
         title={client.name}
         description={[client.city, client.gstin].filter(Boolean).join(" · ") || "Shipper account"}
-        action={<Button variant="outline">Edit client</Button>}
+        action={<EditClientForm client={client} />}
       />
       <ModuleSubNav links={CLIENTS_NAV(id)} />
       <div className="grid gap-4 md:grid-cols-2">

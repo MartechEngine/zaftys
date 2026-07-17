@@ -3,7 +3,9 @@ import { listOrgUsers } from "@/lib/settings/users-repository";
 import {
   createStoredRole,
   listStoredRoles,
+  patchStoredRole,
 } from "@/lib/mutations/entity-stores";
+import { getRolePatch, patchRoleFields } from "@/lib/mutations/sprint11-store";
 
 export type OrgRoleRecord = {
   id: string;
@@ -29,8 +31,10 @@ export async function listOrgRoles(): Promise<OrgRoleRecord[]> {
 
   const demo = demoRoles.map((r) => {
     const count = users.filter((u) => matchesRole(u.role, r.name)).length;
+    const patch = getRolePatch(r.id);
     return {
       ...r,
+      ...patch,
       users: count > 0 ? count : r.users,
     };
   });
@@ -53,4 +57,16 @@ export async function createOrgRole(name: string): Promise<OrgRoleRecord> {
 
 export async function getOrgRole(id: string): Promise<OrgRoleRecord | undefined> {
   return (await listOrgRoles()).find((r) => r.id === id);
+}
+
+export async function patchOrgRole(
+  id: string,
+  input: { name: string },
+): Promise<OrgRoleRecord | undefined> {
+  const existing = await getOrgRole(id);
+  if (!existing) return undefined;
+  const stored = patchStoredRole(id, input);
+  if (stored) return stored;
+  patchRoleFields(id, input);
+  return { ...existing, name: input.name };
 }

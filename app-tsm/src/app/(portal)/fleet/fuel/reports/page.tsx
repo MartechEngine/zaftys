@@ -2,6 +2,7 @@ import Link from "next/link";
 import { PageHeader } from "@/components/app/app-shell";
 import { ModuleSubNav } from "@/components/app/module-sub-nav";
 import { DataTable } from "@/components/app/data-table";
+import { Button } from "@/components/ui/button";
 import { listFuelReports } from "@/lib/fleet/fuel-repository";
 import { FLEET_NAV } from "@/lib/module-nav";
 
@@ -10,15 +11,29 @@ export default async function FuelReportsPage() {
 
   return (
     <>
-      <PageHeader title="Fuel reports" description="Consumption and cost per km by vehicle" />
+      <PageHeader
+        title="Fuel reports"
+        description="Consumption and cost per km by vehicle"
+        action={
+          <Button variant="outline" size="sm" asChild>
+            <a href="/api/fleet/fuel/reports?format=csv">Export CSV</a>
+          </Button>
+        }
+      />
       <ModuleSubNav links={FLEET_NAV} />
       <p className="mb-4 text-sm">
-        <Link href="/fleet/fuel/transactions" className="text-link hover:underline">← Fuel transactions</Link>
+        <Link href="/fleet/fuel/transactions" className="text-link hover:underline">
+          ← Fuel transactions
+        </Link>
       </p>
       <DataTable
         rows={reports}
         columns={[
-          { key: "vehicle", header: "Vehicle", render: (r) => <span className="font-mono">{r.vehicle}</span> },
+          {
+            key: "vehicle",
+            header: "Vehicle",
+            render: (r) => <span className="font-mono">{r.vehicle}</span>,
+          },
           { key: "period", header: "Period", render: (r) => r.period },
           { key: "litersTotal", header: "Liters", render: (r) => r.litersTotal },
           { key: "kmPerLiter", header: "km/L", render: (r) => r.kmPerLiter },

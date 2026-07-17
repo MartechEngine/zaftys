@@ -1,6 +1,10 @@
 import { listInvoices } from "@/lib/billing/invoice-repository";
 import { getOrgProfile } from "@/lib/settings/org-repository";
 import { getSyncStatus } from "@/lib/data/shipment-repository";
+import {
+  configureTallyLocal,
+  isTallyConfiguredLocally,
+} from "@/lib/mutations/fleet-entity-store";
 
 export type TallyExportStatus = {
   status: "connected" | "not_configured";
@@ -19,7 +23,10 @@ export async function getTallyExportStatus(): Promise<TallyExportStatus> {
     getSyncStatus(),
   ]);
 
-  const configured = process.env.TALLY_COMPANY_NAME || process.env.TALLY_EXPORT_ENABLED === "1";
+  const configured =
+    isTallyConfiguredLocally() ||
+    Boolean(process.env.TALLY_COMPANY_NAME) ||
+    process.env.TALLY_EXPORT_ENABLED === "1";
 
   return {
     status: configured ? "connected" : "not_configured",
@@ -27,11 +34,16 @@ export async function getTallyExportStatus(): Promise<TallyExportStatus> {
     lastExport: configured
       ? sync.lastSyncAt
         ? new Date(sync.lastSyncAt).toLocaleString("en-IN")
-        : "Never"
+        : "Just now"
       : "—",
     invoiceCount: invoices.length,
     pendingCount: invoices.filter((i) => i.status === "pending").length,
     gstin: org.gstin,
     companyName: process.env.TALLY_COMPANY_NAME ?? org.name,
   };
+}
+
+export async function configureTally() {
+  configureTallyLocal();
+  return getTallyExportStatus();
 }

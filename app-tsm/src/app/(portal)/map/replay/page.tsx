@@ -4,8 +4,16 @@ import { Card, CardContent } from "@/components/ui/card";
 import { getJourneyReplay, listReplayCandidates } from "@/lib/map/replay-repository";
 import { JourneyReplayControls } from "@/components/app/journey-replay-controls";
 
-export default async function MapReplayPage() {
-  const [replay, candidates] = await Promise.all([getJourneyReplay(), listReplayCandidates()]);
+export default async function MapReplayPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ shipmentId?: string }>;
+}) {
+  const { shipmentId } = await searchParams;
+  const [replay, candidates] = await Promise.all([
+    getJourneyReplay(shipmentId),
+    listReplayCandidates(),
+  ]);
 
   return (
     <>
@@ -32,7 +40,18 @@ export default async function MapReplayPage() {
                 <ul className="mt-3 space-y-2 text-muted-foreground">
                   {candidates.slice(0, 5).map((c) => (
                     <li key={c.shipmentId}>
-                      {c.publicId} · {c.route} · {c.vehicle}
+                      {c.shipmentId === replay.shipmentId ? (
+                        <span className="font-medium text-navy">
+                          {c.publicId} · {c.route} · {c.vehicle} (playing)
+                        </span>
+                      ) : (
+                        <Link
+                          href={`/map/replay?shipmentId=${c.shipmentId}`}
+                          className="text-link hover:underline"
+                        >
+                          {c.publicId} · {c.route} · {c.vehicle}
+                        </Link>
+                      )}
                     </li>
                   ))}
                 </ul>

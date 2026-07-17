@@ -15,8 +15,10 @@ import {
   syncStatus as devSyncStatus,
   tickActiveGeo as devTickGeo,
   updateShipmentStatus as devUpdateStatus,
+  updateShipmentFields as devUpdateFields,
   logActivity,
 } from "@/lib/dev-store";
+import type { ShipmentFieldsPatch } from "@/lib/dev-store";
 import { getSyncState } from "@/lib/sync/sync-state";
 import { getFleetbaseClient } from "@/lib/fleetbase/client";
 import { buildFleetbaseCreatePayload, mapFleetbaseOrder, mapFleetbaseDriver, mapFleetbaseVehicle, toFleetbaseStatus } from "@/lib/fleetbase/mapper";
@@ -239,6 +241,15 @@ export async function updateShipmentStatus(id: string, status: ShipmentStatus) {
   return updated;
 }
 
+export async function updateShipmentFields(id: string, patch: ShipmentFieldsPatch) {
+  const existing = await getShipment(id);
+  if (!existing) return null;
+  if (["delivered", "cancelled"].includes(existing.status)) {
+    throw new Error(`Cannot edit a ${existing.status} shipment.`);
+  }
+  return devUpdateFields(id, patch);
+}
+
 export async function listAllDocuments(filters?: {
   q?: string;
   type?: string;
@@ -283,27 +294,55 @@ export function addShipmentNote(shipmentId: string, author: string, body: string
 }
 
 export async function listDrivers() {
+  const {
+    listStoredDrivers,
+    getDriverPatch,
+  } = await import("@/lib/mutations/fleet-entity-store");
+
+  let base: Awaited<ReturnType<typeof devListDrivers>>;
   if (getActiveDataSource() === "fleetbase") {
     try {
       const raw = await getFleetbaseClient().listDrivers(100);
-      return raw.map((d) => mapFleetbaseDriver(d as Record<string, unknown>));
+      base = raw.map((d) => mapFleetbaseDriver(d as Record<string, unknown>));
     } catch (e) {
       console.warn("[drivers] Fleetbase fallback:", e);
+      base = devListDrivers();
     }
+  } else {
+    base = devListDrivers();
   }
-  return devListDrivers();
+
+  const merged = [...listStoredDrivers(), ...base].map((d) => {
+    const patch = getDriverPatch(d.id);
+    return patch ? { ...d, ...patch, id: d.id } : d;
+  });
+  return merged;
 }
 
 export async function listVehicles() {
+  const {
+    listStoredVehicles,
+    getVehiclePatch,
+  } = await import("@/lib/mutations/fleet-entity-store");
+
+  let base: Awaited<ReturnType<typeof devListVehicles>>;
   if (getActiveDataSource() === "fleetbase") {
     try {
       const raw = await getFleetbaseClient().listVehicles(100);
-      return raw.map((v) => mapFleetbaseVehicle(v as Record<string, unknown>));
+      base = raw.map((v) => mapFleetbaseVehicle(v as Record<string, unknown>));
     } catch (e) {
       console.warn("[vehicles] Fleetbase fallback:", e);
+      base = devListVehicles();
     }
+  } else {
+    base = devListVehicles();
   }
-  return devListVehicles();
+
+  const merged = [...listStoredVehicles(), ...base].map((v) => {
+    const patch = getVehiclePatch(v.id);
+    return patch ? { ...v, ...patch, id: v.id } : v;
+  });
+  return merged;
 }
 
 export async function getAssignOptions(shipmentId: string) {

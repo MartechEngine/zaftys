@@ -3,6 +3,7 @@ import { ModuleSubNav } from "@/components/app/module-sub-nav";
 import { DataTable, StatusPill } from "@/components/app/data-table";
 import { getComplianceSummary, listComplianceDocs } from "@/lib/fleet/compliance-repository";
 import { FLEET_NAV } from "@/lib/module-nav";
+import { RenewComplianceButton } from "@/components/app/sprint10-forms";
 
 const docStatus = {
   valid: { label: "Valid", className: "bg-emerald-100 text-emerald-800" },
@@ -34,6 +35,11 @@ export default async function FleetCompliancePage() {
             key: "status",
             header: "Status",
             render: (r) => <StatusPill status={r.status} map={docStatus} />,
+          },
+          {
+            key: "actions",
+            header: "",
+            render: (r) => <RenewComplianceButton id={r.id} status={r.status} />,
           },
         ]}
       />

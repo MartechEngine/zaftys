@@ -3,6 +3,7 @@ import { PageHeader } from "@/components/app/app-shell";
 import { SettingsNav } from "@/components/app/settings-nav";
 import { Card, CardContent } from "@/components/ui/card";
 import { getBillingTemplateSettings } from "@/lib/settings/config-repository";
+import { ConfigToggleForm } from "@/components/app/config-toggle-form";
 
 export default async function SettingsBillingPage() {
   const settings = await getBillingTemplateSettings();
@@ -36,6 +37,12 @@ export default async function SettingsBillingPage() {
               Billing →
             </Link>
           </p>
+          <ConfigToggleForm
+            section="billing"
+            field="autoInvoiceOnDelivery"
+            label="auto-invoice"
+            current={settings.autoInvoiceOnDelivery}
+          />
         </CardContent>
       </Card>
     </>

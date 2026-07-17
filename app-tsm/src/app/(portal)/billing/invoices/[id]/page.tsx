@@ -7,8 +7,8 @@ import { DataTable, StatusPill } from "@/components/app/data-table";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { getInvoice } from "@/lib/billing/invoice-repository";
 import { BILLING_NAV } from "@/lib/module-nav";
-import { Button } from "@/components/ui/button";
 import { InvoiceStatusActions } from "@/components/app/invoice-status-actions";
+import { InvoicePdfButton } from "@/components/app/sprint8-forms";
 
 const invStatus = {
   pending: { label: "Pending", className: "bg-amber-500/15 text-amber-200" },
@@ -38,9 +38,7 @@ export default async function BillingInvoiceDetailPage({
         description={`${invoice.client} · due ${invoice.due}`}
         action={
           <div className="flex gap-2">
-            <Button variant="outline" disabled>
-              Download PDF
-            </Button>
+            <InvoicePdfButton invoiceId={invoice.id} number={invoice.number} />
             <InvoiceStatusActions id={invoice.id} status={invoice.status} />
           </div>
         }

@@ -3,9 +3,11 @@ import { listPlaces } from "@/lib/fleet/places-repository";
 import {
   createStoredEquipment,
   listStoredEquipment,
+  patchStoredEquipment,
   type EquipmentRecord,
   type EquipmentStatus,
 } from "@/lib/fleet/equipment-store";
+import { getEquipmentPatch, patchEquipmentFields } from "@/lib/mutations/sprint11-store";
 
 export type { EquipmentRecord, EquipmentStatus };
 
@@ -49,7 +51,10 @@ export async function listEquipment(): Promise<EquipmentRecord[]> {
       placeId: p.id,
     }));
 
-  const merged = [...listStoredEquipment(), ...demoEquipment, ...fromPlaces];
+  const merged = [...listStoredEquipment(), ...demoEquipment, ...fromPlaces].map((item) => {
+    const patch = getEquipmentPatch(item.id);
+    return patch ? { ...item, ...patch } : item;
+  });
   const seen = new Set<string>();
   return merged.filter((item) => {
     if (seen.has(item.id)) return false;
@@ -65,4 +70,16 @@ export async function createEquipment(input: CreateEquipmentInput): Promise<Equi
     ...input,
     placeId: place?.id,
   });
+}
+
+export async function updateEquipment(
+  id: string,
+  input: { location?: string; status?: EquipmentStatus },
+): Promise<EquipmentRecord | undefined> {
+  const existing = (await listEquipment()).find((e) => e.id === id);
+  if (!existing) return undefined;
+  const stored = patchStoredEquipment(id, input);
+  if (stored) return stored;
+  patchEquipmentFields(id, input);
+  return { ...existing, ...input };
 }

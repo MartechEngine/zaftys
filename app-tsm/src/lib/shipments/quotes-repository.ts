@@ -1,9 +1,11 @@
 import { demoQuotes } from "@/lib/demo-data";
-import { fetchAllShipmentsRaw } from "@/lib/data/shipment-repository";
+import { createShipment, fetchAllShipmentsRaw, getShipment } from "@/lib/data/shipment-repository";
 import {
   createStoredQuote,
+  linkQuoteToShipment,
   listStoredQuotes,
   updateStoredQuoteStatus,
+  upsertStoredQuote,
   type QuoteRecord,
 } from "@/lib/shipments/quotes-store";
 
@@ -26,6 +28,14 @@ function formatValidUntil(iso: string) {
   const d = new Date(iso);
   d.setDate(d.getDate() + 3);
   return d.toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" });
+}
+
+function parseRoute(route: string) {
+  const parts = route.split(/\s*→\s*|\s*-\s*/).map((p) => p.trim()).filter(Boolean);
+  return {
+    origin: parts[0] ?? "Unknown",
+    destination: parts[1] ?? parts[0] ?? "Unknown",
+  };
 }
 
 export function validateCreateQuoteInput(body: unknown): CreateQuoteInput | { error: string } {
@@ -74,13 +84,23 @@ export async function listQuotes(): Promise<QuoteRecord[]> {
     rateInr: parseInt(q.rate.replace(/[^\d]/g, ""), 10) || 0,
   }));
 
-  const merged = [...listStoredQuotes(), ...fromDemo, ...fromPending];
+  const stored = listStoredQuotes();
+  const storedIds = new Set(stored.map((q) => q.id));
+  const merged = [
+    ...stored,
+    ...fromDemo.filter((q) => !storedIds.has(q.id)),
+    ...fromPending.filter((q) => !storedIds.has(q.id)),
+  ];
   const seen = new Set<string>();
   return merged.filter((q) => {
     if (seen.has(q.id)) return false;
     seen.add(q.id);
     return true;
   });
+}
+
+export async function getQuote(id: string): Promise<QuoteRecord | undefined> {
+  return (await listQuotes()).find((q) => q.id === id);
 }
 
 export async function createQuote(input: CreateQuoteInput): Promise<QuoteRecord> {
@@ -97,19 +117,56 @@ export async function updateQuoteStatus(
   id: string,
   status: QuoteRecord["status"],
 ): Promise<QuoteRecord | undefined> {
+  if (status === "accepted") {
+    const result = await acceptQuote(id);
+    return result?.quote;
+  }
+
   const stored = updateStoredQuoteStatus(id, status);
   if (stored) return stored;
 
-  const all = await listQuotes();
-  const found = all.find((q) => q.id === id);
+  const found = await getQuote(id);
   if (!found) return undefined;
 
-  // Demo / derived quotes: promote into store with new status
-  return createStoredQuote({
-    client: found.client,
-    route: found.route,
-    tonnage: found.tonnage,
-    rateInr: found.rateInr,
-    status,
+  return upsertStoredQuote({ ...found, status });
+}
+
+export async function acceptQuote(id: string) {
+  const existing = await getQuote(id);
+  if (!existing) return null;
+
+  if (existing.status === "accepted" && existing.shipmentId) {
+    const shipment = await getShipment(existing.shipmentId);
+    return shipment ? { quote: existing, shipment } : null;
+  }
+
+  if (existing.shipmentId && existing.id.startsWith("q-ship-")) {
+    const shipment = await getShipment(existing.shipmentId);
+    if (!shipment) return null;
+    const quote = upsertStoredQuote({
+      ...existing,
+      status: "accepted",
+      shipmentId: shipment.id,
+    });
+    return { quote, shipment };
+  }
+
+  const { origin, destination } = parseRoute(existing.route);
+  const shipment = await createShipment({
+    client: existing.client,
+    origin,
+    destination,
+    commodity: "Quoted freight",
+    tonnageMt: existing.tonnage,
+    originType: "fleet",
   });
+  if (!shipment) return null;
+
+  upsertStoredQuote({ ...existing, status: "accepted", shipmentId: shipment.id });
+  const quote = linkQuoteToShipment(existing.id, shipment.id) ?? {
+    ...existing,
+    status: "accepted" as const,
+    shipmentId: shipment.id,
+  };
+  return { quote, shipment };
 }

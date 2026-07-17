@@ -7,6 +7,7 @@ import { ShipmentStatusChip } from "@/components/app/status-chip";
 import { Card, CardContent } from "@/components/ui/card";
 import { getServiceRate } from "@/lib/billing/rates-repository";
 import { BILLING_NAV } from "@/lib/module-nav";
+import { EditRateForm } from "@/components/app/sprint8-forms";
 
 export default async function BillingRateDetailPage({
   params,
@@ -28,7 +29,11 @@ export default async function BillingRateDetailPage({
           { label: rate.name },
         ]}
       />
-      <PageHeader title={rate.name} description={rate.basis} />
+      <PageHeader
+        title={rate.name}
+        description={rate.basis}
+        action={<EditRateForm rate={rate} />}
+      />
       <ModuleSubNav links={BILLING_NAV} />
       <div className="grid gap-4 md:grid-cols-2">
         <Card className="max-w-lg">

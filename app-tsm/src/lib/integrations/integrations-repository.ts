@@ -418,11 +418,24 @@ export async function getTraccarBridgeDetail(): Promise<TraccarBridgeDetail> {
   const devices = await listDevices();
   const traccarCount = devices.filter((d) => d.provider === "Traccar").length;
   const sync = await getSyncStatus();
+  const { getTraccarTestState } = await import("@/lib/mutations/sprint11-store");
+  const test = getTraccarTestState();
 
   return {
     serverUrl: process.env.TRACCAR_SERVER_URL ?? "https://gps.zaftys.internal",
     devicesSynced: traccarCount,
-    lastSync: sync.tranzfortConfigured ? formatRelative(sync.lastSyncAt) : "3 min ago",
-    status: traccarCount > 0 ? "connected" : "disconnected",
+    lastSync: test
+      ? formatRelative(test.lastTestAt)
+      : sync.tranzfortConfigured
+        ? formatRelative(sync.lastSyncAt)
+        : "3 min ago",
+    status: test?.status ?? (traccarCount > 0 ? "connected" : "disconnected"),
   };
+}
+
+export async function testTraccarConnection() {
+  const { recordTraccarTest } = await import("@/lib/mutations/sprint11-store");
+  const test = recordTraccarTest();
+  const detail = await getTraccarBridgeDetail();
+  return { ...detail, testedAt: test.lastTestAt };
 }

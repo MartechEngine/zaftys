@@ -9,7 +9,7 @@ import { DataTable } from "@/components/app/data-table";
 import { getVehicle } from "@/lib/data/fleet-repository";
 import { listDevices } from "@/lib/integrations/integrations-repository";
 import { FLEET_NAV } from "@/lib/module-nav";
-import { Button } from "@/components/ui/button";
+import { EditVehicleForm } from "@/components/app/sprint7-forms";
 
 export default async function VehicleDetailPage({
   params,
@@ -33,7 +33,7 @@ export default async function VehicleDetailPage({
       <PageHeader
         title={vehicle.registration}
         description={`${vehicle.type} · ${vehicle.capacityMt} MT capacity`}
-        action={<Button variant="outline">Edit</Button>}
+        action={<EditVehicleForm vehicle={vehicle} />}
       />
       <ModuleSubNav links={FLEET_NAV} />
       <div className="mb-4 text-sm">

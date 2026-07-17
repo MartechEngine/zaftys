@@ -3,6 +3,7 @@ import {
   inviteStoredOrgUser,
   listStoredOrgUsers,
 } from "@/lib/mutations/entity-stores";
+import { getOrgUserPatch, patchOrgUserFields } from "@/lib/mutations/sprint10-store";
 
 export type OrgUserRecord = {
   id: string;
@@ -20,9 +21,12 @@ export async function listOrgUsers(q?: string): Promise<OrgUserRecord[]> {
       name: u.name,
       email: u.email,
       role: u.role,
-      status: u.status,
+      status: u.status as "active" | "pending",
     })),
-  ];
+  ].map((u) => {
+    const patch = getOrgUserPatch(u.id);
+    return patch ? { ...u, ...patch } : u;
+  });
 
   if (q?.trim()) {
     const needle = q.trim().toLowerCase();
@@ -63,4 +67,22 @@ export async function inviteOrgUser(input: {
 
 export async function getOrgUser(id: string): Promise<OrgUserRecord | undefined> {
   return (await listOrgUsers()).find((u) => u.id === id);
+}
+
+export async function patchOrgUser(
+  id: string,
+  input: { status?: "active" | "pending"; role?: string },
+): Promise<OrgUserRecord | undefined> {
+  const user = await getOrgUser(id);
+  if (!user) return undefined;
+
+  const stored = listStoredOrgUsers().find((u) => u.id === id);
+  if (stored) {
+    if (input.status) stored.status = input.status;
+    if (input.role) stored.role = input.role;
+    return { ...stored };
+  }
+
+  patchOrgUserFields(id, input);
+  return { ...user, ...input };
 }

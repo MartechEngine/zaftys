@@ -3,6 +3,7 @@ import { SettingsNav } from "@/components/app/settings-nav";
 import { DataTable, StatusPill } from "@/components/app/data-table";
 import { listOrgUsers } from "@/lib/settings/users-repository";
 import { InviteOrgUserForm } from "@/components/app/module-create-forms";
+import { ActivateUserButton } from "@/components/app/sprint10-forms";
 
 const userStatus = {
   active: { label: "Active", className: "bg-emerald-100 text-emerald-800" },
@@ -30,6 +31,11 @@ export default async function SettingsUsersPage() {
             key: "status",
             header: "Status",
             render: (r) => <StatusPill status={r.status} map={userStatus} />,
+          },
+          {
+            key: "actions",
+            header: "",
+            render: (r) => <ActivateUserButton id={r.id} status={r.status} />,
           },
         ]}
       />

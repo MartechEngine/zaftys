@@ -3,6 +3,7 @@ import { ModuleSubNav } from "@/components/app/module-sub-nav";
 import { DataTable, StatusPill } from "@/components/app/data-table";
 import { listFleetIssues } from "@/lib/fleet/compliance-repository";
 import { FLEET_NAV } from "@/lib/module-nav";
+import { CreateIssueForm, ResolveIssueButton } from "@/components/app/sprint10-forms";
 
 const severityMap = {
   high: { label: "High", className: "bg-red-100 text-red-800" },
@@ -20,6 +21,9 @@ export default async function FleetIssuesPage() {
         description="Driver-reported defects and linked maintenance faults"
       />
       <ModuleSubNav links={FLEET_NAV} />
+      <div className="mb-4">
+        <CreateIssueForm />
+      </div>
       <DataTable
         rows={issues}
         columns={[
@@ -33,6 +37,11 @@ export default async function FleetIssuesPage() {
             render: (r) => <StatusPill status={r.severity} map={severityMap} />,
           },
           { key: "source", header: "Source", render: (r) => r.source },
+          {
+            key: "actions",
+            header: "",
+            render: (r) => <ResolveIssueButton id={r.id} />,
+          },
         ]}
       />
     </>

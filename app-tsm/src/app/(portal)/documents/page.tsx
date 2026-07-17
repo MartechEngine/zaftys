@@ -59,8 +59,15 @@ export default async function DocumentsPage({
             <Button variant="outline" asChild>
               <Link href="/documents/upload">Upload</Link>
             </Button>
-            <Button variant="outline" disabled title="Bulk download in P3">
-              Bulk download
+            <Button variant="outline" asChild>
+              <a
+                href={`/api/documents/export?${new URLSearchParams({
+                  ...(query ? { q: query } : {}),
+                  ...(typeKey !== "all" ? { type: typeKey } : {}),
+                }).toString()}`}
+              >
+                Export CSV
+              </a>
             </Button>
           </div>
         }

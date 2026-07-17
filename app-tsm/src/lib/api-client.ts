@@ -442,6 +442,41 @@ export const api = {
       body: JSON.stringify({ status }),
     }),
 
+  updateShipmentFields: (
+    id: string,
+    input: {
+      client?: string;
+      origin?: string;
+      destination?: string;
+      commodity?: string;
+      tonnageMt?: number;
+      lrNumber?: string;
+    },
+  ) =>
+    fetchApi<ShipmentRecord>(`/api/shipments/${id}`, {
+      method: "PATCH",
+      body: JSON.stringify(input),
+    }),
+
+  patchServiceRate: (
+    id: string,
+    input: { name: string; basis: string; rate: string; minCharge?: string },
+  ) =>
+    fetchApi<{ id: string; name: string }>(`/api/billing/rates/${id}`, {
+      method: "PATCH",
+      body: JSON.stringify(input),
+    }),
+
+  createReportSchedule: (input: {
+    name: string;
+    cadence: string;
+    recipients: string;
+  }) =>
+    fetchApi<{ id: string; name: string }>("/api/settings/report-schedules", {
+      method: "POST",
+      body: JSON.stringify(input),
+    }),
+
   cancelShipment: (id: string) =>
     fetchApi<ShipmentRecord>(`/api/shipments/${id}/cancel`, { method: "POST" }),
 
@@ -579,6 +614,170 @@ export const api = {
     }),
 
   getNetworkAssignments: () => fetchApi<NetworkAssignmentRow[]>("/api/network/assignments"),
+
+  configureTally: () =>
+    fetchApi<{ status: string }>("/api/integrations/tally", { method: "POST" }),
+
+  createCustomReport: (input: { name: string; description?: string }) =>
+    fetchApi<{ id: string; name: string }>("/api/reports/custom", {
+      method: "POST",
+      body: JSON.stringify(input),
+    }),
+
+  patchVendor: (
+    id: string,
+    input: { name?: string; type?: string; city?: string; contact?: string },
+  ) =>
+    fetchApi<{ id: string; name: string }>(`/api/vendors/${id}`, {
+      method: "PATCH",
+      body: JSON.stringify(input),
+    }),
+
+  patchDriver: (
+    id: string,
+    input: { name?: string; phone?: string; license?: string },
+  ) =>
+    fetchApi<{ id: string; name: string }>(`/api/fleet/drivers/${id}`, {
+      method: "PATCH",
+      body: JSON.stringify(input),
+    }),
+
+  createDriver: (input: { name: string; phone: string; license?: string }) =>
+    fetchApi<{ id: string; name: string }>("/api/fleet/drivers", {
+      method: "POST",
+      body: JSON.stringify(input),
+    }),
+
+  patchVehicle: (
+    id: string,
+    input: { registration?: string; type?: string; capacityMt?: number },
+  ) =>
+    fetchApi<{ id: string; registration: string }>(`/api/fleet/vehicles/${id}`, {
+      method: "PATCH",
+      body: JSON.stringify(input),
+    }),
+
+  createVehicle: (input: { registration: string; type?: string }) =>
+    fetchApi<{ id: string; registration: string }>("/api/fleet/vehicles", {
+      method: "POST",
+      body: JSON.stringify(input),
+    }),
+
+  markNotificationsRead: (input: { ids?: string[]; all?: boolean }) =>
+    fetchApi<{ marked: number; unread: number }>("/api/notifications", {
+      method: "PATCH",
+      body: JSON.stringify(input),
+    }),
+
+  bulkUpdateShipmentStatus: (ids: string[], status: string) =>
+    fetchApi<{
+      status: string;
+      updated: string[];
+      skipped: { id: string; reason: string }[];
+      updatedCount: number;
+      skippedCount: number;
+    }>("/api/shipments/bulk", {
+      method: "POST",
+      body: JSON.stringify({ ids, status }),
+    }),
+
+  acceptQuote: (id: string) =>
+    fetchApi<{
+      quote: { id: string; status: string; shipmentId?: string };
+      shipment: ShipmentRecord;
+    }>(`/api/shipments/quotes/${id}/accept`, { method: "POST" }),
+
+  createFleetIssue: (input: {
+    vehicle: string;
+    driver: string;
+    issue: string;
+    severity?: "high" | "medium" | "low";
+  }) =>
+    fetchApi<{ id: string }>("/api/fleet/issues", {
+      method: "POST",
+      body: JSON.stringify(input),
+    }),
+
+  resolveFleetIssue: (id: string) =>
+    fetchApi<{ id: string; resolved?: boolean }>("/api/fleet/issues", {
+      method: "PATCH",
+      body: JSON.stringify({ id, action: "resolve" }),
+    }),
+
+  updateComplianceDoc: (id: string, status: "valid" | "expiring" | "expired") =>
+    fetchApi<{ id: string; status: string }>("/api/fleet/compliance", {
+      method: "PATCH",
+      body: JSON.stringify({ id, status }),
+    }),
+
+  verifyPartner: (id: string) =>
+    fetchApi<{ id: string; verified: boolean }>(`/api/network/partners/${id}`, {
+      method: "PATCH",
+      body: JSON.stringify({ verify: true }),
+    }),
+
+  activateOrgUser: (id: string) =>
+    fetchApi<{ id: string; status: string }>(`/api/settings/users/${id}`, {
+      method: "PATCH",
+      body: JSON.stringify({ activate: true }),
+    }),
+
+  runCustomReport: (id: string) =>
+    fetchApi<{
+      report: { id: string; name: string };
+      run: { id: string; metric: string; ranAt: string };
+    }>(`/api/reports/custom/${id}/run`, { method: "POST" }),
+
+  testTraccarConnection: () =>
+    fetchApi<{ status: string; lastSync: string; testedAt?: string }>(
+      "/api/integrations/traccar",
+      { method: "POST" },
+    ),
+
+  patchOrgRole: (id: string, name: string) =>
+    fetchApi<{ id: string; name: string }>(`/api/settings/roles/${id}`, {
+      method: "PATCH",
+      body: JSON.stringify({ name }),
+    }),
+
+  patchSettingsGroup: (id: string, input: { name?: string; policy?: string }) =>
+    fetchApi<{ id: string }>(`/api/settings/groups/${id}`, {
+      method: "PATCH",
+      body: JSON.stringify(input),
+    }),
+
+  patchEquipment: (
+    id: string,
+    input: { location?: string; status?: "active" | "stored" | "maintenance" },
+  ) =>
+    fetchApi<{ id: string; status: string }>("/api/fleet/equipment", {
+      method: "PATCH",
+      body: JSON.stringify({ id, ...input }),
+    }),
+
+  patchGeofence: (
+    id: string,
+    input: { name?: string; radius?: string; triggers?: string },
+  ) =>
+    fetchApi<{ id: string }>("/api/settings/geofences", {
+      method: "PATCH",
+      body: JSON.stringify({ id, ...input }),
+    }),
+
+  patchPlace: (
+    id: string,
+    input: { name?: string; type?: string; city?: string; geofence?: string },
+  ) =>
+    fetchApi<{ id: string }>(`/api/fleet/places/${id}`, {
+      method: "PATCH",
+      body: JSON.stringify(input),
+    }),
+
+  patchOrderTypeFlow: (id: string, statusFlow: string) =>
+    fetchApi<{ steps: string[] }>(`/api/settings/order-types/${id}/flow`, {
+      method: "PATCH",
+      body: JSON.stringify({ statusFlow }),
+    }),
 };
 
 export type NetworkAssignmentRow = {

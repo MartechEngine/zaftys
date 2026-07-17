@@ -78,3 +78,55 @@ export function parseStatusPatch(body: unknown): ShipmentStatusPatch | null {
   if (!allowed.includes(status as ShipmentStatus)) return null;
   return { status: status as ShipmentStatus };
 }
+
+export type ShipmentFieldsInput = {
+  client?: string;
+  origin?: string;
+  destination?: string;
+  commodity?: string;
+  tonnageMt?: number;
+  lrNumber?: string;
+};
+
+export function parseFieldsPatch(body: unknown): ShipmentFieldsInput | { error: string } | null {
+  if (!body || typeof body !== "object") return null;
+  const data = body as Record<string, unknown>;
+  if (typeof data.status === "string") return null; // status-only path
+
+  const patch: ShipmentFieldsInput = {};
+  if (data.client !== undefined) {
+    const client = String(data.client).trim();
+    if (!client) return { error: "Client cannot be empty." };
+    patch.client = client;
+  }
+  if (data.origin !== undefined) {
+    const origin = String(data.origin).trim();
+    if (!origin) return { error: "Origin cannot be empty." };
+    patch.origin = origin;
+  }
+  if (data.destination !== undefined) {
+    const destination = String(data.destination).trim();
+    if (!destination) return { error: "Destination cannot be empty." };
+    patch.destination = destination;
+  }
+  if (data.commodity !== undefined) {
+    const commodity = String(data.commodity).trim();
+    if (!commodity) return { error: "Commodity cannot be empty." };
+    patch.commodity = commodity;
+  }
+  if (data.tonnageMt !== undefined) {
+    const tonnageMt = Number(data.tonnageMt);
+    if (!Number.isFinite(tonnageMt) || tonnageMt <= 0) {
+      return { error: "Tonnage must be a positive number." };
+    }
+    patch.tonnageMt = tonnageMt;
+  }
+  if (data.lrNumber !== undefined) {
+    patch.lrNumber = String(data.lrNumber).trim() || undefined;
+  }
+
+  if (Object.keys(patch).length === 0) {
+    return { error: "Provide at least one field to update." };
+  }
+  return patch;
+}

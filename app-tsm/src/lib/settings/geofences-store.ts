@@ -45,3 +45,21 @@ export function createStoredGeofence(input: {
   });
   return geofence;
 }
+
+export function patchStoredGeofence(
+  id: string,
+  patch: Partial<Pick<StoredGeofence, "name" | "radius" | "triggers">>,
+): StoredGeofence | null {
+  const row = getStore().find((g) => g.id === id);
+  if (!row) return null;
+  if (patch.name !== undefined) row.name = patch.name.trim();
+  if (patch.radius !== undefined) row.radius = patch.radius.trim();
+  if (patch.triggers !== undefined) row.triggers = patch.triggers.trim();
+  logActivity({
+    shipmentId: "",
+    type: "geofence.updated",
+    message: row.name,
+    timestamp: new Date().toISOString(),
+  });
+  return row;
+}

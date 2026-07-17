@@ -264,7 +264,8 @@ export async function getSecuritySettings(): Promise<SecuritySettings> {
 
 export async function getNotificationSettings(): Promise<NotificationChannelSettings[]> {
   const sync = await getSyncStatus();
-  return [
+  const patch = getConfigPatches()["notifications"] ?? {};
+  const channels = [
     {
       id: "n-exc",
       channel: "Exception alerts",
@@ -290,6 +291,12 @@ export async function getNotificationSettings(): Promise<NotificationChannelSett
       enabled: false,
     },
   ];
+
+  return channels.map((c) => {
+    const override = patch[c.id];
+    if (typeof override === "boolean") return { ...c, enabled: override };
+    return c;
+  });
 }
 
 export async function getRoutingSettings(): Promise<RoutingSettings> {
@@ -333,18 +340,19 @@ export async function getNavigatorAppSettings(): Promise<NavigatorAppSettings> {
 
 export async function getPaymentsSettings(): Promise<PaymentsSettings> {
   const invoices = await listInvoices();
-  return {
+  return withPatch("payments", {
     gatewaysEnabled: false,
     message:
       "Stripe and other payment gateways are not enabled for the initial India freight rollout. Trip billing uses GST invoices in the Billing module.",
     billingHref: "/billing/invoices",
     pendingInvoiceCount: invoices.filter((i) => i.status === "pending").length,
-  };
+  });
 }
 
 export async function getReportSchedules(): Promise<ReportSchedule[]> {
   const org = await getOrgProfile();
-  return [
+  const { listStoredReportSchedules } = await import("@/lib/mutations/fleet-entity-store");
+  const base = [
     {
       id: "rs1",
       name: "Weekly ops summary",
@@ -364,6 +372,30 @@ export async function getReportSchedules(): Promise<ReportSchedule[]> {
       recipients: `fleet@${org.email.split("@")[1] ?? "zaftys.com"}`,
     },
   ];
+  return [...listStoredReportSchedules(), ...base];
+}
+
+export function validateCreateReportScheduleInput(
+  body: unknown,
+): { name: string; cadence: string; recipients: string } | { error: string } {
+  if (!body || typeof body !== "object") return { error: "Body must be an object." };
+  const data = body as Record<string, unknown>;
+  const name = String(data.name ?? "").trim();
+  const cadence = String(data.cadence ?? "").trim();
+  const recipients = String(data.recipients ?? "").trim();
+  if (!name) return { error: "Name is required." };
+  if (!cadence) return { error: "Cadence is required." };
+  if (!recipients) return { error: "Recipients are required." };
+  return { name, cadence, recipients };
+}
+
+export async function createReportSchedule(input: {
+  name: string;
+  cadence: string;
+  recipients: string;
+}) {
+  const { createStoredReportSchedule } = await import("@/lib/mutations/fleet-entity-store");
+  return createStoredReportSchedule(input);
 }
 
 export async function getTrackingSettings(): Promise<TrackingSettings> {

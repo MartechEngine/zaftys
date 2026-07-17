@@ -2,6 +2,7 @@ import { PageHeader } from "@/components/app/app-shell";
 import { ModuleSubNav } from "@/components/app/module-sub-nav";
 import { DataTable, StatusPill } from "@/components/app/data-table";
 import { CreateEquipmentForm } from "@/components/app/create-equipment-form";
+import { AssignEquipmentButton } from "@/components/app/sprint11-forms";
 import { listEquipment } from "@/lib/fleet/equipment-repository";
 import { listPlaces } from "@/lib/fleet/places-repository";
 import { FLEET_NAV } from "@/lib/module-nav";
@@ -33,6 +34,11 @@ export default async function FleetEquipmentPage() {
             key: "status",
             header: "Status",
             render: (r) => <StatusPill status={r.status} map={equipStatus} />,
+          },
+          {
+            key: "actions",
+            header: "",
+            render: (r) => <AssignEquipmentButton id={r.id} status={r.status} />,
           },
         ]}
       />

@@ -2,6 +2,8 @@ import Link from "next/link";
 import { PageHeader } from "@/components/app/app-shell";
 import { DataTable, SearchFilterBar, StatusPill } from "@/components/app/data-table";
 import { CreateQuoteForm } from "@/components/app/create-quote-form";
+import { AcceptQuoteButton } from "@/components/app/sprint10-forms";
+import { SendQuoteButton } from "@/components/app/sprint11-forms";
 import { listQuotes } from "@/lib/shipments/quotes-repository";
 
 const quoteStatus = {
@@ -33,6 +35,20 @@ export default async function ShipmentsQuotesPage() {
             key: "status",
             header: "Status",
             render: (r) => <StatusPill status={r.status} map={quoteStatus} />,
+          },
+          {
+            key: "actions",
+            header: "",
+            render: (r) => (
+              <div className="flex flex-wrap gap-2">
+                <SendQuoteButton quoteId={r.id} status={r.status} />
+                <AcceptQuoteButton
+                  quoteId={r.id}
+                  status={r.status}
+                  shipmentId={r.shipmentId}
+                />
+              </div>
+            ),
           },
         ]}
       />
