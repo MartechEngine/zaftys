@@ -2,6 +2,8 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   output: "standalone",
+  // pdfkit reads AFM font metrics from disk; keep it external to the bundler.
+  serverExternalPackages: ["pdfkit", "fontkit", "linebreak", "png-js"],
   turbopack: {
     root: process.cwd(),
   },

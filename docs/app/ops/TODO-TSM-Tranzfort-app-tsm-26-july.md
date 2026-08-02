@@ -140,10 +140,12 @@ Scaffold + URL/secret gates done; **do not** pick/deploy staging or WebView Goog
 - [ ] ~~Tauri → staging HTTPS; Google login smoke in WebView2~~ — **DEFERRED**  
 - [ ] Code signing + auto-update — **DEFERRED** (with S5 resume)  
 
-#### S6 — Documents (LR) — before AI — **NEXT product track when resuming after deferrals**
+#### S6 — Documents (LR) — before AI
 
-- [ ] Templates + LR PDF generate/store/print
-- [ ] No Copilot yet
+- [x] LR PDF generate + store/attach + print/open from shipment detail **[2 Aug]**  
+- [ ] Org letterhead / LR series templates (v1 uses org profile name + GSTIN)  
+- [ ] Void / regenerate with audit  
+- [ ] No Copilot yet  
 
 #### S7 — AI agents LAST
 
@@ -262,7 +264,7 @@ Ember clone · storefront in TSM · offline full-stack desktop with embedded DB 
 
 #### Phase E — Docs foundation (start after B; full AI = Horizon 4)
 
-- [ ] LR PDF generate + store + print from TSM shipment (ADR-009 v1)
+- [x] LR PDF generate + store + print from TSM shipment (ADR-009 v1) **[2 Aug]**  
 - [ ] Invoice PDF later; Tally/e-way later
 
 ---
@@ -274,9 +276,9 @@ Ember clone · storefront in TSM · offline full-stack desktop with embedded DB 
 
 ### Documents
 
-- [ ] Document templates per org (letterhead, GSTIN, LR series)
-- [ ] LR PDF generator → MinIO + `app_documents`
-- [ ] Print / download from shipment detail
+- [ ] Document templates per org (letterhead, GSTIN, LR series) — v1 uses org profile  
+- [x] LR PDF generator → MinIO (when configured) + shipment documents **[2 Aug]**  
+- [x] Print / download from shipment detail (**Generate LR PDF**) **[2 Aug]**  
 - [ ] Void / regenerate with audit
 
 ### AI foundation

@@ -405,6 +405,36 @@ export function ShipmentDetailClient({ shipment }: { shipment: ShipmentRecord })
                   router.refresh();
                 }}
               />
+              <Button
+                type="button"
+                variant="outline"
+                className="mt-3 w-full sm:w-auto"
+                disabled={busy}
+                onClick={() => {
+                  void (async () => {
+                    setBusy(true);
+                    try {
+                      const result = await api.generateShipmentLr(current.id);
+                      setCurrent(result.shipment);
+                      toast.success(`LR ${result.lrNumber} generated`);
+                      window.open(
+                        result.stored
+                          ? api.downloadDocumentUrl(result.documentId)
+                          : `/api/shipments/${current.id}/lr`,
+                        "_blank",
+                        "noopener,noreferrer",
+                      );
+                      router.refresh();
+                    } catch (e) {
+                      toast.error(e instanceof Error ? e.message : "LR failed");
+                    } finally {
+                      setBusy(false);
+                    }
+                  })();
+                }}
+              >
+                {busy ? "Generating LR…" : "Generate LR PDF"}
+              </Button>
             </CardContent>
           </Card>
         </div>

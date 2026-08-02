@@ -141,6 +141,27 @@
     color: var(--heading);
     font-weight: 600;
   }
+
+  /*
+   * Native <select> / <option> — Windows paints the open list white by default.
+   * Force opaque dark panel + light text to match the portal contrast scheme.
+   */
+  select {
+    background-color: oklch(0.18 0.02 250);
+    color: var(--foreground);
+    color-scheme: dark;
+  }
+
+  select option,
+  select optgroup {
+    background-color: oklch(0.18 0.02 250);
+    color: oklch(0.96 0.005 250);
+  }
+
+  select:disabled,
+  select:disabled option {
+    color: var(--muted-foreground);
+  }
 }
 
 @layer utilities {
@@ -285,4 +306,12 @@
 [data-portal-surface] ::placeholder {
   color: var(--subtle-foreground);
   opacity: 1;
+}
+
+[data-portal-surface] select,
+[data-portal-surface] select option,
+[data-portal-surface] select optgroup {
+  background-color: oklch(0.18 0.02 250);
+  color: var(--foreground);
+  color-scheme: dark;
 }

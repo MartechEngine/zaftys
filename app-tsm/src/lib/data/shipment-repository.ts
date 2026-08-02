@@ -734,16 +734,64 @@ export async function addShipmentDocument(
     sizeBytes?: number;
   },
 ) {
+  const doc = {
+    id: input.id ?? `doc-${Date.now()}`,
+    type: input.type,
+    name: input.name,
+    uploadedAt: new Date().toISOString(),
+    ...(input.storageKey ? { storageKey: input.storageKey } : {}),
+    ...(input.contentType ? { contentType: input.contentType } : {}),
+    ...(input.sizeBytes != null ? { sizeBytes: input.sizeBytes } : {}),
+  };
+
+  if (isLiveExecutionMode()) {
+    try {
+      const existing = await getShipment(id);
+      if (!existing) return null;
+      const next = {
+        ...existing,
+        documents: [...(existing.documents ?? []), doc],
+        updatedAt: new Date().toISOString(),
+      };
+      const store = await execution();
+      if ("putShipmentRecord" in store && typeof (store as { putShipmentRecord?: unknown }).putShipmentRecord === "function") {
+        await (store as { putShipmentRecord: (r: typeof next) => Promise<typeof next> }).putShipmentRecord(next);
+      } else {
+        // Fleetbase escape: keep metadata locally + DB row; order meta may not hold docs.
+        await store.updateShipmentPatch(id, {
+          meta: { lr_number: existing.lrNumber, last_document: doc.name },
+        });
+      }
+      recordShipmentActivity(
+        id,
+        "document.uploaded",
+        `${existing.publicId} · ${input.type.toUpperCase()} uploaded`,
+      );
+      const { isDatabaseConfigured } = await import("@/lib/db/client");
+      if (isDatabaseConfigured()) {
+        const { insertDocumentToDb } = await import("@/lib/db/documents-repository");
+        try {
+          await insertDocumentToDb(id, doc);
+        } catch (err) {
+          console.error("[documents] failed to persist to database", err);
+        }
+      }
+      return withGeo(next);
+    } catch (e) {
+      liveFail("addShipmentDocument", e);
+    }
+  }
+
   const shipment = devAddDocument(id, input);
   if (!shipment) return null;
 
-  const doc = shipment.documents[shipment.documents.length - 1];
-  if (doc) {
+  const last = shipment.documents[shipment.documents.length - 1];
+  if (last) {
     const { isDatabaseConfigured } = await import("@/lib/db/client");
     if (isDatabaseConfigured()) {
       const { insertDocumentToDb } = await import("@/lib/db/documents-repository");
       try {
-        await insertDocumentToDb(id, doc);
+        await insertDocumentToDb(id, last);
       } catch (err) {
         console.error("[documents] failed to persist to database", err);
       }

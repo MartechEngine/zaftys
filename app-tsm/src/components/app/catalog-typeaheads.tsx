@@ -102,12 +102,12 @@ export function PlaceCatalogTypeahead({
         <p className="mt-1 text-[10px] text-muted-foreground">Searching…</p>
       )}
       {open && !value && items.length > 0 && (
-        <ul className="absolute z-20 mt-1 max-h-48 w-full overflow-auto rounded-lg border border-white/10 bg-background/95 shadow-lg backdrop-blur">
+        <ul className="absolute z-20 mt-1 max-h-48 w-full overflow-auto rounded-lg border border-white/10 bg-[oklch(0.18_0.02_250)] text-foreground shadow-lg">
           {items.map((item) => (
             <li key={`${item.city}|${item.state}|${item.lat}`}>
               <button
                 type="button"
-                className="block w-full px-3 py-2 text-left text-sm hover:bg-white/10"
+                className="block w-full px-3 py-2 text-left text-sm text-foreground hover:bg-white/10"
                 onClick={() => {
                   onPick(item);
                   setOpen(false);
@@ -205,12 +205,12 @@ export function MaterialCatalogTypeahead({
         <p className="mt-1 text-[10px] text-muted-foreground">Searching…</p>
       )}
       {open && !value && items.length > 0 && (
-        <ul className="absolute z-20 mt-1 max-h-48 w-full overflow-auto rounded-lg border border-white/10 bg-background/95 shadow-lg backdrop-blur">
+        <ul className="absolute z-20 mt-1 max-h-48 w-full overflow-auto rounded-lg border border-white/10 bg-[oklch(0.18_0.02_250)] text-foreground shadow-lg">
           {items.map((item) => (
             <li key={item.code}>
               <button
                 type="button"
-                className="block w-full px-3 py-2 text-left text-sm hover:bg-white/10"
+                className="block w-full px-3 py-2 text-left text-sm text-foreground hover:bg-white/10"
                 onClick={() => {
                   onPick(item);
                   setOpen(false);
