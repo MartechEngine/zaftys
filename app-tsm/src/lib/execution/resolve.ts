@@ -2,7 +2,7 @@
  * Resolve which execution backend is active (ADR-008 Phases A–C).
  *
  * TSM_DEMO_UI=1           → dev-store (in-memory)
- * TSM_EXECUTION_BACKEND=postgres → postgres (S3; stub until implemented)
+ * TSM_EXECUTION_BACKEND=postgres → postgres (needs DATABASE_URL + org id)
  * default / fleetbase     → Fleetbase adapter (current pilot)
  */
 
@@ -35,9 +35,24 @@ export function getLiveExecutionBackend(): LiveExecutionBackend | null {
   return null;
 }
 
-let cached: { backend: LiveExecutionBackend; store: ExecutionStore } | null = null;
+/**
+ * Org for Postgres LOS.
+ * Prefer explicit arg → TSM_EXECUTION_ORG_ID (smoke/single-tenant) → error.
+ */
+export function resolveExecutionOrgId(explicit?: string | null): string {
+  const fromArg = explicit?.trim().toLowerCase();
+  if (fromArg) return fromArg;
+  const fromEnv = process.env.TSM_EXECUTION_ORG_ID?.trim().toLowerCase();
+  if (fromEnv) return fromEnv;
+  throw new ExecutionError(
+    "Postgres execution requires org id: pass getExecutionStore({ orgId }) or set TSM_EXECUTION_ORG_ID (e.g. org_zaftys_local for smoke).",
+    400,
+  );
+}
 
-export function getExecutionStore(): ExecutionStore {
+const cache = new Map<string, ExecutionStore>();
+
+export function getExecutionStore(opts?: { orgId?: string | null }): ExecutionStore {
   const backend = getLiveExecutionBackend();
   if (!backend) {
     throw new ExecutionError(
@@ -46,18 +61,27 @@ export function getExecutionStore(): ExecutionStore {
     );
   }
 
-  if (cached?.backend === backend) return cached.store;
+  if (backend === "fleetbase") {
+    const key = "fleetbase";
+    let store = cache.get(key);
+    if (!store) {
+      store = new FleetbaseExecutionStore();
+      cache.set(key, store);
+    }
+    return store;
+  }
 
-  const store: ExecutionStore =
-    backend === "postgres"
-      ? new PostgresExecutionStore()
-      : new FleetbaseExecutionStore();
-
-  cached = { backend, store };
+  const orgId = resolveExecutionOrgId(opts?.orgId);
+  const key = `postgres:${orgId}`;
+  let store = cache.get(key);
+  if (!store) {
+    store = new PostgresExecutionStore(orgId);
+    cache.set(key, store);
+  }
   return store;
 }
 
 /** Test helper — clear singleton between env flips. */
 export function resetExecutionStoreCache() {
-  cached = null;
+  cache.clear();
 }

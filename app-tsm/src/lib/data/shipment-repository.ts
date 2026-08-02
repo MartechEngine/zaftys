@@ -51,6 +51,28 @@ import {
 } from "@/lib/documents/library";
 import { pushTranZfortStatus, isTranZfortConfigured } from "@/lib/sync/tranzfort-client";
 import type { ShipmentRecord } from "@/lib/dev-store";
+import type { ExecutionStore } from "@/lib/execution";
+
+/** Prefer session org for Postgres LOS; Fleetbase ignores org. */
+async function execution(): Promise<ExecutionStore> {
+  if (getExecutionBackend() !== "postgres") {
+    return getExecutionStore();
+  }
+  try {
+    const { getSession } = await import("@/lib/auth/session");
+    const session = await getSession();
+    if (session?.tsmOrgId?.trim()) {
+      return getExecutionStore({ orgId: session.tsmOrgId });
+    }
+    if (session?.supplierId?.trim()) {
+      const { orgIdForSupplier } = await import("@/lib/tsm/org");
+      return getExecutionStore({ orgId: orgIdForSupplier(session.supplierId) });
+    }
+  } catch {
+    /* fall through to env org */
+  }
+  return getExecutionStore();
+}
 
 function withGeo(record: ShipmentRecord): ShipmentRecord {
   const live = isLiveExecutionMode();
@@ -105,7 +127,7 @@ async function applyExecutionPositions(
     return shipments;
   }
   try {
-    const positions = await getExecutionStore().listPositions(100);
+    const positions = await (await execution()).listPositions(100);
     if (!positions.length) return shipments;
     const byOrder = new Map(
       positions
@@ -191,7 +213,7 @@ export async function fetchAllShipmentsRaw(): Promise<ShipmentRecord[]> {
 
   if (isLiveExecutionMode()) {
     try {
-      const orders = await getExecutionStore().listShipments(100);
+      const orders = await (await execution()).listShipments(100);
       const mapped = orders.map(withGeo);
       return applyLiveGeo(await applyExecutionPositions(mapped));
     } catch (e) {
@@ -254,7 +276,7 @@ export async function getShipmentTabCounts(q?: string) {
 export async function getShipment(id: string) {
   if (isLiveExecutionMode()) {
     try {
-      const order = await getExecutionStore().getShipment(id);
+      const order = await (await execution()).getShipment(id);
       if (!order) return undefined;
       const [withPos] = await applyExecutionPositions([withGeo(order)]);
       return withPos;
@@ -271,7 +293,7 @@ export async function getShipmentByToken(token: string) {
   // Live honesty: try execution backend first; only use demo/dev tokens in demo UI.
   if (isLiveExecutionMode() || !allowDemoSeeds()) {
     try {
-      const order = await getExecutionStore().getShipment(token);
+      const order = await (await execution()).getShipment(token);
       return order ? withGeo(order) : undefined;
     } catch {
       return undefined;
@@ -284,7 +306,7 @@ export async function assignShipment(id: string, driverId: string, vehicleId: st
   if (isLiveExecutionMode()) {
     try {
       const mapped = withGeo(
-        await getExecutionStore().assignShipment(id, driverId, vehicleId),
+        await (await execution()).assignShipment(id, driverId, vehicleId),
       );
       recordShipmentActivity(
         mapped.id,
@@ -302,7 +324,7 @@ export async function assignShipment(id: string, driverId: string, vehicleId: st
 export async function createShipment(input: CreateShipmentInput): Promise<ShipmentRecord | null> {
   if (isLiveExecutionMode()) {
     try {
-      const mapped = withGeo(await getExecutionStore().createShipment(input));
+      const mapped = withGeo(await (await execution()).createShipment(input));
       recordShipmentActivity(
         mapped.id,
         "shipment.created",
@@ -328,7 +350,7 @@ export async function updateShipmentStatus(id: string, status: ShipmentStatus) {
 
   if (isLiveExecutionMode()) {
     try {
-      updated = withGeo(await getExecutionStore().updateShipmentStatus(id, status));
+      updated = withGeo(await (await execution()).updateShipmentStatus(id, status));
       recordShipmentActivity(
         updated.id,
         `shipment.${status}`,
@@ -405,7 +427,7 @@ export async function updateShipmentFields(id: string, patch: ShipmentFieldsPatc
       }
       if (Object.keys(fbPatch).length > 0) {
         const mapped = withGeo(
-          await getExecutionStore().updateShipmentPatch(id, fbPatch),
+          await (await execution()).updateShipmentPatch(id, fbPatch),
         );
         // Local-only overlays (network listing mirror, etc.)
         if (patch.networkListing !== undefined) {
@@ -437,7 +459,7 @@ export async function rescheduleShipment(
   if (isLiveExecutionMode() && patch.eta) {
     try {
       return withGeo(
-        await getExecutionStore().updateShipmentPatch(id, {
+        await (await execution()).updateShipmentPatch(id, {
           eta: patch.eta,
           meta: patch.scheduledAt ? { scheduled_at: patch.scheduledAt } : undefined,
         }),
@@ -578,7 +600,7 @@ export async function listDrivers() {
   let base: Awaited<ReturnType<typeof devListDrivers>>;
   if (isLiveExecutionMode()) {
     try {
-      base = await getExecutionStore().listDrivers(100);
+      base = await (await execution()).listDrivers(100);
     } catch (e) {
       liveFail("listDrivers", e);
     }
@@ -608,7 +630,7 @@ export async function listVehicles() {
   let base: Awaited<ReturnType<typeof devListVehicles>>;
   if (isLiveExecutionMode()) {
     try {
-      base = await getExecutionStore().listVehicles(100);
+      base = await (await execution()).listVehicles(100);
     } catch (e) {
       liveFail("listVehicles", e);
     }
@@ -714,7 +736,7 @@ export async function getSyncStatus() {
   };
 
   if (source === "fleetbase" || source === "postgres") {
-    const healthy = await getExecutionStore().healthCheck();
+    const healthy = await (await execution()).healthCheck();
     return {
       ...base,
       healthy: healthy && tz.healthy,

@@ -104,9 +104,12 @@ Why next: unblocks S3/S4 without changing pilot behavior (`TSM_EXECUTION_BACKEND
 
 #### S3 — Postgres LOS opt-in (flag off for pilot until green)
 
-- [ ] Migrations M1 + `PostgresExecutionStore`
-- [ ] Dev/smoke org on `postgres`; pilot stays on `fleetbase` until ready
-- [ ] Create / list / assign / status on Postgres org
+- [x] Migrations M1 — `tsm_shipments` / `tsm_drivers` / `tsm_vehicles` / `tsm_positions` (`drizzle/0002_tsm_execution.sql`) **[2 Aug]**  
+- [x] Implement `PostgresExecutionStore` for list/get/create/assign/status/patch + fleet  
+- [x] Org scope: session `tsmOrgId` or `TSM_EXECUTION_ORG_ID` (smoke)  
+- [x] Run `npm run db:migrate` on local **[2 Aug — applied 0002_tsm_execution]**  
+- [ ] Dev/smoke org on `TSM_EXECUTION_BACKEND=postgres`; pilot stays on `fleetbase` until ready  
+- [ ] Create / list / assign / status smoke on Postgres org  
 
 #### S4 — Cutover (high risk — only after S0 push + S3 green)
 
@@ -213,9 +216,9 @@ Ember clone · storefront in TSM · offline full-stack desktop with embedded DB 
 
 #### Phase B — Postgres store
 
-- [ ] Migrations for M1 tables (`org_id` on every row)
-- [ ] Implement `PostgresExecutionStore` for methods already used by repos
-- [ ] Smoke: create / list / assign / status on pilot org with `postgres` flag
+- [x] Migrations for M1 tables (`org_id` on every row) **[S3]**  
+- [x] Implement `PostgresExecutionStore` for methods already used by repos **[S3]**  
+- [ ] Smoke: create / list / assign / status on pilot org with `postgres` flag  
 
 **Exit:** One org can run ops on Postgres with FB ignored for those calls.
 

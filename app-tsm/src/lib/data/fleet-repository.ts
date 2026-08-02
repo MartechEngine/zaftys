@@ -4,7 +4,11 @@ import {
   listDrivers,
   listVehicles,
 } from "@/lib/data/shipment-repository";
-import { getExecutionStore, isLiveExecutionMode } from "@/lib/execution";
+import {
+  getExecutionBackend,
+  getExecutionStore,
+  isLiveExecutionMode,
+} from "@/lib/execution";
 
 export type DriverDetail = Driver & {
   recentShipments: ShipmentRecord[];
@@ -13,6 +17,20 @@ export type DriverDetail = Driver & {
 export type VehicleDetail = Vehicle & {
   recentShipments: ShipmentRecord[];
 };
+
+async function execution() {
+  if (getExecutionBackend() !== "postgres") return getExecutionStore();
+  try {
+    const { getSession } = await import("@/lib/auth/session");
+    const session = await getSession();
+    if (session?.tsmOrgId?.trim()) {
+      return getExecutionStore({ orgId: session.tsmOrgId });
+    }
+  } catch {
+    /* env org */
+  }
+  return getExecutionStore();
+}
 
 function recentForDriver(shipments: ShipmentRecord[], driver: Driver, limit = 8) {
   return shipments
@@ -35,7 +53,7 @@ function recentForVehicle(shipments: ShipmentRecord[], vehicle: Vehicle, limit =
 export async function getDriver(id: string): Promise<DriverDetail | null> {
   if (isLiveExecutionMode()) {
     try {
-      const driver = await getExecutionStore().getDriver(id);
+      const driver = await (await execution()).getDriver(id);
       if (driver) {
         const shipments = await fetchAllShipmentsRaw();
         return { ...driver, recentShipments: recentForDriver(shipments, driver) };
@@ -55,7 +73,7 @@ export async function getDriver(id: string): Promise<DriverDetail | null> {
 export async function getVehicle(id: string): Promise<VehicleDetail | null> {
   if (isLiveExecutionMode()) {
     try {
-      const vehicle = await getExecutionStore().getVehicle(id);
+      const vehicle = await (await execution()).getVehicle(id);
       if (vehicle) {
         const shipments = await fetchAllShipmentsRaw();
         return { ...vehicle, recentShipments: recentForVehicle(shipments, vehicle) };

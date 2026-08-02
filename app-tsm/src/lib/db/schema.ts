@@ -1,4 +1,5 @@
 import {
+  doublePrecision,
   index,
   jsonb,
   pgTable,
@@ -97,4 +98,74 @@ export const shipmentDocuments = pgTable(
     payload: jsonb("payload"),
   },
   (t) => [index("shipment_documents_shipment_id_idx").on(t.shipmentId)],
+);
+
+/**
+ * Org-scoped LOS execution tables (ADR-008 / S3).
+ * Payload holds full domain JSON (ShipmentRecord / Driver / Vehicle).
+ */
+export const tsmShipments = pgTable(
+  "tsm_shipments",
+  {
+    id: text("id").primaryKey(),
+    orgId: text("org_id").notNull(),
+    publicId: text("public_id").notNull(),
+    status: text("status").notNull(),
+    payload: jsonb("payload").notNull(),
+    updatedAt: timestamp("updated_at", { withTimezone: true, mode: "string" })
+      .notNull()
+      .defaultNow(),
+  },
+  (t) => [
+    index("tsm_shipments_org_id_idx").on(t.orgId),
+    index("tsm_shipments_org_status_idx").on(t.orgId, t.status),
+  ],
+);
+
+export const tsmDrivers = pgTable(
+  "tsm_drivers",
+  {
+    id: text("id").primaryKey(),
+    orgId: text("org_id").notNull(),
+    payload: jsonb("payload").notNull(),
+    updatedAt: timestamp("updated_at", { withTimezone: true, mode: "string" })
+      .notNull()
+      .defaultNow(),
+  },
+  (t) => [index("tsm_drivers_org_id_idx").on(t.orgId)],
+);
+
+export const tsmVehicles = pgTable(
+  "tsm_vehicles",
+  {
+    id: text("id").primaryKey(),
+    orgId: text("org_id").notNull(),
+    payload: jsonb("payload").notNull(),
+    updatedAt: timestamp("updated_at", { withTimezone: true, mode: "string" })
+      .notNull()
+      .defaultNow(),
+  },
+  (t) => [index("tsm_vehicles_org_id_idx").on(t.orgId)],
+);
+
+export const tsmPositions = pgTable(
+  "tsm_positions",
+  {
+    id: text("id").primaryKey(),
+    orgId: text("org_id").notNull(),
+    orderId: text("order_id"),
+    vehicleId: text("vehicle_id"),
+    driverId: text("driver_id"),
+    latitude: doublePrecision("latitude"),
+    longitude: doublePrecision("longitude"),
+    recordedAt: timestamp("recorded_at", { withTimezone: true, mode: "string" }),
+    payload: jsonb("payload"),
+    updatedAt: timestamp("updated_at", { withTimezone: true, mode: "string" })
+      .notNull()
+      .defaultNow(),
+  },
+  (t) => [
+    index("tsm_positions_org_id_idx").on(t.orgId),
+    index("tsm_positions_order_id_idx").on(t.orderId),
+  ],
 );
