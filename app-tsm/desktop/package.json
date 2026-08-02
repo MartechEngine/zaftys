@@ -3,9 +3,14 @@
   "version": "0.1.0",
   "private": true,
   "description": "Thin Tauri shell for hosted TSM — no TranZfort secrets in this package",
+  "type": "module",
   "scripts": {
+    "predesktop:dev": "node scripts/check-no-secrets.mjs && node scripts/apply-desktop-url.mjs",
     "desktop:dev": "tauri dev",
+    "predesktop:build": "node scripts/check-no-secrets.mjs && node scripts/apply-desktop-url.mjs",
     "desktop:build": "tauri build",
+    "check:secrets": "node scripts/check-no-secrets.mjs",
+    "apply:url": "node scripts/apply-desktop-url.mjs",
     "tauri": "tauri"
   },
   "devDependencies": {

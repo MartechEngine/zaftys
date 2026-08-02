@@ -3,7 +3,7 @@
 **Document ID:** `TODO-TSM-Tranzfort-app-tsm-26-july`  
 **Created:** 26 July 2026  
 **Updated:** 2 August 2026 (dev sequence S0–S7 locked; AI last; git checkpoint before FB cutover)  
-**Status:** **Active — S4 cutover in progress (postgres default); FB escape hatch retained**  
+**Status:** **Active — S4 postgres cutover smoked; S5 desktop URL wiring started (staging host pending)**  
 
 **Architecture ADRs (locked 2 Aug):**
 - [ADR-008](../decisions/008-tsm-owns-execution.md) — **TSM Postgres owns execution; drop Fleetbase** (supersedes ADR-001)
@@ -109,7 +109,7 @@ Why next: unblocks S3/S4 without changing pilot behavior (`TSM_EXECUTION_BACKEND
 - [x] Org scope: session `tsmOrgId` or `TSM_EXECUTION_ORG_ID` (smoke)  
 - [x] Run `npm run db:migrate` on local **[2 Aug — applied 0002_tsm_execution]**  
 - [ ] Dev/smoke org on `TSM_EXECUTION_BACKEND=postgres`; pilot stays on `fleetbase` until ready  
-- [ ] Create / list / assign / status smoke on Postgres org  
+- [x] Create / list / assign / status smoke on Postgres org **[S4]**  
 
 #### S4 — Cutover (high risk — only after S0 push + S3 green)
 
@@ -117,14 +117,17 @@ Why next: unblocks S3/S4 without changing pilot behavior (`TSM_EXECUTION_BACKEND
 - [x] Retarget TZ sync → ExecutionStore shipments (no FB createOrder)  
 - [x] `isLiveFleetbaseMode` = fleetbase only (clients use local store on postgres)  
 - [x] Health / badge report TSM Postgres; FB optional escape  
-- [~] Keep `lib/fleetbase/*` + `FleetbaseExecutionStore` as **escape hatch** (full delete = S4b after pilot smoke)  
-- [~] Pilot smoke on postgres: health + create/list shipment OK **[2 Aug]**; assign + marketplace desks still open  
-- [ ] Full delete of Fleetbase client after smoke green  
+- [x] Pilot smoke on postgres: health + create/list/assign + fleet + marketplace desks **[2 Aug]**  
+- [~] Keep `lib/fleetbase/*` escape hatch (hard delete = S4b / Phase D — defer until staging)  
+- [ ] Full delete of Fleetbase client (S4b)  
 
 #### S5 — Hosted platform + thin desktop
 
-- [ ] Staging `TSM_PUBLIC_URL` + Google redirect allowlist (append only)
-- [ ] Tauri → staging HTTPS; zero secrets in binary
+- [~] Desktop: `TSM_DESKTOP_URL` apply script + secret scan gate **[2 Aug]**  
+- [ ] Staging HTTPS host + `TSM_PUBLIC_URL` (deploy still open)  
+- [ ] Append Google redirect for staging callback (append only — never rotate Web client)  
+- [ ] Tauri → staging HTTPS; Google login smoke in WebView2  
+- [ ] Code signing + auto-update (later)  
 
 #### S6 — Documents (LR) — before AI
 
@@ -221,7 +224,7 @@ Ember clone · storefront in TSM · offline full-stack desktop with embedded DB 
 
 - [x] Migrations for M1 tables (`org_id` on every row) **[S3]**  
 - [x] Implement `PostgresExecutionStore` for methods already used by repos **[S3]**  
-- [~] Smoke: create / list on pilot org with postgres default **[S4]**; assign still open  
+- [x] Smoke: create / list / assign on pilot org with postgres default **[S4]**  
 
 **Exit:** One org can run ops on Postgres with FB ignored for those calls.
 
@@ -327,6 +330,7 @@ Ember clone · storefront in TSM · offline full-stack desktop with embedded DB 
 
 - [x] Packaging decision locked: **Tauri thin shell → hosted HTTPS** (not embedded Next/DB)  
 - [x] Scaffold `app-tsm/desktop/` (Tauri config + README) **[2 Aug]**  
+- [x] `TSM_DESKTOP_URL` apply + `check-no-secrets` before build **[S5]**  
 - [ ] Point shell at staging URL; Google OAuth smoke in WebView2  
 - [ ] Windows code signing + auto-update (stable/beta)  
 - [ ] Deep links optional; “Open TranZfort” for KYC/chat  
