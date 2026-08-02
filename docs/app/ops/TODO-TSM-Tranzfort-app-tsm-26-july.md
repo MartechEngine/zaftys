@@ -3,7 +3,7 @@
 **Document ID:** `TODO-TSM-Tranzfort-app-tsm-26-july`  
 **Created:** 26 July 2026  
 **Updated:** 2 August 2026 (dev sequence S0–S7 locked; AI last; git checkpoint before FB cutover)  
-**Status:** **Active — marketplace pilot complete; next = S0 push → S1 tenancy → S2–S4 drop FB**  
+**Status:** **Active — S4 cutover in progress (postgres default); FB escape hatch retained**  
 
 **Architecture ADRs (locked 2 Aug):**
 - [ADR-008](../decisions/008-tsm-owns-execution.md) — **TSM Postgres owns execution; drop Fleetbase** (supersedes ADR-001)
@@ -99,7 +99,7 @@ Why next: unblocks S3/S4 without changing pilot behavior (`TSM_EXECUTION_BACKEND
 
 - [x] `ExecutionStore` interface + `FleetbaseExecutionStore` + postgres stub **[2 Aug]** — `lib/execution/*`  
 - [x] Repos/fleet APIs call store; shipment list path does not use `getFleetbaseClient` directly  
-- [~] Clients + `run-tranzfort-sync` still FB-direct (S3/S4)  
+- [x] Clients + `run-tranzfort-sync` use ExecutionStore on postgres (S4)  
 - [ ] Smoke: existing pilot shipments/fleet still work unchanged  
 
 #### S3 — Postgres LOS opt-in (flag off for pilot until green)
@@ -113,10 +113,13 @@ Why next: unblocks S3/S4 without changing pilot behavior (`TSM_EXECUTION_BACKEND
 
 #### S4 — Cutover (high risk — only after S0 push + S3 green)
 
-- [ ] Default `postgres`; retarget/delete TZ→FB sync
-- [ ] Pilot import if needed; map/track without FB
-- [ ] Delete `lib/fleetbase/*` + FB health (Horizon 0D)
-- [ ] Full smoke: marketplace desks + shipments + fleet + health
+- [x] Default **postgres** when `DATABASE_URL` set (override: `TSM_EXECUTION_BACKEND=fleetbase`) **[2 Aug]**  
+- [x] Retarget TZ sync → ExecutionStore shipments (no FB createOrder)  
+- [x] `isLiveFleetbaseMode` = fleetbase only (clients use local store on postgres)  
+- [x] Health / badge report TSM Postgres; FB optional escape  
+- [~] Keep `lib/fleetbase/*` + `FleetbaseExecutionStore` as **escape hatch** (full delete = S4b after pilot smoke)  
+- [~] Pilot smoke on postgres: health + create/list shipment OK **[2 Aug]**; assign + marketplace desks still open  
+- [ ] Full delete of Fleetbase client after smoke green  
 
 #### S5 — Hosted platform + thin desktop
 
@@ -218,25 +221,26 @@ Ember clone · storefront in TSM · offline full-stack desktop with embedded DB 
 
 - [x] Migrations for M1 tables (`org_id` on every row) **[S3]**  
 - [x] Implement `PostgresExecutionStore` for methods already used by repos **[S3]**  
-- [ ] Smoke: create / list / assign / status on pilot org with `postgres` flag  
+- [~] Smoke: create / list on pilot org with postgres default **[S4]**; assign still open  
 
 **Exit:** One org can run ops on Postgres with FB ignored for those calls.
 
 #### Phase C — Default postgres
 
-- [ ] Default `TSM_EXECUTION_BACKEND=postgres`
-- [ ] Clients + map + track on TSM data
-- [ ] Retarget or remove TZ→FB shadow sync
-- [ ] Pilot import script (optional)
+- [x] Default postgres when `DATABASE_URL` set (override: `TSM_EXECUTION_BACKEND=fleetbase`) **[S4]**  
+- [x] Clients use local store when not fleetbase (`isLiveFleetbaseMode` = FB only)  
+- [x] Retarget TZ→ExecutionStore shipment sync (no FB createOrder)  
+- [~] Map/track via TSM positions (sparse OK + honesty)  
+- [ ] Pilot import script (optional)  
 
-**Exit:** App usable with Fleetbase process **stopped**.
+**Exit:** App usable with Fleetbase process **stopped** (escape hatch only if needed).
 
 #### Phase D — Delete Fleetbase
 
-- [ ] Remove `app-tsm/src/lib/fleetbase/*`
-- [ ] Health / integrations no longer ping `:8000`
-- [ ] Strip `FLEETBASE_*` from product `.env.example` / runbooks
-- [ ] ADR-001 remains **Superseded**; mark compose FB optional removed
+- [~] Soft: FB not required for health/default path **[S4]**  
+- [ ] Hard delete `lib/fleetbase/*` after postgres pilot smoke (S4b)  
+- [ ] Strip `FLEETBASE_*` from product `.env.example` / runbooks  
+- [ ] ADR-001 remains **Superseded**; mark compose FB optional removed  
 
 **Exit:** `FLEETBASE_API_KEY` unset → `/api/health` healthy; marketplace + LOS work.
 

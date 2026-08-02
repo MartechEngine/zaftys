@@ -194,9 +194,9 @@ export function getActiveDataSource(): DataSource {
   return getExecutionBackend();
 }
 
-/** @deprecated Prefer isLiveExecutionMode — true for Fleetbase or Postgres live backends. */
+/** True only when the live backend is Fleetbase (not Postgres). */
 export function isLiveFleetbaseMode(): boolean {
-  return isLiveExecutionMode();
+  return getExecutionBackend() === "fleetbase";
 }
 
 function liveFail(context: string, e: unknown): never {

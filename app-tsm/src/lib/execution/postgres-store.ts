@@ -59,8 +59,12 @@ function applyFbStylePatch(
     if (meta.origin_type != null) {
       next.originType = String(meta.origin_type) as ShipmentRecord["originType"];
     }
-    if (meta.scheduled_at != null) {
-      /* stored only in payload for now */
+    if (meta.tranzfort_id != null) {
+      const tid = String(meta.tranzfort_id);
+      next.tranzfortId = tid;
+      next.tranzfortTripIds = Array.from(
+        new Set([...(next.tranzfortTripIds ?? []), tid]),
+      );
     }
   }
   const pickup = patch.pickup as { name?: string; city?: string } | undefined;

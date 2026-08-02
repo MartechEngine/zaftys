@@ -1,4 +1,3 @@
-import { getFleetbaseClient } from "@/lib/fleetbase/client";
 import {
   fetchTranZfortTrips,
   isTranZfortConfigured,
@@ -6,24 +5,29 @@ import {
   type TranZfortTrip,
 } from "@/lib/sync/tranzfort-client";
 import { recordSyncRun } from "@/lib/sync/sync-state";
+import {
+  getExecutionBackend,
+  getExecutionStore,
+  isLiveExecutionMode,
+} from "@/lib/execution";
+import type { CreateShipmentInput } from "@/lib/shipments/create-shipment";
 
-function tripToFleetbasePayload(trip: TranZfortTrip) {
+function tripToCreateInput(trip: TranZfortTrip): CreateShipmentInput {
   return {
-    meta: {
-      tranzfort_id: trip.id,
-      lr_number: trip.lr_number,
-      commodity: trip.commodity ?? "general",
-      tonnage: trip.weight,
-      origin: trip.origin,
-      destination: trip.destination,
-      origin_type: "network",
-    },
-    pickup: { name: trip.origin ?? "Pickup" },
-    dropoff: { name: trip.destination ?? "Dropoff" },
+    client: "TranZfort network",
+    origin: trip.origin ?? "Pickup",
+    destination: trip.destination ?? "Dropoff",
+    commodity: trip.commodity ?? "general",
+    tonnageMt: Number(trip.weight) > 0 ? Number(trip.weight) : 1,
+    lrNumber: trip.lr_number ?? undefined,
+    originType: "network",
   };
 }
 
-/** Shadow sync: TranZfort trips → Fleetbase orders (idempotent via meta.tranzfort_id). */
+/**
+ * Shadow sync: TranZfort trips → TSM execution shipments (Postgres default / Fleetbase escape).
+ * Idempotent via shipment.tranzfortId / tranzfortTripIds.
+ */
 export async function runTranZfortSync(): Promise<SyncRunResult> {
   const result: SyncRunResult = { scanned: 0, created: 0, skipped: 0, errors: [] };
 
@@ -33,9 +37,8 @@ export async function runTranZfortSync(): Promise<SyncRunResult> {
     return result;
   }
 
-  const client = getFleetbaseClient();
-  if (!client.isConfigured) {
-    result.errors.push("FLEETBASE_API_KEY not configured");
+  if (!isLiveExecutionMode()) {
+    result.errors.push("Execution backend is demo/dev-store — sync skipped");
     await recordSyncRun({ ...result, success: false, source: "tranzfort" });
     return result;
   }
@@ -51,15 +54,29 @@ export async function runTranZfortSync(): Promise<SyncRunResult> {
 
   result.scanned = trips.length;
 
+  const backend = getExecutionBackend();
+  let store;
+  try {
+    store = getExecutionStore(
+      backend === "postgres"
+        ? { orgId: process.env.TSM_EXECUTION_ORG_ID ?? undefined }
+        : undefined,
+    );
+  } catch (e) {
+    result.errors.push(e instanceof Error ? e.message : "ExecutionStore unavailable");
+    await recordSyncRun({ ...result, success: false, source: "tranzfort" });
+    return result;
+  }
+
   const existingTranzfortIds = new Set<string>();
   try {
-    const orders = await client.listOrders(100);
-    for (const o of orders) {
-      const tzId = o.meta?.tranzfort_id;
-      if (typeof tzId === "string") existingTranzfortIds.add(tzId);
+    const shipments = await store.listShipments(200);
+    for (const s of shipments) {
+      if (s.tranzfortId) existingTranzfortIds.add(s.tranzfortId);
+      for (const tid of s.tranzfortTripIds ?? []) existingTranzfortIds.add(tid);
     }
   } catch (e) {
-    result.errors.push(e instanceof Error ? e.message : "Fleetbase list orders failed");
+    result.errors.push(e instanceof Error ? e.message : "listShipments failed");
     await recordSyncRun({ ...result, success: false, source: "tranzfort" });
     return result;
   }
@@ -70,7 +87,16 @@ export async function runTranZfortSync(): Promise<SyncRunResult> {
       continue;
     }
     try {
-      await client.createOrder(tripToFleetbasePayload(trip));
+      const created = await store.createShipment(tripToCreateInput(trip));
+      await store.updateShipmentPatch(created.id, {
+        meta: {
+          tranzfort_id: trip.id,
+          lr_number: trip.lr_number,
+          origin_type: "network",
+          commodity: trip.commodity ?? "general",
+          tonnage: trip.weight,
+        },
+      });
       result.created++;
       existingTranzfortIds.add(trip.id);
     } catch (e) {

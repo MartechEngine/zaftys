@@ -275,6 +275,34 @@ export async function rotateFleetbaseKey() {
 
 export async function runFleetbaseHealthCheck() {
   const start = Date.now();
+  const { getExecutionBackend, getExecutionStore, isLiveExecutionMode } =
+    await import("@/lib/execution");
+  const backend = getExecutionBackend();
+
+  // S4: primary health is execution store (Postgres). Fleetbase only if escape hatch.
+  if (isLiveExecutionMode() && backend === "postgres") {
+    let reachable = false;
+    try {
+      reachable = await getExecutionStore({
+        orgId: process.env.TSM_EXECUTION_ORG_ID ?? "org_zaftys_local",
+      }).healthCheck();
+    } catch {
+      reachable = false;
+    }
+    const latencyMs = reachable ? Math.max(12, Date.now() - start) : 0;
+    recordFleetbaseHealthCheck(reachable, latencyMs || 0);
+    const detail = await getFleetbaseIntegrationDetail();
+    return {
+      ...detail,
+      name: "TSM execution (Postgres)",
+      reachable,
+      status: reachable ? ("ok" as const) : ("down" as const),
+      message: reachable
+        ? "Org-scoped Postgres LOS healthy."
+        : "Postgres execution health failed — check DATABASE_URL / migrations.",
+    };
+  }
+
   let reachable = false;
   try {
     const { getFleetbaseClient } = await import("@/lib/fleetbase/client");

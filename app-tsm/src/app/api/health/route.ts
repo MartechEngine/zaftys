@@ -12,25 +12,24 @@ export async function GET() {
 
   if (isLiveExecutionMode()) {
     try {
-      executionHealthy = await getExecutionStore().healthCheck();
+      executionHealthy = await getExecutionStore(
+        dataSource === "postgres"
+          ? { orgId: process.env.TSM_EXECUTION_ORG_ID ?? "org_zaftys_local" }
+          : undefined,
+      ).healthCheck();
       if (dataSource === "fleetbase") fleetbaseReachable = executionHealthy;
     } catch {
       executionHealthy = false;
-    }
-  } else if (fleetbaseConfigured) {
-    // Demo mode: still report Fleetbase reachability for ops badges.
-    try {
-      const { getFleetbaseClient } = await import("@/lib/fleetbase/client");
-      fleetbaseReachable = await getFleetbaseClient().healthCheck();
-    } catch {
-      fleetbaseReachable = false;
     }
   }
 
   const [database, s3] = await Promise.all([checkDatabaseHealth(), checkS3Health()]);
 
   return NextResponse.json({
-    status: database === "down" || s3 === "down" ? "degraded" : "ok",
+    status:
+      database === "down" || s3 === "down" || (isLiveExecutionMode() && !executionHealthy)
+        ? "degraded"
+        : "ok",
     service: "zaftys-tsm",
     dataSource,
     executionBackend: dataSource,
@@ -38,6 +37,7 @@ export async function GET() {
     demoUi: process.env.TSM_DEMO_UI === "1",
     fleetbaseConfigured,
     fleetbaseReachable,
+    fleetbaseOptional: true,
     database,
     databaseConfigured: isDatabaseConfigured(),
     redisConfigured: Boolean(process.env.REDIS_URL?.trim()),

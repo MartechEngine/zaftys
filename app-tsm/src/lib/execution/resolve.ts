@@ -1,9 +1,9 @@
 /**
- * Resolve which execution backend is active (ADR-008 Phases A–C).
+ * Resolve which execution backend is active (ADR-008).
  *
- * TSM_DEMO_UI=1           → dev-store (in-memory)
- * TSM_EXECUTION_BACKEND=postgres → postgres (needs DATABASE_URL + org id)
- * default / fleetbase     → Fleetbase adapter (current pilot)
+ * TSM_DEMO_UI=1              → dev-store
+ * TSM_EXECUTION_BACKEND=…    → explicit override (fleetbase | postgres | dev-store)
+ * default (S4)               → postgres when DATABASE_URL set, else fleetbase if key set
  */
 
 import type {
@@ -14,13 +14,22 @@ import type {
 import { ExecutionError } from "@/lib/execution/types";
 import { FleetbaseExecutionStore } from "@/lib/execution/fleetbase-store";
 import { PostgresExecutionStore } from "@/lib/execution/postgres-store";
+import { isDatabaseConfigured } from "@/lib/db/client";
+
+function inferDefaultBackend(): ExecutionBackend {
+  // S4: Postgres is the product default when the app DB is available.
+  if (isDatabaseConfigured()) return "postgres";
+  if (process.env.FLEETBASE_API_KEY?.trim()) return "fleetbase";
+  return "postgres";
+}
 
 export function getExecutionBackend(): ExecutionBackend {
   if (process.env.TSM_DEMO_UI === "1") return "dev-store";
-  const raw = (process.env.TSM_EXECUTION_BACKEND ?? "fleetbase").toLowerCase().trim();
+  const raw = process.env.TSM_EXECUTION_BACKEND?.toLowerCase().trim();
   if (raw === "postgres") return "postgres";
+  if (raw === "fleetbase") return "fleetbase";
   if (raw === "dev-store" || raw === "dev") return "dev-store";
-  return "fleetbase";
+  return inferDefaultBackend();
 }
 
 /** True when shipments/fleet must come from a live ExecutionStore (no demo fallback). */

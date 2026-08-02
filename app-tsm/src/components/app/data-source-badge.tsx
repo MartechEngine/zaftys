@@ -3,7 +3,9 @@
 import { useEffect, useState } from "react";
 
 interface HealthPayload {
-  dataSource: "fleetbase" | "dev-store";
+  dataSource: "fleetbase" | "postgres" | "dev-store";
+  executionBackend?: string;
+  executionHealthy?: boolean;
   fleetbaseConfigured: boolean;
   demoUi?: boolean;
   status: string;
@@ -33,21 +35,26 @@ export function DataSourceBadge() {
     );
   }
 
-  if (health.dataSource === "fleetbase" && health.fleetbaseConfigured) {
+  if (health.dataSource === "postgres") {
+    const ok = health.executionHealthy !== false && health.status !== "degraded";
     return (
       <span className="flex items-center gap-2 text-sm">
-        <span className="h-2 w-2 rounded-full bg-emerald-400" aria-hidden />
-        <span className="font-medium text-heading">Fleetbase connected</span>
-        <span className="hidden text-muted-foreground sm:inline">· live orders</span>
+        <span
+          className={`h-2 w-2 rounded-full ${ok ? "bg-emerald-400" : "bg-orange"}`}
+          aria-hidden
+        />
+        <span className="font-medium text-heading">TSM Postgres</span>
+        <span className="hidden text-muted-foreground sm:inline">· org-scoped LOS</span>
       </span>
     );
   }
 
-  if (health.fleetbaseConfigured) {
+  if (health.dataSource === "fleetbase" && health.fleetbaseConfigured) {
     return (
-      <span className="flex items-center gap-2 text-sm text-orange">
-        <span className="h-2 w-2 rounded-full bg-orange" aria-hidden />
-        Fleetbase key set · using mock fallback (check API)
+      <span className="flex items-center gap-2 text-sm">
+        <span className="h-2 w-2 rounded-full bg-emerald-400" aria-hidden />
+        <span className="font-medium text-heading">Fleetbase (escape)</span>
+        <span className="hidden text-muted-foreground sm:inline">· set TSM_EXECUTION_BACKEND=postgres to cut over</span>
       </span>
     );
   }
@@ -56,7 +63,6 @@ export function DataSourceBadge() {
     <span className="flex items-center gap-2 text-sm text-muted-foreground">
       <span className="h-2 w-2 rounded-full bg-white/30" aria-hidden />
       Dev mode · mock data
-      <span className="hidden sm:inline">· add FLEETBASE_API_KEY to connect</span>
     </span>
   );
 }

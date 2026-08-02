@@ -40,7 +40,8 @@ npm run dev
 
 | Mode | Env | Behavior |
 |------|-----|----------|
-| **Live (default)** | `TSM_DEMO_UI=0` or unset | Today: Fleetbase + Postgres (transitional). Target: **TSM Postgres only** (`TSM_EXECUTION_BACKEND=postgres`, ADR-008) |
+| **Live Postgres (default)** | `DATABASE_URL` set, `TSM_DEMO_UI≠1` | Org-scoped LOS via `PostgresExecutionStore` (ADR-008 S4) |
+| **Fleetbase escape** | `TSM_EXECUTION_BACKEND=fleetbase` | Transitional adapter only |
 | **Demo (opt-in)** | `TSM_DEMO_UI=1` | Rich seeds for demos only — not the build target |
 
 Live-first plan: [`docs/app/ops/tsm-live-first-plan.md`](../docs/app/ops/tsm-live-first-plan.md).
