@@ -15,6 +15,7 @@ import { DataTable, type DataTableColumn } from "@/components/app/data-table";
 import { KanbanCard, KanbanColumn } from "@/components/app/ui-primitives";
 import { Button } from "@/components/ui/button";
 import { api } from "@/lib/api-client";
+import { useOpsStream } from "@/lib/hooks/use-ops-stream";
 import { DISPATCH_NAV } from "@/lib/module-nav";
 import {
   canDropInColumn,
@@ -26,8 +27,6 @@ import {
 import type { ShipmentRecord } from "@/lib/dev-store";
 import type { NetworkListing } from "@/lib/network/listing-types";
 import { cn } from "@/lib/utils";
-
-const REFRESH_MS = 30_000;
 
 type BoardView = "kanban" | "table";
 
@@ -140,10 +139,16 @@ function DispatchBoardInner() {
     return () => window.removeEventListener("focus", onFocus);
   }, [load]);
 
+  const { connected: opsLive } = useOpsStream(true, () => {
+    void load(true);
+  });
+
+  // Fallback poll when SSE is disconnected (mirrors live-map pattern)
   useEffect(() => {
-    const id = window.setInterval(() => void load(true), REFRESH_MS);
+    if (opsLive) return;
+    const id = window.setInterval(() => void load(true), 30_000);
     return () => window.clearInterval(id);
-  }, [load]);
+  }, [opsLive, load]);
 
   async function handleColumnDrop(columnId: DispatchColumnId, shipmentId: string) {
     const shipment = shipments.find((s) => s.id === shipmentId);
@@ -208,8 +213,7 @@ function DispatchBoardInner() {
       toast.info("Review offers or edit listing on shipment detail");
       return;
     }
-    router.push(`/shipments/${shipment.id}?tab=offers`);
-    toast.info("Open shipment Offers tab to post to TranZfort");
+    router.push(`/shipments/${shipment.id}?tab=offers&post=1`);
   }
 
   return (
@@ -237,6 +241,17 @@ function DispatchBoardInner() {
             <Button variant="outline" size="sm" asChild>
               <Link href="/map?mode=dispatch">Map</Link>
             </Button>
+            <span
+              className={cn(
+                "inline-flex items-center gap-1.5 rounded-full px-2 py-1 text-[10px] tracking-wide uppercase",
+                opsLive ? "bg-success/15 text-success" : "bg-white/5 text-muted-foreground",
+              )}
+            >
+              <span
+                className={cn("size-1.5 rounded-full", opsLive ? "bg-success" : "bg-muted-foreground")}
+              />
+              {opsLive ? "Live" : "Offline"}
+            </span>
             <Button
               variant="outline"
               size="sm"

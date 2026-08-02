@@ -30,7 +30,12 @@ export const INTEGRATIONS_NAV: SubNavLink[] = [
 
 export const NETWORK_NAV: SubNavLink[] = [
   { href: "/network", label: "Overview", exact: true },
-  { href: "/network/overflow", label: "Overflow" },
+  { href: "/network/my-loads", label: "My Loads" },
+  { href: "/network/bookings", label: "Bookings" },
+  { href: "/network/trips", label: "Trips" },
+  { href: "/network/analytics", label: "Analytics" },
+  { href: "/network/chat", label: "Chat" },
+  { href: "/network/overflow", label: "Local overflow" },
   { href: "/network/assignments", label: "Assignments" },
   { href: "/network/partners", label: "Partners" },
   { href: "/network/sync", label: "Sync" },

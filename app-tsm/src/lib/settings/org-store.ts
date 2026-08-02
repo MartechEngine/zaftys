@@ -1,4 +1,5 @@
 import { demoOrg } from "@/lib/demo-data";
+import { allowDemoSeeds } from "@/lib/data/demo-mode";
 import { logActivity } from "@/lib/dev-store";
 
 export type OrgProfileFields = {
@@ -17,7 +18,9 @@ const g = globalThis as typeof globalThis & {
 
 export function getStoredOrgProfile(): OrgProfileFields {
   if (!g.__tsmOrgProfile) {
-    g.__tsmOrgProfile = { ...demoOrg };
+    g.__tsmOrgProfile = allowDemoSeeds()
+      ? { ...demoOrg }
+      : { name: "", gstin: "", address: "", phone: "", email: "" };
   }
   return { ...g.__tsmOrgProfile };
 }

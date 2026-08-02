@@ -28,6 +28,10 @@ export function listStoredFuelTransactions(): FuelTransaction[] {
   return [...getStore()];
 }
 
+export function replaceStoredFuelTransactions(items: FuelTransaction[]) {
+  g.__tsmDevFuelTx = [...items];
+}
+
 export function createStoredFuelTransaction(input: {
   vehicle: string;
   vehicleId?: string;

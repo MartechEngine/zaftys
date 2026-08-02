@@ -1,5 +1,9 @@
 import { demoClients, demoClientUsers, demoContacts } from "@/lib/demo-data";
-import { fetchAllShipmentsRaw } from "@/lib/data/shipment-repository";
+import { demoSeed } from "@/lib/data/demo-mode";
+import {
+  fetchAllShipmentsRaw,
+  isLiveFleetbaseMode,
+} from "@/lib/data/shipment-repository";
 import {
   createStoredClient,
   listStoredClients,
@@ -31,6 +35,15 @@ import {
   persistClientPatch,
   persistClientUser,
 } from "@/lib/db/domain-persistence";
+import { getFleetbaseClient } from "@/lib/fleetbase/client";
+import {
+  buildFleetbaseClientPayload,
+  mapFleetbaseContact,
+  type FleetbaseContact,
+} from "@/lib/fleetbase/mapper";
+
+/** Alias — Fleetbase customers share the contact field shape we map. */
+const mapFleetbaseCustomer = mapFleetbaseContact;
 
 export type ClientRecord = {
   id: string;
@@ -68,7 +81,7 @@ export type CreateClientInput = {
 };
 
 const META_BY_NAME = Object.fromEntries(
-  demoClients.map((c) => [
+  demoSeed(demoClients).map((c) => [
     c.name,
     { id: c.id, gstin: c.gstin, city: c.city, contact: c.contact },
   ]),
@@ -110,17 +123,94 @@ export function validateCreateClientInput(body: unknown): CreateClientInput | { 
   };
 }
 
-export async function listClients(q?: string): Promise<ClientRecord[]> {
-  await ensureClientsHydrated();
-  const shipments = await fetchAllShipmentsRaw();
+function shipmentCountsByClientName(
+  shipments: Awaited<ReturnType<typeof fetchAllShipmentsRaw>>,
+) {
   const counts = new Map<string, { active: number; total: number }>();
-
   for (const s of shipments) {
     const entry = counts.get(s.client) ?? { active: 0, total: 0 };
     entry.total += 1;
     if (ACTIVE_STATUSES.has(s.status)) entry.active += 1;
     counts.set(s.client, entry);
   }
+  return counts;
+}
+
+async function listClientsFromFleetbase(q?: string): Promise<ClientRecord[]> {
+  let raw: unknown[] = [];
+  try {
+    const result = await getFleetbaseClient().listCustomersOrContacts(100);
+    raw = result.rows;
+  } catch (e) {
+    // Both /customers and /contacts failed — fall back to unique names on live orders
+    const msg = e instanceof Error ? e.message : String(e);
+    console.warn("[listClients] Fleetbase customers/contacts unavailable, deriving from orders:", msg);
+    const shipments = await fetchAllShipmentsRaw();
+    const counts = shipmentCountsByClientName(shipments);
+    const derived: ClientRecord[] = [...counts.entries()].map(([name, c]) => ({
+      id: slugify(name),
+      name,
+      activeShipments: c.active,
+      totalShipments: c.total,
+    }));
+    derived.sort((a, b) => a.name.localeCompare(b.name));
+    if (!q?.trim()) return derived;
+    const needle = q.trim().toLowerCase();
+    return derived.filter((c) => c.name.toLowerCase().includes(needle));
+  }
+
+  const shipments = await fetchAllShipmentsRaw();
+  const counts = shipmentCountsByClientName(shipments);
+
+  const clients: ClientRecord[] = raw
+    .map((row) => mapFleetbaseCustomer(row as FleetbaseContact))
+    .filter((c) => c.id)
+    .map((c) => {
+      const byName = counts.get(c.name) ?? { active: 0, total: 0 };
+      const patch = getClientPatch(c.id);
+      return {
+        ...c,
+        activeShipments: byName.active,
+        totalShipments: byName.total,
+        ...(patch ?? {}),
+        id: c.id,
+      };
+    });
+
+  // Include shipment-only clients not yet in Fleetbase registry
+  for (const [name, c] of counts.entries()) {
+    if (!clients.some((x) => x.name === name)) {
+      clients.push({
+        id: slugify(name),
+        name,
+        activeShipments: c.active,
+        totalShipments: c.total,
+      });
+    }
+  }
+
+  clients.sort((a, b) => a.name.localeCompare(b.name));
+
+  if (!q?.trim()) return clients;
+  const needle = q.trim().toLowerCase();
+  return clients.filter(
+    (c) =>
+      c.name.toLowerCase().includes(needle) ||
+      c.gstin?.toLowerCase().includes(needle) ||
+      c.city?.toLowerCase().includes(needle) ||
+      c.contact?.toLowerCase().includes(needle),
+  );
+}
+
+export async function listClients(q?: string): Promise<ClientRecord[]> {
+  await ensureClientsHydrated();
+
+  if (isLiveFleetbaseMode()) {
+    return listClientsFromFleetbase(q);
+  }
+
+  const shipments = await fetchAllShipmentsRaw();
+  const counts = shipmentCountsByClientName(shipments);
 
   const clients: ClientRecord[] = [...counts.entries()].map(([name, c]) => {
     const meta = META_BY_NAME[name];
@@ -136,7 +226,7 @@ export async function listClients(q?: string): Promise<ClientRecord[]> {
     };
   });
 
-  for (const c of demoClients) {
+  for (const c of demoSeed(demoClients)) {
     if (!clients.some((x) => x.name === c.name)) {
       clients.push({
         id: c.id,
@@ -176,6 +266,26 @@ export async function listClients(q?: string): Promise<ClientRecord[]> {
 }
 
 export async function createClient(input: CreateClientInput): Promise<ClientRecord> {
+  if (isLiveFleetbaseMode()) {
+    try {
+      const { row } = await getFleetbaseClient().createCustomerOrContact(
+        buildFleetbaseClientPayload(input),
+      );
+      const mapped = mapFleetbaseCustomer(row as FleetbaseContact);
+      if (!mapped.id) {
+        throw new Error("Fleetbase did not return a client id.");
+      }
+      return {
+        ...mapped,
+        activeShipments: 0,
+        totalShipments: 0,
+      };
+    } catch (e) {
+      const msg = e instanceof Error ? e.message : String(e);
+      console.error("[createClient] Fleetbase live mode failed:", e);
+      throw new Error(`Fleetbase unavailable (createClient): ${msg}`);
+    }
+  }
   await ensureClientsHydrated();
   const existing = (await listClients()).find(
     (c) => c.name.toLowerCase() === input.name.toLowerCase(),
@@ -191,6 +301,36 @@ export async function createClient(input: CreateClientInput): Promise<ClientReco
 
 export async function getClient(id: string): Promise<ClientRecord | undefined> {
   await ensureClientsHydrated();
+
+  if (isLiveFleetbaseMode()) {
+    try {
+      const raw = await getFleetbaseClient().getCustomerOrContact(id);
+      const mapped = mapFleetbaseCustomer(raw as FleetbaseContact);
+      if (!mapped.id) return undefined;
+      const shipments = await fetchAllShipmentsRaw();
+      const counts = shipmentCountsByClientName(shipments).get(mapped.name) ?? {
+        active: 0,
+        total: 0,
+      };
+      const patch = getClientPatch(mapped.id);
+      return {
+        ...mapped,
+        activeShipments: counts.active,
+        totalShipments: counts.total,
+        ...(patch ?? {}),
+        id: mapped.id,
+      };
+    } catch (e) {
+      const msg = e instanceof Error ? e.message : String(e);
+      if (/404|not found/i.test(msg)) {
+        const clients = await listClientsFromFleetbase();
+        return clients.find((c) => c.id === id || slugify(c.name) === id);
+      }
+      console.error("[getClient] Fleetbase live mode failed:", e);
+      throw new Error(`Fleetbase unavailable (getClient): ${msg}`);
+    }
+  }
+
   const clients = await listClients();
   const client = clients.find((c) => c.id === id || slugify(c.name) === id);
   if (!client) return undefined;
@@ -242,6 +382,24 @@ export async function patchClient(
   await ensureClientsHydrated();
   const client = await getClient(id);
   if (!client) return undefined;
+
+  if (isLiveFleetbaseMode()) {
+    // Prefer Fleetbase write when id looks like a real UUID / public id; always keep local patch overlay.
+    try {
+      await getFleetbaseClient().updateCustomerOrContact(
+        client.id,
+        buildFleetbaseClientPayload(input),
+      );
+    } catch (e) {
+      const msg = e instanceof Error ? e.message : String(e);
+      // Slug-derived shipment-only clients won't exist in Fleetbase — fall through to local patch.
+      if (!/404|not found/i.test(msg)) {
+        console.error("[patchClient] Fleetbase live mode failed:", e);
+        throw new Error(`Fleetbase unavailable (patchClient): ${msg}`);
+      }
+    }
+  }
+
   patchStoredClient(client.id, input);
   await persistClientPatch(client.id, input);
   return getClient(client.id);
@@ -332,7 +490,7 @@ export async function listClientContacts(clientId: string): Promise<ClientContac
   if (!client) return [];
 
   const stored = listStoredContacts(client.id);
-  const demo = demoContacts.filter((c) => c.clientId === client.id);
+  const demo = demoSeed(demoContacts).filter((c) => c.clientId === client.id);
   const base =
     demo.length > 0
       ? demo
@@ -362,7 +520,7 @@ export async function listClientUsers(clientId: string): Promise<ClientPortalUse
   const client = await getClient(clientId);
   if (!client) return [];
   const stored = listStoredClientUsers(client.id);
-  const demo = demoClientUsers.filter((u) => u.clientId === client.id);
+  const demo = demoSeed(demoClientUsers).filter((u) => u.clientId === client.id);
   return [...stored, ...demo].map((u) =>
     isClientUserRevoked(u.id)
       ? { ...u, status: "pending" as const, lastLogin: "Revoked" }

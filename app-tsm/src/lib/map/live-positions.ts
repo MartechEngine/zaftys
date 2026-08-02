@@ -1,4 +1,5 @@
 import type { GeoPoint, ShipmentGeo } from "@/lib/geo";
+import { isValidGps } from "@/lib/geo";
 import type { ShipmentRecord } from "@/lib/dev-store";
 import { upsertDocument, loadCollection } from "@/lib/db/collections";
 import { isDatabaseConfigured } from "@/lib/db/client";
@@ -40,7 +41,7 @@ export async function ensurePositionsHydrated() {
     const rows = await loadCollection<LivePosition>(COLLECTION);
     const map = positions();
     for (const row of rows) {
-      if (row?.shipmentId && Number.isFinite(row.lat) && Number.isFinite(row.lng)) {
+      if (row?.shipmentId && isValidGps(row.lat, row.lng)) {
         map.set(row.shipmentId, row);
       }
     }
@@ -58,6 +59,9 @@ export async function upsertLivePosition(input: {
   vehicleId?: string;
   source?: string;
 }): Promise<LivePosition> {
+  if (!isValidGps(input.lat, input.lng)) {
+    throw new Error("Invalid GPS coordinates (rejected Null Island / non-finite).");
+  }
   await ensurePositionsHydrated();
   const row: LivePosition = {
     id: input.shipmentId,

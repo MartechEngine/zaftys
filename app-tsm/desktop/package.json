@@ -1,0 +1,14 @@
+{
+  "name": "tsm-desktop",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Thin Tauri shell for hosted TSM — no TranZfort secrets in this package",
+  "scripts": {
+    "desktop:dev": "tauri dev",
+    "desktop:build": "tauri build",
+    "tauri": "tauri"
+  },
+  "devDependencies": {
+    "@tauri-apps/cli": "^2.5.0"
+  }
+}

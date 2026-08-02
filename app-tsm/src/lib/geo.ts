@@ -49,6 +49,25 @@ export function isGpsStale(
   return Date.now() - ts > thresholdMinutes * 60_000;
 }
 
+/** Reject missing/NaN and Null Island (0,0) — not a real fix. */
+export function isValidGps(lat: number, lng: number): boolean {
+  if (!Number.isFinite(lat) || !Number.isFinite(lng)) return false;
+  if (lat === 0 && lng === 0) return false;
+  if (Math.abs(lat) > 90 || Math.abs(lng) > 180) return false;
+  return true;
+}
+
+/** Endpoints only — never invent a moving `current` pin. */
+export function geoEndpointsForShipment(
+  originCity: string,
+  destinationCity: string,
+): Pick<ShipmentGeo, "origin" | "destination"> | undefined {
+  const origin = cityCoords(originCity);
+  const destination = cityCoords(destinationCity);
+  if (!origin || !destination) return undefined;
+  return { origin, destination };
+}
+
 export function geoForShipment(input: {
   origin: string;
   destination: string;
@@ -58,28 +77,26 @@ export function geoForShipment(input: {
   /** When set, use for age-based staleness instead of status-only. */
   gpsUpdatedAt?: string;
 }): ShipmentGeo | undefined {
-  const origin = cityCoords(input.origin);
-  const destination = cityCoords(input.destination);
-  if (!origin || !destination) return undefined;
+  const endpoints = geoEndpointsForShipment(input.origin, input.destination);
+  if (!endpoints) return undefined;
 
   const active = ["dispatched", "at_plant", "in_transit", "at_weighbridge", "exception"].includes(
     input.status,
   );
 
   if (!active) {
-    return { origin, destination };
+    return { ...endpoints };
   }
 
   const seed = input.id.split("").reduce((n, c) => n + c.charCodeAt(0), 0);
   const t = 0.35 + (seed % 40) / 100;
-  const current = interpolateRoute(origin, destination, t);
+  const current = interpolateRoute(endpoints.origin, endpoints.destination, t);
   const gpsUpdatedAt = input.gpsUpdatedAt ?? input.updatedAt;
   const gpsStale =
     input.status === "exception" || isGpsStale(gpsUpdatedAt, DEFAULT_GPS_STALE_MINUTES);
 
   return {
-    origin,
-    destination,
+    ...endpoints,
     current,
     gpsUpdatedAt,
     gpsStale,

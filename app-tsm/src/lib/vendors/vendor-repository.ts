@@ -1,4 +1,5 @@
 import { demoVendors, demoWorkOrders } from "@/lib/demo-data";
+import { demoSeed } from "@/lib/data/demo-mode";
 import { createStoredVendor, listStoredVendors } from "@/lib/vendors/vendor-store";
 import {
   getWorkOrderStatusOverride,
@@ -28,7 +29,7 @@ function parseCostInr(cost: string) {
 }
 
 function allWorkOrders() {
-  const demo = demoWorkOrders.map((wo) => ({
+  const demo = demoSeed(demoWorkOrders).map((wo) => ({
     ...wo,
     status: getWorkOrderStatusOverride(wo.id) ?? wo.status,
   }));
@@ -62,7 +63,7 @@ export async function listVendors(q?: string): Promise<VendorRecord[]> {
   await ensureVendorsHydrated();
   const { getVendorPatch } = await import("@/lib/mutations/fleet-entity-store");
   const stored = listStoredVendors().map((v) => ({ ...v, ...vendorStats(v.name) }));
-  const demo = demoVendors.map((v) => ({ ...v, ...vendorStats(v.name) }));
+  const demo = demoSeed(demoVendors).map((v) => ({ ...v, ...vendorStats(v.name) }));
   let vendors = [...stored, ...demo].map((v) => {
     const patch = getVendorPatch(v.id);
     return patch ? { ...v, ...patch, id: v.id } : v;

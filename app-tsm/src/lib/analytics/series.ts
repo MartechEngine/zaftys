@@ -1,5 +1,10 @@
-import { fetchAllShipmentsRaw, getExceptions, listVehicles } from "@/lib/data/shipment-repository";
+import {
+  fetchShipmentsForEnrichment,
+  getExceptions,
+  listVehiclesSafe,
+} from "@/lib/data/shipment-repository";
 import { listInvoices } from "@/lib/billing/invoice-repository";
+import { allowDemoSeeds } from "@/lib/data/demo-mode";
 import {
   getOutboundListingStats,
   listOutboundListings,
@@ -36,7 +41,7 @@ function seedSeries(base: number, days: string[], salt: number): number[] {
 
 /**
  * Prefer real day-bucket counts from shipment.updatedAt; fall back to seeded
- * values when a day has no matching shipments.
+ * values when a day has no matching shipments (demo UI only).
  */
 function dayBucketSeries<T extends { updatedAt: string }>(
   shipments: T[],
@@ -45,7 +50,8 @@ function dayBucketSeries<T extends { updatedAt: string }>(
   fallbackBase: number,
   salt: number,
 ): number[] {
-  const seeded = seedSeries(fallbackBase, days, salt);
+  const useSeed = allowDemoSeeds();
+  const seeded = useSeed ? seedSeries(fallbackBase, days, salt) : null;
   const byDay = new Map(days.map((d) => [d, 0]));
   for (const s of shipments) {
     if (!predicate(s)) continue;
@@ -54,14 +60,15 @@ function dayBucketSeries<T extends { updatedAt: string }>(
   }
   return days.map((d, i) => {
     const count = byDay.get(d) ?? 0;
-    return count > 0 ? count : seeded[i];
+    if (count > 0) return count;
+    return seeded ? seeded[i] : 0;
   });
 }
 
 export async function getCommandCenterAnalytics() {
   const { ensureNetworkHydrated } = await import("@/lib/network/network-persistence");
   await ensureNetworkHydrated();
-  const shipments = await fetchAllShipmentsRaw();
+  const shipments = await fetchShipmentsForEnrichment();
   const active = shipments.filter((s) =>
     ["dispatched", "at_plant", "in_transit", "at_weighbridge"].includes(s.status),
   );
@@ -121,7 +128,11 @@ export async function getCommandCenterAnalytics() {
     else if (ageH < 24) aging["4–24h"] += 1;
     else aging[">24h"] += 1;
   }
-  if (Object.values(aging).every((v) => v === 0) && pending.length > 0) {
+  if (
+    allowDemoSeeds() &&
+    Object.values(aging).every((v) => v === 0) &&
+    pending.length > 0
+  ) {
     aging["1–4h"] = Math.min(pending.length, 2);
     aging["4–24h"] = Math.max(0, pending.length - 2);
   }
@@ -134,12 +145,10 @@ export async function getCommandCenterAnalytics() {
   const fillRate =
     fillRates.length > 0
       ? Math.round((fillRates.reduce((a, b) => a + b, 0) / fillRates.length) * 100)
-      : openPosts > 0
-        ? 0
-        : 100;
+      : 0;
 
   return {
-    demoSeries: process.env.TSM_DEMO_UI !== "0",
+    demoSeries: process.env.TSM_DEMO_UI === "1",
     activeTripsSpark: { labels: days.map((d) => d.slice(5)), values: activeSpark },
     exceptionsSpark: { labels: days.map((d) => d.slice(5)), values: exceptionSpark },
     statusMix,
@@ -151,7 +160,7 @@ export async function getCommandCenterAnalytics() {
 
 export async function getOperationsAnalytics(days = 30) {
   const report = await getOperationsReport();
-  const shipments = await fetchAllShipmentsRaw();
+  const shipments = await fetchShipmentsForEnrichment();
   const labels = lastNDays(days);
   const byDay = new Map(labels.map((d) => [d, { fleet: 0, network: 0 }]));
 
@@ -165,6 +174,14 @@ export async function getOperationsAnalytics(days = 30) {
 
   const tripsOverTime = labels.map((date, i) => {
     const row = byDay.get(date) ?? { fleet: 0, network: 0 };
+    if (!allowDemoSeeds()) {
+      return {
+        date: date.slice(5),
+        trips: row.fleet + row.network,
+        fleet: row.fleet,
+        network: row.network,
+      };
+    }
     const seededFleet = seedSeries(Math.max(report.totalTrips / 10, 2), labels, 3)[i];
     const seededNet = seedSeries(Math.max(report.totalTrips / 20, 1), labels, 7)[i];
     const fleet = row.fleet || seededFleet;
@@ -178,14 +195,19 @@ export async function getOperationsAnalytics(days = 30) {
   });
 
   const weeks = ["W-3", "W-2", "W-1", "This week"];
-  const onTimeByWeek = weeks.map((week, i) => ({
-    week,
-    pct: Math.min(99, Math.max(70, report.onTimePercent - 6 + i * 3)),
-  }));
+  const onTimeByWeek = allowDemoSeeds()
+    ? weeks.map((week, i) => ({
+        week,
+        pct: Math.min(99, Math.max(70, report.onTimePercent - 6 + i * 3)),
+      }))
+    : weeks.map((week, i) => ({
+        week,
+        pct: i === weeks.length - 1 ? report.onTimePercent : 0,
+      }));
   onTimeByWeek[onTimeByWeek.length - 1].pct = report.onTimePercent;
 
   return {
-    demoSeries: process.env.TSM_DEMO_UI !== "0",
+    demoSeries: process.env.TSM_DEMO_UI === "1",
     kpis: {
       totalTrips: report.totalTrips,
       onTimePercent: report.onTimePercent,
@@ -205,7 +227,7 @@ export async function getOperationsAnalytics(days = 30) {
 export async function getDriversAnalytics() {
   const cards = await getDriverScorecards();
   return {
-    demoSeries: process.env.TSM_DEMO_UI !== "0",
+    demoSeries: process.env.TSM_DEMO_UI === "1",
     leaderboard: cards.slice(0, 8).map((d) => ({
       name: d.name,
       trips: d.trips,
@@ -223,13 +245,13 @@ export async function getDriversAnalytics() {
 
 export async function getFleetAnalytics() {
   const report = await getFleetUtilizationReport();
-  const vehicles = await listVehicles();
+  const vehicles = await listVehiclesSafe();
   const byStatus = new Map<string, number>();
   for (const v of vehicles) {
     byStatus.set(v.status, (byStatus.get(v.status) ?? 0) + 1);
   }
   return {
-    demoSeries: process.env.TSM_DEMO_UI !== "0",
+    demoSeries: process.env.TSM_DEMO_UI === "1",
     utilizationPct: report.utilizationPercent,
     statusMix: [...byStatus.entries()].map(([id, value]) => ({
       id,
@@ -238,8 +260,10 @@ export async function getFleetAnalytics() {
     })),
     capacity: report.byVehicle.slice(0, 6).map((v) => ({
       label: v.registration,
-      used: Math.round((v.utilizationPercent / 100) * 32),
-      capacity: 32,
+      used: allowDemoSeeds()
+        ? Math.round((v.utilizationPercent / 100) * 32)
+        : Math.round(v.utilizationPercent),
+      capacity: allowDemoSeeds() ? 32 : 100,
     })),
   };
 }
@@ -247,12 +271,13 @@ export async function getFleetAnalytics() {
 export async function getLanesAnalytics() {
   const lanes = await getLanesReport();
   return {
-    demoSeries: process.env.TSM_DEMO_UI !== "0",
+    demoSeries: process.env.TSM_DEMO_UI === "1",
     corridors: lanes.corridors.slice(0, 8).map((l) => ({
       corridor: l.corridor,
       trips: l.trips,
       onTimePct: l.onTime,
-      avgHours: Math.round(8 + l.trips * 0.4),
+      // No real transit-hour field yet — invent only in demo UI.
+      avgHours: allowDemoSeeds() ? Math.round(8 + l.trips * 0.4) : 0,
     })),
   };
 }
@@ -291,7 +316,7 @@ export async function getNetworkAnalytics() {
     else if (mins < 240) ttfBuckets[2].count += 1;
     else ttfBuckets[3].count += 1;
   }
-  if (ttfBuckets.every((b) => b.count === 0)) {
+  if (allowDemoSeeds() && ttfBuckets.every((b) => b.count === 0)) {
     ttfBuckets[0].count = 2;
     ttfBuckets[1].count = 1;
   }
@@ -302,7 +327,7 @@ export async function getNetworkAnalytics() {
   );
   const fillRate =
     open.length === 0
-      ? 100
+      ? 0
       : Math.round(
           (open.reduce((s, l) => s + l.trucksFilled / Math.max(l.trucksNeeded, 1), 0) /
             open.length) *
@@ -310,7 +335,7 @@ export async function getNetworkAnalytics() {
         );
 
   return {
-    demoSeries: process.env.TSM_DEMO_UI !== "0",
+    demoSeries: process.env.TSM_DEMO_UI === "1",
     pipeline: Object.entries(pipeline).map(([stage, count]) => ({ stage, count })),
     ttfBuckets,
     openPosts,
@@ -324,6 +349,9 @@ export async function getBillingAnalytics() {
   const months = ["Feb", "Mar", "Apr", "May", "Jun", "Jul"];
   const revenueByMonth = months.map((month, i) => {
     const base = invoices.reduce((s, inv) => s + (inv.subtotalInr || 0), 0) / months.length;
+    if (!allowDemoSeeds()) {
+      return { month, revenue: Math.round(base), gst: Math.round(base * 0.18) };
+    }
     return {
       month,
       revenue: Math.round(seedSeries(base || 80_000, months, 4)[i]),
@@ -344,11 +372,16 @@ export async function getBillingAnalytics() {
   const aging = { "0–30": 0, "31–60": 0, "61–90": 0, "90+": 0 };
   for (const inv of invoices) {
     if (inv.status === "paid") continue;
-    const n = inv.id.charCodeAt(inv.id.length - 1) % 4;
-    const bucket = n === 0 ? "90+" : n === 1 ? "61–90" : n === 2 ? "31–60" : "0–30";
-    aging[bucket as keyof typeof aging] += inv.subtotalInr || 0;
+    if (allowDemoSeeds()) {
+      const n = inv.id.charCodeAt(inv.id.length - 1) % 4;
+      const bucket = n === 0 ? "90+" : n === 1 ? "61–90" : n === 2 ? "31–60" : "0–30";
+      aging[bucket as keyof typeof aging] += inv.subtotalInr || 0;
+    } else {
+      // No due-date field yet — bucket all open AR as current rather than invent age.
+      aging["0–30"] += inv.subtotalInr || 0;
+    }
   }
-  if (Object.values(aging).every((v) => v === 0)) {
+  if (allowDemoSeeds() && Object.values(aging).every((v) => v === 0)) {
     aging["0–30"] = 120_000;
     aging["31–60"] = 45_000;
   }
@@ -359,19 +392,24 @@ export async function getBillingAnalytics() {
   const lastGst = revenueByMonth[revenueByMonth.length - 1]?.gst ?? 0;
 
   return {
-    demoSeries: process.env.TSM_DEMO_UI !== "0",
+    demoSeries: process.env.TSM_DEMO_UI === "1",
     revenueByMonth,
     arAging: Object.entries(aging).map(([bucket, amount]) => ({ bucket, amount })),
     statusMix: [
       { id: "paid", label: "Paid", value: paid },
       { id: "pending", label: "Open", value: pending },
     ],
-    marginBridge: [
-      { label: "Shipper revenue", value: lastRevenue },
-      { label: "Partner payout", value: -Math.round(lastRevenue * 0.62) },
-      { label: "GST", value: -lastGst },
-      { label: "Net margin", value: Math.round(lastRevenue * 0.2) },
-    ],
+    marginBridge: allowDemoSeeds()
+      ? [
+          { label: "Shipper revenue", value: lastRevenue },
+          { label: "Partner payout", value: -Math.round(lastRevenue * 0.62) },
+          { label: "GST", value: -lastGst },
+          { label: "Net margin", value: Math.round(lastRevenue * 0.2) },
+        ]
+      : [
+          { label: "Shipper revenue", value: lastRevenue },
+          { label: "GST", value: -lastGst },
+        ],
   };
 }
 

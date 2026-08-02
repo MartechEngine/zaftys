@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
+import { EmptyState } from "@/components/app/empty-state";
 import { cn } from "@/lib/utils";
 import type { Driver, Vehicle } from "@/lib/dev-store";
 
@@ -54,45 +55,81 @@ export function FleetTabs({
       <Card>
         <CardContent className="p-0">
           {tab === "Vehicles" ? (
-            <table className="w-full text-sm">
-              <thead className="border-b border-white/10 bg-white/[0.03]">
-                <tr>
-                  <th className="px-4 py-3 text-left text-xs font-semibold text-label uppercase">Registration</th>
-                  <th className="px-4 py-3 text-left text-xs font-semibold text-label uppercase">Type</th>
-                  <th className="px-4 py-3 text-left text-xs font-semibold text-label uppercase">Capacity</th>
-                  <th className="px-4 py-3 text-left text-xs font-semibold text-label uppercase">Driver</th>
-                  <th className="px-4 py-3 text-left text-xs font-semibold text-label uppercase">Docs</th>
-                  <th className="px-4 py-3 text-left text-xs font-semibold text-label uppercase">Status</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-white/5">
-                {vehicles.map((v) => (
-                  <tr key={v.id} className="hover:bg-white/[0.04]">
-                    <td className="px-4 py-3 font-medium text-link">
-                      <Link href={`/fleet/vehicles/${v.id}`} className="hover:text-link-hover">
-                        {v.registration}
-                      </Link>
-                    </td>
-                    <td className="px-4 py-3">{v.type}</td>
-                    <td className="px-4 py-3">{v.capacityMt} MT</td>
-                    <td className="px-4 py-3">{v.driver ?? "—"}</td>
-                    <td className="px-4 py-3">
-                      <DocBadge status={v.docs} />
-                    </td>
-                    <td className="px-4 py-3 capitalize">{v.status.replace("_", " ")}</td>
+            vehicles.length === 0 ? (
+              <EmptyState
+                className="m-4 border-0 bg-transparent py-10"
+                title="No vehicles yet"
+                description="Use Create vehicle above to register a unit in Fleetbase for assignment and compliance."
+              />
+            ) : (
+              <table className="w-full text-sm">
+                <thead className="border-b border-white/10 bg-white/[0.03]">
+                  <tr>
+                    <th className="px-4 py-3 text-left text-xs font-semibold text-label uppercase">
+                      Registration
+                    </th>
+                    <th className="px-4 py-3 text-left text-xs font-semibold text-label uppercase">
+                      Type
+                    </th>
+                    <th className="px-4 py-3 text-left text-xs font-semibold text-label uppercase">
+                      Capacity
+                    </th>
+                    <th className="px-4 py-3 text-left text-xs font-semibold text-label uppercase">
+                      Driver
+                    </th>
+                    <th className="px-4 py-3 text-left text-xs font-semibold text-label uppercase">
+                      Docs
+                    </th>
+                    <th className="px-4 py-3 text-left text-xs font-semibold text-label uppercase">
+                      Status
+                    </th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody className="divide-y divide-white/5">
+                  {vehicles.map((v) => (
+                    <tr key={v.id} className="hover:bg-white/[0.04]">
+                      <td className="px-4 py-3 font-medium text-link">
+                        <Link href={`/fleet/vehicles/${v.id}`} className="hover:text-link-hover">
+                          {v.registration}
+                        </Link>
+                      </td>
+                      <td className="px-4 py-3">{v.type}</td>
+                      <td className="px-4 py-3">{v.capacityMt} MT</td>
+                      <td className="px-4 py-3">{v.driver ?? "—"}</td>
+                      <td className="px-4 py-3">
+                        <DocBadge status={v.docs} />
+                      </td>
+                      <td className="px-4 py-3 capitalize">{v.status.replace("_", " ")}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            )
+          ) : drivers.length === 0 ? (
+            <EmptyState
+              className="m-4 border-0 bg-transparent py-10"
+              title="No drivers yet"
+              description="Use Create driver above (name, phone, email) to register in Fleetbase."
+            />
           ) : (
             <table className="w-full text-sm">
               <thead className="border-b border-white/10 bg-white/[0.03]">
                 <tr>
-                  <th className="px-4 py-3 text-left text-xs font-semibold text-label uppercase">Name</th>
-                  <th className="px-4 py-3 text-left text-xs font-semibold text-label uppercase">Phone</th>
-                  <th className="px-4 py-3 text-left text-xs font-semibold text-label uppercase">License</th>
-                  <th className="px-4 py-3 text-left text-xs font-semibold text-label uppercase">Vehicle</th>
-                  <th className="px-4 py-3 text-left text-xs font-semibold text-label uppercase">Status</th>
+                  <th className="px-4 py-3 text-left text-xs font-semibold text-label uppercase">
+                    Name
+                  </th>
+                  <th className="px-4 py-3 text-left text-xs font-semibold text-label uppercase">
+                    Phone
+                  </th>
+                  <th className="px-4 py-3 text-left text-xs font-semibold text-label uppercase">
+                    License
+                  </th>
+                  <th className="px-4 py-3 text-left text-xs font-semibold text-label uppercase">
+                    Vehicle
+                  </th>
+                  <th className="px-4 py-3 text-left text-xs font-semibold text-label uppercase">
+                    Status
+                  </th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-white/5">

@@ -38,7 +38,8 @@ export async function POST(request: Request) {
       const vehicle = mapFleetbaseVehicle(raw as Record<string, unknown>);
       return apiSuccess(vehicle, { created: true, source: "fleetbase" });
     } catch (err) {
-      console.warn("[vehicles] Fleetbase create failed, using local store:", err);
+      const message = err instanceof Error ? err.message : "Fleetbase vehicle create failed.";
+      return apiError("CREATE_FAILED", `Fleetbase unavailable (createVehicle): ${message}`, 502);
     }
   }
 

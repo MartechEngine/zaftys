@@ -1,12 +1,17 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import {
+  MaterialCatalogTypeahead,
+  PlaceCatalogTypeahead,
+  type MaterialPick,
+  type PlacePick,
+} from "@/components/app/catalog-typeaheads";
 import { api, type ClientRecord } from "@/lib/api-client";
 import type { Driver, Vehicle } from "@/lib/dev-store";
 import { cn } from "@/lib/utils";
@@ -19,11 +24,15 @@ export function CreateShipmentWizard() {
   const [submitting, setSubmitting] = useState(false);
   const [loadingFleet, setLoadingFleet] = useState(true);
   const [clients, setClients] = useState<ClientRecord[]>([]);
+  const [catalogHint, setCatalogHint] = useState<string | null>(null);
 
   const [clientId, setClientId] = useState("");
-  const [origin, setOrigin] = useState("Amravati");
-  const [destination, setDestination] = useState("Nagpur");
-  const [commodity, setCommodity] = useState("Cement");
+  const [originPlace, setOriginPlace] = useState<PlacePick | null>(null);
+  const [destPlace, setDestPlace] = useState<PlacePick | null>(null);
+  const [originQuery, setOriginQuery] = useState("");
+  const [destQuery, setDestQuery] = useState("");
+  const [material, setMaterial] = useState<MaterialPick | null>(null);
+  const [materialQuery, setMaterialQuery] = useState("");
   const [tonnage, setTonnage] = useState("32");
   const [lrNumber, setLrNumber] = useState("");
   const [driverId, setDriverId] = useState("");
@@ -46,16 +55,37 @@ export function CreateShipmentWizard() {
       })
       .catch(() => toast.error("Could not load clients or fleet options."))
       .finally(() => setLoadingFleet(false));
+
+    fetch("/api/tsm/catalog/status")
+      .then((r) => r.json())
+      .then((json) => {
+        const d = json.data;
+        if (!d) return;
+        if (d.ready) {
+          setCatalogHint(
+            `TZ catalogs ready · ${d.materialsCount} materials · ${d.placesCount.toLocaleString()} places`,
+          );
+        } else {
+          setCatalogHint(
+            "TZ catalogs not synced — run npm run catalog:sync (places/materials typeahead may be empty).",
+          );
+        }
+      })
+      .catch(() => undefined);
   }, []);
 
   function next() {
-    if (step === 0 && (!origin.trim() || !destination.trim())) {
-      toast.error("Origin and destination are required.");
-      return;
+    if (step === 0) {
+      if (!originPlace || !destPlace) {
+        toast.error("Pick origin and destination from the TranZfort places catalog.");
+        return;
+      }
     }
-    if (step === 1 && (!commodity.trim() || Number(tonnage) <= 0)) {
-      toast.error("Enter a valid commodity and tonnage.");
-      return;
+    if (step === 1) {
+      if (!material || Number(tonnage) <= 0) {
+        toast.error("Pick a TranZfort material and enter tonnage.");
+        return;
+      }
     }
     if (step < STEPS.length - 1) setStep(step + 1);
   }
@@ -65,24 +95,39 @@ export function CreateShipmentWizard() {
   }
 
   async function submit() {
-    if (!client) {
-      toast.error("Select a client.");
+    if (!client || !originPlace || !destPlace || !material) {
+      toast.error("Client, places, and material are required.");
       return;
     }
     setSubmitting(true);
     try {
       const shipment = await api.createShipment({
         client: client.name,
-        origin: origin.trim(),
-        destination: destination.trim(),
-        commodity: commodity.trim(),
+        origin: originPlace.city,
+        destination: destPlace.city,
+        commodity: material.nameEn,
         tonnageMt: Number(tonnage),
         lrNumber: lrNumber.trim() || undefined,
         driverId: driverId || undefined,
         vehicleId: vehicleId || undefined,
+        materialCode: material.code,
+        originPlace: {
+          city: originPlace.city,
+          state: originPlace.state,
+          lat: originPlace.lat,
+          lng: originPlace.lng,
+          label: originPlace.label,
+        },
+        destinationPlace: {
+          city: destPlace.city,
+          state: destPlace.state,
+          lat: destPlace.lat,
+          lng: destPlace.lng,
+          label: destPlace.label,
+        },
       });
       toast.success("Shipment created", {
-        description: `${shipment.publicId} · ${origin} → ${destination}`,
+        description: `${shipment.publicId} · ${originPlace.city} → ${destPlace.city}`,
       });
       router.push(`/shipments/${shipment.id}`);
       router.refresh();
@@ -115,6 +160,10 @@ export function CreateShipmentWizard() {
         ))}
       </div>
 
+      {catalogHint && (
+        <p className="mb-4 text-xs text-muted-foreground">{catalogHint}</p>
+      )}
+
       <Card className="max-w-2xl">
         <CardContent className="space-y-4 p-6">
           {step === 0 && (
@@ -122,35 +171,65 @@ export function CreateShipmentWizard() {
               <label className="block text-sm">
                 <span className="text-label">Client</span>
                 <select
-                  className={cn(fieldClass, "rounded-lg border border-white/12 bg-white/[0.05] px-3 py-2 text-sm text-foreground")}
+                  className={cn(
+                    fieldClass,
+                    "rounded-lg border border-white/12 bg-white/[0.05] px-3 py-2 text-sm text-foreground",
+                  )}
                   value={clientId}
                   onChange={(e) => setClientId(e.target.value)}
                   disabled={loadingFleet || clients.length === 0}
                 >
                   {clients.map((c) => (
-                    <option key={c.id} value={c.id}>{c.name}</option>
+                    <option key={c.id} value={c.id}>
+                      {c.name}
+                    </option>
                   ))}
                 </select>
               </label>
               <div className="grid gap-4 sm:grid-cols-2">
-                <label className="block text-sm">
-                  <span className="text-label">Origin</span>
-                  <Input className={fieldClass} value={origin} onChange={(e) => setOrigin(e.target.value)} />
-                </label>
-                <label className="block text-sm">
-                  <span className="text-label">Destination</span>
-                  <Input className={fieldClass} value={destination} onChange={(e) => setDestination(e.target.value)} />
-                </label>
+                <PlaceCatalogTypeahead
+                  label="Origin (TZ places)"
+                  value={originPlace}
+                  query={originQuery}
+                  onQueryChange={setOriginQuery}
+                  onPick={setOriginPlace}
+                  onClear={() => {
+                    setOriginPlace(null);
+                    setOriginQuery("");
+                  }}
+                />
+                <PlaceCatalogTypeahead
+                  label="Destination (TZ places)"
+                  value={destPlace}
+                  query={destQuery}
+                  onQueryChange={setDestQuery}
+                  onPick={setDestPlace}
+                  onClear={() => {
+                    setDestPlace(null);
+                    setDestQuery("");
+                  }}
+                />
               </div>
+              <p className="text-xs text-muted-foreground">
+                Places come from TranZfort&apos;s offline India catalog (city, state, lat/lng) so Post
+                to TZ can reuse them.
+              </p>
             </>
           )}
 
           {step === 1 && (
             <>
-              <label className="block text-sm">
-                <span className="text-label">Commodity</span>
-                <Input className={fieldClass} value={commodity} onChange={(e) => setCommodity(e.target.value)} />
-              </label>
+              <MaterialCatalogTypeahead
+                label="Material (TZ catalog)"
+                value={material}
+                query={materialQuery}
+                onQueryChange={setMaterialQuery}
+                onPick={setMaterial}
+                onClear={() => {
+                  setMaterial(null);
+                  setMaterialQuery("");
+                }}
+              />
               <label className="block text-sm">
                 <span className="text-label">Tonnage (MT)</span>
                 <Input
@@ -185,26 +264,36 @@ export function CreateShipmentWizard() {
                   <label className="block text-sm">
                     <span className="text-label">Driver</span>
                     <select
-                      className={cn(fieldClass, "rounded-lg border border-white/12 bg-white/[0.05] px-3 py-2 text-sm text-foreground")}
+                      className={cn(
+                        fieldClass,
+                        "rounded-lg border border-white/12 bg-white/[0.05] px-3 py-2 text-sm text-foreground",
+                      )}
                       value={driverId}
                       onChange={(e) => setDriverId(e.target.value)}
                     >
                       <option value="">Unassigned</option>
                       {drivers.map((d) => (
-                        <option key={d.id} value={d.id}>{d.name} · {d.vehicle ?? "no vehicle"}</option>
+                        <option key={d.id} value={d.id}>
+                          {d.name} · {d.vehicle ?? "no vehicle"}
+                        </option>
                       ))}
                     </select>
                   </label>
                   <label className="block text-sm">
                     <span className="text-label">Vehicle</span>
                     <select
-                      className={cn(fieldClass, "rounded-lg border border-white/12 bg-white/[0.05] px-3 py-2 text-sm text-foreground")}
+                      className={cn(
+                        fieldClass,
+                        "rounded-lg border border-white/12 bg-white/[0.05] px-3 py-2 text-sm text-foreground",
+                      )}
                       value={vehicleId}
                       onChange={(e) => setVehicleId(e.target.value)}
                     >
                       <option value="">Unassigned</option>
                       {vehicles.map((v) => (
-                        <option key={v.id} value={v.id}>{v.registration} · {v.capacityMt} MT</option>
+                        <option key={v.id} value={v.id}>
+                          {v.registration} · {v.type} · {v.capacityMt}T
+                        </option>
                       ))}
                     </select>
                   </label>
@@ -216,52 +305,53 @@ export function CreateShipmentWizard() {
           {step === 3 && (
             <dl className="space-y-2 text-sm">
               <div className="flex justify-between gap-4">
-                <dt className="text-label">Client</dt>
-                <dd className="font-medium text-heading">{client?.name}</dd>
+                <dt className="text-muted-foreground">Client</dt>
+                <dd>{client?.name ?? "—"}</dd>
               </div>
               <div className="flex justify-between gap-4">
-                <dt className="text-label">Route</dt>
-                <dd>{origin} → {destination}</dd>
-              </div>
-              <div className="flex justify-between gap-4">
-                <dt className="text-label">Load</dt>
-                <dd>{commodity} · {tonnage} MT</dd>
-              </div>
-              {lrNumber && (
-                <div className="flex justify-between gap-4">
-                  <dt className="text-label">LR</dt>
-                  <dd className="font-mono">{lrNumber}</dd>
-                </div>
-              )}
-              <div className="flex justify-between gap-4">
-                <dt className="text-label">Assignment</dt>
-                <dd>
-                  {selectedDriver
-                    ? `${selectedDriver.name} · ${selectedVehicle?.registration ?? "—"}`
-                    : "Unassigned"}
+                <dt className="text-muted-foreground">Lane</dt>
+                <dd className="text-right">
+                  {originPlace?.label ?? "—"} → {destPlace?.label ?? "—"}
                 </dd>
               </div>
               <div className="flex justify-between gap-4">
-                <dt className="text-label">Est. charge</dt>
-                <dd>₹{(Number(tonnage) * 420).toLocaleString("en-IN")}</dd>
+                <dt className="text-muted-foreground">Material</dt>
+                <dd className="text-right">
+                  {material?.nameEn ?? "—"}
+                  {material ? (
+                    <span className="ml-1 font-mono text-[10px] text-muted-foreground">
+                      {material.code}
+                    </span>
+                  ) : null}
+                </dd>
+              </div>
+              <div className="flex justify-between gap-4">
+                <dt className="text-muted-foreground">Tonnage</dt>
+                <dd>{tonnage} MT</dd>
+              </div>
+              <div className="flex justify-between gap-4">
+                <dt className="text-muted-foreground">Assignment</dt>
+                <dd>
+                  {selectedDriver?.name ?? "Unassigned"}
+                  {selectedVehicle ? ` · ${selectedVehicle.registration}` : ""}
+                </dd>
               </div>
             </dl>
           )}
 
-          <div className="flex flex-wrap gap-2 pt-2">
-            {step > 0 && (
-              <Button variant="outline" onClick={back} disabled={submitting}>Back</Button>
-            )}
+          <div className="flex justify-between gap-3 pt-2">
+            <Button type="button" variant="outline" onClick={back} disabled={step === 0 || submitting}>
+              Back
+            </Button>
             {step < STEPS.length - 1 ? (
-              <Button variant="accent" onClick={next}>Next step</Button>
+              <Button type="button" variant="accent" onClick={next}>
+                Continue
+              </Button>
             ) : (
-              <Button variant="accent" onClick={submit} disabled={submitting}>
+              <Button type="button" variant="accent" onClick={() => void submit()} disabled={submitting}>
                 {submitting ? "Creating…" : "Create shipment"}
               </Button>
             )}
-            <Button variant="outline" asChild>
-              <Link href="/shipments">Cancel</Link>
-            </Button>
           </div>
         </CardContent>
       </Card>

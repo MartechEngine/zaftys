@@ -485,7 +485,11 @@ export async function getTrackingSettings(): Promise<TrackingSettings> {
     logo: "ZAFTYS header on track page",
     tokenExpiryDays: 90,
     showInternalEvents: false,
-    sampleTrackPath: withToken ? `/track/${withToken.trackToken}` : "/track/demo-1",
+    sampleTrackPath: withToken
+      ? `/track/${withToken.trackToken}`
+      : process.env.TSM_DEMO_UI === "1"
+        ? "/track/demo-1"
+        : "",
     orgName: org.name,
   });
 }

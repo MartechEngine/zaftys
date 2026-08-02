@@ -4,48 +4,45 @@
 |-------|-------|
 | **Parent** | [system-context.md](./system-context.md) |
 | **Build strategy** | [build-strategy.md](./build-strategy.md) |
+| **Execution SoT** | [ADR-008](../decisions/008-tsm-owns-execution.md) — TSM Postgres (Fleetbase transitional only) |
 
 ---
 
-## Containers
+## Containers (target — post ADR-008)
 
 ```mermaid
 flowchart TB
   subgraph clients [Clients]
-    Browser[Next.js Portal — full IA]
+    Browser[Browser / PWA]
+    Desktop[Tauri thin desktop]
     Track[Public Track Page]
   end
 
-  subgraph zaftys [ZAFTYS Platform]
+  subgraph zaftys [ZAFTYS Hosted TSM]
     BFF[TSM BFF — Next.js API routes]
-    WS[WebSocket Gateway]
-    Sync[TranZfort Sync Worker]
-    Jobs[Background Jobs — stale GPS, exceptions]
+    Ops[Ops SSE / jobs]
+    Docs[Document generators — LR PDF]
+    AI[LlmClient + agents — ADR-009]
+    PG[(TSM PostgreSQL)]
+    Minio[(MinIO / S3)]
   end
 
-  subgraph backend [Execution — Fleetbase Docker]
-    FBAPI[Fleetbase API :8000]
-    FBSC[SocketCluster :38000]
-    FBDB[(MySQL / Fleetbase DB)]
-    Ext[Extensions — IAM, Ledger, VROOM, Valhalla]
-  end
-
-  subgraph network [Network]
+  subgraph network [Marketplace]
     TZ[(TranZfort Supabase)]
   end
 
   Browser --> BFF
-  Browser --> WS
+  Desktop --> BFF
   Track --> BFF
-  BFF --> FBAPI
-  BFF --> Ext
-  WS --> FBSC
-  Sync --> TZ
-  Sync --> FBAPI
-  Jobs --> FBAPI
-  Jobs --> BFF
-  FBAPI --> FBDB
+  BFF --> PG
+  BFF --> TZ
+  Docs --> PG
+  Docs --> Minio
+  AI --> BFF
+  Ops --> PG
 ```
+
+**Transitional (Phases A–C):** BFF may still call Fleetbase via `FleetbaseExecutionStore`. **Phase D:** remove that path entirely.
 
 ---
 
@@ -53,61 +50,54 @@ flowchart TB
 
 | Container | Tech | Responsibility |
 |-----------|------|----------------|
-| **Portal** | Next.js 16 App Router, React 19 | **Full product UI** — all modules in [sitemap-tsm.md](../sitemap-tsm.md) |
-| **BFF** | Next.js Route Handlers | Auth, RBAC, field mapping, Fleetbase/TranZfort proxy |
-| **WebSocket gateway** | SocketCluster client → SSE/WS to browser | Live GPS, status, exceptions |
-| **Sync worker** | Node cron + `npm run sync:tranzfort` | TranZfort ↔ Fleetbase mirror (idempotent) |
-| **Background jobs** | Cron / queue | Stale GPS, doc expiry, exception queue |
-| **Fleetbase stack** | Docker (8 containers) | Execution SoT: orders, fleet, proofs, maintenance |
-| **TranZfort** | Supabase | Network SoT: marketplace bookings |
+| **Portal / desktop WebView** | Next.js 16 + Tauri shell | Full product UI; desktop loads hosted HTTPS only |
+| **BFF** | Next.js Route Handlers | Auth, seats, RBAC, TranZfort bridge, `ExecutionStore` |
+| **TSM Postgres** | Compose / managed | Portal + **execution** SoT (shipments, fleet, clients, positions) |
+| **MinIO / S3** | Object storage | LR / ePOD / invoice blobs |
+| **Document / AI services** | In-process BFF (v1) | PDF generate; `LlmClient` Google + OpenRouter |
+| **TranZfort** | Supabase | Marketplace SoT: loads, bookings, trips, KYC Auth |
 
 ---
 
 ## Frontend module map (portal)
 
-Portal is one Next.js app; logical modules mirror Fleetbase + TSM-only:
-
 | Portal module | Primary routes | Backend |
 |---------------|----------------|---------|
-| Operations | `/`, `/shipments`, `/dispatch`, `/map` | Fleetbase orders + WS |
-| Resources | `/fleet`, `/clients`, `/vendors` | Fleetbase drivers/vehicles/customers |
-| Network | `/network/*` | TranZfort + BFF |
-| Documents | `/documents` | Fleetbase proofs |
-| Maintenance | `/maintenance/*` | Fleetbase maintenance |
-| Reports | `/reports/*` | Fleetbase analytics + BFF aggregates |
-| Billing | `/billing/*` | Ledger + BFF India rules |
-| Settings | `/settings/*` | IAM + Fleet-Ops config |
-| Integrations | `/integrations/*` | Developers + telematics |
+| Operations | `/`, `/shipments`, `/dispatch`, `/map` | TSM Postgres (`ExecutionStore`) |
+| Resources | `/fleet`, `/clients`, `/vendors` | TSM Postgres + app stores |
+| Marketplace | `/network/*` | TranZfort + BFF |
+| Documents | `/documents` | TSM docs + MinIO (ADR-009) |
+| Maintenance | `/maintenance/*` | TSM app stores / Postgres |
+| Reports | `/reports/*` | BFF aggregates |
+| Billing | `/billing/*` | TSM billing + later GST |
+| Settings | `/settings/*` | TSM IAM/seats + org + AI BYOK |
+| Integrations | `/integrations/*` | Webhooks / telematics (build depth later) |
 
 ---
 
-## Data flow (read path)
+## Data flow (read path — target)
 
-1. Portal `GET /api/shipments` → BFF
-2. BFF validates session + RBAC scope ([user-roles-rbac.md](../product/user-roles-rbac.md))
-3. BFF calls Fleetbase `GET /v1/orders` with mapped filters
-4. BFF enriches: LR, origin badge (fleet/network), client name, corridor
-5. JSON returned; React Query caches with stale-while-revalidate
+1. Portal `GET /api/shipments` → BFF  
+2. BFF validates session + `tsmOrgId` scope  
+3. BFF reads org-scoped rows via `PostgresExecutionStore`  
+4. BFF enriches: LR number, origin badge (fleet/network), client name  
+5. JSON returned to UI / agent tools  
 
 ---
 
-## Data flow (TranZfort sync)
+## Data flow (TranZfort)
 
-1. Sync worker polls/webhooks TranZfort `trips` (or manual `POST /api/sync/run`)
-2. Map TZ booking → Fleetbase order ([tranzfort-sync-bridge.md](../integrations/tranzfort-sync-bridge.md))
-3. Idempotency: `meta.tranzfort_id` on order
-4. Portal reads unified shipment via repository — origin badge = `network`
-5. Two-way: status changes in FB → push to TZ (P3)
+1. Marketplace desks read/write via bridge RPCs (`service_*`) — unchanged  
+2. Optional: “Create TSM job from trip” writes **TSM shipment** (not Fleetbase order)  
+3. Legacy `run-tranzfort-sync` (TZ → FB) is **retargeted or removed** in ADR-008 Phase C  
 
 ---
 
 ## Data flow (live updates)
 
-1. Driver GPS → Fleetbase SocketCluster
-2. BFF subscribes to org + vehicle channels
-3. BFF pushes to browser rooms `org:{id}`, `shipment:{id}`
-4. `LiveMap`, Command Center, track page update markers
-5. Stale >15 min → exception queue ([realtime-events.md](./realtime-events.md))
+1. Positions land in `tsm_positions` (driver app / telematics / manual — depth over time)  
+2. BFF ops stream / SSE notifies portal rooms `org:{id}`, `shipment:{id}`  
+3. Map and track pages update; stale GPS → exception honesty  
 
 ---
 
@@ -115,12 +105,14 @@ Portal is one Next.js app; logical modules mirror Fleetbase + TSM-only:
 
 | Unit | Host | Notes |
 |------|------|-------|
-| Portal + BFF | VPS (India) | Same process initially |
-| Fleetbase Docker | VPS or dedicated | `zaftys-lab/infra/fleetbase` |
-| Sync worker | Sidecar / cron on VPS | Can merge into portal later |
+| Portal + BFF | Staging/prod VPS or PaaS | Horizon 2 |
+| TSM Postgres | Managed or Compose | Single app DB |
+| MinIO / S3 | Same region | Documents |
+| Desktop installer | Customer PC | WebView → hosted URL only |
 | TranZfort | Existing Supabase | No change |
+| Fleetbase Docker | **Remove after Phase D** | Transitional only |
 
-See [ops/deployment.md](../ops/deployment.md).
+See [ops/deployment.md](../ops/deployment.md) and [ADR-008](../decisions/008-tsm-owns-execution.md).
 
 ---
 
@@ -130,3 +122,4 @@ See [ops/deployment.md](../ops/deployment.md).
 |------|--------|
 | Jul 2026 | Initial container diagram |
 | 11 Jul 2026 | Full module map, sync flow, 8-container Fleetbase |
+| 2 Aug 2026 | Target architecture: TSM Postgres execution (ADR-008); thin desktop |

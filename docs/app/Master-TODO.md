@@ -83,7 +83,7 @@ Use `[x]` done · `[ ]` pending · `[~]` in progress · `[—]` deferred
 ## 4. Wave 2 — Resources & network (P3)
 
 - [~] Fleet — detail pages, places, groups, compliance (shells exist)
-- [~] Clients — list/detail/contacts/users live; **POST create client** (local store)
+- [~] Clients — list/detail from Fleetbase contacts when `TSM_DEMO_UI=0` (read); live create/patch via Fleetbase `/customers`→`/contacts`; demo/local create still works in demo mode
 - [x] Documents — global proofs library + upload wired
 - [~] Network — overflow queue, assignments, partners, sync UI
 - [~] TranZfort live sync (env + two-way status push)
@@ -203,17 +203,21 @@ Use `[x]` done · `[ ]` pending · `[~]` in progress · `[—]` deferred
 18. ~~Profile PATCH + role-safe login~~ ✅
 19. ~~Map polylines + marker clustering~~ ✅
 
-### Sprint 6 (current) — Local perfection (no auth / no deploy)
-20. Live Fleetbase end-to-end when `TSM_DEMO_UI=0` (lists, KPIs, create, assign)
-21. WebSocket or hardened SSE — map + dispatch refresh without manual reload
-22. Shipment timeline, notes, bulk export polish
-23. Clients module BFF (read-only first)
-24. Local QA script + README runbook (`npm run dev`, FB, seed, sync)
-25. Playwright smoke test (optional, local only)
+### Sprint 6 → Live-first (current)
+**Decision (19 Jul 2026):** Drop demo catalogs; complete TSM live (Fleetbase + Postgres); TranZfort deferred. Plan: [ops/tsm-live-first-plan.md](./ops/tsm-live-first-plan.md). Tests: [ops/tsm-feature-test-matrix.md](./ops/tsm-feature-test-matrix.md).
+
+28. [~] **Phase 1 kill demo** — live by default (`TSM_DEMO_UI=1` opt-in only); `npm run test:live`
+29. [ ] **Phase 2 Fleetbase completeness** — orders/drivers/vehicles/clients/assign live QA
+30. [ ] **Phase 3 domain durability** — remaining Postgres gaps + empty states
+31. [ ] **Phase 4 UX empty states** — every module intentional when empty
+32. [ ] **Phase 5–6 test matrix** — expand `test:live` + Playwright; fix until green
+
+**Frozen (updated 26 Jul):** Full Sync Bridge outbox / Bitwarden daily ops.  
+**Re-opened:** TranZfort Super Load publish via auth-lite + bridge — see [ops/TODO-TSM-Tranzfort-app-tsm-26-july.md](./ops/TODO-TSM-Tranzfort-app-tsm-26-july.md) (**frontend-first** full post form in TSM; **no TranZfort scaffolding** — consume live RPCs only).
 
 ### Deferred until local app is stable
 - NextAuth, forgot password, login audit
-- Push branch, CI, staging, `app.zaftys.com` TLS
+- Push branch, staging, `app.zaftys.com` TLS
 
 ---
 
@@ -239,4 +243,10 @@ Use `[x]` done · `[ ]` pending · `[~]` in progress · `[—]` deferred
 | 12 Jul 2026 | Sprint 2: HMAC track tokens, rate limit, document upload API, shipment detail live map |
 | 12 Jul 2026 | Sprints 3–5: documents, TZ sync, search, SSE map, filters, profile, CSV export |
 | 17 Jul 2026 | Initial commit: `app-tsm/` (106 routes) + `docs/app/` on `app-dev-mode` |
-| 17 Jul 2026 | Strategy: local-first — defer auth, push, CI until app runs perfectly locally |
+| 19 Jul 2026 | Sprint 6: Phase A live honesty — `demoSeed` gates + fuel/equipment invent + analytics fabrications + no silent `dev-store` when `TSM_DEMO_UI=0` |
+| 19 Jul 2026 | Phase B start: fuel transactions hydrate/persist via `fleet_fuel` (Postgres domain collection) |
+| 19 Jul 2026 | Phase B: compliance durability — `fleet_issues`, `compliance_patches`, `fleet_issue_resolved` |
+| 19 Jul 2026 | Phase B: clients live write — Fleetbase `createCustomerOrContact` / `updateCustomerOrContact` |
+| 19 Jul 2026 | Sprint 6 #24: local QA runbook (`docs/app/ops/local-qa-runbook.md`) + `npm run qa` |
+| 19 Jul 2026 | TranZfort keys via Bitwarden: `scripts/load-bitwarden-tranzfort-secrets.ps1` + `npm run secrets:tranzfort` |
+| 19 Jul 2026 | **Live-first lock:** drop demo default; plan `tsm-live-first-plan.md`; `npm run test:live`; TranZfort deferred |

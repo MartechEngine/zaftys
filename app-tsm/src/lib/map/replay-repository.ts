@@ -1,4 +1,5 @@
 import { fetchAllShipmentsRaw } from "@/lib/data/shipment-repository";
+import { allowDemoSeeds } from "@/lib/data/demo-mode";
 
 export type ReplayPoint = {
   lat: number;
@@ -89,6 +90,7 @@ function buildReplay(shipment: Awaited<ReturnType<typeof fetchAllShipmentsRaw>>[
 }
 
 export async function listReplayCandidates() {
+  if (!allowDemoSeeds()) return [];
   const shipments = await fetchAllShipmentsRaw();
   return shipments
     .filter((s) => s.status === "delivered" && s.vehicle)
@@ -102,6 +104,9 @@ export async function listReplayCandidates() {
 }
 
 export async function getJourneyReplay(shipmentId?: string): Promise<JourneyReplay | undefined> {
+  // Live: no invented GPS journeys until telematics history is wired
+  if (!allowDemoSeeds()) return undefined;
+
   const shipments = await fetchAllShipmentsRaw();
   const delivered = shipments.filter((s) => s.status === "delivered" && s.vehicle);
 

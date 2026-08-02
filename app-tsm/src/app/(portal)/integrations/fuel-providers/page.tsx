@@ -19,6 +19,7 @@ export default async function FuelProvidersPage() {
       <ModuleSubNav links={INTEGRATIONS_NAV} />
       <DataTable
         rows={providers}
+        emptyMessage="No fuel providers connected. Live mode has no demo catalog — connect when adapters are ready."
         columns={[
           { key: "name", header: "Provider", render: (r) => r.name },
           { key: "stations", header: "Linked stations", render: (r) => r.stations },

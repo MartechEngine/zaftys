@@ -1,4 +1,5 @@
 import { demoLedgerAccounts } from "@/lib/demo-data";
+import { demoSeed } from "@/lib/data/demo-mode";
 import { listInvoices } from "@/lib/billing/invoice-repository";
 import { listStoredLedgerAccounts } from "@/lib/mutations/sprint15-store";
 import { ensureBillingHydrated, persistLedgerAccount } from "@/lib/db/domain-persistence";
@@ -25,7 +26,7 @@ export async function listLedgerAccounts(): Promise<LedgerAccount[]> {
     .filter((i) => i.lineItems.some((l) => l.description.toLowerCase().includes("overflow")))
     .reduce((sum, i) => sum + i.subtotalInr, 0);
 
-  const enriched: LedgerAccount[] = demoLedgerAccounts.map((account) => {
+  const enriched: LedgerAccount[] = demoSeed(demoLedgerAccounts).map((account) => {
     if (account.id === "la1" && freightRevenue > 0) {
       const balanceInr = freightRevenue;
       return { ...account, type: account.type as LedgerAccount["type"], balance: formatInr(balanceInr), balanceInr };

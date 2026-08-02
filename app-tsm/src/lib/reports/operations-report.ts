@@ -1,6 +1,7 @@
 import type { ShipmentRecord } from "@/lib/dev-store";
 import { fetchAllShipmentsRaw } from "@/lib/data/shipment-repository";
 import { isExceptionShipment } from "@/lib/shipments/filters";
+import { allowDemoSeeds } from "@/lib/data/demo-mode";
 
 export type CorridorStat = {
   corridor: string;
@@ -67,10 +68,12 @@ export async function getOperationsReport(): Promise<OperationsReport> {
   const activeCount = shipments.filter((s) =>
     ["dispatched", "in_transit", "at_plant", "at_weighbridge"].includes(s.status),
   ).length;
-  const avgTransitHours =
-    totalTrips > 0
+  // Demo-only heuristic; live has no transit-duration telemetry yet → 0
+  const avgTransitHours = allowDemoSeeds()
+    ? totalTrips > 0
       ? Math.round(((activeCount * 6 + delivered.length * 18) / Math.max(totalTrips, 1)) * 10) / 10
-      : 0;
+      : 0
+    : 0;
 
   return {
     totalTrips,
@@ -109,6 +112,16 @@ export async function getDriverScorecards(): Promise<DriverScorecard[]> {
     .map(([id, d]) => {
       const onTimePct =
         d.delivered > 0 ? Math.round((d.onTime / d.delivered) * 100) : 0;
+      if (!allowDemoSeeds()) {
+        return {
+          id,
+          name: d.name,
+          trips: d.trips,
+          onTime: `${onTimePct}%`,
+          safety: "—",
+          rating: 0,
+        };
+      }
       const rating = Math.min(5, Math.round((3.8 + onTimePct / 50) * 10) / 10);
       const safety = onTimePct >= 95 ? "A" : onTimePct >= 90 ? "A-" : onTimePct >= 85 ? "B+" : "B";
       return {

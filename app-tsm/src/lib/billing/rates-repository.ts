@@ -1,4 +1,5 @@
 import { demoGstSummary, demoServiceRates } from "@/lib/demo-data";
+import { demoSeed, allowDemoSeeds } from "@/lib/data/demo-mode";
 import { listInvoices } from "@/lib/billing/invoice-repository";
 import { fetchAllShipmentsRaw } from "@/lib/data/shipment-repository";
 import { createStoredRate, listStoredRates, getRatePatch, patchStoredRate } from "@/lib/billing/rates-store";
@@ -70,7 +71,7 @@ export async function listServiceRates(): Promise<ServiceRate[]> {
     ...rate,
     shipmentCount: shipments.filter((s) => rateMatchesShipment(rate, s)).length,
   }));
-  const demo = demoServiceRates.map((rate) => {
+  const demo = demoSeed(demoServiceRates).map((rate) => {
     const patch = getRatePatch(rate.id);
     const merged = patch ? { ...rate, ...patch, id: rate.id } : rate;
     return {
@@ -135,15 +136,16 @@ export async function getGstSummary() {
   const gstInr = invoices.reduce((sum, i) => sum + i.gstInr, 0);
   const halfGst = Math.round(gstInr / 2);
 
+  const seed = allowDemoSeeds();
   return {
-    period: demoGstSummary.period,
+    period: seed ? demoGstSummary.period : new Date().toISOString().slice(0, 7),
     taxableValue: formatInr(
-      taxableInr || parseInt(demoGstSummary.taxableValue.replace(/\D/g, ""), 10),
+      taxableInr || (seed ? parseInt(demoGstSummary.taxableValue.replace(/\D/g, ""), 10) : 0),
     ),
-    cgst: formatInr(halfGst || parseInt(demoGstSummary.cgst.replace(/\D/g, ""), 10)),
-    sgst: formatInr(halfGst || parseInt(demoGstSummary.sgst.replace(/\D/g, ""), 10)),
-    igst: demoGstSummary.igst,
+    cgst: formatInr(halfGst || (seed ? parseInt(demoGstSummary.cgst.replace(/\D/g, ""), 10) : 0)),
+    sgst: formatInr(halfGst || (seed ? parseInt(demoGstSummary.sgst.replace(/\D/g, ""), 10) : 0)),
+    igst: seed ? demoGstSummary.igst : formatInr(0),
     invoiceCount: invoices.length,
-    filings: demoGstSummary.filings,
+    filings: seed ? demoGstSummary.filings : [],
   };
 }

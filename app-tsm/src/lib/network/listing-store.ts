@@ -1,3 +1,4 @@
+import { allowDemoSeeds } from "@/lib/data/demo-mode";
 import { logActivity } from "@/lib/dev-store";
 import type {
   NetworkListing,
@@ -217,8 +218,16 @@ export function listAcceptedListingAssignments(): NetworkOffer[] {
 }
 
 function listingTtlMs(hours?: number) {
-  const h = hours && hours > 0 ? hours : 48;
+  // Align with TranZfort default listing_duration `7_days` when hours omitted.
+  const h = hours && hours > 0 ? hours : 7 * 24;
   return h * 60 * 60 * 1000;
+}
+
+function hoursFromListingDuration(duration?: string | null): number | undefined {
+  if (duration === "48_hours") return 48;
+  if (duration === "7_days") return 7 * 24;
+  if (duration === "30_days") return 30 * 24;
+  return undefined;
 }
 
 export function createListing(input: PostListingInput): NetworkListing | { error: string } {
@@ -228,11 +237,14 @@ export function createListing(input: PostListingInput): NetworkListing | { error
   }
 
   const trucksNeeded = Math.max(1, Math.min(20, Math.round(input.trucksNeeded) || 1));
-  const advancePercent = Math.max(0, Math.min(50, Math.round(input.advancePercent) || 0));
+  const advancePercent = Math.max(0, Math.min(100, Math.round(input.advancePercent) || 0));
   const rateInr = Math.max(1, Math.round(input.rateInr) || 0);
   if (!rateInr) return { error: "Rate is required." };
 
   const publish = input.publish !== false;
+  const ttlHours =
+    input.listingTtlHours ??
+    hoursFromListingDuration(input.draftSnapshot?.listingDuration);
   const listing: NetworkListing = {
     id: `nl-${Date.now().toString(36)}`,
     shipmentId: input.shipmentId,
@@ -250,9 +262,13 @@ export function createListing(input: PostListingInput): NetworkListing | { error
     plantNotes: input.plantNotes?.trim() || undefined,
     postedAt: publish ? new Date().toISOString() : undefined,
     expiresAt: publish
-      ? new Date(Date.now() + listingTtlMs(input.listingTtlHours)).toISOString()
+      ? new Date(Date.now() + listingTtlMs(ttlHours)).toISOString()
       : undefined,
-    tranzfortTripIds: [],
+    tranzfortTripIds: input.tranzfortLoadId ? [input.tranzfortLoadId] : [],
+    draftSnapshot: input.draftSnapshot,
+    tranzfortLoadId: input.tranzfortLoadId,
+    liveOnTranzfort: input.liveOnTranzfort ?? Boolean(input.tranzfortLoadId),
+    superLoad: input.superLoad ?? Boolean(input.tranzfortLoadId),
   };
 
   listings().unshift(listing);
@@ -265,7 +281,7 @@ export function createListing(input: PostListingInput): NetworkListing | { error
     timestamp: new Date().toISOString(),
   });
 
-  if (publish) {
+  if (publish && allowDemoSeeds()) {
     // Demo: partners respond immediately so Offers tab is usable
     seedDemoOffers(listing);
   }
@@ -313,6 +329,27 @@ export function updateListing(
   if (input.expiresAt !== undefined) {
     listing.expiresAt = input.expiresAt || undefined;
   }
+  if (input.draftSnapshot !== undefined) {
+    listing.draftSnapshot = input.draftSnapshot;
+  }
+  if (input.tranzfortLoadId !== undefined) {
+    listing.tranzfortLoadId = input.tranzfortLoadId;
+    if (input.tranzfortLoadId && !listing.tranzfortTripIds.includes(input.tranzfortLoadId)) {
+      listing.tranzfortTripIds = [...listing.tranzfortTripIds, input.tranzfortLoadId];
+    }
+  }
+  if (input.liveOnTranzfort !== undefined) {
+    listing.liveOnTranzfort = input.liveOnTranzfort;
+  }
+  if (input.superLoad !== undefined) {
+    listing.superLoad = input.superLoad;
+  }
+  if (input.advancePercent !== undefined) {
+    listing.advancePercent = Math.max(0, Math.min(100, Math.round(input.advancePercent)));
+  }
+  if (input.priceType !== undefined) {
+    listing.priceType = input.priceType === "per_ton" ? "per_ton" : "fixed";
+  }
 
   if (input.publish === true && listing.state === "draft") {
     listing.state = "posted";
@@ -320,7 +357,7 @@ export function updateListing(
     if (!listing.expiresAt) {
       listing.expiresAt = new Date(Date.now() + listingTtlMs()).toISOString();
     }
-    seedDemoOffers(listing);
+    if (allowDemoSeeds()) seedDemoOffers(listing);
     logActivity({
       shipmentId,
       type: "network.listing.posted",

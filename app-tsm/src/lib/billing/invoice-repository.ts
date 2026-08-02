@@ -1,6 +1,7 @@
 import type { ShipmentRecord } from "@/lib/dev-store";
 import { demoInvoices } from "@/lib/demo-data";
-import { fetchAllShipmentsRaw } from "@/lib/data/shipment-repository";
+import { demoSeed } from "@/lib/data/demo-mode";
+import { fetchShipmentsForEnrichment } from "@/lib/data/shipment-repository";
 import {
   getInvoiceStatusOverride,
   setInvoiceStatus,
@@ -155,9 +156,9 @@ export async function createInvoice(input: CreateInvoiceInput): Promise<InvoiceR
 
 export async function listInvoices(): Promise<InvoiceRecord[]> {
   await ensureBillingHydrated();
-  const shipments = await fetchAllShipmentsRaw();
+  const shipments = await fetchShipmentsForEnrichment();
   const stored = listStoredInvoices();
-  const demo = demoInvoices.map(demoToRecord);
+  const demo = demoSeed(demoInvoices).map(demoToRecord);
   const demoClients = new Set(demo.map((d) => d.client));
 
   const generated = shipments

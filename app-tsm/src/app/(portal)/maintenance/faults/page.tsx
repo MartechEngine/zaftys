@@ -21,6 +21,7 @@ export default async function MaintenanceFaultsPage() {
       <ModuleSubNav links={MAINTENANCE_NAV} />
       <DataTable
         rows={faults}
+        emptyMessage="No fault reports yet. Create one or wait for driver-reported issues."
         columns={[
           { key: "vehicle", header: "Vehicle", render: (r) => r.vehicle },
           { key: "driver", header: "Driver", render: (r) => r.driver },

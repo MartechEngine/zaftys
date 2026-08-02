@@ -37,6 +37,9 @@ yarn-error.log*
 .env*
 !.env.example
 
+# local auth-lite seed (hashed passwords — never commit)
+.data/
+
 # vercel
 .vercel
 

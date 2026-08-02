@@ -65,6 +65,7 @@ export default async function MaintenancePage() {
       <h2 className="mb-3 text-lg font-semibold text-navy">Recent work orders</h2>
       <DataTable
         rows={summary.recentWorkOrders}
+        emptyMessage="No work orders yet. Create a job from Maintenance or link a fault."
         columns={[
           { key: "vehicle", header: "Vehicle", render: (r) => r.vehicle },
           {

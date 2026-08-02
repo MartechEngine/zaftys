@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { Calendar, MapPin, Package } from "lucide-react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
+import { AssignDriverDrawer } from "@/components/app/assign-driver-drawer";
 import { OriginBadge, ShipmentStatusChip } from "@/components/app/status-chip";
 import { NetworkListingChip } from "@/components/app/network-offers-panel";
 import { api } from "@/lib/api-client";
@@ -30,9 +31,14 @@ export function ShipmentsBulkTable({
   const [selected, setSelected] = useState<Set<string>>(new Set());
   const [status, setStatus] = useState<string>("in_transit");
   const [busy, setBusy] = useState(false);
+  const [assignTarget, setAssignTarget] = useState<ShipmentRecord | null>(null);
 
   const allIds = useMemo(() => rows.map((r) => r.id), [rows]);
   const allSelected = allIds.length > 0 && allIds.every((id) => selected.has(id));
+  const selectedRows = useMemo(
+    () => rows.filter((r) => selected.has(r.id)),
+    [rows, selected],
+  );
 
   function toggle(id: string) {
     setSelected((prev) => {
@@ -68,6 +74,82 @@ export function ShipmentsBulkTable({
     }
   }
 
+  async function cancelSelected() {
+    if (selected.size === 0) {
+      toast.error("Select at least one shipment.");
+      return;
+    }
+    setBusy(true);
+    try {
+      const result = await api.bulkUpdateShipmentStatus([...selected], "cancelled");
+      toast.success(
+        `Cancelled ${result.updatedCount}` +
+          (result.skippedCount ? ` · skipped ${result.skippedCount}` : ""),
+      );
+      setSelected(new Set());
+      router.refresh();
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : "Bulk cancel failed.");
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  function openAssign() {
+    if (selectedRows.length !== 1) {
+      toast.error("Select exactly one shipment to assign.");
+      return;
+    }
+    const row = selectedRows[0];
+    if (["delivered", "cancelled"].includes(row.status)) {
+      toast.error(`Cannot assign a ${row.status} shipment.`);
+      return;
+    }
+    setAssignTarget(row);
+  }
+
+  function exportSelected() {
+    if (selected.size === 0) {
+      toast.error("Select at least one shipment.");
+      return;
+    }
+    const header = [
+      "publicId",
+      "client",
+      "origin",
+      "destination",
+      "status",
+      "tonnageMt",
+      "driver",
+      "eta",
+    ];
+    const lines = [
+      header.join(","),
+      ...selectedRows.map((s) =>
+        [
+          s.publicId,
+          s.client,
+          s.origin,
+          s.destination,
+          s.status,
+          s.tonnageMt,
+          s.driver ?? "",
+          s.eta ?? "",
+        ]
+          .map((v) => `"${String(v).replaceAll('"', '""')}"`)
+          .join(","),
+      ),
+    ];
+    const blob = new Blob([lines.join("\n")], { type: "text/csv;charset=utf-8" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `shipments-selected-${new Date().toISOString().slice(0, 10)}.csv`;
+    a.click();
+    URL.revokeObjectURL(url);
+    toast.success(`Exported ${selectedRows.length} shipment${selectedRows.length === 1 ? "" : "s"}`);
+  }
+
   if (rows.length === 0) {
     return (
       <div className="px-2 py-12 text-center text-sm text-muted-foreground">{emptyMessage}</div>
@@ -91,6 +173,30 @@ export function ShipmentsBulkTable({
         </select>
         <Button size="sm" onClick={applyBulk} disabled={busy || selected.size === 0}>
           {busy ? "Updating…" : "Apply status"}
+        </Button>
+        <Button
+          size="sm"
+          variant="outline"
+          onClick={openAssign}
+          disabled={busy || selected.size !== 1}
+        >
+          Assign…
+        </Button>
+        <Button
+          size="sm"
+          variant="outline"
+          onClick={() => void cancelSelected()}
+          disabled={busy || selected.size === 0}
+        >
+          Cancel selected
+        </Button>
+        <Button
+          size="sm"
+          variant="outline"
+          onClick={exportSelected}
+          disabled={busy || selected.size === 0}
+        >
+          Export selected
         </Button>
       </div>
 
@@ -203,6 +309,20 @@ export function ShipmentsBulkTable({
           </tbody>
         </table>
       </div>
+
+      {assignTarget ? (
+        <AssignDriverDrawer
+          shipmentId={assignTarget.id}
+          shipmentLabel={assignTarget.publicId}
+          open
+          onClose={() => setAssignTarget(null)}
+          onAssigned={() => {
+            setAssignTarget(null);
+            setSelected(new Set());
+            router.refresh();
+          }}
+        />
+      ) : null}
     </div>
   );
 }

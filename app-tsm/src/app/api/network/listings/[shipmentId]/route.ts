@@ -43,6 +43,15 @@ export async function PATCH(req: NextRequest, ctx: Ctx) {
     plantNotes: typeof b.plantNotes === "string" ? b.plantNotes : undefined,
     publish: b.publish === true,
     expiresAt: typeof b.expiresAt === "string" ? b.expiresAt : undefined,
+    draftSnapshot:
+      b.draftSnapshot && typeof b.draftSnapshot === "object"
+        ? (b.draftSnapshot as import("@/lib/tsm/post-draft").TsmPostDraft)
+        : undefined,
+    tranzfortLoadId: typeof b.tranzfortLoadId === "string" ? b.tranzfortLoadId : undefined,
+    liveOnTranzfort: typeof b.liveOnTranzfort === "boolean" ? b.liveOnTranzfort : undefined,
+    superLoad: typeof b.superLoad === "boolean" ? b.superLoad : undefined,
+    advancePercent: b.advancePercent !== undefined ? Number(b.advancePercent) : undefined,
+    priceType: b.priceType === "per_ton" || b.priceType === "fixed" ? b.priceType : undefined,
   });
 
   if ("error" in result && result.error) {

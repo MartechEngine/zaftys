@@ -516,6 +516,21 @@ export function createShipment(input: {
   originType?: OriginType;
   driverId?: string;
   vehicleId?: string;
+  originPlace?: {
+    city: string;
+    state?: string;
+    lat?: number;
+    lng?: number;
+    label?: string;
+  };
+  destinationPlace?: {
+    city: string;
+    state?: string;
+    lat?: number;
+    lng?: number;
+    label?: string;
+  };
+  materialCode?: string;
 }) {
   const shipments = getShipmentsStore();
   const id = `sh-${Date.now()}`;
@@ -525,13 +540,22 @@ export function createShipment(input: {
     id,
     publicId,
     client: input.client,
-    origin: input.origin,
-    destination: input.destination,
+    origin: input.originPlace?.city ?? input.origin,
+    destination: input.destinationPlace?.city ?? input.destination,
     commodity: input.commodity,
     tonnageMt: input.tonnageMt,
     status: "pending",
     originType: input.originType ?? "fleet",
     lrNumber: input.lrNumber,
+    materialCode: input.materialCode,
+    originState: input.originPlace?.state,
+    originLat: input.originPlace?.lat,
+    originLng: input.originPlace?.lng,
+    originLabel: input.originPlace?.label,
+    destinationState: input.destinationPlace?.state,
+    destinationLat: input.destinationPlace?.lat,
+    destinationLng: input.destinationPlace?.lng,
+    destinationLabel: input.destinationPlace?.label,
     documents: [],
     trackToken: `demo-${id}`,
     updatedAt: now(),
@@ -543,7 +567,7 @@ export function createShipment(input: {
     id: `a${Date.now()}`,
     shipmentId: id,
     type: "shipment.created",
-    message: `${publicId} created · ${input.origin} → ${input.destination}`,
+    message: `${publicId} created · ${shipment.origin} → ${shipment.destination}`,
     timestamp: now(),
   });
 

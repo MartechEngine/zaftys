@@ -218,7 +218,7 @@ Use `[x]` done · `[ ]` pending · `[~]` in progress · `[—]` deferred
 - [~] Empty states + microcopy per screen (`EmptyState` component)
 - [x] Error boundaries + retry UI (portal error.tsx)
 - [ ] Org switcher placeholder (multi-tenant P3)
-- [ ] View mode toggle: Kanban / table / map on orders — dispatch done; shipments pending
+- [ ] View mode toggle: Kanban / table / map on orders — dispatch done; **shipments Table/Kanban/Map ✅**
 
 ### Module 3 — Command Center (`/`)
 - [~] Wire KPIs to live Fleetbase (async when `TSM_DEMO_UI=0`)

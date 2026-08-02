@@ -1,4 +1,5 @@
 import { demoEquipment } from "@/lib/demo-data";
+import { allowDemoSeeds, demoSeed } from "@/lib/data/demo-mode";
 import { listPlaces } from "@/lib/fleet/places-repository";
 import {
   createStoredEquipment,
@@ -41,19 +42,22 @@ export async function listEquipment(): Promise<EquipmentRecord[]> {
   const { ensureFleetAuxHydrated } = await import("@/lib/db/domain-persistence");
   await ensureFleetAuxHydrated();
   const places = await listPlaces();
-  const fromPlaces: EquipmentRecord[] = places
-    .filter((p) => /plant|depot/i.test(p.type))
-    .slice(0, 2)
-    .map((p, index) => ({
-      id: `eq-place-${p.id}`,
-      name: index === 0 ? "Portable weighbridge WB-P2" : "Yard loader FL-03",
-      type: index === 0 ? "Weighbridge" : "Loader",
-      location: p.name,
-      status: "active" as const,
-      placeId: p.id,
-    }));
+  // Invented yard assets from place type are demo-only.
+  const fromPlaces: EquipmentRecord[] = allowDemoSeeds()
+    ? places
+        .filter((p) => /plant|depot/i.test(p.type))
+        .slice(0, 2)
+        .map((p, index) => ({
+          id: `eq-place-${p.id}`,
+          name: index === 0 ? "Portable weighbridge WB-P2" : "Yard loader FL-03",
+          type: index === 0 ? "Weighbridge" : "Loader",
+          location: p.name,
+          status: "active" as const,
+          placeId: p.id,
+        }))
+    : [];
 
-  const merged = [...listStoredEquipment(), ...demoEquipment, ...fromPlaces].map((item) => {
+  const merged = [...listStoredEquipment(), ...demoSeed(demoEquipment), ...fromPlaces].map((item) => {
     const patch = getEquipmentPatch(item.id);
     return patch ? { ...item, ...patch } : item;
   });

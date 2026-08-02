@@ -29,7 +29,7 @@ export const NAV_BY_ROLE: NavItem[] = [
   { href: "/dispatch", label: "Dispatch", icon: "Kanban", roles: ["admin", "dispatcher"] },
   { href: "/map", label: "Live Map", icon: "Map", roles: ["admin", "dispatcher"] },
   { href: "/fleet", label: "Fleet", icon: "Truck", roles: ["admin", "dispatcher", "fleet_manager"] },
-  { href: "/network", label: "Network", icon: "Network", roles: ["admin", "dispatcher", "partner"] },
+  { href: "/network", label: "Marketplace", icon: "Network", roles: ["admin", "dispatcher", "partner"] },
   { href: "/clients", label: "Clients", icon: "Users", roles: ["admin", "dispatcher"] },
   { href: "/documents", label: "Documents", icon: "FileText", roles: ["admin", "dispatcher", "fleet_manager", "client"] },
   { href: "/reports", label: "Reports", icon: "BarChart3", roles: ["admin", "dispatcher", "client"] },
@@ -48,15 +48,19 @@ export interface NavGroup {
   hrefs: string[];
 }
 
-/** Sidebar sections — aligned with obsidian-glass mock */
+/** Sidebar sections — Marketplace (TZ) vs Operations (TMS) called out */
 export const NAV_GROUPS: NavGroup[] = [
   {
     label: "Operations",
     hrefs: ["/", "/shipments", "/dispatch", "/map"],
   },
   {
-    label: "Network & resources",
-    hrefs: ["/fleet", "/network", "/maintenance", "/clients", "/documents", "/vendors"],
+    label: "Marketplace",
+    hrefs: ["/network"],
+  },
+  {
+    label: "Fleet & resources",
+    hrefs: ["/fleet", "/maintenance", "/clients", "/documents", "/vendors"],
   },
   {
     label: "Insights",

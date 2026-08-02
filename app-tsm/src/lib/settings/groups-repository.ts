@@ -1,4 +1,5 @@
 import { demoGroups } from "@/lib/demo-data";
+import { demoSeed } from "@/lib/data/demo-mode";
 import { listOrgUsers } from "@/lib/settings/users-repository";
 import { listOrgRoles } from "@/lib/settings/roles-repository";
 import {
@@ -26,7 +27,7 @@ export async function listSettingsGroups(): Promise<SettingsGroupRecord[]> {
   await ensureSettingsHydrated();
   const [users, roles] = await Promise.all([listOrgUsers(), listOrgRoles()]);
 
-  const demo = demoGroups.map((group) => {
+  const demo = demoSeed(demoGroups).map((group) => {
     const patch = getGroupPatch(group.id);
     const merged = { ...group, ...patch };
     const role = roles.find(

@@ -19,8 +19,8 @@ export async function GET() {
     status: database === "down" || s3 === "down" ? "degraded" : "ok",
     service: "zaftys-tsm",
     dataSource:
-      fleetbaseReachable && process.env.TSM_DEMO_UI === "0" ? "fleetbase" : dataSource,
-    demoUi: process.env.TSM_DEMO_UI !== "0",
+      fleetbaseReachable && process.env.TSM_DEMO_UI !== "1" ? "fleetbase" : dataSource,
+    demoUi: process.env.TSM_DEMO_UI === "1",
     fleetbaseConfigured,
     fleetbaseReachable,
     database,

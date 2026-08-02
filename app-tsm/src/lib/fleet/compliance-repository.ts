@@ -1,5 +1,6 @@
 import { demoComplianceDocs, demoFleetIssues } from "@/lib/demo-data";
-import { listVehicles } from "@/lib/data/shipment-repository";
+import { demoSeed } from "@/lib/data/demo-mode";
+import { listVehiclesSafe } from "@/lib/data/shipment-repository";
 import { listFaultReports } from "@/lib/maintenance/fault-repository";
 import {
   createStoredFleetIssue,
@@ -32,7 +33,9 @@ export type FleetIssue = {
 };
 
 export async function listComplianceDocs(): Promise<ComplianceDoc[]> {
-  const vehicles = await listVehicles();
+  const { ensureFleetAuxHydrated } = await import("@/lib/db/domain-persistence");
+  await ensureFleetAuxHydrated();
+  const vehicles = await listVehiclesSafe();
   const fromVehicles: ComplianceDoc[] = vehicles
     .filter((v) => v.docs !== "valid")
     .map((v, index) => ({
@@ -43,7 +46,7 @@ export async function listComplianceDocs(): Promise<ComplianceDoc[]> {
       status: v.docs === "expired" ? ("expired" as const) : ("expiring" as const),
     }));
 
-  const merged = [...demoComplianceDocs, ...fromVehicles].map((d) => {
+  const merged = [...demoSeed(demoComplianceDocs), ...fromVehicles].map((d) => {
     const patch = getCompliancePatch(d.id);
     return patch ? { ...d, ...patch } : d;
   });
@@ -81,11 +84,15 @@ export async function updateComplianceDoc(
           year: "numeric",
         })
       : found.expires;
-  patchComplianceDoc(id, { status, expires });
+  const patch = patchComplianceDoc(id, { status, expires });
+  const { persistCompliancePatch } = await import("@/lib/db/domain-persistence");
+  await persistCompliancePatch(id, patch);
   return { ...found, status, expires };
 }
 
 export async function listFleetIssues(includeResolved = false): Promise<FleetIssue[]> {
+  const { ensureFleetAuxHydrated } = await import("@/lib/db/domain-persistence");
+  await ensureFleetAuxHydrated();
   const faults = await listFaultReports({ status: "active" });
   const fromFaults: FleetIssue[] = faults.map((f) => ({
     id: f.id,
@@ -98,7 +105,7 @@ export async function listFleetIssues(includeResolved = false): Promise<FleetIss
     resolved: isIssueResolved(f.id),
   }));
 
-  const fromDemo: FleetIssue[] = demoFleetIssues.map((f) => ({
+  const fromDemo: FleetIssue[] = demoSeed(demoFleetIssues).map((f) => ({
     ...f,
     source: "navigator" as const,
     resolved: isIssueResolved(f.id),
@@ -146,7 +153,13 @@ export async function createFleetIssue(input: {
   issue: string;
   severity?: FleetIssue["severity"];
 }) {
-  return createStoredFleetIssue(input);
+  const { ensureFleetAuxHydrated, persistFleetIssue } = await import(
+    "@/lib/db/domain-persistence"
+  );
+  await ensureFleetAuxHydrated();
+  const created = createStoredFleetIssue(input);
+  await persistFleetIssue(created);
+  return created;
 }
 
 export async function resolveFleetIssue(id: string): Promise<FleetIssue | undefined> {
@@ -154,5 +167,7 @@ export async function resolveFleetIssue(id: string): Promise<FleetIssue | undefi
   const found = issues.find((i) => i.id === id);
   if (!found) return undefined;
   resolveStoredIssue(id);
+  const { persistFleetIssueResolved } = await import("@/lib/db/domain-persistence");
+  await persistFleetIssueResolved(id);
   return { ...found, resolved: true };
 }

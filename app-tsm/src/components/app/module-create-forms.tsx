@@ -459,6 +459,7 @@ export function InviteOrgUserForm() {
       setOpen(false);
       setName("");
       setEmail("");
+      setRole("Dispatcher");
       router.refresh();
     } catch (err) {
       toast.error(err instanceof Error ? err.message : "Could not invite user.");
@@ -470,7 +471,7 @@ export function InviteOrgUserForm() {
   if (!open) {
     return (
       <Button variant="accent" onClick={() => setOpen(true)}>
-        Invite user
+        Invite seat
       </Button>
     );
   }
@@ -479,6 +480,10 @@ export function InviteOrgUserForm() {
     <Card className="mb-4 max-w-md">
       <CardContent className="p-5">
         <form className="grid gap-3" onSubmit={onSubmit}>
+          <p className="text-xs text-muted-foreground">
+            Invitee sets a TSM password via the link. Marketplace posts still show as the company
+            supplier.
+          </p>
           <label className="block text-sm">
             <span className="text-muted-foreground">Name</span>
             <Input className="mt-1" value={name} onChange={(e) => setName(e.target.value)} required />
@@ -495,7 +500,14 @@ export function InviteOrgUserForm() {
           </label>
           <label className="block text-sm">
             <span className="text-muted-foreground">Role</span>
-            <Input className="mt-1" value={role} onChange={(e) => setRole(e.target.value)} />
+            <select
+              className="mt-1 flex h-10 w-full rounded-md border border-input bg-background px-3 text-sm"
+              value={role}
+              onChange={(e) => setRole(e.target.value)}
+            >
+              <option value="Dispatcher">Dispatcher (can publish)</option>
+              <option value="Viewer">Viewer (read-only marketplace)</option>
+            </select>
           </label>
           <div className="flex gap-2">
             <Button type="submit" variant="accent" disabled={submitting}>

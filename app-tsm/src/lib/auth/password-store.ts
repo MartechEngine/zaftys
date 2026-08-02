@@ -46,6 +46,11 @@ export function getPasswordHash(email: string): string | undefined {
   return memoryStore()[normalizeEmail(email)];
 }
 
+/** Set a precomputed scrypt hash (salt:hex) without re-hashing. */
+export function setPasswordHashRaw(email: string, hash: string): void {
+  memoryStore()[normalizeEmail(email)] = hash;
+}
+
 export async function setPasswordHash(email: string, newPassword: string): Promise<void> {
   const key = normalizeEmail(email);
   const hash = hashPassword(newPassword);
@@ -82,6 +87,9 @@ export async function clearPasswordHash(email: string): Promise<void> {
 }
 
 export async function hydratePasswordHashes(): Promise<void> {
+  const { applyAuthSeedOnce } = await import("@/lib/auth/auth-seed");
+  applyAuthSeedOnce(setPasswordHashRaw);
+
   if (!isDatabaseConfigured() || g.__tsmPasswordsHydrated) return;
   try {
     const rows = await loadCollection<PasswordRecord>("user_passwords");

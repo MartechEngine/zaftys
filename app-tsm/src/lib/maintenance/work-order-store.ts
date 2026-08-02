@@ -1,5 +1,6 @@
 import { logActivity } from "@/lib/dev-store";
 import { demoWorkOrders } from "@/lib/demo-data";
+import { demoSeed } from "@/lib/data/demo-mode";
 
 export type WorkOrderStatus = "open" | "in_progress" | "resolved";
 
@@ -103,7 +104,7 @@ export function setWorkOrderStatus(
     return created;
   }
 
-  const demo = demoWorkOrders.find((w) => w.id === id);
+  const demo = demoSeed(demoWorkOrders).find((w) => w.id === id);
   if (!demo) return undefined;
 
   getStatusOverrides()[id] = status;

@@ -153,7 +153,29 @@ export function OutboundListingsDesk() {
             {
               key: "state",
               header: "Listing",
-              render: (row) => <StatusPill status={row.listing.state} map={stateMap} />,
+              render: (row) => (
+                <div className="space-y-1">
+                  <StatusPill status={row.listing.state} map={stateMap} />
+                  {(row.listing.liveOnTranzfort || row.listing.superLoad) && (
+                    <div className="flex flex-wrap gap-1">
+                      {row.listing.liveOnTranzfort ? (
+                        <span className="rounded-full bg-emerald-500/15 px-1.5 py-0.5 text-[10px] text-emerald-200">
+                          Live
+                        </span>
+                      ) : row.listing.tranzfortLoadId?.startsWith("tz-mock-") ? (
+                        <span className="rounded-full bg-amber-500/15 px-1.5 py-0.5 text-[10px] text-amber-100">
+                          Mock
+                        </span>
+                      ) : null}
+                      {row.listing.superLoad && (
+                        <span className="rounded-full bg-violet-500/15 px-1.5 py-0.5 text-[10px] text-violet-200">
+                          Super
+                        </span>
+                      )}
+                    </div>
+                  )}
+                </div>
+              ),
             },
             {
               key: "posted",

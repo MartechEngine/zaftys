@@ -28,6 +28,7 @@ export default async function ShipmentsQuotesPage() {
       <SearchFilterBar placeholder="Search quotes…" />
       <DataTable
         rows={quotes}
+        emptyMessage="No quotes yet. Create a quote for an on-demand freight request."
         columns={[
           { key: "client", header: "Client", render: (r) => r.client },
           { key: "route", header: "Route", render: (r) => r.route },

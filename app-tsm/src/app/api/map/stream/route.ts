@@ -10,7 +10,7 @@ const INTERVAL_MS = 5_000;
 async function buildPayload() {
   await ensurePositionsHydrated();
   // Simulated GPS motion only in demo UI — live mode uses telematics ingest
-  if (process.env.TSM_DEMO_UI !== "0") {
+  if (process.env.TSM_DEMO_UI === "1") {
     tickMapGeo();
   }
   const active = await listShipments({ tab: "active" });

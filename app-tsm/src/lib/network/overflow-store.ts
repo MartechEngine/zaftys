@@ -1,5 +1,7 @@
 /** TranZfort overflow queue — shared in-memory store (globalThis for API route parity). */
 
+import { allowDemoSeeds } from "@/lib/data/demo-mode";
+
 export type OverflowStatus = "open" | "review" | "accepted" | "rejected";
 
 export interface OverflowLoad {
@@ -64,9 +66,15 @@ const INITIAL_LOADS: OverflowLoad[] = [
 
 function getLoadsStore() {
   if (!g.__tsmOverflowLoads) {
-    g.__tsmOverflowLoads = INITIAL_LOADS.map((l) => ({ ...l }));
+    g.__tsmOverflowLoads = allowDemoSeeds()
+      ? INITIAL_LOADS.map((l) => ({ ...l }))
+      : [];
   }
   return g.__tsmOverflowLoads;
+}
+
+export function replaceOverflowLoads(rows: OverflowLoad[]) {
+  g.__tsmOverflowLoads = [...rows];
 }
 
 function now() {

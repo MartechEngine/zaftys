@@ -4,9 +4,15 @@ import { PortalBackground } from "@/components/effects/portal-background";
 import { APP_NAME, APP_TAGLINE, COMPANY_EMAIL } from "@/lib/constants";
 import { glassCard } from "@/lib/surface";
 import { cn } from "@/lib/utils";
+import { getBridgeMode, isBridgeLiveConfigured } from "@/lib/tsm/bridge-rpc";
+import { isTranzfortAuthConfigured } from "@/lib/tsm/tranzfort-auth";
 import { LoginForm } from "./login-form";
 
 export default function LoginPage() {
+  const bridgeMode = getBridgeMode();
+  const liveConfigured = isBridgeLiveConfigured();
+  const authConfigured = isTranzfortAuthConfigured();
+
   return (
     <div className="relative flex min-h-screen flex-col items-center justify-center p-6">
       <PortalBackground />
@@ -27,7 +33,11 @@ export default function LoginPage() {
         </p>
 
         <Suspense fallback={<p className="mt-8 text-sm text-muted-foreground">Loading…</p>}>
-          <LoginForm />
+          <LoginForm
+            bridgeMode={bridgeMode}
+            liveConfigured={liveConfigured}
+            authConfigured={authConfigured}
+          />
         </Suspense>
 
         <p className="mt-8 text-center text-xs text-muted-foreground">

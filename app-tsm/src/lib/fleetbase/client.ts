@@ -31,33 +31,52 @@ export class FleetbaseClient {
       throw new FleetbaseError("FLEETBASE_API_KEY not configured", 503);
     }
 
-    const res = await fetch(`${this.baseUrl}${path}`, {
-      ...init,
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${this.apiKey}`,
-        ...init?.headers,
-      },
-      cache: "no-store",
-    });
+    const maxAttempts = 4;
+    let lastError: FleetbaseError | null = null;
 
-    const text = await res.text();
-    let json: unknown = {};
-    try {
-      json = text ? JSON.parse(text) : {};
-    } catch {
-      json = { raw: text };
-    }
+    for (let attempt = 0; attempt < maxAttempts; attempt++) {
+      const res = await fetch(`${this.baseUrl}${path}`, {
+        ...init,
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${this.apiKey}`,
+          ...init?.headers,
+        },
+        cache: "no-store",
+      });
 
-    if (!res.ok) {
-      const err = json as { errors?: string[]; message?: string };
+      const text = await res.text();
+      let json: unknown = {};
+      try {
+        json = text ? JSON.parse(text) : {};
+      } catch {
+        json = { raw: text };
+      }
+
+      if (res.ok) {
+        return json as T;
+      }
+
+      const err = json as { errors?: string[]; message?: string; error?: string };
       const msg =
-        err.errors?.[0] ?? err.message ?? `Fleetbase request failed (${res.status})`;
-      throw new FleetbaseError(msg, res.status);
+        err.errors?.[0] ??
+        err.message ??
+        (typeof err.error === "string" ? err.error : undefined) ??
+        `Fleetbase request failed (${res.status})`;
+      lastError = new FleetbaseError(msg, res.status);
+
+      const rateLimited =
+        res.status === 429 ||
+        res.status === 400 && /too many requests/i.test(msg);
+      if (!rateLimited || attempt === maxAttempts - 1) {
+        throw lastError;
+      }
+      const waitMs = 1500 * 2 ** attempt;
+      await new Promise((r) => setTimeout(r, waitMs));
     }
 
-    return json as T;
+    throw lastError ?? new FleetbaseError("Fleetbase request failed", 500);
   }
 
   async listOrders(limit = 50) {
@@ -108,6 +127,144 @@ export class FleetbaseClient {
     return data;
   }
 
+  /** Fleetbase customers (preferred) */
+  async listCustomers(limit = 100) {
+    const data = await this.request<{ data?: unknown[] } | unknown[]>(
+      `/customers?limit=${limit}`,
+    );
+    if (Array.isArray(data)) return data;
+    return data.data ?? [];
+  }
+
+  async getCustomer(id: string) {
+    const data = await this.request<{ data?: unknown } | unknown>(`/customers/${id}`);
+    if (data && typeof data === "object" && "data" in data && data.data) {
+      return data.data;
+    }
+    return data;
+  }
+
+  /** Fleetbase contacts (fallback when /customers is unavailable) */
+  async listContacts(limit = 100) {
+    const data = await this.request<{ data?: unknown[] } | unknown[]>(
+      `/contacts?limit=${limit}`,
+    );
+    if (Array.isArray(data)) return data;
+    return data.data ?? [];
+  }
+
+  async getContact(id: string) {
+    const data = await this.request<{ data?: unknown } | unknown>(`/contacts/${id}`);
+    if (data && typeof data === "object" && "data" in data && data.data) {
+      return data.data;
+    }
+    return data;
+  }
+
+  /**
+   * Ops client registry lives on /contacts (type=customer).
+   * Prefer contacts; only use /customers when contacts is empty/missing.
+   * (Storefront /customers often returns [] while contacts has the ops rows.)
+   */
+  async listCustomersOrContacts(limit = 100): Promise<{
+    rows: unknown[];
+    source: "customers" | "contacts";
+  }> {
+    try {
+      const rows = await this.listContacts(limit);
+      if (rows.length > 0) return { rows, source: "contacts" };
+    } catch (e) {
+      if (!(e instanceof FleetbaseError) || e.status !== 404) throw e;
+    }
+    try {
+      return { rows: await this.listCustomers(limit), source: "customers" };
+    } catch (e) {
+      if (!(e instanceof FleetbaseError) || e.status !== 404) throw e;
+    }
+    return { rows: [], source: "contacts" };
+  }
+
+  async getCustomerOrContact(id: string): Promise<unknown> {
+    try {
+      return await this.getCustomer(id);
+    } catch (e) {
+      if (!(e instanceof FleetbaseError) || e.status !== 404) throw e;
+    }
+    return this.getContact(id);
+  }
+
+  /**
+   * Create a customer/contact for the ops registry.
+   * Fleetbase `/customers` is storefront (identity/password) — use `/contacts` with type.
+   */
+  async createCustomerOrContact(payload: Record<string, unknown>): Promise<{
+    row: unknown;
+    source: "customers" | "contacts";
+  }> {
+    const body = {
+      type: "customer",
+      ...payload,
+    };
+    return { row: await this.createContact(body), source: "contacts" };
+  }
+
+  async updateCustomerOrContact(
+    id: string,
+    patch: Record<string, unknown>,
+  ): Promise<{ row: unknown; source: "customers" | "contacts" }> {
+    try {
+      const row = await this.updateContact(id, patch);
+      return { row, source: "contacts" };
+    } catch (e) {
+      if (!(e instanceof FleetbaseError) || e.status !== 404) throw e;
+    }
+    return { row: await this.updateCustomer(id, patch), source: "customers" };
+  }
+
+  async createCustomer(payload: Record<string, unknown>) {
+    const data = await this.request<{ data?: unknown } | unknown>("/customers", {
+      method: "POST",
+      body: JSON.stringify(payload),
+    });
+    if (data && typeof data === "object" && "data" in data && (data as { data?: unknown }).data) {
+      return (data as { data: unknown }).data;
+    }
+    return data;
+  }
+
+  async updateCustomer(id: string, patch: Record<string, unknown>) {
+    const data = await this.request<{ data?: unknown } | unknown>(`/customers/${id}`, {
+      method: "PATCH",
+      body: JSON.stringify(patch),
+    });
+    if (data && typeof data === "object" && "data" in data && (data as { data?: unknown }).data) {
+      return (data as { data: unknown }).data;
+    }
+    return data;
+  }
+
+  async createContact(payload: Record<string, unknown>) {
+    const data = await this.request<{ data?: unknown } | unknown>("/contacts", {
+      method: "POST",
+      body: JSON.stringify(payload),
+    });
+    if (data && typeof data === "object" && "data" in data && (data as { data?: unknown }).data) {
+      return (data as { data: unknown }).data;
+    }
+    return data;
+  }
+
+  async updateContact(id: string, patch: Record<string, unknown>) {
+    const data = await this.request<{ data?: unknown } | unknown>(`/contacts/${id}`, {
+      method: "PATCH",
+      body: JSON.stringify(patch),
+    });
+    if (data && typeof data === "object" && "data" in data && (data as { data?: unknown }).data) {
+      return (data as { data: unknown }).data;
+    }
+    return data;
+  }
+
   async healthCheck() {
     try {
       await this.listOrders(1);
@@ -130,7 +287,7 @@ export class FleetbaseClient {
     const data = await this.request<{ data?: FleetbaseOrder } | FleetbaseOrder>(
       `/orders/${orderId}`,
       {
-        method: "PATCH",
+        method: "PUT",
         body: JSON.stringify({
           driver: driverId,
           vehicle: vehicleId,
@@ -146,7 +303,7 @@ export class FleetbaseClient {
     const data = await this.request<{ data?: FleetbaseOrder } | FleetbaseOrder>(
       `/orders/${orderId}`,
       {
-        method: "PATCH",
+        method: "PUT",
         body: JSON.stringify({ status }),
       },
     );
@@ -157,7 +314,8 @@ export class FleetbaseClient {
   async updateOrder(orderId: string, patch: Record<string, unknown>) {
     const data = await this.request<{ data?: FleetbaseOrder } | FleetbaseOrder>(
       `/orders/${orderId}`,
-      { method: "PATCH", body: JSON.stringify(patch) },
+      // This Fleetbase build exposes GET/PUT/DELETE for individual orders.
+      { method: "PUT", body: JSON.stringify(patch) },
     );
     if (data && "data" in data && data.data) return data.data;
     return data as FleetbaseOrder;

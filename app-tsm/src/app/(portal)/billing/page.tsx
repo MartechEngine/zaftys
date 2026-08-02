@@ -49,6 +49,7 @@ export default async function BillingPage() {
       <h2 className="mb-3 text-lg font-semibold text-navy">Recent invoices</h2>
       <DataTable
         rows={summary.recentInvoices}
+        emptyMessage="No invoices yet. Create an invoice to bill completed trips."
         columns={[
           {
             key: "number",

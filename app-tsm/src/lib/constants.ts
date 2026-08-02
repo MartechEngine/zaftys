@@ -30,6 +30,16 @@ export interface Shipment {
   vehicle?: string;
   eta?: string;
   lrNumber?: string;
+  /** TranZfort-aligned structured place / material (optional; set by catalog pickers). */
+  originState?: string;
+  originLat?: number;
+  originLng?: number;
+  originLabel?: string;
+  destinationState?: string;
+  destinationLat?: number;
+  destinationLng?: number;
+  destinationLabel?: string;
+  materialCode?: string;
 }
 
 export const NAV_ITEMS = [

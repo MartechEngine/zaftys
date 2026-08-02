@@ -22,6 +22,8 @@ export type StoredOrgUser = {
   email: string;
   role: string;
   status: "active" | "pending";
+  /** Owning TSM org (Phase C seats) */
+  tsmOrgId?: string;
 };
 
 export type StoredRole = {
@@ -174,6 +176,7 @@ export function inviteStoredOrgUser(input: {
   name: string;
   email: string;
   role?: string;
+  tsmOrgId?: string;
 }): StoredOrgUser {
   if (!g.__tsmOrgUsers) g.__tsmOrgUsers = [];
   const row: StoredOrgUser = {
@@ -182,6 +185,7 @@ export function inviteStoredOrgUser(input: {
     email: input.email.trim().toLowerCase(),
     role: input.role?.trim() || "Dispatcher",
     status: "pending",
+    tsmOrgId: input.tsmOrgId?.trim() || undefined,
   };
   g.__tsmOrgUsers.unshift(row);
   logActivity({

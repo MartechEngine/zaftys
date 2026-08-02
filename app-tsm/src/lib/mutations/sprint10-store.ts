@@ -33,6 +33,10 @@ export function listStoredFleetIssues(): StoredFleetIssue[] {
   return [...g.__tsmFleetIssues];
 }
 
+export function replaceStoredFleetIssues(items: StoredFleetIssue[]) {
+  g.__tsmFleetIssues = [...items];
+}
+
 export function createStoredFleetIssue(input: {
   vehicle: string;
   driver: string;
@@ -63,6 +67,14 @@ export function isIssueResolved(id: string) {
   return Boolean(g.__tsmResolvedIssues?.has(id));
 }
 
+export function replaceResolvedIssues(ids: string[]) {
+  g.__tsmResolvedIssues = new Set(ids);
+}
+
+export function listResolvedIssueIds(): string[] {
+  return [...(g.__tsmResolvedIssues ?? [])];
+}
+
 export function resolveStoredIssue(id: string) {
   if (!g.__tsmResolvedIssues) g.__tsmResolvedIssues = new Set();
   g.__tsmResolvedIssues.add(id);
@@ -77,6 +89,19 @@ export function resolveStoredIssue(id: string) {
 
 export function getCompliancePatch(id: string) {
   return g.__tsmCompliancePatches?.[id];
+}
+
+export function replaceCompliancePatches(
+  next: Record<string, { status: "valid" | "expiring" | "expired"; expires?: string }>,
+) {
+  g.__tsmCompliancePatches = { ...next };
+}
+
+export function listCompliancePatches(): Record<
+  string,
+  { status: "valid" | "expiring" | "expired"; expires?: string }
+> {
+  return { ...(g.__tsmCompliancePatches ?? {}) };
 }
 
 export function patchComplianceDoc(

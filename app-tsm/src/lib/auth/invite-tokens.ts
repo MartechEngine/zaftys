@@ -1,5 +1,5 @@
 import { randomBytes } from "crypto";
-import { upsertDocument, loadCollection } from "@/lib/db/collections";
+import { upsertDocument, loadCollection, deleteDocument } from "@/lib/db/collections";
 import { isDatabaseConfigured } from "@/lib/db/client";
 
 export type InviteTokenKind = "org_user" | "client_user";
@@ -11,8 +11,14 @@ export type InviteTokenRecord = {
   email: string;
   subjectId: string;
   clientId?: string;
+  /** Owning TSM org for team seats */
+  tsmOrgId?: string;
+  /** Portal role label at invite time (Dispatcher / Viewer) */
+  seatRole?: string;
+  invitedName?: string;
   createdAt: string;
   expiresAt: string;
+  consumedAt?: string;
 };
 
 const g = globalThis as typeof globalThis & {
@@ -34,6 +40,9 @@ export async function createInviteToken(input: {
   email: string;
   subjectId: string;
   clientId?: string;
+  tsmOrgId?: string;
+  seatRole?: string;
+  invitedName?: string;
   ttlHours?: number;
 }): Promise<{ token: string; invitePath: string; record: InviteTokenRecord }> {
   const token = newToken();
@@ -46,6 +55,9 @@ export async function createInviteToken(input: {
     email: input.email.trim().toLowerCase(),
     subjectId: input.subjectId,
     clientId: input.clientId,
+    tsmOrgId: input.tsmOrgId?.trim() || undefined,
+    seatRole: input.seatRole?.trim() || undefined,
+    invitedName: input.invitedName?.trim() || undefined,
     createdAt: now.toISOString(),
     expiresAt: new Date(now.getTime() + ttlHours * 3600_000).toISOString(),
   };
@@ -83,4 +95,28 @@ export async function getInviteToken(token: string): Promise<InviteTokenRecord |
   }
 
   return undefined;
+}
+
+/** Mark invite consumed (one-time). Soft-delete from memory + DB when possible. */
+export async function consumeInviteToken(token: string): Promise<boolean> {
+  const record = await getInviteToken(token);
+  if (!record) return false;
+  if (record.consumedAt) return false;
+
+  memoryStore().delete(token);
+  if (isDatabaseConfigured()) {
+    try {
+      await deleteDocument("invite_tokens", token);
+    } catch {
+      try {
+        await upsertDocument("invite_tokens", token, {
+          ...record,
+          consumedAt: new Date().toISOString(),
+        });
+      } catch (err) {
+        console.error("[invite-tokens] consume persist failed", err);
+      }
+    }
+  }
+  return true;
 }

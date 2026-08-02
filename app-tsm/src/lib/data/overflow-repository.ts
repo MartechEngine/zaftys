@@ -13,19 +13,37 @@ import {
 } from "@/lib/network/overflow-store";
 
 export async function listNetworkOverflow(q?: string, status?: OverflowLoad["status"] | "active") {
+  const { ensureMaintenanceAuxHydrated } = await import("@/lib/db/domain-persistence");
+  await ensureMaintenanceAuxHydrated();
   const items = listOverflowLoads(status);
   return filterOverflowByQuery(items, q);
 }
 
 export async function reviewNetworkOverflow(id: string) {
-  return markOverflowReview(id);
+  const { ensureMaintenanceAuxHydrated, persistOverflowLoad } = await import(
+    "@/lib/db/domain-persistence"
+  );
+  await ensureMaintenanceAuxHydrated();
+  const load = markOverflowReview(id);
+  if (load) await persistOverflowLoad(load);
+  return load;
 }
 
 export async function rejectNetworkOverflow(id: string) {
-  return rejectOverflow(id);
+  const { ensureMaintenanceAuxHydrated, persistOverflowLoad } = await import(
+    "@/lib/db/domain-persistence"
+  );
+  await ensureMaintenanceAuxHydrated();
+  const load = rejectOverflow(id);
+  if (load) await persistOverflowLoad(load);
+  return load;
 }
 
 export async function acceptNetworkOverflow(id: string) {
+  const { ensureMaintenanceAuxHydrated, persistOverflowLoad } = await import(
+    "@/lib/db/domain-persistence"
+  );
+  await ensureMaintenanceAuxHydrated();
   const load = getOverflowLoad(id);
   if (!load) return null;
   if (load.status === "accepted" && load.shipmentId) {
@@ -47,6 +65,7 @@ export async function acceptNetworkOverflow(id: string) {
   if (!shipment) return null;
 
   const updated = acceptOverflow(id, shipment.id);
+  if (updated) await persistOverflowLoad(updated);
   return updated ? { load: updated, shipment } : null;
 }
 
@@ -82,6 +101,9 @@ export async function postShipmentToOverflow(shipmentId: string) {
         "Outbound posting is via shipment Post to TranZfort / Load Exchange listings. Overflow desk is for inbound network bookings.",
     };
   }
+
+  const { persistOverflowLoad } = await import("@/lib/db/domain-persistence");
+  await persistOverflowLoad(created.load);
 
   await updateShipmentFields(shipmentId, {
     eta: shipment.eta ? `${shipment.eta} · posted to network` : "Posted to network",

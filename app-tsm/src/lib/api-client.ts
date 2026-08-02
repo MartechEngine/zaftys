@@ -560,6 +560,10 @@ export const api = {
     pickupWindowEnd?: string;
     plantNotes?: string;
     publish?: boolean;
+    draftSnapshot?: import("@/lib/tsm/post-draft").TsmPostDraft;
+    tranzfortLoadId?: string;
+    liveOnTranzfort?: boolean;
+    superLoad?: boolean;
   }) =>
     fetchApi<{ listing: import("@/lib/network/listing-types").NetworkListing; offers: import("@/lib/network/listing-types").NetworkOffer[] }>(
       "/api/network/listings",
@@ -577,6 +581,12 @@ export const api = {
       pickupWindowEnd?: string;
       plantNotes?: string;
       publish?: boolean;
+      draftSnapshot?: import("@/lib/tsm/post-draft").TsmPostDraft;
+      tranzfortLoadId?: string;
+      liveOnTranzfort?: boolean;
+      superLoad?: boolean;
+      advancePercent?: number;
+      priceType?: "fixed" | "per_ton";
     },
   ) =>
     fetchApi<{
@@ -585,6 +595,135 @@ export const api = {
     }>(`/api/network/listings/${shipmentId}`, {
       method: "PATCH",
       body: JSON.stringify(input),
+    }),
+
+  getTsmOrg: () =>
+    fetchApi<{
+      org: {
+        id: string;
+        tradeName: string;
+        legalName: string;
+        mainContactName: string;
+        tranzfortSupplierId?: string;
+        superLoadAutoPolicy?: string;
+      };
+      bridge: {
+        mode: string;
+        liveConfigured: boolean;
+        linked: boolean;
+        liveLinked?: boolean;
+        linkStatus?:
+          | "verified"
+          | "local_only"
+          | "supplier_mismatch"
+          | "check_failed"
+          | "mock_local"
+          | "unlinked";
+        remoteLinkError?: string | null;
+        supplierIdMasked?: string | null;
+      };
+      seat: { canPublish: boolean; tsmRole: string };
+    }>("/api/tsm/org"),
+
+  patchTsmOrg: (input: {
+    legalName?: string;
+    tradeName?: string;
+    gstin?: string;
+    mainContactName?: string;
+    superLoadAutoPolicy?: "paid_tsm_auto_activate" | "manual";
+  }) =>
+    fetchApi<{
+      id: string;
+      tradeName: string;
+      legalName: string;
+      mainContactName: string;
+      tranzfortSupplierId?: string;
+    }>("/api/tsm/org", { method: "PATCH", body: JSON.stringify(input) }),
+
+  linkTranzfortSupplier: (input: {
+    supplierId: string;
+    companyName?: string;
+    mainContactName?: string;
+    autoPolicy?: "paid_tsm_auto_activate" | "manual";
+    dailyPostLimit?: number;
+    notes?: string;
+  }) =>
+    fetchApi<{
+      supplierId: string;
+      orgId: string;
+      mode: string;
+      message: string;
+      roleAtPost: string;
+    }>("/api/tsm/tranzfort/link-supplier", {
+      method: "POST",
+      body: JSON.stringify(input),
+    }),
+
+  getTranzfortLoads: (query?: {
+    status?: "active" | "expired" | "cancelled" | "all";
+    q?: string;
+    limit?: number;
+    offset?: number;
+  }) => {
+    const params = new URLSearchParams();
+    if (query?.status) params.set("status", query.status);
+    if (query?.q) params.set("q", query.q);
+    if (query?.limit != null) params.set("limit", String(query.limit));
+    if (query?.offset != null) params.set("offset", String(query.offset));
+    const qs = params.toString();
+    return fetchApi<import("@/lib/tsm/loads-types").SupplierLoadsListResult>(
+      `/api/tsm/tranzfort/loads${qs ? `?${qs}` : ""}`,
+    );
+  },
+
+  getVehicleCatalog: () =>
+    fetchApi<import("@/lib/tsm/catalog-types").VehicleCatalog>(
+      "/api/tsm/tranzfort/catalog",
+    ),
+
+  searchMaterials: (q: string, limit = 12) =>
+    fetchApi<{
+      items: import("@/lib/tsm/catalog-types").MaterialSuggestion[];
+      source: "live" | "stub";
+    }>(
+      `/api/tsm/tranzfort/materials?q=${encodeURIComponent(q)}&limit=${limit}`,
+    ),
+
+  searchPlaces: (q: string) =>
+    fetchApi<{
+      items: import("@/lib/tsm/catalog-types").PlaceSuggestion[];
+      source?: string;
+    }>(`/api/tsm/places/search?q=${encodeURIComponent(q)}`),
+
+  resolvePlace: (input: {
+    city?: string;
+    label?: string;
+    state?: string;
+    lat?: number;
+    lng?: number;
+  }) =>
+    fetchApi<{ place: import("@/lib/tsm/catalog-types").PlaceSuggestion }>(
+      "/api/tsm/places/resolve",
+      { method: "POST", body: JSON.stringify(input) },
+    ),
+
+  previewRoute: (origin: { lat: number; lng: number }, destination: { lat: number; lng: number }) =>
+    fetchApi<{ preview: import("@/lib/tsm/catalog-types").RoutePreview }>(
+      "/api/tsm/routes/preview",
+      { method: "POST", body: JSON.stringify({ origin, destination }) },
+    ),
+
+  publishToTranzfort: (draft: import("@/lib/tsm/post-draft").TsmPostDraft) =>
+    fetchApi<{
+      loadId: string;
+      mode: string;
+      orgId: string;
+      company: string;
+      message: string;
+      roleAtPost: string;
+    }>("/api/tsm/tranzfort/publish", {
+      method: "POST",
+      body: JSON.stringify({ draft }),
     }),
 
   getShipmentNetworkListing: (shipmentId: string) =>
@@ -920,7 +1059,13 @@ export const api = {
 
   patchOrgUser: (
     id: string,
-    input: { role?: string; status?: "active" | "pending"; activate?: boolean },
+    input: {
+      role?: string;
+      status?: "active" | "pending";
+      activate?: boolean;
+      promoteToAdmin?: boolean;
+      deactivate?: boolean;
+    },
   ) =>
     fetchApi<{ id: string; role: string; status: string }>(`/api/settings/users/${id}`, {
       method: "PATCH",

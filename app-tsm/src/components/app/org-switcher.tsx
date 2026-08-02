@@ -4,11 +4,14 @@ import { Building2, ChevronDown } from "lucide-react";
 import { glassChip } from "@/lib/surface";
 import { cn } from "@/lib/utils";
 import { demoOrg } from "@/lib/demo-data";
+import { allowDemoSeeds } from "@/lib/data/demo-mode";
 
-const ORGS = [
-  { id: "org1", name: demoOrg.name, active: true },
-  { id: "org2", name: "ZAFTYS Mumbai Hub", active: false },
-];
+const ORGS = allowDemoSeeds()
+  ? [
+      { id: "org1", name: demoOrg.name, active: true },
+      { id: "org2", name: "ZAFTYS Mumbai Hub", active: false },
+    ]
+  : [{ id: "org1", name: "Organization", active: true }];
 
 export function OrgSwitcher() {
   return (

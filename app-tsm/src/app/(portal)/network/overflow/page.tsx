@@ -12,21 +12,26 @@ export default async function NetworkOverflowPage() {
   return (
     <>
       <PageHeader
-        title="Network overflow"
-        description="Inbound marketplace bookings for own-fleet or partner dispatch"
+        title="Local overflow desk"
+        description="TSM-local inbound queue and NetworkOffer listings — not live Find Loads"
+        eyebrow="Marketplace"
       />
       <ModuleSubNav links={NETWORK_NAV} />
       <div className="mb-4 rounded-xl border border-amber-500/30 bg-amber-500/10 px-4 py-3 text-sm text-amber-100">
-        <p className="font-medium text-amber-50">Outbound vs inbound</p>
+        <p className="font-medium text-amber-50">Local desk (not TranZfort Find Loads)</p>
         <p className="mt-1 text-amber-100/90">
-          Outbound posting to partners is via shipment{" "}
-          <strong className="font-medium text-white">Post to TranZfort</strong> / Load Exchange
-          listings. This overflow desk is for{" "}
-          <strong className="font-medium text-white">inbound</strong> network bookings only.
+          Live marketplace posts and booking decisions are under{" "}
+          <strong className="font-medium text-white">My Loads</strong> and{" "}
+          <strong className="font-medium text-white">Bookings</strong>. Outbound listings here are
+          TSM-local NetworkOffer rows unless you published via Post to TranZfort on a shipment.
         </p>
         <p className="mt-2">
-          <Link href="/network" className="text-link underline-offset-2 hover:underline">
-            Open Network hub
+          <Link href="/network/my-loads" className="text-link underline-offset-2 hover:underline">
+            Open My Loads
+          </Link>
+          {" · "}
+          <Link href="/network/bookings" className="text-link underline-offset-2 hover:underline">
+            Booking inbox
           </Link>
           {" · "}
           <Link href="/shipments" className="text-link underline-offset-2 hover:underline">
@@ -38,7 +43,7 @@ export default async function NetworkOverflowPage() {
       <NetworkOverflowDesk />
       <p className="mt-4 text-sm text-muted-foreground">
         <Link href="/network" className="text-link hover:underline">
-          ← Back to Network
+          ← Back to Marketplace
         </Link>
         {" · "}
         <Link href="/network/assignments" className="text-link hover:underline">

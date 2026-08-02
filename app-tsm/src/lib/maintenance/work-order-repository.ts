@@ -1,4 +1,5 @@
 import { demoFaultReports, demoMaintenanceSchedules, demoParts, demoWorkOrders } from "@/lib/demo-data";
+import { demoSeed } from "@/lib/data/demo-mode";
 import {
   createStoredWorkOrder,
   getWorkOrderStatusOverride,
@@ -85,7 +86,7 @@ export async function listWorkOrders(filters?: {
   vendor?: string;
 }): Promise<WorkOrderRecord[]> {
   await ensureWorkOrdersHydrated();
-  const demo = demoWorkOrders.map((wo) =>
+  const demo = demoSeed(demoWorkOrders).map((wo) =>
     toRecord({ ...wo, status: getWorkOrderStatusOverride(wo.id) ?? wo.status }),
   );
   let rows = [...listStoredWorkOrders().map(toRecord), ...demo];
@@ -136,8 +137,8 @@ export async function getMaintenanceSummary() {
 
   return {
     openWorkOrders: openCount,
-    scheduleCount: demoMaintenanceSchedules.length,
-    partsSkuCount: demoParts.length,
+    scheduleCount: demoSeed(demoMaintenanceSchedules).length,
+    partsSkuCount: demoSeed(demoParts).length,
     openFaults,
     recentWorkOrders: workOrders.slice(0, 5),
   };
@@ -165,7 +166,7 @@ export async function listMaintenanceSchedules(): Promise<MaintenanceSchedule[]>
   await ensureSettingsHydrated();
   const { listStoredSchedules } = await import("@/lib/mutations/entity-stores");
   const { getSchedulePatch } = await import("@/lib/mutations/sprint14-store");
-  return [...listStoredSchedules(), ...demoMaintenanceSchedules.map((s) => ({ ...s }))].map(
+  return [...listStoredSchedules(), ...demoSeed(demoMaintenanceSchedules).map((s) => ({ ...s }))].map(
     (row) => {
       const patch = getSchedulePatch(row.id);
       return patch ? { ...row, ...patch } : row;
@@ -275,11 +276,13 @@ export async function patchMaintenanceSchedule(
 }
 
 export async function listPartsInventory(): Promise<PartRecord[]> {
+  const { ensureMaintenanceAuxHydrated } = await import("@/lib/db/domain-persistence");
+  await ensureMaintenanceAuxHydrated();
   const { getPartStock, getPartDisplayMeta } = await import("@/lib/maintenance/parts-store");
   const { listCreatedParts } = await import("@/lib/mutations/sprint17-store");
   const { getPartMetaPatch } = await import("@/lib/mutations/sprint18-store");
 
-  const demoRows = demoParts.map((p) => {
+  const demoRows = demoSeed(demoParts).map((p) => {
     const stock = getPartStock(p.id) ?? p.stock;
     const meta = getPartDisplayMeta(p.id);
     const reorder = meta?.reorder ?? p.reorder;
@@ -342,13 +345,35 @@ export async function createPart(input: {
   location?: string;
 }) {
   const { createStoredPart } = await import("@/lib/mutations/sprint17-store");
+  const { persistPart, persistPartStock, ensureMaintenanceAuxHydrated } =
+    await import("@/lib/db/domain-persistence");
+  await ensureMaintenanceAuxHydrated();
   const part = createStoredPart(input);
+  await persistPart(part);
+  await persistPartStock(part.id, part.stock);
   return { ...part, lowStock: part.stock <= part.reorder };
 }
 
 export async function adjustPartsStock(id: string, delta: number) {
   const { adjustPartStock } = await import("@/lib/maintenance/parts-store");
-  return adjustPartStock(id, delta);
+  const { persistPart, persistPartStock, ensureMaintenanceAuxHydrated } =
+    await import("@/lib/db/domain-persistence");
+  const { listCreatedParts } = await import("@/lib/mutations/sprint17-store");
+  await ensureMaintenanceAuxHydrated();
+  const updated = adjustPartStock(id, delta);
+  if (!updated) return undefined;
+  await persistPartStock(id, updated.stock);
+  if (listCreatedParts().some((p) => p.id === id)) {
+    await persistPart({
+      id,
+      sku: updated.sku,
+      name: updated.name,
+      stock: updated.stock,
+      reorder: updated.reorder,
+      location: updated.location,
+    });
+  }
+  return updated;
 }
 
 export function validatePatchPartInput(
@@ -379,7 +404,7 @@ export async function patchPartMeta(
   const { listCreatedParts } = await import("@/lib/mutations/sprint17-store");
   const { patchPartMeta: storePatch } = await import("@/lib/mutations/sprint18-store");
 
-  const demo = demoParts.find((p) => p.id === id);
+  const demo = demoSeed(demoParts).find((p) => p.id === id);
   const created = listCreatedParts().find((p) => p.id === id);
   if (!demo && !created) return undefined;
 

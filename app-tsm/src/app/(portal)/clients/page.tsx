@@ -26,6 +26,7 @@ export default async function ClientsPage({
       <SearchFilterBar placeholder="Search name, GSTIN…" />
       <DataTable
         rows={clients}
+        emptyMessage="No clients yet. Add a client to start quoting and booking."
         columns={[
           {
             key: "name",

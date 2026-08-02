@@ -1,5 +1,6 @@
 import { listInvoices, type InvoiceRecord } from "@/lib/billing/invoice-repository";
 import { demoServiceRates } from "@/lib/demo-data";
+import { demoSeed } from "@/lib/data/demo-mode";
 
 function formatInr(amount: number) {
   return `₹${amount.toLocaleString("en-IN")}`;
@@ -32,7 +33,7 @@ export async function getBillingSummary(): Promise<BillingSummary> {
     paidTotal: formatInr(paidTotalInr),
     pendingTotalInr,
     paidTotalInr,
-    rateRuleCount: demoServiceRates.length,
+    rateRuleCount: demoSeed(demoServiceRates).length,
     recentInvoices: invoices.slice(0, 5),
   };
 }

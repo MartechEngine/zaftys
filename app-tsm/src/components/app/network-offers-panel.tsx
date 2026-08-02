@@ -28,23 +28,38 @@ export function NetworkListingChip({
   listing: NetworkListing | NetworkListingMirror | null;
 }) {
   if (!listing) return null;
+  const live =
+    "liveOnTranzfort" in listing ? Boolean(listing.liveOnTranzfort) : false;
+  const superLoad = "superLoad" in listing ? Boolean(listing.superLoad) : false;
   return (
-    <span
-      className={cn(
-        "inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium",
-        listing.state === "offers_received" || listing.state === "partially_assigned"
-          ? "bg-amber-500/15 text-amber-200"
-          : listing.state === "assigned"
-            ? "bg-emerald-500/15 text-emerald-300"
-            : listing.state === "posted"
-              ? "bg-primary/15 text-primary"
-              : "bg-white/10 text-muted-foreground",
+    <span className="inline-flex flex-wrap items-center gap-1.5">
+      <span
+        className={cn(
+          "inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium",
+          listing.state === "offers_received" || listing.state === "partially_assigned"
+            ? "bg-amber-500/15 text-amber-200"
+            : listing.state === "assigned"
+              ? "bg-emerald-500/15 text-emerald-300"
+              : listing.state === "posted"
+                ? "bg-primary/15 text-primary"
+                : "bg-white/10 text-muted-foreground",
+        )}
+      >
+        TranZfort · {LISTING_STATE_LABEL[listing.state]}
+        {listing.trucksNeeded > 1
+          ? ` · ${listing.trucksFilled}/${listing.trucksNeeded} trucks`
+          : ""}
+      </span>
+      {live && (
+        <span className="inline-flex items-center rounded-full bg-emerald-500/15 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-emerald-200">
+          Live on TranZfort
+        </span>
       )}
-    >
-      TranZfort · {LISTING_STATE_LABEL[listing.state]}
-      {listing.trucksNeeded > 1
-        ? ` · ${listing.trucksFilled}/${listing.trucksNeeded} trucks`
-        : ""}
+      {superLoad && (
+        <span className="inline-flex items-center rounded-full bg-violet-500/15 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-violet-200">
+          Super Load
+        </span>
+      )}
     </span>
   );
 }

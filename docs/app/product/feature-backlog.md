@@ -100,12 +100,19 @@ Feature IDs: `TSM-{phase}-{nn}`. Status: `planned` | `in_progress` | `done` | `d
 
 ## P6 — Intelligence
 
+Canonical design: [ai-agents.md](./ai-agents.md) · [ADR-009](../decisions/009-documents-and-ai.md).
+
 | ID | Feature | Status |
 |----|---------|--------|
+| TSM-P6-10 | Ops Copilot chat + Action cards (AI-01…05) | planned (Horizon 4) |
+| TSM-P6-11 | Google + OpenRouter BYOK settings | planned (Horizon 4) |
+| TSM-P6-12 | Form assist / NL → shipment draft (AI-06) | planned |
+| TSM-P6-13 | LR assist from chat (AI-07) | planned (after LR PDF) |
+| TSM-P6-14 | Exception triage + marketplace briefing (AI-08/09) | planned |
+| TSM-P6-04 | Document OCR (AI-10) | deferred |
 | TSM-P6-01 | Predictive delay alerts | deferred |
 | TSM-P6-02 | Smart ETA | deferred |
-| TSM-P6-03 | Auto-dispatch AI | deferred |
-| TSM-P6-04 | Document OCR | deferred |
+| TSM-P6-03 | Auto-dispatch AI | deferred — **suggest only + human confirm**; never silent |
 
 ---
 
@@ -115,3 +122,4 @@ Feature IDs: `TSM-{phase}-{nn}`. Status: `planned` | `in_progress` | `done` | `d
 |------|--------|
 | Jul 2026 | Initial backlog |
 | 11 Jul 2026 | Full product phases P1–P6; statuses updated |
+| 2 Aug 2026 | P6 aligned to ai-agents.md (Copilot, BYOK, confirm-only auto-dispatch) |

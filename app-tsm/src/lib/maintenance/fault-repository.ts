@@ -1,4 +1,5 @@
 import { demoFaultReports } from "@/lib/demo-data";
+import { demoSeed } from "@/lib/data/demo-mode";
 import {
   getFaultWorkOrderId,
   linkFaultToWorkOrder,
@@ -29,6 +30,9 @@ export type FaultReport = {
 export async function listFaultReports(filters?: {
   status?: FaultStatus | "active";
 }): Promise<FaultReport[]> {
+  const { ensureMaintenanceAuxHydrated } = await import("@/lib/db/domain-persistence");
+  await ensureMaintenanceAuxHydrated();
+
   const created: FaultReport[] = listCreatedFaults().map((f) => ({
     ...f,
     workOrderId: getFaultWorkOrderId(f.id),
@@ -36,7 +40,7 @@ export async function listFaultReports(filters?: {
 
   let rows: FaultReport[] = [
     ...created,
-    ...demoFaultReports.map((f) => ({
+    ...demoSeed(demoFaultReports).map((f) => ({
       ...f,
       status: getFaultStatusOverride(f.id) ?? f.status,
       workOrderId: getFaultWorkOrderId(f.id),
@@ -62,7 +66,10 @@ export async function createFaultReport(input: {
   issue: string;
 }): Promise<FaultReport> {
   const { createStoredFault } = await import("@/lib/mutations/sprint18-store");
-  return createStoredFault(input);
+  const { persistFault } = await import("@/lib/db/domain-persistence");
+  const row = createStoredFault(input);
+  await persistFault(row);
+  return row;
 }
 
 export async function updateFaultStatus(
@@ -71,6 +78,11 @@ export async function updateFaultStatus(
 ): Promise<FaultReport | undefined> {
   const updated = setFaultStatus(id, status);
   if (!updated) return undefined;
+  const { persistFault, persistFaultStatus } = await import("@/lib/db/domain-persistence");
+  if (listCreatedFaults().some((f) => f.id === id)) {
+    await persistFault(updated);
+  }
+  await persistFaultStatus(id, status);
   return { ...updated, workOrderId: getFaultWorkOrderId(id) };
 }
 
@@ -81,7 +93,7 @@ export async function linkFaultWithWorkOrder(id: string) {
   const existingWoId = getFaultWorkOrderId(id);
   if (existingWoId) {
     const wo = await getWorkOrder(existingWoId);
-    setFaultStatus(id, "linked");
+    await updateFaultStatus(id, "linked");
     return {
       fault: { ...fault, status: "linked" as const, workOrderId: existingWoId },
       workOrder: wo,
@@ -96,7 +108,7 @@ export async function linkFaultWithWorkOrder(id: string) {
   });
 
   linkFaultToWorkOrder(id, workOrder.id);
-  setFaultStatus(id, "linked");
+  await updateFaultStatus(id, "linked");
 
   return {
     fault: { ...fault, status: "linked" as const, workOrderId: workOrder.id },

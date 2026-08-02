@@ -26,6 +26,7 @@ export default async function NetworkPartnersPage({
       <SearchFilterBar placeholder="Search partners…" />
       <DataTable
         rows={partners}
+        emptyMessage="No partners registered yet. Local registry only — TranZfort sync is deferred."
         columns={[
           {
             key: "name",

@@ -47,9 +47,14 @@ export function NetworkOverflowDesk() {
       ) : (
         <>
           <p className="mb-4 text-sm text-muted-foreground">
-            Loads you posted as ZAFTYS supplier via{" "}
-            <strong className="font-medium text-foreground">Post to TranZfort</strong> on a shipment.
-            Approve partner offers on the shipment Offers tab.{" "}
+            <strong className="font-medium text-foreground">Local NetworkOffer desk</strong> for
+            partner overflow — not the live TranZfort Find Loads feed. Prefer{" "}
+            <Link href="/network/my-loads" className="text-link hover:underline">
+              My Loads
+            </Link>{" "}
+            for marketplace posts and{" "}
+            <strong className="font-medium text-foreground">Post to TranZfort</strong> on a shipment
+            for Super Loads.{" "}
             <Link href="/shipments" className="text-link hover:underline">
               Open shipments
             </Link>

@@ -31,7 +31,9 @@ export type CollectionName =
   | "vendor_patches"
   | "work_orders"
   | "work_order_status"
+  | "faults"
   | "fault_status"
+  | "parts"
   | "parts_stock"
   | "maintenance_schedules"
   | "quotes"
@@ -47,15 +49,23 @@ export type CollectionName =
   | "report_schedules"
   | "fleet_places"
   | "fleet_equipment"
+  | "fleet_fuel"
+  | "fleet_issues"
+  | "fleet_issue_resolved"
+  | "compliance_patches"
   | "fleet_groups"
   | "network_partners"
+  | "network_overflow"
   | "place_patches"
   | "equipment_patches"
   | "fleet_group_patches"
   | "sync_dlq"
   | "notification_reads"
   | "notification_items"
-  | "live_positions";
+  | "live_positions"
+  | "tsm_org"
+  | "tsm_publish_audit"
+  | "auth_users";
 
 const g = globalThis as typeof globalThis & {
   __tsmCollectionHydrated?: Set<string>;

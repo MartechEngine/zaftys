@@ -22,6 +22,7 @@ export default async function VendorsPage({
       <SearchFilterBar placeholder="Search vendors…" />
       <DataTable
         rows={vendors}
+        emptyMessage="No vendors yet. Create a vendor for maintenance and fuel suppliers."
         columns={[
           {
             key: "name",

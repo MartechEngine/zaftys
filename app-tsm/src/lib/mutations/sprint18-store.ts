@@ -25,7 +25,7 @@ export type StoredFault = {
   driver: string;
   issue: string;
   reported: string;
-  status: "open";
+  status: "open" | "linked" | "resolved";
 };
 
 const g = globalThis as typeof globalThis & {
@@ -117,4 +117,16 @@ export function createStoredFault(input: {
 
 export function listCreatedFaults(): StoredFault[] {
   return [...(g.__tsmCreatedFaults ?? [])];
+}
+
+export function replaceCreatedFaults(rows: StoredFault[]) {
+  g.__tsmCreatedFaults = [...rows];
+}
+
+export function upsertCreatedFault(row: StoredFault) {
+  if (!g.__tsmCreatedFaults) g.__tsmCreatedFaults = [];
+  const idx = g.__tsmCreatedFaults.findIndex((f) => f.id === row.id);
+  if (idx >= 0) g.__tsmCreatedFaults[idx] = row;
+  else g.__tsmCreatedFaults.unshift(row);
+  return row;
 }

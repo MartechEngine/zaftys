@@ -137,6 +137,18 @@ export function listCreatedParts(): StoredPart[] {
   return [...(g.__tsmCreatedParts ?? [])];
 }
 
+export function replaceCreatedParts(rows: StoredPart[]) {
+  g.__tsmCreatedParts = [...rows];
+}
+
+export function upsertCreatedPart(row: StoredPart) {
+  if (!g.__tsmCreatedParts) g.__tsmCreatedParts = [];
+  const idx = g.__tsmCreatedParts.findIndex((p) => p.id === row.id);
+  if (idx >= 0) g.__tsmCreatedParts[idx] = row;
+  else g.__tsmCreatedParts.unshift(row);
+  return row;
+}
+
 export function linkFaultToWorkOrder(faultId: string, workOrderId: string) {
   if (!g.__tsmFaultWorkOrders) g.__tsmFaultWorkOrders = {};
   g.__tsmFaultWorkOrders[faultId] = workOrderId;

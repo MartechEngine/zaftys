@@ -10,14 +10,14 @@ import { api } from "@/lib/api-client";
 export function ChangeUserRoleButton({ id, role }: { id: string; role: string }) {
   const router = useRouter();
   const [busy, setBusy] = useState(false);
+  const isAdmin = /admin/i.test(role);
 
-  async function onClick() {
-    const next = window.prompt(`Role for user`, role)?.trim();
+  async function applyRole(next: string) {
     if (!next || next === role) return;
     setBusy(true);
     try {
       await api.patchOrgUser(id, { role: next });
-      toast.success("Role updated");
+      toast.success(next === "Admin" ? "Promoted to Admin" : "Role updated");
       router.refresh();
     } catch (err) {
       toast.error(err instanceof Error ? err.message : "Could not update role.");
@@ -26,10 +26,42 @@ export function ChangeUserRoleButton({ id, role }: { id: string; role: string })
     }
   }
 
+  async function onChangeRole() {
+    const next = window.prompt(
+      "Role: Admin | Dispatcher | Viewer",
+      role,
+    )?.trim();
+    if (!next) return;
+    await applyRole(next);
+  }
+
+  async function onPromote() {
+    if (!window.confirm("Promote this seat to Admin? They can invite and manage seats.")) {
+      return;
+    }
+    setBusy(true);
+    try {
+      await api.patchOrgUser(id, { promoteToAdmin: true });
+      toast.success("Promoted to Admin");
+      router.refresh();
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : "Could not promote.");
+    } finally {
+      setBusy(false);
+    }
+  }
+
   return (
-    <Button variant="outline" size="sm" onClick={onClick} disabled={busy}>
-      {busy ? "…" : "Change role"}
-    </Button>
+    <>
+      {!isAdmin && (
+        <Button variant="outline" size="sm" onClick={onPromote} disabled={busy}>
+          {busy ? "…" : "Promote to Admin"}
+        </Button>
+      )}
+      <Button variant="outline" size="sm" onClick={onChangeRole} disabled={busy}>
+        {busy ? "…" : "Change role"}
+      </Button>
+    </>
   );
 }
 
@@ -49,7 +81,7 @@ export function DeactivateUserButton({
     if (!window.confirm("Deactivate this user?")) return;
     setBusy(true);
     try {
-      await api.patchOrgUser(id, { status: "pending" });
+      await api.patchOrgUser(id, { deactivate: true });
       toast.success("User deactivated");
       router.refresh();
     } catch (err) {

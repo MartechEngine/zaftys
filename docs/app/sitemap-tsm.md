@@ -10,9 +10,9 @@
 | **Scope** | [product/product-scope.md](./product/product-scope.md) |
 | **Backlog IDs** | [product/feature-backlog.md](./product/feature-backlog.md) |
 
-This document is the **full TSM product surface** — target parity with headless Fleetbase (~151 features) plus ZAFTYS TranZfort network and India compliance. **We are not shipping a cut-down portal.** See [architecture/build-strategy.md](./architecture/build-strategy.md).
+This document is the **full TSM product surface** — long-term IA inspired by classic Fleet-Ops (~151 features) plus ZAFTYS TranZfort network and India compliance. **We are not shipping a cut-down portal.** Runtime execution is **TSM-owned Postgres** ([ADR-008](./decisions/008-tsm-owns-execution.md)); Fleetbase is not a permanent backend. See [architecture/build-strategy.md](./architecture/build-strategy.md).
 
-**Fleetbase console (`:4200`)** remains internal reference only. Everything below ships on the **custom Next.js portal**.
+**Fleetbase console (`:4200`)** was internal reference only and exits the product path after Horizon 0D. Everything below ships on the **custom Next.js portal**.
 
 ---
 
@@ -41,9 +41,10 @@ This document is the **full TSM product surface** — target parity with headles
 
 | Source | Role |
 |--------|------|
-| **FB** | Fleetbase API (headless) |
-| **TZ** | TranZfort Supabase sync |
-| **BFF** | Custom Next.js logic |
+| **TSM** | TSM PostgreSQL via `ExecutionStore` — **target SoT** ([ADR-008](./decisions/008-tsm-owns-execution.md)) |
+| **FB** | Fleetbase API — **legacy / transitional only** (delete Phase D) |
+| **TZ** | TranZfort Supabase sync / bridge |
+| **BFF** | Custom Next.js logic (docs, AI, seats) |
 | **UI** | Portal-only (no external API yet) |
 
 ### TSM-only vs Fleetbase
@@ -1123,3 +1124,4 @@ Priority queue to close the “empty vs Fleetbase” gap:
 |------|--------|
 | 11 Jul 2026 | Initial comprehensive sitemap — P1 through P6 |
 | 11 Jul 2026 | Full product phases; frontend-first build strategy |
+| 2 Aug 2026 | Backend source: TSM Postgres target; FB legacy (ADR-008) |

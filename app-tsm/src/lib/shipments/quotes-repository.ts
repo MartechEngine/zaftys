@@ -1,4 +1,5 @@
 import { demoQuotes } from "@/lib/demo-data";
+import { demoSeed } from "@/lib/data/demo-mode";
 import { createShipment, fetchAllShipmentsRaw, getShipment } from "@/lib/data/shipment-repository";
 import {
   createStoredQuote,
@@ -83,7 +84,7 @@ export async function listQuotes(): Promise<QuoteRecord[]> {
       };
     });
 
-  const fromDemo: QuoteRecord[] = demoQuotes.map((q) => ({
+  const fromDemo: QuoteRecord[] = demoSeed(demoQuotes).map((q) => ({
     ...q,
     rateInr: parseInt(q.rate.replace(/[^\d]/g, ""), 10) || 0,
   }));

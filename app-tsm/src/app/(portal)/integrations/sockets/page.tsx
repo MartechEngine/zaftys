@@ -6,7 +6,7 @@ import { INTEGRATIONS_NAV } from "@/lib/module-nav";
 
 export default async function SocketsPage() {
   const channels = await listSocketChannels();
-  const demoUi = process.env.TSM_DEMO_UI !== "0";
+  const demoUi = process.env.TSM_DEMO_UI === "1";
 
   return (
     <>

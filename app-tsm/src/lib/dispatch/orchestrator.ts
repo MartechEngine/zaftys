@@ -1,4 +1,5 @@
 import { demoOrchestratorPhases } from "@/lib/demo-data";
+import { demoSeed } from "@/lib/data/demo-mode";
 import { fetchAllShipmentsRaw } from "@/lib/data/shipment-repository";
 import { listNetworkOverflow } from "@/lib/data/overflow-repository";
 import {
@@ -40,7 +41,7 @@ export async function getOrchestratorState() {
   const hasTarget = Boolean(target);
   const networkTarget = target?.originType === "network";
 
-  const phases: OrchestratorPhase[] = demoOrchestratorPhases.map((phase, index) => {
+  const phases: OrchestratorPhase[] = demoSeed(demoOrchestratorPhases).map((phase, index) => {
     if (!hasTarget) {
       return { ...phase, status: "pending" as const, duration: "—" };
     }

@@ -157,6 +157,57 @@ async function main() {
 
   let failed = 0;
 
+  // Sprint 6 — when live mode is requested, health must not silently report demo
+  try {
+    const healthRes = await fetch(`${BASE}/api/health`, { cache: "no-store" });
+    const health = await healthRes.json();
+    const wantLive = process.env.TSM_DEMO_UI !== "1";
+    if (wantLive) {
+      const liveOk =
+        healthRes.ok &&
+        health.dataSource === "fleetbase" &&
+        health.fleetbaseReachable === true &&
+        health.demoUi === false;
+      console.log(
+        `${liveOk ? "✓" : "✗"} live Fleetbase mode (${healthRes.status}) source=${health.dataSource} reachable=${health.fleetbaseReachable}`,
+      );
+      if (!liveOk) failed += 1;
+    } else {
+      console.log(
+        `✓ demo mode health (${healthRes.status}) source=${health.dataSource} demoUi=${health.demoUi}`,
+      );
+    }
+  } catch (e) {
+    failed += 1;
+    console.log(`✗ /api/health live-mode gate — ${e instanceof Error ? e.message : "failed"}`);
+  }
+
+  // Ops SSE — abort after first event (do not hang on open stream)
+  try {
+    const ac = new AbortController();
+    const timer = setTimeout(() => ac.abort(), 4_000);
+    const res = await fetch(`${BASE}/api/ops/stream`, {
+      headers: cookie ? { Cookie: cookie } : {},
+      signal: ac.signal,
+    });
+    clearTimeout(timer);
+    const reader = res.body?.getReader();
+    let gotEvent = false;
+    if (reader) {
+      const { value } = await reader.read();
+      const text = value ? new TextDecoder().decode(value) : "";
+      gotEvent = /event:\s*ops/.test(text) || /ops\.changed/.test(text);
+      await reader.cancel();
+    }
+    console.log(
+      `${res.ok && gotEvent ? "✓" : "✗"} /api/ops/stream (${res.status}) ${gotEvent ? "ops event" : "no event"}`,
+    );
+    if (!res.ok || !gotEvent) failed += 1;
+  } catch (e) {
+    failed += 1;
+    console.log(`✗ /api/ops/stream — ${e instanceof Error ? e.message : "failed"}`);
+  }
+
   for (const path of routes) {
     try {
       const result = await check(path, cookie);

@@ -1,4 +1,5 @@
 import { listVehicles, fetchAllShipmentsRaw } from "@/lib/data/shipment-repository";
+import { allowDemoSeeds } from "@/lib/data/demo-mode";
 
 export type FleetUtilizationReport = {
   utilizationPercent: number;
@@ -29,7 +30,18 @@ export async function getFleetUtilizationReport(): Promise<FleetUtilizationRepor
     const trips = shipments.filter(
       (s) => s.vehicleId === v.id || s.vehicle === v.registration,
     ).length;
-    const util = v.status === "on_trip" ? 85 : trips > 2 ? 62 : 28;
+    // Live: util from on_trip vs trip count only; no invented 85/62/28 ladder
+    const util = allowDemoSeeds()
+      ? v.status === "on_trip"
+        ? 85
+        : trips > 2
+          ? 62
+          : 28
+      : v.status === "on_trip"
+        ? 100
+        : trips > 0
+          ? Math.min(100, trips * 10)
+          : 0;
     return {
       id: v.id,
       registration: v.registration,
@@ -45,7 +57,9 @@ export async function getFleetUtilizationReport(): Promise<FleetUtilizationRepor
     available,
     maintenance,
     totalVehicles: vehicles.length,
-    idleHoursAvg: Math.max(4, 24 - Math.round(utilizationPercent / 4)),
+    idleHoursAvg: allowDemoSeeds()
+      ? Math.max(4, 24 - Math.round(utilizationPercent / 4))
+      : 0,
     byVehicle,
   };
 }

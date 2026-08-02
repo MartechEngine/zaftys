@@ -2,6 +2,8 @@ import { PageHeader } from "@/components/app/app-shell";
 import { SettingsNav } from "@/components/app/settings-nav";
 import { Card, CardContent } from "@/components/ui/card";
 import { OrgProfileEditor } from "@/components/app/org-profile-editor";
+import { TranzfortOrgLinkPanel } from "@/components/app/tranzfort-org-link-panel";
+import { CatalogStatusPanel } from "@/components/app/catalog-status-panel";
 import { UploadLogoButton } from "@/components/app/sprint12-forms";
 import { getOrgProfile } from "@/lib/settings/org-repository";
 
@@ -63,6 +65,12 @@ export default async function SettingsOrganizationPage() {
           </div>
         </CardContent>
       </Card>
+      <div className="mt-4">
+        <TranzfortOrgLinkPanel />
+      </div>
+      <div className="mt-4">
+        <CatalogStatusPanel />
+      </div>
     </>
   );
 }

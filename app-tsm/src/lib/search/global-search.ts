@@ -1,4 +1,5 @@
 import { demoClients } from "@/lib/demo-data";
+import { allowDemoSeeds } from "@/lib/data/demo-mode";
 import { listDrivers, listShipments, listVehicles } from "@/lib/data/shipment-repository";
 
 export type SearchResultKind = "shipment" | "driver" | "vehicle" | "client" | "page";
@@ -70,17 +71,19 @@ export async function runGlobalSearch(query: string, limit = 8): Promise<SearchR
     });
   }
 
-  for (const c of demoClients) {
-    if (results.filter((r) => r.kind === "client").length >= perKind) break;
-    const haystack = [c.name, c.gstin, c.city, c.contact].join(" ");
-    if (!matchesNeedle(haystack, needle)) continue;
-    results.push({
-      id: `client-${c.id}`,
-      kind: "client",
-      title: c.name,
-      subtitle: `${c.city} · ${c.contact}`,
-      href: `/clients/${c.id}`,
-    });
+  if (allowDemoSeeds()) {
+    for (const c of demoClients) {
+      if (results.filter((r) => r.kind === "client").length >= perKind) break;
+      const haystack = [c.name, c.gstin, c.city, c.contact].join(" ");
+      if (!matchesNeedle(haystack, needle)) continue;
+      results.push({
+        id: `client-${c.id}`,
+        kind: "client",
+        title: c.name,
+        subtitle: `${c.city} · ${c.contact}`,
+        href: `/clients/${c.id}`,
+      });
+    }
   }
 
   for (const page of STATIC_PAGES) {

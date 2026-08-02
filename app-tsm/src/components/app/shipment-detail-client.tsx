@@ -36,15 +36,26 @@ export function ShipmentDetailClient({ shipment }: { shipment: ShipmentRecord })
 
   const estCharge = current.tonnageMt * 420;
   const gst = Math.round(estCharge * 0.18);
-  const canPostNetwork =
+  const canOpenPublishForm =
     ["pending", "dispatched"].includes(current.status) &&
+    (!listing || !["assigned", "withdrawn", "expired"].includes(listing.state));
+  const canPostNetwork =
+    canOpenPublishForm &&
     current.originType === "fleet" &&
     (!listing || ["withdrawn", "expired", "not_posted"].includes(listing.state));
+  const canEditListing =
+    canOpenPublishForm &&
+    !!listing &&
+    ["draft", "posted", "offers_received", "partially_assigned"].includes(listing.state);
 
   useEffect(() => {
     const t = searchParams.get("tab");
     if (t === "offers" || t === "notes" || t === "billing" || t === "overview") {
       setTab(t);
+    }
+    if (searchParams.get("post") === "1") {
+      setShowPostWizard(true);
+      setTab("offers");
     }
   }, [searchParams]);
 
@@ -185,6 +196,18 @@ export function ShipmentDetailClient({ shipment }: { shipment: ShipmentRecord })
             Post to TranZfort
           </Button>
         )}
+        {canEditListing && !canPostNetwork && (
+          <Button
+            variant="outline"
+            disabled={busy}
+            onClick={() => {
+              setShowPostWizard(true);
+              setTab("offers");
+            }}
+          >
+            Edit TranZfort listing
+          </Button>
+        )}
         {listing && !["withdrawn", "expired", "not_posted"].includes(listing.state) && (
           <Button variant="outline" onClick={() => setTab("offers")}>
             Offers
@@ -196,10 +219,11 @@ export function ShipmentDetailClient({ shipment }: { shipment: ShipmentRecord })
         <EditShipmentFieldsForm shipment={current} onUpdated={setCurrent} />
       </div>
 
-      {showPostWizard && canPostNetwork && (
+      {showPostWizard && canOpenPublishForm && (
         <div className="mb-6">
           <PostToTranZfortWizard
             shipment={current}
+            existingListing={listing}
             onCancel={() => setShowPostWizard(false)}
             onPosted={() => {
               setShowPostWizard(false);

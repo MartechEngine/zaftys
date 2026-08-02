@@ -1,6 +1,7 @@
 import { PageHeader } from "@/components/app/app-shell";
 import { ModuleSubNav } from "@/components/app/module-sub-nav";
 import { DataTable, StatusPill } from "@/components/app/data-table";
+import { HonestyNotice } from "@/components/app/honesty-notice";
 import { listDevices } from "@/lib/integrations/integrations-repository";
 import { INTEGRATIONS_NAV } from "@/lib/module-nav";
 import { CreateDeviceForm } from "@/components/app/module-create-forms";
@@ -23,14 +24,27 @@ export default async function DevicesPage() {
         action={<CreateDeviceForm />}
       />
       <ModuleSubNav links={INTEGRATIONS_NAV} />
+      <HonestyNotice title="Session-only.">
+        Devices are stored in server memory — restart clears the list. Prefer Traccar / Fleetbase for
+        durable hardware identity.
+      </HonestyNotice>
       <DataTable
         rows={devices}
+        emptyMessage="No devices in this session. Create one to try assignment flows."
         columns={[
-          { key: "imei", header: "IMEI", render: (r) => <span className="font-mono text-xs">{r.imei}</span> },
+          {
+            key: "imei",
+            header: "IMEI",
+            render: (r) => <span className="font-mono text-xs">{r.imei}</span>,
+          },
           { key: "vehicle", header: "Vehicle", render: (r) => r.vehicle },
           { key: "provider", header: "Provider", render: (r) => r.provider },
           { key: "firmware", header: "Firmware", render: (r) => r.firmware },
-          { key: "status", header: "Status", render: (r) => <StatusPill status={r.status} map={deviceStatus} /> },
+          {
+            key: "status",
+            header: "Status",
+            render: (r) => <StatusPill status={r.status} map={deviceStatus} />,
+          },
           {
             key: "actions",
             header: "",

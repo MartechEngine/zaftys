@@ -17,6 +17,7 @@ export default async function IntegrationEventsPage() {
       <ModuleSubNav links={INTEGRATIONS_NAV} />
       <DataTable
         rows={events}
+        emptyMessage="No platform events yet. Activity appears as shipments, sync, and ops actions run."
         columns={[
           { key: "time", header: "Time", render: (r) => r.time },
           {

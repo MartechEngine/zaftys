@@ -18,12 +18,19 @@ function formatTime(iso?: string) {
   });
 }
 
-const TRANSIT_STATUSES: ShipmentStatus[] = [
-  "in_transit",
-  "at_weighbridge",
-  "delivered",
-  "exception",
-];
+function findActivity(
+  activities: ActivityEvent[],
+  types: string[],
+  messageRe?: RegExp,
+) {
+  return activities.find(
+    (a) =>
+      types.includes(a.type) ||
+      (messageRe &&
+        (a.type === "shipment.status_changed" || a.type.startsWith("shipment.")) &&
+        messageRe.test(a.message)),
+  );
+}
 
 export function buildShipmentTimeline(
   shipment: {
@@ -36,24 +43,15 @@ export function buildShipmentTimeline(
 ): TimelineStep[] {
   const { status } = shipment;
   const cancelled = status === "cancelled";
+  const exception = status === "exception";
 
-  const created = activities.find((a) => a.type === "shipment.created");
-  const assigned = activities.find((a) => a.type === "shipment.assigned");
-  const atPlant = activities.find(
-    (a) =>
-      a.type === "shipment.at_plant" ||
-      (a.type === "shipment.status_changed" && /plant/i.test(a.message)),
-  );
-  const inTransit = activities.find(
-    (a) =>
-      a.type === "shipment.in_transit" ||
-      (a.type === "shipment.status_changed" && /transit/i.test(a.message)),
-  );
-  const delivered = activities.find(
-    (a) =>
-      a.type === "shipment.delivered" ||
-      (a.type === "shipment.status_changed" && /delivered/i.test(a.message)),
-  );
+  const created = findActivity(activities, ["shipment.created"]);
+  const assigned = findActivity(activities, ["shipment.assigned", "shipment.dispatched"], /assign|dispatch/i);
+  const atPlant = findActivity(activities, ["shipment.at_plant"], /plant/i);
+  const inTransit = findActivity(activities, ["shipment.in_transit"], /transit/i);
+  const weighbridge = findActivity(activities, ["shipment.at_weighbridge"], /weigh/i);
+  const delivered = findActivity(activities, ["shipment.delivered"], /delivered/i);
+  const exceptionEvent = findActivity(activities, ["shipment.exception"], /exception|delay|hold/i);
 
   if (cancelled) {
     return [
@@ -71,10 +69,38 @@ export function buildShipmentTimeline(
     ];
   }
 
-  const dispatchedDone = !["pending"].includes(status);
-  const plantDone = ["at_plant", ...TRANSIT_STATUSES].includes(status);
+  if (exception) {
+    return [
+      {
+        label: "Booked",
+        time: formatTime(created?.timestamp ?? shipment.updatedAt),
+        done: true,
+      },
+      {
+        label: "Dispatched",
+        time: formatTime(assigned?.timestamp),
+        done: true,
+      },
+      {
+        label: "Exception",
+        time: formatTime(exceptionEvent?.timestamp ?? shipment.updatedAt),
+        done: true,
+        current: true,
+      },
+    ];
+  }
 
-  return [
+  const order: ShipmentStatus[] = [
+    "pending",
+    "dispatched",
+    "at_plant",
+    "in_transit",
+    "at_weighbridge",
+    "delivered",
+  ];
+  const idx = Math.max(0, order.indexOf(status));
+
+  const steps: TimelineStep[] = [
     {
       label: "Booked",
       time: formatTime(created?.timestamp ?? shipment.updatedAt),
@@ -83,30 +109,40 @@ export function buildShipmentTimeline(
     },
     {
       label: "Dispatched",
-      time: shipment.driver ? formatTime(assigned?.timestamp) : "—",
-      done: dispatchedDone,
+      time: shipment.driver || idx >= 1 ? formatTime(assigned?.timestamp ?? shipment.updatedAt) : "—",
+      done: idx >= 1,
       current: status === "dispatched",
     },
     {
       label: "At plant",
       time: formatTime(atPlant?.timestamp),
-      done: plantDone,
+      done: idx >= 2,
       current: status === "at_plant",
     },
     {
       label: "In transit",
       time: formatTime(inTransit?.timestamp),
-      done: TRANSIT_STATUSES.includes(status),
-      current: status === "in_transit" || status === "at_weighbridge",
+      done: idx >= 3,
+      current: status === "in_transit",
+    },
+    {
+      label: "Weighbridge",
+      time: formatTime(weighbridge?.timestamp),
+      done: idx >= 4,
+      current: status === "at_weighbridge",
     },
     {
       label: "Delivered",
       time:
         status === "delivered"
-          ? (shipment.eta ?? formatTime(delivered?.timestamp ?? shipment.updatedAt))
-          : "—",
+          ? formatTime(delivered?.timestamp ?? shipment.updatedAt)
+          : shipment.eta
+            ? `ETA ${shipment.eta}`
+            : "—",
       done: status === "delivered",
       current: status === "delivered",
     },
   ];
+
+  return steps;
 }

@@ -1,9 +1,10 @@
 import { demoPartners } from "@/lib/demo-data";
+import { demoSeed } from "@/lib/data/demo-mode";
 import {
   listNetworkAssignments,
   listNetworkOverflow,
 } from "@/lib/data/overflow-repository";
-import { fetchAllShipmentsRaw, getSyncStatus } from "@/lib/data/shipment-repository";
+import { fetchShipmentsForEnrichment, getSyncStatus } from "@/lib/data/shipment-repository";
 import { getOutboundListingStats } from "@/lib/network/listing-store";
 import {
   createStoredPartner,
@@ -26,7 +27,7 @@ export async function listPartners(q?: string): Promise<PartnerRecord[]> {
   const { ensureFleetAuxHydrated } = await import("@/lib/db/domain-persistence");
   await ensureFleetAuxHydrated();
   const [shipments, assignments] = await Promise.all([
-    fetchAllShipmentsRaw(),
+    fetchShipmentsForEnrichment(),
     listNetworkAssignments(),
   ]);
 
@@ -34,11 +35,11 @@ export async function listPartners(q?: string): Promise<PartnerRecord[]> {
 
   let partners: PartnerRecord[] = [
     ...listStoredPartners(),
-    ...demoPartners.map((p, index) => ({
+    ...demoSeed(demoPartners).map((p, index) => ({
       ...p,
       verified: p.verified || isPartnerVerifiedOverride(p.id),
-      trips: p.trips + Math.max(0, Math.floor(networkTrips / demoPartners.length) - index),
-      activeAssignments: Math.floor(assignments.length / demoPartners.length),
+      trips: p.trips + Math.max(0, Math.floor(networkTrips / demoSeed(demoPartners).length) - index),
+      activeAssignments: Math.floor(assignments.length / demoSeed(demoPartners).length),
     })),
   ];
 

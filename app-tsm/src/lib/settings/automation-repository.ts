@@ -1,4 +1,5 @@
 import { demoAutomationRules } from "@/lib/demo-data";
+import { demoSeed } from "@/lib/data/demo-mode";
 import { fetchAllShipmentsRaw } from "@/lib/data/shipment-repository";
 import { listNetworkOverflow } from "@/lib/data/overflow-repository";
 import { listComplianceDocs } from "@/lib/fleet/compliance-repository";
@@ -38,7 +39,7 @@ export async function listAutomationRules(): Promise<AutomationRuleRecord[]> {
   ).length;
   const expiringDocs = compliance.filter((d) => d.status === "expiring").length;
 
-  const demo = demoAutomationRules.map((rule) => {
+  const demo = demoSeed(demoAutomationRules).map((rule) => {
     const override = getAutomationOverride(rule.id);
     const enabled = override ?? rule.enabled;
     const base = { ...rule, enabled };
@@ -98,7 +99,7 @@ export async function setAutomationRuleEnabled(
 export async function deleteAutomationRule(id: string): Promise<boolean> {
   if (isAutomationDeleted(id)) return true;
   const known = new Set([
-    ...demoAutomationRules.map((r) => r.id),
+    ...demoSeed(demoAutomationRules).map((r) => r.id),
     ...listStoredAutomationRules().map((r) => r.id),
   ]);
   if (!known.has(id)) return false;

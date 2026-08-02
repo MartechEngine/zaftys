@@ -46,6 +46,9 @@ export function ShipmentActivityFeed({
     <Card>
       <CardHeader>
         <CardTitle>Activity</CardTitle>
+        <p className="text-xs font-normal text-muted-foreground">
+          Local ops events (not full Fleetbase activity feed yet)
+        </p>
       </CardHeader>
       <CardContent>
         {loading ? (

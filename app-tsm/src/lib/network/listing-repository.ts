@@ -47,11 +47,18 @@ async function syncShipmentListingMirror(
   shipmentId: string,
   listing: ReturnType<typeof getListingByShipment>,
 ) {
-  if (!listing || ["withdrawn", "expired"].includes(listing.state)) {
-    await updateShipmentFields(shipmentId, { networkListing: null });
-    return;
+  try {
+    if (!listing || ["withdrawn", "expired"].includes(listing.state)) {
+      await updateShipmentFields(shipmentId, { networkListing: null });
+      return;
+    }
+    await updateShipmentFields(shipmentId, { networkListing: toListingMirror(listing) });
+  } catch (e) {
+    console.warn(
+      "[network] shipment mirror skipped (Fleetbase down?):",
+      e instanceof Error ? e.message : e,
+    );
   }
-  await updateShipmentFields(shipmentId, { networkListing: toListingMirror(listing) });
 }
 
 export async function getShipmentNetworkContext(shipmentId: string) {
@@ -184,7 +191,12 @@ export async function listOutboundNetworkDesk(state?: string) {
   const rows = listOutboundListings({ state });
   const enriched = await Promise.all(
     rows.map(async (listing) => {
-      const shipment = await getShipment(listing.shipmentId);
+      let shipment = null;
+      try {
+        shipment = await getShipment(listing.shipmentId);
+      } catch {
+        shipment = null;
+      }
       return {
         listing,
         offers: listOffersForListing(listing.id),

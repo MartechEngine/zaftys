@@ -123,6 +123,7 @@ curl http://localhost:3000/api/health
 npm run smoke
 ```
 
+Full local QA checklist (demo, live Fleetbase, seed, sync): [local-qa-runbook.md](./local-qa-runbook.md).
 ---
 
 ## What stays out of this compose (for now)

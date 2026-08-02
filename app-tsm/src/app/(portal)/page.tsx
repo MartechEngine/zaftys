@@ -1,9 +1,12 @@
 import Link from "next/link";
-import { AlertTriangle, Plus } from "lucide-react";
+import { Plus } from "lucide-react";
 import { PageHeader, KpiCard, SectionCard } from "@/components/app/app-shell";
 import { SyncStatusBanner } from "@/components/app/sync-status-banner";
 import { CommandCenterMap } from "@/components/app/command-center-map";
-import { AlertRow } from "@/components/app/ui-primitives";
+import {
+  CommandCenterActivityFeed,
+  CommandCenterExceptionQueue,
+} from "@/components/app/command-center-live-panels";
 import { getCommandCenterAnalytics } from "@/lib/analytics/series";
 import { CommandCenterCharts } from "@/components/app/charts/command-center-charts";
 import { getExceptions, getKpis, listActivities, listShipments } from "@/lib/data/shipment-repository";
@@ -59,8 +62,6 @@ export default async function CommandCenterPage() {
           label="Active trips"
           value={kpis.activeTrips}
           href="/shipments?tab=active"
-          delta="+12%"
-          deltaUp
           sparklineValues={analytics.activeTripsSpark.values}
         />
         <KpiCard
@@ -112,80 +113,17 @@ export default async function CommandCenterPage() {
           />
         </SectionCard>
 
-        <SectionCard
-          eyebrow="Signal"
-          title="Exception queue"
-          className="lg:col-span-2"
-          action={
-            <Link href="/shipments?tab=exceptions" className="text-xs text-primary hover:underline">
-              View all
-            </Link>
-          }
-        >
-          <div className="flex flex-col gap-3">
-            {exceptions.length === 0 ? (
-              <p className="text-sm text-muted-foreground">No exceptions — all clear.</p>
-            ) : (
-              exceptions.map((ex) => (
-                <AlertRow
-                  key={ex.id}
-                  icon={AlertTriangle}
-                  tone="destructive"
-                  title={ex.publicId}
-                  meta={ex.reason}
-                  href={`/shipments/${ex.shipmentId}`}
-                />
-              ))
-            )}
-          </div>
-          {kpis.outboundOpenPosts > 0 && (
-            <div className="mt-4 rounded-2xl border border-primary/20 bg-gradient-to-br from-primary/10 to-transparent p-4">
-              <div className="text-[10px] tracking-[0.2em] text-primary uppercase">TranZfort network</div>
-              <div className="mt-1 font-display text-sm font-semibold text-heading">
-                {kpis.outboundOpenPosts} outbound post{kpis.outboundOpenPosts === 1 ? "" : "s"}
-                {kpis.outboundOffersWaiting > 0
-                  ? ` · ${kpis.outboundOffersWaiting} offer${kpis.outboundOffersWaiting === 1 ? "" : "s"} waiting`
-                  : ""}
-              </div>
-              <Button variant="accent" size="sm" className="mt-3" asChild>
-                <Link href="/network/overflow">Review outbound desk</Link>
-              </Button>
-            </div>
-          )}
-          {kpis.outboundOpenPosts === 0 && kpis.inboundOverflow > 0 && (
-            <div className="mt-4 rounded-2xl border border-primary/20 bg-gradient-to-br from-primary/10 to-transparent p-4">
-              <div className="text-[10px] tracking-[0.2em] text-primary uppercase">TranZfort network</div>
-              <div className="mt-1 font-display text-sm font-semibold text-heading">
-                {kpis.inboundOverflow} inbound overflow load{kpis.inboundOverflow === 1 ? "" : "s"}
-              </div>
-              <Button variant="accent" size="sm" className="mt-3" asChild>
-                <Link href="/network/overflow">Browse queue</Link>
-              </Button>
-            </div>
-          )}
-        </SectionCard>
+        <CommandCenterExceptionQueue
+          initialExceptions={exceptions}
+          initialKpis={{
+            outboundOpenPosts: kpis.outboundOpenPosts,
+            outboundOffersWaiting: kpis.outboundOffersWaiting,
+            inboundOverflow: kpis.inboundOverflow,
+          }}
+        />
       </div>
 
-      <SectionCard eyebrow="Operations" title="Recent activity" className="mt-5">
-        {activities.length === 0 ? (
-          <p className="text-sm text-muted-foreground">No recent activity.</p>
-        ) : (
-          <ul className="divide-y divide-white/5">
-            {activities.map((a) => (
-              <li key={a.id} className="flex items-center justify-between py-3">
-                <div>
-                  <Link href={`/shipments/${a.shipmentId}`} className="text-sm font-medium text-link">
-                    {a.message}
-                  </Link>
-                  <p className="text-xs text-muted-foreground">
-                    {new Date(a.timestamp).toLocaleString()}
-                  </p>
-                </div>
-              </li>
-            ))}
-          </ul>
-        )}
-      </SectionCard>
+      <CommandCenterActivityFeed initialActivities={activities} />
     </>
   );
 }

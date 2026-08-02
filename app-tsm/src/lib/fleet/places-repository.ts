@@ -1,5 +1,10 @@
 import { demoFleetGroups, demoPlaces } from "@/lib/demo-data";
-import { fetchAllShipmentsRaw, listDrivers, listVehicles } from "@/lib/data/shipment-repository";
+import { demoSeed } from "@/lib/data/demo-mode";
+import {
+  fetchShipmentsForEnrichment,
+  listDriversSafe,
+  listVehiclesSafe,
+} from "@/lib/data/shipment-repository";
 import {
   createStoredPlace,
   listStoredPlaces,
@@ -66,7 +71,7 @@ export function validateCreatePlaceInput(body: unknown): CreatePlaceInput | { er
 export async function listPlaces(q?: string): Promise<PlaceRecord[]> {
   const { ensureFleetAuxHydrated } = await import("@/lib/db/domain-persistence");
   await ensureFleetAuxHydrated();
-  const shipments = await fetchAllShipmentsRaw();
+  const shipments = await fetchShipmentsForEnrichment();
 
   const enrich = (p: {
     id: string;
@@ -87,7 +92,7 @@ export async function listPlaces(q?: string): Promise<PlaceRecord[]> {
 
   let places: PlaceRecord[] = [
     ...listStoredPlaces().map(enrich),
-    ...demoPlaces.map(enrich),
+    ...demoSeed(demoPlaces).map(enrich),
   ];
 
   if (q?.trim()) {
@@ -142,7 +147,7 @@ export async function getPlace(id: string) {
   const place = (await listPlaces()).find((p) => p.id === id);
   if (!place) return undefined;
 
-  const shipments = await fetchAllShipmentsRaw();
+  const shipments = await fetchShipmentsForEnrichment();
   const relatedShipments = shipments
     .filter(
       (s) => cityMatches(place.city, s.origin) || cityMatches(place.city, s.destination),
@@ -156,11 +161,11 @@ export async function listFleetGroups(): Promise<FleetGroupRecord[]> {
   const { ensureFleetAuxHydrated } = await import("@/lib/db/domain-persistence");
   await ensureFleetAuxHydrated();
   const { listStoredFleetGroups } = await import("@/lib/mutations/entity-stores");
-  const [drivers, vehicles] = await Promise.all([listDrivers(), listVehicles()]);
+  const [drivers, vehicles] = await Promise.all([listDriversSafe(), listVehiclesSafe()]);
 
-  const demo = demoFleetGroups.map((g, index) => {
-    const driverSlice = Math.max(1, Math.floor(drivers.length / demoFleetGroups.length));
-    const vehicleSlice = Math.max(1, Math.floor(vehicles.length / demoFleetGroups.length));
+  const demo = demoSeed(demoFleetGroups).map((g, index) => {
+    const driverSlice = Math.max(1, Math.floor(drivers.length / demoSeed(demoFleetGroups).length));
+    const vehicleSlice = Math.max(1, Math.floor(vehicles.length / demoSeed(demoFleetGroups).length));
     const patch = getFleetGroupPatch(g.id);
     return {
       ...g,
@@ -216,7 +221,7 @@ export async function getFleetGroup(id: string) {
   const group = (await listFleetGroups()).find((g) => g.id === id);
   if (!group) return undefined;
 
-  const [drivers, vehicles] = await Promise.all([listDrivers(), listVehicles()]);
+  const [drivers, vehicles] = await Promise.all([listDriversSafe(), listVehiclesSafe()]);
   const storedMembers = listFleetGroupMembers(id);
   const removed = listRemovedFleetGroupMembers(id);
   const derivedMembers: FleetGroupMember[] = drivers.slice(0, group.drivers).map((d, i) => ({

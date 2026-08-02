@@ -27,6 +27,7 @@ export default async function FleetEquipmentPage() {
       <ModuleSubNav links={FLEET_NAV} />
       <DataTable
         rows={equipment}
+        emptyMessage="No equipment assets yet. Create loaders, scales, or spare modems here."
         columns={[
           { key: "name", header: "Asset", render: (r) => r.name },
           { key: "type", header: "Type", render: (r) => r.type },

@@ -25,6 +25,7 @@ export default async function MaintenancePartsPage() {
       <ModuleSubNav links={MAINTENANCE_NAV} />
       <DataTable
         rows={parts}
+        emptyMessage="No parts in inventory yet. Create a SKU to track stock and reorder levels."
         columns={[
           {
             key: "sku",

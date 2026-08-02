@@ -1,9 +1,9 @@
 import Link from "next/link";
 import { PageHeader } from "@/components/app/app-shell";
 import { ModuleSubNav } from "@/components/app/module-sub-nav";
-import { DataTable } from "@/components/app/data-table";
+import { DataTable, StatusPill } from "@/components/app/data-table";
+import { HonestyNotice } from "@/components/app/honesty-notice";
 import { listWebhooks } from "@/lib/integrations/integrations-repository";
-import { StatusPill } from "@/components/app/data-table";
 import { INTEGRATIONS_NAV } from "@/lib/module-nav";
 import { CreateWebhookForm } from "@/components/app/module-create-forms";
 import { DeleteWebhookButton } from "@/components/app/sprint12-forms";
@@ -24,12 +24,20 @@ export default async function IntegrationsWebhooksPage() {
         action={<CreateWebhookForm />}
       />
       <ModuleSubNav links={INTEGRATIONS_NAV} />
+      <HonestyNotice title="Session-only.">
+        Webhooks are stored in server memory — restart clears the list. Not for production delivery.
+      </HonestyNotice>
       <DataTable
         rows={webhooks}
+        emptyMessage="No webhooks in this session. Create one to exercise outbound event wiring."
         columns={[
           { key: "url", header: "Endpoint", render: (r) => r.url },
           { key: "events", header: "Events", render: (r) => r.events },
-          { key: "status", header: "Status", render: (r) => <StatusPill status={r.status} map={whStatus} /> },
+          {
+            key: "status",
+            header: "Status",
+            render: (r) => <StatusPill status={r.status} map={whStatus} />,
+          },
           { key: "last", header: "Last delivery", render: (r) => r.lastDelivery },
           {
             key: "actions",
@@ -39,7 +47,9 @@ export default async function IntegrationsWebhooksPage() {
         ]}
       />
       <p className="mt-4 text-sm">
-        <Link href="/integrations" className="text-link hover:underline">← Integrations</Link>
+        <Link href="/integrations" className="text-link hover:underline">
+          ← Integrations
+        </Link>
       </p>
     </>
   );

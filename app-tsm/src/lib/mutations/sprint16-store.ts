@@ -164,6 +164,12 @@ export function patchRolePermission(
   return getRolePermissions(roleId);
 }
 
+export function replaceRolePermissionPatches(
+  map: Record<string, Partial<RolePermissionMap>>,
+) {
+  g.__tsmRolePermissionPatches = { ...map };
+}
+
 export function patchNotificationRecipients(channelId: string, recipients: string) {
   if (!g.__tsmNotificationRecipientPatches) g.__tsmNotificationRecipientPatches = {};
   g.__tsmNotificationRecipientPatches[channelId] = recipients.trim();

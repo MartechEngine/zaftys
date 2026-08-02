@@ -37,6 +37,7 @@ export default async function WorkOrdersPage() {
       <ModuleSubNav links={MAINTENANCE_NAV} />
       <DataTable
         rows={workOrders}
+        emptyMessage="No work orders yet. Create a maintenance job for a vehicle."
         columns={[
           { key: "vehicle", header: "Vehicle", render: (r) => r.vehicle },
           {

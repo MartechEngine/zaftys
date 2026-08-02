@@ -12,9 +12,15 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const envPath = resolve(__dirname, "../.env.local");
 
 if (existsSync(envPath)) {
-  for (const line of readFileSync(envPath, "utf8").split("\n")) {
+  for (const line of readFileSync(envPath, "utf8").split(/\r?\n/)) {
     const m = line.match(/^([^#=]+)=(.*)$/);
-    if (m) process.env[m[1].trim()] ??= m[2].trim();
+    if (!m) continue;
+    const key = m[1].trim();
+    const val = m[2].trim();
+    // Always prefer .env.local for Fleetbase (shell may have empty stubs)
+    if (key.startsWith("FLEETBASE_") || process.env[key] == null || process.env[key] === "") {
+      process.env[key] = val;
+    }
   }
 }
 

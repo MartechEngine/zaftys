@@ -2,6 +2,7 @@ import Link from "next/link";
 import { PageHeader } from "@/components/app/app-shell";
 import { ModuleSubNav } from "@/components/app/module-sub-nav";
 import { DataTable, HubCard, StatusPill } from "@/components/app/data-table";
+import { HonestyNotice } from "@/components/app/honesty-notice";
 import { getIntegrationsOverview } from "@/lib/integrations/integrations-repository";
 import { INTEGRATIONS_NAV } from "@/lib/module-nav";
 
@@ -25,6 +26,10 @@ export default async function IntegrationsPage() {
         description={`${overview.connectedCount} connected · Fleetbase & TranZfort status from live env`}
       />
       <ModuleSubNav links={INTEGRATIONS_NAV} />
+      <HonestyNotice title="Session-only registries.">
+        Devices and webhooks live in server memory for this process — a restart clears them.
+        Prefer Fleetbase / Traccar for production hardware identity.
+      </HonestyNotice>
       <div className="mb-8 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
         {overview.integrations.map((i) => (
           <div key={i.id} className="rounded-lg border border-border bg-background p-4">
@@ -62,6 +67,7 @@ export default async function IntegrationsPage() {
       <h2 className="mb-3 text-lg font-semibold text-navy">Webhooks</h2>
       <DataTable
         rows={overview.webhooks}
+        emptyMessage="No webhooks in this session. Create one below — cleared on server restart."
         columns={[
           {
             key: "url",

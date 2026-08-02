@@ -11,9 +11,10 @@ export function DemoBanner() {
     >
       <span className="h-2 w-2 shrink-0 rounded-full bg-orange" aria-hidden />
       <span>
-        <strong>Demo UI mode</strong> — all modules use rich mock data. Set{" "}
-        <code className="rounded bg-white/10 px-1 text-xs text-navy-bright">TSM_DEMO_UI=0</code> in{" "}
-        <code className="rounded bg-white/10 px-1 text-xs text-navy-bright">.env.local</code> to use live Fleetbase.
+        <strong>Demo UI mode</strong> — mock catalogs enabled. Unset{" "}
+        <code className="rounded bg-white/10 px-1 text-xs text-navy-bright">TSM_DEMO_UI</code> or set{" "}
+        <code className="rounded bg-white/10 px-1 text-xs text-navy-bright">TSM_DEMO_UI=0</code> for live
+        Fleetbase + Postgres (default).
       </span>
     </div>
   );

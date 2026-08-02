@@ -1,4 +1,5 @@
 import { demoRoles } from "@/lib/demo-data";
+import { demoSeed } from "@/lib/data/demo-mode";
 import { listOrgUsers } from "@/lib/settings/users-repository";
 import {
   createStoredRole,
@@ -18,7 +19,11 @@ import {
   isRoleDeleted,
   isSystemRole,
 } from "@/lib/mutations/sprint17-store";
-import { ensureSettingsHydrated, persistRole } from "@/lib/db/domain-persistence";
+import {
+  ensureMaintenanceAuxHydrated,
+  ensureSettingsHydrated,
+  persistRole,
+} from "@/lib/db/domain-persistence";
 
 export type OrgRoleRecord = {
   id: string;
@@ -42,9 +47,10 @@ function matchesRole(userRole: string, roleName: string) {
 
 export async function listOrgRoles(): Promise<OrgRoleRecord[]> {
   await ensureSettingsHydrated();
+  await ensureMaintenanceAuxHydrated();
   const users = await listOrgUsers();
 
-  const demo = demoRoles.map((r) => {
+  const demo = demoSeed(demoRoles).map((r) => {
     const count = users.filter((u) => matchesRole(u.role, r.name)).length;
     const patch = getRolePatch(r.id);
     return {
@@ -124,7 +130,11 @@ export async function updateRolePermissions(
     }
   }
 
-  return { ...existing, permissions: getRolePermissions(id) };
+  const permissions = getRolePermissions(id);
+  const { persistRolePermissions } = await import("@/lib/db/domain-persistence");
+  await persistRolePermissions(id, permissions);
+
+  return { ...existing, permissions };
 }
 
 export async function deleteOrgRoleById(

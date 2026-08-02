@@ -93,11 +93,7 @@ import {
 
 async function persistItem(collection: CollectionName, id: string, payload: unknown) {
   if (!isDatabaseConfigured()) return;
-  try {
-    await upsertDocument(collection, id, payload);
-  } catch (err) {
-    console.error(`[db] persist ${collection}/${id} failed`, err);
-  }
+  await upsertDocument(collection, id, payload);
 }
 
 async function persistPatchMap(
@@ -106,11 +102,7 @@ async function persistPatchMap(
   value: unknown,
 ) {
   if (!isDatabaseConfigured()) return;
-  try {
-    await persistMapEntry(collection, id, value);
-  } catch (err) {
-    console.error(`[db] persist map ${collection}/${id} failed`, err);
-  }
+  await persistMapEntry(collection, id, value);
 }
 
 // --- Clients ---
@@ -246,6 +238,72 @@ export async function ensureOrgHydrated() {
 
 export async function persistOrgProfile(profile: OrgProfileFields) {
   await persistItem("org_profile", "profile", { id: "profile", ...profile });
+}
+
+// --- TSM org account (TranZfort bridge auth-lite) ---
+export async function ensureTsmOrgHydrated() {
+  if (!isDatabaseConfigured()) return;
+  const { loadCollection, isCollectionHydrated, markCollectionHydrated } =
+    await import("@/lib/db/collections");
+  if (!isCollectionHydrated("tsm_org")) {
+    const { upsertTsmOrgAccounts } = await import("@/lib/tsm/org-account-store");
+    type TsmOrgAccount = import("@/lib/tsm/org").TsmOrgAccount;
+    const rows = await loadCollection<TsmOrgAccount & { id: string }>("tsm_org");
+    if (rows.length > 0) {
+      upsertTsmOrgAccounts(rows);
+    }
+    markCollectionHydrated("tsm_org");
+  }
+
+  if (!isCollectionHydrated("tsm_publish_audit")) {
+    const { replacePublishAudit } = await import("@/lib/tsm/publish-audit-store");
+    type PublishAuditRow = import("@/lib/tsm/publish-audit-store").PublishAuditRow;
+    const audits = await loadCollection<PublishAuditRow>("tsm_publish_audit");
+    if (audits.length > 0) replacePublishAudit(audits);
+    markCollectionHydrated("tsm_publish_audit");
+  }
+}
+
+export async function persistTsmOrgAccount(
+  account: import("@/lib/tsm/org").TsmOrgAccount,
+) {
+  await persistItem("tsm_org", account.id, account);
+}
+
+export async function persistPublishAuditRow(
+  row: import("@/lib/tsm/publish-audit-store").PublishAuditRow,
+) {
+  await persistItem("tsm_publish_audit", row.id, row);
+}
+
+// --- Auth-lite login users ---
+export async function ensureAuthUsersHydrated() {
+  const { applyAuthSeedOnce } = await import("@/lib/auth/auth-seed");
+  const { setPasswordHashRaw } = await import("@/lib/auth/password-store");
+  applyAuthSeedOnce(setPasswordHashRaw);
+
+  if (!isDatabaseConfigured()) return;
+  const { loadCollection, isCollectionHydrated, markCollectionHydrated } =
+    await import("@/lib/db/collections");
+  if (isCollectionHydrated("auth_users")) return;
+  const { replaceAuthUsers, listAuthUsers } = await import(
+    "@/lib/auth/auth-users-store"
+  );
+  type AuthUserRecord = import("@/lib/auth/auth-users-store").AuthUserRecord;
+  const rows = await loadCollection<AuthUserRecord>("auth_users");
+  if (rows.length > 0) {
+    // Merge DB over seed (keep both)
+    const byEmail = new Map(listAuthUsers().map((u) => [u.email.toLowerCase(), u]));
+    for (const row of rows) byEmail.set(row.email.toLowerCase(), row);
+    replaceAuthUsers([...byEmail.values()]);
+  }
+  markCollectionHydrated("auth_users");
+}
+
+export async function persistAuthUser(
+  user: import("@/lib/auth/auth-users-store").AuthUserRecord,
+) {
+  await persistItem("auth_users", user.id, user);
 }
 
 export async function ensureVendorsHydrated() {
@@ -407,6 +465,16 @@ export async function ensureFleetAuxHydrated() {
     replaceStoredEquipment,
   } = await import("@/lib/fleet/equipment-store");
   const {
+    listStoredFuelTransactions,
+    replaceStoredFuelTransactions,
+  } = await import("@/lib/fleet/fuel-store");
+  const {
+    listStoredFleetIssues,
+    replaceStoredFleetIssues,
+    replaceResolvedIssues,
+    replaceCompliancePatches,
+  } = await import("@/lib/mutations/sprint10-store");
+  const {
     listStoredFleetGroups,
     replaceStoredFleetGroups,
     listStoredPartners,
@@ -435,6 +503,16 @@ export async function ensureFleetAuxHydrated() {
       collection: "fleet_equipment",
       list: listStoredEquipment,
       replace: replaceStoredEquipment,
+    }),
+    ensureArrayHydrated({
+      collection: "fleet_fuel",
+      list: listStoredFuelTransactions,
+      replace: replaceStoredFuelTransactions,
+    }),
+    ensureArrayHydrated({
+      collection: "fleet_issues",
+      list: listStoredFleetIssues,
+      replace: replaceStoredFleetIssues,
     }),
     ensureArrayHydrated({
       collection: "fleet_groups",
@@ -515,6 +593,27 @@ export async function ensureFleetAuxHydrated() {
       }
       markCollectionHydrated("vendor_patches");
     }
+    if (!isCollectionHydrated("compliance_patches")) {
+      const rows = await loadCollection<{
+        id: string;
+        value: { status: "valid" | "expiring" | "expired"; expires?: string };
+      }>("compliance_patches");
+      if (rows.length > 0) {
+        replaceCompliancePatches(
+          Object.fromEntries(rows.map((r) => [r.id, r.value])),
+        );
+      }
+      markCollectionHydrated("compliance_patches");
+    }
+    if (!isCollectionHydrated("fleet_issue_resolved")) {
+      const rows = await loadCollection<{ id: string; value: boolean }>(
+        "fleet_issue_resolved",
+      );
+      if (rows.length > 0) {
+        replaceResolvedIssues(rows.filter((r) => r.value).map((r) => r.id));
+      }
+      markCollectionHydrated("fleet_issue_resolved");
+    }
   }
 }
 
@@ -529,6 +628,18 @@ export async function persistEquipment(e: { id: string }) {
 }
 export async function persistEquipmentPatch(id: string, value: unknown) {
   await persistPatchMap("equipment_patches", id, value);
+}
+export async function persistFuelTransaction(tx: { id: string }) {
+  await persistItem("fleet_fuel", tx.id, tx);
+}
+export async function persistFleetIssue(issue: { id: string }) {
+  await persistItem("fleet_issues", issue.id, issue);
+}
+export async function persistFleetIssueResolved(id: string) {
+  await persistPatchMap("fleet_issue_resolved", id, true);
+}
+export async function persistCompliancePatch(id: string, value: unknown) {
+  await persistPatchMap("compliance_patches", id, value);
 }
 export async function persistFleetGroup(g: { id: string }) {
   await persistItem("fleet_groups", g.id, g);
@@ -549,6 +660,110 @@ export async function persistVendorPatch(id: string, value: unknown) {
   await persistPatchMap("vendor_patches", id, value);
 }
 
+// --- Faults / parts / overflow / role permissions ---
+export async function ensureMaintenanceAuxHydrated() {
+  const {
+    listCreatedFaults,
+    replaceCreatedFaults,
+  } = await import("@/lib/mutations/sprint18-store");
+  const {
+    listCreatedParts,
+    replaceCreatedParts,
+  } = await import("@/lib/mutations/sprint17-store");
+  const {
+    replaceFaultStatusOverrides,
+  } = await import("@/lib/maintenance/fault-store");
+  const {
+    replacePartStock,
+  } = await import("@/lib/maintenance/parts-store");
+  const {
+    listOverflowLoads,
+    replaceOverflowLoads,
+  } = await import("@/lib/network/overflow-store");
+  const {
+    replaceRolePermissionPatches,
+  } = await import("@/lib/mutations/sprint16-store");
+
+  await Promise.all([
+    ensureArrayHydrated({
+      collection: "faults",
+      list: listCreatedFaults,
+      replace: replaceCreatedFaults,
+    }),
+    ensureArrayHydrated({
+      collection: "parts",
+      list: listCreatedParts,
+      replace: replaceCreatedParts,
+    }),
+    ensureArrayHydrated({
+      collection: "network_overflow",
+      list: () => listOverflowLoads(),
+      replace: replaceOverflowLoads,
+    }),
+  ]);
+
+  if (isDatabaseConfigured()) {
+    const { loadCollection, isCollectionHydrated, markCollectionHydrated } =
+      await import("@/lib/db/collections");
+    if (!isCollectionHydrated("fault_status")) {
+      const rows = await loadCollection<{
+        id: string;
+        value: "open" | "linked" | "resolved";
+      }>("fault_status");
+      if (rows.length > 0) {
+        replaceFaultStatusOverrides(
+          Object.fromEntries(rows.map((r) => [r.id, r.value])),
+        );
+      }
+      markCollectionHydrated("fault_status");
+    }
+    if (!isCollectionHydrated("parts_stock")) {
+      const rows = await loadCollection<{ id: string; value: number }>("parts_stock");
+      if (rows.length > 0) {
+        replacePartStock(Object.fromEntries(rows.map((r) => [r.id, r.value])));
+      }
+      markCollectionHydrated("parts_stock");
+    }
+    if (!isCollectionHydrated("role_permissions")) {
+      const rows = await loadCollection<{
+        id: string;
+        value: Record<string, boolean>;
+      }>("role_permissions");
+      if (rows.length > 0) {
+        replaceRolePermissionPatches(
+          Object.fromEntries(rows.map((r) => [r.id, r.value])),
+        );
+      }
+      markCollectionHydrated("role_permissions");
+    }
+  }
+}
+
+export async function persistFault(f: { id: string }) {
+  await persistItem("faults", f.id, f);
+}
+export async function persistFaultStatus(
+  id: string,
+  status: "open" | "linked" | "resolved",
+) {
+  await persistPatchMap("fault_status", id, status);
+}
+export async function persistPart(p: { id: string }) {
+  await persistItem("parts", p.id, p);
+}
+export async function persistPartStock(id: string, stock: number) {
+  await persistPatchMap("parts_stock", id, stock);
+}
+export async function persistOverflowLoad(load: { id: string }) {
+  await persistItem("network_overflow", load.id, load);
+}
+export async function persistRolePermissions(
+  roleId: string,
+  permissions: Record<string, boolean>,
+) {
+  await persistPatchMap("role_permissions", roleId, permissions);
+}
+
 /** Convenience: hydrate everything used by portal list pages. */
 export async function ensurePortalDomainsHydrated() {
   await Promise.all([
@@ -560,5 +775,6 @@ export async function ensurePortalDomainsHydrated() {
     ensureWorkOrdersHydrated(),
     ensureSettingsHydrated(),
     ensureFleetAuxHydrated(),
+    ensureMaintenanceAuxHydrated(),
   ]);
 }

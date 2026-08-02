@@ -1,3 +1,5 @@
+export type ShipmentListView = "table" | "kanban" | "map";
+
 export type ShipmentListFilters = {
   tab?: string;
   q?: string;
@@ -10,10 +12,16 @@ export type ShipmentListFilters = {
   size?: number;
   sort?: string;
   dir?: "asc" | "desc";
-  view?: "table" | "cards";
+  view?: ShipmentListView;
 };
 
 export const PAGE_SIZE_OPTIONS = [25, 50, 100] as const;
+export const SHIPMENT_VIEWS = ["table", "kanban", "map"] as const;
+
+export function parseShipmentView(raw?: string): ShipmentListView {
+  if (raw === "kanban" || raw === "map" || raw === "table") return raw;
+  return "table";
+}
 
 export function buildShipmentsQuery(filters: ShipmentListFilters): string {
   const sp = new URLSearchParams();

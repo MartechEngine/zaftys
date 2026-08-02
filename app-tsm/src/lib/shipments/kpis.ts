@@ -35,7 +35,7 @@ export function computeExceptionsFromShipments(shipments: ShipmentRecord[]) {
       publicId: s.publicId,
       reason:
         s.status === "exception"
-          ? "Late ETA (+45m)"
+          ? "Exception"
           : s.originType === "network"
             ? "Unassigned — network booking"
             : "Awaiting assignment",

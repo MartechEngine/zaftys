@@ -1,4 +1,5 @@
 import { demoOrderTypes } from "@/lib/demo-data";
+import { demoSeed } from "@/lib/data/demo-mode";
 import { fetchAllShipmentsRaw } from "@/lib/data/shipment-repository";
 import {
   createStoredOrderField,
@@ -104,7 +105,7 @@ export async function listOrderTypes(): Promise<OrderTypeRecord[]> {
   await ensureSettingsHydrated();
   const shipments = await fetchAllShipmentsRaw();
 
-  const demo = demoOrderTypes.map((ot) => {
+  const demo = demoSeed(demoOrderTypes).map((ot) => {
     const namePatch = getOrderTypeNamePatch(ot.id);
     return {
       ...ot,

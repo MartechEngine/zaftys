@@ -1,5 +1,7 @@
 /** Outbound TranZfort listing — separate from ShipmentStatus (ADR-006 / Load Exchange). */
 
+import type { TsmPostDraft } from "@/lib/tsm/post-draft";
+
 export type NetworkListingState =
   | "not_posted"
   | "draft"
@@ -59,6 +61,12 @@ export type NetworkListing = {
   postedAt?: string;
   expiresAt?: string;
   tranzfortTripIds: string[];
+  /** Full create_load-shaped draft for reopen / live publish. */
+  draftSnapshot?: TsmPostDraft;
+  /** Live TranZfort load id when published via bridge. */
+  tranzfortLoadId?: string;
+  liveOnTranzfort?: boolean;
+  superLoad?: boolean;
 };
 
 export type PostListingInput = {
@@ -74,6 +82,10 @@ export type PostListingInput = {
   plantNotes?: string;
   publish?: boolean;
   listingTtlHours?: number;
+  draftSnapshot?: TsmPostDraft;
+  tranzfortLoadId?: string;
+  liveOnTranzfort?: boolean;
+  superLoad?: boolean;
 };
 
 export type UpdateListingInput = {
@@ -86,6 +98,12 @@ export type UpdateListingInput = {
   plantNotes?: string;
   publish?: boolean;
   expiresAt?: string;
+  draftSnapshot?: TsmPostDraft;
+  tranzfortLoadId?: string;
+  liveOnTranzfort?: boolean;
+  superLoad?: boolean;
+  advancePercent?: number;
+  priceType?: NetworkPriceType;
 };
 
 export const LISTING_STATE_LABEL: Record<NetworkListingState, string> = {

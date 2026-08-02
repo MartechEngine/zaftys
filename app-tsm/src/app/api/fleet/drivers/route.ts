@@ -34,18 +34,28 @@ export async function POST(request: Request) {
   if (!name) return apiError("VALIDATION_ERROR", "Name is required.");
   if (!phone) return apiError("VALIDATION_ERROR", "Phone is required.");
   const license = String(data.license ?? "").trim() || undefined;
+  const emailRaw = String(data.email ?? "").trim();
+  const email =
+    emailRaw ||
+    `${name
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, ".")
+      .replace(/^\.|\.$/g, "")
+      .slice(0, 40) || "driver"}@drivers.zaftys.local`;
 
   if (getActiveDataSource() === "fleetbase") {
     try {
       const raw = await getFleetbaseClient().createDriver({
         name,
         phone,
+        email,
         ...(license ? { drivers_license_number: license } : {}),
       });
       const driver = mapFleetbaseDriver(raw as Record<string, unknown>);
       return apiSuccess(driver, { created: true, source: "fleetbase" });
     } catch (err) {
-      console.warn("[drivers] Fleetbase create failed, using local store:", err);
+      const message = err instanceof Error ? err.message : "Fleetbase driver create failed.";
+      return apiError("CREATE_FAILED", `Fleetbase unavailable (createDriver): ${message}`, 502);
     }
   }
 

@@ -1,4 +1,5 @@
 import { demoGeofences } from "@/lib/demo-data";
+import { demoSeed } from "@/lib/data/demo-mode";
 import { listPlaces } from "@/lib/fleet/places-repository";
 import {
   createStoredGeofence,
@@ -56,7 +57,7 @@ export async function listGeofences(): Promise<GeofenceRecord[]> {
     }));
 
   const seen = new Set<string>();
-  return [...listStoredGeofences(), ...demoGeofences, ...fromPlaces]
+  return [...listStoredGeofences(), ...demoSeed(demoGeofences), ...fromPlaces]
     .map((row) => {
       const patch = getGeofencePatch(row.id);
       return patch ? { ...row, ...patch } : row;

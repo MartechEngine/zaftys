@@ -8,6 +8,9 @@ const PUBLIC_PATHS = [
   "/forgot-password",
   "/reset-password",
   "/api/auth/login",
+  "/api/auth/tranzfort/login",
+  "/api/auth/tranzfort/google",
+  "/api/auth/tranzfort/callback",
   "/api/auth/forgot-password",
   "/api/auth/reset-password",
   "/api/health",
@@ -17,6 +20,7 @@ function isPublicPath(pathname: string) {
   if (PUBLIC_PATHS.includes(pathname)) return true;
   if (pathname.startsWith("/track/")) return true;
   if (pathname.startsWith("/invite/")) return true;
+  if (pathname.startsWith("/api/invite/") && pathname.endsWith("/accept")) return true;
   if (pathname.startsWith("/api/track/")) return true;
   if (
     pathname.startsWith("/_next") ||

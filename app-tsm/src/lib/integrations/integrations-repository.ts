@@ -1,4 +1,5 @@
 import { demoIntegrations, demoWebhooks, demoApiLogs, demoPlatformEvents, demoTelematicsProviders, demoDevices, demoSensors, demoSocketChannels, demoFuelProviders } from "@/lib/demo-data";
+import { allowDemoSeeds, demoSeed } from "@/lib/data/demo-mode";
 import { getSyncStatus, listActivities, listVehicles } from "@/lib/data/shipment-repository";
 import {
   createStoredDevice,
@@ -56,7 +57,7 @@ function formatRelative(iso: string) {
 export async function getIntegrationsOverview() {
   const sync = await getSyncStatus();
 
-  const integrations: IntegrationRecord[] = demoIntegrations.map((item) => {
+  const enrichIntegration = (item: (typeof demoIntegrations)[number]): IntegrationRecord => {
     if (item.name === "Fleetbase API") {
       const live =
         sync.dataSource === "fleetbase" ||
@@ -92,16 +93,45 @@ export async function getIntegrationsOverview() {
     }
 
     return item;
-  });
+  };
+
+  let integrations: IntegrationRecord[] = demoSeed(demoIntegrations).map(enrichIntegration);
+
+  // Live honesty: when demo catalog is gated empty, still show real status rows.
+  if (!allowDemoSeeds() && integrations.length === 0) {
+    integrations = [
+      enrichIntegration({
+        id: "int-fleetbase",
+        name: "Fleetbase API",
+        status: "disconnected",
+        latency: "—",
+        detail: "",
+      }),
+      enrichIntegration({
+        id: "int-tranzfort",
+        name: "TranZfort Sync",
+        status: "disconnected",
+        latency: "—",
+        detail: "",
+      }),
+      enrichIntegration({
+        id: "int-openfreemap",
+        name: "OpenFreeMap",
+        status: "connected",
+        latency: "—",
+        detail: "",
+      }),
+    ];
+  }
 
   const connectedCount = integrations.filter((i) => i.status === "connected").length;
 
   return {
     integrations,
-    webhooks: demoWebhooks as WebhookRecord[],
+    webhooks: demoSeed(demoWebhooks) as WebhookRecord[],
     connectedCount,
-    telematicsConnected: 2,
-    deviceCount: 3,
+    telematicsConnected: allowDemoSeeds() ? 2 : 0,
+    deviceCount: allowDemoSeeds() ? 3 : listStoredDevices().length,
     sync,
   };
 }
@@ -149,7 +179,7 @@ export async function listApiLogs(): Promise<ApiLogRecord[]> {
     });
   }
 
-  return [...live, ...demoApiLogs];
+  return [...live, ...demoSeed(demoApiLogs)];
 }
 
 export async function listPlatformEvents(): Promise<PlatformEventRecord[]> {
@@ -162,7 +192,7 @@ export async function listPlatformEvents(): Promise<PlatformEventRecord[]> {
     time: formatRelative(a.timestamp),
   }));
 
-  const merged = [...fromActivity, ...demoPlatformEvents];
+  const merged = [...fromActivity, ...demoSeed(demoPlatformEvents)];
   const seen = new Set<string>();
   return merged.filter((e) => {
     if (seen.has(e.id)) return false;
@@ -200,7 +230,7 @@ export async function getFleetbaseIntegrationDetail(): Promise<FleetbaseIntegrat
   const health = getFleetbaseHealthCheck();
 
   return {
-    connection: live ? "connected" : process.env.TSM_DEMO_UI === "0" ? "disconnected" : "demo",
+    connection: live ? "connected" : process.env.TSM_DEMO_UI === "1" ? "demo" : "disconnected",
     apiUrl: process.env.FLEETBASE_API_URL ?? "http://localhost:8000/v1",
     apiKeyMasked:
       rotated ??
@@ -253,7 +283,7 @@ export async function runFleetbaseHealthCheck() {
     reachable = false;
   }
   const latencyMs = reachable ? Math.max(12, Date.now() - start) : 0;
-  const demoMode = process.env.TSM_DEMO_UI !== "0";
+  const demoMode = process.env.TSM_DEMO_UI === "1";
 
   recordFleetbaseHealthCheck(reachable, latencyMs || 0);
 
@@ -274,7 +304,7 @@ export async function runFleetbaseHealthCheck() {
 }
 
 export async function listTelematicsProviders(): Promise<TelematicsProvider[]> {
-  const demoMode = process.env.TSM_DEMO_UI !== "0";
+  const demoMode = process.env.TSM_DEMO_UI === "1";
   const sync = await getSyncStatus();
   const vehicleCount = sync.dataSource === "fleetbase" ? 12 : 5;
 
@@ -367,24 +397,29 @@ export type TraccarBridgeDetail = {
 
 export async function listDevices(vehicleRegistration?: string): Promise<DeviceRecord[]> {
   const vehicles = await listVehicles();
-  const fromDemo: DeviceRecord[] = demoDevices.map((d) => {
+  const fromDemo: DeviceRecord[] = demoSeed(demoDevices).map((d) => {
     const vehicle = vehicles.find((v) => v.registration === d.vehicle);
     return { ...d, vehicleId: vehicle?.id };
   });
 
-  const withDevice = new Set(fromDemo.map((d) => d.vehicle));
-  const synthetic: DeviceRecord[] = vehicles
-    .filter((v) => !withDevice.has(v.registration))
-    .slice(0, 2)
-    .map((v, index) => ({
-      id: `dv-synth-${v.id}`,
-      imei: `35963310001${2340 + index}`,
-      vehicle: v.registration,
-      vehicleId: v.id,
-      provider: index % 2 === 0 ? "Flespi" : "Traccar",
-      firmware: "2.4.1",
-      status: v.status === "on_trip" ? ("online" as const) : ("offline" as const),
-    }));
+  const withDevice = new Set([
+    ...fromDemo.map((d) => d.vehicle),
+    ...listStoredDevices().map((d) => d.vehicle),
+  ]);
+  const synthetic: DeviceRecord[] = allowDemoSeeds()
+    ? vehicles
+        .filter((v) => !withDevice.has(v.registration))
+        .slice(0, 2)
+        .map((v, index) => ({
+          id: `dv-synth-${v.id}`,
+          imei: `35963310001${2340 + index}`,
+          vehicle: v.registration,
+          vehicleId: v.id,
+          provider: index % 2 === 0 ? "Flespi" : "Traccar",
+          firmware: "2.4.1",
+          status: v.status === "on_trip" ? ("online" as const) : ("offline" as const),
+        }))
+    : [];
 
   const merged = [...listStoredDevices(), ...fromDemo, ...synthetic].map((d) => {
     const patch = getDevicePatch(d.id);
@@ -435,7 +470,7 @@ export async function updateDevice(
 }
 
 export async function listSensors(): Promise<SensorRecord[]> {
-  const demoMode = process.env.TSM_DEMO_UI !== "0";
+  const demoMode = process.env.TSM_DEMO_UI === "1";
   if (!demoMode) return [];
 
   const devices = await listDevices();
@@ -462,7 +497,7 @@ export async function listSensors(): Promise<SensorRecord[]> {
   const seen = new Set<string>();
   return [
     ...live,
-    ...demoSensors.map((s) => ({ ...s, demo: true as const })),
+    ...demoSeed(demoSensors).map((s) => ({ ...s, demo: true as const })),
   ].filter((s) => {
     if (seen.has(s.id)) return false;
     seen.add(s.id);
@@ -471,7 +506,7 @@ export async function listSensors(): Promise<SensorRecord[]> {
 }
 
 export async function listWebhooks(): Promise<WebhookRecord[]> {
-  return [...listStoredWebhooks(), ...(demoWebhooks as WebhookRecord[])].filter(
+  return [...listStoredWebhooks(), ...(demoSeed(demoWebhooks) as WebhookRecord[])].filter(
     (wh) => !isWebhookDeleted(wh.id),
   );
 }
@@ -503,7 +538,7 @@ export async function deleteWebhook(id: string): Promise<boolean> {
 }
 
 export async function listSocketChannels(): Promise<SocketChannelRecord[]> {
-  const demoMode = process.env.TSM_DEMO_UI !== "0";
+  const demoMode = process.env.TSM_DEMO_UI === "1";
   if (!demoMode) return [];
 
   const sync = await getSyncStatus();
@@ -530,7 +565,7 @@ export async function listSocketChannels(): Promise<SocketChannelRecord[]> {
   const seen = new Set<string>();
   return [
     ...live,
-    ...demoSocketChannels.map((c) => ({ ...c, demo: true as const })),
+    ...demoSeed(demoSocketChannels).map((c) => ({ ...c, demo: true as const })),
   ].filter((c) => {
     if (seen.has(c.id)) return false;
     seen.add(c.id);
@@ -543,7 +578,7 @@ export async function listFuelProviders(): Promise<FuelProviderRecord[]> {
   const transactions = await listFuelTransactions();
   const stationNames = new Set(transactions.map((t) => t.station.split(" ")[0]));
 
-  return demoFuelProviders.map((provider) => {
+  return demoSeed(demoFuelProviders).map((provider) => {
     const statusOverride = getFuelProviderStatus(provider.id);
     const row = {
       ...provider,
@@ -567,7 +602,7 @@ export async function updateFuelProviderStatus(
 }
 
 export async function getTraccarBridgeDetail(): Promise<TraccarBridgeDetail> {
-  const demoMode = process.env.TSM_DEMO_UI !== "0";
+  const demoMode = process.env.TSM_DEMO_UI === "1";
   const configuredUrl = process.env.TRACCAR_SERVER_URL?.trim();
   const devices = await listDevices();
   const traccarCount = devices.filter((d) => d.provider === "Traccar").length;

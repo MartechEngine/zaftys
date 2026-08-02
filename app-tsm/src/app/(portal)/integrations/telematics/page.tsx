@@ -13,7 +13,7 @@ const connStatus = {
 
 export default async function TelematicsPage() {
   const providers = await listTelematicsProviders();
-  const demoUi = process.env.TSM_DEMO_UI !== "0";
+  const demoUi = process.env.TSM_DEMO_UI === "1";
 
   return (
     <>

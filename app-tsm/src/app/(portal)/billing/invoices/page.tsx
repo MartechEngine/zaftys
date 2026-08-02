@@ -25,6 +25,7 @@ export default async function BillingInvoicesPage() {
       <ModuleSubNav links={BILLING_NAV} />
       <DataTable
         rows={invoices}
+        emptyMessage="No invoices yet. Create an invoice to bill completed trips."
         columns={[
           {
             key: "number",

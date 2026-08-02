@@ -1,5 +1,6 @@
 import { demoFuelReports, demoFuelTransactions } from "@/lib/demo-data";
-import { listVehicles } from "@/lib/data/shipment-repository";
+import { allowDemoSeeds, demoSeed } from "@/lib/data/demo-mode";
+import { listVehiclesSafe } from "@/lib/data/shipment-repository";
 import {
   createStoredFuelTransaction,
   listStoredFuelTransactions,
@@ -57,19 +58,24 @@ export function validateCreateFuelTransactionInput(
 }
 
 export async function listFuelTransactions(): Promise<FuelTransaction[]> {
-  const vehicles = await listVehicles();
-  const live: FuelTransaction[] = vehicles.slice(0, 2).map((v, index) => ({
-    id: `ft-live-${v.id}`,
-    vehicle: v.registration,
-    vehicleId: v.id,
-    station: index === 0 ? "IOCL Badnera" : "Vidarbha Fuel Hub",
-    liters: 160 + index * 25,
-    amount: formatInr(14400 + index * 2200),
-    amountInr: 14400 + index * 2200,
-    date: "12 Jul 2026",
-  }));
+  const { ensureFleetAuxHydrated } = await import("@/lib/db/domain-persistence");
+  await ensureFleetAuxHydrated();
+  const vehicles = await listVehiclesSafe();
+  // Invented "live" fill-ups are demo-only — live mode shows stored txs only.
+  const live: FuelTransaction[] = allowDemoSeeds()
+    ? vehicles.slice(0, 2).map((v, index) => ({
+        id: `ft-live-${v.id}`,
+        vehicle: v.registration,
+        vehicleId: v.id,
+        station: index === 0 ? "IOCL Badnera" : "Vidarbha Fuel Hub",
+        liters: 160 + index * 25,
+        amount: formatInr(14400 + index * 2200),
+        amountInr: 14400 + index * 2200,
+        date: "12 Jul 2026",
+      }))
+    : [];
 
-  const fromDemo: FuelTransaction[] = demoFuelTransactions.map((t) => ({
+  const fromDemo: FuelTransaction[] = demoSeed(demoFuelTransactions).map((t) => ({
     ...t,
     amountInr: parseInr(t.amount),
   }));
@@ -85,36 +91,61 @@ export async function listFuelTransactions(): Promise<FuelTransaction[]> {
 export async function createFuelTransaction(
   input: CreateFuelTransactionInput,
 ): Promise<FuelTransaction> {
-  const vehicles = await listVehicles();
+  const { ensureFleetAuxHydrated, persistFuelTransaction } = await import(
+    "@/lib/db/domain-persistence"
+  );
+  await ensureFleetAuxHydrated();
+  const vehicles = await listVehiclesSafe();
   const match = vehicles.find((v) => v.registration === input.vehicle);
-  return createStoredFuelTransaction({
+  const created = createStoredFuelTransaction({
     ...input,
     vehicleId: match?.id,
   });
+  await persistFuelTransaction(created);
+  return created;
 }
 
 export async function listFuelReports(): Promise<FuelReport[]> {
-  const vehicles = await listVehicles();
+  const vehicles = await listVehiclesSafe();
   const transactions = await listFuelTransactions();
 
-  const fromVehicles: FuelReport[] = vehicles.map((v, index) => {
-    const vehicleTx = transactions.filter((t) => t.vehicle === v.registration);
-    const litersTotal = vehicleTx.reduce((sum, t) => sum + t.liters, 0) || 180 + index * 15;
-    const kmPerLiter = 3.0 + (index % 3) * 0.1;
-    const costPerKmInr = 8.4 + index * 0.35;
-    return {
-      id: `fr-live-${v.id}`,
-      vehicle: v.registration,
-      vehicleId: v.id,
-      kmPerLiter,
-      costPerKm: `₹${costPerKmInr.toFixed(2)}`,
-      costPerKmInr,
-      period: "Jul 2026",
-      litersTotal,
-    };
-  });
+  let fromVehicles: FuelReport[] = [];
+  if (allowDemoSeeds()) {
+    fromVehicles = vehicles.map((v, index) => {
+      const vehicleTx = transactions.filter((t) => t.vehicle === v.registration);
+      const litersTotal = vehicleTx.reduce((sum, t) => sum + t.liters, 0) || 180 + index * 15;
+      const kmPerLiter = 3.0 + (index % 3) * 0.1;
+      const costPerKmInr = 8.4 + index * 0.35;
+      return {
+        id: `fr-live-${v.id}`,
+        vehicle: v.registration,
+        vehicleId: v.id,
+        kmPerLiter,
+        costPerKm: `₹${costPerKmInr.toFixed(2)}`,
+        costPerKmInr,
+        period: "Jul 2026",
+        litersTotal,
+      };
+    });
+  } else {
+    for (const v of vehicles) {
+      const vehicleTx = transactions.filter((t) => t.vehicle === v.registration);
+      if (vehicleTx.length === 0) continue;
+      const litersTotal = vehicleTx.reduce((sum, t) => sum + t.liters, 0);
+      fromVehicles.push({
+        id: `fr-${v.id}`,
+        vehicle: v.registration,
+        vehicleId: v.id,
+        kmPerLiter: 0,
+        costPerKm: "—",
+        costPerKmInr: 0,
+        period: "Current",
+        litersTotal,
+      });
+    }
+  }
 
-  const fromDemo: FuelReport[] = demoFuelReports.map((r) => ({
+  const fromDemo: FuelReport[] = demoSeed(demoFuelReports).map((r) => ({
     ...r,
     costPerKmInr: parseFloat(r.costPerKm.replace(/[^\d.]/g, "")) || 0,
     litersTotal: 520,

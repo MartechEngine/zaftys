@@ -41,6 +41,13 @@ export async function POST(req: NextRequest) {
     pickupWindowEnd: typeof b.pickupWindowEnd === "string" ? b.pickupWindowEnd : undefined,
     plantNotes: typeof b.plantNotes === "string" ? b.plantNotes : undefined,
     publish: b.publish !== false,
+    draftSnapshot:
+      b.draftSnapshot && typeof b.draftSnapshot === "object"
+        ? (b.draftSnapshot as import("@/lib/tsm/post-draft").TsmPostDraft)
+        : undefined,
+    tranzfortLoadId: typeof b.tranzfortLoadId === "string" ? b.tranzfortLoadId : undefined,
+    liveOnTranzfort: b.liveOnTranzfort === true,
+    superLoad: b.superLoad === true,
   });
 
   if ("error" in result && result.error) {
