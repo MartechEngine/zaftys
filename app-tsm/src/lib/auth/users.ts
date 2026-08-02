@@ -12,9 +12,10 @@ import {
 } from "@/lib/auth/auth-users-store";
 import { ensureAuthUsersHydrated } from "@/lib/db/domain-persistence";
 import { getOrgAccountForSession } from "@/lib/tsm/org-repository";
-import { canPublishToTranzfort } from "@/lib/tsm/org";
+import { canPublishToTranzfort, DEFAULT_TSM_ORG_ID } from "@/lib/tsm/org";
+import { TenancyError } from "@/lib/tsm/tenancy";
 
-/** Dev-only users — replace with DB / Fleetbase org users in production */
+/** Dev-only users — explicit pilot org (no silent fallback). */
 export const DEV_USERS: Array<SessionUser & { password: string }> = [
   {
     id: "u-admin",
@@ -23,6 +24,7 @@ export const DEV_USERS: Array<SessionUser & { password: string }> = [
     role: "admin",
     password: "dev",
     authSource: "auth_lite",
+    tsmOrgId: DEFAULT_TSM_ORG_ID,
   },
   {
     id: "u-dispatcher",
@@ -31,6 +33,7 @@ export const DEV_USERS: Array<SessionUser & { password: string }> = [
     role: "dispatcher",
     password: "dev",
     authSource: "auth_lite",
+    tsmOrgId: DEFAULT_TSM_ORG_ID,
   },
   {
     id: "u-fleet",
@@ -39,6 +42,7 @@ export const DEV_USERS: Array<SessionUser & { password: string }> = [
     role: "fleet_manager",
     password: "dev",
     authSource: "auth_lite",
+    tsmOrgId: DEFAULT_TSM_ORG_ID,
   },
   {
     id: "u-client",
@@ -47,6 +51,7 @@ export const DEV_USERS: Array<SessionUser & { password: string }> = [
     role: "client",
     password: "dev",
     authSource: "auth_lite",
+    tsmOrgId: DEFAULT_TSM_ORG_ID,
   },
 ];
 
@@ -70,6 +75,14 @@ function toSessionUser(user: SessionUser): SessionUser {
 /** Enrich seat / auth-lite session with org supplier when tsmOrgId is known. */
 export async function enrichSeatSession(user: SessionUser): Promise<SessionUser> {
   const base = toSessionUser(user);
+
+  if (base.authSource === "seat" && !base.tsmOrgId?.trim()) {
+    throw new TenancyError(
+      "ORG_REQUIRED",
+      "Team seat is missing tsmOrgId. Ask an admin to resend the invite.",
+    );
+  }
+
   if (!base.tsmOrgId && base.authSource !== "seat") {
     return {
       ...base,

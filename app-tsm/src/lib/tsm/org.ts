@@ -53,7 +53,9 @@ export const DEFAULT_TSM_ORG_ID = "org_zaftys_local";
  */
 export function orgIdForSupplier(supplierId: string): string {
   const id = supplierId.trim().toLowerCase();
-  if (!id) return DEFAULT_TSM_ORG_ID;
+  if (!id) {
+    throw new Error("orgIdForSupplier requires a non-empty supplierId");
+  }
   return `org_tz_${id}`;
 }
 

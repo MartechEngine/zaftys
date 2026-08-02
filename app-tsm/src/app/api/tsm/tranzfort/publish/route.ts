@@ -12,6 +12,7 @@ import {
 import { publishGateForMode } from "@/lib/tsm/live-honesty";
 import { appendPublishAudit } from "@/lib/tsm/publish-audit-store";
 import { persistPublishAuditRow } from "@/lib/db/domain-persistence";
+import { tenancyApiError } from "@/lib/tsm/tenancy-http";
 
 function asDraft(raw: unknown): TsmPostDraft | null {
   if (!raw || typeof raw !== "object") return null;
@@ -93,7 +94,14 @@ export async function POST(request: Request) {
   const draft = asDraft(body.draft ?? body);
   if (!draft) return apiError("VALIDATION", "draft object is required.");
 
-  const org = await getOrgAccountForSession(session);
+  let org: Awaited<ReturnType<typeof getOrgAccountForSession>>;
+  try {
+    org = await getOrgAccountForSession(session);
+  } catch (e) {
+    const err = tenancyApiError(e);
+    if (err) return err;
+    throw e;
+  }
   const roleAtPost = toTsmSeatRole(session.role);
   const mode = getBridgeMode();
 

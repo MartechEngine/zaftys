@@ -10,11 +10,13 @@ import type { SessionUser } from "@/lib/auth/types";
 export function PortalShell({
   user,
   demoUi = false,
+  orgLabel,
   children,
 }: {
   user: SessionUser;
   /** When true, show demo catalog banner (TSM_DEMO_UI=1 only). */
   demoUi?: boolean;
+  orgLabel?: string;
   children: React.ReactNode;
 }) {
   const pathname = usePathname();
@@ -23,7 +25,7 @@ export function PortalShell({
       <div data-portal-surface className="relative min-h-screen">
         <PortalBackground />
         <div className="relative z-10">
-          <AppShell pathname={pathname} user={user}>
+          <AppShell pathname={pathname} user={user} orgLabel={orgLabel}>
             {demoUi ? <DemoBanner /> : null}
             {children}
           </AppShell>

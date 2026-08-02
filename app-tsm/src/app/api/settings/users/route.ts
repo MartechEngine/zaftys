@@ -8,6 +8,7 @@ import {
 import { apiError, apiSuccess } from "@/lib/api-response";
 import { canManageSeats } from "@/lib/auth/seats";
 import { getOrgAccountForSession } from "@/lib/tsm/org-repository";
+import { tenancyApiError } from "@/lib/tsm/tenancy-http";
 
 export const dynamic = "force-dynamic";
 
@@ -15,7 +16,14 @@ export async function GET(request: Request) {
   const session = await getSession();
   if (!session) return apiError("UNAUTHORIZED", "Sign in required.", 401);
 
-  const org = await getOrgAccountForSession(session);
+  let org;
+  try {
+    org = await getOrgAccountForSession(session);
+  } catch (e) {
+    const err = tenancyApiError(e);
+    if (err) return err;
+    throw e;
+  }
   const { searchParams } = new URL(request.url);
   const q = searchParams.get("q") ?? undefined;
   const users = await listOrgUsers(q, org.id);
@@ -30,7 +38,14 @@ export async function POST(request: Request) {
     return apiError("FORBIDDEN", "Only company admins can invite team seats.", 403);
   }
 
-  const org = await getOrgAccountForSession(session);
+  let org;
+  try {
+    org = await getOrgAccountForSession(session);
+  } catch (e) {
+    const err = tenancyApiError(e);
+    if (err) return err;
+    throw e;
+  }
 
   let body: unknown;
   try {

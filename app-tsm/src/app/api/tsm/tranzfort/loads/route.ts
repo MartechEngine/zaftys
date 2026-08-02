@@ -4,6 +4,7 @@ import { getOrgAccountForSession } from "@/lib/tsm/org-repository";
 import { listSupplierLoads } from "@/lib/tsm/loads-client";
 import { ensureTsmOrgHydrated } from "@/lib/db/domain-persistence";
 import type { SupplierLoadTab } from "@/lib/tsm/loads-types";
+import { tenancyApiError } from "@/lib/tsm/tenancy-http";
 
 /**
  * My Loads — scoped to session org's linked supplier only.
@@ -14,7 +15,14 @@ export async function GET(request: Request) {
   if (!session) return apiError("UNAUTHORIZED", "Sign in required.", 401);
 
   await ensureTsmOrgHydrated();
-  const org = await getOrgAccountForSession(session);
+  let org;
+  try {
+    org = await getOrgAccountForSession(session);
+  } catch (e) {
+    const err = tenancyApiError(e);
+    if (err) return err;
+    throw e;
+  }
 
   // Never trust client-supplied supplier UUID — session/org only.
   const supplierId = org.tranzfortSupplierId || session.supplierId;

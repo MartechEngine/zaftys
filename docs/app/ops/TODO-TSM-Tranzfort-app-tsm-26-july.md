@@ -84,13 +84,14 @@ S0 push ──► S1 tenancy ──► S2 adapter (safe) ──► S3 postgres f
 
 Why first: selling multi-org and safe FB migration both need `tsmOrgId` isolation.
 
-- [ ] No silent fallback to `org_zaftys_local` for foreign suppliers
-- [ ] Audit LOS repos for org scope gaps
-- [ ] Support lookup email → org / supplier
-- [ ] Org B Google login smoke (cross-org empty/forbidden)
-- [ ] Hide fake OrgSwitcher orgs in production builds
+- [x] No silent fallback to `org_zaftys_local` when session org missing — throws `ORG_REQUIRED` **[2 Aug]**  
+- [~] Audit LOS repos for org scope gaps — **deferred S2–S3** (FB still global)  
+- [x] Support lookup email → org / supplier — `GET /api/tsm/tenancy/lookup`  
+- [x] Hide fake OrgSwitcher orgs in production — single chip  
+- [ ] Org B Google login smoke (cross-org empty/forbidden)  
+- [ ] Seat invites smoke Org B  
 
-#### S2 — Adapter only (safe refactor — do before any Postgres cutover)
+**Also:** DEV_USERS explicit pilot `tsmOrgId`; marketplace APIs return 403 on tenancy errors; tenancy status can report `unscoped`.
 
 Why next: unblocks S3/S4 without changing pilot behavior (`TSM_EXECUTION_BACKEND=fleetbase` default).
 
@@ -293,13 +294,13 @@ Ember clone · storefront in TSM · offline full-stack desktop with embedded DB 
 
 **Goal:** Two verified suppliers on one TSM host cannot see or post as each other.
 
-- [~] Bootstrap: Google Admin → dedicated org (`orgIdForSupplier`) + map reuse by supplier **[scaffolded]**  
-- [ ] **No silent fallback** to `org_zaftys_local` when session org missing / wrong supplier  
+- [ ] **No silent fallback** to `org_zaftys_local` when session org missing / wrong supplier **[done S1 — throws ORG_REQUIRED]**  
 - [x] Tenancy helpers module + status BFF **[scaffold 2 Aug]** — `lib/tsm/tenancy.ts`, `GET /api/tsm/tenancy/status`  
-- [ ] Audit LOS repositories (shipments, fleet, billing) for `tsmOrgId` scope gaps  
-- [ ] Support lookup: email → org / supplier / verification  
-- [ ] Hide decorative OrgSwitcher fake orgs in production builds  
-- [ ] Seat invites always bind `tsmOrgId` from Admin session (verify smoke Org B)
+- [x] Support lookup `GET /api/tsm/tenancy/lookup` **[S1]**  
+- [x] OrgSwitcher: no fake multi-org dropdown in live builds **[S1]**  
+- [~] Audit LOS repositories (shipments, fleet, billing) for `tsmOrgId` scope gaps — **S2–S3**  
+- [ ] Seat invites smoke Org B  
+- [ ] Company A + Company B Google login smoke; cross-org API empty/forbidden  
 
 **Exit:** Company A + Company B Google login smoke; cross-org API returns empty/forbidden.
 

@@ -12,13 +12,13 @@ import { ActiveSparkline } from "@/components/app/charts/charts";
 import { glassCardHover } from "@/lib/surface";
 import { cn } from "@/lib/utils";
 
-export function TopBar({ user }: { user: SessionUser }) {
+export function TopBar({ user, orgLabel }: { user: SessionUser; orgLabel?: string }) {
   return (
     <header className="glass mx-3 mt-3 flex shrink-0 items-center gap-3 p-3 pl-4">
       <GlobalSearchTrigger />
       <div className="ml-auto flex items-center gap-2">
         <DataSourceBadge />
-        <OrgSwitcher />
+        <OrgSwitcher orgLabel={orgLabel} />
         <NotificationBell />
         <UserMenu initialUser={user} />
       </div>
@@ -30,16 +30,18 @@ export function AppShell({
   children,
   pathname,
   user,
+  orgLabel,
 }: {
   children: React.ReactNode;
   pathname: string;
   user: SessionUser;
+  orgLabel?: string;
 }) {
   return (
     <div className="flex h-screen overflow-hidden">
       <CollapsibleSidebar pathname={pathname} user={user} />
       <div className="flex min-w-0 flex-1 flex-col">
-        <TopBar user={user} />
+        <TopBar user={user} orgLabel={orgLabel} />
         <main className="flex-1 overflow-y-auto px-4 py-4 md:px-5 md:py-5">{children}</main>
       </div>
     </div>

@@ -3,34 +3,44 @@ import {
   replaceTsmOrgAccount,
   updateTsmOrgAccount,
 } from "@/lib/tsm/org-account-store";
-import type { TsmOrgAccount } from "@/lib/tsm/org";
+import {
+  DEFAULT_TSM_ORG_ID,
+  defaultTsmOrgAccount,
+  type TsmOrgAccount,
+} from "@/lib/tsm/org";
 import { ensureTsmOrgHydrated, persistTsmOrgAccount } from "@/lib/db/domain-persistence";
+import {
+  assertSessionTenancy,
+  resolveSessionOrgId,
+} from "@/lib/tsm/tenancy";
 
 export async function getOrgAccount(): Promise<TsmOrgAccount> {
   await ensureTsmOrgHydrated();
   return getTsmOrgAccount();
 }
 
-/** Prefer session org (multi-supplier); never bleed into a foreign pilot org. */
+/**
+ * Prefer session org (multi-supplier).
+ * Never returns a foreign active singleton when session org is missing —
+ * throws TenancyError ORG_REQUIRED instead of falling back to org_zaftys_local.
+ */
 export async function getOrgAccountForSession(session: {
   tsmOrgId?: string | null;
   supplierId?: string | null;
 }): Promise<TsmOrgAccount> {
   await ensureTsmOrgHydrated();
-  const { getTsmOrgAccountById, setActiveTsmOrgId, getTsmOrgAccount, replaceTsmOrgAccount } =
+  const { getTsmOrgAccountById, setActiveTsmOrgId, replaceTsmOrgAccount } =
     await import("@/lib/tsm/org-account-store");
-  const { orgIdForSupplier, DEFAULT_TSM_ORG_ID } = await import("@/lib/tsm/org");
-  const { resolveSessionOrgId } = await import("@/lib/tsm/tenancy");
 
   const expectedId = resolveSessionOrgId(session);
   const found = getTsmOrgAccountById(expectedId);
   if (found) {
     setActiveTsmOrgId(expectedId);
+    assertSessionTenancy(session, found);
     return found;
   }
 
-  // Session asks for a dedicated org that is not hydrated yet — materialize a shell
-  // instead of returning a different company's active singleton.
+  // Dedicated org not hydrated yet — materialize a shell (never swap to another company).
   if (expectedId !== DEFAULT_TSM_ORG_ID) {
     const shell: TsmOrgAccount = {
       id: expectedId,
@@ -42,10 +52,22 @@ export async function getOrgAccountForSession(session: {
     };
     replaceTsmOrgAccount(shell);
     await persistTsmOrgAccount(shell);
+    assertSessionTenancy(session, shell);
     return shell;
   }
 
-  return getTsmOrgAccount();
+  // Explicit pilot org id on session — load or seed pilot only (not unrelated active).
+  const pilot = getTsmOrgAccountById(DEFAULT_TSM_ORG_ID);
+  if (pilot) {
+    setActiveTsmOrgId(DEFAULT_TSM_ORG_ID);
+    assertSessionTenancy(session, pilot);
+    return pilot;
+  }
+  const seed = defaultTsmOrgAccount();
+  replaceTsmOrgAccount(seed);
+  await persistTsmOrgAccount(seed);
+  assertSessionTenancy(session, seed);
+  return seed;
 }
 
 export async function saveOrgAccount(
