@@ -75,8 +75,9 @@ S0 push ──► S1 tenancy ──► S2 adapter (safe) ──► S3 postgres f
 #### S0 — Checkpoint (do now)
 
 - [x] Architecture locked (ADR-008/009, DL-9…11, ai-agents.md)
-- [ ] `git commit` + `git push -u origin app-dev-mode` (rollback point before FB cutover)
-- [ ] Note commit SHA in this section after push
+- [x] Local `git commit` on `app-dev-mode` — **`24fbdb9`** (2026-08-02) — rollback point
+- [ ] `git push -u origin app-dev-mode` (blocked until GitHub account has `workflow` scope on MartechEngine/zaftys)
+- [x] Note commit SHA: `24fbdb9ca2a91764074739593d2b6841f5a7e8af`
 
 #### S1 — Tenancy first (NEXT after push)
 
