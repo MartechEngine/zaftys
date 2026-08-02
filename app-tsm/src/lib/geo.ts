@@ -10,6 +10,13 @@ const CITY_COORDS: Record<string, GeoPoint> = {
   Wardha: { lat: 20.7453, lng: 78.6022 },
   Pune: { lat: 18.5204, lng: 73.8567 },
   Chandrapur: { lat: 19.9615, lng: 79.2961 },
+  Jalna: { lat: 19.841, lng: 75.8864 },
+  Nashik: { lat: 19.9975, lng: 73.7898 },
+  Mumbai: { lat: 19.076, lng: 72.8777 },
+  Delhi: { lat: 28.6139, lng: 77.209 },
+  Jaipur: { lat: 26.9124, lng: 75.7873 },
+  Bellary: { lat: 15.1394, lng: 76.9214 },
+  Ballari: { lat: 15.1394, lng: 76.9214 },
 };
 
 export const DEFAULT_GPS_STALE_MINUTES = 15;

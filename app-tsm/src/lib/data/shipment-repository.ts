@@ -82,6 +82,22 @@ function withGeo(record: ShipmentRecord): ShipmentRecord {
     // Keep real GPS only; never invent a moving pin from city corridors.
     if (current && isValidGps(current.lat, current.lng)) return record;
 
+    const fromFields =
+      record.originLat != null &&
+      record.originLng != null &&
+      record.destinationLat != null &&
+      record.destinationLng != null &&
+      isValidGps(Number(record.originLat), Number(record.originLng)) &&
+      isValidGps(Number(record.destinationLat), Number(record.destinationLng))
+        ? {
+            origin: { lat: Number(record.originLat), lng: Number(record.originLng) },
+            destination: {
+              lat: Number(record.destinationLat),
+              lng: Number(record.destinationLng),
+            },
+          }
+        : undefined;
+
     const synthetic = geoForShipment({
       id: record.id,
       origin: record.origin,
@@ -89,7 +105,11 @@ function withGeo(record: ShipmentRecord): ShipmentRecord {
       status: record.status,
       updatedAt: record.updatedAt,
     });
-    if (!synthetic) {
+    const endpoints = fromFields ?? (synthetic
+      ? { origin: synthetic.origin, destination: synthetic.destination }
+      : undefined);
+
+    if (!endpoints) {
       if (!record.geo) return record;
       return {
         ...record,
@@ -103,8 +123,8 @@ function withGeo(record: ShipmentRecord): ShipmentRecord {
     return {
       ...record,
       geo: {
-        origin: synthetic.origin,
-        destination: synthetic.destination,
+        origin: endpoints.origin,
+        destination: endpoints.destination,
         gpsStale: true,
       },
     };

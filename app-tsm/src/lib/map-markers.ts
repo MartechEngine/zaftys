@@ -20,16 +20,19 @@ export function vehicleMarkersFromShipment(input: {
   driver?: string;
   geo?: ShipmentGeo;
 }): MapVehicleMarker | null {
-  if (!input.geo?.current) return null;
+  // Prefer live GPS; fall back to origin centroid so the map isn't empty
+  // after Postgres cutover when telematics positions are sparse (honest stale).
+  const pin = input.geo?.current ?? input.geo?.origin;
+  if (!pin) return null;
   return {
     id: input.id,
     shipmentId: input.id,
     publicId: input.publicId,
-    lat: input.geo.current.lat,
-    lng: input.geo.current.lng,
+    lat: pin.lat,
+    lng: pin.lng,
     vehicle: input.vehicle,
     driver: input.driver,
     status: input.status,
-    stale: input.geo.gpsStale,
+    stale: Boolean(input.geo?.gpsStale || !input.geo?.current),
   };
 }

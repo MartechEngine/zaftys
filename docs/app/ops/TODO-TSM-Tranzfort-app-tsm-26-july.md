@@ -127,8 +127,8 @@ Why next: unblocks S3/S4 without changing pilot behavior (`TSM_EXECUTION_BACKEND
 - [x] Pilot import `POST /api/ops/import-fleetbase` + My Loads link/mirror  
 - [x] Publish writes `tranzfortId` back onto source shipment  
 - [x] Shipments list shows TSM-posted live loads for pilot org (Cement Blocks Pune→Jalna linked) **[2 Aug]**  
-- [ ] Create / assign / status / clients / map / marketplace desks smoke after import  
-- [ ] Honesty: no silent FB dependency in default health path (already soft)  
+- [x] Create / assign / status / clients / map / marketplace desks smoke after import **[2 Aug]**  
+- [x] Honesty: health ok on postgres without Fleetbase reachable; map falls back to origin pin when GPS sparse  
 
 #### S5 — Hosted platform + thin desktop — **DEFERRED (2 Aug)**
 
@@ -785,15 +785,14 @@ OTP-via-notification · full chat clone · KYC on desktop · TZ Auth per seat ·
 
 | Now (open) | Deferred | Later | Last |
 |------------|----------|-------|------|
-| **Parity smoke** after import · **S1** Org B · **S6** LR | **S5** staging · **S4b** FB delete | S5 resume | **S7** AI |
+| **S1** Org B smokes · **S6** LR | **S5** staging · **S4b** FB delete (parity gate green — still keep FB until you confirm) | S5 resume | **S7** AI |
 
-1. ~~**S0–S4** cutover~~ **done** (FB escape kept)  
-2. **Parity:** finish post-import smoke (assign/map/marketplace) — **do not delete FB yet**  
+1. ~~**S0–S4** cutover + pilot import + post-import API smoke~~ **done**  
+2. **S4b:** Hard-delete Fleetbase only when you explicitly confirm (parity gate checked; escape still available)  
 3. **S1** Org B Google + seat invite smokes  
 4. **S6** LR PDF  
-5. **S4b** hard-delete Fleetbase only after parity gate green  
-6. **S5 (deferred)** staging/WebView  
-7. **S7 LAST:** AI  
+5. **S5 (deferred)** staging/WebView  
+6. **S7 LAST:** AI  
 
 Do **not** embed Next.js/service_role/FB in the desktop binary. Do **not** start AI before S6.
 
