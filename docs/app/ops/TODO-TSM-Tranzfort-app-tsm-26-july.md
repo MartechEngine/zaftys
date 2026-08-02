@@ -2,8 +2,8 @@
 
 **Document ID:** `TODO-TSM-Tranzfort-app-tsm-26-july`  
 **Created:** 26 July 2026  
-**Updated:** 2 August 2026 (dev sequence S0–S7 locked; AI last; git checkpoint before FB cutover)  
-**Status:** **Active — S4 postgres cutover smoked; S5 desktop URL wiring started (staging host pending)**  
+**Updated:** 2 August 2026 (S4 postgres smoked; S5 staging/WebView **deferred**)  
+**Status:** **Active — S4 postgres + pilot import; FB delete BLOCKED until parity; S5 deferred**  
 
 **Architecture ADRs (locked 2 Aug):**
 - [ADR-008](../decisions/008-tsm-owns-execution.md) — **TSM Postgres owns execution; drop Fleetbase** (supersedes ADR-001)
@@ -85,7 +85,7 @@ S0 push ──► S1 tenancy ──► S2 adapter (safe) ──► S3 postgres f
 Why first: selling multi-org and safe FB migration both need `tsmOrgId` isolation.
 
 - [x] No silent fallback to `org_zaftys_local` when session org missing — throws `ORG_REQUIRED` **[2 Aug]**  
-- [~] Audit LOS repos for org scope gaps — **deferred S2–S3** (FB still global)  
+- [~] Audit LOS repos for org scope gaps — **partial** (Postgres store is org-scoped; broader audit still open)  
 - [x] Support lookup email → org / supplier — `GET /api/tsm/tenancy/lookup`  
 - [x] Hide fake OrgSwitcher orgs in production — single chip  
 - [ ] Org B Google login smoke (cross-org empty/forbidden)  
@@ -100,7 +100,7 @@ Why next: unblocks S3/S4 without changing pilot behavior (`TSM_EXECUTION_BACKEND
 - [x] `ExecutionStore` interface + `FleetbaseExecutionStore` + postgres stub **[2 Aug]** — `lib/execution/*`  
 - [x] Repos/fleet APIs call store; shipment list path does not use `getFleetbaseClient` directly  
 - [x] Clients + `run-tranzfort-sync` use ExecutionStore on postgres (S4)  
-- [ ] Smoke: existing pilot shipments/fleet still work unchanged  
+- [x] Smoke: pilot shipments/fleet on live backend **[S4 postgres]**  
 
 #### S3 — Postgres LOS opt-in (flag off for pilot until green)
 
@@ -108,7 +108,7 @@ Why next: unblocks S3/S4 without changing pilot behavior (`TSM_EXECUTION_BACKEND
 - [x] Implement `PostgresExecutionStore` for list/get/create/assign/status/patch + fleet  
 - [x] Org scope: session `tsmOrgId` or `TSM_EXECUTION_ORG_ID` (smoke)  
 - [x] Run `npm run db:migrate` on local **[2 Aug — applied 0002_tsm_execution]**  
-- [ ] Dev/smoke org on `TSM_EXECUTION_BACKEND=postgres`; pilot stays on `fleetbase` until ready  
+- [x] Postgres default when `DATABASE_URL` set (S4 supersedes “pilot stays on fleetbase”)  
 - [x] Create / list / assign / status smoke on Postgres org **[S4]**  
 
 #### S4 — Cutover (high risk — only after S0 push + S3 green)
@@ -118,18 +118,29 @@ Why next: unblocks S3/S4 without changing pilot behavior (`TSM_EXECUTION_BACKEND
 - [x] `isLiveFleetbaseMode` = fleetbase only (clients use local store on postgres)  
 - [x] Health / badge report TSM Postgres; FB optional escape  
 - [x] Pilot smoke on postgres: health + create/list/assign + fleet + marketplace desks **[2 Aug]**  
-- [~] Keep `lib/fleetbase/*` escape hatch (hard delete = S4b / Phase D — defer until staging)  
-- [ ] Full delete of Fleetbase client (S4b)  
+- [~] Keep `lib/fleetbase/*` escape hatch — **do not hard-delete until parity gate below is green**  
+- [ ] Full delete of Fleetbase client (S4b) — **BLOCKED** until parity gate  
 
-#### S5 — Hosted platform + thin desktop
+**Parity gate before S4b (FB delete):**
 
-- [~] Desktop: `TSM_DESKTOP_URL` apply script + secret scan gate **[2 Aug]**  
-- [ ] Staging HTTPS host + `TSM_PUBLIC_URL` (deploy still open)  
-- [ ] Append Google redirect for staging callback (append only — never rotate Web client)  
-- [ ] Tauri → staging HTTPS; Google login smoke in WebView2  
-- [ ] Code signing + auto-update (later)  
+- [x] Root cause: Postgres cutover hid pre-cutover FB shipments (e.g. Cement Blocks Pune→Jalna)  
+- [x] Pilot import `POST /api/ops/import-fleetbase` + My Loads link/mirror  
+- [x] Publish writes `tranzfortId` back onto source shipment  
+- [x] Shipments list shows TSM-posted live loads for pilot org (Cement Blocks Pune→Jalna linked) **[2 Aug]**  
+- [ ] Create / assign / status / clients / map / marketplace desks smoke after import  
+- [ ] Honesty: no silent FB dependency in default health path (already soft)  
 
-#### S6 — Documents (LR) — before AI
+#### S5 — Hosted platform + thin desktop — **DEFERRED (2 Aug)**
+
+Scaffold + URL/secret gates done; **do not** pick/deploy staging or WebView Google smoke until resumed.
+
+- [x] Desktop scaffold + `TSM_DESKTOP_URL` apply + `check-no-secrets` **[2 Aug]**  
+- [ ] ~~Staging HTTPS host + `TSM_PUBLIC_URL`~~ — **DEFERRED**  
+- [ ] ~~Append Google redirect for staging callback~~ — **DEFERRED**  
+- [ ] ~~Tauri → staging HTTPS; Google login smoke in WebView2~~ — **DEFERRED**  
+- [ ] Code signing + auto-update — **DEFERRED** (with S5 resume)  
+
+#### S6 — Documents (LR) — before AI — **NEXT product track when resuming after deferrals**
 
 - [ ] Templates + LR PDF generate/store/print
 - [ ] No Copilot yet
@@ -162,14 +173,16 @@ Desktop / PWA / Browser ──HTTPS──► Hosted TSM (Next.js + Postgres)
 | Customer Docker | **No** — Docker is ops/dev (or rare on-prem server), not laptop install |
 | Dev order | **S0→S7** above; **AI last** |
 
-### Deferred (do not pull ahead of S1 / S2)
+### Deferred (do not pull ahead unless resumed)
 
 | Item | Why deferred |
 |------|----------------|
+| **S5 staging deploy + WebView Google smoke** | **Deferred 2 Aug** — resume when ready to pick/host URL |
+| **S5 code signing / auto-update** | With S5 resume |
 | **AI Copilot / BYOK / agents** | **S7 last** — after LR + stable LOS |
 | **OTP via TZ notification** | Google is primary Admin auth |
 | **W11** formal local-vs-live regression | Correctness already in code |
-| **K** Full QA matrix | After tenancy harden (S1) |
+| **K** Full QA matrix | After Org B tenancy smokes |
 | Full chat **send/reply** clone | Non-goal — read-only inbox |
 | Approximate-pin / Google+OSRM places | Offline pack enough for pilot |
 | Full sitemap ~151 / VROOM / deep telematics | After Postgres LOS MVP (S4) |
@@ -216,9 +229,9 @@ Ember clone · storefront in TSM · offline full-stack desktop with embedded DB 
 - [x] Define `ExecutionStore` (shipments, drivers, vehicles, positions) **[S2]**  
 - [x] Move LOS usage behind `FleetbaseExecutionStore` **[S2]**  
 - [x] Repositories call interface; env `TSM_EXECUTION_BACKEND=fleetbase | postgres`  
-- [~] Clients still direct FB (follow-up)  
+- [x] Clients off FB when backend ≠ fleetbase (`isLiveFleetbaseMode`) **[S4]**  
 
-**Exit:** Behavior identical; adapter boundary exists. **[met for shipments/fleet]**
+**Exit:** Behavior identical; adapter boundary exists. **[met]**
 
 #### Phase B — Postgres store
 
@@ -233,10 +246,10 @@ Ember clone · storefront in TSM · offline full-stack desktop with embedded DB 
 - [x] Default postgres when `DATABASE_URL` set (override: `TSM_EXECUTION_BACKEND=fleetbase`) **[S4]**  
 - [x] Clients use local store when not fleetbase (`isLiveFleetbaseMode` = FB only)  
 - [x] Retarget TZ→ExecutionStore shipment sync (no FB createOrder)  
-- [~] Map/track via TSM positions (sparse OK + honesty)  
-- [ ] Pilot import script (optional)  
+- [x] Retarget or remove TZ→FB shadow sync  
+- [x] Pilot import script (optional) — `POST /api/ops/import-fleetbase` / `npm run db:import-fleetbase` **[2 Aug]**  
 
-**Exit:** App usable with Fleetbase process **stopped** (escape hatch only if needed).
+**Exit:** App usable with Fleetbase process **stopped** (escape hatch only if needed) — **not yet**; keep FB until S4b parity gate.
 
 #### Phase D — Delete Fleetbase
 
@@ -307,20 +320,20 @@ Ember clone · storefront in TSM · offline full-stack desktop with embedded DB 
 
 **Goal:** Two verified suppliers on one TSM host cannot see or post as each other.
 
-- [ ] **No silent fallback** to `org_zaftys_local` when session org missing / wrong supplier **[done S1 — throws ORG_REQUIRED]**  
+- [x] **No silent fallback** to `org_zaftys_local` when session org missing / wrong supplier **[S1 — throws ORG_REQUIRED]**  
 - [x] Tenancy helpers module + status BFF **[scaffold 2 Aug]** — `lib/tsm/tenancy.ts`, `GET /api/tsm/tenancy/status`  
 - [x] Support lookup `GET /api/tsm/tenancy/lookup` **[S1]**  
 - [x] OrgSwitcher: no fake multi-org dropdown in live builds **[S1]**  
-- [~] Audit LOS repositories (shipments, fleet, billing) for `tsmOrgId` scope gaps — **S2–S3**  
+- [~] Audit LOS repositories (shipments, fleet, billing) for `tsmOrgId` scope gaps — Postgres store org-scoped; broader audit open  
 - [ ] Seat invites smoke Org B  
 - [ ] Company A + Company B Google login smoke; cross-org API empty/forbidden  
 
 **Exit:** Company A + Company B Google login smoke; cross-org API returns empty/forbidden.
 
-### Horizon 2 — Hosted platform
+### Horizon 2 — Hosted platform — **DEFERRED (2 Aug)**
 
-- [ ] Staging + prod HTTPS (`TSM_PUBLIC_URL`)  
-- [ ] Supabase Google redirect allowlist for staging/prod callbacks (**append only**)  
+- [ ] Staging + prod HTTPS (`TSM_PUBLIC_URL`) — **DEFERRED**  
+- [ ] Supabase Google redirect allowlist for staging/prod callbacks (**append only**) — **DEFERRED**  
 - [ ] Session secrets rotation; health / logs / backups  
 - [ ] Entitlements: seat cap + `daily_post_limit` / plan hooks  
 
@@ -331,8 +344,8 @@ Ember clone · storefront in TSM · offline full-stack desktop with embedded DB 
 - [x] Packaging decision locked: **Tauri thin shell → hosted HTTPS** (not embedded Next/DB)  
 - [x] Scaffold `app-tsm/desktop/` (Tauri config + README) **[2 Aug]**  
 - [x] `TSM_DESKTOP_URL` apply + `check-no-secrets` before build **[S5]**  
-- [ ] Point shell at staging URL; Google OAuth smoke in WebView2  
-- [ ] Windows code signing + auto-update (stable/beta)  
+- [ ] Point shell at staging URL; Google OAuth smoke in WebView2 — **DEFERRED** (with S5)  
+- [ ] Windows code signing + auto-update (stable/beta) — **DEFERRED**  
 - [ ] Deep links optional; “Open TranZfort” for KYC/chat  
 
 **Exit:** Signed Windows installer; security review confirms zero secrets in binary; same feature set as web.
@@ -770,19 +783,19 @@ OTP-via-notification · full chat clone · KYC on desktop · TZ Auth per seat ·
 
 ### Recommended next action
 
-| Now | Next | Later | Last |
-|-----|------|-------|------|
-| **S0** push `app-dev-mode` | **S1** tenancy harden | **S2→S4** drop FB safely | **S7** AI |
+| Now (open) | Deferred | Later | Last |
+|------------|----------|-------|------|
+| **Parity smoke** after import · **S1** Org B · **S6** LR | **S5** staging · **S4b** FB delete | S5 resume | **S7** AI |
 
-1. **S0:** Commit + push this branch (rollback SHA).  
-2. **S1:** Harden multi-tenant isolation.  
-3. **S2:** `ExecutionStore` adapter only (pilot still on Fleetbase).  
-4. **S3→S4:** Postgres flag → cutover → delete FB (smoke; roll back to S0 if broken).  
-5. **S5:** Hosted URL + Tauri.  
-6. **S6:** LR PDF.  
-7. **S7 LAST:** AI agents per [ai-agents.md](../product/ai-agents.md).  
+1. ~~**S0–S4** cutover~~ **done** (FB escape kept)  
+2. **Parity:** finish post-import smoke (assign/map/marketplace) — **do not delete FB yet**  
+3. **S1** Org B Google + seat invite smokes  
+4. **S6** LR PDF  
+5. **S4b** hard-delete Fleetbase only after parity gate green  
+6. **S5 (deferred)** staging/WebView  
+7. **S7 LAST:** AI  
 
-Do **not** embed Next.js/service_role/FB in the desktop binary. Do **not** start AI before S6. Do **not** default-off Fleetbase until S0 is pushed.
+Do **not** embed Next.js/service_role/FB in the desktop binary. Do **not** start AI before S6.
 
 ---
 
@@ -1189,12 +1202,13 @@ Verified TZ supplier with existing loads
 
 > **Superseded by Development sequence S0–S7** at top of this file (2 Aug). Historical marketplace order kept for archaeology.
 
-**Current:** S0 git push → **S1 tenancy** → S2 adapter → S3/S4 drop FB → S5 hosted/desktop → S6 LR → **S7 AI last**.
+**Current:** S0–S4 **done** (postgres default smoked). **S5 staging/WebView deferred.** Open: S1 Org B smokes · S4b FB delete · S6 LR → **S7 AI last**.
 
 0. ~~Pilot prep~~ / L1 / J / keys / Google / seats / marketplace desks — **mostly done** (see Snapshot)  
-8. ~~M seats / N desktop / O LOS~~ — seats done; desktop = S5; LOS tenancy = S1 + S2–S4  
+8. ~~M seats / N desktop scaffold / O LOS cutover~~ — seats done; desktop scaffold done; LOS = S4 done  
 9. **D** places — deferred  
-10. **K** QA matrix — after S1  
+10. **K** QA matrix — after Org B smokes  
+11. **S5 staging** — **deferred 2 Aug**  
 
 **Optional:** H live UUID paste only if needed (ops).
 

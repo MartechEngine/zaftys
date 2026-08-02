@@ -26,6 +26,7 @@
     "db:pilot-cleanup": "node scripts/pilot-cleanup-tsm.mjs",
     "db:purge-smoke": "node scripts/purge-smoke-docs.mjs",
     "db:purge-fleetbase": "node scripts/purge-fleetbase-smoke.mjs",
+    "db:import-fleetbase": "node scripts/import-fleetbase-pilot.mjs",
     "db:inspect": "node scripts/inspect-local-docs.mjs",
     "catalog:sync": "node scripts/sync-tz-catalogs.mjs",
     "catalog:sync:materials": "node scripts/sync-tz-catalogs.mjs --materials-only",

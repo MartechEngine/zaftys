@@ -1,6 +1,6 @@
 # TSM Desktop (S5 / Horizon 3) — thin Tauri shell
 
-**Status:** URL wiring + secret scan (2 Aug 2026). Staging host still pending.  
+**Status:** Scaffold + URL/secret gates done (2 Aug 2026). **Staging host + WebView Google smoke deferred** — resume when product picks a URL.  
 **Rule:** This binary loads a **hosted** TSM HTTPS URL. It must **never** embed `TRANZFORT_SERVICE_KEY`, Postgres URLs, Fleetbase, or run Next.js locally for production customers.
 
 **Locked with:** [ADR-008](../../../docs/app/decisions/008-tsm-owns-execution.md), [ADR-007](../../../docs/app/decisions/007-local-docker-and-app-db.md), TODO S5 / DL-11.
@@ -38,7 +38,9 @@ npm run desktop:dev
 npm run desktop:build
 ```
 
-## Staging checklist (S5)
+## Staging checklist (S5) — **DEFERRED**
+
+Resume later:
 
 1. Deploy Next.js + Postgres; set `TSM_PUBLIC_URL=https://…`  
 2. Append `https://…/api/auth/tranzfort/callback` on Supabase Google redirects (**append only**)  

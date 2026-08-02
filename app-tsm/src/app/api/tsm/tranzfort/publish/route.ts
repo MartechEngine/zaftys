@@ -13,6 +13,7 @@ import { publishGateForMode } from "@/lib/tsm/live-honesty";
 import { appendPublishAudit } from "@/lib/tsm/publish-audit-store";
 import { persistPublishAuditRow } from "@/lib/db/domain-persistence";
 import { tenancyApiError } from "@/lib/tsm/tenancy-http";
+import { updateShipmentFields } from "@/lib/data/shipment-repository";
 
 function asDraft(raw: unknown): TsmPostDraft | null {
   if (!raw || typeof raw !== "object") return null;
@@ -129,6 +130,13 @@ export async function POST(request: Request) {
   if (mode === "mock") {
     const loadId = `tz-mock-${draft.idempotencyKey.slice(0, 24)}`;
     await audit("mock", { loadId });
+    if (draft.sourceShipmentId) {
+      try {
+        await updateShipmentFields(draft.sourceShipmentId, { tranzfortId: loadId });
+      } catch {
+        /* non-fatal in mock */
+      }
+    }
     return apiSuccess({
       loadId,
       mode: "mock",
@@ -136,6 +144,7 @@ export async function POST(request: Request) {
       company: org.tradeName,
       message: `Mock Super Load publish as ${org.tradeName}. Posts as company; your name is recorded for audit only.`,
       roleAtPost,
+      sourceShipmentId: draft.sourceShipmentId ?? null,
     });
   }
 
@@ -171,6 +180,18 @@ export async function POST(request: Request) {
     });
     const loadId = await rpcPublishTsmLoadAsSuper(org, draft);
     await audit("success", { loadId });
+    // Keep LOS shipment linked to marketplace load (was missing — caused empty Shipments after FB→Postgres).
+    if (draft.sourceShipmentId) {
+      try {
+        await updateShipmentFields(draft.sourceShipmentId, { tranzfortId: loadId });
+      } catch (linkErr) {
+        console.warn(
+          "[publish] could not link tranzfortId on shipment",
+          draft.sourceShipmentId,
+          linkErr,
+        );
+      }
+    }
     return apiSuccess({
       loadId,
       mode: "live",
@@ -178,6 +199,7 @@ export async function POST(request: Request) {
       company: org.tradeName,
       message: `Published to TranZfort as Super Load for ${org.tradeName}.`,
       roleAtPost,
+      sourceShipmentId: draft.sourceShipmentId ?? null,
     });
   } catch (e) {
     const message = e instanceof Error ? e.message : "publish_failed";

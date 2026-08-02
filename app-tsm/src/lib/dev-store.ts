@@ -806,6 +806,8 @@ export type ShipmentFieldsPatch = {
   driverId?: string;
   vehicle?: string;
   vehicleId?: string;
+  /** Link marketplace Super Load after publish. */
+  tranzfortId?: string;
   networkListing?: NetworkListingMirror | null;
 };
 
@@ -824,6 +826,12 @@ export function updateShipmentFields(id: string, patch: ShipmentFieldsPatch) {
   if (patch.originType !== undefined) shipment.originType = patch.originType;
   if (patch.driver !== undefined) shipment.driver = patch.driver;
   if (patch.vehicle !== undefined) shipment.vehicle = patch.vehicle;
+  if (patch.tranzfortId !== undefined) {
+    shipment.tranzfortId = patch.tranzfortId;
+    shipment.tranzfortTripIds = Array.from(
+      new Set([...(shipment.tranzfortTripIds ?? []), patch.tranzfortId]),
+    );
+  }
   if (patch.networkListing !== undefined) {
     if (patch.networkListing === null) delete shipment.networkListing;
     else shipment.networkListing = patch.networkListing;

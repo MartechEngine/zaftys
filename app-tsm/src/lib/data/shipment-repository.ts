@@ -401,7 +401,14 @@ export async function updateShipmentFields(id: string, patch: ShipmentFieldsPatc
   if (isLiveExecutionMode()) {
     try {
       const fbPatch: Record<string, unknown> = {};
-      if (patch.client !== undefined || patch.commodity !== undefined || patch.tonnageMt !== undefined || patch.lrNumber !== undefined || patch.originType !== undefined) {
+      if (
+        patch.client !== undefined ||
+        patch.commodity !== undefined ||
+        patch.tonnageMt !== undefined ||
+        patch.lrNumber !== undefined ||
+        patch.originType !== undefined ||
+        patch.tranzfortId !== undefined
+      ) {
         fbPatch.meta = {
           ...(patch.client !== undefined ? { client: patch.client } : {}),
           ...(patch.commodity !== undefined ? { commodity: patch.commodity } : {}),
@@ -410,6 +417,9 @@ export async function updateShipmentFields(id: string, patch: ShipmentFieldsPatc
             : {}),
           ...(patch.lrNumber !== undefined ? { lr_number: patch.lrNumber } : {}),
           ...(patch.originType !== undefined ? { origin_type: patch.originType } : {}),
+          ...(patch.tranzfortId !== undefined
+            ? { tranzfort_id: patch.tranzfortId }
+            : {}),
         };
       }
       if (patch.origin !== undefined) {

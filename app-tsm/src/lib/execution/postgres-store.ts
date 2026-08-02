@@ -420,4 +420,15 @@ export class PostgresExecutionStore implements ExecutionStore {
         },
       });
   }
+
+  /** Upsert a full domain record (pilot import / TZ mirror). Preserves `record.id`. */
+  async putShipmentRecord(record: ShipmentRecord): Promise<ShipmentRecord> {
+    const next: ShipmentRecord = {
+      ...record,
+      documents: [...(record.documents ?? [])],
+      updatedAt: nowIso(),
+    };
+    await this.upsertShipment(next);
+    return next;
+  }
 }
