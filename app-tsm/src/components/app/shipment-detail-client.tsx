@@ -381,6 +381,11 @@ export function ShipmentDetailClient({ shipment }: { shipment: ShipmentRecord })
                       <span className="text-xs text-label uppercase">{doc.type}</span>
                       <span className="min-w-0 flex-1 truncate font-medium text-heading">
                         {doc.name}
+                        {doc.voidedAt ? (
+                          <span className="ml-2 text-[10px] font-normal text-muted-foreground">
+                            voided
+                          </span>
+                        ) : null}
                       </span>
                       {doc.storageKey ? (
                         <a
@@ -405,36 +410,82 @@ export function ShipmentDetailClient({ shipment }: { shipment: ShipmentRecord })
                   router.refresh();
                 }}
               />
-              <Button
-                type="button"
-                variant="outline"
-                className="mt-3 w-full sm:w-auto"
-                disabled={busy}
-                onClick={() => {
-                  void (async () => {
-                    setBusy(true);
-                    try {
-                      const result = await api.generateShipmentLr(current.id);
-                      setCurrent(result.shipment);
-                      toast.success(`LR ${result.lrNumber} generated`);
-                      window.open(
-                        result.stored
-                          ? api.downloadDocumentUrl(result.documentId)
-                          : `/api/shipments/${current.id}/lr`,
-                        "_blank",
-                        "noopener,noreferrer",
-                      );
-                      router.refresh();
-                    } catch (e) {
-                      toast.error(e instanceof Error ? e.message : "LR failed");
-                    } finally {
-                      setBusy(false);
-                    }
-                  })();
-                }}
-              >
-                {busy ? "Generating LR…" : "Generate LR PDF"}
-              </Button>
+              <div className="mt-3 flex flex-wrap gap-2">
+                <Button
+                  type="button"
+                  variant="outline"
+                  disabled={busy}
+                  onClick={() => {
+                    void (async () => {
+                      setBusy(true);
+                      try {
+                        const hasActiveLr = (current.documents ?? []).some(
+                          (d) => d.type === "lr" && !d.voidedAt,
+                        );
+                        const result = await api.generateShipmentLr(current.id, {
+                          action: hasActiveLr ? "regenerate" : "generate",
+                          reason: hasActiveLr
+                            ? "Regenerated from shipment detail"
+                            : undefined,
+                        });
+                        setCurrent(result.shipment);
+                        toast.success(
+                          result.action === "regenerate"
+                            ? `LR regenerated · ${result.lrNumber}`
+                            : `LR ${result.lrNumber} generated`,
+                        );
+                        if (result.action !== "void") {
+                          window.open(
+                            result.stored && result.documentId
+                              ? api.downloadDocumentUrl(result.documentId)
+                              : `/api/shipments/${current.id}/lr`,
+                            "_blank",
+                            "noopener,noreferrer",
+                          );
+                        }
+                        router.refresh();
+                      } catch (e) {
+                        toast.error(e instanceof Error ? e.message : "LR failed");
+                      } finally {
+                        setBusy(false);
+                      }
+                    })();
+                  }}
+                >
+                  {busy
+                    ? "Working…"
+                    : (current.documents ?? []).some((d) => d.type === "lr" && !d.voidedAt)
+                      ? "Regenerate LR PDF"
+                      : "Generate LR PDF"}
+                </Button>
+                {(current.documents ?? []).some((d) => d.type === "lr" && !d.voidedAt) && (
+                  <Button
+                    type="button"
+                    variant="outline"
+                    disabled={busy}
+                    onClick={() => {
+                      void (async () => {
+                        setBusy(true);
+                        try {
+                          const result = await api.generateShipmentLr(current.id, {
+                            action: "void",
+                            reason: "Voided from shipment detail",
+                          });
+                          setCurrent(result.shipment);
+                          toast.success(`LR ${result.lrNumber} voided`);
+                          router.refresh();
+                        } catch (e) {
+                          toast.error(e instanceof Error ? e.message : "Void failed");
+                        } finally {
+                          setBusy(false);
+                        }
+                      })();
+                    }}
+                  >
+                    Void LR
+                  </Button>
+                )}
+              </div>
             </CardContent>
           </Card>
         </div>

@@ -11,6 +11,10 @@ export interface ShipmentDocument {
   storageKey?: string;
   contentType?: string;
   sizeBytes?: number;
+  /** Soft-void for LR regenerate flow (ADR-009). */
+  voidedAt?: string;
+  voidReason?: string;
+  voidedBy?: string;
 }
 
 export interface Driver {

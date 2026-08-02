@@ -262,6 +262,24 @@ export async function ensureTsmOrgHydrated() {
     if (audits.length > 0) replacePublishAudit(audits);
     markCollectionHydrated("tsm_publish_audit");
   }
+
+  if (!isCollectionHydrated("tsm_lr_audit")) {
+    const { replaceLrAudit, replaceLrSeries } = await import(
+      "@/lib/documents/lr-audit-store"
+    );
+    type LrAuditRow = import("@/lib/documents/lr-audit-store").LrAuditRow;
+    const audits = await loadCollection<LrAuditRow>("tsm_lr_audit");
+    if (audits.length > 0) replaceLrAudit(audits);
+    const seriesRows = await loadCollection<{ id: string } & Record<string, number>>(
+      "tsm_lr_series",
+    );
+    const series = seriesRows.find((r) => r.id === "series");
+    if (series) {
+      const { id: _id, ...map } = series;
+      replaceLrSeries(map as Record<string, number>);
+    }
+    markCollectionHydrated("tsm_lr_audit");
+  }
 }
 
 export async function persistTsmOrgAccount(

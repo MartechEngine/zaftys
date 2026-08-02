@@ -143,8 +143,8 @@ Scaffold + URL/secret gates done; **do not** pick/deploy staging or WebView Goog
 #### S6 — Documents (LR) — before AI
 
 - [x] LR PDF generate + store/attach + print/open from shipment detail **[2 Aug]**  
-- [ ] Org letterhead / LR series templates (v1 uses org profile name + GSTIN)  
-- [ ] Void / regenerate with audit  
+- [~] Org letterhead / LR series — v1 uses org profile + per-org `LR-{year}-{nnnn}` series **[2 Aug]**  
+- [x] Void / regenerate with audit **[2 Aug]**  
 - [ ] No Copilot yet  
 
 #### S7 — AI agents LAST
@@ -276,10 +276,10 @@ Ember clone · storefront in TSM · offline full-stack desktop with embedded DB 
 
 ### Documents
 
-- [ ] Document templates per org (letterhead, GSTIN, LR series) — v1 uses org profile  
+- [~] Document templates per org (letterhead, GSTIN, LR series) — v1 org profile + series allocator  
 - [x] LR PDF generator → MinIO (when configured) + shipment documents **[2 Aug]**  
 - [x] Print / download from shipment detail (**Generate LR PDF**) **[2 Aug]**  
-- [ ] Void / regenerate with audit
+- [x] Void / regenerate with audit **[2 Aug]**
 
 ### AI foundation
 
@@ -326,11 +326,13 @@ Ember clone · storefront in TSM · offline full-stack desktop with embedded DB 
 - [x] Tenancy helpers module + status BFF **[scaffold 2 Aug]** — `lib/tsm/tenancy.ts`, `GET /api/tsm/tenancy/status`  
 - [x] Support lookup `GET /api/tsm/tenancy/lookup` **[S1]**  
 - [x] OrgSwitcher: no fake multi-org dropdown in live builds **[S1]**  
-- [~] Audit LOS repositories (shipments, fleet, billing) for `tsmOrgId` scope gaps — Postgres store org-scoped; broader audit open  
+- [~] Audit LOS repositories (shipments, fleet, billing) for `tsmOrgId` scope gaps — Postgres store org-scoped; **clients + billing still global (hold for multi-org)**  
 - [ ] Seat invites smoke Org B  
 - [ ] Company A + Company B Google login smoke; cross-org API empty/forbidden  
 
-**Exit:** Company A + Company B Google login smoke; cross-org API returns empty/forbidden.
+**Exit:** Company A + Company B Google login smoke; cross-org API returns empty/forbidden.  
+
+**Note (2 Aug):** Org B smokes need a second verified TZ supplier + Google account — blocked on pilot credentials; LOS execution plane is org-scoped.
 
 ### Horizon 2 — Hosted platform — **DEFERRED (2 Aug)**
 
@@ -787,14 +789,15 @@ OTP-via-notification · full chat clone · KYC on desktop · TZ Auth per seat ·
 
 | Now (open) | Deferred | Later | Last |
 |------------|----------|-------|------|
-| **S1** Org B smokes · **S6** LR | **S5** staging · **S4b** FB delete (parity gate green — still keep FB until you confirm) | S5 resume | **S7** AI |
+| **S1** Org B smokes (needs 2nd supplier) · clients/billing org-scope | **S5** staging · **S4b** FB delete (confirm first) | S5 resume | **S7** AI |
 
-1. ~~**S0–S4** cutover + pilot import + post-import API smoke~~ **done**  
-2. **S4b:** Hard-delete Fleetbase only when you explicitly confirm (parity gate checked; escape still available)  
-3. **S1** Org B Google + seat invite smokes  
-4. **S6** LR PDF  
-5. **S5 (deferred)** staging/WebView  
-6. **S7 LAST:** AI  
+1. ~~**S0–S4** + parity + LR generate~~ **done**  
+2. ~~**S6** void/regenerate + series~~ **done**  
+3. **S1** Org B Google + seat smokes when second supplier available  
+4. Org-scope **clients/billing** before multi-tenant sell  
+5. **S4b** hard-delete Fleetbase only when you explicitly confirm  
+6. **S5 (deferred)** staging/WebView  
+7. **S7 LAST:** AI  
 
 Do **not** embed Next.js/service_role/FB in the desktop binary. Do **not** start AI before S6.
 

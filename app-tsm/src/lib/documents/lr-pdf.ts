@@ -18,18 +18,15 @@ export type LrPdfResult = {
   filename: string;
 };
 
-function nextLrNumber(existing?: string | null) {
-  if (existing?.trim()) return existing.trim();
-  const y = new Date().getFullYear();
-  const n = Math.floor(Math.random() * 9000) + 1000;
-  return `LR-${y}-${n}`;
-}
-
 export function buildLrPdf(
   shipment: ShipmentRecord,
   org: LrPdfOrg,
+  opts?: { lrNumber?: string },
 ): Promise<LrPdfResult> {
-  const lrNumber = nextLrNumber(shipment.lrNumber);
+  const lrNumber =
+    opts?.lrNumber?.trim() ||
+    shipment.lrNumber?.trim() ||
+    `LR-${new Date().getFullYear()}-0000`;
   const filename = `${lrNumber.replace(/[^a-zA-Z0-9._-]+/g, "_")}.pdf`;
 
   return new Promise((resolve, reject) => {
@@ -70,9 +67,7 @@ export function buildLrPdf(
       ["Commodity", shipment.commodity || "—"],
       [
         "Tonnage (MT)",
-        Number.isFinite(shipment.tonnageMt)
-          ? String(shipment.tonnageMt)
-          : "—",
+        Number.isFinite(shipment.tonnageMt) ? String(shipment.tonnageMt) : "—",
       ],
       ["Driver", shipment.driver || shipment.driverId || "Unassigned"],
       ["Vehicle", shipment.vehicle || shipment.vehicleId || "Unassigned"],

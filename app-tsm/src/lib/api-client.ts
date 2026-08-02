@@ -863,23 +863,34 @@ export const api = {
     return json.data as ShipmentRecord;
   },
 
-  /** Generate LR PDF, attach to shipment, optionally open download. */
+  /** Generate / regenerate / void LR PDF. */
   generateShipmentLr: async (
     id: string,
+    opts?: {
+      action?: "generate" | "regenerate" | "void";
+      reason?: string;
+    },
   ): Promise<{
-    shipment: ShipmentRecord;
+    shipment: import("@/lib/dev-store").ShipmentRecord;
     lrNumber: string;
-    documentId: string;
-    filename: string;
+    documentId?: string;
+    filename?: string;
     stored: boolean;
-    downloadPath: string;
+    action: string;
+    downloadPath?: string;
+    audit?: unknown[];
   }> => {
     const res = await fetch(`${base}/api/shipments/${id}/lr`, {
       method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({
+        action: opts?.action ?? "generate",
+        reason: opts?.reason,
+      }),
       cache: "no-store",
     });
     const json = await res.json();
-    if (!res.ok) throw new Error(json.error?.message ?? "LR generate failed");
+    if (!res.ok) throw new Error(json.error?.message ?? "LR action failed");
     return json.data;
   },
 
