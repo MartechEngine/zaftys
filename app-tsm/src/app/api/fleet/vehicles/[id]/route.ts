@@ -1,9 +1,6 @@
 import { getDriver, getVehicle } from "@/lib/data/fleet-repository";
-import {
-  getActiveDataSource,
-  listDrivers,
-} from "@/lib/data/shipment-repository";
-import { getFleetbaseClient } from "@/lib/fleetbase/client";
+import { listDrivers } from "@/lib/data/shipment-repository";
+import { getExecutionStore, isLiveExecutionMode } from "@/lib/execution";
 import {
   ensureFleetEntitiesHydrated,
   patchStoredDriver,
@@ -86,7 +83,7 @@ export async function PATCH(
     return apiError("VALIDATION_ERROR", "Provide at least one field.");
   }
 
-  if (getActiveDataSource() === "fleetbase") {
+  if (isLiveExecutionMode()) {
     try {
       const fbPatch: Record<string, unknown> = {};
       if (patch.registration !== undefined) fbPatch.plate_number = patch.registration;
@@ -94,9 +91,9 @@ export async function PATCH(
       if (patch.capacityMt !== undefined) {
         fbPatch.meta = { capacity_mt: patch.capacityMt };
       }
-      await getFleetbaseClient().updateVehicle(id, fbPatch);
+      await getExecutionStore().updateVehicle(id, fbPatch);
     } catch (err) {
-      console.warn("[vehicles] Fleetbase patch failed, applying local overlay:", err);
+      console.warn("[vehicles] Execution patch failed, applying local overlay:", err);
       patchStoredVehicle(id, patch);
       await persistFleetEntities();
     }

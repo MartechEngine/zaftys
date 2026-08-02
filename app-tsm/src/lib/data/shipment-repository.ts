@@ -21,8 +21,11 @@ import {
 import type { ShipmentFieldsPatch } from "@/lib/dev-store";
 import { allowDemoSeeds } from "@/lib/data/demo-mode";
 import { getSyncState } from "@/lib/sync/sync-state";
-import { getFleetbaseClient } from "@/lib/fleetbase/client";
-import { buildFleetbaseCreatePayload, mapFleetbaseOrder, mapFleetbaseDriver, mapFleetbaseVehicle, toFleetbaseStatus } from "@/lib/fleetbase/mapper";
+import {
+  getExecutionBackend,
+  getExecutionStore,
+  isLiveExecutionMode,
+} from "@/lib/execution";
 import { geoForShipment, isValidGps } from "@/lib/geo";
 import type { CreateShipmentInput } from "@/lib/shipments/create-shipment";
 import {
@@ -50,7 +53,7 @@ import { pushTranZfortStatus, isTranZfortConfigured } from "@/lib/sync/tranzfort
 import type { ShipmentRecord } from "@/lib/dev-store";
 
 function withGeo(record: ShipmentRecord): ShipmentRecord {
-  const live = getActiveDataSource() === "fleetbase";
+  const live = isLiveExecutionMode();
   const current = record.geo?.current;
 
   if (live) {
@@ -95,14 +98,14 @@ function withGeo(record: ShipmentRecord): ShipmentRecord {
   return { ...record, geo: synthetic };
 }
 
-async function applyFleetbasePositions(
+async function applyExecutionPositions(
   shipments: ShipmentRecord[],
 ): Promise<ShipmentRecord[]> {
-  if (getActiveDataSource() !== "fleetbase" || shipments.length === 0) {
+  if (!isLiveExecutionMode() || shipments.length === 0) {
     return shipments;
   }
   try {
-    const positions = await getFleetbaseClient().listPositions(100);
+    const positions = await getExecutionStore().listPositions(100);
     if (!positions.length) return shipments;
     const byOrder = new Map(
       positions
@@ -163,23 +166,21 @@ function recordShipmentActivity(shipmentId: string, type: string, message: strin
   void import("@/lib/ops/ops-bus").then(({ publishOpsChange }) => publishOpsChange());
 }
 
-export type DataSource = "fleetbase" | "dev-store";
+export type DataSource = "fleetbase" | "postgres" | "dev-store";
 
 export function getActiveDataSource(): DataSource {
-  // Live-first: Fleetbase unless demo UI is explicitly enabled (TSM_DEMO_UI=1).
-  if (process.env.TSM_DEMO_UI === "1") return "dev-store";
-  return "fleetbase";
+  return getExecutionBackend();
 }
 
-/** True when ops must use Fleetbase only — no silent demo fallback. */
+/** @deprecated Prefer isLiveExecutionMode — true for Fleetbase or Postgres live backends. */
 export function isLiveFleetbaseMode(): boolean {
-  return getActiveDataSource() === "fleetbase";
+  return isLiveExecutionMode();
 }
 
 function liveFail(context: string, e: unknown): never {
   const msg = e instanceof Error ? e.message : String(e);
-  console.error(`[${context}] Fleetbase live mode failed (no demo fallback):`, e);
-  throw new Error(`Fleetbase unavailable (${context}): ${msg}`);
+  console.error(`[${context}] Execution live mode failed (no demo fallback):`, e);
+  throw new Error(`Execution backend unavailable (${context}): ${msg}`);
 }
 
 export async function fetchAllShipmentsRaw(): Promise<ShipmentRecord[]> {
@@ -188,12 +189,11 @@ export async function fetchAllShipmentsRaw(): Promise<ShipmentRecord[]> {
   );
   await ensurePositionsHydrated();
 
-  if (isLiveFleetbaseMode()) {
+  if (isLiveExecutionMode()) {
     try {
-      const client = getFleetbaseClient();
-      const orders = await client.listOrders(100);
-      const mapped = orders.map(mapFleetbaseOrder).map(withGeo);
-      return applyLiveGeo(await applyFleetbasePositions(mapped));
+      const orders = await getExecutionStore().listShipments(100);
+      const mapped = orders.map(withGeo);
+      return applyLiveGeo(await applyExecutionPositions(mapped));
     } catch (e) {
       liveFail("listShipments", e);
     }
@@ -252,15 +252,13 @@ export async function getShipmentTabCounts(q?: string) {
 }
 
 export async function getShipment(id: string) {
-  if (isLiveFleetbaseMode()) {
+  if (isLiveExecutionMode()) {
     try {
-      const order = await getFleetbaseClient().getOrder(id);
-      const [withPos] = await applyFleetbasePositions([
-        withGeo(mapFleetbaseOrder(order)),
-      ]);
+      const order = await getExecutionStore().getShipment(id);
+      if (!order) return undefined;
+      const [withPos] = await applyExecutionPositions([withGeo(order)]);
       return withPos;
     } catch (e) {
-      // Not found vs API down: only fail loud on transport/auth errors if order missing locally
       const msg = e instanceof Error ? e.message : String(e);
       if (/404|not found/i.test(msg)) return undefined;
       liveFail("getShipment", e);
@@ -270,11 +268,11 @@ export async function getShipment(id: string) {
 }
 
 export async function getShipmentByToken(token: string) {
-  // Live honesty: try Fleetbase first; only use demo/dev tokens in demo UI.
-  if (isLiveFleetbaseMode() || !allowDemoSeeds()) {
+  // Live honesty: try execution backend first; only use demo/dev tokens in demo UI.
+  if (isLiveExecutionMode() || !allowDemoSeeds()) {
     try {
-      const order = await getFleetbaseClient().getOrder(token);
-      return withGeo(mapFleetbaseOrder(order));
+      const order = await getExecutionStore().getShipment(token);
+      return order ? withGeo(order) : undefined;
     } catch {
       return undefined;
     }
@@ -283,14 +281,15 @@ export async function getShipmentByToken(token: string) {
 }
 
 export async function assignShipment(id: string, driverId: string, vehicleId: string) {
-  if (isLiveFleetbaseMode()) {
+  if (isLiveExecutionMode()) {
     try {
-      const order = await getFleetbaseClient().assignOrder(id, driverId, vehicleId);
-      const mapped = withGeo(mapFleetbaseOrder(order));
+      const mapped = withGeo(
+        await getExecutionStore().assignShipment(id, driverId, vehicleId),
+      );
       recordShipmentActivity(
         mapped.id,
         "shipment.assigned",
-        `${mapped.publicId} assigned via Fleetbase · ${mapped.driver ?? "driver"} · ${mapped.vehicle ?? "vehicle"}`,
+        `${mapped.publicId} assigned · ${mapped.driver ?? "driver"} · ${mapped.vehicle ?? "vehicle"}`,
       );
       return mapped;
     } catch (e) {
@@ -301,24 +300,13 @@ export async function assignShipment(id: string, driverId: string, vehicleId: st
 }
 
 export async function createShipment(input: CreateShipmentInput): Promise<ShipmentRecord | null> {
-  if (isLiveFleetbaseMode()) {
+  if (isLiveExecutionMode()) {
     try {
-      const client = getFleetbaseClient();
-      let order = await client.createOrder(buildFleetbaseCreatePayload(input));
-
-      if (input.driverId && input.vehicleId) {
-        try {
-          order = await client.assignOrder(order.id, input.driverId, input.vehicleId);
-        } catch (e) {
-          console.warn("[createShipment] Fleetbase assign failed; order created unassigned:", e);
-        }
-      }
-
-      const mapped = withGeo(mapFleetbaseOrder(order));
+      const mapped = withGeo(await getExecutionStore().createShipment(input));
       recordShipmentActivity(
         mapped.id,
         "shipment.created",
-        `${mapped.publicId} created via Fleetbase · ${mapped.origin} → ${mapped.destination}`,
+        `${mapped.publicId} created · ${mapped.origin} → ${mapped.destination}`,
       );
       return mapped;
     } catch (e) {
@@ -338,14 +326,13 @@ export async function updateShipmentStatus(id: string, status: ShipmentStatus) {
 
   let updated: ShipmentRecord | null;
 
-  if (isLiveFleetbaseMode()) {
+  if (isLiveExecutionMode()) {
     try {
-      const order = await getFleetbaseClient().updateOrderStatus(id, toFleetbaseStatus(status));
-      updated = withGeo(mapFleetbaseOrder(order));
+      updated = withGeo(await getExecutionStore().updateShipmentStatus(id, status));
       recordShipmentActivity(
         updated.id,
         `shipment.${status}`,
-        `${updated.publicId} · ${status.replace("_", " ")} (Fleetbase)`,
+        `${updated.publicId} · ${status.replace("_", " ")}`,
       );
     } catch (e) {
       liveFail("updateShipmentStatus", e);
@@ -389,7 +376,7 @@ export async function updateShipmentFields(id: string, patch: ShipmentFieldsPatc
     throw new Error(`Cannot edit a ${existing.status} shipment.`);
   }
 
-  if (isLiveFleetbaseMode()) {
+  if (isLiveExecutionMode()) {
     try {
       const fbPatch: Record<string, unknown> = {};
       if (patch.client !== undefined || patch.commodity !== undefined || patch.tonnageMt !== undefined || patch.lrNumber !== undefined || patch.originType !== undefined) {
@@ -417,8 +404,9 @@ export async function updateShipmentFields(id: string, patch: ShipmentFieldsPatc
         if (patch.vehicleId) fbPatch.vehicle = patch.vehicleId;
       }
       if (Object.keys(fbPatch).length > 0) {
-        const order = await getFleetbaseClient().updateOrder(id, fbPatch);
-        const mapped = withGeo(mapFleetbaseOrder(order));
+        const mapped = withGeo(
+          await getExecutionStore().updateShipmentPatch(id, fbPatch),
+        );
         // Local-only overlays (network listing mirror, etc.)
         if (patch.networkListing !== undefined) {
           return { ...mapped, networkListing: patch.networkListing };
@@ -446,13 +434,14 @@ export async function rescheduleShipment(
   const { patchShipmentSchedule } = await import("@/lib/mutations/sprint17-store");
   patchShipmentSchedule(id, patch);
 
-  if (isLiveFleetbaseMode() && patch.eta) {
+  if (isLiveExecutionMode() && patch.eta) {
     try {
-      const order = await getFleetbaseClient().updateOrder(id, {
-        eta: patch.eta,
-        meta: patch.scheduledAt ? { scheduled_at: patch.scheduledAt } : undefined,
-      });
-      return withGeo(mapFleetbaseOrder(order));
+      return withGeo(
+        await getExecutionStore().updateShipmentPatch(id, {
+          eta: patch.eta,
+          meta: patch.scheduledAt ? { scheduled_at: patch.scheduledAt } : undefined,
+        }),
+      );
     } catch (e) {
       liveFail("rescheduleShipment", e);
     }
@@ -587,14 +576,13 @@ export async function listDrivers() {
   await ensureFleetEntitiesHydrated();
 
   let base: Awaited<ReturnType<typeof devListDrivers>>;
-  if (isLiveFleetbaseMode()) {
+  if (isLiveExecutionMode()) {
     try {
-      const raw = await getFleetbaseClient().listDrivers(100);
-      base = raw.map((d) => mapFleetbaseDriver(d as Record<string, unknown>));
+      base = await getExecutionStore().listDrivers(100);
     } catch (e) {
       liveFail("listDrivers", e);
     }
-    // Live: Fleetbase only — do not merge legacy local store rows.
+    // Live: execution backend only — do not merge legacy local store rows.
     return base.map((d) => {
       const patch = getDriverPatch(d.id);
       return patch ? { ...d, ...patch, id: d.id } : d;
@@ -618,14 +606,13 @@ export async function listVehicles() {
   await ensureFleetEntitiesHydrated();
 
   let base: Awaited<ReturnType<typeof devListVehicles>>;
-  if (isLiveFleetbaseMode()) {
+  if (isLiveExecutionMode()) {
     try {
-      const raw = await getFleetbaseClient().listVehicles(100);
-      base = raw.map((v) => mapFleetbaseVehicle(v as Record<string, unknown>));
+      base = await getExecutionStore().listVehicles(100);
     } catch (e) {
       liveFail("listVehicles", e);
     }
-    // Live: Fleetbase only — do not merge legacy local store rows.
+    // Live: execution backend only — do not merge legacy local store rows.
     return base.map((v) => {
       const patch = getVehiclePatch(v.id);
       return patch ? { ...v, ...patch, id: v.id } : v;
@@ -726,13 +713,14 @@ export async function getSyncStatus() {
     lastRun: tz.lastRun,
   };
 
-  if (source === "fleetbase") {
-    const healthy = await getFleetbaseClient().healthCheck();
+  if (source === "fleetbase" || source === "postgres") {
+    const healthy = await getExecutionStore().healthCheck();
     return {
       ...base,
       healthy: healthy && tz.healthy,
-      dataSource: "fleetbase" as const,
-      fleetbaseReachable: healthy,
+      dataSource: source,
+      fleetbaseReachable: source === "fleetbase" ? healthy : false,
+      executionBackend: source,
     };
   }
 
@@ -741,5 +729,6 @@ export async function getSyncStatus() {
     healthy: tz.healthy,
     dataSource: "dev-store" as const,
     fleetbaseReachable: false,
+    executionBackend: "dev-store" as const,
   };
 }

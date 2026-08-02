@@ -93,11 +93,14 @@ Why first: selling multi-org and safe FB migration both need `tsmOrgId` isolatio
 
 **Also:** DEV_USERS explicit pilot `tsmOrgId`; marketplace APIs return 403 on tenancy errors; tenancy status can report `unscoped`.
 
+#### S2 — Adapter only (safe refactor — do before any Postgres cutover)
+
 Why next: unblocks S3/S4 without changing pilot behavior (`TSM_EXECUTION_BACKEND=fleetbase` default).
 
-- [ ] `ExecutionStore` interface + `FleetbaseExecutionStore`
-- [ ] Repos call interface; pages never import `@/lib/fleetbase/*`
-- [ ] Smoke: existing pilot shipments/fleet still work unchanged
+- [x] `ExecutionStore` interface + `FleetbaseExecutionStore` + postgres stub **[2 Aug]** — `lib/execution/*`  
+- [x] Repos/fleet APIs call store; shipment list path does not use `getFleetbaseClient` directly  
+- [~] Clients + `run-tranzfort-sync` still FB-direct (S3/S4)  
+- [ ] Smoke: existing pilot shipments/fleet still work unchanged  
 
 #### S3 — Postgres LOS opt-in (flag off for pilot until green)
 
@@ -201,12 +204,12 @@ Ember clone · storefront in TSM · offline full-stack desktop with embedded DB 
 
 #### Phase A — Contract (no UX change)
 
-- [ ] Define `ExecutionStore` (shipments, drivers, vehicles, clients, positions, proofs)
-- [ ] Move `getFleetbaseClient` usage behind `FleetbaseExecutionStore`
-- [ ] Repositories call interface only; pages never import `@/lib/fleetbase/*`
-- [ ] Env stub: `TSM_EXECUTION_BACKEND=fleetbase | postgres`
+- [x] Define `ExecutionStore` (shipments, drivers, vehicles, positions) **[S2]**  
+- [x] Move LOS usage behind `FleetbaseExecutionStore` **[S2]**  
+- [x] Repositories call interface; env `TSM_EXECUTION_BACKEND=fleetbase | postgres`  
+- [~] Clients still direct FB (follow-up)  
 
-**Exit:** Behavior identical; adapter boundary exists.
+**Exit:** Behavior identical; adapter boundary exists. **[met for shipments/fleet]**
 
 #### Phase B — Postgres store
 

@@ -1,6 +1,6 @@
 import { getDriver } from "@/lib/data/fleet-repository";
-import { getActiveDataSource, listVehicles } from "@/lib/data/shipment-repository";
-import { getFleetbaseClient } from "@/lib/fleetbase/client";
+import { listVehicles } from "@/lib/data/shipment-repository";
+import { getExecutionStore, isLiveExecutionMode } from "@/lib/execution";
 import {
   ensureFleetEntitiesHydrated,
   patchStoredDriver,
@@ -68,16 +68,16 @@ export async function PATCH(
     return apiError("VALIDATION_ERROR", "Provide at least one field.");
   }
 
-  if (getActiveDataSource() === "fleetbase") {
+  if (isLiveExecutionMode()) {
     try {
       const fbPatch: Record<string, unknown> = {};
       if (patch.name !== undefined) fbPatch.name = patch.name;
       if (patch.phone !== undefined) fbPatch.phone = patch.phone;
       if (patch.license !== undefined) fbPatch.drivers_license_number = patch.license;
       if (patch.vehicleId !== undefined) fbPatch.vehicle_uuid = patch.vehicleId ?? null;
-      await getFleetbaseClient().updateDriver(id, fbPatch);
+      await getExecutionStore().updateDriver(id, fbPatch);
     } catch (err) {
-      console.warn("[drivers] Fleetbase patch failed, applying local overlay:", err);
+      console.warn("[drivers] Execution patch failed, applying local overlay:", err);
       patchStoredDriver(id, patch);
       await persistFleetEntities();
     }

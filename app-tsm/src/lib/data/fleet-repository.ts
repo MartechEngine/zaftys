@@ -1,12 +1,10 @@
 import type { Driver, ShipmentRecord, Vehicle } from "@/lib/dev-store";
 import {
   fetchAllShipmentsRaw,
-  getActiveDataSource,
   listDrivers,
   listVehicles,
 } from "@/lib/data/shipment-repository";
-import { getFleetbaseClient } from "@/lib/fleetbase/client";
-import { mapFleetbaseDriver, mapFleetbaseVehicle } from "@/lib/fleetbase/mapper";
+import { getExecutionStore, isLiveExecutionMode } from "@/lib/execution";
 
 export type DriverDetail = Driver & {
   recentShipments: ShipmentRecord[];
@@ -35,14 +33,15 @@ function recentForVehicle(shipments: ShipmentRecord[], vehicle: Vehicle, limit =
 }
 
 export async function getDriver(id: string): Promise<DriverDetail | null> {
-  if (getActiveDataSource() === "fleetbase") {
+  if (isLiveExecutionMode()) {
     try {
-      const raw = await getFleetbaseClient().getDriver(id);
-      const driver = mapFleetbaseDriver(raw as Record<string, unknown>);
-      const shipments = await fetchAllShipmentsRaw();
-      return { ...driver, recentShipments: recentForDriver(shipments, driver) };
+      const driver = await getExecutionStore().getDriver(id);
+      if (driver) {
+        const shipments = await fetchAllShipmentsRaw();
+        return { ...driver, recentShipments: recentForDriver(shipments, driver) };
+      }
     } catch (e) {
-      console.warn("[driver] Fleetbase getDriver fallback to list:", e);
+      console.warn("[driver] Execution getDriver fallback to list:", e);
     }
   }
 
@@ -54,14 +53,15 @@ export async function getDriver(id: string): Promise<DriverDetail | null> {
 }
 
 export async function getVehicle(id: string): Promise<VehicleDetail | null> {
-  if (getActiveDataSource() === "fleetbase") {
+  if (isLiveExecutionMode()) {
     try {
-      const raw = await getFleetbaseClient().getVehicle(id);
-      const vehicle = mapFleetbaseVehicle(raw as Record<string, unknown>);
-      const shipments = await fetchAllShipmentsRaw();
-      return { ...vehicle, recentShipments: recentForVehicle(shipments, vehicle) };
+      const vehicle = await getExecutionStore().getVehicle(id);
+      if (vehicle) {
+        const shipments = await fetchAllShipmentsRaw();
+        return { ...vehicle, recentShipments: recentForVehicle(shipments, vehicle) };
+      }
     } catch (e) {
-      console.warn("[vehicle] Fleetbase getVehicle fallback to list:", e);
+      console.warn("[vehicle] Execution getVehicle fallback to list:", e);
     }
   }
 

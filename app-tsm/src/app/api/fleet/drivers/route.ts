@@ -2,9 +2,7 @@ import {
   getActiveDataSource,
   listDrivers,
 } from "@/lib/data/shipment-repository";
-import { getDriver } from "@/lib/data/fleet-repository";
-import { getFleetbaseClient } from "@/lib/fleetbase/client";
-import { mapFleetbaseDriver } from "@/lib/fleetbase/mapper";
+import { getExecutionStore, isLiveExecutionMode } from "@/lib/execution";
 import {
   createStoredDriver,
   persistFleetEntities,
@@ -43,19 +41,21 @@ export async function POST(request: Request) {
       .replace(/^\.|\.$/g, "")
       .slice(0, 40) || "driver"}@drivers.zaftys.local`;
 
-  if (getActiveDataSource() === "fleetbase") {
+  if (isLiveExecutionMode()) {
     try {
-      const raw = await getFleetbaseClient().createDriver({
+      const driver = await getExecutionStore().createDriver({
         name,
         phone,
         email,
         ...(license ? { drivers_license_number: license } : {}),
       });
-      const driver = mapFleetbaseDriver(raw as Record<string, unknown>);
-      return apiSuccess(driver, { created: true, source: "fleetbase" });
+      return apiSuccess(driver, {
+        created: true,
+        source: getActiveDataSource(),
+      });
     } catch (err) {
-      const message = err instanceof Error ? err.message : "Fleetbase driver create failed.";
-      return apiError("CREATE_FAILED", `Fleetbase unavailable (createDriver): ${message}`, 502);
+      const message = err instanceof Error ? err.message : "Driver create failed.";
+      return apiError("CREATE_FAILED", message, 502);
     }
   }
 

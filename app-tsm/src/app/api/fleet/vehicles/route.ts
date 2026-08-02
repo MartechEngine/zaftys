@@ -1,6 +1,5 @@
 import { getActiveDataSource, listVehicles } from "@/lib/data/shipment-repository";
-import { getFleetbaseClient } from "@/lib/fleetbase/client";
-import { mapFleetbaseVehicle } from "@/lib/fleetbase/mapper";
+import { getExecutionStore, isLiveExecutionMode } from "@/lib/execution";
 import {
   createStoredVehicle,
   ensureFleetEntitiesHydrated,
@@ -29,17 +28,19 @@ export async function POST(request: Request) {
   if (!registration) return apiError("VALIDATION_ERROR", "Registration is required.");
   const type = String(data.type ?? "").trim() || undefined;
 
-  if (getActiveDataSource() === "fleetbase") {
+  if (isLiveExecutionMode()) {
     try {
-      const raw = await getFleetbaseClient().createVehicle({
+      const vehicle = await getExecutionStore().createVehicle({
         plate_number: registration,
         ...(type ? { type } : {}),
       });
-      const vehicle = mapFleetbaseVehicle(raw as Record<string, unknown>);
-      return apiSuccess(vehicle, { created: true, source: "fleetbase" });
+      return apiSuccess(vehicle, {
+        created: true,
+        source: getActiveDataSource(),
+      });
     } catch (err) {
-      const message = err instanceof Error ? err.message : "Fleetbase vehicle create failed.";
-      return apiError("CREATE_FAILED", `Fleetbase unavailable (createVehicle): ${message}`, 502);
+      const message = err instanceof Error ? err.message : "Vehicle create failed.";
+      return apiError("CREATE_FAILED", message, 502);
     }
   }
 
