@@ -69,7 +69,7 @@ export const homeHowItWorks = [
   {
     step: "04",
     title: "Full visibility",
-    description: "ZAFTYS TSM™ tracks every trip  -  powering our operations today and available for your business.",
+    description: "ZAFTYS TMS™ tracks every trip  -  powering our operations today and live for shippers and fleet operators at app.zaftys.com.",
   },
 ] as const;
 
@@ -204,7 +204,7 @@ export const tsmCapabilities = [
 ] as const;
 
 export const networkHighlights = [
-  { title: "Smart route intelligence", desc: "AI-assisted routing to cut empty miles on industrial corridors." },
+  { title: "Route intelligence", desc: "Smarter routing suggestions to cut empty miles on industrial corridors." },
   { title: "Hindi & English voice", desc: "Speak naturally on the road  -  built for Indian logistics." },
   { title: "Works offline", desc: "Core features keep working on highways with limited signal." },
   { title: "Verified truckers", desc: "KYC, RC, and vehicle docs before partners move your freight." },

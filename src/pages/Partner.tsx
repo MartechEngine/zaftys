@@ -95,8 +95,8 @@ const Partner = () => {
       />
       <PageHero
         badge="Fleet Owners"
-        title="Grow Your Fleet Through A Professional Logistics Network."
-        description="TranZfort connects verified transport partners to industrial freight coordinated through ZAFTYS Logistics  -  structured opportunities, transparent payments, and professional support."
+        title="Join TranZfort — Industrial Loads For Fleet Partners."
+        description="Verified transport partners get structured industrial freight coordinated through ZAFTYS Logistics  -  clear payments, professional onboarding, and tools as you scale across India."
         imageSrc={pageHeroImages.partner.src}
         imageAlt={pageHeroImages.partner.alt}
       >
@@ -121,7 +121,7 @@ const Partner = () => {
               { icon: Network, title: "Verified Network", desc: "Industrial freight opportunities on corridors where ZAFTYS operates." },
               { icon: TrendingUp, title: "Better Utilization", desc: "Reduce empty return trips with backhaul-friendly matching." },
               { icon: Shield, title: "Payments via ZAFTYS", desc: "Transparent GST-compliant billing through ZAFTYS Logistics." },
-              { icon: Zap, title: "TSM™ Access", desc: "Operational tools as your volume scales with ZAFTYS." },
+              { icon: Zap, title: "TMS™ Access", desc: "Operational tools as your volume scales with ZAFTYS." },
             ].map((item, index) => (
               <Card key={index} className="text-center border-none shadow-lg hover:-translate-y-1 transition-transform duration-300">
                 <CardContent className="p-8">

@@ -15,7 +15,7 @@ export function DemoDisclaimer({ variant = "default", className }: DemoDisclaime
         className,
       )}
     >
-      Sample data · demo UI only · all transactions through ZAFTYS Logistics
+      Sample data · interactive preview · TranZfort app is live
     </p>
   );
 }

@@ -88,11 +88,11 @@ const Careers = () => {
       title: "Logistics Coordinator",
       type: "Full-time",
       location: "Amravati (HQ)",
-      requirements: "Experience with TSM/ERP systems, strong communication skills.",
+      requirements: "Experience with TMS/ERP systems, strong communication skills.",
       perks: ["Career progression", "Tech training", "Competitive salary"],
     },
     {
-      title: "Backend Developer (TSM)",
+      title: "Backend Developer (TMS)",
       type: "Remote / Hybrid",
       location: "Remote / Amravati",
       requirements: "Node.js, React, PostgreSQL experience. Logistics domain knowledge is a plus.",
@@ -109,8 +109,8 @@ const Careers = () => {
       />
       <PageHero
         badge="Join Our Team"
-        title="Build Careers Where Logistics And Technology Meet."
-        description="ZAFTYS offers roles where operational experience matters  -  and where technology is built to solve real transport problems. We value integrity, discipline, curiosity, and respect for the people who move freight."
+        title="Careers In Logistics, Operations & Technology."
+        description="Join ZAFTYS in Amravati and across our network  -  roles where corridor experience and transport technology solve real industrial freight problems."
         imageSrc={pageHeroImages.careers.src}
         imageAlt={pageHeroImages.careers.alt}
       >

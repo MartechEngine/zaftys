@@ -15,12 +15,12 @@ import { truckImageForId } from "@/lib/services-images";
 
 const Fleet = () => {
   const features = [
-    { icon: MapPin, title: "Operational visibility", desc: "Shipment progress connected through ZAFTYS TSM on active lanes." },
+    { icon: MapPin, title: "Operational visibility", desc: "Shipment progress connected through ZAFTYS TMS on active lanes." },
     { icon: Gauge, title: "Fleet readiness", desc: "Structured inspections and dispatch planning before every journey." },
     { icon: Wrench, title: "Preventive maintenance", desc: "Planned maintenance to support availability and continuity." },
     { icon: Shield, title: "Safety discipline", desc: "Standardized procedures across planning, loading, transit, and delivery." },
     { icon: Leaf, title: "Efficient planning", desc: "Better routing and utilization to reduce unnecessary empty miles." },
-    { icon: Radio, title: "TSM™ connected", desc: "Vehicles integrated with dispatch, documentation, and client visibility." },
+    { icon: Radio, title: "TMS™ connected", desc: "Vehicles integrated with dispatch, documentation, and client visibility." },
   ];
 
   const fleetHighlights = [
@@ -39,14 +39,8 @@ const Fleet = () => {
 
       <PageHero
         badge="Fleet & Capacity"
-        title={
-          <>
-            Built To Deliver.
-            <br />
-            Ready To Scale.
-          </>
-        }
-        description="Dependable logistics is measured by planning, readiness, communication, and scalability  -  not truck count alone. ZAFTYS combines company-operated transport with verified network capacity and TSM visibility."
+        title="Company Fleet For Heavy-Haul Industrial Freight."
+        description="Company-operated tippers, flatbeds, and multi-axle assets on industrial corridors across India  -  with TranZfort surge capacity and ZAFTYS TMS visibility when your lanes need to scale."
         imageSrc={pageHeroImages.fleet.src}
         imageAlt={pageHeroImages.fleet.alt}
       >
@@ -113,7 +107,7 @@ const Fleet = () => {
             </div>
             <Link to="/technology">
               <Button variant="on-dark-outline" className="mt-4 md:mt-0">
-                Explore ZAFTYS TSM
+                Explore ZAFTYS TMS
               </Button>
             </Link>
           </div>

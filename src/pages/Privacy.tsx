@@ -43,7 +43,7 @@ const Privacy = () => {
             <li>Provide and manage our logistics services.</li>
             <li>Process your quotes and orders.</li>
             <li>Communicate with you regarding updates, offers, and customer service.</li>
-            <li>Improve our website and TSM™ platform functionality.</li>
+            <li>Improve our website and TMS™ platform functionality.</li>
             <li>Comply with legal obligations.</li>
           </ul>
 

@@ -35,6 +35,6 @@ export function materialImageForId(id: string): { src: string; alt: string } {
 
 export const pillarImages = {
   transportation: { src: "/images/services/home/transportation.jpg", alt: "Multimodal industrial freight  -  road, rail, air, and sea logistics" },
-  operations: { src: "/images/services/home/operations-app.jpg", alt: "ZAFTYS TSM operations platform" },
+  operations: { src: "/images/services/home/operations-app.jpg", alt: "ZAFTYS TMS operations platform" },
   tranzfort: { src: "/images/services/home/tranzfort.jpg", alt: "TranZfort freight marketplace" },
 } as const;

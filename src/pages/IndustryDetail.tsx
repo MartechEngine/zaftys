@@ -9,7 +9,8 @@ import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { CTAGroup } from "@/components/CTAGroup";
 import { heroMailSubjects } from "@/lib/hero-ctas";
 import NotFound from "@/pages/NotFound";
-import { getIndustryBySlug } from "@/lib/industries-data";
+import { getIndustryBySlug, industries } from "@/lib/industries-data";
+import { breadcrumbSchema, faqPageSchema } from "@/lib/schema";
 
 const IndustryDetail = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -19,20 +20,32 @@ const IndustryDetail = () => {
     return <NotFound />;
   }
 
+  const related = industries.filter((item) => item.slug !== industry.slug).slice(0, 3);
+
+  const schema = [
+    breadcrumbSchema([
+      { name: "Home", path: "/" },
+      { name: "Industries", path: "/industries" },
+      { name: industry.title, path: `/industries/${industry.slug}` },
+    ]),
+    faqPageSchema(industry.faqs),
+  ];
+
   return (
     <div className="min-h-screen bg-background font-sans">
       <SEO
         title={industry.seoTitle}
         description={industry.seoDescription}
         canonical={`/industries/${industry.slug}`}
+        schema={schema}
       />
 
       <PageHero
         badge={industry.title}
-        title={industry.heroHeadline}
-        description={industry.description}
+        title={industry.seoH1}
+        description={`${industry.heroHeadline} ${industry.description}`}
         imageSrc={industry.image}
-        imageAlt={industry.title}
+        imageAlt={`${industry.title} logistics — ZAFTYS heavy freight`}
         prepend={
           <Link
             to="/industries"
@@ -67,7 +80,7 @@ const IndustryDetail = () => {
               <TabsTrigger value="equipment">Corridors & assets</TabsTrigger>
             </TabsList>
 
-            <TabsContent value="overview" className="space-y-8">
+            <TabsContent value="overview" forceMount className="space-y-8 data-[state=inactive]:hidden">
               <div>
                 <h2 className="text-2xl font-heading font-bold text-navy mb-6">Operational Challenges</h2>
                 <ul className="space-y-4">
@@ -84,10 +97,10 @@ const IndustryDetail = () => {
               </div>
             </TabsContent>
 
-            <TabsContent value="operations">
+            <TabsContent value="operations" forceMount className="data-[state=inactive]:hidden">
               <h2 className="text-2xl font-heading font-bold text-navy mb-4">How ZAFTYS Supports This Vertical</h2>
               <p className="text-muted-foreground mb-8">
-                Own fleet first. Verified TranZfort network when demand exceeds capacity. Visibility through ZAFTYS TSM  -  one partner throughout.
+                Own fleet first. Verified TranZfort network when demand exceeds capacity. Visibility through ZAFTYS TMS — one partner throughout.
               </p>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 {industry.howZaftysHelps.map((item) => (
@@ -98,7 +111,7 @@ const IndustryDetail = () => {
               </div>
             </TabsContent>
 
-            <TabsContent value="equipment">
+            <TabsContent value="equipment" forceMount className="data-[state=inactive]:hidden">
               <h2 className="text-2xl font-heading font-bold text-navy mb-8">Typical Corridors & Equipment</h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
                 <div>
@@ -126,6 +139,43 @@ const IndustryDetail = () => {
               </div>
             </TabsContent>
           </Tabs>
+
+          <div className="mt-16 pt-10 border-t border-border">
+            <h2 className="text-xl font-heading font-bold text-navy mb-6">Frequently asked questions</h2>
+            <div className="space-y-4 mb-12">
+              {industry.faqs.map((faq) => (
+                <div key={faq.question} className="p-5 rounded-xl bg-muted/30 border border-border">
+                  <h3 className="font-heading font-bold text-navy mb-2 text-sm">{faq.question}</h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed">{faq.answer}</p>
+                </div>
+              ))}
+            </div>
+
+            <h2 className="text-xl font-heading font-bold text-navy mb-6">Related industries</h2>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              {related.map((item) => (
+                <Link
+                  key={item.slug}
+                  to={`/industries/${item.slug}`}
+                  className="p-4 rounded-lg border border-border hover:border-primary/40 transition-colors"
+                >
+                  <span className="font-heading font-semibold text-navy">{item.title}</span>
+                  <span className="block text-xs text-muted-foreground mt-1">{item.highlight}</span>
+                </Link>
+              ))}
+            </div>
+            <div className="mt-6 flex flex-wrap gap-4 text-sm">
+              <Link to="/services" className="text-primary font-semibold hover:underline">
+                Explore services
+              </Link>
+              <Link to="/network" className="text-primary font-semibold hover:underline">
+                TranZfort network
+              </Link>
+              <Link to="/technology" className="text-primary font-semibold hover:underline">
+                ZAFTYS TMS
+              </Link>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -133,7 +183,7 @@ const IndustryDetail = () => {
         <div className="container mx-auto container-padding max-w-3xl text-center">
           <h2 className="text-3xl font-heading font-bold mb-4">Get a Quote for {industry.title}</h2>
           <p className="text-gray-300 mb-8">
-            Share your corridor, load type, and volume on WhatsApp  -  our team will recommend a suitable transport approach.
+            Share your corridor, load type, and volume on WhatsApp — our team will recommend a suitable transport approach.
           </p>
           <CTAGroup>
             <WhatsAppButton label="Chat on WhatsApp" message={industry.whatsappPrefill} />

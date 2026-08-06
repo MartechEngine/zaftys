@@ -13,12 +13,10 @@ import {
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import SEO from "@/components/SEO";
-import { HeroEmailButton } from "@/components/HeroEmailButton";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { CTAGroup } from "@/components/CTAGroup";
 import { externalLinks, networkHighlights } from "@/lib/constants";
 import { pageSeo } from "@/lib/page-seo";
-import { heroMailBodies, heroMailSubjects } from "@/lib/hero-ctas";
 import { pageHeroImages } from "@/lib/page-heroes";
 import { PageHero } from "@/components/PageHero";
 import {
@@ -27,6 +25,7 @@ import {
   PersonaTabDemo,
   DemoDisclaimer,
 } from "@/components/tranzfort-demo";
+import { breadcrumbSchema, organizationSchema } from "@/lib/schema";
 
 const highlightIcons = [Route, Mic, Smartphone, Shield, Network, Users] as const;
 
@@ -52,7 +51,7 @@ const flowSteps = [
   { title: "Capacity assessment", desc: "Own fleet first; TranZfort network when additional vehicles are needed." },
   { title: "Verified allocation", desc: "Suitable partners matched to operational and documentation standards." },
   { title: "Centralized coordination", desc: "You continue working with ZAFTYS  -  not ad-hoc carriers." },
-  { title: "Shipment visibility", desc: "Progress monitored through ZAFTYS TSM throughout the trip." },
+  { title: "Shipment visibility", desc: "Progress monitored through ZAFTYS TMS throughout the trip." },
   { title: "Delivery & documentation", desc: "Structured completion with standardized communication." },
 ];
 
@@ -61,7 +60,7 @@ const networkBenefits = [
   { title: "One operational team", desc: "Continue with one logistics partner instead of coordinating multiple providers." },
   { title: "Consistent communication", desc: "Shipment updates stay centralized through execution." },
   { title: "Verified network", desc: "Partners complete structured onboarding before joining." },
-  { title: "Digital visibility", desc: "Operational information connected through ZAFTYS TSM." },
+  { title: "Digital visibility", desc: "Operational information connected through ZAFTYS TMS." },
   { title: "Faster response", desc: "Additional resources arranged when business conditions change." },
 ];
 
@@ -72,7 +71,7 @@ const audienceCards = [
     bullets: [
       "Share load requirements through structured channels",
       "Capacity coordinated centrally through ZAFTYS",
-      "Visibility through ZAFTYS TSM on active shipments",
+      "Visibility through ZAFTYS TMS on active shipments",
     ],
   },
   {
@@ -150,29 +149,37 @@ const NetworkPage = () => {
         title={pageSeo.network.title}
         description={pageSeo.network.description}
         canonical="/network"
+        schema={[
+          organizationSchema,
+          breadcrumbSchema([
+            { name: "Home", path: "/" },
+            { name: "TranZfort Network", path: "/network" },
+          ]),
+        ]}
       />
 
       <PageHero
-        badge="TranZfort Network"
+        badge="TranZfort Network · Live"
         title={
           <>
-            Scale Your Logistics.
+            Verified Capacity Through ZAFTYS.
             <br />
-            Not Your Complexity.
+            Scale Without The Complexity.
           </>
         }
-        description="Verified transport capacity through ZAFTYS  -  one relationship, centralized coordination, and operational visibility on every lane."
+        description="TranZfort is live  -  verified transport partners, centralized coordination, and ZAFTYS TMS visibility on every lane. All commercial transactions through ZAFTYS Logistics."
         imageSrc={pageHeroImages.network.src}
         imageAlt={pageHeroImages.network.alt}
       >
         <CTAGroup className="justify-start sm:justify-start">
-          <HeroEmailButton
-            label="Request Additional Capacity"
-            subject={heroMailSubjects.network}
-            body={heroMailBodies.network}
-          />
+          <Button asChild size="lg" variant="accent">
+            <a href={externalLinks.tranzfort} target="_blank" rel="noopener noreferrer">
+              Download TranZfort <ArrowRight className="ml-2" size={18} />
+            </a>
+          </Button>
+          <WhatsAppButton label="Request Capacity" tone="on-dark-outline" />
           <Link to="/partner">
-            <Button size="lg" variant="on-dark-outline">Become a Transport Partner</Button>
+            <Button size="lg" variant="on-dark-outline">Become a Partner</Button>
           </Link>
         </CTAGroup>
       </PageHero>
@@ -197,9 +204,9 @@ const NetworkPage = () => {
       <section id="explore-demo" className="section-padding bg-white scroll-mt-28 pt-10 md:pt-12">
         <div className="container mx-auto container-padding">
           <div className="text-center max-w-2xl mx-auto mb-8">
-            <h2 className="text-3xl md:text-4xl font-heading font-bold mb-3 text-navy">Explore TranZfort</h2>
+            <h2 className="text-3xl md:text-4xl font-heading font-bold mb-3 text-navy">Try The App Flows</h2>
             <p className="text-muted-foreground">
-              Switch between supplier and trucker views  -  see how each side of the network uses the app.
+              Preview supplier and trucker views below — then download the live TranZfort app to get started.
             </p>
           </div>
           <div className="max-w-md mx-auto rounded-2xl border border-border bg-muted/10 shadow-lg p-4 sm:p-6">
@@ -361,7 +368,7 @@ const NetworkPage = () => {
               <ul className="space-y-3 text-gray-200 text-sm">
                 <li className="flex gap-2"><span className="text-accent">·</span> One logistics partner and one communication channel</li>
                 <li className="flex gap-2"><span className="text-accent">·</span> Own fleet first; verified network scales when needed</li>
-                <li className="flex gap-2"><span className="text-accent">·</span> Visibility through ZAFTYS TSM™ on active lanes</li>
+                <li className="flex gap-2"><span className="text-accent">·</span> Visibility through ZAFTYS TMS™ on active lanes</li>
               </ul>
             </div>
           </div>
@@ -373,15 +380,18 @@ const NetworkPage = () => {
         <div className="container mx-auto container-padding max-w-2xl">
           <h2 className="text-3xl md:text-4xl font-heading font-bold mb-4">Need More Transport Capacity?</h2>
           <p className="text-lg text-gray-200 mb-8">
-            Whether production is increasing or projects are expanding, ZAFTYS and TranZfort provide flexibility without adding vendor complexity.
+            Download TranZfort for partners, or WhatsApp ZAFTYS for freight capacity — one accountable logistics relationship.
           </p>
           <CTAGroup>
-            <WhatsAppButton label="Get a Freight Quote" tone="solid" />
-            <Button asChild size="lg" variant="on-dark-outline">
+            <Button asChild size="lg" variant="accent">
               <a href={externalLinks.tranzfort} target="_blank" rel="noopener noreferrer">
-                Visit TranZfort.com <ArrowRight className="ml-2" size={18} />
+                Download TranZfort <ArrowRight className="ml-2" size={18} />
               </a>
             </Button>
+            <WhatsAppButton label="Get a Freight Quote" tone="on-dark-outline" />
+            <Link to="/partner">
+              <Button size="lg" variant="on-dark-outline">Partner with ZAFTYS</Button>
+            </Link>
           </CTAGroup>
         </div>
       </section>

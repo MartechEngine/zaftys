@@ -108,8 +108,8 @@ const Contact = () => {
       />
       <PageHero
         badge="Contact"
-        title="Let's Build A Better Logistics Strategy Together."
-        description="Our team begins by understanding your business before recommending any solution  -  whether you need logistics services, technology, or strategic guidance."
+        title="Contact ZAFTYS For Industrial Freight Quotes."
+        description="WhatsApp-first quotes from our Amravati team  -  industrial freight, ZAFTYS TMS demos, and TranZfort partnership enquiries across India."
         imageSrc={pageHeroImages.contact.src}
         imageAlt={pageHeroImages.contact.alt}
       >
@@ -259,7 +259,7 @@ const Contact = () => {
                       </SelectTrigger>
                       <SelectContent>
                         <SelectItem value="quote">Getting a Freight Quote</SelectItem>
-                        <SelectItem value="demo">TSM Platform Demo</SelectItem>
+                        <SelectItem value="demo">TMS Platform Demo</SelectItem>
                         <SelectItem value="partner">Partner / Fleet Owner</SelectItem>
                         <SelectItem value="careers">Careers</SelectItem>
                         <SelectItem value="support">Support</SelectItem>

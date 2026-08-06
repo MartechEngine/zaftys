@@ -39,14 +39,14 @@ const Terms = () => {
           </p>
           <ul className="list-disc pl-6 mb-4 space-y-2">
             <li>Use the website for any unlawful purpose.</li>
-            <li>Attempt to gain unauthorized access to our TSM™ platform or computer systems.</li>
+            <li>Attempt to gain unauthorized access to our TMS™ platform or computer systems.</li>
             <li>Submit false or misleading information in quote requests or forms.</li>
             <li>Interfere with the proper working of the website.</li>
           </ul>
 
           <h3 className="text-navy font-bold mt-8 mb-4">4. Intellectual Property</h3>
           <p>
-            All content on this website, including text, graphics, logos, and software (including ZAFTYS TSM™), is the property of 
+            All content on this website, including text, graphics, logos, and software (including ZAFTYS TMS™), is the property of 
             ZAFTYS Logistics or its licensors and is protected by Indian and international copyright laws.
           </p>
 

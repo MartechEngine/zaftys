@@ -39,13 +39,13 @@ const About = () => {
     { year: "1960s", title: "The Foundation", desc: "Started as a family trucking operation moving freight in India's industrial heartlands." },
     { year: "1990s", title: "National Corridors", desc: "Expanded across cross-country routes as India's infrastructure and industry grew." },
     { year: "2010s", title: "Modern Heavy-Haul Fleet", desc: "Upgraded to multi-axle and tipper assets built for cement, steel, and mining loads." },
-    { year: "2020s", title: "Company & Platform", desc: "Formal operations with GST-compliant billing; launched TranZfort network and ZAFTYS TSM." },
+    { year: "2020s", title: "Company & Platform", desc: "Formal operations with GST-compliant billing; launched TranZfort network and ZAFTYS TMS." },
   ];
 
   const todayPillars = [
     { title: "Own Fleet", desc: "Company-owned heavy-haul trucks for direct suppliers and transporters." },
     { title: "TranZfort", desc: "Verified logistics network scaling capacity across India  -  all through ZAFTYS." },
-    { title: "ZAFTYS TSM™", desc: "Transport & fleet management platform  -  internal ops and client product." },
+    { title: "ZAFTYS TMS™", desc: "Transport & fleet management platform  -  internal ops and client product." },
   ];
 
   return (
@@ -57,14 +57,8 @@ const About = () => {
       />
       <PageHero
         badge="Our Story"
-        title={
-          <>
-            Built On Real Logistics Experience.
-            <br />
-            <span className="text-accent">Designed For The Future Of Supply Chains.</span>
-          </>
-        }
-        description="ZAFTYS combines transport operations, intelligent technology, and a verified logistics network into one connected ecosystem  -  helping businesses move freight with greater confidence."
+        title="About ZAFTYS — Industrial Logistics Across India."
+        description="Three generations of corridor experience. GST-compliant operations combining company-operated fleet, TranZfort verified capacity, and ZAFTYS TMS for industrial shippers and transporters."
         imageSrc={pageHeroImages.about.src}
         imageAlt={pageHeroImages.about.alt}
       >
@@ -96,7 +90,7 @@ const About = () => {
                   For most of our history we operated in the traditional truck-owner category: hands-on dispatch, corridor relationships, and a reputation for showing up when it mattered. That operational DNA still defines how we work.
                 </p>
                 <p>
-                  We built formal operations with <strong className="text-foreground">GST-compliant billing and structured documentation</strong> to serve direct suppliers and large transporters  -  with own fleet, TranZfort network capacity, and ZAFTYS TSM powering every trip.
+                  We built formal operations with <strong className="text-foreground">GST-compliant billing and structured documentation</strong> to serve direct suppliers and large transporters  -  with own fleet, TranZfort network capacity, and ZAFTYS TMS powering every trip.
                 </p>
               </div>
               
@@ -164,7 +158,7 @@ const About = () => {
                 </div>
                 <h3 className="text-2xl font-heading font-bold mb-4 text-navy">Our Mission</h3>
                 <p className="text-muted-foreground leading-relaxed">
-                  To move India's industrial freight with reliability, transparency, and scale  -  through own fleet, TranZfort network, and TSM™ technology. Every transaction runs through ZAFTYS.
+                  To move India's industrial freight with reliability, transparency, and scale  -  through own fleet, TranZfort network, and TMS™ technology. Every transaction runs through ZAFTYS.
                 </p>
               </CardContent>
             </Card>
@@ -176,7 +170,7 @@ const About = () => {
                 </div>
                 <h3 className="text-2xl font-heading font-bold mb-4 text-navy">Our Vision</h3>
                 <p className="text-muted-foreground leading-relaxed">
-                  To be India's most trusted heavy-transport operator  -  combining decades of corridor experience with a national digital freight network and world-class operations software.
+                  To be India's most trusted industrial logistics operator  -  combining decades of corridor experience with verified network capacity and transport technology built from real heavy-haul operations.
                 </p>
               </CardContent>
             </Card>

@@ -11,14 +11,14 @@ import heroServices from "@/assets/hero-services.jpg";
 import heroTechnology from "@/assets/hero-technology.jpg";
 
 export const pageHeroImages = {
-  about: { src: heroAbout, alt: "ZAFTYS warehouse and logistics operations" },
-  careers: { src: heroCareers, alt: "ZAFTYS team collaboration" },
-  contact: { src: heroContact, alt: "Business team planning logistics strategy" },
-  fleet: { src: heroFleet, alt: "ZAFTYS heavy-haul fleet on industrial corridor" },
-  industries: { src: heroIndustries, alt: "Industrial supply chain operations" },
-  network: { src: heroNetwork, alt: "Verified transport partners moving freight on an industrial highway corridor" },
-  partner: { src: heroPartner, alt: "Verified transport partners and fleet operators" },
-  resources: { src: heroResources, alt: "Logistics knowledge and planning resources" },
-  services: { src: heroServices, alt: "Industrial freight and trucking services" },
-  technology: { src: heroTechnology, alt: "ZAFTYS TSM transport management platform" },
+  about: { src: heroAbout, alt: "ZAFTYS industrial logistics heritage — heavy freight operations in India" },
+  careers: { src: heroCareers, alt: "ZAFTYS logistics and technology careers in Amravati" },
+  contact: { src: heroContact, alt: "Contact ZAFTYS for industrial freight quotes in India" },
+  fleet: { src: heroFleet, alt: "ZAFTYS company-operated heavy-haul fleet on an industrial corridor" },
+  industries: { src: heroIndustries, alt: "Cement, steel, mining and bulk freight logistics across India" },
+  network: { src: heroNetwork, alt: "TranZfort verified transport partners on an industrial highway corridor" },
+  partner: { src: heroPartner, alt: "Fleet partners joining TranZfort for industrial loads through ZAFTYS" },
+  resources: { src: heroResources, alt: "ZAFTYS knowledge center for logistics and supply chain resources" },
+  services: { src: heroServices, alt: "FTL and heavy-haul industrial trucking services across India" },
+  technology: { src: heroTechnology, alt: "ZAFTYS TMS transport management platform for industrial freight" },
 } as const;

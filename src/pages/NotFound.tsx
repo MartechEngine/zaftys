@@ -11,7 +11,7 @@ const NotFound = () => {
       <SEO
         title={pageSeo.notFound.title}
         description={pageSeo.notFound.description}
-        canonical="/404"
+        noindex
       />
       <div className="text-center">
         <h1 className="text-9xl font-heading font-bold text-accent mb-4 opacity-20 animate-pulse">404</h1>

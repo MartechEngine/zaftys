@@ -67,7 +67,7 @@ const Footer = () => {
   ];
 
   const platformLinks = [
-    { name: "Platform (TSM™)", path: "/technology" },
+    { name: "Platform (TMS™)", path: "/technology" },
     { name: "TranZfort Network", path: "/network" },
     { name: "Login", path: "/login" },
   ];
@@ -85,7 +85,7 @@ const Footer = () => {
           <div>
             <img src={logoFooter} alt="ZAFTYS Logistics" className="h-14 w-auto mb-6" loading="lazy" />
             <p className="text-gray-400 max-w-md text-lg leading-relaxed">
-              Heavy industrial freight across India. Own fleet, TranZfort network, and ZAFTYS TSM™  -  three generations of corridor experience.
+              Heavy industrial freight across India. Own fleet, TranZfort network, and ZAFTYS TMS™  -  three generations of corridor experience.
             </p>
             <a
               href={externalLinks.tranzfort}

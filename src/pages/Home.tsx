@@ -22,7 +22,7 @@ import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { CTAGroup } from "@/components/CTAGroup";
 import { externalLinks, homeHowItWorks, homeIndustries, coreServices, homeTrustStrip, whatsappUrl } from "@/lib/constants";
 import { pageSeo } from "@/lib/page-seo";
-import { logisticsServiceSchema, organizationSchema } from "@/lib/schema";
+import { logisticsServiceSchema, organizationSchema, websiteSchema, localBusinessSchema } from "@/lib/schema";
 import { pillarImages } from "@/lib/services-images";
 import type { LucideIcon } from "lucide-react";
 
@@ -45,7 +45,7 @@ const Home = () => {
     { icon: TrendingUp, title: "Digital Docs", desc: "LR, invoices, and proof of delivery stored securely." },
   ];
 
-  const schema = [logisticsServiceSchema, organizationSchema];
+  const schema = [organizationSchema, websiteSchema, localBusinessSchema, logisticsServiceSchema];
 
   return (
     <div className="min-h-screen bg-background text-foreground font-sans">
@@ -58,16 +58,16 @@ const Home = () => {
 
       <section className="relative pt-32 pb-24 overflow-hidden min-h-[700px] flex items-center">
         <div className="absolute inset-0">
-          <img src={heroImage} alt="ZAFTYS Logistics Trucks" className="w-full h-full object-cover" />
+          <img src={heroImage} alt="ZAFTYS heavy-haul trucks for industrial freight transport across India" className="w-full h-full object-cover" />
           <div className="absolute inset-0 bg-gradient-to-r from-navy/95 via-navy/80 to-navy/40" />
         </div>
         <div className="container mx-auto container-padding relative z-10">
           <div className="max-w-4xl text-white">
             <h1 className="text-5xl md:text-6xl lg:text-7xl font-heading font-bold mb-6 animate-fade-in-up leading-tight">
-              Industrial Logistics, Built for Modern Supply Chains.
+              Industrial Logistics & Heavy Freight Across India.
             </h1>
             <p className="text-xl md:text-2xl mb-10 text-gray-200 font-light animate-fade-in-up max-w-2xl" style={{ animationDelay: "0.2s" }}>
-              ZAFTYS brings transport operations, intelligent technology, and a verified logistics network together  -  so your business moves freight with greater visibility, reliability, and control.
+              Company-operated transport, ZAFTYS TMS visibility, and TranZfort verified capacity  -  one partner for cement, steel, mining, and bulk freight.
             </p>
             <div className="animate-fade-in-up" style={{ animationDelay: "0.4s" }}>
               <CTAGroup className="justify-start sm:justify-start">
@@ -191,13 +191,13 @@ const Home = () => {
             </div>
             <div className="lg:w-1/2 order-1 lg:order-2">
               <div className="inline-block px-3 py-1 rounded-full bg-primary/10 text-primary text-sm font-semibold mb-6 border border-primary/20">
-                ZAFTYS TSM™
+                ZAFTYS TMS™
               </div>
               <h2 className="text-4xl md:text-5xl font-heading font-bold mb-6 text-navy leading-tight">
                 Technology That Supports Every Shipment.
               </h2>
               <p className="text-lg text-muted-foreground mb-8 leading-relaxed">
-                ZAFTYS TSM connects dispatch, fleet records, documentation, and customer visibility in one operational platform  -  built for our fleet and available for shippers and operators.
+                ZAFTYS TMS connects dispatch, fleet records, documentation, and customer visibility in one operational platform  -  live for our fleet and for shippers and operators at app.zaftys.com.
               </p>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-10">
                 {tsmFeatures.map((feature, index) => (
@@ -225,7 +225,7 @@ const Home = () => {
           <div className="text-center mb-16">
             <h2 className="text-4xl font-heading font-bold mb-4 text-primary">Industries We Serve</h2>
             <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
-              Specialized heavy-haul for India's core industrial verticals.
+              Specialized heavy-haul for India's core industrial verticals  -  cement, steel, mining, chemicals, and manufacturing corridors.
             </p>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -259,7 +259,7 @@ const Home = () => {
             <div>
               <h2 className="text-3xl font-heading font-bold mb-6 text-navy">Built On Real Logistics Experience.</h2>
               <p className="text-lg text-muted-foreground leading-relaxed mb-8">
-                ZAFTYS was created from decades of industrial freight experience  -  from family-operated corridors to a GST-compliant logistics operator with formal billing, combining own fleet, TranZfort network capacity, and ZAFTYS TSM for businesses that cannot afford delays.
+                ZAFTYS was created from decades of industrial freight experience across India's corridors  -  from family-operated lanes to GST-compliant operations based in Amravati, Maharashtra  -  combining own fleet, TranZfort network capacity, and ZAFTYS TMS for businesses that cannot afford delays.
               </p>
               <Link to="/about">
                 <Button variant="outline" className="border-primary text-primary hover:bg-primary hover:text-white">

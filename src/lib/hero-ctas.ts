@@ -1,7 +1,7 @@
 /** Mailto subjects and body templates for hero inquiry CTAs → info@zaftys.com */
 
 export const heroMailSubjects = {
-  demo: "ZAFTYS TSM demo request",
+  demo: "ZAFTYS TMS demo request",
   quote: "Freight quote request",
   fleet: "Fleet availability inquiry",
   network: "TranZfort capacity inquiry",
@@ -16,7 +16,7 @@ export const heroMailSubjects = {
 
 export const heroMailBodies = {
   demo:
-    "Hi ZAFTYS,\n\nI'd like to request a demo of ZAFTYS TSM.\n\nCompany:\nRole:\nBest time to connect:\n\n",
+    "Hi ZAFTYS,\n\nI'd like to request a demo of ZAFTYS TMS.\n\nCompany:\nRole:\nBest time to connect:\n\n",
   quote:
     "Hi ZAFTYS,\n\nI'd like a freight quote.\n\nFrom:\nTo:\nLoad type:\nTimeline:\n\n",
   fleet:

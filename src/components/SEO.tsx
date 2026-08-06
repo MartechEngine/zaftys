@@ -1,4 +1,4 @@
-import { Helmet } from 'react-helmet-async';
+import { Helmet } from "react-helmet-async";
 
 interface SEOProps {
   title: string;
@@ -10,43 +10,48 @@ interface SEOProps {
   noindex?: boolean;
 }
 
-const SEO = ({ 
-  title, 
-  description, 
+const BASE_URL = "https://zaftys.com";
+const SITE_TITLE = "ZAFTYS Logistics";
+const DEFAULT_OG_IMAGE = "/og-image.png";
+
+const SEO = ({
+  title,
+  description,
   canonical,
-  image = '/og-image.svg', 
-  type = 'website',
+  image = DEFAULT_OG_IMAGE,
+  type = "website",
   schema,
-  noindex = false
+  noindex = false,
 }: SEOProps) => {
-  const siteTitle = 'ZAFTYS Logistics';
-  const fullTitle = title === siteTitle ? title : `${title} | ${siteTitle}`;
-  const baseUrl = 'https://zaftys.com'; // Replace with actual domain
-  const currentUrl = canonical ? `${baseUrl}${canonical}` : baseUrl;
-  const imageUrl = image.startsWith('http') ? image : `${baseUrl}${image}`;
+  const fullTitle = title === SITE_TITLE ? title : `${title} | ${SITE_TITLE}`;
+  const currentUrl = canonical ? `${BASE_URL}${canonical}` : BASE_URL;
+  const imageUrl = image.startsWith("http") ? image : `${BASE_URL}${image}`;
 
   return (
     <Helmet>
-      {/* Standard Metadata */}
       <title>{fullTitle}</title>
       <meta name="description" content={description} />
-      {noindex && <meta name="robots" content="noindex, nofollow" />}
-      <link rel="canonical" href={currentUrl} />
+      {noindex ? (
+        <meta name="robots" content="noindex, nofollow" />
+      ) : (
+        <link rel="canonical" href={currentUrl} />
+      )}
 
-      {/* Open Graph / Facebook */}
       <meta property="og:type" content={type} />
+      <meta property="og:site_name" content={SITE_TITLE} />
+      <meta property="og:locale" content="en_IN" />
       <meta property="og:title" content={fullTitle} />
       <meta property="og:description" content={description} />
-      <meta property="og:url" content={currentUrl} />
+      <meta property="og:url" content={noindex ? BASE_URL : currentUrl} />
       <meta property="og:image" content={imageUrl} />
+      <meta property="og:image:width" content="1200" />
+      <meta property="og:image:height" content="630" />
 
-      {/* Twitter */}
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:title" content={fullTitle} />
       <meta name="twitter:description" content={description} />
       <meta name="twitter:image" content={imageUrl} />
 
-      {/* Structured Data (JSON-LD) */}
       {(Array.isArray(schema) ? schema : schema ? [schema] : []).map((entry, index) => (
         <script key={index} type="application/ld+json">
           {JSON.stringify(entry)}

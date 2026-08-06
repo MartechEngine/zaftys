@@ -22,6 +22,7 @@ const Resources = () => {
         description={pageSeo.resources.description}
         canonical="/resources"
         schema={resourcesPageSchema}
+        noindex
       />
 
       <PageHero

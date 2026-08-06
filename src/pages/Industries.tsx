@@ -12,6 +12,7 @@ import { CTAGroup } from "@/components/CTAGroup";
 import ResponsiveImage from "@/components/ResponsiveImage";
 import { pageSeo } from "@/lib/page-seo";
 import { industryHubCards } from "@/lib/industries-data";
+import { breadcrumbSchema, organizationSchema } from "@/lib/schema";
 
 const Industries = () => {
   const industries = industryHubCards();
@@ -22,12 +23,19 @@ const Industries = () => {
         title={pageSeo.industries.title}
         description={pageSeo.industries.description}
         canonical="/industries"
+        schema={[
+          organizationSchema,
+          breadcrumbSchema([
+            { name: "Home", path: "/" },
+            { name: "Industries", path: "/industries" },
+          ]),
+        ]}
       />
 
       <PageHero
         badge="Industries"
-        title="Built For Industrial Supply Chains"
-        description="Steel, cement, chemicals, and bulk freight each demand different assets, documentation, and timing  -  ZAFTYS develops transport programs around these realities with company-operated fleet first and verified network capacity when needed."
+        title="Industrial Logistics For Cement, Steel, Mining & Bulk Freight."
+        description="Each vertical needs different assets, documentation, and timing. ZAFTYS builds transport programs around those realities  -  company-operated fleet first, TranZfort capacity when demand spikes, and TMS visibility on active lanes across India."
         imageSrc={pageHeroImages.industries.src}
         imageAlt={pageHeroImages.industries.alt}
       >
@@ -48,7 +56,7 @@ const Industries = () => {
           <div className="text-center mb-16">
             <h2 className="text-4xl font-heading font-bold mb-4 text-navy">Specialized by Vertical</h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Each industry runs on the same ZAFTYS stack  -  own fleet, TranZfort network, and TSM™ visibility.
+              Each industry runs on the same ZAFTYS stack  -  own fleet, TranZfort network, and TMS™ visibility.
             </p>
           </div>
 
@@ -94,7 +102,7 @@ const Industries = () => {
             {[
               { title: "Compliance Ready", desc: "Structured documentation, ePOD, and regulatory awareness on active lanes." },
               { title: "Scalable Capacity", desc: "Own fleet for core lanes; TranZfort network for surge and spot overflow." },
-              { title: "Full Visibility", desc: "ZAFTYS TSM™ tracking for shippers who need real-time shipment status." },
+              { title: "Full Visibility", desc: "ZAFTYS TMS™ tracking for shippers who need real-time shipment status." },
             ].map((item) => (
               <div key={item.title} className="text-center p-6 rounded-lg border border-border bg-muted/10">
                 <h3 className="text-lg font-bold text-navy mb-2">{item.title}</h3>

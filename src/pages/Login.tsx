@@ -17,7 +17,7 @@ const Login = () => {
       <SEO
         title={pageSeo.login.title}
         description={pageSeo.login.description}
-        canonical="/login"
+        noindex
       />
 
       {/* Background Pattern */}
@@ -32,7 +32,7 @@ const Login = () => {
           </div>
           <CardTitle className="text-2xl font-heading font-bold text-navy">Welcome Back</CardTitle>
           <CardDescription>
-            Access ZAFTYS TSM™  -  client portal and team dashboard
+            Access ZAFTYS TMS™  -  client portal and team dashboard
           </CardDescription>
         </CardHeader>
         

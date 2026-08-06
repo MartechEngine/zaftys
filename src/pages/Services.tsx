@@ -24,8 +24,8 @@ const Services = () => {
       id: "ftl",
       icon: Truck,
       title: "Full Truckload (FTL) Transport",
-      description: "Dedicated trucks for large-volume heavy shipments with nationwide corridor coverage and TSM™ tracking.",
-      features: ["Heavy-haul multi-axle vehicles", "Pan-India industrial corridors", "Real-time TSM™ tracking", "Dedicated fleet assignment"],
+      description: "Dedicated trucks for large-volume heavy shipments with nationwide corridor coverage and TMS™ tracking.",
+      features: ["Heavy-haul multi-axle vehicles", "Pan-India industrial corridors", "Real-time TMS™ tracking", "Dedicated fleet assignment"],
       highlight: "Dispatch discipline built over decades",
     },
     {
@@ -65,7 +65,7 @@ const Services = () => {
       icon: Network,
       title: "TranZfort Network Overflow",
       description: "When our fleet is at capacity, verified partners on TranZfort fulfil loads  -  all coordinated through ZAFTYS.",
-      features: ["Verified operator network", "Structured load matching", "Same ZAFTYS accountability", "TSM™ visibility on every trip"],
+      features: ["Verified operator network", "Structured load matching", "Same ZAFTYS accountability", "TMS™ visibility on every trip"],
       highlight: "Scale without losing control",
     },
   ];
@@ -85,8 +85,8 @@ const Services = () => {
 
       <PageHero
         badge="Industrial Trucking"
-        title="Industrial Logistics Services Built Around Your Business."
-        description="ZAFTYS develops transport solutions around your cargo, schedules, and compliance needs  -  supported by experienced professionals and intelligent technology."
+        title="FTL, Contract & Heavy-Haul Logistics Across India."
+        description="Transport programs for industrial cargo, plant windows, and compliance needs  -  company fleet, TranZfort overflow, and live ZAFTYS TMS visibility on every lane."
         imageSrc={pageHeroImages.services.src}
         imageAlt={pageHeroImages.services.alt}
       >
@@ -149,7 +149,7 @@ const Services = () => {
           <div className="text-center mb-16 max-w-3xl mx-auto">
             <h2 className="text-4xl font-heading font-bold mb-4 text-navy">Materials We Move</h2>
             <p className="text-lg text-muted-foreground">
-              Industrial commodities across mining, construction, metals, energy, FMCG, and agriculture.
+              Industrial commodities across mining, construction, metals, energy, FMCG, and agriculture on corridors across India.
             </p>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -198,7 +198,7 @@ const Services = () => {
                 <Card className={`border-none shadow-lg bg-muted/20 ${index % 2 === 1 ? "lg:col-start-1" : ""}`}>
                   <CardContent className="p-8">
                     <p className="text-sm font-semibold text-muted-foreground uppercase tracking-wider mb-4">Every program includes</p>
-                    {["Registered ZAFTYS contracts", "Own fleet + TranZfort overflow", "TSM™ tracking on active lanes"].map((line, i) => (
+                    {["Registered ZAFTYS contracts", "Own fleet + TranZfort overflow", "TMS™ tracking on active lanes"].map((line, i) => (
                       <div key={i} className="flex gap-3 mb-3 last:mb-0">
                         <CheckCircle2 className="text-primary shrink-0" size={18} />
                         <span className="text-sm">{line}</span>
@@ -212,14 +212,14 @@ const Services = () => {
         </div>
       </section>
 
-      {/* TSM  -  6 cards, 3×2 */}
+      {/* TMS  -  6 cards, 3×2 */}
       <section id="operations" className="section-padding bg-muted/30 scroll-mt-28">
         <div className="container mx-auto container-padding">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-16">
             <div>
-              <h2 className="text-4xl font-heading font-bold mb-4 text-navy">ZAFTYS TSM™ Operations</h2>
+              <h2 className="text-4xl font-heading font-bold mb-4 text-navy">ZAFTYS TMS™ Operations</h2>
               <p className="text-lg text-muted-foreground leading-relaxed">
-                The dispatch and visibility layer behind every move  -  built for our fleet, available for shippers and operators.
+                The dispatch and visibility layer behind every move  -  live at app.zaftys.com for our fleet and for shippers and operators who want the same discipline.
               </p>
             </div>
             <ResponsiveImage
