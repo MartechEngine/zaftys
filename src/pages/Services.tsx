@@ -244,9 +244,12 @@ const Services = () => {
               );
             })}
           </div>
-          <div className="text-center mt-10">
+          <div className="text-center mt-10 flex flex-col sm:flex-row gap-4 justify-center items-center">
             <Link to="/technology">
               <Button variant="accent">See Full Platform <ArrowRight className="ml-2" size={16} /></Button>
+            </Link>
+            <Link to="/blog/planning-industrial-shipments" className="text-primary font-semibold hover:underline text-sm">
+              Read more: planning industrial shipments
             </Link>
           </div>
         </div>
@@ -292,7 +295,24 @@ const Services = () => {
             <Link to="/network">
               <Button size="lg" variant="on-dark-outline">Network Page</Button>
             </Link>
+            <Link to="/technology">
+              <Button size="lg" variant="on-dark-outline">ZAFTYS TMS</Button>
+            </Link>
           </CTAGroup>
+          <p className="mt-6 text-sm text-gray-400">
+            Also see{" "}
+            <Link to="/partner" className="text-accent hover:underline font-semibold">
+              partner program
+            </Link>
+            {" · "}
+            <Link to="/blog/planning-industrial-shipments" className="text-accent hover:underline font-semibold">
+              shipment planning guide
+            </Link>
+            {" · "}
+            <Link to="/blog/reduce-empty-return-trips" className="text-accent hover:underline font-semibold">
+              empty miles guide
+            </Link>
+          </p>
         </div>
       </section>
 

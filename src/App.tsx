@@ -4,7 +4,7 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { HelmetProvider } from "react-helmet-async";
 import { useEffect } from "react";
-import { BrowserRouter, Routes, Route, useLocation, Navigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation, Navigate, useParams } from "react-router-dom";
 import Navigation from "./components/Navigation";
 import Footer from "./components/Footer";
 import About from "./pages/About";
@@ -24,7 +24,8 @@ const Home = lazy(() => import("./pages/Home"));
 const Network = lazy(() => import("./pages/Network"));
 const Services = lazy(() => import("./pages/Services"));
 const IndustryDetail = lazy(() => import("./pages/IndustryDetail"));
-const Resources = lazy(() => import("./pages/Resources"));
+const Blog = lazy(() => import("./pages/Blog"));
+const BlogPost = lazy(() => import("./pages/BlogPost"));
 
 const PageFallback = () => (
   <div className="min-h-[40vh] flex items-center justify-center" role="status" aria-label="Loading page">
@@ -34,6 +35,11 @@ const PageFallback = () => (
 
 function LazyPage({ children }: { children: React.ReactNode }) {
   return <Suspense fallback={<PageFallback />}>{children}</Suspense>;
+}
+
+function ResourcesSlugRedirect() {
+  const { slug } = useParams<{ slug: string }>();
+  return <Navigate to={slug ? `/blog/${slug}` : "/blog"} replace />;
 }
 
 const ScrollToTop = () => {
@@ -68,7 +74,10 @@ const App = () => (
           <Route path="/careers" element={<Careers />} />
           <Route path="/partner" element={<Partner />} />
           <Route path="/contact" element={<Contact />} />
-          <Route path="/resources" element={<LazyPage><Resources /></LazyPage>} />
+          <Route path="/blog" element={<LazyPage><Blog /></LazyPage>} />
+          <Route path="/blog/:slug" element={<LazyPage><BlogPost /></LazyPage>} />
+          <Route path="/resources" element={<Navigate to="/blog" replace />} />
+          <Route path="/resources/:slug" element={<ResourcesSlugRedirect />} />
           <Route path="/privacy" element={<Privacy />} />
           <Route path="/terms" element={<Terms />} />
           <Route path="/login" element={<Login />} />

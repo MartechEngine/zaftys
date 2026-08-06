@@ -523,7 +523,7 @@ These exist in `zaftys-lab/marketing` but **do not fit** current `zaftys-main` U
 |-----------|-----------------|
 | `/platform/los-core`, `/visibility`, `/control-tower`, etc. | Sub-product pages  -  consolidate into single `/technology` until nav supports dropdown |
 | `/solutions/*` (enterprise, broker, 3pl) | Enterprise SaaS segmentation  -  overkill for transport-first site |
-| `/blog` | Deferred in lab spec |
+| `/blog` | ✅ Index + 5 posts; `/resources` redirects here |
 | GCC / SEA emerging markets | Not current market focus |
 | Ask ZAFTYS / Intelligence Cloud marketing | Tool-level detail  -  ignore per content brief |
 | Ferrofluid / glass marketing shell | Different design system  -  keep zaftys-main industrial navy/orange UX |
@@ -586,7 +586,7 @@ These exist in `zaftys-lab/marketing` but **do not fit** current `zaftys-main` U
 |------|:------:|-------|
 | Industry detail routes × 8 | ✅ | `/industries/:slug` |
 | Services transportation explorer | ✅ | `#transportation-explorer` |
-| `/resources` Knowledge Center | ✅ | Footer link; articles marked coming soon |
+| `/blog` Blog | ✅ | Header + footer; 5 launch posts; `/resources` → `/blog` |
 | `/platform` → `/technology` redirect | ✅ | |
 | Login → `app.zaftys.com` | ⏸ | **Deferred**  -  UI login page retained |
 
@@ -597,7 +597,7 @@ These exist in `zaftys-lab/marketing` but **do not fit** current `zaftys-main` U
 | Real client logos / reviews | ⬜ | When available |
 | Industry playbook tabs on detail pages | ✅ | Overview / Operations / Equipment tabs |
 | SEO schema updates | ✅ | Shipped in Phase 2 closeout |
-| Publish Knowledge Center articles | ⬜ | Library placeholders on `/resources` |
+| Publish Knowledge Center articles | ✅ | 5 posts live on `/blog` |
 | `docs/marketing-copy-deck.md` | ⬜ | Optional final copy deck |
 
 ---
@@ -645,7 +645,7 @@ These exist in `zaftys-lab/marketing` but **do not fit** current `zaftys-main` U
 | `docs/marketing-content-blueprint.md` | ✅ Created  -  page/section/card map |
 | `docs/marketing-website-sitemap-new.md` | ✅ This file  -  canonical IA + task tracker |
 | `docs/project-idea.md` | ✅ Product vision |
-| `/resources` | ✅ Knowledge Center hub (articles coming soon) |
+| `/blog` | ✅ Blog hub + `/blog/:slug` posts (`/resources` redirects) |
 | `docs/marketing-copy-deck.md` | ⬜ Optional  -  page-by-page final copy |
 | `zaftys-lab/docs/marketing/` | Reference  -  industry/playbook deep specs |
 

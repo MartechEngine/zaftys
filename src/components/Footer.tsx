@@ -55,7 +55,7 @@ const Footer = () => {
   const companyLinks = [
     { name: "About Us", path: "/about" },
     { name: "Careers", path: "/careers" },
-    { name: "Resources", path: "/resources" },
+    { name: "Blog", path: "/blog" },
     { name: "Contact", path: "/contact" },
     { name: "Partner", path: "/partner" },
   ];
@@ -198,7 +198,7 @@ const Footer = () => {
             <h4 className="text-lg font-bold text-white mb-6 font-heading uppercase tracking-wider">Follow Us</h4>
             <div className="flex gap-4">
               <a
-                href="https://www.linkedin.com/company/zaftys"
+                href={externalLinks.linkedin}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-gray-400 hover:bg-accent hover:text-white transition-all duration-300"

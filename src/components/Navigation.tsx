@@ -31,11 +31,15 @@ const Navigation = () => {
     { name: "Network", path: "/network" },
     { name: "Platform", path: "/technology" },
     { name: "Industries", path: "/industries" },
+    { name: "Blog", path: "/blog" },
     { name: "Partner", path: "/partner" },
     { name: "Contact", path: "/contact" },
   ];
 
-  const isActive = (path: string) => location.pathname === path;
+  const isActive = (path: string) =>
+    path === "/blog"
+      ? location.pathname === "/blog" || location.pathname.startsWith("/blog/")
+      : location.pathname === path;
 
   return (
     <nav

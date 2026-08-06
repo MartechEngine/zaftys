@@ -18,7 +18,7 @@ export const pageHeroImages = {
   industries: { src: heroIndustries, alt: "Cement, steel, mining and bulk freight logistics across India" },
   network: { src: heroNetwork, alt: "TranZfort verified transport partners on an industrial highway corridor" },
   partner: { src: heroPartner, alt: "Fleet partners joining TranZfort for industrial loads through ZAFTYS" },
-  resources: { src: heroResources, alt: "ZAFTYS knowledge center for logistics and supply chain resources" },
+  resources: { src: heroResources, alt: "ZAFTYS Blog — practical industrial logistics and corridor operations guides" },
   services: { src: heroServices, alt: "FTL and heavy-haul industrial trucking services across India" },
   technology: { src: heroTechnology, alt: "ZAFTYS TMS transport management platform for industrial freight" },
 } as const;

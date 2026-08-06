@@ -42,6 +42,7 @@ export const WHATSAPP_DEFAULT_MESSAGE =
 export const externalLinks = {
   tranzfort: "https://tranzfort.com",
   app: "https://app.zaftys.com",
+  linkedin: "https://www.linkedin.com/company/zaftys",
 } as const;
 
 export function whatsappUrl(message = WHATSAPP_DEFAULT_MESSAGE): string {

@@ -14,6 +14,11 @@ export const organizationSchema = {
   name: legalEntity.name,
   url: BASE,
   logo: `${BASE}/og-image.png`,
+  sameAs: [
+    "https://www.linkedin.com/company/zaftys",
+    "https://tranzfort.com",
+    "https://app.zaftys.com",
+  ],
   contactPoint: {
     "@type": "ContactPoint",
     telephone: "+91-927-092-3581",
@@ -101,14 +106,55 @@ export const softwareApplicationSchema = {
   url: "https://app.zaftys.com",
 };
 
-export const resourcesPageSchema = {
+export const blogPageSchema = {
   "@context": "https://schema.org",
   "@type": "CollectionPage",
-  name: "ZAFTYS Knowledge Center",
-  description: "Logistics operations guides, supply chain insights, and transport technology resources.",
+  name: "ZAFTYS Blog",
+  description:
+    "Practical logistics guides from corridor operations — industrial FTL, plant windows, steel and cement freight, and TMS.",
   publisher: organizationRef,
-  url: `${BASE}/resources`,
+  url: `${BASE}/blog`,
 };
+
+/** @deprecated Prefer blogPageSchema — /resources redirects to /blog */
+export const resourcesPageSchema = blogPageSchema;
+
+export function blogPostingSchema(post: {
+  slug: string;
+  title: string;
+  seoDescription: string;
+  publishedAt: string;
+  updatedAt?: string;
+  author: string;
+  heroImage?: string;
+}): Record<string, unknown> {
+  const image = post.heroImage
+    ? post.heroImage.startsWith("http")
+      ? post.heroImage
+      : `${BASE}${post.heroImage}`
+    : `${BASE}/og-image.png`;
+
+  return {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    headline: post.title,
+    description: post.seoDescription,
+    datePublished: post.publishedAt,
+    dateModified: post.updatedAt ?? post.publishedAt,
+    author: {
+      "@type": "Organization",
+      name: post.author,
+      url: BASE,
+    },
+    publisher: organizationRef,
+    image,
+    mainEntityOfPage: {
+      "@type": "WebPage",
+      "@id": `${BASE}/blog/${post.slug}`,
+    },
+    url: `${BASE}/blog/${post.slug}`,
+  };
+}
 
 export function breadcrumbSchema(
   items: readonly { name: string; path: string }[],

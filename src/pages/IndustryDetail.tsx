@@ -174,6 +174,27 @@ const IndustryDetail = () => {
               <Link to="/technology" className="text-primary font-semibold hover:underline">
                 ZAFTYS TMS
               </Link>
+              <Link to="/partner" className="text-primary font-semibold hover:underline">
+                Become a partner
+              </Link>
+              <Link to="/contact" className="text-primary font-semibold hover:underline">
+                Contact
+              </Link>
+              {industry.slug === "cement" ? (
+                <Link to="/blog/cement-plant-loading-windows" className="text-primary font-semibold hover:underline">
+                  Read more: plant loading windows
+                </Link>
+              ) : null}
+              {industry.slug === "steel-metals" ? (
+                <Link to="/blog/steel-coil-transport-basics" className="text-primary font-semibold hover:underline">
+                  Read more: coil transport basics
+                </Link>
+              ) : null}
+              {industry.slug === "coal-mining" ? (
+                <Link to="/blog/planning-industrial-shipments" className="text-primary font-semibold hover:underline">
+                  Read more: planning industrial shipments
+                </Link>
+              ) : null}
             </div>
           </div>
         </div>

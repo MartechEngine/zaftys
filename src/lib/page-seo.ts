@@ -70,9 +70,15 @@ export const pageSeo = {
     description:
       "This page does not exist. Return to Services, Network, or Contact for freight quotes and logistics support.",
   },
-  resources: {
-    title: "Knowledge Center — Logistics Resources",
+  blog: {
+    title: "Blog — Industrial Logistics Insights",
     description:
-      "Practical logistics guides, supply chain insights, fleet management resources, and transport technology articles from ZAFTYS.",
+      "Practical guides on FTL empty miles, industrial shipment planning, cement and steel freight, and TMS for heavy-haul operations.",
+  },
+  /** @deprecated Prefer blog — /resources redirects to /blog */
+  resources: {
+    title: "Blog — Industrial Logistics Insights",
+    description:
+      "Practical guides on FTL empty miles, industrial shipment planning, cement and steel freight, and TMS for heavy-haul operations.",
   },
 } as const;
