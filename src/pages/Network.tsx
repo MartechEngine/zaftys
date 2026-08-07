@@ -208,7 +208,7 @@ const NetworkPage = () => {
           <div className="text-center max-w-2xl mx-auto mb-8">
             <h2 className="text-3xl md:text-4xl font-heading font-bold mb-3 text-navy">Try The App Flows</h2>
             <p className="text-muted-foreground">
-              Preview supplier and trucker views below — then download the live TranZfort app to get started.
+              Preview supplier and trucker views below  -  then download the live TranZfort app to get started.
             </p>
           </div>
           <div className="max-w-md mx-auto rounded-2xl border border-border bg-muted/10 shadow-lg p-4 sm:p-6">
@@ -382,7 +382,7 @@ const NetworkPage = () => {
         <div className="container mx-auto container-padding max-w-2xl">
           <h2 className="text-3xl md:text-4xl font-heading font-bold mb-4">Need More Transport Capacity?</h2>
           <p className="text-lg text-gray-200 mb-8">
-            Download TranZfort for partners, or WhatsApp ZAFTYS for freight capacity — one accountable logistics relationship.
+            Download TranZfort for partners, or WhatsApp ZAFTYS for freight capacity  -  one accountable logistics relationship.
           </p>
           <CTAGroup>
             <Button asChild size="lg" variant="accent">

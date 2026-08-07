@@ -74,7 +74,7 @@ const Home = () => {
         <div className="container mx-auto container-padding relative z-10">
           <div className="max-w-4xl text-white">
             <h1 className="text-5xl md:text-6xl lg:text-7xl font-heading font-bold mb-6 animate-fade-in-up leading-tight">
-              ZAFTYS Logistics — Industrial Freight Across India.
+              ZAFTYS Logistics  -  Industrial Freight Across India.
             </h1>
             <p className="text-xl md:text-2xl mb-10 text-gray-200 font-light animate-fade-in-up max-w-2xl" style={{ animationDelay: "0.2s" }}>
               Company-operated transport, ZAFTYS TMS visibility, and TranZfort verified capacity  -  one partner for cement, steel, mining, and bulk freight.
@@ -239,7 +239,7 @@ const Home = () => {
                 <Card className="overflow-hidden hover:border-primary/50 cursor-pointer transition-all duration-300 hover:shadow-lg hover:-translate-y-1 bg-white h-full border-none shadow-md group flex flex-col">
                   <ResponsiveImage
                     src={industry.image}
-                    alt={`${industry.name} logistics — ZAFTYS heavy freight India`}
+                    alt={`${industry.name} logistics  -  ZAFTYS heavy freight India`}
                     aspectRatio="2/1"
                     objectFit="cover"
                     imgClassName="object-center"
@@ -303,7 +303,7 @@ const Home = () => {
             <div>
               <h2 className="text-3xl font-heading font-bold text-navy mb-2">Latest from the Blog</h2>
               <p className="text-muted-foreground max-w-xl">
-                Practical notes from industrial corridor operations — planning, plant windows, and TMS.
+                Practical notes from industrial corridor operations  -  planning, plant windows, and TMS.
               </p>
             </div>
             <Link to="/blog" className="text-primary font-semibold hover:underline inline-flex items-center shrink-0">

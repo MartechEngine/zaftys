@@ -67,7 +67,7 @@ const About = () => {
       />
       <PageHero
         badge="Our Story"
-        title="About ZAFTYS Logistics — Industrial Freight Across India."
+        title="About ZAFTYS Logistics  -  Industrial Freight Across India."
         description="Three generations of corridor experience. GST-compliant operations combining company-operated fleet, TranZfort verified capacity, and ZAFTYS TMS for industrial shippers and transporters."
         imageSrc={heroAbout}
         imageAlt={pageHeroAlts.about}

@@ -38,7 +38,7 @@ export const BOARD_COLUMNS: { key: TripStatus; label: string }[] = [
   { key: "delivered", label: "Delivered" },
 ];
 
-/** Fixture trips — sample corridor data for marketing sneak peek */
+/** Fixture trips  -  sample corridor data for marketing sneak peek */
 export const DEMO_TRIPS: DemoTrip[] = [
   {
     id: "ZFT-2026-0142",

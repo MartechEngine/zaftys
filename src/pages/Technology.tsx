@@ -35,7 +35,7 @@ const liveToday = [
   "Dispatch & trip lifecycle in production at app.zaftys.com",
   "Client portal for shipment visibility and ePOD",
   "Fleet, driver, and document records on one system",
-  "Built for industrial freight — plant windows, multi-axle, weighbridge reality",
+  "Built for industrial freight  -  plant windows, multi-axle, weighbridge reality",
 ] as const;
 
 const technologyFaqs = [
@@ -52,7 +52,7 @@ const technologyFaqs = [
   {
     question: "How is this different from generic TMS tools?",
     answer:
-      "ZAFTYS TMS is shaped by heavy-haul operations — multi-axle assets, plant loading windows, weighbridge loops, and scaling capacity through TranZfort when owned fleet is full.",
+      "ZAFTYS TMS is shaped by heavy-haul operations  -  multi-axle assets, plant loading windows, weighbridge loops, and scaling capacity through TranZfort when owned fleet is full.",
   },
 ] as const;
 
@@ -94,13 +94,13 @@ const Technology = () => {
     {
       icon: Users,
       title: "For Shippers & Transporters",
-      description: "Outsource freight with full visibility — track every shipment through the client portal in real time.",
+      description: "Outsource freight with full visibility  -  track every shipment through the client portal in real time.",
       bullets: ["Live shipment tracking", "ePOD and document access", "Lane performance reports"],
     },
     {
       icon: Truck,
       title: "For Fleet Operators",
-      description: "Run dispatch, fleet, and billing on one platform — the same tools ZAFTYS uses internally.",
+      description: "Run dispatch, fleet, and billing on one platform  -  the same tools ZAFTYS uses internally.",
       bullets: ["Dispatch dashboard", "Driver & vehicle management", "Trip lifecycle & billing"],
     },
   ];
@@ -121,8 +121,8 @@ const Technology = () => {
 
       <PageHero
         badge="ZAFTYS TMS™ · Live"
-        title="ZAFTYS Logistics TMS — Transport Management For Industrial Freight."
-        description="ZAFTYS TMS is live — dispatch, fleet, driver, documentation, and customer visibility in one platform. We run it every day on our own fleet and offer the same operational discipline to shippers and operators."
+        title="ZAFTYS Logistics TMS  -  Transport Management For Industrial Freight."
+        description="ZAFTYS TMS is live  -  dispatch, fleet, driver, documentation, and customer visibility in one platform. We run it every day on our own fleet and offer the same operational discipline to shippers and operators."
         imageSrc={heroTechnology}
         imageAlt={pageHeroAlts.technology}
       >

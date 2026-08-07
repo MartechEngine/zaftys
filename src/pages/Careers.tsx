@@ -110,7 +110,7 @@ const Careers = () => {
       />
       <PageHero
         badge="Join Our Team"
-        title="Careers In Logistics, Operations & Technology."
+        title="Careers At ZAFTYS Logistics  -  Operations & Technology."
         description="Join ZAFTYS in Amravati and across our network  -  roles where corridor experience and transport technology solve real industrial freight problems."
         imageSrc={heroCareers}
         imageAlt={pageHeroAlts.careers}

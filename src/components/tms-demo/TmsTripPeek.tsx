@@ -225,7 +225,7 @@ function FleetBoard({
             <div className="space-y-1.5">
               {col.trips.length === 0 ? (
                 <p className="text-[10px] px-1 py-2" style={{ color: "var(--tms-muted)" }}>
-                  —
+                  -
                 </p>
               ) : (
                 col.trips.slice(0, compact ? 2 : 3).map((trip) => (

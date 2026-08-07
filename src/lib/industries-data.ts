@@ -43,11 +43,11 @@ export const industries: readonly IndustryRecord[] = [
       "Clinker and cement movement between grinding units and consumption hubs.",
       "Aggregates supply to infrastructure and construction sites.",
     ],
-    equipment: ["16–35T tippers and bulk carriers", "Open-body for bagged and loose bulk", "Multi-axle for heavy project loads"],
+    equipment: ["16-35T tippers and bulk carriers", "Open-body for bagged and loose bulk", "Multi-axle for heavy project loads"],
     whatsappPrefill:
       "Hi ZAFTYS, I need a quote for Cement & Construction freight. Corridor:  Load type:  Volume:",
     seoH1: "Cement & Construction Logistics",
-    seoTitle: "Cement Logistics — Tipper & Bulk Transport",
+    seoTitle: "Cement Logistics  -  Tipper & Bulk Transport",
     seoDescription:
       "Cement, clinker, and aggregates transport with plant dispatch discipline. Own fleet, TranZfort overflow, and ZAFTYS TMS visibility.",
     faqs: [
@@ -59,7 +59,7 @@ export const industries: readonly IndustryRecord[] = [
       {
         question: "How do you reduce detention at cement plants?",
         answer:
-          "We plan around plant windows, assign suitable tipper capacity, and keep dispatch coordination through one ZAFTYS channel — with TranZfort overflow when demand spikes.",
+          "We plan around plant windows, assign suitable tipper capacity, and keep dispatch coordination through one ZAFTYS channel  -  with TranZfort overflow when demand spikes.",
       },
       {
         question: "Can I track cement shipments?",
@@ -96,7 +96,7 @@ export const industries: readonly IndustryRecord[] = [
     whatsappPrefill:
       "Hi ZAFTYS, I need a quote for Coal & Mining freight. Corridor:  Load type:  Volume:",
     seoH1: "Coal & Mining Logistics",
-    seoTitle: "Coal & Mining Logistics — Tipper Transport",
+    seoTitle: "Coal & Mining Logistics  -  Tipper Transport",
     seoDescription:
       "Pit-to-plant and mine-to-mill freight with site discipline. Company fleet and verified TranZfort capacity through ZAFTYS.",
     faqs: [
@@ -145,7 +145,7 @@ export const industries: readonly IndustryRecord[] = [
     whatsappPrefill:
       "Hi ZAFTYS, I need a quote for Steel & Metals freight. Corridor:  Load type:  Weight:",
     seoH1: "Steel & Metals Logistics",
-    seoTitle: "Steel Logistics — Coil & Heavy-Haul Transport",
+    seoTitle: "Steel Logistics  -  Coil & Heavy-Haul Transport",
     seoDescription:
       "Secure heavy-haul for coils, plates, and structural steel with weighbridge discipline. Own fleet, TranZfort, and ZAFTYS TMS.",
     faqs: [
@@ -194,19 +194,19 @@ export const industries: readonly IndustryRecord[] = [
     whatsappPrefill:
       "Hi ZAFTYS, I need a quote for Chemicals freight. Corridor:  Load type:  Packaging:",
     seoH1: "Chemical Logistics",
-    seoTitle: "Chemical Logistics — Bulk & Tanker Transport",
+    seoTitle: "Chemical Logistics  -  Bulk & Tanker Transport",
     seoDescription:
       "Compliance-focused chemical and bulk liquid transport with structured documentation and ZAFTYS TMS visibility.",
     faqs: [
       {
         question: "What chemical freight can ZAFTYS support?",
         answer:
-          "Industrial chemicals and bulk liquids where tanker or packaged handling fits the program — scoped honestly during consultation.",
+          "Industrial chemicals and bulk liquids where tanker or packaged handling fits the program  -  scoped honestly during consultation.",
       },
       {
         question: "How is compliance handled?",
         answer:
-          "Documentation discipline, structured LR/POD, and accountable handover through ZAFTYS operations — not informal spot-only coordination.",
+          "Documentation discipline, structured LR/POD, and accountable handover through ZAFTYS operations  -  not informal spot-only coordination.",
       },
       {
         question: "Can we see shipment status without calling dispatch?",
@@ -243,7 +243,7 @@ export const industries: readonly IndustryRecord[] = [
     whatsappPrefill:
       "Hi ZAFTYS, I need a quote for Manufacturing logistics. Corridor:  Load type:  Frequency:",
     seoH1: "Manufacturing Logistics",
-    seoTitle: "Manufacturing Logistics — Plant-to-Plant FTL",
+    seoTitle: "Manufacturing Logistics  -  Plant-to-Plant FTL",
     seoDescription:
       "Inbound and outbound manufacturing freight with production-window discipline. Own fleet, TranZfort, and ZAFTYS TMS.",
     faqs: [
@@ -292,14 +292,14 @@ export const industries: readonly IndustryRecord[] = [
     whatsappPrefill:
       "Hi ZAFTYS, I need a quote for FMCG distribution. Corridor:  Load type:  Frequency:",
     seoH1: "FMCG Logistics",
-    seoTitle: "FMCG Logistics — Regional FTL Distribution",
+    seoTitle: "FMCG Logistics  -  Regional FTL Distribution",
     seoDescription:
       "Regional FMCG distribution with OTIF focus and lane discipline. ZAFTYS fleet, TranZfort capacity, and TMS tracking.",
     faqs: [
       {
         question: "Is ZAFTYS focused on industrial FTL or last-mile retail vans?",
         answer:
-          "Primary focus is regional FTL and DC-oriented industrial distribution — not generic last-mile e-commerce vans.",
+          "Primary focus is regional FTL and DC-oriented industrial distribution  -  not generic last-mile e-commerce vans.",
       },
       {
         question: "How do you support OTIF goals?",
@@ -341,14 +341,14 @@ export const industries: readonly IndustryRecord[] = [
     whatsappPrefill:
       "Hi ZAFTYS, I need a quote for Retail Distribution. Corridor:  Load type:  Drops:",
     seoH1: "Retail Distribution Logistics",
-    seoTitle: "Retail Distribution — DC-to-Store FTL",
+    seoTitle: "Retail Distribution  -  DC-to-Store FTL",
     seoDescription:
       "DC-to-store and hub distribution with schedule discipline and ePOD. Own fleet and TranZfort overflow through ZAFTYS.",
     faqs: [
       {
         question: "Do you run DC-to-store programs?",
         answer:
-          "Yes, where FTL or multi-stop designs fit your network — scoped during program design with schedule and ePOD requirements.",
+          "Yes, where FTL or multi-stop designs fit your network  -  scoped during program design with schedule and ePOD requirements.",
       },
       {
         question: "How is proof of delivery handled?",
@@ -390,7 +390,7 @@ export const industries: readonly IndustryRecord[] = [
     whatsappPrefill:
       "Hi ZAFTYS, I need a quote for Industrial Logistics. Corridor:  Load type:  Plants involved:",
     seoH1: "Industrial Multi-Plant Logistics",
-    seoTitle: "Industrial Logistics — Multi-Plant Programs",
+    seoTitle: "Industrial Logistics  -  Multi-Plant Programs",
     seoDescription:
       "Complex multi-plant industrial freight with contract and spot capacity. Own fleet, TranZfort network, and ZAFTYS TMS.",
     faqs: [

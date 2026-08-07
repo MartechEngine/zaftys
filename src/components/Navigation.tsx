@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Menu, X, UserCircle } from "lucide-react";
-import logoHeader from "@/assets/logo-header.png";
+import logoHeader from "@/assets/logo-zaftys.png";
 import { mailtoCompany } from "@/lib/constants";
 import { heroMailBodies, heroMailSubjects } from "@/lib/hero-ctas";
 
@@ -55,7 +55,7 @@ const Navigation = () => {
             <img
               src={logoHeader}
               alt="ZAFTYS Logistics"
-              className="h-14 md:h-16 w-auto transition-all"
+              className="h-12 md:h-14 w-auto transition-all"
               decoding="async"
               fetchPriority="high"
             />

@@ -205,9 +205,9 @@ Hi ZAFTYS, I'd like a quote for heavy load transport. From:  To:  Load type:
 
 | Truck | Tagline | Description |
 |-------|---------|-------------|
-| Open Body | 7–35T · bulk solids | High-side and flat-deck trucks for coal, aggregates, bagged cement, and steel lengths on industrial corridors. |
-| Tipper / Dumper | 16–35T · loose bulk | Hydraulic discharge for sand, ore, overburden, and mine outbound  -  pit-to-plant specialists. |
-| Flatbed / Low-bed | 20–40T · heavy haul | Open deck and multi-axle trailers for steel coils, machinery, pipes, and project cargo. |
+| Open Body | 7-35T · bulk solids | High-side and flat-deck trucks for coal, aggregates, bagged cement, and steel lengths on industrial corridors. |
+| Tipper / Dumper | 16-35T · loose bulk | Hydraulic discharge for sand, ore, overburden, and mine outbound  -  pit-to-plant specialists. |
+| Flatbed / Low-bed | 20-40T · heavy haul | Open deck and multi-axle trailers for steel coils, machinery, pipes, and project cargo. |
 | Bulk Tanker | Liquids & powders | Tankers for diesel, fly ash, cement powder, and industrial liquids with compartment tracking. |
 | Container / Box | Sealed freight | Box-body and container configurations for palletized, weather-sensitive, and high-value cargo. |
 | Contract Fleet | Dedicated lanes | Long-term assigned assets and drivers on recurring plant, mill, and dealer programs. |

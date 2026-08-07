@@ -115,7 +115,7 @@ export function BlogPostLayout({ post }: BlogPostLayoutProps) {
           {post.heroImage ? (
             <ResponsiveImage
               src={post.heroImage}
-              alt={`${post.title} — ZAFTYS industrial logistics`}
+              alt={`${post.title}  -  ZAFTYS industrial logistics`}
               aspectRatio="16/9"
               objectFit="cover"
               priority
@@ -187,7 +187,7 @@ export function BlogPostLayout({ post }: BlogPostLayoutProps) {
         <div className="container mx-auto container-padding max-w-3xl text-center">
           <h2 className="text-3xl font-heading font-bold mb-4">Next step</h2>
           <p className="text-gray-300 mb-8">
-            Prefer a practical conversation over another form? Share your corridor and load type — we will recommend a suitable approach.
+            Prefer a practical conversation over another form? Share your corridor and load type  -  we will recommend a suitable approach.
           </p>
           <CTAGroup>
             <PostCta post={post} />

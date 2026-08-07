@@ -1,4 +1,4 @@
-/** JSON-LD structured data — site-wide helpers */
+/** JSON-LD structured data  -  site-wide helpers */
 
 import { companyAddress, legalEntity } from "@/lib/constants";
 
@@ -98,7 +98,6 @@ export const softwareApplicationSchema = {
   operatingSystem: "Web, Android, iOS",
   offers: {
     "@type": "Offer",
-    price: "0",
     priceCurrency: "INR",
     description: "Contact ZAFTYS Logistics for platform licensing and demos",
   },
@@ -113,12 +112,12 @@ export const blogPageSchema = {
   "@type": "CollectionPage",
   name: "ZAFTYS Blog",
   description:
-    "Practical logistics guides from corridor operations — industrial FTL, plant windows, steel and cement freight, and TMS.",
+    "Practical logistics guides from corridor operations  -  industrial FTL, plant windows, steel and cement freight, and TMS.",
   publisher: organizationRef,
   url: `${BASE}/blog`,
 };
 
-/** @deprecated Prefer blogPageSchema — /resources redirects to /blog */
+/** @deprecated Prefer blogPageSchema  -  /resources redirects to /blog */
 export const resourcesPageSchema = blogPageSchema;
 
 export function blogPostingSchema(post: {

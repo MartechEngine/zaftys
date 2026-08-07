@@ -304,7 +304,7 @@ Contact Person  -  placeholder: Full name
 
 Mobile Number  -  placeholder: +91
 
-Fleet Size  -  options: 1–5 Vehicles · 6–20 Vehicles · 20+ Vehicles
+Fleet Size  -  options: 1-5 Vehicles · 6-20 Vehicles · 20+ Vehicles
 
 ---
 

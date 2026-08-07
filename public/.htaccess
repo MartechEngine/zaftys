@@ -1,4 +1,4 @@
-# Hostinger Apache — SPA fallback + protect crawler assets
+# Hostinger Apache  -  SPA fallback + protect crawler assets
 # Copied into dist/ by Vite (public/) and deploy workflow
 
 Options -MultiViews
@@ -15,7 +15,7 @@ Options -MultiViews
   RewriteRule ^og-image\.png$ - [L]
   RewriteRule ^favicon\.ico$ - [L]
 
-  # Existing files/dirs (Vite assets, images) — serve as-is
+  # Existing files/dirs (Vite assets, images)  -  serve as-is
   RewriteCond %{REQUEST_FILENAME} -f [OR]
   RewriteCond %{REQUEST_FILENAME} -d
   RewriteRule ^ - [L]

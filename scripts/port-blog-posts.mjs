@@ -306,7 +306,7 @@ for (const raw of rawPosts) {
 // Sort by publishedAt desc to match previous editorial order preference in source array
 parsed.sort((a, b) => (a.publishedAt < b.publishedAt ? 1 : -1));
 
-const header = `/** ZAFTYS Blog — typed content modules (ported from docs/marketing/blog-posts.md) */
+const header = `/** ZAFTYS Blog  -  typed content modules (ported from docs/marketing/blog-posts.md) */
 
 export type BlogCategory = "operations" | "industries" | "technology";
 
@@ -327,7 +327,7 @@ export type BlogPost = {
   seoDescription: string;
   category: BlogCategory;
   publishedAt: string;
-  /** ISO date — when the guide was last materially revised */
+  /** ISO date  -  when the guide was last materially revised */
   updatedAt?: string;
   author: string;
   summary: string;

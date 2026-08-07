@@ -40,7 +40,7 @@ const Fleet = () => {
 
       <PageHero
         badge="Fleet & Capacity"
-        title="Company Fleet For Heavy-Haul Industrial Freight."
+        title="ZAFTYS Logistics Company Fleet For Heavy-Haul Freight."
         description="Company-operated tippers, flatbeds, and multi-axle assets on industrial corridors across India  -  with TranZfort surge capacity and ZAFTYS TMS visibility when your lanes need to scale."
         imageSrc={heroFleet}
         imageAlt={pageHeroAlts.fleet}

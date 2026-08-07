@@ -45,7 +45,7 @@ const IndustryDetail = () => {
         title={industry.seoH1}
         description={`${industry.heroHeadline} ${industry.description}`}
         imageSrc={industry.image}
-        imageAlt={`${industry.title} logistics — ZAFTYS heavy freight`}
+        imageAlt={`${industry.title} logistics  -  ZAFTYS heavy freight`}
         prepend={
           <Link
             to="/industries"
@@ -100,7 +100,7 @@ const IndustryDetail = () => {
             <TabsContent value="operations" forceMount className="data-[state=inactive]:hidden">
               <h2 className="text-2xl font-heading font-bold text-navy mb-4">How ZAFTYS Supports This Vertical</h2>
               <p className="text-muted-foreground mb-8">
-                Own fleet first. Verified TranZfort network when demand exceeds capacity. Visibility through ZAFTYS TMS — one partner throughout.
+                Own fleet first. Verified TranZfort network when demand exceeds capacity. Visibility through ZAFTYS TMS  -  one partner throughout.
               </p>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 {industry.howZaftysHelps.map((item) => (
@@ -204,7 +204,7 @@ const IndustryDetail = () => {
         <div className="container mx-auto container-padding max-w-3xl text-center">
           <h2 className="text-3xl font-heading font-bold mb-4">Get a Quote for {industry.title}</h2>
           <p className="text-gray-300 mb-8">
-            Share your corridor, load type, and volume on WhatsApp — our team will recommend a suitable transport approach.
+            Share your corridor, load type, and volume on WhatsApp  -  our team will recommend a suitable transport approach.
           </p>
           <CTAGroup>
             <WhatsAppButton label="Chat on WhatsApp" message={industry.whatsappPrefill} />

@@ -88,19 +88,19 @@ export const truckTypes = [
   {
     id: "open-body",
     title: "Open Body",
-    tagline: "7–35T · bulk solids",
+    tagline: "7-35T · bulk solids",
     description: "High-side and flat-deck trucks for coal, aggregates, bagged cement, and steel lengths on industrial corridors.",
   },
   {
     id: "tipper",
     title: "Tipper / Dumper",
-    tagline: "16–35T · loose bulk",
+    tagline: "16-35T · loose bulk",
     description: "Hydraulic discharge for sand, ore, overburden, and mine outbound  -  pit-to-plant specialists.",
   },
   {
     id: "flatbed",
     title: "Flatbed / Low-bed",
-    tagline: "20–40T · heavy haul",
+    tagline: "20-40T · heavy haul",
     description: "Open deck and multi-axle trailers for steel coils, machinery, pipes, and project cargo.",
   },
   {

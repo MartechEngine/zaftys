@@ -35,7 +35,7 @@ const Industries = () => {
 
       <PageHero
         badge="Industries"
-        title="Industrial Logistics For Cement, Steel, Mining & Bulk — ZAFTYS Logistics."
+        title="Industrial Logistics For Cement, Steel, Mining & Bulk  -  ZAFTYS Logistics."
         description="Each vertical needs different assets, documentation, and timing. ZAFTYS Logistics builds transport programs around those realities  -  company-operated fleet first, TranZfort capacity when demand spikes, and TMS visibility on active lanes across India."
         imageSrc={heroIndustries}
         imageAlt={pageHeroAlts.industries}

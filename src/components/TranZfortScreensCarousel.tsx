@@ -62,7 +62,7 @@ export function TranZfortScreensCarousel({ className }: TranZfortScreensCarousel
         aria-hidden
       />
 
-      {/* Continuous scroll — pauses on hover */}
+      {/* Continuous scroll  -  pauses on hover */}
       <div
         className={cn(
           "flex w-max gap-8 py-2",

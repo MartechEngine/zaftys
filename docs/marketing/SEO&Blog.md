@@ -1,8 +1,8 @@
-# SEO & Blog — ZAFTYS Marketing Site
+# SEO & Blog  -  ZAFTYS Marketing Site
 
 | Field | Value |
 |-------|-------|
-| **Project** | `zaftys-main` — marketing site (`zaftys.com`) |
+| **Project** | `zaftys-main`  -  marketing site (`zaftys.com`) |
 | **Purpose** | Master tracker for SEO improvements, keyword strategy, and Knowledge Center / blog content |
 | **Status** | Blog v1 shipped; Wave 3 copy done on `seo-improvements`. Pending: deploy/GSC/GA4, prerender, CWV, blog backlog |
 | **Last updated** | 6 August 2026 |
@@ -12,12 +12,12 @@
 
 ## How to use this file
 
-1. **Section 1** — all SEO improvements (checklist). Work top-down by priority.
-2. **Section 2** — keyword strategy (easy / high-value / defer).
-3. **Section 3** — page ownership map (one primary intent per URL).
-4. **Section 4** — Blog / Knowledge Center plan (articles, SEO role).
-5. **Section 5** — product-ready messaging notes (TMS live, TranZfort live).
-6. **Section 6** — decision log & measurement.
+1. **Section 1**  -  all SEO improvements (checklist). Work top-down by priority.
+2. **Section 2**  -  keyword strategy (easy / high-value / defer).
+3. **Section 3**  -  page ownership map (one primary intent per URL).
+4. **Section 4**  -  Blog / Knowledge Center plan (articles, SEO role).
+5. **Section 5**  -  product-ready messaging notes (TMS live, TranZfort live).
+6. **Section 6**  -  decision log & measurement.
 
 Mark items `[x]` when shipped. Add notes under each item if scope changes.
 
@@ -31,23 +31,23 @@ Mark items `[x]` when shipped. Add notes under each item if scope changes.
 
 | Priority | Meaning |
 |----------|---------|
-| **P0** | Blocking crawl, indexation, or social previews — fix first |
+| **P0** | Blocking crawl, indexation, or social previews  -  fix first |
 | **P1** | Strong ranking / CTR / conversion impact |
 | **P2** | Depth, polish, long-tail, rich results |
 | **P3** | Nice-to-have / later waves |
 
 ---
 
-## 1.2 P0 — Crawl, indexation & technical foundations
+## 1.2 P0  -  Crawl, indexation & technical foundations
 
 ### Sitemap
 
 - [ ] **Fix live `https://zaftys.com/sitemap.xml` returning HTTP 500**  
   - `robots.txt` points crawlers here; a 500 blocks discovery.  
   - Confirm host serves `public/sitemap.xml` (or generated equivalent) correctly.  
-  - **Repo:** expanded sitemap ready — **deploy required** to clear live 500.
+  - **Repo:** expanded sitemap ready  -  **deploy required** to clear live 500.
 
-- [x] **Regenerate / expand `public/sitemap.xml`** — core + `/network` + 8 industry URLs + `/blog` + 5 posts + legal; excludes `/login`. `/resources` redirects to `/blog` (not listed).
+- [x] **Regenerate / expand `public/sitemap.xml`**  -  core + `/network` + 8 industry URLs + `/blog` + 5 posts + legal; excludes `/login`. `/resources` redirects to `/blog` (not listed).
 
 - [x] **Refresh `<lastmod>`** dates to `2026-08-06`.
 - [ ] **Submit sitemap in Google Search Console** and request indexing for top commercial URLs.
@@ -72,7 +72,7 @@ Mark items `[x]` when shipped. Add notes under each item if scope changes.
 
 ### Open Graph / social preview
 
-- [x] **Replace default OG image** — shipped `public/og-image.png` (1200×630); `SEO.tsx` default updated. Keep `og-image.svg` as fallback asset only.
+- [x] **Replace default OG image**  -  shipped `public/og-image.png` (1200×630); `SEO.tsx` default updated. Keep `og-image.svg` as fallback asset only.
 - [x] **Sync `index.html` shell meta** with shortened home title/description + absolute `https://zaftys.com/og-image.png`.
 - [x] **Add missing OG fields in `SEO.tsx`:** `og:site_name`, `og:locale` (`en_IN`), image width/height.
 
@@ -84,7 +84,7 @@ Mark items `[x]` when shipped. Add notes under each item if scope changes.
 
 ---
 
-## 1.3 P1 — On-page SEO, index hygiene & CTR
+## 1.3 P1  -  On-page SEO, index hygiene & CTR
 
 ### Meta titles & descriptions
 
@@ -95,23 +95,23 @@ Mark items `[x]` when shipped. Add notes under each item if scope changes.
 ### Indexation hygiene
 
 - [x] **`noindex` on `/login`**
-- [x] **`noindex` on 404** — no `/404` canonical
-- [x] **Fix NotFound canonical** — omitted when `noindex`
-- [x] **Resources hub `noindex`** until articles publish — **superseded:** `/resources` redirects to indexable `/blog` (5 posts live)
+- [x] **`noindex` on 404**  -  no `/404` canonical
+- [x] **Fix NotFound canonical**  -  omitted when `noindex`
+- [x] **Resources hub `noindex`** until articles publish  -  **superseded:** `/resources` redirects to indexable `/blog` (5 posts live)
 
 ### Industry detail pages (highest organic inventory)
 
 - [x] **Keyword-aligned H1s** via `seoH1` + pain line in hero description
-- [x] **Expand content depth** — FAQ blocks on all 8 industry pages (+ Technology FAQs)
-- [x] **Tabbed content crawlable** — `forceMount` + `data-[state=inactive]:hidden` on industry tabs
+- [x] **Expand content depth**  -  FAQ blocks on all 8 industry pages (+ Technology FAQs)
+- [x] **Tabbed content crawlable**  -  `forceMount` + `data-[state=inactive]:hidden` on industry tabs
 - [x] **`BreadcrumbList` JSON-LD** on industry detail (`breadcrumbSchema`)
 - [x] **BreadcrumbList on industries hub** (+ Network page)
 - [x] **Cross-link related industries** + Services / Network / TMS
 
 ### Product pages (TMS + TranZfort live)
 
-- [x] **`/technology` — product-ready SEO pass** — Login primary, live-today checklist, portal CTA, FAQ schema; mock replaced with live portal card
-- [x] **`/network` — product-ready SEO pass** — Download TranZfort primary; demos framed as preview; capacity WhatsApp + partner secondary
+- [x] **`/technology`  -  product-ready SEO pass**  -  Login primary, live-today checklist, portal CTA, FAQ schema; mock replaced with live portal card
+- [x] **`/network`  -  product-ready SEO pass**  -  Download TranZfort primary; demos framed as preview; capacity WhatsApp + partner secondary
 
 ### Naming consistency (brand SEO)
 
@@ -119,30 +119,30 @@ Mark items `[x]` when shipped. Add notes under each item if scope changes.
 
 ### Brand / site voice consistency
 
-- [x] **Align zaftys.com Network positioning** — verified capacity + live app download; softened AI-first highlight (“Route intelligence”); demo disclaimer says app is live.  
-  - [ ] **tranzfort.com** claim alignment still open (separate site — document shared claim rules with that repo)
+- [x] **Align zaftys.com Network positioning**  -  verified capacity + live app download; softened AI-first highlight (“Route intelligence”); demo disclaimer says app is live.  
+  - [ ] **tranzfort.com** claim alignment still open (separate site  -  document shared claim rules with that repo)
 ---
 
-## 1.4 P2 — Structured data, local SEO, content systems
+## 1.4 P2  -  Structured data, local SEO, content systems
 
 ### Schema.org
 
 - [x] Keep / validate existing: `Organization`, `LogisticsService`, `SoftwareApplication`, `CollectionPage` (`src/lib/schema.ts`).
-- [x] **Add `LocalBusiness`** (Amravati address + phone) — on Home
-- [x] **Add `WebSite`** schema — on Home + Technology
+- [x] **Add `LocalBusiness`** (Amravati address + phone)  -  on Home
+- [x] **Add `WebSite`** schema  -  on Home + Technology
 - [x] **Add `sameAs`** on Organization (LinkedIn + product sites).
 - [x] **Add `BreadcrumbList`** on industry detail, industries hub, network, blog posts
 - [x] **Add `FAQPage`** on industry detail + Technology + blog posts
-- [x] **Review `SoftwareApplication` offers** — removed misleading `price: "0"`; contact/demo description retained.
-- [x] **Reduce duplicate Organization nesting** — schemas reference `@id` organization node; Home emits org once + website + local business + logistics service.
+- [x] **Review `SoftwareApplication` offers**  -  removed misleading `price: "0"`; contact/demo description retained.
+- [x] **Reduce duplicate Organization nesting**  -  schemas reference `@id` organization node; Home emits org once + website + local business + logistics service.
 ### Internal linking
 
-- [x] Footer already links hubs — contextual links: Home → industries/services/partner/contact; Services → technology/network/blog; industry pages → partner/contact (+ vertical blog where relevant).
+- [x] Footer already links hubs  -  contextual links: Home → industries/services/partner/contact; Services → technology/network/blog; industry pages → partner/contact (+ vertical blog where relevant).
 - [x] Every Knowledge article links to commercial pages + related articles (launch set).
 
 ### Images & accessibility
 
-- [x] Meaningful `alt` text on page heroes (`page-heroes.ts`) and Home industry/TMS imagery — continue spot-checks when adding assets.
+- [x] Meaningful `alt` text on page heroes (`page-heroes.ts`) and Home industry/TMS imagery  -  continue spot-checks when adding assets.
 - [ ] Compress hero/industry images; prefer modern formats where host allows.
 - [ ] Optional: image sitemap for key visuals later.
 
@@ -154,19 +154,19 @@ Mark items `[x]` when shipped. Add notes under each item if scope changes.
 
 ---
 
-## 1.5 P3 — Expansion & advanced SEO
+## 1.5 P3  -  Expansion & advanced SEO
 
 - [ ] Corridor / city landing pages (e.g. cement Vidarbha, steel Maharashtra belt, mining pit-to-plant).
-- [ ] Asset-specific pages only if capability is real (tipper programs, low-bed / ODC — do not invent).
+- [ ] Asset-specific pages only if capability is real (tipper programs, low-bed / ODC  -  do not invent).
 - [ ] XML news/blog sitemap when article volume grows.
-- [ ] hreflang only if multi-language sites launch (Hindi microsite — not current scope).
+- [ ] hreflang only if multi-language sites launch (Hindi microsite  -  not current scope).
 - [ ] Comparison / alternative pages only with legal-safe factual framing (never unverified “better than X”).
 
 ---
 
 ## 1.6 Quick-win batch (same week)
 
-1. [x] Expand sitemap (+ `/network` + industries + legal) — **deploy to clear live 500**
+1. [x] Expand sitemap (+ `/network` + industries + legal)  -  **deploy to clear live 500**
 2. [x] `noindex` login + 404; fix 404 canonical
 3. [x] Ship PNG OG image; sync `index.html` meta
 4. [x] Shorten longest titles/descriptions
@@ -175,7 +175,7 @@ Mark items `[x]` when shipped. Add notes under each item if scope changes.
 
 ---
 
-# 1.7 Wave 3 — Full on-page copy audit (6 Aug 2026)
+# 1.7 Wave 3  -  Full on-page copy audit (6 Aug 2026)
 
 Re-read of **all live marketing routes** for SEO strength: H1 ↔ meta alignment, primary keywords in body, product-ready voice, banned hype, thin/empty content, and geo modifiers.
 
@@ -183,7 +183,7 @@ Re-read of **all live marketing routes** for SEO strength: H1 ↔ meta alignment
 
 | Area | Strength |
 |------|----------|
-| Meta titles/descriptions | Lengths now SERP-safe (~50–57 full title chars); unique per page |
+| Meta titles/descriptions | Lengths now SERP-safe (~50-57 full title chars); unique per page |
 | Industry detail pages | Keyword `seoH1`, FAQs, breadcrumbs, related links |
 | `/technology` | Live product framing, Login primary, FAQ schema |
 | `/network` | Download primary, verified-capacity positioning (not marketplace hype) |
@@ -255,11 +255,11 @@ Re-read of **all live marketing routes** for SEO strength: H1 ↔ meta alignment
 | fleet partner industrial loads India | Partner | `/partner` | Onboarding + payments via ZAFTYS |
 | contract fleet logistics cement/steel | B2B program | `/services` | Dedicated program subsection |
 
-## 2.2 High value (commercial — invest deliberately)
+## 2.2 High value (commercial  -  invest deliberately)
 
 | Keyword / cluster | Value | Competition | ZAFTYS angle | Required asset |
 |-------------------|-------|-------------|--------------|----------------|
-| industrial logistics / heavy freight transport India | Shipper quotes | Medium–high | Fleet + TMS + network, one company | Home/Services depth + proof |
+| industrial logistics / heavy freight transport India | Shipper quotes | Medium-high | Fleet + TMS + network, one company | Home/Services depth + proof |
 | cement logistics / cement transportation company India | Volume lanes | Specialist transporters | Plant discipline + tippers + visibility | Cement lander + corridors |
 | steel logistics / coil & plate transport India | Heavy haul | Regional specialists | Flatbed/low-bed + mill windows | Steel lander + FAQ |
 | FTL industrial / bulk freight FTL India | Core service | Crowded | Industrial FTL (not ecom Ace) | Services + materials |
@@ -283,7 +283,7 @@ Re-read of **all live marketing routes** for SEO strength: H1 ↔ meta alignment
 
 # 3. Page ownership map
 
-One primary SEO job per URL — avoid making Home compete for every cluster.
+One primary SEO job per URL  -  avoid making Home compete for every cluster.
 
 | URL | Primary keyword job | Secondary | Primary CTA |
 |-----|---------------------|-----------|-------------|
@@ -313,21 +313,21 @@ One primary SEO job per URL — avoid making Home compete for every cluster.
 | Rank easy informational keywords | Practical guides from real corridor ops |
 | Support commercial pages | Every article links to Services / Industry / TMS / Partner |
 | Build E-E-A-T | Operator experience, not generic AI filler |
-| Feed WhatsApp / demo leads | Soft CTA — not hard sell |
+| Feed WhatsApp / demo leads | Soft CTA  -  not hard sell |
 
 **Public label:** Blog (header + footer).  
 **Routes:** `/blog` (index), `/blog/:slug` (posts). `/resources` → `/blog` (redirect).  
-**Data:** `src/lib/blog-data.ts` — typed TS modules (no CMS/MDX for v1).  
+**Data:** `src/lib/blog-data.ts`  -  typed TS modules (no CMS/MDX for v1).  
 **Copy rules:** `copy-v2-a` + this file.
 
 ## 4.2 Publishing rules
 
-- Write for people first (`copy-v2-a` SEO philosophy) — no keyword stuffing.
+- Write for people first (`copy-v2-a` SEO philosophy)  -  no keyword stuffing.
 - No banned hype words (best, world-class, revolutionary, guaranteed…) unless evidenced.
 - No fake stats or fake testimonials.
 - Prefer operational specificity (plant windows, weighbridge, tipper payload, LR/ePOD).
 - Standardize product name: **ZAFTYS TMS**; TranZfort as capacity network / app.
-- Each article: unique title (~50–60 chars), meta description (~140–155), H1, FAQ optional, internal links, OG image.
+- Each article: unique title (~50-60 chars), meta description (~140-155), H1, FAQ optional, internal links, OG image.
 
 ## 4.3 Article backlog
 
@@ -350,7 +350,7 @@ One primary SEO job per URL — avoid making Home compete for every cluster.
 | P1 | Choosing The Right Logistics Partner | shipper evaluation | Backlog |
 | P2 | Vehicle Dispatch Checklist | checklist / featured snippet | Backlog |
 | P2 | Pit-to-plant tipper operations overview | mining logistics | Backlog |
-| P2 | Own fleet vs network capacity — when to scale | TranZfort / capacity | Backlog |
+| P2 | Own fleet vs network capacity  -  when to scale | TranZfort / capacity | Backlog |
 | P2 | Corridor playbook: Maharashtra industrial lanes | geo long-tail | Backlog |
 
 ## 4.4 Blog technical SEO
@@ -420,7 +420,7 @@ These are not classic “meta tag” tasks but they affect how pages rank and co
 | Aug 2026 | Public **Blog** at `/blog` + `/blog/:slug`; `/resources` redirects; 5 launch posts shipped |
 | Aug 2026 | Prefer `/resources/` for educational content (not a separate `/blog` brand) unless IA changes → **superseded** by Blog IA |
 | Aug 2026 | Do not chase bare “freight marketplace India” or bare “TMS India” as primary landers |
-| Jul 2026 | Meta defaults and per-page titles defined in `copy-v2-l.md` — shorten further for SERP CTR |
+| Jul 2026 | Meta defaults and per-page titles defined in `copy-v2-l.md`  -  shorten further for SERP CTR |
 | 6 Aug 2026 | Branch `seo-improvements` from `main`; shipped quick-win SEO wave (sitemap, OG PNG, noindex, meta, industry H1s, SPA rewrites) |
 | 6 Aug 2026 | Wave 2: product-ready Technology/Network CTAs, FAQs + FAQPage, WebSite/LocalBusiness, TMS naming sweep, removed GTM placeholder |
 | 6 Aug 2026 | SEO polish: Organization `sameAs`, blog `updatedAt`, hub internal links, stale checklist sync |

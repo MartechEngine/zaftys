@@ -141,7 +141,7 @@ Copied to `public/images/`:
 |---|---------|---------|
 | 1 | Hero | Heritage + registered company |
 | 2 | Story | 3 generations, corridor experience |
-| 3 | Values / pillars | 3–4 items (even count) |
+| 3 | Values / pillars | 3-4 items (even count) |
 | 4 | CTA | WhatsApp or Contact |
 
 ---

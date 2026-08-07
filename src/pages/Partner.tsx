@@ -97,7 +97,7 @@ const Partner = () => {
       />
       <PageHero
         badge="Fleet Owners"
-        title="Join TranZfort — Industrial Loads With ZAFTYS Logistics."
+        title="Join TranZfort  -  Industrial Loads With ZAFTYS Logistics."
         description="Verified transport partners get structured industrial freight coordinated through ZAFTYS Logistics  -  clear payments, professional onboarding, and tools as you scale across India."
         imageSrc={heroPartner}
         imageAlt={pageHeroAlts.partner}

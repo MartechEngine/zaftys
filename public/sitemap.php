@@ -1,6 +1,6 @@
 <?php
 /**
- * Dynamic sitemap for Hostinger — reliable when static .xml misbehaves.
+ * Dynamic sitemap for Hostinger  -  reliable when static .xml misbehaves.
  * Keep in sync with scripts/generate-sitemap.mjs / public/sitemap.xml
  */
 header('Content-Type: application/xml; charset=utf-8');

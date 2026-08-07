@@ -8,9 +8,9 @@ interface SEOProps {
   type?: string;
   schema?: Record<string, unknown> | Record<string, unknown>[];
   noindex?: boolean;
-  /** ISO date — blog article published */
+  /** ISO date  -  blog article published */
   publishedTime?: string;
-  /** ISO date — blog article modified */
+  /** ISO date  -  blog article modified */
   modifiedTime?: string;
 }
 
@@ -29,7 +29,8 @@ const SEO = ({
   publishedTime,
   modifiedTime,
 }: SEOProps) => {
-  const fullTitle = title === SITE_TITLE ? title : `${title} | ${SITE_TITLE}`;
+  const fullTitle =
+    title === SITE_TITLE || title.includes(SITE_TITLE) ? title : `${title} | ${SITE_TITLE}`;
   const currentUrl = canonical ? `${BASE_URL}${canonical}` : BASE_URL;
   const imageUrl = image.startsWith("http") ? image : `${BASE_URL}${image}`;
 

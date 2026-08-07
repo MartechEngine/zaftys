@@ -1,4 +1,4 @@
-/** ZAFTYS Blog — typed content modules (ported from docs/marketing/blog-posts.md) */
+/** ZAFTYS Blog  -  typed content modules (ported from docs/marketing/blog-posts.md) */
 
 export type BlogCategory = "operations" | "industries" | "technology";
 
@@ -19,7 +19,7 @@ export type BlogPost = {
   seoDescription: string;
   category: BlogCategory;
   publishedAt: string;
-  /** ISO date — when the guide was last materially revised */
+  /** ISO date  -  when the guide was last materially revised */
   updatedAt?: string;
   author: string;
   summary: string;

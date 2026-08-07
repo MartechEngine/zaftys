@@ -14,6 +14,6 @@ User-agent: *
 Allow: /
 Disallow: /login
 
-# Primary (PHP — reliable on Hostinger). Static XML also deployed.
+# Primary (PHP  -  reliable on Hostinger). Static XML also deployed.
 Sitemap: https://zaftys.com/sitemap.php
 Sitemap: https://zaftys.com/sitemap.xml

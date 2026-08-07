@@ -88,7 +88,7 @@ const Services = () => {
 
       <PageHero
         badge="Industrial Trucking"
-        title="FTL, Contract & Heavy-Haul Logistics — ZAFTYS Logistics."
+        title="FTL, Contract & Heavy-Haul Logistics  -  ZAFTYS Logistics."
         description="Transport programs for industrial cargo, plant windows, and compliance needs  -  company fleet, TranZfort overflow, and live ZAFTYS TMS visibility on every lane."
         imageSrc={heroServices}
         imageAlt={pageHeroAlts.services}

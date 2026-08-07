@@ -4,7 +4,7 @@
 |-------|-------|
 | **Project** | `zaftys-main`  -  Vite + React marketing site (`zaftys.com`) |
 | **Reference** | `zaftys-lab/marketing` content model (industries, services, network) |
-| **Status** | Phases 1–2 **shipped** (Login hard-redirect **deferred**)  -  Phase 3 polish open |
+| **Status** | Phases 1-2 **shipped** (Login hard-redirect **deferred**)  -  Phase 3 polish open |
 | **Version** | 1.1 |
 | **Last updated** | July 2026 |
 
