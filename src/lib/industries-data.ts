@@ -413,9 +413,10 @@ export const industries: readonly IndustryRecord[] = [
   },
 ] as const;
 
-/** @deprecated use coal-mining */
+/** @deprecated use coal-mining / retail-distribution */
 export const INDUSTRY_SLUG_ALIASES: Record<string, string> = {
   mining: "coal-mining",
+  retail: "retail-distribution",
 };
 
 export function getIndustryBySlug(slug: string): IndustryRecord | undefined {

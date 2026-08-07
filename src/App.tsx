@@ -67,6 +67,7 @@ const AppShell = () => {
         <Route path="/services" element={<LazyPage><Services /></LazyPage>} />
         <Route path="/industries" element={<LazyPage><Industries /></LazyPage>} />
         <Route path="/industries/mining" element={<Navigate to="/industries/coal-mining" replace />} />
+        <Route path="/industries/retail" element={<Navigate to="/industries/retail-distribution" replace />} />
         <Route path="/industries/:slug" element={<LazyPage><IndustryDetail /></LazyPage>} />
         <Route path="/fleet" element={<LazyPage><Fleet /></LazyPage>} />
         <Route path="/network" element={<LazyPage><Network /></LazyPage>} />

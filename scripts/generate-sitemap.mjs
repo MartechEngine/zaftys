@@ -32,7 +32,7 @@ const industrySlugs = [
   "chemicals",
   "manufacturing",
   "fmcg",
-  "retail",
+  "retail-distribution",
   "industrial-logistics",
 ];
 

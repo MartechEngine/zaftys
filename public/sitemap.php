@@ -23,7 +23,7 @@ $urls = [
   ['/industries/chemicals', '0.7', 'monthly'],
   ['/industries/manufacturing', '0.7', 'monthly'],
   ['/industries/fmcg', '0.7', 'monthly'],
-  ['/industries/retail', '0.7', 'monthly'],
+  ['/industries/retail-distribution', '0.7', 'monthly'],
   ['/industries/industrial-logistics', '0.7', 'monthly'],
   ['/partner', '0.8', 'monthly'],
   ['/about', '0.7', 'monthly'],
