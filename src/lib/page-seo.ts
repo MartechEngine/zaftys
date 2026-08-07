@@ -1,34 +1,34 @@
 /** Page titles & meta descriptions — keep titles ≤ ~55 chars before brand suffix */
 export const pageSeo = {
   home: {
-    title: "Industrial Logistics & Heavy Freight",
+    title: "ZAFTYS Logistics — Industrial Freight",
     description:
-      "Industrial freight with company-operated transport, ZAFTYS TMS visibility, and TranZfort capacity. Get a quote on WhatsApp.",
+      "ZAFTYS Logistics moves industrial freight across India with company-operated transport, ZAFTYS TMS visibility, and TranZfort capacity. Get a quote on WhatsApp.",
   },
   services: {
     title: "FTL, Contract & Heavy Haul Services",
     description:
-      "FTL, mining logistics, contract fleet, and overflow capacity on industrial corridors across India. Own fleet + TranZfort + TMS.",
+      "ZAFTYS Logistics provides FTL, mining logistics, contract fleet, and overflow capacity on industrial corridors across India — own fleet, TranZfort, and TMS.",
   },
   fleet: {
     title: "Company Fleet & Transport Capacity",
     description:
-      "Company-operated heavy-haul assets, disciplined maintenance, and surge capacity through TranZfort. Built for industrial India.",
+      "Company-operated heavy-haul assets from ZAFTYS Logistics, disciplined maintenance, and surge capacity through TranZfort. Built for industrial India.",
   },
   network: {
     title: "TranZfort Network — Verified Capacity",
     description:
-      "Scale capacity without extra vendors. Verified partners, centralized coordination, and TMS visibility. All transactions through ZAFTYS.",
+      "Scale capacity with ZAFTYS Logistics without extra vendors. Verified partners, centralized coordination, and TMS visibility on every trip.",
   },
   technology: {
     title: "ZAFTYS TMS — Transport Management",
     description:
-      "Dispatch, GPS, ePOD, fleet records, and client visibility — the platform ZAFTYS runs daily and offers to shippers and operators.",
+      "ZAFTYS TMS by ZAFTYS Logistics: dispatch, GPS, ePOD, fleet records, and client visibility — the platform we run daily for shippers and operators.",
   },
   industries: {
     title: "Industries — Cement, Steel, Mining",
     description:
-      "Heavy-haul logistics for cement, steel, coal, chemicals, manufacturing, FMCG, retail, and industrial supply chains across India.",
+      "ZAFTYS Logistics heavy-haul for cement, steel, coal, chemicals, manufacturing, FMCG, retail, and industrial supply chains across India.",
   },
   partner: {
     title: "Fleet Partner Program — TranZfort",
@@ -36,19 +36,19 @@ export const pageSeo = {
       "Register your fleet for verified industrial loads, payments through ZAFTYS Logistics, and operational tools as you scale.",
   },
   about: {
-    title: "About ZAFTYS — Industrial Logistics",
+    title: "About ZAFTYS Logistics",
     description:
-      "Three generations of corridor experience. GST-compliant ops — own fleet, TranZfort capacity, and ZAFTYS TMS for industrial shippers.",
+      "About ZAFTYS Logistics: three generations of corridor experience, GST-compliant ops, own fleet, TranZfort capacity, and ZAFTYS TMS for industrial shippers.",
   },
   contact: {
-    title: "Contact ZAFTYS — Freight Quotes",
+    title: "Contact ZAFTYS Logistics",
     description:
-      "WhatsApp-first industrial freight quotes, TMS demos, and partner enquiries. Amravati HQ · +91-927-092-3581.",
+      "Contact ZAFTYS Logistics for WhatsApp-first industrial freight quotes, TMS demos, and partner enquiries. Amravati HQ · +91-927-092-3581.",
   },
   careers: {
-    title: "Careers at ZAFTYS",
+    title: "Careers at ZAFTYS Logistics",
     description:
-      "Join ZAFTYS in operations, dispatch, fleet, and technology roles supporting industrial freight across India.",
+      "Join ZAFTYS Logistics in operations, dispatch, fleet, and technology roles supporting industrial freight across India.",
   },
   login: {
     title: "Login — ZAFTYS TMS",
@@ -63,22 +63,22 @@ export const pageSeo = {
   terms: {
     title: "Terms of Service",
     description:
-      "Terms for using the ZAFTYS website, requesting logistics services, and accessing ZAFTYS TMS. Contracts govern transport agreements.",
+      "Terms for using the ZAFTYS Logistics website, requesting logistics services, and accessing ZAFTYS TMS. Contracts govern transport agreements.",
   },
   notFound: {
     title: "Page Not Found",
     description:
-      "This page does not exist. Return to Services, Network, or Contact for freight quotes and logistics support.",
+      "This page does not exist. Return to ZAFTYS Logistics Services, Network, or Contact for freight quotes and logistics support.",
   },
   blog: {
     title: "Blog — Industrial Logistics Insights",
     description:
-      "Practical guides on FTL empty miles, industrial shipment planning, cement and steel freight, and TMS for heavy-haul operations.",
+      "Practical guides from ZAFTYS Logistics on FTL empty miles, industrial shipment planning, cement and steel freight, and TMS for heavy-haul operations.",
   },
   /** @deprecated Prefer blog — /resources redirects to /blog */
   resources: {
     title: "Blog — Industrial Logistics Insights",
     description:
-      "Practical guides on FTL empty miles, industrial shipment planning, cement and steel freight, and TMS for heavy-haul operations.",
+      "Practical guides from ZAFTYS Logistics on FTL empty miles, industrial shipment planning, cement and steel freight, and TMS for heavy-haul operations.",
   },
 } as const;

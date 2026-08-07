@@ -395,6 +395,14 @@ const NetworkPage = () => {
               <Button size="lg" variant="on-dark-outline">Partner with ZAFTYS</Button>
             </Link>
           </CTAGroup>
+          <p className="mt-8 text-sm text-gray-300">
+            Also explore{" "}
+            <Link to="/services" className="underline hover:text-white">logistics services</Link>
+            {", "}
+            <Link to="/technology" className="underline hover:text-white">ZAFTYS TMS</Link>
+            {", and "}
+            <Link to="/contact" className="underline hover:text-white">contact ZAFTYS Logistics</Link>.
+          </p>
         </div>
       </section>
     </div>

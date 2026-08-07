@@ -22,6 +22,8 @@ import { heroMailBodies, heroMailSubjects } from "@/lib/hero-ctas";
 import { HeroEmailButton } from "@/components/HeroEmailButton";
 import { externalLinks } from "@/lib/constants";
 import { pageSeo } from "@/lib/page-seo";
+import { LazyTmsTripPeek, TmsDemoDisclaimer } from "@/components/tms-demo";
+import "@/styles/tms-demo.css";
 import {
   softwareApplicationSchema,
   organizationSchema,
@@ -119,7 +121,7 @@ const Technology = () => {
 
       <PageHero
         badge="ZAFTYS TMS™ · Live"
-        title="Transport Management Built For Industrial Freight."
+        title="ZAFTYS Logistics TMS — Transport Management For Industrial Freight."
         description="ZAFTYS TMS is live — dispatch, fleet, driver, documentation, and customer visibility in one platform. We run it every day on our own fleet and offer the same operational discipline to shippers and operators."
         imageSrc={heroTechnology}
         imageAlt={pageHeroAlts.technology}
@@ -171,26 +173,8 @@ const Technology = () => {
             </div>
 
             <div className="lg:w-1/2 w-full">
-              <div className="rounded-xl overflow-hidden shadow-2xl border border-border bg-navy aspect-video relative">
-                <div className="absolute inset-0 bg-gradient-to-br from-navy to-primary/50" />
-                <div className="absolute inset-0 flex items-center justify-center p-8">
-                  <div className="text-center max-w-sm">
-                    <BarChart3 className="mx-auto text-accent mb-4 opacity-80" size={56} />
-                    <p className="text-white font-heading text-xl tracking-wide mb-2">ZAFTYS TMS</p>
-                    <p className="text-gray-300 text-sm leading-relaxed mb-6">
-                      Live at app.zaftys.com — client portal and team operations.
-                    </p>
-                    <Button asChild size="sm" variant="accent">
-                      <a href={externalLinks.app} target="_blank" rel="noopener noreferrer">
-                        Open portal
-                      </a>
-                    </Button>
-                  </div>
-                </div>
-              </div>
-              <p className="text-xs text-muted-foreground text-center mt-3">
-                Product UI preview · login for the live workspace
-              </p>
+              <LazyTmsTripPeek density="full" className="min-h-[360px] rounded-xl shadow-2xl" />
+              <TmsDemoDisclaimer className="mt-3" />
             </div>
           </div>
         </div>
@@ -279,6 +263,16 @@ const Technology = () => {
               <Button size="lg" variant="on-dark-outline">Book a Demo</Button>
             </Link>
           </CTAGroup>
+          <p className="mt-8 text-sm text-gray-300">
+            Related:{" "}
+            <Link to="/services" className="underline hover:text-white">services</Link>
+            {" · "}
+            <Link to="/network" className="underline hover:text-white">TranZfort network</Link>
+            {" · "}
+            <Link to="/fleet" className="underline hover:text-white">company fleet</Link>
+            {" · "}
+            <Link to="/industries" className="underline hover:text-white">industries</Link>
+          </p>
         </div>
       </section>
     </div>

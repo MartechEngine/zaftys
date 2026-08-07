@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 import SEO from "@/components/SEO";
 import { BlogPostLayout } from "@/components/blog/BlogPostLayout";
-import { getPostBySlug } from "@/lib/blog-data";
+import { getPostBySlug, postModifiedAt } from "@/lib/blog-data";
 import { blogPostingSchema, breadcrumbSchema, faqPageSchema } from "@/lib/schema";
 import NotFound from "@/pages/NotFound";
 
@@ -32,6 +32,8 @@ const BlogPost = () => {
         canonical={`/blog/${post.slug}`}
         image={image}
         type="article"
+        publishedTime={post.publishedAt}
+        modifiedTime={postModifiedAt(post)}
         schema={schema}
       />
       <BlogPostLayout post={post} />

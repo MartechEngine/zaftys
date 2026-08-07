@@ -11,6 +11,7 @@ import { HeroEmailButton } from "@/components/HeroEmailButton";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { CTAGroup } from "@/components/CTAGroup";
 import { pageSeo } from "@/lib/page-seo";
+import { organizationSchema, localBusinessSchema, breadcrumbSchema } from "@/lib/schema";
 
 const About = () => {
   const values = [
@@ -55,10 +56,18 @@ const About = () => {
         title={pageSeo.about.title}
         description={pageSeo.about.description}
         canonical="/about"
+        schema={[
+          organizationSchema,
+          localBusinessSchema,
+          breadcrumbSchema([
+            { name: "Home", path: "/" },
+            { name: "About", path: "/about" },
+          ]),
+        ]}
       />
       <PageHero
         badge="Our Story"
-        title="About ZAFTYS — Industrial Logistics Across India."
+        title="About ZAFTYS Logistics — Industrial Freight Across India."
         description="Three generations of corridor experience. GST-compliant operations combining company-operated fleet, TranZfort verified capacity, and ZAFTYS TMS for industrial shippers and transporters."
         imageSrc={heroAbout}
         imageAlt={pageHeroAlts.about}
@@ -85,7 +94,7 @@ const About = () => {
               <h2 className="text-4xl font-heading font-bold mb-6 text-primary">Decades of Trust</h2>
               <div className="space-y-6 text-lg text-muted-foreground leading-relaxed">
                 <p>
-                  ZAFTYS embodies six decades of family-operated freight experience  -  moving steel, cement, coal, and bulk cargo across India's industrial corridors.
+                  ZAFTYS Logistics embodies six decades of family-operated freight experience  -  moving steel, cement, coal, and bulk cargo across India's industrial corridors.
                 </p>
                 <p>
                   For most of our history we operated in the traditional truck-owner category: hands-on dispatch, corridor relationships, and a reputation for showing up when it mattered. That operational DNA still defines how we work.

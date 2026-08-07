@@ -7,9 +7,10 @@ import { HeroEmailButton } from "@/components/HeroEmailButton";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { CTAGroup } from "@/components/CTAGroup";
 import ImageContentCard from "@/components/ImageContentCard";
-import ResponsiveImage from "@/components/ResponsiveImage";
 import { AppDemoFrame, LazyMatchFlowDemo, DemoDisclaimer } from "@/components/tranzfort-demo";
+import { LazyTmsTripPeek, TmsDemoDisclaimer } from "@/components/tms-demo";
 import "@/styles/tranzfort-demo.css";
+import "@/styles/tms-demo.css";
 import { externalLinks, truckTypes, materialTypes, tsmCapabilities } from "@/lib/constants";
 import { pageSeo } from "@/lib/page-seo";
 import { TransportationExplorer } from "@/components/TransportationExplorer";
@@ -18,7 +19,7 @@ import { PageHero } from "@/components/PageHero";
 import heroServices from "@/assets/hero-services.jpg";
 import { pageHeroAlts } from "@/lib/page-heroes";
 import { truckingServiceSchema, organizationSchema } from "@/lib/schema";
-import { truckImageForId, materialImageForId, pillarImages } from "@/lib/services-images";
+import { truckImageForId, materialImageForId } from "@/lib/services-images";
 
 const Services = () => {
   const detailedServices = [
@@ -87,7 +88,7 @@ const Services = () => {
 
       <PageHero
         badge="Industrial Trucking"
-        title="FTL, Contract & Heavy-Haul Logistics Across India."
+        title="FTL, Contract & Heavy-Haul Logistics — ZAFTYS Logistics."
         description="Transport programs for industrial cargo, plant windows, and compliance needs  -  company fleet, TranZfort overflow, and live ZAFTYS TMS visibility on every lane."
         imageSrc={heroServices}
         imageAlt={pageHeroAlts.services}
@@ -224,13 +225,10 @@ const Services = () => {
                 The dispatch and visibility layer behind every move  -  live at app.zaftys.com for our fleet and for shippers and operators who want the same discipline.
               </p>
             </div>
-            <ResponsiveImage
-              src={pillarImages.operations.src}
-              alt={pillarImages.operations.alt}
-              aspectRatio="2/1"
-              objectFit="contain"
-              className="rounded-xl shadow-xl"
-            />
+            <div className="w-full">
+              <LazyTmsTripPeek density="compact" className="min-h-[280px] rounded-xl shadow-xl" />
+              <TmsDemoDisclaimer className="mt-3" />
+            </div>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {tsmCapabilities.map((item, index) => {

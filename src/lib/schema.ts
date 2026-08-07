@@ -13,15 +13,16 @@ export const organizationSchema = {
   "@id": ORG_ID,
   name: legalEntity.name,
   url: BASE,
-  logo: `${BASE}/og-image.png`,
+  logo: `${BASE}/logo-header.png`,
   sameAs: [
     "https://www.linkedin.com/company/zaftys",
-    "https://tranzfort.com",
+    "https://www.tranzfort.com",
     "https://app.zaftys.com",
   ],
   contactPoint: {
     "@type": "ContactPoint",
     telephone: "+91-927-092-3581",
+    email: "info@zaftys.com",
     contactType: "customer service",
     areaServed: "IN",
     availableLanguage: ["English", "Hindi"],
@@ -50,7 +51,7 @@ export const localBusinessSchema = {
   "@type": "LocalBusiness",
   "@id": `${BASE}/#localbusiness`,
   name: legalEntity.name,
-  image: `${BASE}/og-image.png`,
+  image: `${BASE}/logo-header.png`,
   url: BASE,
   telephone: "+91-927-092-3581",
   email: "info@zaftys.com",
@@ -97,8 +98,9 @@ export const softwareApplicationSchema = {
   operatingSystem: "Web, Android, iOS",
   offers: {
     "@type": "Offer",
+    price: "0",
     priceCurrency: "INR",
-    description: "Contact ZAFTYS for platform licensing and demos",
+    description: "Contact ZAFTYS Logistics for platform licensing and demos",
   },
   description:
     "Transport and fleet management platform for dispatch, GPS tracking, ePOD, fleet records, and client visibility.",
@@ -143,7 +145,7 @@ export function blogPostingSchema(post: {
     dateModified: post.updatedAt ?? post.publishedAt,
     author: {
       "@type": "Organization",
-      name: post.author,
+      name: legalEntity.name,
       url: BASE,
     },
     publisher: organizationRef,
@@ -174,6 +176,9 @@ export function breadcrumbSchema(
 export function faqPageSchema(
   faqs: readonly { question: string; answer: string }[],
 ): Record<string, unknown> {
+  const stripMdLinks = (text: string) =>
+    text.replace(/\[([^\]]+)\]\([^)]+\)/g, "$1").replace(/\*\*([^*]+)\*\*/g, "$1");
+
   return {
     "@context": "https://schema.org",
     "@type": "FAQPage",
@@ -182,7 +187,7 @@ export function faqPageSchema(
       name: faq.question,
       acceptedAnswer: {
         "@type": "Answer",
-        text: faq.answer,
+        text: stripMdLinks(faq.answer),
       },
     })),
   };

@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import logoFooter from "@/assets/logo-footer.png";
 import { useToast } from "@/hooks/use-toast";
-import { externalLinks, whatsappUrl, companyAddress, legalEntity } from "@/lib/constants";
+import { externalLinks, whatsappUrl, companyAddress, legalEntity, COMPANY_EMAIL } from "@/lib/constants";
 
 const Footer = () => {
   const { toast } = useToast();
@@ -142,9 +142,9 @@ const Footer = () => {
                 </a>
               </li>
               <li>
-                <a href="mailto:contact@zaftys.com" className="flex items-center gap-3 text-gray-400 hover:text-accent transition-colors">
+                <a href={`mailto:${COMPANY_EMAIL}`} className="flex items-center gap-3 text-gray-400 hover:text-accent transition-colors">
                   <Mail className="text-accent shrink-0" size={18} />
-                  <span>contact@zaftys.com</span>
+                  <span>{COMPANY_EMAIL}</span>
                 </a>
               </li>
             </ul>

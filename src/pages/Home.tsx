@@ -23,9 +23,10 @@ import { CTAGroup } from "@/components/CTAGroup";
 import { externalLinks, homeHowItWorks, homeIndustries, coreServices, homeTrustStrip, whatsappUrl } from "@/lib/constants";
 import { pageSeo } from "@/lib/page-seo";
 import { logisticsServiceSchema, organizationSchema, websiteSchema, localBusinessSchema } from "@/lib/schema";
-import { pillarImages } from "@/lib/services-images";
 import { blogCategoryLabels, formatPostDate, latestPosts } from "@/lib/blog-data";
 import { Badge } from "@/components/ui/badge";
+import { LazyTmsTripPeek, TmsDemoDisclaimer } from "@/components/tms-demo";
+import "@/styles/tms-demo.css";
 import type { LucideIcon } from "lucide-react";
 
 const serviceIcons: Record<string, LucideIcon> = {
@@ -73,7 +74,7 @@ const Home = () => {
         <div className="container mx-auto container-padding relative z-10">
           <div className="max-w-4xl text-white">
             <h1 className="text-5xl md:text-6xl lg:text-7xl font-heading font-bold mb-6 animate-fade-in-up leading-tight">
-              Industrial Logistics & Heavy Freight Across India.
+              ZAFTYS Logistics — Industrial Freight Across India.
             </h1>
             <p className="text-xl md:text-2xl mb-10 text-gray-200 font-light animate-fade-in-up max-w-2xl" style={{ animationDelay: "0.2s" }}>
               Company-operated transport, ZAFTYS TMS visibility, and TranZfort verified capacity  -  one partner for cement, steel, mining, and bulk freight.
@@ -189,14 +190,9 @@ const Home = () => {
       <section className="section-padding bg-muted/30">
         <div className="container mx-auto container-padding">
           <div className="flex flex-col lg:flex-row items-center gap-16">
-            <div className="lg:w-1/2 order-2 lg:order-1">
-              <ResponsiveImage
-                src={pillarImages.operations.src}
-                alt={pillarImages.operations.alt}
-                aspectRatio="2/1"
-                objectFit="contain"
-                className="rounded-xl shadow-2xl border border-border"
-              />
+            <div className="lg:w-1/2 order-2 lg:order-1 w-full">
+              <LazyTmsTripPeek density="compact" className="min-h-[280px] rounded-xl shadow-2xl" />
+              <TmsDemoDisclaimer className="mt-3" />
             </div>
             <div className="lg:w-1/2 order-1 lg:order-2">
               <div className="inline-block px-3 py-1 rounded-full bg-primary/10 text-primary text-sm font-semibold mb-6 border border-primary/20">

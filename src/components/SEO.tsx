@@ -8,6 +8,10 @@ interface SEOProps {
   type?: string;
   schema?: Record<string, unknown> | Record<string, unknown>[];
   noindex?: boolean;
+  /** ISO date — blog article published */
+  publishedTime?: string;
+  /** ISO date — blog article modified */
+  modifiedTime?: string;
 }
 
 const BASE_URL = "https://zaftys.com";
@@ -22,6 +26,8 @@ const SEO = ({
   type = "website",
   schema,
   noindex = false,
+  publishedTime,
+  modifiedTime,
 }: SEOProps) => {
   const fullTitle = title === SITE_TITLE ? title : `${title} | ${SITE_TITLE}`;
   const currentUrl = canonical ? `${BASE_URL}${canonical}` : BASE_URL;
@@ -46,6 +52,8 @@ const SEO = ({
       <meta property="og:image" content={imageUrl} />
       <meta property="og:image:width" content="1200" />
       <meta property="og:image:height" content="630" />
+      {publishedTime ? <meta property="article:published_time" content={publishedTime} /> : null}
+      {modifiedTime ? <meta property="article:modified_time" content={modifiedTime} /> : null}
 
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:title" content={fullTitle} />

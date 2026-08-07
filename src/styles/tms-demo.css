@@ -1,0 +1,63 @@
+/* ZAFTYS TMS demo tokens — scoped to .tms-demo embeds */
+.tms-demo {
+  --tms-bg: #04080d;
+  --tms-panel: #0f171f;
+  --tms-card: rgba(20, 27, 36, 0.72);
+  --tms-border: rgba(246, 249, 252, 0.1);
+  --tms-heading: #f6f9fc;
+  --tms-muted: #a0a5ab;
+  --tms-link: #69c1fc;
+  --tms-primary: #00a9fb;
+  --tms-success: #00cd94;
+  --tms-warn: #fab72a;
+  --tms-accent: #ff7a1a;
+  color: var(--tms-heading);
+  background: var(--tms-bg);
+}
+
+.tms-demo-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0, 169, 251, 0.35) transparent;
+}
+.tms-demo-scroll::-webkit-scrollbar {
+  width: 5px;
+}
+.tms-demo-scroll::-webkit-scrollbar-thumb {
+  background: rgba(0, 169, 251, 0.35);
+  border-radius: 9999px;
+}
+
+.tms-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  border-radius: 9999px;
+  padding: 0.15rem 0.55rem;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.tms-status-plant {
+  background: rgba(250, 183, 42, 0.15);
+  color: #fab72a;
+}
+.tms-status-transit {
+  background: rgba(0, 169, 251, 0.15);
+  color: #69c1fc;
+}
+.tms-status-weigh {
+  background: rgba(99, 102, 241, 0.18);
+  color: #a5b4fc;
+}
+.tms-status-delivered {
+  background: rgba(0, 205, 148, 0.15);
+  color: #00cd94;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tms-demo * {
+    transition: none !important;
+    animation: none !important;
+  }
+}

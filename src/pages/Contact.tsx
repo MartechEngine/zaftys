@@ -16,6 +16,8 @@ import { HeroEmailButton } from "@/components/HeroEmailButton";
 import { CTAGroup } from "@/components/CTAGroup";
 import { whatsappUrl, companyAddress } from "@/lib/constants";
 import { pageSeo } from "@/lib/page-seo";
+import { organizationSchema, localBusinessSchema, breadcrumbSchema } from "@/lib/schema";
+import { Link } from "react-router-dom";
 
 const Contact = () => {
   const { toast } = useToast();
@@ -106,10 +108,18 @@ const Contact = () => {
         title={pageSeo.contact.title}
         description={pageSeo.contact.description}
         canonical="/contact"
+        schema={[
+          organizationSchema,
+          localBusinessSchema,
+          breadcrumbSchema([
+            { name: "Home", path: "/" },
+            { name: "Contact", path: "/contact" },
+          ]),
+        ]}
       />
       <PageHero
         badge="Contact"
-        title="Contact ZAFTYS For Industrial Freight Quotes."
+        title="Contact ZAFTYS Logistics For Industrial Freight Quotes."
         description="WhatsApp-first quotes from our Amravati team  -  industrial freight, ZAFTYS TMS demos, and TranZfort partnership enquiries across India."
         imageSrc={heroContact}
         imageAlt={pageHeroAlts.contact}
@@ -333,6 +343,17 @@ const Contact = () => {
                     WhatsApp Priority Line
                   </a>
                 </Button>
+              </div>
+
+              <div className="rounded-xl border border-border bg-muted/20 p-6">
+                <h3 className="text-lg font-heading font-bold text-navy mb-3">Explore ZAFTYS Logistics</h3>
+                <ul className="space-y-2 text-sm">
+                  <li><Link to="/services" className="text-primary hover:underline">FTL &amp; contract logistics services</Link></li>
+                  <li><Link to="/technology" className="text-primary hover:underline">ZAFTYS TMS visibility</Link></li>
+                  <li><Link to="/network" className="text-primary hover:underline">TranZfort verified capacity</Link></li>
+                  <li><Link to="/industries" className="text-primary hover:underline">Industries we serve</Link></li>
+                  <li><Link to="/about" className="text-primary hover:underline">About ZAFTYS Logistics</Link></li>
+                </ul>
               </div>
             </div>
 

@@ -35,8 +35,8 @@ const Industries = () => {
 
       <PageHero
         badge="Industries"
-        title="Industrial Logistics For Cement, Steel, Mining & Bulk Freight."
-        description="Each vertical needs different assets, documentation, and timing. ZAFTYS builds transport programs around those realities  -  company-operated fleet first, TranZfort capacity when demand spikes, and TMS visibility on active lanes across India."
+        title="Industrial Logistics For Cement, Steel, Mining & Bulk — ZAFTYS Logistics."
+        description="Each vertical needs different assets, documentation, and timing. ZAFTYS Logistics builds transport programs around those realities  -  company-operated fleet first, TranZfort capacity when demand spikes, and TMS visibility on active lanes across India."
         imageSrc={heroIndustries}
         imageAlt={pageHeroAlts.industries}
       >
@@ -67,7 +67,7 @@ const Industries = () => {
                 <Card className="border-none shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1 group bg-white overflow-hidden flex flex-col h-full">
                   <ResponsiveImage
                     src={industry.image}
-                    alt={industry.title}
+                    alt={`${industry.title} logistics by ZAFTYS Logistics`}
                     aspectRatio="2/1"
                     objectFit="cover"
                     imgClassName="object-center"
@@ -121,6 +121,14 @@ const Industries = () => {
           <CTAGroup>
             <WhatsAppButton label="Chat on WhatsApp" />
           </CTAGroup>
+          <p className="mt-8 text-sm text-gray-300">
+            Also see{" "}
+            <Link to="/services" className="underline hover:text-white">services</Link>
+            {", "}
+            <Link to="/technology" className="underline hover:text-white">ZAFTYS TMS</Link>
+            {", and "}
+            <Link to="/network" className="underline hover:text-white">TranZfort capacity</Link>.
+          </p>
         </div>
       </section>
     </div>

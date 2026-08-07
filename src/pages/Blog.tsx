@@ -74,7 +74,7 @@ const Blog = () => {
 
       <PageHero
         badge="Blog"
-        title="Practical logistics knowledge from corridor operations"
+        title="Practical logistics knowledge from ZAFTYS Logistics operations"
         description="Guides on industrial FTL, plant windows, steel and cement freight, and what matters in a heavy-haul TMS — written for shippers and operators who plan real trips."
         imageSrc={heroResources}
         imageAlt={pageHeroAlts.resources}
@@ -206,6 +206,16 @@ const Blog = () => {
             </Button>
           </form>
           <WhatsAppButton label="Talk to our team" />
+          <p className="mt-8 text-sm text-muted-foreground">
+            Explore{" "}
+            <Link to="/services" className="text-primary hover:underline">services</Link>
+            {", "}
+            <Link to="/technology" className="text-primary hover:underline">ZAFTYS TMS</Link>
+            {", "}
+            <Link to="/industries" className="text-primary hover:underline">industries</Link>
+            {", or "}
+            <Link to="/contact" className="text-primary hover:underline">contact ZAFTYS Logistics</Link>.
+          </p>
         </div>
       </section>
     </div>

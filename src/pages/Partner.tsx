@@ -17,6 +17,7 @@ import { CTAGroup } from "@/components/CTAGroup";
 import { useToast } from "@/hooks/use-toast";
 import { externalLinks } from "@/lib/constants";
 import { pageSeo } from "@/lib/page-seo";
+import { Link } from "react-router-dom";
 
 const Partner = () => {
   const { toast } = useToast();
@@ -96,7 +97,7 @@ const Partner = () => {
       />
       <PageHero
         badge="Fleet Owners"
-        title="Join TranZfort — Industrial Loads For Fleet Partners."
+        title="Join TranZfort — Industrial Loads With ZAFTYS Logistics."
         description="Verified transport partners get structured industrial freight coordinated through ZAFTYS Logistics  -  clear payments, professional onboarding, and tools as you scale across India."
         imageSrc={heroPartner}
         imageAlt={pageHeroAlts.partner}
@@ -273,6 +274,14 @@ const Partner = () => {
               </a>
             </Button>
           </CTAGroup>
+          <p className="mt-8 text-sm text-gray-300">
+            Learn about{" "}
+            <Link to="/network" className="underline hover:text-white">TranZfort network</Link>
+            {", "}
+            <Link to="/technology" className="underline hover:text-white">ZAFTYS TMS</Link>
+            {", or "}
+            <Link to="/contact" className="underline hover:text-white">contact ZAFTYS Logistics</Link>.
+          </p>
         </div>
       </section>
     </div>
