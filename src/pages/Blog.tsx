@@ -10,7 +10,8 @@ import { PageHero } from "@/components/PageHero";
 import { CTAGroup } from "@/components/CTAGroup";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
 import ResponsiveImage from "@/components/ResponsiveImage";
-import { pageHeroImages } from "@/lib/page-heroes";
+import heroResources from "@/assets/hero-resources.jpg";
+import { pageHeroAlts } from "@/lib/page-heroes";
 import { pageSeo } from "@/lib/page-seo";
 import { blogPageSchema } from "@/lib/schema";
 import {
@@ -75,8 +76,8 @@ const Blog = () => {
         badge="Blog"
         title="Practical logistics knowledge from corridor operations"
         description="Guides on industrial FTL, plant windows, steel and cement freight, and what matters in a heavy-haul TMS — written for shippers and operators who plan real trips."
-        imageSrc={pageHeroImages.resources.src}
-        imageAlt={pageHeroImages.resources.alt}
+        imageSrc={heroResources}
+        imageAlt={pageHeroAlts.resources}
       >
         <CTAGroup className="justify-start sm:justify-start">
           <a href="#posts">

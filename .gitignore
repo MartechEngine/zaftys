@@ -11,6 +11,8 @@ node_modules
 dist
 dist-ssr
 *.local
+.image-backups/
+app-tsm/
 
 # Editor directories and files
 .vscode/*

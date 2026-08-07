@@ -64,6 +64,7 @@ const ResponsiveImage = ({
           alt={alt}
           loading={priority ? "eager" : "lazy"}
           decoding="async"
+          {...(priority ? { fetchPriority: "high" as const } : {})}
           onLoad={() => setLoaded(true)}
           onError={() => setError(true)}
           className={cn(

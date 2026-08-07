@@ -8,7 +8,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { MapPin, Phone, Mail, Clock, Send, MessageSquare, Loader2 } from "lucide-react";
 import SEO from "@/components/SEO";
 import { PageHero } from "@/components/PageHero";
-import { pageHeroImages } from "@/lib/page-heroes";
+import heroContact from "@/assets/hero-contact.jpg";
+import { pageHeroAlts } from "@/lib/page-heroes";
 import { heroMailBodies, heroMailSubjects } from "@/lib/hero-ctas";
 import { useToast } from "@/hooks/use-toast";
 import { HeroEmailButton } from "@/components/HeroEmailButton";
@@ -110,8 +111,8 @@ const Contact = () => {
         badge="Contact"
         title="Contact ZAFTYS For Industrial Freight Quotes."
         description="WhatsApp-first quotes from our Amravati team  -  industrial freight, ZAFTYS TMS demos, and TranZfort partnership enquiries across India."
-        imageSrc={pageHeroImages.contact.src}
-        imageAlt={pageHeroImages.contact.alt}
+        imageSrc={heroContact}
+        imageAlt={pageHeroAlts.contact}
       >
         <CTAGroup className="justify-start sm:justify-start">
           <HeroEmailButton

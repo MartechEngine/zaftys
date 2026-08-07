@@ -312,3 +312,101 @@ All colors MUST be HSL.
   background-size: 1000px 100%;
   animation: shimmer 3s infinite;
 }
+
+/* ── ZAFTYS TMS auth shell (marketing /login mirrors app.zaftys.com) ── */
+.auth-shell {
+  --auth-bg: #04080d;
+  --auth-heading: #f6f9fc;
+  --auth-fg: #eff2f5;
+  --auth-muted: #a0a5ab;
+  --auth-link: #69c1fc;
+  --auth-primary: #00a9fb;
+  --auth-primary-fg: #040a11;
+  --auth-glass-bg: rgba(20, 27, 36, 0.45);
+  --auth-glass-border: rgba(246, 249, 252, 0.1);
+  --auth-input-bg: rgba(255, 255, 255, 0.05);
+  --auth-glow: radial-gradient(60rem 40rem at 12% 8%, rgba(0, 169, 251, 0.2), transparent 60%),
+    radial-gradient(50rem 40rem at 88% 92%, rgba(66, 107, 206, 0.18), transparent 60%);
+  color: var(--auth-fg);
+  background: var(--auth-bg);
+}
+
+.auth-shell-bg {
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+}
+
+.auth-shell-bg-base {
+  position: absolute;
+  inset: 0;
+  background: var(--auth-bg);
+}
+
+.auth-shell-bg-glow {
+  position: absolute;
+  inset: 0;
+  background-image: var(--auth-glow);
+}
+
+.auth-shell-bg-grid {
+  position: absolute;
+  inset: 0;
+  opacity: 0.3;
+  background-image:
+    linear-gradient(rgba(246, 249, 252, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(246, 249, 252, 0.04) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+.auth-glass {
+  background: var(--auth-glass-bg);
+  -webkit-backdrop-filter: blur(24px) saturate(160%);
+  backdrop-filter: blur(24px) saturate(160%);
+  border: 1px solid var(--auth-glass-border);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.55), inset 0 1px 0 0 rgba(246, 249, 252, 0.07);
+  border-radius: 0.9rem;
+  color: var(--auth-fg);
+}
+
+.auth-mark {
+  background: linear-gradient(135deg, #070d18 0%, #0f1e3d 50%, #1e3a5f 100%);
+  color: #f6f9fc;
+  box-shadow: 0 0 28px rgba(0, 169, 251, 0.35);
+}
+
+.auth-tagline {
+  background: linear-gradient(135deg, #e8eef7 0%, #7ba3d4 55%, #6366f1 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.auth-shell .auth-input {
+  background: var(--auth-input-bg) !important;
+  border-color: var(--auth-glass-border) !important;
+  color: var(--auth-heading) !important;
+  border-radius: 0.75rem;
+}
+
+.auth-shell .auth-input::placeholder {
+  color: var(--auth-muted);
+}
+
+.auth-shell .auth-input:focus-visible {
+  outline: none;
+  border-color: rgba(0, 169, 251, 0.55) !important;
+  box-shadow: 0 0 0 3px rgba(0, 169, 251, 0.2);
+}
+
+.auth-submit {
+  background: var(--auth-primary) !important;
+  color: var(--auth-primary-fg) !important;
+  border: none !important;
+  border-radius: 0.75rem !important;
+}
+
+.auth-submit:hover {
+  filter: brightness(1.06);
+}

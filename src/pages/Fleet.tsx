@@ -3,7 +3,8 @@ import { MapPin, Gauge, Shield, Wrench, Leaf, Radio, ArrowRight } from "lucide-r
 import { Link } from "react-router-dom";
 import SEO from "@/components/SEO";
 import { PageHero } from "@/components/PageHero";
-import { pageHeroImages } from "@/lib/page-heroes";
+import heroFleet from "@/assets/hero-fleet.jpg";
+import { pageHeroAlts } from "@/lib/page-heroes";
 import { heroMailBodies, heroMailSubjects } from "@/lib/hero-ctas";
 import { HeroEmailButton } from "@/components/HeroEmailButton";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
@@ -41,8 +42,8 @@ const Fleet = () => {
         badge="Fleet & Capacity"
         title="Company Fleet For Heavy-Haul Industrial Freight."
         description="Company-operated tippers, flatbeds, and multi-axle assets on industrial corridors across India  -  with TranZfort surge capacity and ZAFTYS TMS visibility when your lanes need to scale."
-        imageSrc={pageHeroImages.fleet.src}
-        imageAlt={pageHeroImages.fleet.alt}
+        imageSrc={heroFleet}
+        imageAlt={pageHeroAlts.fleet}
       >
         <CTAGroup className="justify-start sm:justify-start">
           <HeroEmailButton

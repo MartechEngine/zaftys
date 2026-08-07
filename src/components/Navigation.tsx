@@ -52,7 +52,13 @@ const Navigation = () => {
       <div className="container mx-auto container-padding">
         <div className="flex items-center justify-between">
           <Link to="/" className="flex items-center">
-            <img src={logoHeader} alt="ZAFTYS Logistics" className="h-14 md:h-16 w-auto transition-all" />
+            <img
+              src={logoHeader}
+              alt="ZAFTYS Logistics"
+              className="h-14 md:h-16 w-auto transition-all"
+              decoding="async"
+              fetchPriority="high"
+            />
           </Link>
 
           {/* Desktop Navigation */}

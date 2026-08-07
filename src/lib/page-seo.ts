@@ -51,9 +51,9 @@ export const pageSeo = {
       "Join ZAFTYS in operations, dispatch, fleet, and technology roles supporting industrial freight across India.",
   },
   login: {
-    title: "Login — ZAFTYS TMS Portal",
+    title: "Login — ZAFTYS TMS",
     description:
-      "Access the ZAFTYS TMS client portal and team dashboard at app.zaftys.com for shipment visibility and fleet operations.",
+      "Sign in to ZAFTYS TMS for dispatch, fleet, and customer visibility. Access is by invitation — no public signup.",
   },
   privacy: {
     title: "Privacy Policy",

@@ -36,7 +36,14 @@ export function PageHero({
       )}
     >
       <div className="absolute inset-0">
-        <img src={imageSrc} alt={imageAlt} className="w-full h-full object-cover" />
+        <img
+          src={imageSrc}
+          alt={imageAlt}
+          className="w-full h-full object-cover"
+          loading="eager"
+          fetchPriority="high"
+          decoding="async"
+        />
         <div className="absolute inset-0 bg-gradient-to-r from-navy via-navy/90 to-navy/60" />
       </div>
 

@@ -4,7 +4,8 @@ import { Target, Eye, Heart, Leaf } from "lucide-react";
 import { Link } from "react-router-dom";
 import SEO from "@/components/SEO";
 import { PageHero } from "@/components/PageHero";
-import { pageHeroImages } from "@/lib/page-heroes";
+import heroAbout from "@/assets/hero-about.jpg";
+import { pageHeroAlts } from "@/lib/page-heroes";
 import { heroMailBodies, heroMailSubjects } from "@/lib/hero-ctas";
 import { HeroEmailButton } from "@/components/HeroEmailButton";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
@@ -59,8 +60,8 @@ const About = () => {
         badge="Our Story"
         title="About ZAFTYS — Industrial Logistics Across India."
         description="Three generations of corridor experience. GST-compliant operations combining company-operated fleet, TranZfort verified capacity, and ZAFTYS TMS for industrial shippers and transporters."
-        imageSrc={pageHeroImages.about.src}
-        imageAlt={pageHeroImages.about.alt}
+        imageSrc={heroAbout}
+        imageAlt={pageHeroAlts.about}
       >
         <CTAGroup className="justify-start sm:justify-start">
           <HeroEmailButton

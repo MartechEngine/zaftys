@@ -1,31 +1,30 @@
-import { lazy, Suspense } from "react";
+import { lazy, Suspense, useEffect } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { HelmetProvider } from "react-helmet-async";
-import { useEffect } from "react";
 import { BrowserRouter, Routes, Route, useLocation, Navigate, useParams } from "react-router-dom";
 import Navigation from "./components/Navigation";
 import Footer from "./components/Footer";
-import About from "./pages/About";
-import Technology from "./pages/Technology";
-import Industries from "./pages/Industries";
-import Fleet from "./pages/Fleet";
-import Careers from "./pages/Careers";
-import Partner from "./pages/Partner";
-import Contact from "./pages/Contact";
 import NotFound from "./pages/NotFound";
-import Privacy from "./pages/Privacy";
-import Terms from "./pages/Terms";
-import Login from "./pages/Login";
 import { WhatsAppFab } from "./components/WhatsAppButton";
 
 const Home = lazy(() => import("./pages/Home"));
+const About = lazy(() => import("./pages/About"));
+const Technology = lazy(() => import("./pages/Technology"));
 const Network = lazy(() => import("./pages/Network"));
 const Services = lazy(() => import("./pages/Services"));
+const Industries = lazy(() => import("./pages/Industries"));
 const IndustryDetail = lazy(() => import("./pages/IndustryDetail"));
+const Fleet = lazy(() => import("./pages/Fleet"));
+const Careers = lazy(() => import("./pages/Careers"));
+const Partner = lazy(() => import("./pages/Partner"));
+const Contact = lazy(() => import("./pages/Contact"));
 const Blog = lazy(() => import("./pages/Blog"));
 const BlogPost = lazy(() => import("./pages/BlogPost"));
+const Privacy = lazy(() => import("./pages/Privacy"));
+const Terms = lazy(() => import("./pages/Terms"));
+const Login = lazy(() => import("./pages/Login"));
 
 const PageFallback = () => (
   <div className="min-h-[40vh] flex items-center justify-center" role="status" aria-label="Loading page">
@@ -52,39 +51,54 @@ const ScrollToTop = () => {
   return null;
 };
 
+const AppShell = () => {
+  const { pathname } = useLocation();
+  const isAuthPage = pathname === "/login";
+
+  return (
+    <>
+      <ScrollToTop />
+      {!isAuthPage && <Navigation />}
+      <Routes>
+        <Route path="/" element={<LazyPage><Home /></LazyPage>} />
+        <Route path="/about" element={<LazyPage><About /></LazyPage>} />
+        <Route path="/technology" element={<LazyPage><Technology /></LazyPage>} />
+        <Route path="/platform" element={<Navigate to="/technology" replace />} />
+        <Route path="/services" element={<LazyPage><Services /></LazyPage>} />
+        <Route path="/industries" element={<LazyPage><Industries /></LazyPage>} />
+        <Route path="/industries/mining" element={<Navigate to="/industries/coal-mining" replace />} />
+        <Route path="/industries/:slug" element={<LazyPage><IndustryDetail /></LazyPage>} />
+        <Route path="/fleet" element={<LazyPage><Fleet /></LazyPage>} />
+        <Route path="/network" element={<LazyPage><Network /></LazyPage>} />
+        <Route path="/careers" element={<LazyPage><Careers /></LazyPage>} />
+        <Route path="/partner" element={<LazyPage><Partner /></LazyPage>} />
+        <Route path="/contact" element={<LazyPage><Contact /></LazyPage>} />
+        <Route path="/blog" element={<LazyPage><Blog /></LazyPage>} />
+        <Route path="/blog/:slug" element={<LazyPage><BlogPost /></LazyPage>} />
+        <Route path="/resources" element={<Navigate to="/blog" replace />} />
+        <Route path="/resources/:slug" element={<ResourcesSlugRedirect />} />
+        <Route path="/privacy" element={<LazyPage><Privacy /></LazyPage>} />
+        <Route path="/terms" element={<LazyPage><Terms /></LazyPage>} />
+        <Route path="/login" element={<LazyPage><Login /></LazyPage>} />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+      {!isAuthPage && (
+        <>
+          <Footer />
+          <WhatsAppFab />
+        </>
+      )}
+    </>
+  );
+};
+
 const App = () => (
   <HelmetProvider>
     <TooltipProvider>
       <Toaster />
       <Sonner />
       <BrowserRouter>
-        <ScrollToTop />
-        <Navigation />
-        <Routes>
-          <Route path="/" element={<LazyPage><Home /></LazyPage>} />
-          <Route path="/about" element={<About />} />
-          <Route path="/technology" element={<Technology />} />
-          <Route path="/platform" element={<Navigate to="/technology" replace />} />
-          <Route path="/services" element={<LazyPage><Services /></LazyPage>} />
-          <Route path="/industries" element={<Industries />} />
-          <Route path="/industries/mining" element={<Navigate to="/industries/coal-mining" replace />} />
-          <Route path="/industries/:slug" element={<LazyPage><IndustryDetail /></LazyPage>} />
-          <Route path="/fleet" element={<Fleet />} />
-          <Route path="/network" element={<LazyPage><Network /></LazyPage>} />
-          <Route path="/careers" element={<Careers />} />
-          <Route path="/partner" element={<Partner />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/blog" element={<LazyPage><Blog /></LazyPage>} />
-          <Route path="/blog/:slug" element={<LazyPage><BlogPost /></LazyPage>} />
-          <Route path="/resources" element={<Navigate to="/blog" replace />} />
-          <Route path="/resources/:slug" element={<ResourcesSlugRedirect />} />
-          <Route path="/privacy" element={<Privacy />} />
-          <Route path="/terms" element={<Terms />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-        <Footer />
-        <WhatsAppFab />
+        <AppShell />
       </BrowserRouter>
     </TooltipProvider>
   </HelmetProvider>

@@ -8,7 +8,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Truck, Users, Code, TrendingUp, Heart, Trophy, ArrowRight, Briefcase, Loader2 } from "lucide-react";
 import SEO from "@/components/SEO";
 import { PageHero } from "@/components/PageHero";
-import { pageHeroImages } from "@/lib/page-heroes";
+import heroCareers from "@/assets/hero-careers.jpg";
+import { pageHeroAlts } from "@/lib/page-heroes";
 import { heroMailBodies, heroMailSubjects } from "@/lib/hero-ctas";
 import { HeroEmailButton } from "@/components/HeroEmailButton";
 import { CTAGroup } from "@/components/CTAGroup";
@@ -111,8 +112,8 @@ const Careers = () => {
         badge="Join Our Team"
         title="Careers In Logistics, Operations & Technology."
         description="Join ZAFTYS in Amravati and across our network  -  roles where corridor experience and transport technology solve real industrial freight problems."
-        imageSrc={pageHeroImages.careers.src}
-        imageAlt={pageHeroImages.careers.alt}
+        imageSrc={heroCareers}
+        imageAlt={pageHeroAlts.careers}
       >
         <CTAGroup className="justify-start sm:justify-start">
           <Button asChild size="lg" variant="on-dark">

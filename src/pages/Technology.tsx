@@ -16,7 +16,8 @@ import { CTAGroup } from "@/components/CTAGroup";
 import { Link } from "react-router-dom";
 import SEO from "@/components/SEO";
 import { PageHero } from "@/components/PageHero";
-import { pageHeroImages } from "@/lib/page-heroes";
+import heroTechnology from "@/assets/hero-technology.jpg";
+import { pageHeroAlts } from "@/lib/page-heroes";
 import { heroMailBodies, heroMailSubjects } from "@/lib/hero-ctas";
 import { HeroEmailButton } from "@/components/HeroEmailButton";
 import { externalLinks } from "@/lib/constants";
@@ -120,8 +121,8 @@ const Technology = () => {
         badge="ZAFTYS TMS™ · Live"
         title="Transport Management Built For Industrial Freight."
         description="ZAFTYS TMS is live — dispatch, fleet, driver, documentation, and customer visibility in one platform. We run it every day on our own fleet and offer the same operational discipline to shippers and operators."
-        imageSrc={pageHeroImages.technology.src}
-        imageAlt={pageHeroImages.technology.alt}
+        imageSrc={heroTechnology}
+        imageAlt={pageHeroAlts.technology}
       >
         <CTAGroup className="justify-start sm:justify-start">
           <Button asChild size="lg" variant="accent">

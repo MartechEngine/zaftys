@@ -4,7 +4,8 @@ import { CheckCircle, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import SEO from "@/components/SEO";
 import { PageHero } from "@/components/PageHero";
-import { pageHeroImages } from "@/lib/page-heroes";
+import heroIndustries from "@/assets/hero-industries.jpg";
+import { pageHeroAlts } from "@/lib/page-heroes";
 import { heroMailBodies, heroMailSubjects } from "@/lib/hero-ctas";
 import { HeroEmailButton } from "@/components/HeroEmailButton";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
@@ -36,8 +37,8 @@ const Industries = () => {
         badge="Industries"
         title="Industrial Logistics For Cement, Steel, Mining & Bulk Freight."
         description="Each vertical needs different assets, documentation, and timing. ZAFTYS builds transport programs around those realities  -  company-operated fleet first, TranZfort capacity when demand spikes, and TMS visibility on active lanes across India."
-        imageSrc={pageHeroImages.industries.src}
-        imageAlt={pageHeroImages.industries.alt}
+        imageSrc={heroIndustries}
+        imageAlt={pageHeroAlts.industries}
       >
         <CTAGroup className="justify-start sm:justify-start">
           <HeroEmailButton

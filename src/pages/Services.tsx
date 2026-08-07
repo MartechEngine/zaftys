@@ -8,13 +8,15 @@ import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { CTAGroup } from "@/components/CTAGroup";
 import ImageContentCard from "@/components/ImageContentCard";
 import ResponsiveImage from "@/components/ResponsiveImage";
-import { AppDemoFrame, MatchFlowDemo, DemoDisclaimer } from "@/components/tranzfort-demo";
+import { AppDemoFrame, LazyMatchFlowDemo, DemoDisclaimer } from "@/components/tranzfort-demo";
+import "@/styles/tranzfort-demo.css";
 import { externalLinks, truckTypes, materialTypes, tsmCapabilities } from "@/lib/constants";
 import { pageSeo } from "@/lib/page-seo";
 import { TransportationExplorer } from "@/components/TransportationExplorer";
 import { heroMailBodies, heroMailSubjects } from "@/lib/hero-ctas";
 import { PageHero } from "@/components/PageHero";
-import { pageHeroImages } from "@/lib/page-heroes";
+import heroServices from "@/assets/hero-services.jpg";
+import { pageHeroAlts } from "@/lib/page-heroes";
 import { truckingServiceSchema, organizationSchema } from "@/lib/schema";
 import { truckImageForId, materialImageForId, pillarImages } from "@/lib/services-images";
 
@@ -87,8 +89,8 @@ const Services = () => {
         badge="Industrial Trucking"
         title="FTL, Contract & Heavy-Haul Logistics Across India."
         description="Transport programs for industrial cargo, plant windows, and compliance needs  -  company fleet, TranZfort overflow, and live ZAFTYS TMS visibility on every lane."
-        imageSrc={pageHeroImages.services.src}
-        imageAlt={pageHeroImages.services.alt}
+        imageSrc={heroServices}
+        imageAlt={pageHeroAlts.services}
       >
         <CTAGroup className="justify-start sm:justify-start">
           <HeroEmailButton
@@ -284,7 +286,7 @@ const Services = () => {
               screen="app"
               className="max-w-md mx-auto lg:ml-auto min-h-[280px] sm:min-h-[340px] md:min-h-[380px]"
             >
-              <MatchFlowDemo theme="app" />
+              <LazyMatchFlowDemo theme="app" />
             </AppDemoFrame>
             <DemoDisclaimer variant="on-dark" className="mt-3 max-w-md mx-auto lg:ml-auto" />
           </div>

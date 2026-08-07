@@ -8,7 +8,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Network, TrendingUp, Shield, Zap, Loader2 } from "lucide-react";
 import SEO from "@/components/SEO";
 import { PageHero } from "@/components/PageHero";
-import { pageHeroImages } from "@/lib/page-heroes";
+import heroPartner from "@/assets/hero-partner.jpg";
+import { pageHeroAlts } from "@/lib/page-heroes";
 import { heroMailBodies, heroMailSubjects } from "@/lib/hero-ctas";
 import { HeroEmailButton } from "@/components/HeroEmailButton";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
@@ -97,8 +98,8 @@ const Partner = () => {
         badge="Fleet Owners"
         title="Join TranZfort — Industrial Loads For Fleet Partners."
         description="Verified transport partners get structured industrial freight coordinated through ZAFTYS Logistics  -  clear payments, professional onboarding, and tools as you scale across India."
-        imageSrc={pageHeroImages.partner.src}
-        imageAlt={pageHeroImages.partner.alt}
+        imageSrc={heroPartner}
+        imageAlt={pageHeroAlts.partner}
       >
         <CTAGroup className="justify-start sm:justify-start">
           <Button asChild size="lg" variant="on-dark">

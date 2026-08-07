@@ -17,14 +17,16 @@ import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { CTAGroup } from "@/components/CTAGroup";
 import { externalLinks, networkHighlights } from "@/lib/constants";
 import { pageSeo } from "@/lib/page-seo";
-import { pageHeroImages } from "@/lib/page-heroes";
+import heroNetwork from "@/assets/hero-network.jpg";
+import { pageHeroAlts } from "@/lib/page-heroes";
 import { PageHero } from "@/components/PageHero";
 import {
   AppDemoFrame,
-  MatchFlowDemo,
-  PersonaTabDemo,
+  LazyMatchFlowDemo,
+  LazyPersonaTabDemo,
   DemoDisclaimer,
 } from "@/components/tranzfort-demo";
+import "@/styles/tranzfort-demo.css";
 import { breadcrumbSchema, organizationSchema } from "@/lib/schema";
 
 const highlightIcons = [Route, Mic, Smartphone, Shield, Network, Users] as const;
@@ -168,8 +170,8 @@ const NetworkPage = () => {
           </>
         }
         description="TranZfort is live  -  verified transport partners, centralized coordination, and ZAFTYS TMS visibility on every lane. All commercial transactions through ZAFTYS Logistics."
-        imageSrc={pageHeroImages.network.src}
-        imageAlt={pageHeroImages.network.alt}
+        imageSrc={heroNetwork}
+        imageAlt={pageHeroAlts.network}
       >
         <CTAGroup className="justify-start sm:justify-start">
           <Button asChild size="lg" variant="accent">
@@ -210,7 +212,7 @@ const NetworkPage = () => {
             </p>
           </div>
           <div className="max-w-md mx-auto rounded-2xl border border-border bg-muted/10 shadow-lg p-4 sm:p-6">
-            <PersonaTabDemo variant="panel" surface="light" showDisclaimer />
+            <LazyPersonaTabDemo variant="panel" surface="light" showDisclaimer />
           </div>
         </div>
       </section>
@@ -260,7 +262,7 @@ const NetworkPage = () => {
                   screen="app"
                   className="flex-1 min-h-[260px] sm:min-h-[300px]"
                 >
-                  <MatchFlowDemo theme="app" />
+                  <LazyMatchFlowDemo theme="app" />
                 </AppDemoFrame>
                 <DemoDisclaimer className="mt-3" />
               </div>

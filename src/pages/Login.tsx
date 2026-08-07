@@ -1,107 +1,182 @@
-import { useState } from "react";
+import { FormEvent, useState } from "react";
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { UserCircle, Truck, Lock, ArrowRight } from "lucide-react";
 import SEO from "@/components/SEO";
-import { Link } from "react-router-dom";
-import { externalLinks } from "@/lib/constants";
+import { COMPANY_EMAIL, externalLinks, mailtoCompany } from "@/lib/constants";
 import { pageSeo } from "@/lib/page-seo";
 
+const APP_LOGIN = `${externalLinks.app}/login`;
+const APP_FORGOT = `${externalLinks.app}/forgot-password`;
+
+type LoginMode = "user" | "team";
+
+/** Marketing bridge to ZAFTYS TMS auth — mirrors app.zaftys.com/login (tabs + login only). */
 const Login = () => {
-  const [activeTab, setActiveTab] = useState<"client" | "team">("client");
+  const [mode, setMode] = useState<LoginMode>("user");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  function switchMode(next: LoginMode) {
+    setMode(next);
+    setEmail("");
+    setPassword("");
+  }
+
+  function handleSubmit(e: FormEvent) {
+    e.preventDefault();
+    // Real auth lives on the TMS app (same dual-mode login)
+    window.location.href = APP_LOGIN;
+  }
 
   return (
-    <div className="min-h-screen bg-navy flex items-center justify-center p-4 relative overflow-hidden">
-      <SEO
-        title={pageSeo.login.title}
-        description={pageSeo.login.description}
-        noindex
-      />
+    <div className="auth-shell relative flex min-h-screen flex-col items-center justify-center p-6">
+      <SEO title={pageSeo.login.title} description={pageSeo.login.description} noindex />
 
-      {/* Background Pattern */}
-      <div className="absolute inset-0 opacity-10 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGcmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxwYXRoIGQ9Ik0zNiAzNHYtNGgtMnY0aC0ydjRoMnY0aDJ2LTRoMnYtNGgtMnpNMzYgMzRWMzRoNDB2MmgtNDB2LTJ6bTAgMHYtMmgydjJ4LTIyek02IDZ2MmgyVjZINnptMCA0aDJ2MmgtMlYxMHptMCA0aDJ2MmgtMlYxNHptMCA0aDJ2MmgtMlYxOHoiIGZpbGw9IiNmZmYiLz48L2c+PC9zdmc+')]"></div>
-      
-      <div className="absolute inset-0 bg-gradient-to-br from-navy via-navy/90 to-primary/20 pointer-events-none"></div>
+      <div className="auth-shell-bg" aria-hidden>
+        <div className="auth-shell-bg-base" />
+        <div className="auth-shell-bg-glow" />
+        <div className="auth-shell-bg-grid" />
+      </div>
 
-      <Card className="w-full max-w-md relative z-10 border-white/10 bg-white/95 backdrop-blur shadow-2xl animate-fade-in-up">
-        <CardHeader className="text-center pb-2">
-          <div className="mx-auto w-12 h-12 bg-accent/10 rounded-full flex items-center justify-center mb-4 text-accent">
-            <Lock size={24} />
+      <div className="auth-glass relative z-10 w-full max-w-md p-8">
+        <div className="mb-6 flex items-center gap-3">
+          <div className="auth-mark flex size-10 items-center justify-center rounded-xl text-sm font-bold">
+            Z
           </div>
-          <CardTitle className="text-2xl font-heading font-bold text-navy">Welcome Back</CardTitle>
-          <CardDescription>
-            Access ZAFTYS TMS™  -  client portal and team dashboard
-          </CardDescription>
-        </CardHeader>
-        
-        <CardContent>
-          {/* Custom Tabs */}
-          <div className="grid grid-cols-2 gap-2 p-1 bg-muted rounded-lg mb-6">
+          <div>
+            <p className="text-lg font-semibold text-[var(--auth-heading)]">ZAFTYS</p>
+            <p className="text-[11px] uppercase tracking-[0.14em] text-[var(--auth-muted)]">
+              Sign in to TMS
+            </p>
+          </div>
+        </div>
+
+        <p className="auth-tagline text-sm font-medium">
+          Operations become easier when everyone sees the same information.
+        </p>
+        <p className="mt-2 text-xs text-[var(--auth-muted)]">
+          ZAFTYS TMS — dispatch, fleet, and customer visibility for industrial logistics.
+        </p>
+
+        <form onSubmit={handleSubmit} className="mt-8 space-y-4">
+          <div
+            className="flex rounded-xl border border-white/10 bg-white/[0.03] p-0.5 text-xs"
+            role="tablist"
+            aria-label="Login type"
+          >
             <button
-              onClick={() => setActiveTab("client")}
-              className={`flex items-center justify-center gap-2 py-2.5 text-sm font-bold rounded-md transition-all ${
-                activeTab === "client" 
-                  ? "bg-white text-navy shadow-sm" 
-                  : "text-muted-foreground hover:text-navy"
+              type="button"
+              role="tab"
+              aria-selected={mode === "user"}
+              className={`flex-1 rounded-lg px-3 py-2 transition-colors ${
+                mode === "user"
+                  ? "bg-white/10 text-[var(--auth-heading)]"
+                  : "text-[var(--auth-muted)] hover:text-[var(--auth-heading)]"
               }`}
+              onClick={() => switchMode("user")}
             >
-              <UserCircle size={18} />
-              Client Portal
+              Company admin
             </button>
             <button
-              onClick={() => setActiveTab("team")}
-              className={`flex items-center justify-center gap-2 py-2.5 text-sm font-bold rounded-md transition-all ${
-                activeTab === "team" 
-                  ? "bg-white text-navy shadow-sm" 
-                  : "text-muted-foreground hover:text-navy"
+              type="button"
+              role="tab"
+              aria-selected={mode === "team"}
+              className={`flex-1 rounded-lg px-3 py-2 transition-colors ${
+                mode === "team"
+                  ? "bg-white/10 text-[var(--auth-heading)]"
+                  : "text-[var(--auth-muted)] hover:text-[var(--auth-heading)]"
               }`}
+              onClick={() => switchMode("team")}
             >
-              <Truck size={18} />
-              Team / Driver
+              Team seat
             </button>
           </div>
 
-          <form className="space-y-4" onSubmit={(e) => e.preventDefault()}>
-            <div className="space-y-2">
-              <Label htmlFor="email">
-                {activeTab === "client" ? "Business Email" : "Employee ID / Email"}
-              </Label>
-              <Input 
-                id="email" 
-                type={activeTab === "client" ? "email" : "text"} 
-                placeholder={activeTab === "client" ? "name@company.com" : "EMP-ID-1234"}
-                className="bg-white"
-              />
-            </div>
-            
-            <div className="space-y-2">
-              <div className="flex items-center justify-between">
-                <Label htmlFor="password">Password</Label>
-                <a href="#" className="text-xs text-primary hover:underline font-medium">
+          {mode === "user" ? (
+            <p className="text-xs text-[var(--auth-muted)]">
+              Sign in as your company admin account. There is no public TMS signup — access is
+              provisioned for verified organisations.
+            </p>
+          ) : (
+            <p className="text-xs text-[var(--auth-muted)]">
+              Team seats for your workspace. Invited operators sign in here with the credentials
+              your admin shared.
+            </p>
+          )}
+
+          <div>
+            <label htmlFor="email" className="block text-sm font-medium text-[var(--auth-heading)]">
+              Email
+            </label>
+            <Input
+              id="email"
+              name="email"
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="name@company.com"
+              className="auth-input mt-1"
+              required
+              autoComplete="email"
+            />
+          </div>
+
+          <div>
+            <div className="flex items-center justify-between gap-3">
+              <label htmlFor="password" className="block text-sm font-medium text-[var(--auth-heading)]">
+                Password
+              </label>
+              {mode === "team" ? (
+                <a
+                  href={APP_FORGOT}
+                  className="text-xs text-[var(--auth-link)] hover:underline"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   Forgot password?
                 </a>
-              </div>
-              <Input id="password" type="password" placeholder="••••••••" className="bg-white" />
+              ) : null}
             </div>
+            <Input
+              id="password"
+              name="password"
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="••••••••"
+              className="auth-input mt-1"
+              required
+              autoComplete="current-password"
+            />
+          </div>
 
-            <Button asChild className="w-full bg-navy hover:bg-navy/90 text-white font-bold h-11 mt-2">
-              <a href={externalLinks.app} target="_blank" rel="noopener noreferrer">
-                Continue to Portal
-                <ArrowRight className="ml-2" size={18} />
-              </a>
-            </Button>
+          <Button type="submit" className="auth-submit w-full h-11 font-semibold">
+            {mode === "user" ? "Sign in with email" : "Sign in to TMS"}
+          </Button>
+        </form>
 
-            <div className="text-center text-sm text-muted-foreground mt-4">
-              Don't have an account?{" "}
-              <Link to={activeTab === "client" ? "/contact" : "/careers"} className="text-accent hover:underline font-semibold">
-                {activeTab === "client" ? "Contact Sales" : "Apply Now"}
-              </Link>
-            </div>
-          </form>
-        </CardContent>
-      </Card>
+        <p className="mt-6 text-center text-xs text-[var(--auth-muted)]">
+          No public signup. Access is by invitation.{" "}
+          <a href={mailtoCompany("ZAFTYS TMS access")} className="text-[var(--auth-link)] hover:underline">
+            Contact your administrator
+          </a>
+          {" · "}
+          <a href={APP_LOGIN} className="text-[var(--auth-link)] hover:underline" target="_blank" rel="noopener noreferrer">
+            Open app.zaftys.com
+          </a>
+        </p>
+
+        <p className="mt-8 text-center text-xs text-[var(--auth-muted)]">
+          <Link to="/" className="text-[var(--auth-link)] hover:text-[var(--auth-heading)]">
+            Back to zaftys.com
+          </Link>
+          {" · "}
+          <a href={`mailto:${COMPANY_EMAIL}`} className="hover:text-[var(--auth-heading)]">
+            {COMPANY_EMAIL}
+          </a>
+        </p>
+      </div>
     </div>
   );
 };

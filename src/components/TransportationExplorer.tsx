@@ -94,7 +94,13 @@ export function TransportationExplorer() {
                           isTruckMode ? "bg-navy" : "bg-muted",
                         )}
                       >
-                        <img src={thumb.src} alt="" className="max-h-full max-w-full object-contain" />
+                        <img
+                          src={thumb.src}
+                          alt=""
+                          loading="lazy"
+                          decoding="async"
+                          className="max-h-full max-w-full object-contain"
+                        />
                       </div>
                       <div className="min-w-0 flex-1">
                         <span className="block font-heading font-bold text-sm text-navy truncate">{item.title}</span>

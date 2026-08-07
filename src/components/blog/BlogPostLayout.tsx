@@ -118,6 +118,7 @@ export function BlogPostLayout({ post }: BlogPostLayoutProps) {
               alt={`${post.title} — ZAFTYS industrial logistics`}
               aspectRatio="16/9"
               objectFit="cover"
+              priority
               className="rounded-xl mb-12 shadow-md"
             />
           ) : null}
@@ -150,7 +151,9 @@ export function BlogPostLayout({ post }: BlogPostLayoutProps) {
               {post.faqs.map((faq) => (
                 <div key={faq.question} className="p-5 rounded-xl bg-muted/30 border border-border">
                   <h3 className="font-heading font-bold text-navy mb-2 text-sm">{faq.question}</h3>
-                  <p className="text-sm text-muted-foreground leading-relaxed">{faq.answer}</p>
+                  <p className="text-sm text-muted-foreground leading-relaxed">
+                    <RichText text={faq.answer} />
+                  </p>
                 </div>
               ))}
             </div>

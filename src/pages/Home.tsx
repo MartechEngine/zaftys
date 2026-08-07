@@ -60,7 +60,14 @@ const Home = () => {
 
       <section className="relative pt-32 pb-24 overflow-hidden min-h-[700px] flex items-center">
         <div className="absolute inset-0">
-          <img src={heroImage} alt="ZAFTYS heavy-haul trucks for industrial freight transport across India" className="w-full h-full object-cover" />
+          <img
+            src={heroImage}
+            alt="ZAFTYS heavy-haul trucks for industrial freight transport across India"
+            className="w-full h-full object-cover"
+            loading="eager"
+            fetchPriority="high"
+            decoding="async"
+          />
           <div className="absolute inset-0 bg-gradient-to-r from-navy/95 via-navy/80 to-navy/40" />
         </div>
         <div className="container mx-auto container-padding relative z-10">
