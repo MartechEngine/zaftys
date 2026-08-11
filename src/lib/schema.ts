@@ -117,8 +117,58 @@ export const blogPageSchema = {
   url: `${BASE}/blog`,
 };
 
-/** @deprecated Prefer blogPageSchema  -  /resources redirects to /blog */
-export const resourcesPageSchema = blogPageSchema;
+export const resourcesHubSchema = {
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  name: "ZAFTYS Logistics Resources",
+  description:
+    "Blog guides and logistics & supply chain market reports from ZAFTYS Logistics.",
+  publisher: organizationRef,
+  url: `${BASE}/resources`,
+};
+
+export const reportsCollectionSchema = {
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  name: "ZAFTYS Logistics Market Reports",
+  description:
+    "Logistics and supply chain market reports for industrial freight shippers and operators in India.",
+  publisher: organizationRef,
+  url: `${BASE}/resources/reports`,
+};
+
+/** @deprecated Prefer blogPageSchema */
+export const resourcesPageSchema = resourcesHubSchema;
+
+export function marketReportSchema(report: {
+  slug: string;
+  title: string;
+  seoDescription: string;
+  publishedAt: string;
+  updatedAt?: string;
+  pdfPath: string;
+}): Record<string, unknown> {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Report",
+    name: report.title,
+    description: report.seoDescription,
+    datePublished: report.publishedAt,
+    dateModified: report.updatedAt ?? report.publishedAt,
+    author: {
+      "@type": "Organization",
+      name: legalEntity.name,
+      url: BASE,
+    },
+    publisher: organizationRef,
+    url: `${BASE}/resources/reports/${report.slug}`,
+    encoding: {
+      "@type": "MediaObject",
+      contentUrl: `${BASE}${report.pdfPath}`,
+      encodingFormat: "application/pdf",
+    },
+  };
+}
 
 export function blogPostingSchema(post: {
   slug: string;

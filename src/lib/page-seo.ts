@@ -58,12 +58,22 @@ export const pageSeo = {
   privacy: {
     title: "Privacy Policy",
     description:
-      "How ZAFTYS Logistics collects, uses, and protects personal data from website forms, partner registration, and platform services.",
+      "How ZAFTYS Logistics collects, uses, and shares personal data for website forms, capacity matching, Transporter and Fleet Partner Trips, and platform services.",
   },
   terms: {
-    title: "Terms of Service",
+    title: "Terms of Use & Service",
     description:
-      "Terms for using the ZAFTYS Logistics website, requesting logistics services, and accessing ZAFTYS TMS. Contracts govern transport agreements.",
+      "ZAFTYS Logistics terms for website use, capacity facilitation, Vehicle Approval, Transporter verification, detention, and Mode A/B liability.",
+  },
+  cookies: {
+    title: "Cookie Policy",
+    description:
+      "How ZAFTYS Logistics uses cookies and similar technologies on zaftys.com, including necessary, preference, analytics, and marketing cookies.",
+  },
+  legalNotice: {
+    title: "Legal Notice",
+    description:
+      "Website legal notice for ZAFTYS Logistics: informational content, vehicle availability, rates, and electronic transactions.",
   },
   notFound: {
     title: "Page Not Found",
@@ -75,10 +85,14 @@ export const pageSeo = {
     description:
       "Practical guides from ZAFTYS Logistics on FTL empty miles, industrial shipment planning, cement and steel freight, and TMS for heavy-haul operations.",
   },
-  /** @deprecated Prefer blog  -  /resources redirects to /blog */
   resources: {
-    title: "Blog  -  Industrial Logistics Insights",
+    title: "Resources  -  Blog & Market Reports",
     description:
-      "Practical guides from ZAFTYS Logistics on FTL empty miles, industrial shipment planning, cement and steel freight, and TMS for heavy-haul operations.",
+      "ZAFTYS Logistics resources: practical industrial freight blog guides and logistics & supply chain market reports with PDF downloads.",
+  },
+  reports: {
+    title: "Market Reports  -  Logistics & Supply Chain",
+    description:
+      "ZAFTYS Logistics market reports on industrial road freight, corridors, cement and steel logistics, TMS, and capacity  -  sneak peeks with PDF download.",
   },
 } as const;

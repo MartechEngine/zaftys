@@ -10,7 +10,8 @@ export const pageHeroAlts = {
   industries: "Cement, steel, mining and bulk freight logistics across India",
   network: "TranZfort verified transport partners on an industrial highway corridor",
   partner: "Fleet partners joining TranZfort for industrial loads through ZAFTYS",
-  resources: "ZAFTYS Blog  -  practical industrial logistics and corridor operations guides",
+  resources: "ZAFTYS Logistics resources  -  blog guides and market reports for industrial freight",
+  reports: "ZAFTYS Logistics market reports on logistics and supply chain in industrial India",
   services: "FTL and heavy-haul industrial trucking services across India",
   technology: "ZAFTYS TMS transport management platform for industrial freight",
 } as const;

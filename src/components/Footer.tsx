@@ -55,7 +55,9 @@ const Footer = () => {
   const companyLinks = [
     { name: "About Us", path: "/about" },
     { name: "Careers", path: "/careers" },
+    { name: "Resources", path: "/resources" },
     { name: "Blog", path: "/blog" },
+    { name: "Market Reports", path: "/resources/reports" },
     { name: "Contact", path: "/contact" },
     { name: "Partner", path: "/partner" },
   ];
@@ -73,9 +75,10 @@ const Footer = () => {
   ];
 
   const legal = [
+    { name: "Terms of Use", path: "/terms" },
     { name: "Privacy Policy", path: "/privacy" },
-    { name: "Terms of Service", path: "/terms" },
-    { name: "Cookie Policy", path: "/privacy#cookies" },
+    { name: "Cookie Policy", path: "/cookies" },
+    { name: "Legal Notice", path: "/legal-notice" },
   ];
 
   return (

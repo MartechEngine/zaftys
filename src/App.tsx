@@ -22,8 +22,14 @@ const Partner = lazy(() => import("./pages/Partner"));
 const Contact = lazy(() => import("./pages/Contact"));
 const Blog = lazy(() => import("./pages/Blog"));
 const BlogPost = lazy(() => import("./pages/BlogPost"));
+const Resources = lazy(() => import("./pages/Resources"));
+const MarketReports = lazy(() => import("./pages/MarketReports"));
+const MarketReport = lazy(() => import("./pages/MarketReport"));
+const ReportPdfReader = lazy(() => import("./pages/ReportPdfReader"));
 const Privacy = lazy(() => import("./pages/Privacy"));
 const Terms = lazy(() => import("./pages/Terms"));
+const Cookies = lazy(() => import("./pages/Cookies"));
+const LegalNotice = lazy(() => import("./pages/LegalNotice"));
 const Login = lazy(() => import("./pages/Login"));
 
 const PageFallback = () => (
@@ -38,6 +44,9 @@ function LazyPage({ children }: { children: React.ReactNode }) {
 
 function ResourcesSlugRedirect() {
   const { slug } = useParams<{ slug: string }>();
+  if (slug === "reports") {
+    return <Navigate to="/resources/reports" replace />;
+  }
   return <Navigate to={slug ? `/blog/${slug}` : "/blog"} replace />;
 }
 
@@ -76,10 +85,23 @@ const AppShell = () => {
         <Route path="/contact" element={<LazyPage><Contact /></LazyPage>} />
         <Route path="/blog" element={<LazyPage><Blog /></LazyPage>} />
         <Route path="/blog/:slug" element={<LazyPage><BlogPost /></LazyPage>} />
-        <Route path="/resources" element={<Navigate to="/blog" replace />} />
+        <Route path="/resources" element={<LazyPage><Resources /></LazyPage>} />
+        <Route path="/resources/reports" element={<LazyPage><MarketReports /></LazyPage>} />
+        <Route
+          path="/resources/reports/global-logistics-market-2026-2033"
+          element={<Navigate to="/resources/reports/global-logistics-market-2027-2036" replace />}
+        />
+        <Route
+          path="/resources/reports/global-logistics-market-2026-2033/read"
+          element={<Navigate to="/resources/reports/global-logistics-market-2027-2036/read" replace />}
+        />
+        <Route path="/resources/reports/:slug/read" element={<LazyPage><ReportPdfReader /></LazyPage>} />
+        <Route path="/resources/reports/:slug" element={<LazyPage><MarketReport /></LazyPage>} />
         <Route path="/resources/:slug" element={<ResourcesSlugRedirect />} />
         <Route path="/privacy" element={<LazyPage><Privacy /></LazyPage>} />
         <Route path="/terms" element={<LazyPage><Terms /></LazyPage>} />
+        <Route path="/cookies" element={<LazyPage><Cookies /></LazyPage>} />
+        <Route path="/legal-notice" element={<LazyPage><LegalNotice /></LazyPage>} />
         <Route path="/login" element={<LazyPage><Login /></LazyPage>} />
         <Route path="*" element={<NotFound />} />
       </Routes>

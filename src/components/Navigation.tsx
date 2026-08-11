@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Menu, X, UserCircle } from "lucide-react";
+import { Menu, X, UserCircle, ChevronDown } from "lucide-react";
 import logoHeader from "@/assets/logo-zaftys.png";
 import { mailtoCompany } from "@/lib/constants";
 import { heroMailBodies, heroMailSubjects } from "@/lib/hero-ctas";
@@ -11,6 +11,8 @@ const quoteMailto = mailtoCompany(heroMailSubjects.quote, heroMailBodies.quote);
 const Navigation = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [resourcesOpen, setResourcesOpen] = useState(false);
+  const [mobileResourcesOpen, setMobileResourcesOpen] = useState(false);
   const location = useLocation();
 
   useEffect(() => {
@@ -23,6 +25,8 @@ const Navigation = () => {
 
   useEffect(() => {
     setIsMobileMenuOpen(false);
+    setResourcesOpen(false);
+    setMobileResourcesOpen(false);
   }, [location]);
 
   const navLinks = [
@@ -31,15 +35,22 @@ const Navigation = () => {
     { name: "Network", path: "/network" },
     { name: "Platform", path: "/technology" },
     { name: "Industries", path: "/industries" },
-    { name: "Blog", path: "/blog" },
     { name: "Partner", path: "/partner" },
     { name: "Contact", path: "/contact" },
   ];
 
-  const isActive = (path: string) =>
-    path === "/blog"
-      ? location.pathname === "/blog" || location.pathname.startsWith("/blog/")
-      : location.pathname === path;
+  const resourcesLinks = [
+    { name: "Blog", path: "/blog" },
+    { name: "Reports", path: "/resources/reports" },
+  ];
+
+  const isActive = (path: string) => location.pathname === path;
+
+  const isResourcesActive =
+    location.pathname === "/resources" ||
+    location.pathname.startsWith("/resources/") ||
+    location.pathname === "/blog" ||
+    location.pathname.startsWith("/blog/");
 
   return (
     <nav
@@ -61,9 +72,63 @@ const Navigation = () => {
             />
           </Link>
 
-          {/* Desktop Navigation */}
           <div className="hidden xl:flex items-center space-x-1">
-            {navLinks.map((link) => (
+            {navLinks.slice(0, 5).map((link) => (
+              <Link
+                key={link.path}
+                to={link.path}
+                className={`px-3 py-2 rounded-md text-sm font-bold transition-colors uppercase tracking-wide ${
+                  isActive(link.path)
+                    ? "text-accent"
+                    : "text-navy hover:text-accent hover:bg-navy/5"
+                }`}
+              >
+                {link.name}
+              </Link>
+            ))}
+
+            <div
+              className="relative"
+              onMouseEnter={() => setResourcesOpen(true)}
+              onMouseLeave={() => setResourcesOpen(false)}
+            >
+              <button
+                type="button"
+                className={`px-3 py-2 rounded-md text-sm font-bold transition-colors uppercase tracking-wide inline-flex items-center gap-1 ${
+                  isResourcesActive
+                    ? "text-accent"
+                    : "text-navy hover:text-accent hover:bg-navy/5"
+                }`}
+                aria-expanded={resourcesOpen}
+                aria-haspopup="true"
+              >
+                Resources <ChevronDown size={14} />
+              </button>
+              {resourcesOpen ? (
+                <div className="absolute left-0 top-full pt-1 min-w-[200px]">
+                  <div className="rounded-lg border border-border bg-white shadow-lg py-2">
+                    {resourcesLinks.map((link) => (
+                      <Link
+                        key={link.path}
+                        to={link.path}
+                        className={`block px-4 py-2.5 text-sm font-semibold transition-colors ${
+                          isActive(link.path) ||
+                          (link.path === "/blog" && location.pathname.startsWith("/blog/")) ||
+                          (link.path === "/resources/reports" &&
+                            location.pathname.startsWith("/resources/reports"))
+                            ? "text-accent bg-accent/5"
+                            : "text-navy hover:text-accent hover:bg-navy/5"
+                        }`}
+                      >
+                        {link.name}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              ) : null}
+            </div>
+
+            {navLinks.slice(5).map((link) => (
               <Link
                 key={link.path}
                 to={link.path}
@@ -94,7 +159,6 @@ const Navigation = () => {
             </Button>
           </div>
 
-          {/* Mobile Menu Button */}
           <button
             className="xl:hidden p-2 text-navy hover:bg-navy/10 rounded-md transition-colors"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
@@ -104,11 +168,10 @@ const Navigation = () => {
           </button>
         </div>
 
-        {/* Mobile Menu */}
         {isMobileMenuOpen && (
           <div className="xl:hidden py-4 animate-fade-in bg-white border-t border-gray-100 shadow-xl max-h-[calc(100vh-80px)] overflow-y-auto">
             <div className="flex flex-col space-y-2">
-              {navLinks.map((link) => (
+              {navLinks.slice(0, 5).map((link) => (
                 <Link
                   key={link.path}
                   to={link.path}
@@ -121,6 +184,46 @@ const Navigation = () => {
                   {link.name}
                 </Link>
               ))}
+
+              <button
+                type="button"
+                onClick={() => setMobileResourcesOpen((open) => !open)}
+                className={`px-4 py-3 text-sm font-bold transition-colors uppercase tracking-wide text-left flex items-center justify-between ${
+                  isResourcesActive
+                    ? "text-accent bg-accent/5 border-l-4 border-accent"
+                    : "text-navy hover:text-accent hover:bg-gray-50"
+                }`}
+              >
+                Resources <ChevronDown size={16} className={mobileResourcesOpen ? "rotate-180" : ""} />
+              </button>
+              {mobileResourcesOpen ? (
+                <div className="pl-4 pb-2 space-y-1">
+                  {resourcesLinks.map((link) => (
+                    <Link
+                      key={link.path}
+                      to={link.path}
+                      className="block px-4 py-2.5 text-sm font-semibold text-navy hover:text-accent"
+                    >
+                      {link.name}
+                    </Link>
+                  ))}
+                </div>
+              ) : null}
+
+              {navLinks.slice(5).map((link) => (
+                <Link
+                  key={link.path}
+                  to={link.path}
+                  className={`px-4 py-3 text-sm font-bold transition-colors uppercase tracking-wide ${
+                    isActive(link.path)
+                      ? "text-accent bg-accent/5 border-l-4 border-accent"
+                      : "text-navy hover:text-accent hover:bg-gray-50"
+                  }`}
+                >
+                  {link.name}
+                </Link>
+              ))}
+
               <div className="pt-4 space-y-3 px-4 border-t border-gray-100 mt-2">
                 <Link to="/login" className="block">
                   <Button variant="outline" className="w-full border-navy/20 text-navy hover:bg-navy/5 justify-start gap-2">
