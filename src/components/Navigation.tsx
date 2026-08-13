@@ -5,6 +5,7 @@ import { Menu, X, UserCircle, ChevronDown } from "lucide-react";
 import logoHeader from "@/assets/logo-zaftys.png";
 import { mailtoCompany } from "@/lib/constants";
 import { heroMailBodies, heroMailSubjects } from "@/lib/hero-ctas";
+import { trackEvent } from "@/lib/analytics";
 
 const quoteMailto = mailtoCompany(heroMailSubjects.quote, heroMailBodies.quote);
 
@@ -155,7 +156,9 @@ const Navigation = () => {
               </Button>
             </Link>
             <Button asChild size="sm" variant="accent" className="font-semibold uppercase tracking-wide">
-              <a href={quoteMailto}>Get a Quote</a>
+              <a href={quoteMailto} onClick={() => trackEvent("cta_mailto", { placement: "nav", intent: "quote" })}>
+                Get a Quote
+              </a>
             </Button>
           </div>
 
@@ -232,7 +235,9 @@ const Navigation = () => {
                   </Button>
                 </Link>
                 <Button asChild className="w-full font-semibold uppercase tracking-wide" variant="accent">
-                  <a href={quoteMailto}>Get a Quote</a>
+                  <a href={quoteMailto} onClick={() => trackEvent("cta_mailto", { placement: "nav", intent: "quote" })}>
+                Get a Quote
+              </a>
                 </Button>
               </div>
             </div>

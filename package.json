@@ -9,7 +9,8 @@
     "build:dev": "vite build --mode development",
     "sitemap": "node scripts/generate-sitemap.mjs",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "secrets:generate": "node scripts/generate-zaftys-secrets.mjs"
   },
   "dependencies": {
     "@radix-ui/react-label": "^2.1.7",

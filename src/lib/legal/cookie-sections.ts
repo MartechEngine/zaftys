@@ -40,7 +40,7 @@ export const cookieSections: LegalSection[] = [
       },
       {
         type: "p",
-        text: "Where enabled, help understand visitors, pages viewed, traffic sources, performance and usage patterns, configured in line with applicable privacy requirements.",
+        text: "Where enabled, help understand visitors, pages viewed, traffic sources, campaigns, button clicks and form completions. ZAFTYS prefers self-hosted analytics (Matomo) so data stays on ZAFTYS hosting. Configuration should stay privacy-friendly where practical.",
       },
       {
         type: "h3",

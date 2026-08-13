@@ -1,66 +1,43 @@
 <?php
-// Prevent direct access
-if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    http_response_code(405);
-    echo json_encode(['success' => false, 'error' => 'Method Not Allowed']);
-    exit;
-}
+require_once __DIR__ . '/_bootstrap.php';
 
-// Set headers
-header('Content-Type: application/json');
-header('Access-Control-Allow-Origin: *'); // Adjust this for stricter security if needed
-header('Access-Control-Allow-Headers: Content-Type');
-
-// Get JSON input
-$input = json_decode(file_get_contents('php://input'), true);
-
-// 1. Honeypot Check (Spam Protection)
-// If the hidden 'website' field is filled, it's a bot.
-if (!empty($input['website'])) {
-    // Pretend to succeed so the bot doesn't try again
+if (!zaftys_rate_limit('contact')) {
     echo json_encode(['success' => true, 'message' => 'Message sent successfully']);
     exit;
 }
 
-// 2. Validation
-$name = trim($input['name'] ?? '');
-$email = trim($input['email'] ?? '');
-$phone = trim($input['phone'] ?? '');
-$subject_interest = trim($input['interest'] ?? 'General Inquiry');
-$message_content = trim($input['message'] ?? '');
-
-if (empty($name) || empty($email) || empty($message_content)) {
+$input = zaftys_json_input();
+if ($input === null) {
     http_response_code(400);
-    echo json_encode(['success' => false, 'error' => 'Missing required fields']);
+    echo json_encode(['success' => false, 'error' => 'Invalid request']);
     exit;
 }
 
-if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-    http_response_code(400);
-    echo json_encode(['success' => false, 'error' => 'Invalid email format']);
+if (zaftys_honeypot($input)) {
+    echo json_encode(['success' => true, 'message' => 'Message sent successfully']);
     exit;
 }
 
-// 3. Prepare Email
-$to = 'contact@zaftys.com'; // TARGET EMAIL
-$subject = "New Website Inquiry: $subject_interest";
+$name = zaftys_clip((string) ($input['name'] ?? ''), 120);
+$email = zaftys_clip((string) ($input['email'] ?? ''), 255);
+$phone = zaftys_clip((string) ($input['phone'] ?? ''), 40);
+$interest = zaftys_clip((string) ($input['interest'] ?? 'General Inquiry'), 80);
+$message = zaftys_clip((string) ($input['message'] ?? ''), 5000);
 
-$email_body = "You have received a new message from your website contact form.\n\n";
-$email_body .= "Name: $name\n";
-$email_body .= "Email: $email\n";
-$email_body .= "Phone: $phone\n";
-$email_body .= "Interest: $subject_interest\n\n";
-$email_body .= "Message:\n$message_content\n";
+if ($name === '' || $email === '' || $message === '' || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    http_response_code(400);
+    echo json_encode(['success' => false, 'error' => 'Invalid fields']);
+    exit;
+}
 
-$headers = "From: no-reply@zaftys.com\r\n";
-$headers .= "Reply-To: $email\r\n";
-$headers .= "X-Mailer: PHP/" . phpversion();
+$to = (string) zaftys_secret('mail_contact', 'contact@zaftys.com');
+$subject = 'New Website Inquiry: ' . $interest;
+$body = "New message from the ZAFTYS contact form.\n\n";
+$body .= "Name: {$name}\nEmail: {$email}\nPhone: {$phone}\nInterest: {$interest}\n\nMessage:\n{$message}\n";
 
-// 4. Send Email
-if (mail($to, $subject, $email_body, $headers)) {
+if (zaftys_smtp_send($to, $subject, $body, $email)) {
     echo json_encode(['success' => true, 'message' => 'Message sent successfully']);
 } else {
     http_response_code(500);
     echo json_encode(['success' => false, 'error' => 'Failed to send email']);
 }
-?>

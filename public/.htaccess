@@ -9,11 +9,16 @@ Options -MultiViews
 
   # Never rewrite API, static crawler files, or existing assets
   RewriteRule ^api/ - [L]
+  RewriteRule ^config/ - [F,L]
   RewriteRule ^sitemap\.xml$ - [L]
   RewriteRule ^sitemap\.php$ - [L]
   RewriteRule ^robots\.txt$ - [L]
   RewriteRule ^og-image\.png$ - [L]
   RewriteRule ^favicon\.ico$ - [L]
+
+  # Legacy flagship report slug → 2027-2036 (server 301 for crawlers)
+  RewriteRule ^resources/reports/global-logistics-market-2026-2033/read/?$ /resources/reports/global-logistics-market-2027-2036/read [R=301,L]
+  RewriteRule ^resources/reports/global-logistics-market-2026-2033/?$ /resources/reports/global-logistics-market-2027-2036 [R=301,L]
 
   # Existing files/dirs (Vite assets, images)  -  serve as-is
   RewriteCond %{REQUEST_FILENAME} -f [OR]
@@ -22,6 +27,13 @@ Options -MultiViews
 
   # SPA fallback
   RewriteRule ^ index.html [L]
+</IfModule>
+
+# Prefer HTML sneak-peek pages over raw PDF URLs in search
+<IfModule mod_headers.c>
+  <FilesMatch "\.pdf$">
+    Header set X-Robots-Tag "noindex, follow"
+  </FilesMatch>
 </IfModule>
 
 # Correct types for crawlers

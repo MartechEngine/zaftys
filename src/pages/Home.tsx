@@ -21,6 +21,7 @@ import SEO from "@/components/SEO";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { CTAGroup } from "@/components/CTAGroup";
 import { externalLinks, homeHowItWorks, homeIndustries, coreServices, homeTrustStrip, whatsappUrl } from "@/lib/constants";
+import { trackEvent } from "@/lib/analytics";
 import { pageSeo } from "@/lib/page-seo";
 import { logisticsServiceSchema, organizationSchema, websiteSchema, localBusinessSchema } from "@/lib/schema";
 import { blogCategoryLabels, formatPostDate, latestPosts } from "@/lib/blog-data";
@@ -82,7 +83,12 @@ const Home = () => {
             <div className="animate-fade-in-up" style={{ animationDelay: "0.4s" }}>
               <CTAGroup className="justify-start sm:justify-start">
                 <Button asChild size="lg" variant="accent" className="uppercase tracking-wide shadow-lg shadow-accent/20">
-                  <a href={whatsappUrl()} target="_blank" rel="noopener noreferrer">
+                  <a
+                    href={whatsappUrl()}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => trackEvent("cta_whatsapp", { placement: "hero", intent: "quote" })}
+                  >
                     Request a Quote <ArrowRight className="ml-2" size={20} />
                   </a>
                 </Button>
@@ -173,7 +179,14 @@ const Home = () => {
               </p>
               <CTAGroup>
                 <Button asChild variant="accent">
-                  <a href={externalLinks.tranzfort} target="_blank" rel="noopener noreferrer">Explore TranZfort</a>
+                  <a
+                    href={externalLinks.tranzfort}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => trackEvent("cta_tranzfort", { placement: "home" })}
+                  >
+                    Explore TranZfort
+                  </a>
                 </Button>
                 <Link to="/network">
                   <Button variant="on-dark-outline">Learn About the Network</Button>
@@ -306,9 +319,17 @@ const Home = () => {
                 Practical notes from industrial corridor operations  -  planning, plant windows, and TMS.
               </p>
             </div>
-            <Link to="/blog" className="text-primary font-semibold hover:underline inline-flex items-center shrink-0">
-              View all posts <ArrowRight className="ml-2" size={16} />
-            </Link>
+            <div className="flex flex-col sm:flex-row gap-3 sm:items-center shrink-0">
+              <Link to="/blog" className="text-primary font-semibold hover:underline inline-flex items-center">
+                View all posts <ArrowRight className="ml-2" size={16} />
+              </Link>
+              <Link
+                to="/resources/reports"
+                className="text-primary font-semibold hover:underline inline-flex items-center"
+              >
+                Market reports <ArrowRight className="ml-2" size={16} />
+              </Link>
+            </div>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {latestPosts(3).map((post) => (

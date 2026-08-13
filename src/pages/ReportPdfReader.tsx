@@ -1,13 +1,21 @@
 import { Link, useParams } from "react-router-dom";
+import { useEffect } from "react";
 import { ArrowLeft, Download } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import SEO from "@/components/SEO";
 import { getReportBySlug } from "@/lib/market-reports-data";
 import NotFound from "@/pages/NotFound";
+import { trackEvent } from "@/lib/analytics";
 
 const ReportPdfReader = () => {
   const { slug } = useParams<{ slug: string }>();
   const report = slug ? getReportBySlug(slug) : undefined;
+
+  useEffect(() => {
+    if (report) {
+      trackEvent("report_pdf_open", { page: report.slug });
+    }
+  }, [report?.slug]);
 
   if (!report) {
     return <NotFound />;
@@ -19,7 +27,7 @@ const ReportPdfReader = () => {
         title={`Read  -  ${report.seoTitle}`}
         description={report.seoDescription}
         canonical={`/resources/reports/${report.slug}/read`}
-        noindex
+        robots="noindex, follow"
       />
 
       <div className="border-b border-border bg-white sticky top-0 z-20">

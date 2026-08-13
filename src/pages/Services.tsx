@@ -12,6 +12,7 @@ import { LazyTmsTripPeek, TmsDemoDisclaimer } from "@/components/tms-demo";
 import "@/styles/tranzfort-demo.css";
 import "@/styles/tms-demo.css";
 import { externalLinks, truckTypes, materialTypes, tsmCapabilities } from "@/lib/constants";
+import { trackEvent } from "@/lib/analytics";
 import { pageSeo } from "@/lib/page-seo";
 import { TransportationExplorer } from "@/components/TransportationExplorer";
 import { heroMailBodies, heroMailSubjects } from "@/lib/hero-ctas";
@@ -290,7 +291,14 @@ const Services = () => {
           </div>
           <CTAGroup>
             <Button asChild size="lg" variant="accent">
-              <a href={externalLinks.tranzfort} target="_blank" rel="noopener noreferrer">Explore TranZfort</a>
+              <a
+                href={externalLinks.tranzfort}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => trackEvent("cta_tranzfort", { placement: "services" })}
+              >
+                Explore TranZfort
+              </a>
             </Button>
             <Link to="/network">
               <Button size="lg" variant="on-dark-outline">Network Page</Button>

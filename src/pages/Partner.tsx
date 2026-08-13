@@ -15,6 +15,7 @@ import { HeroEmailButton } from "@/components/HeroEmailButton";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { CTAGroup } from "@/components/CTAGroup";
 import { useToast } from "@/hooks/use-toast";
+import { trackEvent } from "@/lib/analytics";
 import { externalLinks } from "@/lib/constants";
 import { pageSeo } from "@/lib/page-seo";
 import { Link } from "react-router-dom";
@@ -55,6 +56,7 @@ const Partner = () => {
       const result = await response.json();
 
       if (result.success) {
+        trackEvent("form_partner_success", { placement: "partner-form" });
         toast({
           title: "Application Received!",
           description: "Our fleet manager will contact you within 24 hours for verification.",
@@ -269,7 +271,12 @@ const Partner = () => {
           <CTAGroup>
             <WhatsAppButton label="WhatsApp Our Fleet Team" />
             <Button asChild size="lg" variant="on-dark-outline">
-              <a href={externalLinks.tranzfort} target="_blank" rel="noopener noreferrer">
+              <a
+                href={externalLinks.tranzfort}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => trackEvent("cta_tranzfort", { placement: "partner" })}
+              >
                 Download TranZfort App
               </a>
             </Button>

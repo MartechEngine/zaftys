@@ -21,6 +21,8 @@ import {
   listPosts,
 } from "@/lib/blog-data";
 import { useToast } from "@/hooks/use-toast";
+import { subscribeNewsletter } from "@/lib/newsletter";
+import { SUBSCRIBERS_EMAIL } from "@/lib/constants";
 
 const categoryFilters: Array<"all" | BlogCategory> = ["all", "operations", "industries", "technology"];
 
@@ -40,12 +42,7 @@ const Blog = () => {
     if (!email) return;
     setIsSubmitting(true);
     try {
-      const response = await fetch("/api/newsletter.php", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email }),
-      });
-      const result = await response.json();
+      const result = await subscribeNewsletter(email, "blog");
       if (result.success) {
         toast({ title: "Subscribed", description: "You have been added to our newsletter list." });
         setEmail("");
@@ -192,7 +189,8 @@ const Blog = () => {
           <p className="text-muted-foreground mb-6">
             Occasional operational notes and company updates  -  no spam.
           </p>
-          <form onSubmit={handleNewsletter} className="flex flex-col sm:flex-row gap-3 max-w-lg mx-auto mb-8">
+          <form onSubmit={handleNewsletter} className="flex flex-col sm:flex-row gap-3 max-w-lg mx-auto mb-2">
+            <input type="text" name="website" tabIndex={-1} autoComplete="off" className="hidden" aria-hidden="true" />
             <Input
               type="email"
               placeholder="Enter your email address"
@@ -205,9 +203,14 @@ const Blog = () => {
               {isSubmitting ? "Subscribing..." : "Subscribe"}
             </Button>
           </form>
+          <p className="text-xs text-muted-foreground mb-8">
+            Unsubscribe anytime at {SUBSCRIBERS_EMAIL}.
+          </p>
           <WhatsAppButton label="Talk to our team" />
           <p className="mt-8 text-sm text-muted-foreground">
             Explore{" "}
+            <Link to="/resources/reports" className="text-primary hover:underline">market reports</Link>
+            {", "}
             <Link to="/services" className="text-primary hover:underline">services</Link>
             {", "}
             <Link to="/technology" className="text-primary hover:underline">ZAFTYS TMS</Link>

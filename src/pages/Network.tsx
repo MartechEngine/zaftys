@@ -16,6 +16,7 @@ import SEO from "@/components/SEO";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { CTAGroup } from "@/components/CTAGroup";
 import { externalLinks, networkHighlights } from "@/lib/constants";
+import { trackEvent } from "@/lib/analytics";
 import { pageSeo } from "@/lib/page-seo";
 import heroNetwork from "@/assets/hero-network.jpg";
 import { pageHeroAlts } from "@/lib/page-heroes";
@@ -175,7 +176,12 @@ const NetworkPage = () => {
       >
         <CTAGroup className="justify-start sm:justify-start">
           <Button asChild size="lg" variant="accent">
-            <a href={externalLinks.tranzfort} target="_blank" rel="noopener noreferrer">
+            <a
+              href={externalLinks.tranzfort}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => trackEvent("cta_tranzfort", { placement: "hero" })}
+            >
               Download TranZfort <ArrowRight className="ml-2" size={18} />
             </a>
           </Button>
@@ -386,7 +392,12 @@ const NetworkPage = () => {
           </p>
           <CTAGroup>
             <Button asChild size="lg" variant="accent">
-              <a href={externalLinks.tranzfort} target="_blank" rel="noopener noreferrer">
+              <a
+                href={externalLinks.tranzfort}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => trackEvent("cta_tranzfort", { placement: "cta" })}
+              >
                 Download TranZfort <ArrowRight className="ml-2" size={18} />
               </a>
             </Button>
