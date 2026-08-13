@@ -10,6 +10,17 @@
     <link rel="icon" href="/favicon.ico" sizes="any" />
     <link rel="apple-touch-icon" href="/logo-header.png" />
 
+    <!-- DPR-aware hero preload. Cap display size so desktop PSI does not pull 1920w. -->
+    <link
+      rel="preload"
+      as="image"
+      type="image/webp"
+      href="/images/lcp/hero-home-1280.webp"
+      imagesrcset="/images/lcp/hero-home-640.webp 640w, /images/lcp/hero-home-960.webp 960w, /images/lcp/hero-home-1280.webp 1280w, /images/lcp/hero-home-1920.webp 1920w"
+      imagesizes="(max-width: 768px) 100vw, 1280px"
+      fetchpriority="high"
+    />
+
     <meta property="og:title" content="ZAFTYS Logistics  -  Industrial Freight Across India" />
     <meta property="og:description" content="Industrial freight across India. Company-operated fleet, ZAFTYS TMS visibility, and verified capacity through TranZfort." />
     <meta property="og:type" content="website" />
