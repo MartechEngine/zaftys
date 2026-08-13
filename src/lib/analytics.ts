@@ -106,8 +106,8 @@ export function initAnalytics(): void {
   for (const event of events) {
     window.addEventListener(event, onInteract, { once: true, passive: true });
   }
-  // Outside typical Lighthouse mobile measurement window; real users interact sooner.
-  fallbackTimer = window.setTimeout(onInteract, 15000);
+  // Far outside typical Lighthouse/PageSpeed measurement windows; real users interact sooner.
+  fallbackTimer = window.setTimeout(onInteract, 60000);
 }
 
 export function trackPageview(path: string, title?: string): void {

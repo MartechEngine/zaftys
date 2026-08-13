@@ -44,9 +44,27 @@ const Home = () => {
   const [hasLcpShell, setHasLcpShell] = useState(() =>
     typeof document !== "undefined" ? Boolean(document.getElementById("lcp-shell")) : false,
   );
+  const [stylesReady, setStylesReady] = useState(false);
 
   useEffect(() => {
     setHasLcpShell(Boolean(document.getElementById("lcp-shell")));
+  }, []);
+
+  useEffect(() => {
+    const enable = () => setStylesReady(true);
+    const link = document.querySelector(
+      'link[rel="stylesheet"][media="print"]',
+    ) as HTMLLinkElement | null;
+    if (!link || link.media === "all") {
+      enable();
+      return;
+    }
+    link.addEventListener("load", enable, { once: true });
+    const t = window.setTimeout(enable, 1200);
+    return () => {
+      link.removeEventListener("load", enable);
+      window.clearTimeout(t);
+    };
   }, []);
 
   const tsmFeatures = [
@@ -69,7 +87,10 @@ const Home = () => {
         schema={schema}
       />
 
-      <section className="relative pt-28 pb-16 md:pt-32 md:pb-24 overflow-hidden min-h-[520px] md:min-h-[700px] flex items-center">
+      <section
+        className="relative pb-16 md:pt-32 md:pb-24 overflow-hidden min-h-[520px] md:min-h-[700px] flex items-center"
+        style={{ paddingTop: "7rem", minHeight: 520 }}
+      >
         <div className="absolute inset-0 pointer-events-none">
           {!hasLcpShell ? (
             <picture>
@@ -96,32 +117,39 @@ const Home = () => {
           <div className="max-w-4xl text-white">
             <h1
               className={`text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight ${
-                hasLcpShell ? "invisible font-sans" : "text-white font-heading"
+                hasLcpShell ? "font-sans" : "text-white font-heading"
               }`}
+              style={hasLcpShell ? { visibility: "hidden" } : undefined}
               aria-hidden={hasLcpShell}
             >
               ZAFTYS Logistics  -  Industrial Freight Across India.
             </h1>
-            <p className="text-xl md:text-2xl mb-10 text-gray-200 font-light max-w-2xl">
+            <p
+              className="text-xl md:text-2xl mb-10 text-gray-200 font-light max-w-2xl"
+              style={hasLcpShell ? { visibility: "hidden" } : undefined}
+              aria-hidden={hasLcpShell}
+            >
               Company-operated transport, ZAFTYS TMS visibility, and TranZfort verified capacity  -  one partner for cement, steel, mining, and bulk freight.
             </p>
-            <CTAGroup className="justify-start sm:justify-start">
-              <Button asChild size="lg" variant="accent" className="uppercase tracking-wide shadow-lg shadow-accent/20">
-                <a
-                  href={whatsappUrl()}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={() => trackEvent("cta_whatsapp", { placement: "hero", intent: "quote" })}
-                >
-                  Request a Quote <ArrowRight className="ml-2" size={20} />
-                </a>
-              </Button>
-              <Link to="/services">
-                <Button size="lg" variant="on-dark-outline">
-                  Explore Services
+            <div style={hasLcpShell && !stylesReady ? { visibility: "hidden" } : undefined}>
+              <CTAGroup className="justify-start sm:justify-start">
+                <Button asChild size="lg" variant="accent" className="uppercase tracking-wide shadow-lg shadow-accent/20">
+                  <a
+                    href={whatsappUrl()}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => trackEvent("cta_whatsapp", { placement: "hero", intent: "quote" })}
+                  >
+                    Request a Quote <ArrowRight className="ml-2" size={20} />
+                  </a>
                 </Button>
-              </Link>
-            </CTAGroup>
+                <Link to="/services">
+                  <Button size="lg" variant="on-dark-outline">
+                    Explore Services
+                  </Button>
+                </Link>
+              </CTAGroup>
+            </div>
           </div>
         </div>
       </section>

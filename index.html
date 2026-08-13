@@ -79,23 +79,35 @@
         #lcp-shell .lcp-copy { padding: 8rem 1.5rem 3rem; }
         #lcp-shell h1 { font-size: clamp(2.75rem, 5vw, 4.5rem); }
       }
-      #root { position: relative; z-index: 1; }
+      #root { position: relative; z-index: 1; min-height: 100vh; }
     </style>
   </head>
 
   <body>
+    <!-- Static shell so the parser discovers the LCP image immediately (removed on non-home routes). -->
+    <div id="lcp-shell">
+      <img
+        src="/images/lcp/hero-home-960.webp"
+        srcset="/images/lcp/hero-home-640.webp 640w, /images/lcp/hero-home-960.webp 960w, /images/lcp/hero-home-1280.webp 1280w, /images/lcp/hero-home-1920.webp 1920w"
+        sizes="(max-width: 768px) 100vw, 1280px"
+        width="1280"
+        height="720"
+        alt=""
+        fetchpriority="high"
+        decoding="async"
+      />
+      <div class="lcp-grad" aria-hidden="true"></div>
+      <div class="lcp-copy">
+        <h1>ZAFTYS Logistics  -  Industrial Freight Across India.</h1>
+      </div>
+    </div>
     <div id="root"></div>
     <script>
       (function () {
         var path = location.pathname;
-        if (path !== "/" && path !== "") return;
-        var shell = document.createElement("div");
-        shell.id = "lcp-shell";
-        shell.innerHTML =
-          '<img src="/images/lcp/hero-home-960.webp" srcset="/images/lcp/hero-home-640.webp 640w, /images/lcp/hero-home-960.webp 960w, /images/lcp/hero-home-1280.webp 1280w, /images/lcp/hero-home-1920.webp 1920w" sizes="(max-width: 768px) 100vw, 1280px" width="1280" height="720" alt="" fetchpriority="high" decoding="async" />' +
-          '<div class="lcp-grad" aria-hidden="true"></div>' +
-          '<div class="lcp-copy"><h1>ZAFTYS Logistics  -  Industrial Freight Across India.</h1></div>';
-        document.body.insertBefore(shell, document.getElementById("root"));
+        if (path === "/" || path === "") return;
+        var shell = document.getElementById("lcp-shell");
+        if (shell) shell.remove();
       })();
     </script>
     <script type="module" src="/src/main.tsx"></script>

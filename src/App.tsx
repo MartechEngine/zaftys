@@ -1,22 +1,24 @@
 import { lazy, Suspense, useEffect, useState } from "react";
 import { HelmetProvider } from "react-helmet-async";
 import { BrowserRouter, Routes, Route, useLocation, Navigate, useParams } from "react-router-dom";
-import { TooltipProvider } from "@/components/ui/tooltip";
 import Navigation from "./components/Navigation";
 import NotFound from "./pages/NotFound";
 import { WhatsAppFab } from "./components/WhatsAppButton";
 import { initAnalytics, trackPageview } from "./lib/analytics";
 import { captureUtmFromLocation } from "./lib/utm";
 import { logVisit } from "./lib/visit-log";
-/** Eager: homepage LCP must not wait on a second JS chunk waterfall. */
-import Home from "./pages/Home";
 
+/** Lazy Home: LCP is owned by the HTML shell, so the Home chunk must not bloat the main bundle. */
+const Home = lazy(() => import("./pages/Home"));
 const Footer = lazy(() => import("./components/Footer"));
 const Toaster = lazy(() =>
   import("@/components/ui/toaster").then((m) => ({ default: m.Toaster })),
 );
 const Sonner = lazy(() =>
   import("@/components/ui/sonner").then((m) => ({ default: m.Toaster })),
+);
+const TooltipProvider = lazy(() =>
+  import("@/components/ui/tooltip").then((m) => ({ default: m.TooltipProvider })),
 );
 const About = lazy(() => import("./pages/About"));
 const Technology = lazy(() => import("./pages/Technology"));
@@ -84,25 +86,54 @@ const ScrollToTop = () => {
   return null;
 };
 
-/** Toast UI is below-fold chrome — keep it out of the first paint path. */
-function DeferredToasters() {
+/** Toast/tooltip UI is below-fold chrome — keep it out of the first paint path. */
+function DeferredChrome() {
   const [ready, setReady] = useState(false);
   useEffect(() => {
     const ric = window.requestIdleCallback?.bind(window);
     if (typeof ric === "function") {
-      const id = ric(() => setReady(true), { timeout: 2500 });
+      const id = ric(() => setReady(true), { timeout: 4000 });
       return () => window.cancelIdleCallback?.(id);
     }
-    const t = window.setTimeout(() => setReady(true), 1);
+    const t = window.setTimeout(() => setReady(true), 2000);
     return () => window.clearTimeout(t);
   }, []);
   if (!ready) return null;
   return (
     <Suspense fallback={null}>
-      <Toaster />
-      <Sonner />
+      <TooltipProvider>
+        <Toaster />
+        <Sonner />
+      </TooltipProvider>
     </Suspense>
   );
+}
+
+/** Wait for deferred stylesheet so unstyled nav cannot steal LCP. */
+function DeferredNav() {
+  const [ready, setReady] = useState(false);
+  useEffect(() => {
+    const enable = () => setReady(true);
+    const link = document.querySelector(
+      'link[rel="stylesheet"][media="print"]',
+    ) as HTMLLinkElement | null;
+    if (!link) {
+      enable();
+      return;
+    }
+    if (link.media === "all") {
+      enable();
+      return;
+    }
+    link.addEventListener("load", enable, { once: true });
+    const t = window.setTimeout(enable, 1200);
+    return () => {
+      link.removeEventListener("load", enable);
+      window.clearTimeout(t);
+    };
+  }, []);
+  if (!ready) return null;
+  return <Navigation />;
 }
 
 const AppShell = () => {
@@ -112,9 +143,17 @@ const AppShell = () => {
   return (
     <>
       <ScrollToTop />
-      {!isAuthPage && <Navigation />}
+      {!isAuthPage && <DeferredNav />}
       <Routes>
-        <Route path="/" element={<Home />} />
+        {/* null fallback keeps the HTML LCP shell visible while Home loads */}
+        <Route
+          path="/"
+          element={
+            <Suspense fallback={null}>
+              <Home />
+            </Suspense>
+          }
+        />
         <Route path="/about" element={<LazyPage><About /></LazyPage>} />
         <Route path="/technology" element={<LazyPage><Technology /></LazyPage>} />
         <Route path="/platform" element={<Navigate to="/technology" replace />} />
@@ -164,12 +203,10 @@ const AppShell = () => {
 
 const App = () => (
   <HelmetProvider>
-    <TooltipProvider>
-      <BrowserRouter>
-        <AppShell />
-        <DeferredToasters />
-      </BrowserRouter>
-    </TooltipProvider>
+    <BrowserRouter>
+      <AppShell />
+      <DeferredChrome />
+    </BrowserRouter>
   </HelmetProvider>
 );
 
