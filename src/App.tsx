@@ -11,8 +11,9 @@ import { WhatsAppFab } from "./components/WhatsAppButton";
 import { initAnalytics, trackPageview } from "./lib/analytics";
 import { captureUtmFromLocation } from "./lib/utm";
 import { logVisit } from "./lib/visit-log";
+/** Eager Home: lazy Home painted Footer first, then shoved it down (~0.6 CLS). */
+import Home from "./pages/Home";
 
-const Home = lazy(() => import("./pages/Home"));
 const About = lazy(() => import("./pages/About"));
 const Technology = lazy(() => import("./pages/Technology"));
 const Network = lazy(() => import("./pages/Network"));
@@ -80,7 +81,7 @@ const AppShell = () => {
       <ScrollToTop />
       {!isAuthPage && <Navigation />}
       <Routes>
-        <Route path="/" element={<LazyPage><Home /></LazyPage>} />
+        <Route path="/" element={<Home />} />
         <Route path="/about" element={<LazyPage><About /></LazyPage>} />
         <Route path="/technology" element={<LazyPage><Technology /></LazyPage>} />
         <Route path="/platform" element={<Navigate to="/technology" replace />} />
