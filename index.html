@@ -8,11 +8,11 @@
     <meta name="author" content="ZAFTYS Logistics" />
 
     <link rel="icon" href="/favicon.ico" sizes="any" />
-    <link rel="apple-touch-icon" href="/logo-header.png" />
+    <link rel="apple-touch-icon" href="/logo-header-180.png" />
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Oswald:wght@500;600;700&display=swap" rel="stylesheet">
+    <!-- Self-hosted fonts (see src/styles/fonts.css). Preload only latin critical faces. -->
+    <link rel="preload" href="/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/oswald-latin.woff2" as="font" type="font/woff2" crossorigin />
 
     <meta property="og:title" content="ZAFTYS Logistics  -  Industrial Freight Across India" />
     <meta property="og:description" content="Industrial freight across India. Company-operated fleet, ZAFTYS TMS visibility, and verified capacity through TranZfort." />
@@ -28,11 +28,6 @@
     <meta name="twitter:title" content="ZAFTYS Logistics  -  Industrial Freight Across India" />
     <meta name="twitter:description" content="Industrial freight across India. Company-operated fleet, ZAFTYS TMS, and TranZfort capacity." />
     <meta name="twitter:image" content="https://zaftys.com/og-image.png" />
-
-    <!--
-      Google Tag Manager: set VITE_GTM_ID at build time or replace GTM_CONTAINER_ID below.
-      Placeholder IDs must not ship  -  invalid containers pollute analytics.
-    -->
   </head>
 
   <body>

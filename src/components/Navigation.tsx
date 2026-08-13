@@ -2,7 +2,8 @@ import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Menu, X, UserCircle, ChevronDown } from "lucide-react";
-import logoHeader from "@/assets/logo-zaftys.png";
+import logoHeaderWebp from "@/assets/logo-zaftys-280.webp";
+import logoHeaderPng from "@/assets/logo-zaftys-280.png";
 import { mailtoCompany } from "@/lib/constants";
 import { heroMailBodies, heroMailSubjects } from "@/lib/hero-ctas";
 import { trackEvent } from "@/lib/analytics";
@@ -17,10 +18,16 @@ const Navigation = () => {
   const location = useLocation();
 
   useEffect(() => {
+    let ticking = false;
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
+      if (ticking) return;
+      ticking = true;
+      window.requestAnimationFrame(() => {
+        setIsScrolled(window.scrollY > 20);
+        ticking = false;
+      });
     };
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
@@ -57,20 +64,25 @@ const Navigation = () => {
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 border-b border-white/10 ${
         isScrolled
-          ? "bg-white/95 backdrop-blur-md shadow-md py-2"
-          : "bg-white/90 backdrop-blur-sm py-4"
+          ? "bg-white/95 md:backdrop-blur-md shadow-md py-2"
+          : "bg-white/95 md:bg-white/90 md:backdrop-blur-sm py-4"
       }`}
     >
       <div className="container mx-auto container-padding">
         <div className="flex items-center justify-between">
           <Link to="/" className="flex items-center">
-            <img
-              src={logoHeader}
-              alt="ZAFTYS Logistics"
-              className="h-12 md:h-14 w-auto transition-all"
-              decoding="async"
-              fetchPriority="high"
-            />
+            <picture>
+              <source srcSet={logoHeaderWebp} type="image/webp" />
+              <img
+                src={logoHeaderPng}
+                alt="ZAFTYS Logistics"
+                width={280}
+                height={86}
+                className="h-12 md:h-14 w-auto transition-all"
+                decoding="async"
+                fetchPriority="high"
+              />
+            </picture>
           </Link>
 
           <div className="hidden xl:flex items-center space-x-1">

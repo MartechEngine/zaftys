@@ -15,8 +15,12 @@ import {
 import { Link } from "react-router-dom";
 import ServiceCard from "@/components/ServiceCard";
 import ResponsiveImage from "@/components/ResponsiveImage";
-import { TranZfortScreensCarousel } from "@/components/TranZfortScreensCarousel";
-import heroImage from "@/assets/hero-home.jpg";
+import { LazyTranZfortScreensCarousel } from "@/components/LazyTranZfortScreensCarousel";
+import heroHome640 from "@/assets/hero-home-640.webp";
+import heroHome960 from "@/assets/hero-home-960.webp";
+import heroHome1280 from "@/assets/hero-home-1280.webp";
+import heroHome1920 from "@/assets/hero-home-1920.webp";
+import heroHomeJpg from "@/assets/hero-home-960.jpg";
 import SEO from "@/components/SEO";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { CTAGroup } from "@/components/CTAGroup";
@@ -24,10 +28,9 @@ import { externalLinks, homeHowItWorks, homeIndustries, coreServices, homeTrustS
 import { trackEvent } from "@/lib/analytics";
 import { pageSeo } from "@/lib/page-seo";
 import { logisticsServiceSchema, organizationSchema, websiteSchema, localBusinessSchema } from "@/lib/schema";
-import { blogCategoryLabels, formatPostDate, latestPosts } from "@/lib/blog-data";
+import { blogCategoryLabels, formatPostDate, homeBlogTeasers } from "@/lib/blog-teasers";
 import { Badge } from "@/components/ui/badge";
 import { LazyTmsTripPeek, TmsDemoDisclaimer } from "@/components/tms-demo";
-import "@/styles/tms-demo.css";
 import type { LucideIcon } from "lucide-react";
 
 const serviceIcons: Record<string, LucideIcon> = {
@@ -62,14 +65,23 @@ const Home = () => {
 
       <section className="relative pt-32 pb-24 overflow-hidden min-h-[700px] flex items-center">
         <div className="absolute inset-0">
-          <img
-            src={heroImage}
-            alt="ZAFTYS heavy-haul trucks for industrial freight transport across India"
-            className="w-full h-full object-cover"
-            loading="eager"
-            fetchPriority="high"
-            decoding="async"
-          />
+          <picture>
+            <source
+              type="image/webp"
+              srcSet={`${heroHome640} 640w, ${heroHome960} 960w, ${heroHome1280} 1280w, ${heroHome1920} 1920w`}
+              sizes="100vw"
+            />
+            <img
+              src={heroHomeJpg}
+              alt="ZAFTYS heavy-haul trucks for industrial freight transport across India"
+              className="w-full h-full object-cover"
+              width={960}
+              height={540}
+              loading="eager"
+              fetchPriority="high"
+              decoding="async"
+            />
+          </picture>
           <div className="absolute inset-0 bg-gradient-to-r from-navy/95 via-navy/80 to-navy/40" />
         </div>
         <div className="container mx-auto container-padding relative z-10">
@@ -194,7 +206,7 @@ const Home = () => {
               </CTAGroup>
             </div>
             <div className="lg:w-1/2 order-first lg:order-none">
-              <TranZfortScreensCarousel />
+              <LazyTranZfortScreensCarousel />
             </div>
           </div>
         </div>
@@ -332,7 +344,7 @@ const Home = () => {
             </div>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {latestPosts(3).map((post) => (
+            {homeBlogTeasers.map((post) => (
               <Card key={post.slug} className="border-none shadow-sm hover:shadow-md transition-shadow h-full">
                 <CardContent className="p-6 flex flex-col h-full">
                   <div className="flex flex-wrap items-center gap-2 mb-3 text-xs text-muted-foreground">
