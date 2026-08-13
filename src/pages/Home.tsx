@@ -66,6 +66,8 @@ const Home = () => {
             src={heroImage}
             alt="ZAFTYS heavy-haul trucks for industrial freight transport across India"
             className="w-full h-full object-cover"
+            width={1920}
+            height={1080}
             loading="eager"
             fetchPriority="high"
             decoding="async"

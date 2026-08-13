@@ -67,6 +67,8 @@ const Navigation = () => {
             <img
               src={logoHeader}
               alt="ZAFTYS Logistics"
+              width={280}
+              height={86}
               className="h-12 md:h-14 w-auto transition-all"
               decoding="async"
               fetchPriority="high"
