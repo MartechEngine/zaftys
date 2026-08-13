@@ -109,33 +109,6 @@ function DeferredChrome() {
   );
 }
 
-/** Wait for deferred stylesheet so unstyled nav cannot steal LCP. */
-function DeferredNav() {
-  const [ready, setReady] = useState(false);
-  useEffect(() => {
-    const enable = () => setReady(true);
-    const link = document.querySelector(
-      'link[rel="stylesheet"][media="print"]',
-    ) as HTMLLinkElement | null;
-    if (!link) {
-      enable();
-      return;
-    }
-    if (link.media === "all") {
-      enable();
-      return;
-    }
-    link.addEventListener("load", enable, { once: true });
-    const t = window.setTimeout(enable, 1200);
-    return () => {
-      link.removeEventListener("load", enable);
-      window.clearTimeout(t);
-    };
-  }, []);
-  if (!ready) return null;
-  return <Navigation />;
-}
-
 const AppShell = () => {
   const { pathname } = useLocation();
   const isAuthPage = pathname === "/login";
@@ -143,7 +116,7 @@ const AppShell = () => {
   return (
     <>
       <ScrollToTop />
-      {!isAuthPage && <DeferredNav />}
+      {!isAuthPage && <Navigation />}
       <Routes>
         {/* null fallback keeps the HTML LCP shell visible while Home loads */}
         <Route
