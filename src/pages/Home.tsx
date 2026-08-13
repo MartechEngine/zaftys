@@ -16,11 +16,6 @@ import { Link } from "react-router-dom";
 import ServiceCard from "@/components/ServiceCard";
 import ResponsiveImage from "@/components/ResponsiveImage";
 import { LazyTranZfortScreensCarousel } from "@/components/LazyTranZfortScreensCarousel";
-import heroHome640 from "@/assets/hero-home-640.webp";
-import heroHome960 from "@/assets/hero-home-960.webp";
-import heroHome1280 from "@/assets/hero-home-1280.webp";
-import heroHome1920 from "@/assets/hero-home-1920.webp";
-import heroHomeJpg from "@/assets/hero-home-960.jpg";
 import SEO from "@/components/SEO";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { CTAGroup } from "@/components/CTAGroup";
@@ -63,16 +58,16 @@ const Home = () => {
         schema={schema}
       />
 
-      <section className="relative pt-32 pb-24 overflow-hidden min-h-[700px] flex items-center">
+      <section className="relative pt-28 pb-16 md:pt-32 md:pb-24 overflow-hidden min-h-[520px] md:min-h-[700px] flex items-center">
         <div className="absolute inset-0">
           <picture>
             <source
               type="image/webp"
-              srcSet={`${heroHome640} 640w, ${heroHome960} 960w, ${heroHome1280} 1280w, ${heroHome1920} 1920w`}
+              srcSet="/images/lcp/hero-home-640.webp 640w, /images/lcp/hero-home-960.webp 960w, /images/lcp/hero-home-1280.webp 1280w, /images/lcp/hero-home-1920.webp 1920w"
               sizes="100vw"
             />
             <img
-              src={heroHomeJpg}
+              src="/images/lcp/hero-home-960.jpg"
               alt="ZAFTYS heavy-haul trucks for industrial freight transport across India"
               className="w-full h-full object-cover"
               width={960}

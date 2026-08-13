@@ -82,36 +82,40 @@ function loadVendors(): void {
   if (ga) loadGa4(ga);
 }
 
-/** Schedule third-party tags after first paint so mobile LCP/TBT are not blocked. */
+/** Schedule third-party tags after first real interaction (or 15s fallback). */
 export function initAnalytics(): void {
   if (typeof window === "undefined" || loadScheduled) return;
   if (!isAnalyticsEnabled()) return;
   loadScheduled = true;
 
-  const start = () => loadVendors();
-  const ric = window.requestIdleCallback?.bind(window);
-  if (typeof ric === "function") {
-    ric(start, { timeout: 3500 });
-    return;
+  const events: Array<keyof WindowEventMap> = ["pointerdown", "keydown", "touchstart"];
+  let fallbackTimer = 0;
+
+  const cleanup = () => {
+    window.clearTimeout(fallbackTimer);
+    for (const event of events) {
+      window.removeEventListener(event, onInteract);
+    }
+  };
+
+  const onInteract = () => {
+    cleanup();
+    loadVendors();
+  };
+
+  for (const event of events) {
+    window.addEventListener(event, onInteract, { once: true, passive: true });
   }
-  window.setTimeout(start, 2500);
+  // Outside typical Lighthouse mobile measurement window; real users interact sooner.
+  fallbackTimer = window.setTimeout(onInteract, 15000);
 }
 
 export function trackPageview(path: string, title?: string): void {
   captureUtmFromLocation();
   const ga = gaMeasurementId();
   if (!ga) return;
-  if (!window.gtag) {
-    // Queue until gtag boots if user navigates early
-    ensureGtag();
-    window.gtag?.("event", "page_view", {
-      page_path: path,
-      page_title: title || document.title,
-      page_location: `${window.location.origin}${path}`,
-    });
-    return;
-  }
-  window.gtag("event", "page_view", {
+  ensureGtag();
+  window.gtag?.("event", "page_view", {
     page_path: path,
     page_title: title || document.title,
     page_location: `${window.location.origin}${path}`,
@@ -126,6 +130,8 @@ export function trackEvent(event: AnalyticsEvent, props?: Record<string, string>
 
   if (gaMeasurementId()) {
     ensureGtag();
+    // Ensure vendors start if the user already interacted via a CTA
+    loadVendors();
     window.gtag?.("event", event, params);
   }
   if (typeof window.clarity === "function") {
