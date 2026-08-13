@@ -40,7 +40,7 @@ export const cookieSections: LegalSection[] = [
       },
       {
         type: "p",
-        text: "Where enabled, help understand visitors, pages viewed, traffic sources, performance and usage patterns, configured in line with applicable privacy requirements.",
+        text: "Where enabled, help understand visitors, pages viewed, traffic sources, campaigns, button clicks and form completions. Website analytics may use Google Analytics 4 and Microsoft Clarity, configured in line with applicable privacy requirements.",
       },
       {
         type: "h3",

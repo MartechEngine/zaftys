@@ -14,6 +14,7 @@ import { heroMailBodies, heroMailSubjects } from "@/lib/hero-ctas";
 import { HeroEmailButton } from "@/components/HeroEmailButton";
 import { CTAGroup } from "@/components/CTAGroup";
 import { useToast } from "@/hooks/use-toast";
+import { trackEvent } from "@/lib/analytics";
 import { pageSeo } from "@/lib/page-seo";
 
 const Careers = () => {
@@ -52,6 +53,7 @@ const Careers = () => {
       const result = await response.json();
 
       if (result.success) {
+        trackEvent("form_careers_success", { placement: "careers-form" });
         toast({
           title: "Application Submitted",
           description: "Our HR team will review your profile and get in touch.",

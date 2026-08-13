@@ -8,6 +8,8 @@ import Navigation from "./components/Navigation";
 import Footer from "./components/Footer";
 import NotFound from "./pages/NotFound";
 import { WhatsAppFab } from "./components/WhatsAppButton";
+import { initAnalytics, trackPageview } from "./lib/analytics";
+import { captureUtmFromLocation } from "./lib/utm";
 
 const Home = lazy(() => import("./pages/Home"));
 const About = lazy(() => import("./pages/About"));
@@ -51,11 +53,17 @@ function ResourcesSlugRedirect() {
 }
 
 const ScrollToTop = () => {
-  const { pathname } = useLocation();
+  const { pathname, search } = useLocation();
 
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: "instant" as ScrollBehavior });
   }, [pathname]);
+
+  useEffect(() => {
+    captureUtmFromLocation();
+    initAnalytics();
+    trackPageview(`${pathname}${search}`, document.title);
+  }, [pathname, search]);
 
   return null;
 };

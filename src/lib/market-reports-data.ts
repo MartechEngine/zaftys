@@ -589,3 +589,9 @@ export function formatReportDate(isoDate: string): string {
 export function reportModifiedAt(report: Pick<MarketReport, "publishedAt" | "updatedAt">): string {
   return report.updatedAt ?? report.publishedAt;
 }
+
+/** Absolute-path cover for OG/schema (strip cache-bust query). */
+export function reportShareImage(report: Pick<MarketReport, "coverImage">): string {
+  const raw = report.coverImage ?? "/og-image.png";
+  return raw.split("?")[0] || "/og-image.png";
+}

@@ -5,6 +5,9 @@ on:
     branches: ["main"]
   workflow_dispatch:
 
+permissions:
+  contents: read
+
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
@@ -23,6 +26,9 @@ jobs:
         run: npm ci
 
       - name: Build
+        env:
+          VITE_CLARITY_ID: ${{ secrets.VITE_CLARITY_ID }}
+          VITE_GA_MEASUREMENT_ID: ${{ secrets.VITE_GA_MEASUREMENT_ID }}
         run: npm run build
 
       - name: Add SPA fallback (.htaccess) if missing
@@ -43,6 +49,28 @@ jobs:
             fi
           fi
 
+      - name: Generate Hostinger secrets PHP
+        env:
+          DB_HOST: ${{ secrets.DB_HOST }}
+          DB_NAME: ${{ secrets.DB_NAME }}
+          DB_USER: ${{ secrets.DB_USER }}
+          DB_PASS: ${{ secrets.DB_PASS }}
+          SMTP_HOST: ${{ secrets.SMTP_HOST }}
+          SMTP_PORT: ${{ secrets.SMTP_PORT }}
+          SMTP_ENCRYPTION: ${{ secrets.SMTP_ENCRYPTION }}
+          SMTP_USER: ${{ secrets.SMTP_USER }}
+          SMTP_PASS: ${{ secrets.SMTP_PASS }}
+          SMTP_FROM: ${{ secrets.SMTP_FROM }}
+          SMTP_FROM_NAME: ${{ secrets.SMTP_FROM_NAME }}
+          MAIL_CONTACT: ${{ secrets.MAIL_CONTACT }}
+          MAIL_SUBSCRIBERS: ${{ secrets.MAIL_SUBSCRIBERS }}
+          MAIL_PARTNER: ${{ secrets.MAIL_PARTNER }}
+          MAIL_CAREERS: ${{ secrets.MAIL_CAREERS }}
+          IP_HASH_SALT: ${{ secrets.IP_HASH_SALT }}
+          MIGRATE_TOKEN: ${{ secrets.MIGRATE_TOKEN }}
+          ZAFTS_SECRETS_OUT: dist/config/zaftys-secrets.php
+        run: node scripts/generate-zaftys-secrets.mjs
+
       - name: Deploy to Hostinger via FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
@@ -61,4 +89,31 @@ jobs:
             **/.DS_Store
             **/node_modules/**
             **/*.map
+            **/zaftys-secrets.example.php
           dangerous-clean-slate: true
+
+      - name: Run newsletter SQL migration
+        env:
+          MIGRATE_TOKEN: ${{ secrets.MIGRATE_TOKEN }}
+          SITE_URL: ${{ secrets.SITE_URL }}
+        run: |
+          set -euo pipefail
+          SITE_URL="${SITE_URL:-https://zaftys.com}"
+          SITE_URL="${SITE_URL%/}"
+          if [ -z "${MIGRATE_TOKEN}" ]; then
+            echo "MIGRATE_TOKEN secret is required"
+            exit 1
+          fi
+          for attempt in 1 2 3 4 5 6; do
+            echo "Migration attempt ${attempt}"
+            if curl -fsS -X POST "${SITE_URL}/api/migrate.php" \
+              -H "X-Zaftys-Migrate-Token: ${MIGRATE_TOKEN}" \
+              -H "Content-Type: application/json"; then
+              echo
+              echo "Migration succeeded"
+              exit 0
+            fi
+            sleep 8
+          done
+          echo "Migration failed after retries"
+          exit 1

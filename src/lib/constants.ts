@@ -1,6 +1,8 @@
 export const WHATSAPP_PHONE = "919270923581";
 
 export const COMPANY_EMAIL = "info@zaftys.com";
+export const CONTACT_FORM_EMAIL = "contact@zaftys.com";
+export const SUBSCRIBERS_EMAIL = "subscribers@zaftys.com";
 
 /** Public legal positioning  -  GST-compliant operations; not a Pvt Ltd entity */
 export const legalEntity = {

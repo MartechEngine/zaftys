@@ -12,6 +12,7 @@ import heroContact from "@/assets/hero-contact.jpg";
 import { pageHeroAlts } from "@/lib/page-heroes";
 import { heroMailBodies, heroMailSubjects } from "@/lib/hero-ctas";
 import { useToast } from "@/hooks/use-toast";
+import { trackEvent } from "@/lib/analytics";
 import { HeroEmailButton } from "@/components/HeroEmailButton";
 import { CTAGroup } from "@/components/CTAGroup";
 import { whatsappUrl, companyAddress } from "@/lib/constants";
@@ -58,6 +59,7 @@ const Contact = () => {
       const result = await response.json();
 
       if (result.success) {
+        trackEvent("form_contact_success", { intent: formData.interest || "general" });
         toast({
           title: "Message Sent!",
           description: "We've received your inquiry and will get back to you shortly.",
@@ -339,7 +341,12 @@ const Contact = () => {
                   Existing clients can reach our priority dispatch desk directly.
                 </p>
                 <Button asChild variant="on-dark-outline" className="w-full">
-                  <a href={whatsappUrl()} target="_blank" rel="noopener noreferrer">
+                  <a
+                    href={whatsappUrl()}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => trackEvent("cta_whatsapp", { placement: "contact-priority" })}
+                  >
                     WhatsApp Priority Line
                   </a>
                 </Button>

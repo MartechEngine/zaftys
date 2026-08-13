@@ -5,7 +5,9 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import logoFooter from "@/assets/logo-footer.png";
 import { useToast } from "@/hooks/use-toast";
-import { externalLinks, whatsappUrl, companyAddress, legalEntity, COMPANY_EMAIL } from "@/lib/constants";
+import { externalLinks, whatsappUrl, companyAddress, legalEntity, COMPANY_EMAIL, SUBSCRIBERS_EMAIL } from "@/lib/constants";
+import { subscribeNewsletter } from "@/lib/newsletter";
+import { trackEvent } from "@/lib/analytics";
 
 const Footer = () => {
   const { toast } = useToast();
@@ -22,15 +24,7 @@ const Footer = () => {
     setIsSubmitting(true);
 
     try {
-      const response = await fetch("/api/newsletter.php", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email }),
-      });
-
-      const result = await response.json();
+      const result = await subscribeNewsletter(email, "footer");
 
       if (result.success) {
         toast({
@@ -94,6 +88,7 @@ const Footer = () => {
               href={externalLinks.tranzfort}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => trackEvent("cta_tranzfort", { placement: "footer" })}
               className="inline-flex items-center gap-2 mt-4 text-accent hover:text-accent-light text-sm font-semibold transition-colors"
             >
               Explore TranZfort network <ArrowRight size={14} />
@@ -103,6 +98,7 @@ const Footer = () => {
             <h3 className="text-xl font-heading font-bold mb-4">Stay Updated</h3>
             <p className="text-gray-400 mb-4">Get the latest industry insights and company news.</p>
             <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3">
+              <input type="text" name="website" tabIndex={-1} autoComplete="off" className="hidden" aria-hidden="true" />
               <Input
                 type="email"
                 placeholder="Enter your email address"
@@ -115,6 +111,9 @@ const Footer = () => {
                 {isSubmitting ? "Subscribing..." : "Subscribe"}
               </Button>
             </form>
+            <p className="text-gray-500 text-xs mt-3">
+              Insights and company updates. Unsubscribe anytime at {SUBSCRIBERS_EMAIL}.
+            </p>
           </div>
         </div>
 
@@ -133,19 +132,33 @@ const Footer = () => {
                 </span>
               </li>
               <li>
-                <a href="tel:+919270923581" className="flex items-center gap-3 text-gray-400 hover:text-accent transition-colors">
+                <a
+                  href="tel:+919270923581"
+                  className="flex items-center gap-3 text-gray-400 hover:text-accent transition-colors"
+                  onClick={() => trackEvent("cta_call", { placement: "footer" })}
+                >
                   <Phone className="text-accent shrink-0" size={18} />
                   <span>+91-927-092-3581</span>
                 </a>
               </li>
               <li>
-                <a href={whatsappUrl()} target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 text-gray-400 hover:text-[#25D366] transition-colors">
+                <a
+                  href={whatsappUrl()}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-3 text-gray-400 hover:text-[#25D366] transition-colors"
+                  onClick={() => trackEvent("cta_whatsapp", { placement: "footer" })}
+                >
                   <MessageCircle className="text-[#25D366] shrink-0" size={18} />
                   <span>WhatsApp us</span>
                 </a>
               </li>
               <li>
-                <a href={`mailto:${COMPANY_EMAIL}`} className="flex items-center gap-3 text-gray-400 hover:text-accent transition-colors">
+                <a
+                  href={`mailto:${COMPANY_EMAIL}`}
+                  className="flex items-center gap-3 text-gray-400 hover:text-accent transition-colors"
+                  onClick={() => trackEvent("cta_mailto", { placement: "footer" })}
+                >
                   <Mail className="text-accent shrink-0" size={18} />
                   <span>{COMPANY_EMAIL}</span>
                 </a>
@@ -190,7 +203,13 @@ const Footer = () => {
                 </li>
               ))}
               <li>
-                <a href={externalLinks.tranzfort} target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-accent transition-colors">
+                <a
+                  href={externalLinks.tranzfort}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-gray-400 hover:text-accent transition-colors"
+                  onClick={() => trackEvent("cta_tranzfort", { placement: "footer-links" })}
+                >
                   tranzfort.com
                 </a>
               </li>

@@ -132,7 +132,7 @@ export const privacySections: LegalSection[] = [
     blocks: [
       {
         type: "p",
-        text: "Promotional communications may be sent where permitted by law, with an opt-out where required. Service and transaction messages may continue as needed to provide services, complete Trips, process payment, maintain security or comply with law.",
+        text: "Promotional communications may be sent where permitted by law, with an opt-out where required. Website newsletter signup is stored on ZAFTYS hosting. Unsubscribe by emailing subscribers@zaftys.com with subject Unsubscribe. Service and transaction messages may continue as needed to provide services, complete Trips, process payment, maintain security or comply with law.",
       },
     ],
   },
@@ -142,7 +142,7 @@ export const privacySections: LegalSection[] = [
     blocks: [
       {
         type: "p",
-        text: "Cookie practices are described in the separate Cookie Policy (see legal navigation or /cookies). Essential cookies may be required for site function; optional analytics or marketing cookies (if used) will follow applicable consent requirements.",
+        text: "Cookie practices are described in the separate Cookie Policy (see legal navigation or /cookies). Essential cookies may be required for site function. Where enabled, website analytics and session insights may use Google Analytics 4 and Microsoft Clarity. Optional analytics or marketing cookies (if used) will follow applicable consent requirements.",
       },
     ],
   },

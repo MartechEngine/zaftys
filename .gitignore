@@ -11,6 +11,14 @@ node_modules
 dist
 dist-ssr
 *.local
+.env
+.env.*
+!.env.example
+
+# Hostinger secrets (never commit)
+config/zaftys-secrets.php
+public/config/zaftys-secrets.php
+public/config/rate-limit/
 .image-backups/
 app-tsm/
 
