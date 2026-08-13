@@ -13,10 +13,10 @@ import {
   Building,
 } from "lucide-react";
 import { Link } from "react-router-dom";
-import { useEffect, useState } from "react";
 import ServiceCard from "@/components/ServiceCard";
 import ResponsiveImage from "@/components/ResponsiveImage";
-import { LazyTranZfortScreensCarousel } from "@/components/LazyTranZfortScreensCarousel";
+import { TranZfortScreensCarousel } from "@/components/TranZfortScreensCarousel";
+import heroImage from "@/assets/hero-home.jpg";
 import SEO from "@/components/SEO";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { CTAGroup } from "@/components/CTAGroup";
@@ -24,9 +24,10 @@ import { externalLinks, homeHowItWorks, homeIndustries, coreServices, homeTrustS
 import { trackEvent } from "@/lib/analytics";
 import { pageSeo } from "@/lib/page-seo";
 import { logisticsServiceSchema, organizationSchema, websiteSchema, localBusinessSchema } from "@/lib/schema";
-import { blogCategoryLabels, formatPostDate, homeBlogTeasers } from "@/lib/blog-teasers";
+import { blogCategoryLabels, formatPostDate, latestPosts } from "@/lib/blog-data";
 import { Badge } from "@/components/ui/badge";
 import { LazyTmsTripPeek, TmsDemoDisclaimer } from "@/components/tms-demo";
+import "@/styles/tms-demo.css";
 import type { LucideIcon } from "lucide-react";
 
 const serviceIcons: Record<string, LucideIcon> = {
@@ -38,17 +39,7 @@ const serviceIcons: Record<string, LucideIcon> = {
   overflow: Network,
 };
 
-const HERO_SIZES = "(max-width: 768px) 100vw, 1280px";
-
 const Home = () => {
-  const [hasLcpShell, setHasLcpShell] = useState(() =>
-    typeof document !== "undefined" ? Boolean(document.getElementById("lcp-shell")) : false,
-  );
-
-  useEffect(() => {
-    setHasLcpShell(Boolean(document.getElementById("lcp-shell")));
-  }, []);
-
   const tsmFeatures = [
     { icon: MapPin, title: "Live GPS Tracking", desc: "Real-time location and ETA on every active shipment." },
     { icon: BarChart3, title: "Dispatch & Analytics", desc: "Trip management, lane costs, and performance reporting." },
@@ -61,7 +52,7 @@ const Home = () => {
   const schema = [organizationSchema, websiteSchema, localBusinessSchema, logisticsServiceSchema];
 
   return (
-    <div className="min-h-screen text-foreground font-sans">
+    <div className="min-h-screen bg-background text-foreground font-sans">
       <SEO
         title={pageSeo.home.title}
         description={pageSeo.home.description}
@@ -69,67 +60,45 @@ const Home = () => {
         schema={schema}
       />
 
-      <section
-        className="relative pb-16 md:pt-32 md:pb-24 overflow-hidden min-h-[520px] md:min-h-[700px] flex items-center"
-        style={{ paddingTop: "7rem", minHeight: 520 }}
-      >
-        <div className="absolute inset-0 pointer-events-none">
-          {!hasLcpShell ? (
-            <picture>
-              <source
-                type="image/webp"
-                srcSet="/images/lcp/hero-home-640.webp 640w, /images/lcp/hero-home-960.webp 960w, /images/lcp/hero-home-1280.webp 1280w, /images/lcp/hero-home-1920.webp 1920w"
-                sizes={HERO_SIZES}
-              />
-              <img
-                src="/images/lcp/hero-home-960.jpg"
-                alt="ZAFTYS heavy-haul trucks for industrial freight transport across India"
-                className="w-full h-full object-cover"
-                width={1280}
-                height={720}
-                loading="eager"
-                fetchPriority="high"
-                decoding="async"
-              />
-            </picture>
-          ) : null}
+      <section className="relative pt-32 pb-24 overflow-hidden min-h-[700px] flex items-center">
+        <div className="absolute inset-0">
+          <img
+            src={heroImage}
+            alt="ZAFTYS heavy-haul trucks for industrial freight transport across India"
+            className="w-full h-full object-cover"
+            loading="eager"
+            fetchPriority="high"
+            decoding="async"
+          />
           <div className="absolute inset-0 bg-gradient-to-r from-navy/95 via-navy/80 to-navy/40" />
         </div>
         <div className="container mx-auto container-padding relative z-10">
           <div className="max-w-4xl text-white">
-            <h1
-              className={`text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight ${
-                hasLcpShell ? "font-sans" : "text-white font-heading"
-              }`}
-              style={hasLcpShell ? { visibility: "hidden" } : undefined}
-              aria-hidden={hasLcpShell}
-            >
+            <h1 className="text-5xl md:text-6xl lg:text-7xl font-heading font-bold mb-6 animate-fade-in-up leading-tight">
               ZAFTYS Logistics  -  Industrial Freight Across India.
             </h1>
-            <p
-              className="text-xl md:text-2xl mb-10 text-gray-200 font-light max-w-2xl"
-              style={hasLcpShell ? { visibility: "hidden" } : undefined}
-              aria-hidden={hasLcpShell}
-            >
+            <p className="text-xl md:text-2xl mb-10 text-gray-200 font-light animate-fade-in-up max-w-2xl" style={{ animationDelay: "0.2s" }}>
               Company-operated transport, ZAFTYS TMS visibility, and TranZfort verified capacity  -  one partner for cement, steel, mining, and bulk freight.
             </p>
-            <CTAGroup className="justify-start sm:justify-start">
-              <Button asChild size="lg" variant="accent" className="uppercase tracking-wide shadow-lg shadow-accent/20">
-                <a
-                  href={whatsappUrl()}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={() => trackEvent("cta_whatsapp", { placement: "hero", intent: "quote" })}
-                >
-                  Request a Quote <ArrowRight className="ml-2" size={20} />
-                </a>
-              </Button>
-              <Link to="/services">
-                <Button size="lg" variant="on-dark-outline">
-                  Explore Services
+            <div className="animate-fade-in-up" style={{ animationDelay: "0.4s" }}>
+              <CTAGroup className="justify-start sm:justify-start">
+                <Button asChild size="lg" variant="accent" className="uppercase tracking-wide shadow-lg shadow-accent/20">
+                  <a
+                    href={whatsappUrl()}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => trackEvent("cta_whatsapp", { placement: "hero", intent: "quote" })}
+                  >
+                    Request a Quote <ArrowRight className="ml-2" size={20} />
+                  </a>
                 </Button>
-              </Link>
-            </CTAGroup>
+                <Link to="/services">
+                  <Button size="lg" variant="on-dark-outline">
+                    Explore Services
+                  </Button>
+                </Link>
+              </CTAGroup>
+            </div>
           </div>
         </div>
       </section>
@@ -225,7 +194,7 @@ const Home = () => {
               </CTAGroup>
             </div>
             <div className="lg:w-1/2 order-first lg:order-none">
-              <LazyTranZfortScreensCarousel />
+              <TranZfortScreensCarousel />
             </div>
           </div>
         </div>
@@ -363,7 +332,7 @@ const Home = () => {
             </div>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {homeBlogTeasers.map((post) => (
+            {latestPosts(3).map((post) => (
               <Card key={post.slug} className="border-none shadow-sm hover:shadow-md transition-shadow h-full">
                 <CardContent className="p-6 flex flex-col h-full">
                   <div className="flex flex-wrap items-center gap-2 mb-3 text-xs text-muted-foreground">

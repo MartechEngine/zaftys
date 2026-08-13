@@ -15,25 +15,9 @@ export default {
     },
     extend: {
       fontFamily: {
-        sans: [
-          "system-ui",
-          "-apple-system",
-          "Segoe UI",
-          "Roboto",
-          "Helvetica Neue",
-          "Arial",
-          "sans-serif",
-        ],
-        heading: ["Oswald", "system-ui", "sans-serif"],
-        body: [
-          "system-ui",
-          "-apple-system",
-          "Segoe UI",
-          "Roboto",
-          "Helvetica Neue",
-          "Arial",
-          "sans-serif",
-        ],
+        sans: ["Inter", "sans-serif"],
+        heading: ["Oswald", "sans-serif"],
+        body: ["Inter", "sans-serif"],
       },
       colors: {
         border: "hsl(var(--border))",

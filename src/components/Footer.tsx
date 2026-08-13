@@ -80,15 +80,7 @@ const Footer = () => {
       <div className="container mx-auto container-padding pt-16 pb-12">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-end mb-16 border-b border-white/10 pb-12">
           <div>
-            <img
-              src={logoFooter}
-              alt="ZAFTYS Logistics"
-              width={200}
-              height={62}
-              className="h-14 w-auto mb-6"
-              loading="lazy"
-              decoding="async"
-            />
+            <img src={logoFooter} alt="ZAFTYS Logistics" className="h-14 w-auto mb-6" loading="lazy" />
             <p className="text-gray-400 max-w-md text-lg leading-relaxed">
               Heavy industrial freight across India. Own fleet, TranZfort network, and ZAFTYS TMS™  -  three generations of corridor experience.
             </p>

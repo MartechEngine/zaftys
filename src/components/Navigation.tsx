@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Menu, X, UserCircle, ChevronDown } from "lucide-react";
+import logoHeader from "@/assets/logo-zaftys.png";
 import { mailtoCompany } from "@/lib/constants";
 import { heroMailBodies, heroMailSubjects } from "@/lib/hero-ctas";
 import { trackEvent } from "@/lib/analytics";
@@ -16,16 +17,10 @@ const Navigation = () => {
   const location = useLocation();
 
   useEffect(() => {
-    let ticking = false;
     const handleScroll = () => {
-      if (ticking) return;
-      ticking = true;
-      window.requestAnimationFrame(() => {
-        setIsScrolled(window.scrollY > 20);
-        ticking = false;
-      });
+      setIsScrolled(window.scrollY > 20);
     };
-    window.addEventListener("scroll", handleScroll, { passive: true });
+    window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
@@ -62,24 +57,20 @@ const Navigation = () => {
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 border-b border-white/10 ${
         isScrolled
-          ? "bg-white/95 md:backdrop-blur-md shadow-md py-2"
-          : "bg-white py-4"
+          ? "bg-white/95 backdrop-blur-md shadow-md py-2"
+          : "bg-white/90 backdrop-blur-sm py-4"
       }`}
     >
       <div className="container mx-auto container-padding">
         <div className="flex items-center justify-between">
           <Link to="/" className="flex items-center">
-            <picture>
-              <source srcSet="/logo-header-180.webp" type="image/webp" />
-              <img
-                src="/logo-header-180.png"
-                alt="ZAFTYS Logistics"
-                width={180}
-                height={55}
-                className="h-12 md:h-14 w-auto transition-all"
-                decoding="async"
-              />
-            </picture>
+            <img
+              src={logoHeader}
+              alt="ZAFTYS Logistics"
+              className="h-12 md:h-14 w-auto transition-all"
+              decoding="async"
+              fetchPriority="high"
+            />
           </Link>
 
           <div className="hidden xl:flex items-center space-x-1">

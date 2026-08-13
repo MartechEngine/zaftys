@@ -1,5 +1,4 @@
 import { MessageCircle } from "lucide-react";
-import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { whatsappUrl } from "@/lib/constants";
 import { cn } from "@/lib/utils";
@@ -54,18 +53,6 @@ export function WhatsAppButton({
 }
 
 export function WhatsAppFab({ message }: { message?: string }) {
-  const [ready, setReady] = useState(false);
-  useEffect(() => {
-    const ric = window.requestIdleCallback?.bind(window);
-    if (typeof ric === "function") {
-      const id = ric(() => setReady(true), { timeout: 4000 });
-      return () => window.cancelIdleCallback?.(id);
-    }
-    const t = window.setTimeout(() => setReady(true), 2000);
-    return () => window.clearTimeout(t);
-  }, []);
-  if (!ready) return null;
-
   return (
     <a
       href={whatsappUrl(message)}
