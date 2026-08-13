@@ -10,9 +10,32 @@
     <link rel="icon" href="/favicon.ico" sizes="any" />
     <link rel="apple-touch-icon" href="/logo-header-180.png" />
 
-    <!-- Heading font only; body uses system UI. Preload LCP hero for mobile. -->
+    <!-- Heading font + viewport-matched hero preload (do not preload mobile image on desktop). -->
     <link rel="preload" href="/fonts/oswald-latin.woff2" as="font" type="font/woff2" crossorigin />
-    <link rel="preload" href="/images/lcp/hero-home-640.webp" as="image" type="image/webp" fetchpriority="high" />
+    <link
+      rel="preload"
+      href="/images/lcp/hero-home-640.webp"
+      as="image"
+      type="image/webp"
+      media="(max-width: 640px)"
+      fetchpriority="high"
+    />
+    <link
+      rel="preload"
+      href="/images/lcp/hero-home-1280.webp"
+      as="image"
+      type="image/webp"
+      media="(min-width: 641px) and (max-width: 1280px)"
+      fetchpriority="high"
+    />
+    <link
+      rel="preload"
+      href="/images/lcp/hero-home-1920.webp"
+      as="image"
+      type="image/webp"
+      media="(min-width: 1281px)"
+      fetchpriority="high"
+    />
 
     <meta property="og:title" content="ZAFTYS Logistics  -  Industrial Freight Across India" />
     <meta property="og:description" content="Industrial freight across India. Company-operated fleet, ZAFTYS TMS visibility, and verified capacity through TranZfort." />

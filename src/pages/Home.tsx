@@ -70,8 +70,8 @@ const Home = () => {
               src="/images/lcp/hero-home-960.jpg"
               alt="ZAFTYS heavy-haul trucks for industrial freight transport across India"
               className="w-full h-full object-cover"
-              width={960}
-              height={540}
+              width={1280}
+              height={720}
               loading="eager"
               fetchPriority="high"
               decoding="async"
