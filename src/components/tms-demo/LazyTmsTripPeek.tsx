@@ -1,5 +1,4 @@
 import { lazy, Suspense, useEffect, useRef, useState, type ComponentProps } from "react";
-import "@/styles/tms-demo.css";
 
 const TmsTripPeekLazy = lazy(() =>
   import("./TmsTripPeek").then((m) => ({ default: m.TmsTripPeek })),

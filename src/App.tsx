@@ -1,25 +1,18 @@
-import { lazy, Suspense, useEffect, useState } from "react";
+import { lazy, Suspense, useEffect } from "react";
+import { Toaster } from "@/components/ui/toaster";
+import { Toaster as Sonner } from "@/components/ui/sonner";
+import { TooltipProvider } from "@/components/ui/tooltip";
 import { HelmetProvider } from "react-helmet-async";
 import { BrowserRouter, Routes, Route, useLocation, Navigate, useParams } from "react-router-dom";
 import Navigation from "./components/Navigation";
+import Footer from "./components/Footer";
 import NotFound from "./pages/NotFound";
 import { WhatsAppFab } from "./components/WhatsAppButton";
 import { initAnalytics, trackPageview } from "./lib/analytics";
 import { captureUtmFromLocation } from "./lib/utm";
 import { logVisit } from "./lib/visit-log";
 
-/** Lazy Home: LCP is owned by the HTML shell, so the Home chunk must not bloat the main bundle. */
 const Home = lazy(() => import("./pages/Home"));
-const Footer = lazy(() => import("./components/Footer"));
-const Toaster = lazy(() =>
-  import("@/components/ui/toaster").then((m) => ({ default: m.Toaster })),
-);
-const Sonner = lazy(() =>
-  import("@/components/ui/sonner").then((m) => ({ default: m.Toaster })),
-);
-const TooltipProvider = lazy(() =>
-  import("@/components/ui/tooltip").then((m) => ({ default: m.TooltipProvider })),
-);
 const About = lazy(() => import("./pages/About"));
 const Technology = lazy(() => import("./pages/Technology"));
 const Network = lazy(() => import("./pages/Network"));
@@ -60,19 +53,11 @@ function ResourcesSlugRedirect() {
   return <Navigate to={slug ? `/blog/${slug}` : "/blog"} replace />;
 }
 
-function removeLcpShell() {
-  document.getElementById("lcp-shell")?.remove();
-}
-
 const ScrollToTop = () => {
   const { pathname, search } = useLocation();
 
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: "instant" as ScrollBehavior });
-  }, [pathname]);
-
-  useEffect(() => {
-    if (pathname !== "/") removeLcpShell();
   }, [pathname]);
 
   useEffect(() => {
@@ -86,29 +71,6 @@ const ScrollToTop = () => {
   return null;
 };
 
-/** Toast/tooltip UI is below-fold chrome — keep it out of the first paint path. */
-function DeferredChrome() {
-  const [ready, setReady] = useState(false);
-  useEffect(() => {
-    const ric = window.requestIdleCallback?.bind(window);
-    if (typeof ric === "function") {
-      const id = ric(() => setReady(true), { timeout: 4000 });
-      return () => window.cancelIdleCallback?.(id);
-    }
-    const t = window.setTimeout(() => setReady(true), 2000);
-    return () => window.clearTimeout(t);
-  }, []);
-  if (!ready) return null;
-  return (
-    <Suspense fallback={null}>
-      <TooltipProvider>
-        <Toaster />
-        <Sonner />
-      </TooltipProvider>
-    </Suspense>
-  );
-}
-
 const AppShell = () => {
   const { pathname } = useLocation();
   const isAuthPage = pathname === "/login";
@@ -118,15 +80,7 @@ const AppShell = () => {
       <ScrollToTop />
       {!isAuthPage && <Navigation />}
       <Routes>
-        {/* null fallback keeps the HTML LCP shell visible while Home loads */}
-        <Route
-          path="/"
-          element={
-            <Suspense fallback={null}>
-              <Home />
-            </Suspense>
-          }
-        />
+        <Route path="/" element={<LazyPage><Home /></LazyPage>} />
         <Route path="/about" element={<LazyPage><About /></LazyPage>} />
         <Route path="/technology" element={<LazyPage><Technology /></LazyPage>} />
         <Route path="/platform" element={<Navigate to="/technology" replace />} />
@@ -164,9 +118,7 @@ const AppShell = () => {
       </Routes>
       {!isAuthPage && (
         <>
-          <Suspense fallback={null}>
-            <Footer />
-          </Suspense>
+          <Footer />
           <WhatsAppFab />
         </>
       )}
@@ -176,10 +128,13 @@ const AppShell = () => {
 
 const App = () => (
   <HelmetProvider>
-    <BrowserRouter>
-      <AppShell />
-      <DeferredChrome />
-    </BrowserRouter>
+    <TooltipProvider>
+      <Toaster />
+      <Sonner />
+      <BrowserRouter>
+        <AppShell />
+      </BrowserRouter>
+    </TooltipProvider>
   </HelmetProvider>
 );
 
