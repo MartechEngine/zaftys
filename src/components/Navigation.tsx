@@ -6,14 +6,76 @@ import logoHeader from "@/assets/logo-zaftys.png";
 import { mailtoCompany } from "@/lib/constants";
 import { heroMailBodies, heroMailSubjects } from "@/lib/hero-ctas";
 import { trackEvent } from "@/lib/analytics";
+import { cn } from "@/lib/utils";
 
 const quoteMailto = mailtoCompany(heroMailSubjects.quote, heroMailBodies.quote);
+
+type NavItem = { name: string; path: string };
+type NavGroup = { id: string; label: string; items: readonly NavItem[] };
+
+const navGroups: readonly NavGroup[] = [
+  {
+    id: "solutions",
+    label: "Solutions",
+    items: [
+      { name: "Services", path: "/services" },
+      { name: "Industries", path: "/industries" },
+      { name: "Fleet", path: "/fleet" },
+    ],
+  },
+  {
+    id: "technology",
+    label: "Technology",
+    items: [
+      { name: "ZAFTYS TMS", path: "/technology" },
+      { name: "TranZfort Network", path: "/network" },
+    ],
+  },
+  {
+    id: "company",
+    label: "Company",
+    items: [
+      { name: "About", path: "/about" },
+      { name: "Partner", path: "/partner" },
+      { name: "Contact", path: "/contact" },
+    ],
+  },
+  {
+    id: "resources",
+    label: "Resources",
+    items: [
+      { name: "Blog", path: "/blog" },
+      { name: "Reports", path: "/resources/reports" },
+    ],
+  },
+];
+
+function pathMatches(pathname: string, path: string): boolean {
+  if (pathname === path) return true;
+  if (path === "/blog" && pathname.startsWith("/blog/")) return true;
+  if (path === "/resources/reports" && pathname.startsWith("/resources/reports")) return true;
+  if (path === "/industries" && pathname.startsWith("/industries/")) return true;
+  if (path === "/resources" && pathname.startsWith("/resources/")) return true;
+  return false;
+}
+
+function groupIsActive(pathname: string, group: NavGroup): boolean {
+  if (group.id === "resources") {
+    return (
+      pathname === "/resources" ||
+      pathname.startsWith("/resources/") ||
+      pathname === "/blog" ||
+      pathname.startsWith("/blog/")
+    );
+  }
+  return group.items.some((item) => pathMatches(pathname, item.path));
+}
 
 const Navigation = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [resourcesOpen, setResourcesOpen] = useState(false);
-  const [mobileResourcesOpen, setMobileResourcesOpen] = useState(false);
+  const [openDesktopGroup, setOpenDesktopGroup] = useState<string | null>(null);
+  const [openMobileGroup, setOpenMobileGroup] = useState<string | null>(null);
   const location = useLocation();
 
   useEffect(() => {
@@ -26,32 +88,9 @@ const Navigation = () => {
 
   useEffect(() => {
     setIsMobileMenuOpen(false);
-    setResourcesOpen(false);
-    setMobileResourcesOpen(false);
+    setOpenDesktopGroup(null);
+    setOpenMobileGroup(null);
   }, [location]);
-
-  const navLinks = [
-    { name: "Services", path: "/services" },
-    { name: "Fleet", path: "/fleet" },
-    { name: "Network", path: "/network" },
-    { name: "Platform", path: "/technology" },
-    { name: "Industries", path: "/industries" },
-    { name: "Partner", path: "/partner" },
-    { name: "Contact", path: "/contact" },
-  ];
-
-  const resourcesLinks = [
-    { name: "Blog", path: "/blog" },
-    { name: "Reports", path: "/resources/reports" },
-  ];
-
-  const isActive = (path: string) => location.pathname === path;
-
-  const isResourcesActive =
-    location.pathname === "/resources" ||
-    location.pathname.startsWith("/resources/") ||
-    location.pathname === "/blog" ||
-    location.pathname.startsWith("/blog/");
 
   return (
     <nav
@@ -75,74 +114,53 @@ const Navigation = () => {
           </Link>
 
           <div className="hidden xl:flex items-center space-x-1">
-            {navLinks.slice(0, 5).map((link) => (
-              <Link
-                key={link.path}
-                to={link.path}
-                className={`px-3 py-2 rounded-md text-sm font-bold transition-colors uppercase tracking-wide ${
-                  isActive(link.path)
-                    ? "text-accent"
-                    : "text-navy hover:text-accent hover:bg-navy/5"
-                }`}
-              >
-                {link.name}
-              </Link>
-            ))}
-
-            <div
-              className="relative"
-              onMouseEnter={() => setResourcesOpen(true)}
-              onMouseLeave={() => setResourcesOpen(false)}
-            >
-              <button
-                type="button"
-                className={`px-3 py-2 rounded-md text-sm font-bold transition-colors uppercase tracking-wide inline-flex items-center gap-1 ${
-                  isResourcesActive
-                    ? "text-accent"
-                    : "text-navy hover:text-accent hover:bg-navy/5"
-                }`}
-                aria-expanded={resourcesOpen}
-                aria-haspopup="true"
-              >
-                Resources <ChevronDown size={14} />
-              </button>
-              {resourcesOpen ? (
-                <div className="absolute left-0 top-full pt-1 min-w-[200px]">
-                  <div className="rounded-lg border border-border bg-white shadow-lg py-2">
-                    {resourcesLinks.map((link) => (
-                      <Link
-                        key={link.path}
-                        to={link.path}
-                        className={`block px-4 py-2.5 text-sm font-semibold transition-colors ${
-                          isActive(link.path) ||
-                          (link.path === "/blog" && location.pathname.startsWith("/blog/")) ||
-                          (link.path === "/resources/reports" &&
-                            location.pathname.startsWith("/resources/reports"))
-                            ? "text-accent bg-accent/5"
-                            : "text-navy hover:text-accent hover:bg-navy/5"
-                        }`}
-                      >
-                        {link.name}
-                      </Link>
-                    ))}
-                  </div>
+            {navGroups.map((group) => {
+              const active = groupIsActive(location.pathname, group);
+              const open = openDesktopGroup === group.id;
+              return (
+                <div
+                  key={group.id}
+                  className="relative"
+                  onMouseEnter={() => setOpenDesktopGroup(group.id)}
+                  onMouseLeave={() => setOpenDesktopGroup(null)}
+                >
+                  <button
+                    type="button"
+                    className={cn(
+                      "px-3 py-2 rounded-md text-sm font-bold transition-colors uppercase tracking-wide inline-flex items-center gap-1",
+                      active
+                        ? "text-accent"
+                        : "text-navy hover:text-accent hover:bg-navy/5",
+                    )}
+                    aria-expanded={open}
+                    aria-haspopup="true"
+                    onClick={() => setOpenDesktopGroup(open ? null : group.id)}
+                  >
+                    {group.label} <ChevronDown size={14} />
+                  </button>
+                  {open ? (
+                    <div className="absolute left-0 top-full pt-1 min-w-[220px]">
+                      <div className="rounded-lg border border-border bg-white shadow-lg py-2">
+                        {group.items.map((link) => (
+                          <Link
+                            key={link.path}
+                            to={link.path}
+                            className={cn(
+                              "block px-4 py-2.5 text-sm font-semibold transition-colors",
+                              pathMatches(location.pathname, link.path)
+                                ? "text-accent bg-accent/5"
+                                : "text-navy hover:text-accent hover:bg-navy/5",
+                            )}
+                          >
+                            {link.name}
+                          </Link>
+                        ))}
+                      </div>
+                    </div>
+                  ) : null}
                 </div>
-              ) : null}
-            </div>
-
-            {navLinks.slice(5).map((link) => (
-              <Link
-                key={link.path}
-                to={link.path}
-                className={`px-3 py-2 rounded-md text-sm font-bold transition-colors uppercase tracking-wide ${
-                  isActive(link.path)
-                    ? "text-accent"
-                    : "text-navy hover:text-accent hover:bg-navy/5"
-                }`}
-              >
-                {link.name}
-              </Link>
-            ))}
+              );
+            })}
           </div>
 
           <div className="hidden xl:flex items-center space-x-3">
@@ -174,59 +192,47 @@ const Navigation = () => {
 
         {isMobileMenuOpen && (
           <div className="xl:hidden py-4 animate-fade-in bg-white border-t border-gray-100 shadow-xl max-h-[calc(100vh-80px)] overflow-y-auto">
-            <div className="flex flex-col space-y-2">
-              {navLinks.slice(0, 5).map((link) => (
-                <Link
-                  key={link.path}
-                  to={link.path}
-                  className={`px-4 py-3 text-sm font-bold transition-colors uppercase tracking-wide ${
-                    isActive(link.path)
-                      ? "text-accent bg-accent/5 border-l-4 border-accent"
-                      : "text-navy hover:text-accent hover:bg-gray-50"
-                  }`}
-                >
-                  {link.name}
-                </Link>
-              ))}
-
-              <button
-                type="button"
-                onClick={() => setMobileResourcesOpen((open) => !open)}
-                className={`px-4 py-3 text-sm font-bold transition-colors uppercase tracking-wide text-left flex items-center justify-between ${
-                  isResourcesActive
-                    ? "text-accent bg-accent/5 border-l-4 border-accent"
-                    : "text-navy hover:text-accent hover:bg-gray-50"
-                }`}
-              >
-                Resources <ChevronDown size={16} className={mobileResourcesOpen ? "rotate-180" : ""} />
-              </button>
-              {mobileResourcesOpen ? (
-                <div className="pl-4 pb-2 space-y-1">
-                  {resourcesLinks.map((link) => (
-                    <Link
-                      key={link.path}
-                      to={link.path}
-                      className="block px-4 py-2.5 text-sm font-semibold text-navy hover:text-accent"
+            <div className="flex flex-col space-y-1">
+              {navGroups.map((group) => {
+                const active = groupIsActive(location.pathname, group);
+                const open = openMobileGroup === group.id;
+                return (
+                  <div key={group.id}>
+                    <button
+                      type="button"
+                      onClick={() => setOpenMobileGroup(open ? null : group.id)}
+                      className={cn(
+                        "w-full px-4 py-3 text-sm font-bold transition-colors uppercase tracking-wide text-left flex items-center justify-between",
+                        active
+                          ? "text-accent bg-accent/5 border-l-4 border-accent"
+                          : "text-navy hover:text-accent hover:bg-gray-50",
+                      )}
+                      aria-expanded={open}
                     >
-                      {link.name}
-                    </Link>
-                  ))}
-                </div>
-              ) : null}
-
-              {navLinks.slice(5).map((link) => (
-                <Link
-                  key={link.path}
-                  to={link.path}
-                  className={`px-4 py-3 text-sm font-bold transition-colors uppercase tracking-wide ${
-                    isActive(link.path)
-                      ? "text-accent bg-accent/5 border-l-4 border-accent"
-                      : "text-navy hover:text-accent hover:bg-gray-50"
-                  }`}
-                >
-                  {link.name}
-                </Link>
-              ))}
+                      {group.label}
+                      <ChevronDown size={16} className={cn("transition-transform", open && "rotate-180")} />
+                    </button>
+                    {open ? (
+                      <div className="pl-4 pb-2 space-y-1">
+                        {group.items.map((link) => (
+                          <Link
+                            key={link.path}
+                            to={link.path}
+                            className={cn(
+                              "block px-4 py-2.5 text-sm font-semibold",
+                              pathMatches(location.pathname, link.path)
+                                ? "text-accent"
+                                : "text-navy hover:text-accent",
+                            )}
+                          >
+                            {link.name}
+                          </Link>
+                        ))}
+                      </div>
+                    ) : null}
+                  </div>
+                );
+              })}
 
               <div className="pt-4 space-y-3 px-4 border-t border-gray-100 mt-2">
                 <Link to="/login" className="block">
@@ -237,8 +243,8 @@ const Navigation = () => {
                 </Link>
                 <Button asChild className="w-full font-semibold uppercase tracking-wide" variant="accent">
                   <a href={quoteMailto} onClick={() => trackEvent("cta_mailto", { placement: "nav", intent: "quote" })}>
-                Get a Quote
-              </a>
+                    Get a Quote
+                  </a>
                 </Button>
               </div>
             </div>

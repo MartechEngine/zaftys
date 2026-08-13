@@ -237,7 +237,7 @@ const Home = () => {
                 ))}
               </div>
               <Link to="/technology">
-                <Button variant="accent">See the Platform</Button>
+                <Button variant="accent">See ZAFTYS TMS</Button>
               </Link>
             </div>
           </div>
