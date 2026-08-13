@@ -13,6 +13,7 @@ import {
   Building,
 } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
 import ServiceCard from "@/components/ServiceCard";
 import ResponsiveImage from "@/components/ResponsiveImage";
 import { LazyTranZfortScreensCarousel } from "@/components/LazyTranZfortScreensCarousel";
@@ -37,7 +38,17 @@ const serviceIcons: Record<string, LucideIcon> = {
   overflow: Network,
 };
 
+const HERO_SIZES = "(max-width: 768px) 100vw, 1280px";
+
 const Home = () => {
+  const [hasLcpShell, setHasLcpShell] = useState(() =>
+    typeof document !== "undefined" ? Boolean(document.getElementById("lcp-shell")) : false,
+  );
+
+  useEffect(() => {
+    setHasLcpShell(Boolean(document.getElementById("lcp-shell")));
+  }, []);
+
   const tsmFeatures = [
     { icon: MapPin, title: "Live GPS Tracking", desc: "Real-time location and ETA on every active shipment." },
     { icon: BarChart3, title: "Dispatch & Analytics", desc: "Trip management, lane costs, and performance reporting." },
@@ -50,7 +61,7 @@ const Home = () => {
   const schema = [organizationSchema, websiteSchema, localBusinessSchema, logisticsServiceSchema];
 
   return (
-    <div className="min-h-screen bg-background text-foreground font-sans">
+    <div className="min-h-screen text-foreground font-sans">
       <SEO
         title={pageSeo.home.title}
         description={pageSeo.home.description}
@@ -59,29 +70,36 @@ const Home = () => {
       />
 
       <section className="relative pt-28 pb-16 md:pt-32 md:pb-24 overflow-hidden min-h-[520px] md:min-h-[700px] flex items-center">
-        <div className="absolute inset-0">
-          <picture>
-            <source
-              type="image/webp"
-              srcSet="/images/lcp/hero-home-640.webp 640w, /images/lcp/hero-home-960.webp 960w, /images/lcp/hero-home-1280.webp 1280w, /images/lcp/hero-home-1920.webp 1920w"
-              sizes="100vw"
-            />
-            <img
-              src="/images/lcp/hero-home-960.jpg"
-              alt="ZAFTYS heavy-haul trucks for industrial freight transport across India"
-              className="w-full h-full object-cover"
-              width={1280}
-              height={720}
-              loading="eager"
-              fetchPriority="high"
-              decoding="async"
-            />
-          </picture>
+        <div className="absolute inset-0 pointer-events-none">
+          {!hasLcpShell ? (
+            <picture>
+              <source
+                type="image/webp"
+                srcSet="/images/lcp/hero-home-640.webp 640w, /images/lcp/hero-home-960.webp 960w, /images/lcp/hero-home-1280.webp 1280w, /images/lcp/hero-home-1920.webp 1920w"
+                sizes={HERO_SIZES}
+              />
+              <img
+                src="/images/lcp/hero-home-960.jpg"
+                alt="ZAFTYS heavy-haul trucks for industrial freight transport across India"
+                className="w-full h-full object-cover"
+                width={1280}
+                height={720}
+                loading="eager"
+                fetchPriority="high"
+                decoding="async"
+              />
+            </picture>
+          ) : null}
           <div className="absolute inset-0 bg-gradient-to-r from-navy/95 via-navy/80 to-navy/40" />
         </div>
         <div className="container mx-auto container-padding relative z-10">
           <div className="max-w-4xl text-white">
-            <h1 className="text-5xl md:text-6xl lg:text-7xl font-heading font-bold mb-6 leading-tight">
+            <h1
+              className={`text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight ${
+                hasLcpShell ? "invisible font-sans" : "text-white font-heading"
+              }`}
+              aria-hidden={hasLcpShell}
+            >
               ZAFTYS Logistics  -  Industrial Freight Across India.
             </h1>
             <p className="text-xl md:text-2xl mb-10 text-gray-200 font-light max-w-2xl">

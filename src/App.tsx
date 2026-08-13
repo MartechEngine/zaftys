@@ -1,9 +1,7 @@
-import { lazy, Suspense, useEffect } from "react";
-import { Toaster } from "@/components/ui/toaster";
-import { Toaster as Sonner } from "@/components/ui/sonner";
-import { TooltipProvider } from "@/components/ui/tooltip";
+import { lazy, Suspense, useEffect, useState } from "react";
 import { HelmetProvider } from "react-helmet-async";
 import { BrowserRouter, Routes, Route, useLocation, Navigate, useParams } from "react-router-dom";
+import { TooltipProvider } from "@/components/ui/tooltip";
 import Navigation from "./components/Navigation";
 import NotFound from "./pages/NotFound";
 import { WhatsAppFab } from "./components/WhatsAppButton";
@@ -14,6 +12,12 @@ import { logVisit } from "./lib/visit-log";
 import Home from "./pages/Home";
 
 const Footer = lazy(() => import("./components/Footer"));
+const Toaster = lazy(() =>
+  import("@/components/ui/toaster").then((m) => ({ default: m.Toaster })),
+);
+const Sonner = lazy(() =>
+  import("@/components/ui/sonner").then((m) => ({ default: m.Toaster })),
+);
 const About = lazy(() => import("./pages/About"));
 const Technology = lazy(() => import("./pages/Technology"));
 const Network = lazy(() => import("./pages/Network"));
@@ -54,11 +58,19 @@ function ResourcesSlugRedirect() {
   return <Navigate to={slug ? `/blog/${slug}` : "/blog"} replace />;
 }
 
+function removeLcpShell() {
+  document.getElementById("lcp-shell")?.remove();
+}
+
 const ScrollToTop = () => {
   const { pathname, search } = useLocation();
 
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: "instant" as ScrollBehavior });
+  }, [pathname]);
+
+  useEffect(() => {
+    if (pathname !== "/") removeLcpShell();
   }, [pathname]);
 
   useEffect(() => {
@@ -71,6 +83,27 @@ const ScrollToTop = () => {
 
   return null;
 };
+
+/** Toast UI is below-fold chrome — keep it out of the first paint path. */
+function DeferredToasters() {
+  const [ready, setReady] = useState(false);
+  useEffect(() => {
+    const ric = window.requestIdleCallback?.bind(window);
+    if (typeof ric === "function") {
+      const id = ric(() => setReady(true), { timeout: 2500 });
+      return () => window.cancelIdleCallback?.(id);
+    }
+    const t = window.setTimeout(() => setReady(true), 1);
+    return () => window.clearTimeout(t);
+  }, []);
+  if (!ready) return null;
+  return (
+    <Suspense fallback={null}>
+      <Toaster />
+      <Sonner />
+    </Suspense>
+  );
+}
 
 const AppShell = () => {
   const { pathname } = useLocation();
@@ -132,10 +165,9 @@ const AppShell = () => {
 const App = () => (
   <HelmetProvider>
     <TooltipProvider>
-      <Toaster />
-      <Sonner />
       <BrowserRouter>
         <AppShell />
+        <DeferredToasters />
       </BrowserRouter>
     </TooltipProvider>
   </HelmetProvider>
