@@ -25,6 +25,14 @@ type ResponsiveImageProps = {
   objectFit?: "cover" | "contain";
 };
 
+function webpCandidate(src: string): string | null {
+  if (/\.webp($|\?)/i.test(src)) return null;
+  if (/\.(jpe?g|png)($|\?)/i.test(src)) {
+    return src.replace(/\.(jpe?g|png)($|\?)/i, ".webp$2");
+  }
+  return null;
+}
+
 const ResponsiveImage = ({
   src,
   alt,
@@ -37,8 +45,15 @@ const ResponsiveImage = ({
 }: ResponsiveImageProps) => {
   const [loaded, setLoaded] = useState(false);
   const [error, setError] = useState(false);
+  const webpSrc = webpCandidate(src);
 
   const fitClass = objectFit === "cover" ? "object-cover" : "object-contain";
+  const imgClass = cn(
+    "transition-opacity duration-300",
+    fill ? cn("absolute inset-0 h-full w-full", fitClass) : cn("h-full w-full", fitClass),
+    loaded ? "opacity-100" : "opacity-0",
+    imgClassName,
+  );
 
   return (
     <div
@@ -46,7 +61,7 @@ const ResponsiveImage = ({
         "relative overflow-hidden bg-muted/20",
         fill ? "absolute inset-0 h-full w-full" : cn("w-full", aspectClasses[aspectRatio]),
         !fill && objectFit === "contain" && "flex items-center justify-center",
-        className
+        className,
       )}
     >
       {!loaded && !error && (
@@ -59,23 +74,19 @@ const ResponsiveImage = ({
           <span className="text-xs font-medium uppercase tracking-wider opacity-60">Image unavailable</span>
         </div>
       ) : (
-        <img
-          src={src}
-          alt={alt}
-          loading={priority ? "eager" : "lazy"}
-          decoding="async"
-          {...(priority ? { fetchPriority: "high" as const } : {})}
-          onLoad={() => setLoaded(true)}
-          onError={() => setError(true)}
-          className={cn(
-            "transition-opacity duration-300",
-            fill
-              ? cn("absolute inset-0 h-full w-full", fitClass)
-              : cn("h-full w-full", fitClass),
-            loaded ? "opacity-100" : "opacity-0",
-            imgClassName
-          )}
-        />
+        <picture>
+          {webpSrc ? <source srcSet={webpSrc} type="image/webp" /> : null}
+          <img
+            src={src}
+            alt={alt}
+            loading={priority ? "eager" : "lazy"}
+            decoding="async"
+            {...(priority ? { fetchPriority: "high" as const } : {})}
+            onLoad={() => setLoaded(true)}
+            onError={() => setError(true)}
+            className={imgClass}
+          />
+        </picture>
       )}
     </div>
   );
