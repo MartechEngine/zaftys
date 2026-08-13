@@ -4,7 +4,7 @@
 |---|---|
 | **Project** | `zaftys-main` — marketing site (`zaftys.com`) |
 | **Purpose** | Production architecture for website traffic analytics, conversion/lead tracking, inbound form email, newsletter subscription storage, attribution, privacy, and future newsletter campaigns |
-| **Status** | **v1 email + Clarity/GA4 shipped. Exact visitor IP logging in progress (13 Aug 2026)** |
+| **Status** | **Shipped to production (13 Aug 2026)** — email, newsletter, Clarity/GA4, exact IP, geo CSV, contact City/PIN |
 | **Owner** | CTO / solo engineering |
 | **Last updated** | 13 August 2026 |
 | **Related** | `marketing/SEO&Blog.md`, `marketing-website-sitemap-new.md`, `legal/terms-and-policies-draft.md`, `public/api/*.php` |
@@ -14,9 +14,9 @@
 
 ## How to use this file
 
-**If you are implementing:** start at **Section 0 (Solo-dev easy mode)**, **Section 8**, and **Section 10 (exact visitor IP)**.
+**If you are operating:** Sections **8** and **10** checklists are done for v1. Use **Section 6** for day-to-day ops.
 
-The rest of this file is the **full architecture** (keep it). Do not try to build every checklist in one pass.
+The rest of this file is the **full architecture** (keep it). Do not reopen deferred P2 items without a new decision.
 
 1. **Section 0** — Easy mode: what you click in Hostinger vs what code we add. **Read this first.**
 2. **Section 1** — CTO decisions: what we do and do not do.
@@ -45,9 +45,12 @@ This overrides older Matomo-first wording later in the file.
 | Newsletter | MySQL `zaftys_newsletter_subscribers`. New signups alert `subscribers@`. Unsubscribe = email `subscribers@` |
 | Public mailto | `info@zaftys.com` |
 | Traffic analytics | **Microsoft Clarity** + **GA4** (not Matomo). IDs from GitHub Secrets at build time |
-| Exact visitor IP | **Section 10** — own MySQL log + form emails + morning CSV to `info@`. Not taken from GA4/Clarity |
+| Exact visitor IP | **Section 10** — MySQL `zaftys_page_visits` + form emails + morning CSV to `info@`. Not taken from GA4/Clarity |
+| Geo on CSV | Approximate country/region/city/ISP via ipwho.is (cached per IP). City-level, not GPS |
+| Contact City/PIN | Optional fields on `/contact`; included on `contact@` email with typed values + approx IP location |
 | Secrets | GitHub Actions writes `zaftys-secrets.php` on deploy. Never commit that file |
 | Deploy | Push `main` → FTP to Hostinger → `POST /api/migrate.php` |
+| Daily digest | GitHub Action `visit-digest.yml` ~07:00 IST → CSV to `info@` → purge rows older than 90 days |
 
 GA4 is configured with `anonymize_ip: true`. Clarity/GA4 are **not** the source of exact IPs. Exact IPs come only from Hostinger `REMOTE_ADDR`.
 
@@ -1409,40 +1412,40 @@ All public endpoints should have:
 
 # 8. Immediate engineering actions
 
-Follow **Section 0.7**. Do not start P2. Skip analytics if Matomo is not a Hostinger one-click / Auto Installer success.
+**Status (13 Aug 2026):** P0 + P1 shipped on `main` and verified live. Matomo skipped → Clarity + GA4. Do not start P2 until Section 4.1 triggers hit.
 
 ## You in hPanel (before code)
 
-1. [ ] Create/confirm: `contact@`, `subscribers@`, `partner@`, `careers@`, `info@` (optional `no-reply@`). Gmail-test each ops inbox.
-2. [ ] Do **not** forward other mailboxes into `contact@`. Do **not** create `tracking@`.
-3. [ ] Copy SMTP host, port, username, password into a private note (prefer `no-reply@` login).
-4. [ ] Create one MySQL database + user; open phpMyAdmin.
-5. [ ] Create `config` folder (above `public_html` or inside + `.htaccess` deny).
-6. [ ] Try Hostinger Auto Installer for Matomo. If missing/failing/slow → skip and write “analytics later.”
+1. [x] Create/confirm: `contact@`, `subscribers@`, `partner@`, `careers@`, `info@` (optional `no-reply@`). Gmail-test each ops inbox.
+2. [x] Do **not** forward other mailboxes into `contact@`. Do **not** create `tracking@`.
+3. [x] Copy SMTP host, port, username, password into a private note (prefer `no-reply@` login).
+4. [x] Create one MySQL database + user; open phpMyAdmin.
+5. [x] Create `config` folder (above `public_html` or inside + `.htaccess` deny).
+6. [x] Try Hostinger Auto Installer for Matomo. **Skipped** — not available / not used. Live analytics = Clarity + GA4.
 
 ## Code (P0 — inbox first)
 
-7. [ ] Add `config/zaftys-secrets.php` template (real passwords never committed) + gitignore.
-8. [ ] Add one SMTP helper file; stop using PHP `mail()`.
-9. [ ] Point each form at the helper with the correct **To:** (`contact@` / `subscribers@` / `partner@` / `careers@`).
-10. [ ] Honeypot + validation + max field length on all four APIs.
-11. [ ] Simple file-based rate limit.
-12. [ ] Production test: Contact form → `contact@` only. Newsletter → MySQL + `subscribers@`. Partner → `partner@`. Careers → `careers@`.
+7. [x] Add `config/zaftys-secrets.php` template (real passwords never committed) + gitignore.
+8. [x] Add one SMTP helper file; stop using PHP `mail()`.
+9. [x] Point each form at the helper with the correct **To:** (`contact@` / `subscribers@` / `partner@` / `careers@`).
+10. [x] Honeypot + validation + max field length on all four APIs.
+11. [x] Simple file-based rate limit.
+12. [x] Production test: Contact form → `contact@` only. Newsletter → MySQL + `subscribers@`. Partner → `partner@`. Careers → `careers@`.
 
 ## Code (P1 — list)
 
-13. [ ] Paste `CREATE TABLE` in phpMyAdmin.
-14. [ ] `newsletter.php`: insert, unique email, consent, source, UTM if present.
-15. [ ] Footer + Blog pass `source`; add newsletter consent line if missing.
-16. [ ] Duplicate subscribe returns success; still one row.
-17. [ ] Unsubscribe = email `subscribers@` + phpMyAdmin `status = unsubscribed`.
-18. [ ] Public mailto / schema / footer → `info@` (not `contact@`).
+13. [x] Paste `CREATE TABLE` in phpMyAdmin (also applied by CI `migrate.php`).
+14. [x] `newsletter.php`: insert, unique email, consent, source, UTM if present.
+15. [x] Footer + Blog pass `source`; add newsletter consent line if missing.
+16. [x] Duplicate subscribe returns success; still one row.
+17. [x] Unsubscribe = email `subscribers@` + phpMyAdmin `status = unsubscribed`.
+18. [x] Public mailto / schema / footer → `info@` (not `contact@`).
 
-## Code (P1 — analytics, only if Matomo exists)
+## Code (P1 — analytics)
 
-19. [ ] SPA pageviews + Section 0.5 events.
-20. [ ] UTM first-touch helper.
-21. [ ] Privacy/Cookie sentence matching the real tracker.
+19. [x] SPA pageviews + CTA/form events (Clarity + GA4; Matomo not used).
+20. [x] UTM first-touch helper.
+21. [x] Privacy/Cookie sentence matching the real tracker (+ exact IP / geo).
 
 ## P2 — do not start
 
@@ -1538,18 +1541,20 @@ Do **not** put the visit table on a public webpage.
 |---|---|
 | Google indexing | No change. Beacon is a background POST |
 | GA4 / Clarity | Unchanged. Do not pass IP into those tags |
-| DPDP | Disclose exact IP + 90-day hosting retention (done in Privacy v1.2) |
+| DPDP | Disclose exact IP + 90-day hosting retention (Privacy v1.3) |
 | Cookie Policy | Server IP is not a cookie; one sentence points at Privacy |
 
 ## 10.7 Checklist
 
-1. [ ] `002_page_visits.sql` applied via migrate on deploy
-2. [ ] Contact / partner / careers / subscriber alert emails include IP
-3. [ ] SPA pageviews POST `/api/visit.php`
-4. [ ] Manual digest workflow sends CSV to `info@`
-5. [ ] Scheduled digest runs on `main` at 07:00 IST
-6. [ ] Rows older than 90 days are deleted by the same job
-7. [ ] Privacy + Cookie copy published
+1. [x] `002_page_visits.sql` applied via migrate on deploy
+2. [x] Contact / partner / careers / subscriber alert emails include IP
+3. [x] SPA pageviews POST `/api/visit.php`
+4. [x] Manual digest workflow sends CSV to `info@`
+5. [x] Scheduled digest runs on `main` at 07:00 IST
+6. [x] Rows older than 90 days are deleted by the same job
+7. [x] Privacy + Cookie copy published
+8. [x] Approximate country/region/city/ISP on visit rows + morning CSV
+9. [x] Optional City + PIN on contact form and `contact@` email
 
 ---
 
@@ -1622,6 +1627,6 @@ Solo-dev rule: **Section 0 easy mode is how we build; Sections 1–7 are what we
 
 ---
 
-**Implementation status:** Email, newsletter MySQL, Clarity, and GA4 shipped to production (merged to `main`, 13 Aug 2026). Exact visitor IP (Section 10) is the next ship.
+**Implementation status:** Complete for v1 (13 Aug 2026). Merged via PRs #1 (email/Clarity/GA4), #2 (exact IP + morning CSV), #3 (geo columns + contact City/PIN). Live on Hostinger.
 
-**Next action:** Merge the visitor-IP feature branch, confirm migrate created `zaftys_page_visits`, submit a test form and check the IP line, then run **Actions → Daily visitor IP digest → Run workflow** once. Morning email starts automatically after that workflow exists on `main`.
+**Next action:** Operate — check `contact@` / `info@` digests, GA4 Realtime, Clarity. Do not start P2 (Listmonk / VPS) until traffic and list size justify it. Unrelated local WIP (sitemap/SEO/report covers) stays out of this track until a separate PR.
