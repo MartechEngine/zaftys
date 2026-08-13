@@ -1,6 +1,7 @@
 <?php
 require_once __DIR__ . '/_bootstrap.php';
 require_once __DIR__ . '/_db.php';
+require_once __DIR__ . '/_geo.php';
 
 header('X-Robots-Tag: noindex, nofollow');
 header('Cache-Control: no-store');
@@ -38,15 +39,20 @@ if (!$pdo) {
     exit;
 }
 
+$ip = zaftys_client_ip();
+$geo = zaftys_geo_for_ip($pdo, $ip);
+
 try {
     $stmt = $pdo->prepare(
         'INSERT INTO zaftys_page_visits
-            (ip, path, referrer, user_agent, utm_source, utm_medium, utm_campaign, utm_content, utm_term)
+            (ip, path, referrer, user_agent, utm_source, utm_medium, utm_campaign, utm_content, utm_term,
+             geo_country, geo_region, geo_city, geo_isp)
          VALUES
-            (:ip, :path, :referrer, :user_agent, :utm_source, :utm_medium, :utm_campaign, :utm_content, :utm_term)'
+            (:ip, :path, :referrer, :user_agent, :utm_source, :utm_medium, :utm_campaign, :utm_content, :utm_term,
+             :geo_country, :geo_region, :geo_city, :geo_isp)'
     );
     $stmt->execute([
-        ':ip' => zaftys_client_ip(),
+        ':ip' => $ip,
         ':path' => $path,
         ':referrer' => $referrer !== '' ? $referrer : null,
         ':user_agent' => $userAgent !== '' ? $userAgent : null,
@@ -55,6 +61,10 @@ try {
         ':utm_campaign' => $utmCampaign !== '' ? $utmCampaign : null,
         ':utm_content' => $utmContent !== '' ? $utmContent : null,
         ':utm_term' => $utmTerm !== '' ? $utmTerm : null,
+        ':geo_country' => $geo['country'],
+        ':geo_region' => $geo['region'],
+        ':geo_city' => $geo['city'],
+        ':geo_isp' => $geo['isp'],
     ]);
 } catch (Throwable $e) {
     echo json_encode(['success' => true]);

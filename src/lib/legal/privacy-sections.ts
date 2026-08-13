@@ -16,7 +16,7 @@ export const privacySections: LegalSection[] = [
           "Vehicle and driver — registration, RC, fitness, permit, insurance, PUC, driver name, licence, Trip-related details.",
           "Trip — origin, destination, cargo information, loading/unloading, status, GPS/location where applicable.",
           "Communications — email, WhatsApp, support conversations, call notes or recordings where lawful.",
-          "Technical — exact IP address, browser, device, server logs, cookies and similar technologies. Website page views may be stored with the visitor IP for security, abuse prevention and traffic measurement, then deleted from hosting after 90 days.",
+          "Technical — exact IP address, approximate city/region/ISP derived from that IP, browser, device, server logs, cookies and similar technologies. Website page views may be stored with the visitor IP for security, abuse prevention and traffic measurement, then deleted from hosting after 90 days. Contact forms may also include an optional city and PIN code you provide.",
           "Payment — invoice, payment status, transaction references, bank/payment details where required for settlement.",
         ],
       },
@@ -28,7 +28,7 @@ export const privacySections: LegalSection[] = [
     blocks: [
       {
         type: "p",
-        text: "We may collect data directly from you; through website forms; when you request services, submit requirements, approve a Vehicle or onboard; from Documents submitted for matching; through authorised partners, apps, GPS/tracking; through business communications; and from publicly available or lawfully obtained sources where appropriate. The hosting server sees the IP address on each request. Form notifications (contact, partner, careers, newsletter alerts) may include that IP. A page-view log may also store IP, path, referrer, browser and campaign tags. Google Analytics 4 and Microsoft Clarity may separately process technical data, including IP, under their policies; ZAFTYS does not send the exact IP into those products as a custom field.",
+        text: "We may collect data directly from you; through website forms (including optional city and PIN on the contact form); when you request services, submit requirements, approve a Vehicle or onboard; from Documents submitted for matching; through authorised partners, apps, GPS/tracking; through business communications; and from publicly available or lawfully obtained sources where appropriate. The hosting server sees the IP address on each request. Form notifications (contact, partner, careers, newsletter alerts) may include that IP and an approximate location/ISP from an IP geolocation lookup (currently ipwho.is). A page-view log may also store IP, approximate city/region/ISP, path, referrer, browser and campaign tags. Google Analytics 4 and Microsoft Clarity may separately process technical data, including IP, under their policies; ZAFTYS does not send the exact IP into those products as a custom field.",
       },
     ],
   },
@@ -72,7 +72,7 @@ export const privacySections: LegalSection[] = [
           "Transporters — Vehicle approval, Trip coordination, delivery.",
           "Fleet Partners and carriers — Trip performance.",
           "Drivers — pickup, delivery and execution.",
-          "Service providers — hosting, cloud, communications, maps/GPS, payments, analytics, authentication, security, storage, support.",
+          "Service providers — hosting, cloud, communications, maps/GPS, IP geolocation lookup, payments, analytics, authentication, security, storage, support.",
           "Professional advisers — lawyers, accountants, insurers, consultants where reasonably necessary.",
           "Authorities — where required or permitted by law.",
           "Business transactions — merger, financing, acquisition or similar, subject to applicable law.",
