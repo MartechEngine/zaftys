@@ -81,31 +81,29 @@ const Home = () => {
         </div>
         <div className="container mx-auto container-padding relative z-10">
           <div className="max-w-4xl text-white">
-            <h1 className="text-5xl md:text-6xl lg:text-7xl font-heading font-bold mb-6 animate-fade-in-up leading-tight">
+            <h1 className="text-5xl md:text-6xl lg:text-7xl font-heading font-bold mb-6 leading-tight">
               ZAFTYS Logistics  -  Industrial Freight Across India.
             </h1>
-            <p className="text-xl md:text-2xl mb-10 text-gray-200 font-light animate-fade-in-up max-w-2xl" style={{ animationDelay: "0.2s" }}>
+            <p className="text-xl md:text-2xl mb-10 text-gray-200 font-light max-w-2xl">
               Company-operated transport, ZAFTYS TMS visibility, and TranZfort verified capacity  -  one partner for cement, steel, mining, and bulk freight.
             </p>
-            <div className="animate-fade-in-up" style={{ animationDelay: "0.4s" }}>
-              <CTAGroup className="justify-start sm:justify-start">
-                <Button asChild size="lg" variant="accent" className="uppercase tracking-wide shadow-lg shadow-accent/20">
-                  <a
-                    href={whatsappUrl()}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    onClick={() => trackEvent("cta_whatsapp", { placement: "hero", intent: "quote" })}
-                  >
-                    Request a Quote <ArrowRight className="ml-2" size={20} />
-                  </a>
+            <CTAGroup className="justify-start sm:justify-start">
+              <Button asChild size="lg" variant="accent" className="uppercase tracking-wide shadow-lg shadow-accent/20">
+                <a
+                  href={whatsappUrl()}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => trackEvent("cta_whatsapp", { placement: "hero", intent: "quote" })}
+                >
+                  Request a Quote <ArrowRight className="ml-2" size={20} />
+                </a>
+              </Button>
+              <Link to="/services">
+                <Button size="lg" variant="on-dark-outline">
+                  Explore Services
                 </Button>
-                <Link to="/services">
-                  <Button size="lg" variant="on-dark-outline">
-                    Explore Services
-                  </Button>
-                </Link>
-              </CTAGroup>
-            </div>
+              </Link>
+            </CTAGroup>
           </div>
         </div>
       </section>
