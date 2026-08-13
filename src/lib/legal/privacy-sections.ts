@@ -142,7 +142,7 @@ export const privacySections: LegalSection[] = [
     blocks: [
       {
         type: "p",
-        text: "Cookie practices are described in the separate Cookie Policy (see legal navigation or /cookies). Essential cookies may be required for site function. Where enabled, website analytics run on self-hosted Matomo (or an equivalent self-hosted tool) on ZAFTYS infrastructure rather than Google Analytics. Optional analytics or marketing cookies (if used) will follow applicable consent requirements.",
+        text: "Cookie practices are described in the separate Cookie Policy (see legal navigation or /cookies). Essential cookies may be required for site function. Where enabled, website analytics and session insights may use Google Analytics 4 and Microsoft Clarity. Optional analytics or marketing cookies (if used) will follow applicable consent requirements.",
       },
     ],
   },

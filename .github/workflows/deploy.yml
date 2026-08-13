@@ -27,8 +27,8 @@ jobs:
 
       - name: Build
         env:
-          VITE_MATOMO_URL: ${{ secrets.VITE_MATOMO_URL }}
-          VITE_MATOMO_SITE_ID: ${{ secrets.VITE_MATOMO_SITE_ID }}
+          VITE_CLARITY_ID: ${{ secrets.VITE_CLARITY_ID }}
+          VITE_GA_MEASUREMENT_ID: ${{ secrets.VITE_GA_MEASUREMENT_ID }}
         run: npm run build
 
       - name: Add SPA fallback (.htaccess) if missing

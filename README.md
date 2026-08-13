@@ -86,8 +86,8 @@ Do not commit `zaftys-secrets.php` or database/SMTP passwords.
 | `MAIL_SUBSCRIBERS` | `subscribers@zaftys.com` |
 | `MAIL_PARTNER` | `partner@zaftys.com` |
 | `MAIL_CAREERS` | `careers@zaftys.com` |
-| `VITE_MATOMO_URL` | empty (analytics off until set) |
-| `VITE_MATOMO_SITE_ID` | empty |
+| `VITE_CLARITY_ID` | Microsoft Clarity project ID |
+| `VITE_GA_MEASUREMENT_ID` | GA4 ID, e.g. `G-XXXXXXXX` |
 
 Create `MIGRATE_TOKEN` once, for example:
 

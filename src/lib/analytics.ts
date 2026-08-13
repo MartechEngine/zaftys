@@ -16,59 +16,92 @@ export type AnalyticsEvent =
 
 declare global {
   interface Window {
-    _paq?: unknown[][];
+    dataLayer?: unknown[];
+    gtag?: (...args: unknown[]) => void;
+    clarity?: (...args: unknown[]) => void;
   }
 }
 
-function matomoUrl(): string {
-  const raw = import.meta.env.VITE_MATOMO_URL?.trim() ?? "";
-  if (!raw) return "";
-  return raw.endsWith("/") ? raw : `${raw}/`;
+function clarityId(): string {
+  return import.meta.env.VITE_CLARITY_ID?.trim() ?? "";
 }
 
-function matomoSiteId(): string {
-  return import.meta.env.VITE_MATOMO_SITE_ID?.trim() ?? "";
+function gaMeasurementId(): string {
+  return import.meta.env.VITE_GA_MEASUREMENT_ID?.trim() ?? "";
 }
 
 export function isAnalyticsEnabled(): boolean {
-  return Boolean(matomoUrl() && matomoSiteId());
+  return Boolean(clarityId() || gaMeasurementId());
 }
 
-function categoryFor(event: AnalyticsEvent): string {
-  if (event.startsWith("cta_")) return "cta";
-  if (event.startsWith("form_") || event.startsWith("newsletter_")) return "form";
-  return "content";
+function ensureGtag(): void {
+  window.dataLayer = window.dataLayer || [];
+  if (!window.gtag) {
+    window.gtag = (...args: unknown[]) => {
+      window.dataLayer?.push(args);
+    };
+  }
 }
 
-export function initAnalytics(): void {
-  if (typeof window === "undefined" || !isAnalyticsEnabled() || window._paq) return;
+function loadClarity(id: string): void {
+  if (typeof window.clarity === "function") return;
 
-  const url = matomoUrl();
-  const siteId = matomoSiteId();
-  const _paq: unknown[][] = [];
-  window._paq = _paq;
-  _paq.push(["enableLinkTracking"]);
-  _paq.push(["setTrackerUrl", `${url}matomo.php`]);
-  _paq.push(["setSiteId", siteId]);
+  const clarity = (...args: unknown[]) => {
+    const fn = window.clarity as ((...a: unknown[]) => void) & { q?: unknown[][] };
+    fn.q = fn.q || [];
+    fn.q.push(args);
+  };
+  window.clarity = clarity;
 
   const script = document.createElement("script");
   script.async = true;
-  script.src = `${url}matomo.js`;
+  script.src = `https://www.clarity.ms/tag/${encodeURIComponent(id)}`;
   document.head.appendChild(script);
+}
+
+function loadGa4(id: string): void {
+  if (document.querySelector(`script[src*="googletagmanager.com/gtag/js?id=${id}"]`)) return;
+  ensureGtag();
+  const script = document.createElement("script");
+  script.async = true;
+  script.src = `https://www.googletagmanager.com/gtag/js?id=${id}`;
+  document.head.appendChild(script);
+  window.gtag?.("js", new Date());
+  window.gtag?.("config", id, { send_page_view: false, anonymize_ip: true });
+}
+
+export function initAnalytics(): void {
+  if (typeof window === "undefined") return;
+
+  const clarity = clarityId();
+  const ga = gaMeasurementId();
+  if (clarity) loadClarity(clarity);
+  if (ga) loadGa4(ga);
 }
 
 export function trackPageview(path: string, title?: string): void {
   captureUtmFromLocation();
-  if (!window._paq) return;
-  window._paq.push(["setCustomUrl", path]);
-  if (title) window._paq.push(["setDocumentTitle", title]);
-  window._paq.push(["trackPageView"]);
+  const ga = gaMeasurementId();
+  if (!ga || !window.gtag) return;
+  window.gtag("event", "page_view", {
+    page_path: path,
+    page_title: title || document.title,
+    page_location: `${window.location.origin}${path}`,
+  });
 }
 
 export function trackEvent(event: AnalyticsEvent, props?: Record<string, string>): void {
-  if (!window._paq) return;
-  const name = props?.placement || props?.page || props?.intent || "";
-  window._paq.push(["trackEvent", categoryFor(event), event, name]);
+  const params: Record<string, string> = {};
+  if (props?.placement) params.placement = props.placement;
+  if (props?.page) params.page = props.page;
+  if (props?.intent) params.intent = props.intent;
+
+  if (window.gtag && gaMeasurementId()) {
+    window.gtag("event", event, params);
+  }
+  if (typeof window.clarity === "function") {
+    window.clarity("event", event);
+  }
 }
 
 export function mailtoEventFromSubject(subject?: string): {

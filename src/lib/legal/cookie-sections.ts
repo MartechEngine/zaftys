@@ -40,7 +40,7 @@ export const cookieSections: LegalSection[] = [
       },
       {
         type: "p",
-        text: "Where enabled, help understand visitors, pages viewed, traffic sources, campaigns, button clicks and form completions. ZAFTYS prefers self-hosted analytics (Matomo) so data stays on ZAFTYS hosting. Configuration should stay privacy-friendly where practical.",
+        text: "Where enabled, help understand visitors, pages viewed, traffic sources, campaigns, button clicks and form completions. Website analytics may use Google Analytics 4 and Microsoft Clarity, configured in line with applicable privacy requirements.",
       },
       {
         type: "h3",
