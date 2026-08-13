@@ -5,14 +5,15 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { HelmetProvider } from "react-helmet-async";
 import { BrowserRouter, Routes, Route, useLocation, Navigate, useParams } from "react-router-dom";
 import Navigation from "./components/Navigation";
-import Footer from "./components/Footer";
 import NotFound from "./pages/NotFound";
 import { WhatsAppFab } from "./components/WhatsAppButton";
 import { initAnalytics, trackPageview } from "./lib/analytics";
 import { captureUtmFromLocation } from "./lib/utm";
 import { logVisit } from "./lib/visit-log";
+/** Eager: homepage LCP must not wait on a second JS chunk waterfall. */
+import Home from "./pages/Home";
 
-const Home = lazy(() => import("./pages/Home"));
+const Footer = lazy(() => import("./components/Footer"));
 const About = lazy(() => import("./pages/About"));
 const Technology = lazy(() => import("./pages/Technology"));
 const Network = lazy(() => import("./pages/Network"));
@@ -80,7 +81,7 @@ const AppShell = () => {
       <ScrollToTop />
       {!isAuthPage && <Navigation />}
       <Routes>
-        <Route path="/" element={<LazyPage><Home /></LazyPage>} />
+        <Route path="/" element={<Home />} />
         <Route path="/about" element={<LazyPage><About /></LazyPage>} />
         <Route path="/technology" element={<LazyPage><Technology /></LazyPage>} />
         <Route path="/platform" element={<Navigate to="/technology" replace />} />
@@ -118,7 +119,9 @@ const AppShell = () => {
       </Routes>
       {!isAuthPage && (
         <>
-          <Footer />
+          <Suspense fallback={null}>
+            <Footer />
+          </Suspense>
           <WhatsAppFab />
         </>
       )}
