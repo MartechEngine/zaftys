@@ -71,7 +71,6 @@ const Navigation = () => {
               height={86}
               className="h-12 md:h-14 w-auto transition-all"
               decoding="async"
-              fetchPriority="high"
             />
           </Link>
 

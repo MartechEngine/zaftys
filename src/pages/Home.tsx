@@ -16,7 +16,6 @@ import { Link } from "react-router-dom";
 import ServiceCard from "@/components/ServiceCard";
 import ResponsiveImage from "@/components/ResponsiveImage";
 import { TranZfortScreensCarousel } from "@/components/TranZfortScreensCarousel";
-import heroImage from "@/assets/hero-home.jpg";
 import SEO from "@/components/SEO";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { CTAGroup } from "@/components/CTAGroup";
@@ -62,16 +61,23 @@ const Home = () => {
 
       <section className="relative pt-32 pb-24 overflow-hidden min-h-[700px] flex items-center">
         <div className="absolute inset-0">
-          <img
-            src={heroImage}
-            alt="ZAFTYS heavy-haul trucks for industrial freight transport across India"
-            className="w-full h-full object-cover"
-            width={1920}
-            height={1080}
-            loading="eager"
-            fetchPriority="high"
-            decoding="async"
-          />
+          <picture>
+            <source
+              type="image/webp"
+              srcSet="/images/lcp/hero-home-640.webp 640w, /images/lcp/hero-home-960.webp 960w, /images/lcp/hero-home-1280.webp 1280w, /images/lcp/hero-home-1920.webp 1920w"
+              sizes="(max-width: 768px) 100vw, 1280px"
+            />
+            <img
+              src="/images/lcp/hero-home-960.jpg"
+              alt="ZAFTYS heavy-haul trucks for industrial freight transport across India"
+              className="w-full h-full object-cover"
+              width={1280}
+              height={720}
+              loading="eager"
+              fetchPriority="high"
+              decoding="async"
+            />
+          </picture>
           <div className="absolute inset-0 bg-gradient-to-r from-navy/95 via-navy/80 to-navy/40" />
         </div>
         <div className="container mx-auto container-padding relative z-10">
