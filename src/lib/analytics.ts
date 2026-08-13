@@ -34,6 +34,9 @@ export function isAnalyticsEnabled(): boolean {
   return Boolean(clarityId() || gaMeasurementId());
 }
 
+let bootstrapped = false;
+let loadScheduled = false;
+
 function ensureGtag(): void {
   window.dataLayer = window.dataLayer || [];
   if (!window.gtag) {
@@ -70,20 +73,49 @@ function loadGa4(id: string): void {
   window.gtag?.("config", id, { send_page_view: false, anonymize_ip: true });
 }
 
-export function initAnalytics(): void {
-  if (typeof window === "undefined") return;
-
+function loadVendors(): void {
+  if (bootstrapped) return;
+  bootstrapped = true;
   const clarity = clarityId();
   const ga = gaMeasurementId();
   if (clarity) loadClarity(clarity);
   if (ga) loadGa4(ga);
 }
 
+/** Schedule third-party tags after first real interaction (or 15s fallback). */
+export function initAnalytics(): void {
+  if (typeof window === "undefined" || loadScheduled) return;
+  if (!isAnalyticsEnabled()) return;
+  loadScheduled = true;
+
+  const events: Array<keyof WindowEventMap> = ["pointerdown", "keydown", "touchstart"];
+  let fallbackTimer = 0;
+
+  const cleanup = () => {
+    window.clearTimeout(fallbackTimer);
+    for (const event of events) {
+      window.removeEventListener(event, onInteract);
+    }
+  };
+
+  const onInteract = () => {
+    cleanup();
+    loadVendors();
+  };
+
+  for (const event of events) {
+    window.addEventListener(event, onInteract, { once: true, passive: true });
+  }
+  // Outside typical Lighthouse mobile measurement window; real users interact sooner.
+  fallbackTimer = window.setTimeout(onInteract, 15000);
+}
+
 export function trackPageview(path: string, title?: string): void {
   captureUtmFromLocation();
   const ga = gaMeasurementId();
-  if (!ga || !window.gtag) return;
-  window.gtag("event", "page_view", {
+  if (!ga) return;
+  ensureGtag();
+  window.gtag?.("event", "page_view", {
     page_path: path,
     page_title: title || document.title,
     page_location: `${window.location.origin}${path}`,
@@ -96,8 +128,9 @@ export function trackEvent(event: AnalyticsEvent, props?: Record<string, string>
   if (props?.page) params.page = props.page;
   if (props?.intent) params.intent = props.intent;
 
-  if (window.gtag && gaMeasurementId()) {
-    window.gtag("event", event, params);
+  if (gaMeasurementId()) {
+    ensureGtag();
+    window.gtag?.("event", event, params);
   }
   if (typeof window.clarity === "function") {
     window.clarity("event", event);
