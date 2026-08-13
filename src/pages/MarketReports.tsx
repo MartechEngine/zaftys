@@ -37,8 +37,8 @@ const MarketReports = () => {
 
       <PageHero
         badge="Market Reports"
-        title="ZAFTYS Logistics Market Reports  -  Logistics & Supply Chain."
-        description="Industrial freight intelligence for shippers and operators  -  open a report for the sneak peek, then download or read the PDF online."
+        title="ZAFTYS Analytics Market Reports  -  Logistics & Digital Freight."
+        description="Institutional market research on global logistics and digital freight matching  -  open a report for the sneak peek, then download or read the full PDF."
         imageSrc={heroResources}
         imageAlt={pageHeroAlts.reports}
       >

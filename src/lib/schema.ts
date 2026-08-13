@@ -130,9 +130,9 @@ export const resourcesHubSchema = {
 export const reportsCollectionSchema = {
   "@context": "https://schema.org",
   "@type": "CollectionPage",
-  name: "ZAFTYS Logistics Market Reports",
+  name: "ZAFTYS Analytics Market Reports",
   description:
-    "Logistics and supply chain market reports for industrial freight shippers and operators in India.",
+    "Institutional market research on the global logistics market and digital freight matching platforms — size, forecast, segments, and competitive outlook.",
   publisher: organizationRef,
   url: `${BASE}/resources/reports`,
 };
