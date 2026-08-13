@@ -44,27 +44,9 @@ const Home = () => {
   const [hasLcpShell, setHasLcpShell] = useState(() =>
     typeof document !== "undefined" ? Boolean(document.getElementById("lcp-shell")) : false,
   );
-  const [stylesReady, setStylesReady] = useState(false);
 
   useEffect(() => {
     setHasLcpShell(Boolean(document.getElementById("lcp-shell")));
-  }, []);
-
-  useEffect(() => {
-    const enable = () => setStylesReady(true);
-    const link = document.querySelector(
-      'link[rel="stylesheet"][media="print"]',
-    ) as HTMLLinkElement | null;
-    if (!link || link.media === "all") {
-      enable();
-      return;
-    }
-    link.addEventListener("load", enable, { once: true });
-    const t = window.setTimeout(enable, 1200);
-    return () => {
-      link.removeEventListener("load", enable);
-      window.clearTimeout(t);
-    };
   }, []);
 
   const tsmFeatures = [
@@ -131,25 +113,23 @@ const Home = () => {
             >
               Company-operated transport, ZAFTYS TMS visibility, and TranZfort verified capacity  -  one partner for cement, steel, mining, and bulk freight.
             </p>
-            <div style={hasLcpShell && !stylesReady ? { visibility: "hidden" } : undefined}>
-              <CTAGroup className="justify-start sm:justify-start">
-                <Button asChild size="lg" variant="accent" className="uppercase tracking-wide shadow-lg shadow-accent/20">
-                  <a
-                    href={whatsappUrl()}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    onClick={() => trackEvent("cta_whatsapp", { placement: "hero", intent: "quote" })}
-                  >
-                    Request a Quote <ArrowRight className="ml-2" size={20} />
-                  </a>
+            <CTAGroup className="justify-start sm:justify-start">
+              <Button asChild size="lg" variant="accent" className="uppercase tracking-wide shadow-lg shadow-accent/20">
+                <a
+                  href={whatsappUrl()}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => trackEvent("cta_whatsapp", { placement: "hero", intent: "quote" })}
+                >
+                  Request a Quote <ArrowRight className="ml-2" size={20} />
+                </a>
+              </Button>
+              <Link to="/services">
+                <Button size="lg" variant="on-dark-outline">
+                  Explore Services
                 </Button>
-                <Link to="/services">
-                  <Button size="lg" variant="on-dark-outline">
-                    Explore Services
-                  </Button>
-                </Link>
-              </CTAGroup>
-            </div>
+              </Link>
+            </CTAGroup>
           </div>
         </div>
       </section>
