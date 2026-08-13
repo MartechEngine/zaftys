@@ -1466,15 +1466,17 @@ GDPR is **not** assumed to be “off” just because ZAFTYS is an Indian company
 
 | Channel | Exact IP | Where you see it |
 |---|---|---|
-| Contact form | Yes | `contact@` email body |
+| Contact form | Yes | `contact@` — IP, optional City/PIN you typed, plus approximate IP city/ISP |
 | Partner form | Yes | `partner@` email body |
 | Careers form | Yes | `careers@` email body |
 | New newsletter signup | Yes, on the **alert email** | `subscribers@`. MySQL row still stores `ip_hash` only |
-| Every SPA page view | Yes | MySQL `zaftys_page_visits` + morning CSV to `info@` |
+| Every SPA page view | Yes | MySQL `zaftys_page_visits` + morning CSV to `info@` (includes approx country/region/city/ISP) |
 
 IP is taken **only** from `zaftys_client_ip()` (`REMOTE_ADDR`). Ignore any IP the browser sends.
 
-Page-view row also stores: time (UTC), path, referrer, user agent (truncated), UTM tags if present.
+Page-view row also stores: time (UTC), path, referrer, user agent (truncated), UTM tags, and **approximate** country/region/city/ISP from ipwho.is (cached per IP). This is city-level, not GPS — mobile ISPs often show the carrier hub city.
+
+Contact form optional **City** and **PIN** are what the visitor types. That is more accurate for a logistics lead than IP geo.
 
 ## 10.3 How it works
 
@@ -1492,14 +1494,14 @@ Frontend: `src/lib/visit-log.ts` runs next to `trackPageview` in `App.tsx`.
 
 Files:
 
-- `public/config/migrations/002_page_visits.sql`
+- `public/api/_geo.php` — ipwho.is lookup + cache on previous visit rows
 - `public/api/visit.php` — public beacon (rate limited; always returns success to the page)
 - `public/api/visit-digest.php` — token-protected daily job
 - `.github/workflows/visit-digest.yml` — cron `30 1 * * *` (07:00 IST) + manual **Run workflow**
 
-CSV columns: `visited_at,ip,path,referrer,user_agent,utm_source,utm_medium,utm_campaign,utm_content,utm_term`
+CSV columns: `visited_at,ip,country,region,city,isp,path,referrer,user_agent,utm_source,utm_medium,utm_campaign,utm_content,utm_term`
 
-One row **per page view**, not unique IPs only. Capped at 15,000 rows per email so SMTP cannot choke. Times in the CSV are UTC.
+One row **per page view**, not unique IPs only. Capped at 15,000 rows per email so SMTP cannot choke. Times in the CSV are UTC. Geo columns are approximate.
 
 ## 10.4 90-day delete
 
@@ -1522,7 +1524,7 @@ That is expected.
 After this is merged to `main` and deployed:
 
 1. No new Hostinger mailbox is required. Digest goes to existing `info@zaftys.com`. Optional GitHub Secret `MAIL_VISITS` if you want a different inbox.
-2. Submit a test Contact form → confirm the mail has `IP: …`.
+2. Submit a test Contact form (optional City + PIN) → confirm the mail has `IP: …`, `City:`, `PIN:`, and `IP location (approx):`.
 3. Click two pages on zaftys.com.
 4. GitHub → **Actions → Daily visitor IP digest → Run workflow**.
 5. Check `info@` for the CSV.

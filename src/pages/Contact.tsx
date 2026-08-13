@@ -30,6 +30,8 @@ const Contact = () => {
     phone: "",
     email: "",
     interest: "",
+    city: "",
+    pin: "",
     message: "",
     website: "",
   });
@@ -69,6 +71,8 @@ const Contact = () => {
           phone: "",
           email: "",
           interest: "",
+          city: "",
+          pin: "",
           message: "",
           website: "",
         });
@@ -262,6 +266,32 @@ const Contact = () => {
                       onChange={handleChange}
                       required
                     />
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="space-y-2">
+                      <Label htmlFor="city">City (optional)</Label>
+                      <Input
+                        id="city"
+                        placeholder="Pune"
+                        className="h-12"
+                        value={formData.city}
+                        onChange={handleChange}
+                        autoComplete="address-level2"
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="pin">PIN code (optional)</Label>
+                      <Input
+                        id="pin"
+                        inputMode="numeric"
+                        placeholder="411001"
+                        className="h-12"
+                        value={formData.pin}
+                        onChange={handleChange}
+                        autoComplete="postal-code"
+                      />
+                    </div>
                   </div>
 
                   <div className="space-y-2">

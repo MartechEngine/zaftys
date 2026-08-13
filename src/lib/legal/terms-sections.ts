@@ -1,6 +1,6 @@
 import type { LegalSection } from "@/components/legal/LegalDocument";
 
-export const LEGAL_VERSION = "1.2";
+export const LEGAL_VERSION = "1.3";
 export const LEGAL_UPDATED = "13 August 2026";
 
 export const termsIntro =

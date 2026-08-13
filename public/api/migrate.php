@@ -5,6 +5,7 @@
  */
 require_once __DIR__ . '/_config.php';
 require_once __DIR__ . '/_db.php';
+require_once __DIR__ . '/_geo.php';
 
 header('Content-Type: application/json');
 header('X-Robots-Tag: noindex, nofollow');
@@ -55,6 +56,8 @@ try {
         $pdo->exec($sql);
         $applied[] = basename($file);
     }
+    zaftys_ensure_page_visit_geo_columns($pdo);
+    $applied[] = 'page_visit_geo_columns';
 } catch (Throwable $e) {
     http_response_code(500);
     echo json_encode(['success' => false, 'error' => 'Migration failed']);

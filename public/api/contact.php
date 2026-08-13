@@ -1,5 +1,7 @@
 <?php
 require_once __DIR__ . '/_bootstrap.php';
+require_once __DIR__ . '/_db.php';
+require_once __DIR__ . '/_geo.php';
 
 if (!zaftys_rate_limit('contact')) {
     echo json_encode(['success' => true, 'message' => 'Message sent successfully']);
@@ -22,6 +24,12 @@ $name = zaftys_clip((string) ($input['name'] ?? ''), 120);
 $email = zaftys_clip((string) ($input['email'] ?? ''), 255);
 $phone = zaftys_clip((string) ($input['phone'] ?? ''), 40);
 $interest = zaftys_clip((string) ($input['interest'] ?? 'General Inquiry'), 80);
+$city = zaftys_clip((string) ($input['city'] ?? ''), 80);
+$pin = zaftys_clip((string) ($input['pin'] ?? ''), 16);
+$pinDigits = preg_replace('/\D+/', '', $pin) ?? '';
+if (strlen($pinDigits) >= 4 && strlen($pinDigits) <= 10) {
+    $pin = $pinDigits;
+}
 $message = zaftys_clip((string) ($input['message'] ?? ''), 5000);
 
 if ($name === '' || $email === '' || $message === '' || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
@@ -33,8 +41,19 @@ if ($name === '' || $email === '' || $message === '' || !filter_var($email, FILT
 $to = (string) zaftys_secret('mail_contact', 'contact@zaftys.com');
 $subject = 'New Website Inquiry: ' . $interest;
 $body = "New message from the ZAFTYS contact form.\n\n";
-$body .= "Name: {$name}\nEmail: {$email}\nPhone: {$phone}\nInterest: {$interest}\n\nMessage:\n{$message}\n";
+$body .= "Name: {$name}\nEmail: {$email}\nPhone: {$phone}\nInterest: {$interest}\n";
+if ($city !== '') {
+    $body .= "City: {$city}\n";
+}
+if ($pin !== '') {
+    $body .= "PIN: {$pin}\n";
+}
+$body .= "\nMessage:\n{$message}\n";
 $body .= zaftys_email_client_meta();
+$pdo = zaftys_pdo();
+$ip = zaftys_client_ip();
+$geo = $pdo ? zaftys_geo_for_ip($pdo, $ip) : zaftys_geo_lookup_remote($ip);
+$body .= zaftys_geo_email_line($geo);
 
 if (zaftys_smtp_send($to, $subject, $body, $email)) {
     echo json_encode(['success' => true, 'message' => 'Message sent successfully']);

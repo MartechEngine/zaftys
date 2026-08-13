@@ -6,6 +6,7 @@
 require_once __DIR__ . '/_config.php';
 require_once __DIR__ . '/_mail.php';
 require_once __DIR__ . '/_db.php';
+require_once __DIR__ . '/_geo.php';
 
 const ZAFTS_VISIT_CSV_MAX_ROWS = 15000;
 
@@ -38,6 +39,8 @@ if (!$pdo) {
     exit;
 }
 
+zaftys_ensure_page_visit_geo_columns($pdo);
+
 function zaftys_csv_field($value): string
 {
     $text = $value === null ? '' : (string) $value;
@@ -47,7 +50,8 @@ function zaftys_csv_field($value): string
 try {
     $stmt = $pdo->query(
         'SELECT visited_at, ip, path, referrer, user_agent,
-                utm_source, utm_medium, utm_campaign, utm_content, utm_term
+                utm_source, utm_medium, utm_campaign, utm_content, utm_term,
+                geo_country, geo_region, geo_city, geo_isp
          FROM zaftys_page_visits
          WHERE visited_at >= DATE_SUB(UTC_TIMESTAMP(), INTERVAL 24 HOUR)
          ORDER BY visited_at ASC
@@ -66,18 +70,39 @@ if ($truncated) {
 }
 
 $uniqueIps = [];
+$geoByIp = [];
 foreach ($rows as $row) {
     $ip = (string) ($row['ip'] ?? '');
-    if ($ip !== '') {
-        $uniqueIps[$ip] = true;
+    if ($ip === '') {
+        continue;
     }
+    $uniqueIps[$ip] = true;
+    if (isset($geoByIp[$ip])) {
+        continue;
+    }
+    if (($row['geo_city'] ?? '') !== '' || ($row['geo_country'] ?? '') !== '') {
+        $geoByIp[$ip] = [
+            'country' => $row['geo_country'] ?? null,
+            'region' => $row['geo_region'] ?? null,
+            'city' => $row['geo_city'] ?? null,
+            'isp' => $row['geo_isp'] ?? null,
+        ];
+        continue;
+    }
+    $geoByIp[$ip] = zaftys_geo_for_ip($pdo, $ip);
 }
 
-$csv = "visited_at,ip,path,referrer,user_agent,utm_source,utm_medium,utm_campaign,utm_content,utm_term\n";
+$csv = "visited_at,ip,country,region,city,isp,path,referrer,user_agent,utm_source,utm_medium,utm_campaign,utm_content,utm_term\n";
 foreach ($rows as $row) {
+    $ip = (string) ($row['ip'] ?? '');
+    $geo = $geoByIp[$ip] ?? zaftys_geo_empty();
     $csv .= implode(',', [
         zaftys_csv_field($row['visited_at'] ?? ''),
-        zaftys_csv_field($row['ip'] ?? ''),
+        zaftys_csv_field($ip),
+        zaftys_csv_field($geo['country'] ?? ''),
+        zaftys_csv_field($geo['region'] ?? ''),
+        zaftys_csv_field($geo['city'] ?? ''),
+        zaftys_csv_field($geo['isp'] ?? ''),
         zaftys_csv_field($row['path'] ?? ''),
         zaftys_csv_field($row['referrer'] ?? ''),
         zaftys_csv_field($row['user_agent'] ?? ''),
@@ -99,7 +124,7 @@ $body .= 'Unique IPs: ' . count($uniqueIps) . "\n";
 if ($truncated) {
     $body .= 'CSV truncated at ' . ZAFTS_VISIT_CSV_MAX_ROWS . " rows.\n";
 }
-$body .= "Times are stored in UTC.\n";
+$body .= "Times are stored in UTC. Country/region/city/ISP are approximate (IP lookup), not GPS.\n";
 $body .= "Visit rows older than 90 days are deleted from Hostinger after this job.\n";
 $body .= "This CSV is also kept in this email; database deletion does not remove mail already received.\n";
 
