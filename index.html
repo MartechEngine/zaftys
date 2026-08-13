@@ -10,15 +10,14 @@
     <link rel="icon" href="/favicon.ico" sizes="any" />
     <link rel="apple-touch-icon" href="/logo-header-180.png" />
 
-    <!-- Heading font + DPR-aware hero preload (browser picks width from srcset). -->
-    <link rel="preload" href="/fonts/oswald-latin.woff2" as="font" type="font/woff2" crossorigin />
+    <!-- DPR-aware hero preload. Cap display size so desktop PSI does not pull 1920w for a 1350px viewport. -->
     <link
       rel="preload"
       as="image"
       type="image/webp"
       href="/images/lcp/hero-home-1280.webp"
       imagesrcset="/images/lcp/hero-home-640.webp 640w, /images/lcp/hero-home-960.webp 960w, /images/lcp/hero-home-1280.webp 1280w, /images/lcp/hero-home-1920.webp 1920w"
-      imagesizes="100vw"
+      imagesizes="(max-width: 768px) 100vw, 1280px"
       fetchpriority="high"
     />
 
@@ -36,24 +35,67 @@
     <meta name="twitter:title" content="ZAFTYS Logistics  -  Industrial Freight Across India" />
     <meta name="twitter:description" content="Industrial freight across India. Company-operated fleet, ZAFTYS TMS, and TranZfort capacity." />
     <meta name="twitter:image" content="https://zaftys.com/og-image.png" />
+
+    <style>
+      html, body { margin: 0; background: #0a1628; }
+      #lcp-shell {
+        position: absolute;
+        inset: 0 0 auto 0;
+        min-height: 520px;
+        height: 100vh;
+        max-height: 900px;
+        overflow: hidden;
+        background: #0a1628;
+        z-index: 0;
+        pointer-events: none;
+      }
+      #lcp-shell img {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      #lcp-shell .lcp-grad {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(to right, rgba(10, 22, 40, 0.95), rgba(10, 22, 40, 0.45));
+      }
+      #lcp-shell .lcp-copy {
+        position: relative;
+        z-index: 1;
+        max-width: 56rem;
+        padding: 7rem 1.25rem 3rem;
+        color: #fff;
+        font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      }
+      #lcp-shell h1 {
+        margin: 0;
+        font-size: clamp(2rem, 8vw, 3rem);
+        font-weight: 700;
+        line-height: 1.15;
+      }
+      @media (min-width: 768px) {
+        #lcp-shell .lcp-copy { padding: 8rem 1.5rem 3rem; }
+        #lcp-shell h1 { font-size: clamp(2.75rem, 5vw, 4.5rem); }
+      }
+      #root { position: relative; z-index: 1; }
+    </style>
   </head>
 
   <body>
     <div id="root"></div>
-    <!-- Paint homepage LCP before the React module loads (SPA otherwise has an empty #root). -->
     <script>
       (function () {
         var path = location.pathname;
         if (path !== "/" && path !== "") return;
-        var root = document.getElementById("root");
-        if (!root || root.childNodes.length) return;
-        root.innerHTML =
-          '<div style="min-height:70vh;background:#0a1628;position:relative;overflow:hidden">' +
-          '<img src="/images/lcp/hero-home-960.webp" srcset="/images/lcp/hero-home-640.webp 640w, /images/lcp/hero-home-960.webp 960w, /images/lcp/hero-home-1280.webp 1280w, /images/lcp/hero-home-1920.webp 1920w" sizes="100vw" width="1280" height="720" alt="ZAFTYS heavy-haul trucks for industrial freight transport across India" fetchpriority="high" decoding="async" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover" />' +
-          '<div style="position:absolute;inset:0;background:linear-gradient(to right,rgba(10,22,40,.95),rgba(10,22,40,.45))"></div>' +
-          '<div style="position:relative;z-index:1;max-width:56rem;padding:7rem 1.25rem 3.5rem;color:#fff;font-family:system-ui,-apple-system,Segoe UI,sans-serif">' +
-          "<h1 style=\"margin:0;font-size:clamp(2rem,5vw,4.25rem);font-weight:700;line-height:1.1\">ZAFTYS Logistics  -  Industrial Freight Across India.</h1>" +
-          "</div></div>";
+        var shell = document.createElement("div");
+        shell.id = "lcp-shell";
+        shell.innerHTML =
+          '<img src="/images/lcp/hero-home-960.webp" srcset="/images/lcp/hero-home-640.webp 640w, /images/lcp/hero-home-960.webp 960w, /images/lcp/hero-home-1280.webp 1280w, /images/lcp/hero-home-1920.webp 1920w" sizes="(max-width: 768px) 100vw, 1280px" width="1280" height="720" alt="" fetchpriority="high" decoding="async" />' +
+          '<div class="lcp-grad" aria-hidden="true"></div>' +
+          '<div class="lcp-copy"><h1>ZAFTYS Logistics  -  Industrial Freight Across India.</h1></div>';
+        document.body.insertBefore(shell, document.getElementById("root"));
       })();
     </script>
     <script type="module" src="/src/main.tsx"></script>
