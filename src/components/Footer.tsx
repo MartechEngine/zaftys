@@ -63,7 +63,7 @@ const Footer = () => {
   ];
 
   const platformLinks = [
-    { name: "Platform (TMS™)", path: "/technology" },
+    { name: "ZAFTYS TMS", path: "/technology" },
     { name: "TranZfort Network", path: "/network" },
     { name: "Login", path: "/login" },
   ];
@@ -193,7 +193,7 @@ const Footer = () => {
           </div>
 
           <div>
-            <h4 className="text-lg font-bold text-white mb-6 font-heading uppercase tracking-wider">Platform</h4>
+            <h4 className="text-lg font-bold text-white mb-6 font-heading uppercase tracking-wider">Technology</h4>
             <ul className="space-y-3">
               {platformLinks.map((link) => (
                 <li key={link.name}>

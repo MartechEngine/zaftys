@@ -183,7 +183,7 @@ const Technology = () => {
       <section className="section-padding bg-muted/30">
         <div className="container mx-auto container-padding">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-heading font-bold mb-4 text-navy">Platform Capabilities</h2>
+            <h2 className="text-4xl font-heading font-bold mb-4 text-navy">ZAFTYS TMS Capabilities</h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
               Everything you need to manage heavy freight operations, in one place.
             </p>
