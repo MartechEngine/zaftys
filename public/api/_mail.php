@@ -22,7 +22,16 @@ function zaftys_smtp_cmd($fp, ?string $cmd, int $expect): bool
     return $code === $expect;
 }
 
-function zaftys_smtp_send(string $to, string $subject, string $body, string $replyTo = ''): bool
+/**
+ * @param array{filename: string, content: string, mime?: string}|null $attachment
+ */
+function zaftys_smtp_send(
+    string $to,
+    string $subject,
+    string $body,
+    string $replyTo = '',
+    ?array $attachment = null
+): bool
 {
     $host = (string) zaftys_secret('smtp_host');
     $port = (int) zaftys_secret('smtp_port', 465);
@@ -98,8 +107,6 @@ function zaftys_smtp_send(string $to, string $subject, string $body, string $rep
         'To: ' . $to,
         'Subject: ' . $encodedSubject,
         'MIME-Version: 1.0',
-        'Content-Type: text/plain; charset=UTF-8',
-        'Content-Transfer-Encoding: 8bit',
         'X-Mailer: ZAFTYS-Website',
     ];
     if ($replyTo !== '' && filter_var($replyTo, FILTER_VALIDATE_EMAIL)) {
@@ -107,7 +114,29 @@ function zaftys_smtp_send(string $to, string $subject, string $body, string $rep
     }
 
     $safeBody = str_replace(["\r\n.", "\n."], ["\r\n..", "\n.."], $body);
-    $payload = implode("\r\n", $headers) . "\r\n\r\n" . $safeBody . "\r\n.";
+    $filename = isset($attachment['filename']) ? (string) $attachment['filename'] : '';
+    $fileContent = isset($attachment['content']) ? (string) $attachment['content'] : '';
+    if ($filename !== '' && $fileContent !== '') {
+        $boundary = '=_Zaftys_' . bin2hex(random_bytes(12));
+        $mime = (string) ($attachment['mime'] ?? 'text/csv; charset=UTF-8');
+        $safeName = str_replace(['"', "\r", "\n"], '', $filename);
+        $headers[] = 'Content-Type: multipart/mixed; boundary="' . $boundary . '"';
+        $message = '--' . $boundary . "\r\n";
+        $message .= "Content-Type: text/plain; charset=UTF-8\r\n";
+        $message .= "Content-Transfer-Encoding: 8bit\r\n\r\n";
+        $message .= $safeBody . "\r\n";
+        $message .= '--' . $boundary . "\r\n";
+        $message .= 'Content-Type: ' . $mime . '; name="' . $safeName . '"' . "\r\n";
+        $message .= "Content-Transfer-Encoding: base64\r\n";
+        $message .= 'Content-Disposition: attachment; filename="' . $safeName . '"' . "\r\n\r\n";
+        $message .= chunk_split(base64_encode($fileContent));
+        $message .= '--' . $boundary . "--\r\n";
+        $payload = implode("\r\n", $headers) . "\r\n\r\n" . $message . "\r\n.";
+    } else {
+        $headers[] = 'Content-Type: text/plain; charset=UTF-8';
+        $headers[] = 'Content-Transfer-Encoding: 8bit';
+        $payload = implode("\r\n", $headers) . "\r\n\r\n" . $safeBody . "\r\n.";
+    }
     fwrite($fp, $payload . "\r\n");
 
     $ok = zaftys_smtp_cmd($fp, null, 250);

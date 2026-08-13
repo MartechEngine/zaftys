@@ -12,6 +12,17 @@ function zaftys_ip_hash(): string
     return hash('sha256', $salt . '|' . zaftys_client_ip());
 }
 
+function zaftys_email_client_meta(): string
+{
+    $ip = zaftys_client_ip();
+    $out = "\nIP: {$ip}\n";
+    $ref = trim((string) ($_SERVER['HTTP_REFERER'] ?? ''));
+    if ($ref !== '') {
+        $out .= 'Page: ' . zaftys_clip($ref, 512) . "\n";
+    }
+    return $out;
+}
+
 /** Simple file limiter: $max hits per $windowSeconds per endpoint + IP hash. */
 function zaftys_rate_limit(string $endpoint, int $max = 10, int $windowSeconds = 600): bool
 {

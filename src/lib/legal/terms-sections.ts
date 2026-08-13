@@ -1,7 +1,7 @@
 import type { LegalSection } from "@/components/legal/LegalDocument";
 
-export const LEGAL_VERSION = "1.1";
-export const LEGAL_UPDATED = "11 August 2026";
+export const LEGAL_VERSION = "1.2";
+export const LEGAL_UPDATED = "13 August 2026";
 
 export const termsIntro =
   "These Website Terms of Use & Service (\"Terms\") govern access to zaftys.com and ZAFTYS logistics, capacity-facilitation, transporter/fleet-partner and technology services. They operate together with Trip Documentation. Where a specific written commercial agreement applies, that agreement prevails to the extent of any inconsistency. Review by an Indian advocate is recommended before treating this as definitive for disputes.";

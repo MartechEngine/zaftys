@@ -50,6 +50,7 @@ return [
     'mail_subscribers' => ${phpQuote(optional("MAIL_SUBSCRIBERS", "subscribers@zaftys.com"))},
     'mail_partner' => ${phpQuote(optional("MAIL_PARTNER", "partner@zaftys.com"))},
     'mail_careers' => ${phpQuote(optional("MAIL_CAREERS", "careers@zaftys.com"))},
+    'mail_visits' => ${phpQuote(optional("MAIL_VISITS", "info@zaftys.com"))},
 
     'db_host' => ${phpQuote(optional("DB_HOST", "localhost"))},
     'db_name' => ${phpQuote(dbName)},

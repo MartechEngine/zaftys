@@ -39,7 +39,9 @@ Push to `main` (or run **Actions → Build and Deploy ZAFTYS to Hostinger via FT
 1. Build the Vite site (copies `public/api` and `public/config` into `dist/`)
 2. Generate `dist/config/zaftys-secrets.php` from GitHub Secrets
 3. FTP `dist/` to Hostinger `public_html/`
-4. POST `/api/migrate.php` to apply `public/config/migrations/*.sql` (newsletter table)
+4. POST `/api/migrate.php` to apply `public/config/migrations/*.sql` (newsletter + page-visit tables)
+
+A separate scheduled workflow emails a 24-hour visitor CSV to `info@zaftys.com` and deletes visit rows older than 90 days.
 
 Do not commit `zaftys-secrets.php` or database/SMTP passwords.
 
@@ -86,6 +88,7 @@ Do not commit `zaftys-secrets.php` or database/SMTP passwords.
 | `MAIL_SUBSCRIBERS` | `subscribers@zaftys.com` |
 | `MAIL_PARTNER` | `partner@zaftys.com` |
 | `MAIL_CAREERS` | `careers@zaftys.com` |
+| `MAIL_VISITS` | `info@zaftys.com` (daily visitor CSV) |
 | `VITE_CLARITY_ID` | Microsoft Clarity project ID |
 | `VITE_GA_MEASUREMENT_ID` | GA4 ID, e.g. `G-XXXXXXXX` |
 

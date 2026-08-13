@@ -19,6 +19,7 @@ return [
     'mail_subscribers' => 'subscribers@zaftys.com',
     'mail_partner' => 'partner@zaftys.com',
     'mail_careers' => 'careers@zaftys.com',
+    'mail_visits' => 'info@zaftys.com',
 
     'db_host' => 'localhost',
     'db_name' => '',

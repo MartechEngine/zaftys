@@ -4,7 +4,7 @@
 |---|---|
 | **Project** | `zaftys-main` — marketing site (`zaftys.com`) |
 | **Purpose** | Production architecture for website traffic analytics, conversion/lead tracking, inbound form email, newsletter subscription storage, attribution, privacy, and future newsletter campaigns |
-| **Status** | **Decisions locked — v2 + solo-dev easy mode (13 Aug 2026)** |
+| **Status** | **v1 email + Clarity/GA4 shipped. Exact visitor IP logging in progress (13 Aug 2026)** |
 | **Owner** | CTO / solo engineering |
 | **Last updated** | 13 August 2026 |
 | **Related** | `marketing/SEO&Blog.md`, `marketing-website-sitemap-new.md`, `legal/terms-and-policies-draft.md`, `public/api/*.php` |
@@ -14,7 +14,7 @@
 
 ## How to use this file
 
-**If you are implementing:** start at **Section 0 (Solo-dev easy mode)** and **Section 8**. Those are the actual work.
+**If you are implementing:** start at **Section 0 (Solo-dev easy mode)**, **Section 8**, and **Section 10 (exact visitor IP)**.
 
 The rest of this file is the **full architecture** (keep it). Do not try to build every checklist in one pass.
 
@@ -27,10 +27,29 @@ The rest of this file is the **full architecture** (keep it). Do not try to buil
 7. **Section 6** — Operational procedures.
 8. **Section 7** — Decision log and rejected options.
 9. **Section 8** — Immediate engineering actions.
+10. **Section 10** — Exact visitor IP, form-email IPs, morning CSV, 90-day delete.
 
 Mark checklist items `[x]` only when shipped and verified in production.
 
 Do not reopen rejected options without a new CTO decision recorded in Section 7.
+
+---
+
+# Current production stack (as of 13 August 2026)
+
+This overrides older Matomo-first wording later in the file.
+
+| Piece | What is live |
+|---|---|
+| Form email | Hostinger SMTP. Contact → `contact@`, Partner → `partner@`, Careers → `careers@` |
+| Newsletter | MySQL `zaftys_newsletter_subscribers`. New signups alert `subscribers@`. Unsubscribe = email `subscribers@` |
+| Public mailto | `info@zaftys.com` |
+| Traffic analytics | **Microsoft Clarity** + **GA4** (not Matomo). IDs from GitHub Secrets at build time |
+| Exact visitor IP | **Section 10** — own MySQL log + form emails + morning CSV to `info@`. Not taken from GA4/Clarity |
+| Secrets | GitHub Actions writes `zaftys-secrets.php` on deploy. Never commit that file |
+| Deploy | Push `main` → FTP to Hostinger → `POST /api/migrate.php` |
+
+GA4 is configured with `anonymize_ip: true`. Clarity/GA4 are **not** the source of exact IPs. Exact IPs come only from Hostinger `REMOTE_ADDR`.
 
 ---
 
@@ -1357,6 +1376,9 @@ All public endpoints should have:
 | 2026-08-13 | phpMyAdmin-only list admin in v1 | No export endpoint |
 | 2026-08-13 | `form_quote_success` not in v1 | No separate quote form; use WhatsApp/mailto + contact `interest` |
 | 2026-08-13 | SMTP as `contact@` if `no-reply@` is extra | One mailbox is enough to start |
+| 2026-08-13 | Clarity + GA4 instead of Matomo | Matomo not in Hostinger Auto Installer; live tracking uses GitHub Secrets `VITE_CLARITY_ID` and `VITE_GA_MEASUREMENT_ID` |
+| 2026-08-13 | Exact visitor IP logging approved | Server `REMOTE_ADDR` stored in MySQL; IP on form emails; morning CSV to `info@`; auto-delete after 90 days |
+| 2026-08-13 | Do not send exact IP into GA4/Clarity events | Google/Microsoft products stay anonymized; ZAFTYS owns the raw IP log |
 
 ---
 
@@ -1373,9 +1395,11 @@ All public endpoints should have:
 | Mautic | Deferred | Automation suite is unnecessary until marketing automation becomes a real requirement |
 | phpList | Deferred alternative | Possible future packaged newsletter UI |
 | Matomo regardless of hosting limits | Rejected | Hosting reliability takes priority; use Umami fallback |
-| Session replay in v1 | Rejected/deferred | Privacy and operational complexity |
-| Raw IP storage | Rejected by default | Data minimization |
-| User-Agent storage | Rejected by default | No current business requirement |
+| Session replay in v1 | Rejected/deferred as a self-built feature | Microsoft Clarity already provides session insights |
+| Raw IP storage | **Reversed 13 Aug 2026** | Exact IP now stored for 90 days (Section 10). Still do not send IP into GA4/Clarity |
+| User-Agent storage | **Reversed 13 Aug 2026 for visit log** | Stored truncated on `zaftys_page_visits` for the morning CSV |
+| Email every pageview | Rejected | Inbox flood / SMTP limits. Daily CSV digest instead |
+| phpMyAdmin as the only way to see visitor IPs | Rejected for operations | Form emails + morning CSV. phpMyAdmin remains a backup |
 | Double opt-in in v1 | Deferred | Solo-dev complexity; Listmonk later |
 | Umami VPS in v1 | Deferred | Only if Matomo one-click fails **and** dashboards are urgently needed |
 | Mixing all forms into `contact@` | Rejected | Contact inbox stays form-only |
@@ -1423,6 +1447,107 @@ Follow **Section 0.7**. Do not start P2. Skip analytics if Matomo is not a Hosti
 ## P2 — do not start
 
 22. [ ] Listmonk / Umami VPS / export PHP / double opt-in / careers uploads — only when Section 4.1 triggers hit.
+
+---
+
+# 10. Exact visitor IP (locked 13 August 2026)
+
+## 10.1 Why this exists
+
+GA4 and Clarity do **not** give ZAFTYS the exact visitor IP (GA4 uses `anonymize_ip: true`). The Hostinger server already sees `REMOTE_ADDR` on every request. This section stores that address so operations can see it without logging into phpMyAdmin every day.
+
+This does **not** change Google indexing. Do **not** send the IP to `gtag` or Clarity as a custom event property.
+
+IP is personal data under Indian DPDP. Privacy Policy + Cookie Policy must describe exact IP, purpose, and 90-day hosting retention. Cookie Policy notes that server IP logging is **not** a cookie and can continue if analytics cookies are blocked.
+
+GDPR is **not** assumed to be “off” just because ZAFTYS is an Indian company. If EU visitors or EU customers appear, review again. This v1 log is for security, abuse, and traffic measurement — not for selling data.
+
+## 10.2 What we collect
+
+| Channel | Exact IP | Where you see it |
+|---|---|---|
+| Contact form | Yes | `contact@` email body |
+| Partner form | Yes | `partner@` email body |
+| Careers form | Yes | `careers@` email body |
+| New newsletter signup | Yes, on the **alert email** | `subscribers@`. MySQL row still stores `ip_hash` only |
+| Every SPA page view | Yes | MySQL `zaftys_page_visits` + morning CSV to `info@` |
+
+IP is taken **only** from `zaftys_client_ip()` (`REMOTE_ADDR`). Ignore any IP the browser sends.
+
+Page-view row also stores: time (UTC), path, referrer, user agent (truncated), UTM tags if present.
+
+## 10.3 How it works
+
+```text
+Browser pageview  →  POST /api/visit.php  →  INSERT zaftys_page_visits (exact IP)
+Form submit       →  existing PHP APIs    →  email inbox includes "IP: …"
+
+Every morning     →  GitHub Action 07:00 IST
+                  →  POST /api/visit-digest.php (MIGRATE_TOKEN)
+                  →  CSV of last 24 hours attached to info@
+                  →  DELETE rows older than 90 days
+```
+
+Frontend: `src/lib/visit-log.ts` runs next to `trackPageview` in `App.tsx`.
+
+Files:
+
+- `public/config/migrations/002_page_visits.sql`
+- `public/api/visit.php` — public beacon (rate limited; always returns success to the page)
+- `public/api/visit-digest.php` — token-protected daily job
+- `.github/workflows/visit-digest.yml` — cron `30 1 * * *` (07:00 IST) + manual **Run workflow**
+
+CSV columns: `visited_at,ip,path,referrer,user_agent,utm_source,utm_medium,utm_campaign,utm_content,utm_term`
+
+One row **per page view**, not unique IPs only. Capped at 15,000 rows per email so SMTP cannot choke. Times in the CSV are UTC.
+
+## 10.4 90-day delete
+
+The digest job runs:
+
+```sql
+DELETE FROM zaftys_page_visits
+WHERE visited_at < DATE_SUB(UTC_TIMESTAMP(), INTERVAL 90 DAY)
+```
+
+This removes IPs from **Hostinger MySQL**. It does **not** delete:
+
+- emails already in `contact@` / `partner@` / `careers@` / `subscribers@` / `info@`
+- CSV attachments already received
+
+That is expected.
+
+## 10.5 What you do (solo-dev)
+
+After this is merged to `main` and deployed:
+
+1. No new Hostinger mailbox is required. Digest goes to existing `info@zaftys.com`. Optional GitHub Secret `MAIL_VISITS` if you want a different inbox.
+2. Submit a test Contact form → confirm the mail has `IP: …`.
+3. Click two pages on zaftys.com.
+4. GitHub → **Actions → Daily visitor IP digest → Run workflow**.
+5. Check `info@` for the CSV.
+6. After that, the morning mail is automatic. phpMyAdmin is backup only.
+
+Do **not** put the visit table on a public webpage.
+
+## 10.6 SEO / analytics / policy (short)
+
+| Concern | Result |
+|---|---|
+| Google indexing | No change. Beacon is a background POST |
+| GA4 / Clarity | Unchanged. Do not pass IP into those tags |
+| DPDP | Disclose exact IP + 90-day hosting retention (done in Privacy v1.2) |
+| Cookie Policy | Server IP is not a cookie; one sentence points at Privacy |
+
+## 10.7 Checklist
+
+1. [ ] `002_page_visits.sql` applied via migrate on deploy
+2. [ ] Contact / partner / careers / subscriber alert emails include IP
+3. [ ] SPA pageviews POST `/api/visit.php`
+4. [ ] Manual digest workflow sends CSV to `info@`
+5. [ ] Scheduled digest runs on `main` at 07:00 IST
+6. [ ] Rows older than 90 days are deleted by the same job
+7. [ ] Privacy + Cookie copy published
 
 ---
 
@@ -1495,6 +1620,6 @@ Solo-dev rule: **Section 0 easy mode is how we build; Sections 1–7 are what we
 
 ---
 
-**Implementation status:** Not started at the time of this document revision.
+**Implementation status:** Email, newsletter MySQL, Clarity, and GA4 shipped to production (merged to `main`, 13 Aug 2026). Exact visitor IP (Section 10) is the next ship.
 
-**Next action:** You complete Section 0.3 in hPanel (inbox, SMTP notes, MySQL, optional Matomo installer). Then we add the SMTP helper and newsletter table in the repo. Inbox before dashboards. Do not open a VPS until Matomo is skipped **and** you actually need analytics.
+**Next action:** Merge the visitor-IP feature branch, confirm migrate created `zaftys_page_visits`, submit a test form and check the IP line, then run **Actions → Daily visitor IP digest → Run workflow** once. Morning email starts automatically after that workflow exists on `main`.

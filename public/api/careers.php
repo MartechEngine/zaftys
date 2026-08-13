@@ -35,6 +35,7 @@ $body .= "Name: {$name}\nEmail: {$email}\n";
 if ($resumeFileName !== '') {
     $body .= "Resume file name (not attached): {$resumeFileName}\n";
 }
+$body .= zaftys_email_client_meta();
 
 if (zaftys_smtp_send($to, $subject, $body, $email)) {
     echo json_encode(['success' => true, 'message' => 'Application submitted']);
