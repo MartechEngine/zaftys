@@ -66,6 +66,7 @@ jobs:
           MAIL_SUBSCRIBERS: ${{ secrets.MAIL_SUBSCRIBERS }}
           MAIL_PARTNER: ${{ secrets.MAIL_PARTNER }}
           MAIL_CAREERS: ${{ secrets.MAIL_CAREERS }}
+          MAIL_VISITS: ${{ secrets.MAIL_VISITS }}
           IP_HASH_SALT: ${{ secrets.IP_HASH_SALT }}
           MIGRATE_TOKEN: ${{ secrets.MIGRATE_TOKEN }}
           ZAFTS_SECRETS_OUT: dist/config/zaftys-secrets.php

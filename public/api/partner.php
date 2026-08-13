@@ -36,6 +36,7 @@ $body .= "Company: {$company}\nContact Person: {$contact}\nPhone: {$phone}\n";
 if ($fleet !== '') {
     $body .= "Fleet Size: {$fleet}\n";
 }
+$body .= zaftys_email_client_meta();
 
 if (zaftys_smtp_send($to, $subject, $body)) {
     echo json_encode(['success' => true, 'message' => 'Application submitted']);

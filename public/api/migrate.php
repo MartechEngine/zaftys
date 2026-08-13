@@ -16,29 +16,13 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     exit;
 }
 
-$expected = (string) zaftys_secret('migrate_token', '');
-if ($expected === '' || $expected === 'CHANGE_ME') {
+if (!zaftys_ops_token_configured()) {
     http_response_code(404);
     echo json_encode(['success' => false, 'error' => 'Not found']);
     exit;
 }
 
-$provided = '';
-$auth = (string) ($_SERVER['HTTP_AUTHORIZATION'] ?? $_SERVER['REDIRECT_HTTP_AUTHORIZATION'] ?? '');
-if (preg_match('/^Bearer\s+(.+)$/i', $auth, $m)) {
-    $provided = trim($m[1]);
-}
-if ($provided === '') {
-    $provided = trim((string) ($_SERVER['HTTP_X_ZAFTYS_MIGRATE_TOKEN'] ?? ''));
-}
-if ($provided === '') {
-    $body = json_decode((string) file_get_contents('php://input'), true);
-    if (is_array($body) && isset($body['token'])) {
-        $provided = trim((string) $body['token']);
-    }
-}
-
-if ($provided === '' || !hash_equals($expected, $provided)) {
+if (!zaftys_ops_token_valid()) {
     http_response_code(401);
     echo json_encode(['success' => false, 'error' => 'Unauthorized']);
     exit;

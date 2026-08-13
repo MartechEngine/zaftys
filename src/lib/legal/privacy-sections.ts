@@ -16,7 +16,7 @@ export const privacySections: LegalSection[] = [
           "Vehicle and driver — registration, RC, fitness, permit, insurance, PUC, driver name, licence, Trip-related details.",
           "Trip — origin, destination, cargo information, loading/unloading, status, GPS/location where applicable.",
           "Communications — email, WhatsApp, support conversations, call notes or recordings where lawful.",
-          "Technical — IP, browser, device, logs, cookies and similar technologies.",
+          "Technical — exact IP address, browser, device, server logs, cookies and similar technologies. Website page views may be stored with the visitor IP for security, abuse prevention and traffic measurement, then deleted from hosting after 90 days.",
           "Payment — invoice, payment status, transaction references, bank/payment details where required for settlement.",
         ],
       },
@@ -28,7 +28,7 @@ export const privacySections: LegalSection[] = [
     blocks: [
       {
         type: "p",
-        text: "We may collect data directly from you; through website forms; when you request services, submit requirements, approve a Vehicle or onboard; from Documents submitted for matching; through authorised partners, apps, GPS/tracking; through business communications; and from publicly available or lawfully obtained sources where appropriate.",
+        text: "We may collect data directly from you; through website forms; when you request services, submit requirements, approve a Vehicle or onboard; from Documents submitted for matching; through authorised partners, apps, GPS/tracking; through business communications; and from publicly available or lawfully obtained sources where appropriate. The hosting server sees the IP address on each request. Form notifications (contact, partner, careers, newsletter alerts) may include that IP. A page-view log may also store IP, path, referrer, browser and campaign tags. Google Analytics 4 and Microsoft Clarity may separately process technical data, including IP, under their policies; ZAFTYS does not send the exact IP into those products as a custom field.",
       },
     ],
   },
@@ -94,7 +94,7 @@ export const privacySections: LegalSection[] = [
       },
       {
         type: "p",
-        text: "Data may be retained as reasonably necessary for services, relationships, contracts, accounting, tax, claims, disputes, fraud prevention, security and regulatory requirements. When no longer required and no legal obligation remains, data may be deleted, anonymised or securely disposed of.",
+        text: "Website page-view records that include exact IP addresses are deleted from ZAFTYS hosting after 90 days. Copies already sent by email (form notifications or the daily visit CSV) remain in those mailboxes. Other data may be retained as reasonably necessary for services, relationships, contracts, accounting, tax, claims, disputes, fraud prevention, security and regulatory requirements. When no longer required and no legal obligation remains, data may be deleted, anonymised or securely disposed of.",
       },
     ],
   },

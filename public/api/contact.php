@@ -34,6 +34,7 @@ $to = (string) zaftys_secret('mail_contact', 'contact@zaftys.com');
 $subject = 'New Website Inquiry: ' . $interest;
 $body = "New message from the ZAFTYS contact form.\n\n";
 $body .= "Name: {$name}\nEmail: {$email}\nPhone: {$phone}\nInterest: {$interest}\n\nMessage:\n{$message}\n";
+$body .= zaftys_email_client_meta();
 
 if (zaftys_smtp_send($to, $subject, $body, $email)) {
     echo json_encode(['success' => true, 'message' => 'Message sent successfully']);

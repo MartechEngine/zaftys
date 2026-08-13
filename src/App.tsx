@@ -10,6 +10,7 @@ import NotFound from "./pages/NotFound";
 import { WhatsAppFab } from "./components/WhatsAppButton";
 import { initAnalytics, trackPageview } from "./lib/analytics";
 import { captureUtmFromLocation } from "./lib/utm";
+import { logVisit } from "./lib/visit-log";
 
 const Home = lazy(() => import("./pages/Home"));
 const About = lazy(() => import("./pages/About"));
@@ -62,7 +63,9 @@ const ScrollToTop = () => {
   useEffect(() => {
     captureUtmFromLocation();
     initAnalytics();
-    trackPageview(`${pathname}${search}`, document.title);
+    const page = `${pathname}${search}`;
+    trackPageview(page, document.title);
+    logVisit(page);
   }, [pathname, search]);
 
   return null;

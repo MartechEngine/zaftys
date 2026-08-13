@@ -87,6 +87,7 @@ if ($isNew) {
     if ($utmSource !== '' || $utmCampaign !== '') {
         $alert .= "UTM: {$utmSource} / {$utmMedium} / {$utmCampaign}\n";
     }
+    $alert .= zaftys_email_client_meta();
     zaftys_smtp_send($to, 'New Newsletter Subscriber', $alert);
 }
 
