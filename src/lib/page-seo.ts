@@ -88,11 +88,11 @@ export const pageSeo = {
   resources: {
     title: "Resources  -  Blog & Market Reports",
     description:
-      "ZAFTYS Logistics resources: practical industrial freight blog guides and logistics & supply chain market reports with PDF downloads.",
+      "ZAFTYS resources: industrial freight blog guides plus institutional market reports on global logistics and digital freight matching with free PDF downloads.",
   },
   reports: {
-    title: "Market Reports  -  Logistics & Supply Chain",
+    title: "Market Reports  -  Global Logistics & Digital Freight Matching",
     description:
-      "ZAFTYS Logistics market reports on industrial road freight, corridors, cement and steel logistics, TMS, and capacity  -  sneak peeks with PDF download.",
+      "ZAFTYS Analytics market reports: global logistics market size & forecast 2027-2036 and digital freight matching platform revenue outlook  -  free institutional PDFs.",
   },
 } as const;

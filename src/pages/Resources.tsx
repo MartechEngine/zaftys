@@ -34,7 +34,7 @@ const Resources = () => {
       <PageHero
         badge="Resources"
         title="ZAFTYS Logistics Resources  -  Blog & Market Reports."
-        description="Practical corridor guides and logistics & supply chain market reports from ZAFTYS Logistics operations across industrial India."
+        description="Practical corridor guides plus institutional market research on global logistics and digital freight matching from ZAFTYS Analytics."
         imageSrc={heroResources}
         imageAlt={pageHeroAlts.resources}
       >
@@ -62,8 +62,8 @@ const Resources = () => {
                 </div>
                 <h2 className="text-2xl font-heading font-bold text-navy mb-3">Market Reports</h2>
                 <p className="text-muted-foreground leading-relaxed mb-6 flex-1">
-                  Logistics &amp; supply chain intelligence for industrial shippers  -  sneak peeks with ToC,
-                  methodology, and downloadable PDFs. {reportCount} reports available.
+                  Institutional market reports on global logistics and digital freight matching  -  size,
+                  forecast, ToC, methodology, and free PDF downloads. {reportCount} reports available.
                 </p>
                 <Link to="/resources/reports">
                   <Button variant="accent" className="w-full sm:w-auto">
