@@ -30,6 +30,12 @@ Options -MultiViews
   RewriteRule ^resources/reports/([^/]+)/?$ /reports/$1 [R=301,L,QSA]
   RewriteRule ^resources/reports/?$ /reports [R=301,L,QSA]
 
+  # SPA catalog lives at /reports while PDFs stay in the /reports/ directory
+  RewriteRule ^reports/?$ index.html [END]
+  RewriteRule ^reports/([^/.]+)/read/?$ index.html [END]
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteRule ^reports/([^/.]+)/?$ index.html [END]
+
   # Existing files/dirs (Vite assets, images)  -  serve as-is
   RewriteCond %{REQUEST_FILENAME} -f [OR]
   RewriteCond %{REQUEST_FILENAME} -d
