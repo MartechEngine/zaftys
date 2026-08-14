@@ -283,9 +283,9 @@ const Partner = () => {
           </CTAGroup>
           <p className="mt-8 text-sm text-gray-300">
             Learn about{" "}
-            <Link to="/network" className="underline hover:text-white">TranZfort network</Link>
+            <Link to="/tranzfort-network" className="underline hover:text-white">TranZfort network</Link>
             {", "}
-            <Link to="/technology" className="underline hover:text-white">ZAFTYS TMS</Link>
+            <Link to="/zaftys-tms" className="underline hover:text-white">ZAFTYS TMS</Link>
             {", or "}
             <Link to="/contact" className="underline hover:text-white">contact ZAFTYS Logistics</Link>.
           </p>

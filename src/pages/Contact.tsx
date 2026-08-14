@@ -386,8 +386,8 @@ const Contact = () => {
                 <h3 className="text-lg font-heading font-bold text-navy mb-3">Explore ZAFTYS Logistics</h3>
                 <ul className="space-y-2 text-sm">
                   <li><Link to="/services" className="text-primary hover:underline">FTL &amp; contract logistics services</Link></li>
-                  <li><Link to="/technology" className="text-primary hover:underline">ZAFTYS TMS visibility</Link></li>
-                  <li><Link to="/network" className="text-primary hover:underline">TranZfort verified capacity</Link></li>
+                  <li><Link to="/zaftys-tms" className="text-primary hover:underline">ZAFTYS TMS visibility</Link></li>
+                  <li><Link to="/tranzfort-network" className="text-primary hover:underline">TranZfort verified capacity</Link></li>
                   <li><Link to="/industries" className="text-primary hover:underline">Industries we serve</Link></li>
                   <li><Link to="/about" className="text-primary hover:underline">About ZAFTYS Logistics</Link></li>
                 </ul>

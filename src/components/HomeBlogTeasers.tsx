@@ -21,7 +21,7 @@ export default function HomeBlogTeasers() {
               View all posts <ArrowRight className="ml-2" size={16} />
             </Link>
             <Link
-              to="/resources/reports"
+              to="/reports"
               className="text-primary font-semibold hover:underline inline-flex items-center"
             >
               Market reports <ArrowRight className="ml-2" size={16} />

@@ -168,10 +168,10 @@ const IndustryDetail = () => {
               <Link to="/services" className="text-primary font-semibold hover:underline">
                 Explore services
               </Link>
-              <Link to="/network" className="text-primary font-semibold hover:underline">
+              <Link to="/tranzfort-network" className="text-primary font-semibold hover:underline">
                 TranZfort network
               </Link>
-              <Link to="/technology" className="text-primary font-semibold hover:underline">
+              <Link to="/zaftys-tms" className="text-primary font-semibold hover:underline">
                 ZAFTYS TMS
               </Link>
               <Link to="/partner" className="text-primary font-semibold hover:underline">

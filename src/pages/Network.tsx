@@ -151,12 +151,12 @@ const NetworkPage = () => {
       <SEO
         title={pageSeo.network.title}
         description={pageSeo.network.description}
-        canonical="/network"
+        canonical="/tranzfort-network"
         schema={[
           organizationSchema,
           breadcrumbSchema([
             { name: "Home", path: "/" },
-            { name: "TranZfort Network", path: "/network" },
+            { name: "TranZfort Network", path: "/tranzfort-network" },
           ]),
         ]}
       />
@@ -410,7 +410,7 @@ const NetworkPage = () => {
             Also explore{" "}
             <Link to="/services" className="underline hover:text-white">logistics services</Link>
             {", "}
-            <Link to="/technology" className="underline hover:text-white">ZAFTYS TMS</Link>
+            <Link to="/zaftys-tms" className="underline hover:text-white">ZAFTYS TMS</Link>
             {", and "}
             <Link to="/contact" className="underline hover:text-white">contact ZAFTYS Logistics</Link>.
           </p>

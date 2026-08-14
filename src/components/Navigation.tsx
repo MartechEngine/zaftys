@@ -27,8 +27,8 @@ const navGroups: readonly NavGroup[] = [
     id: "technology",
     label: "Technology",
     items: [
-      { name: "ZAFTYS TMS", path: "/technology" },
-      { name: "TranZfort Network", path: "/network" },
+      { name: "ZAFTYS TMS", path: "/zaftys-tms" },
+      { name: "TranZfort Network", path: "/tranzfort-network" },
     ],
   },
   {
@@ -45,7 +45,7 @@ const navGroups: readonly NavGroup[] = [
     label: "Resources",
     items: [
       { name: "Blog", path: "/blog" },
-      { name: "Reports", path: "/resources/reports" },
+      { name: "Reports", path: "/reports" },
     ],
   },
 ];
@@ -53,7 +53,7 @@ const navGroups: readonly NavGroup[] = [
 function pathMatches(pathname: string, path: string): boolean {
   if (pathname === path) return true;
   if (path === "/blog" && pathname.startsWith("/blog/")) return true;
-  if (path === "/resources/reports" && pathname.startsWith("/resources/reports")) return true;
+  if (path === "/reports" && pathname.startsWith("/reports/")) return true;
   if (path === "/industries" && pathname.startsWith("/industries/")) return true;
   if (path === "/resources" && pathname.startsWith("/resources/")) return true;
   return false;
@@ -65,7 +65,9 @@ function groupIsActive(pathname: string, group: NavGroup): boolean {
       pathname === "/resources" ||
       pathname.startsWith("/resources/") ||
       pathname === "/blog" ||
-      pathname.startsWith("/blog/")
+      pathname.startsWith("/blog/") ||
+      pathname === "/reports" ||
+      pathname.startsWith("/reports/")
     );
   }
   return group.items.some((item) => pathMatches(pathname, item.path));

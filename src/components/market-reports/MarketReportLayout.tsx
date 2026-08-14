@@ -73,7 +73,7 @@ function DownloadButtons({
           <Download className="mr-2" size={18} /> Download PDF
         </a>
       </Button>
-      <Link to={`/resources/reports/${report.slug}/read`}>
+      <Link to={`/reports/${report.slug}/read`}>
         <Button
           size="lg"
           variant="outline"
@@ -128,7 +128,7 @@ export function MarketReportLayout({ report }: MarketReportLayoutProps) {
               </li>
               <li aria-hidden="true">/</li>
               <li>
-                <Link to="/resources/reports" className="hover:text-white transition-colors">
+                <Link to="/reports" className="hover:text-white transition-colors">
                   Reports
                 </Link>
               </li>
@@ -211,7 +211,7 @@ export function MarketReportLayout({ report }: MarketReportLayoutProps) {
                       <Download className="mr-2" size={18} /> Download PDF
                     </a>
                   </Button>
-                  <Link to={`/resources/reports/${report.slug}/read`} className="block">
+                  <Link to={`/reports/${report.slug}/read`} className="block">
                     <Button size="lg" variant="outline" className="w-full border-primary text-primary">
                       <BookOpen className="mr-2" size={18} /> Read online
                     </Button>
@@ -413,7 +413,7 @@ export function MarketReportLayout({ report }: MarketReportLayoutProps) {
                   {related.map((item) => (
                     <li key={item.slug}>
                       <Link
-                        to={`/resources/reports/${item.slug}`}
+                        to={`/reports/${item.slug}`}
                         className="text-primary font-semibold hover:underline inline-flex items-center gap-2"
                       >
                         {item.title} <ArrowRight size={14} />

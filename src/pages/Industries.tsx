@@ -125,9 +125,9 @@ const Industries = () => {
             Also see{" "}
             <Link to="/services" className="underline hover:text-white">services</Link>
             {", "}
-            <Link to="/technology" className="underline hover:text-white">ZAFTYS TMS</Link>
+            <Link to="/zaftys-tms" className="underline hover:text-white">ZAFTYS TMS</Link>
             {", and "}
-            <Link to="/network" className="underline hover:text-white">TranZfort capacity</Link>.
+            <Link to="/tranzfort-network" className="underline hover:text-white">TranZfort capacity</Link>.
           </p>
         </div>
       </section>

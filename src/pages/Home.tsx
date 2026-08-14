@@ -194,7 +194,7 @@ const Home = () => {
                     Explore TranZfort
                   </a>
                 </Button>
-                <Link to="/network">
+                <Link to="/tranzfort-network">
                   <Button variant="on-dark-outline">Learn About the Network</Button>
                 </Link>
               </CTAGroup>
@@ -236,7 +236,7 @@ const Home = () => {
                   </div>
                 ))}
               </div>
-              <Link to="/technology">
+              <Link to="/zaftys-tms">
                 <Button variant="accent">See ZAFTYS TMS</Button>
               </Link>
             </div>

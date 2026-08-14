@@ -246,7 +246,7 @@ const Services = () => {
             })}
           </div>
           <div className="text-center mt-10 flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <Link to="/technology">
+            <Link to="/zaftys-tms">
               <Button variant="accent">See ZAFTYS TMS <ArrowRight className="ml-2" size={16} /></Button>
             </Link>
             <Link to="/blog/planning-industrial-shipments" className="text-primary font-semibold hover:underline text-sm">
@@ -300,10 +300,10 @@ const Services = () => {
                 Explore TranZfort
               </a>
             </Button>
-            <Link to="/network">
+            <Link to="/tranzfort-network">
               <Button size="lg" variant="on-dark-outline">Network Page</Button>
             </Link>
-            <Link to="/technology">
+            <Link to="/zaftys-tms">
               <Button size="lg" variant="on-dark-outline">ZAFTYS TMS</Button>
             </Link>
           </CTAGroup>

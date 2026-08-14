@@ -193,7 +193,7 @@ export const coreServices = [
     id: "overflow",
     title: "Network Overflow",
     description: "TranZfort network capacity when demand exceeds own fleet  -  still through ZAFTYS.",
-    link: "/network",
+    link: "/tranzfort-network",
   },
 ] as const;
 

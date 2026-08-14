@@ -104,7 +104,7 @@ export const blogPosts: readonly BlogPost[] = [
         heading: "Plant windows and multi-axle reality",
         paragraphs: [
           "Generic last-mile tools often assume simple pickups and urban stops. Industrial freight needs room for:",
-          "ZAFTYS TMS was shaped by those conditions. We run it on our own fleet daily and scale overflow through [TranZfort](https://www.tranzfort.com) while keeping one operational view (also summarised on [/network](/network)).",
+          "ZAFTYS TMS was shaped by those conditions. We run it on our own fleet daily and scale overflow through [TranZfort](https://www.tranzfort.com) while keeping one operational view (also summarised on [/tranzfort-network](/tranzfort-network)).",
         ],
         bullets: [
           "Plant queues and slot discipline ([cement loading windows](/blog/cement-plant-loading-windows))",
@@ -174,7 +174,7 @@ export const blogPosts: readonly BlogPost[] = [
       {
         heading: "What ZAFTYS offers",
         paragraphs: [
-          "[ZAFTYS TMS](/technology) is live for dispatch, fleet, documentation, and customer visibility. We run it every day and offer the same operational discipline to shippers and operators at [app.zaftys.com](https://app.zaftys.com).",
+          "[ZAFTYS TMS](/zaftys-tms) is live for dispatch, fleet, documentation, and customer visibility. We run it every day and offer the same operational discipline to shippers and operators at [app.zaftys.com](https://app.zaftys.com).",
           "Shippers using ZAFTYS logistics get portal visibility. Fleet operators can adopt the platform for their own ops. When overflow is needed, capacity stays coordinated through ZAFTYS and [TranZfort](https://www.tranzfort.com). See also [services](/services).",
         ],
       },
@@ -204,12 +204,12 @@ export const blogPosts: readonly BlogPost[] = [
         ],
         bullets: [
           "[Empty return trips and visibility in India transport (TapTap)](https://taptap.in/blog/technology-eliminate-empty-return-trips-transport-services-india/)",
-          "[ZAFTYS TMS](/technology) · [app.zaftys.com](https://app.zaftys.com) · [TranZfort](https://www.tranzfort.com)",
+          "[ZAFTYS TMS](/zaftys-tms) · [app.zaftys.com](https://app.zaftys.com) · [TranZfort](https://www.tranzfort.com)",
           "---",
         ],
       },
     ],
-    cta: { label: "Explore ZAFTYS TMS", to: "/technology" },
+    cta: { label: "Explore ZAFTYS TMS", to: "/zaftys-tms" },
   },
   {
     slug: "steel-coil-transport-basics",
@@ -320,7 +320,7 @@ export const blogPosts: readonly BlogPost[] = [
       {
         heading: "When demand exceeds owned fleet",
         paragraphs: [
-          "Peak mill programs may need more capacity. Through ZAFTYS, overflow can move via verified [TranZfort](https://www.tranzfort.com) partners while commercial accountability stays with ZAFTYS Logistics (also described on [/network](/network)). Random capacity without securement standards is a quality risk. Overflow still has to meet coil discipline.",
+          "Peak mill programs may need more capacity. Through ZAFTYS, overflow can move via verified [TranZfort](https://www.tranzfort.com) partners while commercial accountability stays with ZAFTYS Logistics (also described on [/tranzfort-network](/tranzfort-network)). Random capacity without securement standards is a quality risk. Overflow still has to meet coil discipline.",
         ],
       },
       {
@@ -352,7 +352,7 @@ export const blogPosts: readonly BlogPost[] = [
         bullets: [
           "Company-operated flatbed and low-bed programs on repeat lanes",
           "Axle-aware planning and weighbridge-minded dispatch",
-          "Trip and document visibility through [ZAFTYS TMS](/technology)",
+          "Trip and document visibility through [ZAFTYS TMS](/zaftys-tms)",
           "Surge via TranZfort when mill demand spikes",
         ],
       },
@@ -490,7 +490,7 @@ export const blogPosts: readonly BlogPost[] = [
       {
         heading: "Visibility after the gate still matters",
         paragraphs: [
-          "Once the truck leaves the plant, you still need status without chasing drivers: ETA changes, site waiting, proof of delivery. Trip records and ePOD through [ZAFTYS TMS](/technology) keep plant, project, and logistics teams on the same page.",
+          "Once the truck leaves the plant, you still need status without chasing drivers: ETA changes, site waiting, proof of delivery. Trip records and ePOD through [ZAFTYS TMS](/zaftys-tms) keep plant, project, and logistics teams on the same page.",
         ],
       },
       {
@@ -512,7 +512,7 @@ export const blogPosts: readonly BlogPost[] = [
         heading: "Seasonal surge without losing the plot",
         paragraphs: [
           "Cement demand spikes around infrastructure pushes, construction cycles, and plant maintenance catch-up. Surge weeks are when many shippers add the most transporters and lose the most control.",
-          "Calmer pattern: lock core lanes with a primary partner, pre-agree overflow rules, keep one escalation channel. [TranZfort](https://www.tranzfort.com) is for verified capacity under ZAFTYS coordination (see also [/network](/network)), not anonymous last-minute chaos.",
+          "Calmer pattern: lock core lanes with a primary partner, pre-agree overflow rules, keep one escalation channel. [TranZfort](https://www.tranzfort.com) is for verified capacity under ZAFTYS coordination (see also [/tranzfort-network](/tranzfort-network)), not anonymous last-minute chaos.",
         ],
       },
       {
@@ -657,7 +657,7 @@ export const blogPosts: readonly BlogPost[] = [
         heading: "Documents should travel with the trip",
         paragraphs: [
           "LR, invoices, e-way bills, quality certificates, proof of delivery: don't leave them for the end. Teams that organise paperwork only at delivery create payment delays and the familiar \"send the photo again\" loop.",
-          "Digital trip records cut that loop. [ZAFTYS TMS](/technology) keeps documents against the trip so dispatch and the customer share one record.",
+          "Digital trip records cut that loop. [ZAFTYS TMS](/zaftys-tms) keeps documents against the trip so dispatch and the customer share one record.",
         ],
       },
       {
@@ -665,7 +665,7 @@ export const blogPosts: readonly BlogPost[] = [
         paragraphs: [
           "When volume spikes (seasonal cement, mill catch-up, multi-plant surges), adding random transporters often raises coordination cost more than it adds reliable capacity.",
           "A cleaner pattern:",
-          "ZAFTYS runs own fleet with overflow through [TranZfort](https://www.tranzfort.com) under ZAFTYS Logistics billing and coordination. More on that on our [network](/network) and [services](/services) pages.",
+          "ZAFTYS runs own fleet with overflow through [TranZfort](https://www.tranzfort.com) under ZAFTYS Logistics billing and coordination. More on that on our [network](/tranzfort-network) and [services](/services) pages.",
         ],
         bullets: [
           "Cover core lanes with company-operated fleet where you can.",
@@ -728,7 +728,7 @@ export const blogPosts: readonly BlogPost[] = [
         ],
         bullets: [
           "[Cement logistics challenges in India (Fretron)](https://www.fretron.com/blog/logistics-challenges-in-cement-industry/)",
-          "[TranZfort](https://www.tranzfort.com) · [ZAFTYS services](/services) · [ZAFTYS TMS](/technology) · [Fleet](/fleet)",
+          "[TranZfort](https://www.tranzfort.com) · [ZAFTYS services](/services) · [ZAFTYS TMS](/zaftys-tms) · [Fleet](/fleet)",
           "---",
         ],
       },
@@ -835,14 +835,14 @@ export const blogPosts: readonly BlogPost[] = [
         paragraphs: [
           "Return matching is time-sensitive. Dispatch needs to know when loading finished, when the truck cleared the gate, and whether an exception just killed the return window.",
           "If that status only lives in WhatsApp, matching happens late or not at all. You want trip assignment, milestones, and documents on the same record so planning and exceptions share one picture.",
-          "That's why [ZAFTYS TMS](/technology) matters beyond a map pin. It supports the sequence that makes backhaul decisions possible. You can see how we run live visibility at [app.zaftys.com](https://app.zaftys.com).",
+          "That's why [ZAFTYS TMS](/zaftys-tms) matters beyond a map pin. It supports the sequence that makes backhaul decisions possible. You can see how we run live visibility at [app.zaftys.com](https://app.zaftys.com).",
         ],
       },
       {
         heading: "Use overflow carefully",
         paragraphs: [
           "Extra trucks can cover outbound gaps. They can also create more empty repositioning if partners are random. When owned fleet can't cover both directions, prefer verified capacity under one commercial relationship.",
-          "Through ZAFTYS, overflow can move via [TranZfort](https://www.tranzfort.com) (and our [network page](/network)) while accountability stays with ZAFTYS Logistics. That doesn't invent reverse freight out of thin air. It cuts the chaos of adding unmanaged vendors when you need surge capacity on planned corridors.",
+          "Through ZAFTYS, overflow can move via [TranZfort](https://www.tranzfort.com) (and our [network page](/tranzfort-network)) while accountability stays with ZAFTYS Logistics. That doesn't invent reverse freight out of thin air. It cuts the chaos of adding unmanaged vendors when you need surge capacity on planned corridors.",
         ],
       },
       {
@@ -861,7 +861,7 @@ export const blogPosts: readonly BlogPost[] = [
       {
         heading: "What to do next",
         paragraphs: [
-          "If you want a corridor-level view of empty returns on your lanes, share origin, destination, load type, and weekly volume on WhatsApp. We'll suggest a practical approach. We won't promise zero empty kilometres. You can also skim [services](/services) and [network](/network) for how own fleet and overflow sit under one account.",
+          "If you want a corridor-level view of empty returns on your lanes, share origin, destination, load type, and weekly volume on WhatsApp. We'll suggest a practical approach. We won't promise zero empty kilometres. You can also skim [services](/services) and [network](/tranzfort-network) for how own fleet and overflow sit under one account.",
         ],
       },
       {
@@ -873,7 +873,7 @@ export const blogPosts: readonly BlogPost[] = [
           "[Backhaul Optimisation in Indian Trucking (PTC)](https://www.ptccorp.in/backhaul-optimisation-indian-trucking-empty-miles-reduction-ftl-india/)",
           "[Backhaul Logistics Strategy for Pan-India FTL (PTC)](https://www.ptccorp.in/backhaul-logistics-strategy-pan-india-ftl/)",
           "[How technology addresses empty return trips in India transport (TapTap)](https://taptap.in/blog/technology-eliminate-empty-return-trips-transport-services-india/)",
-          "[TranZfort](https://www.tranzfort.com) · [ZAFTYS network](/network) · [ZAFTYS TMS](/technology)",
+          "[TranZfort](https://www.tranzfort.com) · [ZAFTYS network](/tranzfort-network) · [ZAFTYS TMS](/zaftys-tms)",
           "---",
         ],
       },

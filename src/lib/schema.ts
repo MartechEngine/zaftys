@@ -134,7 +134,7 @@ export const reportsCollectionSchema = {
   description:
     "Institutional market research on the global logistics market and digital freight matching platforms — size, forecast, segments, and competitive outlook.",
   publisher: organizationRef,
-  url: `${BASE}/resources/reports`,
+  url: `${BASE}/reports`,
 };
 
 /** @deprecated Prefer blogPageSchema */
@@ -161,7 +161,7 @@ export function marketReportSchema(report: {
       url: BASE,
     },
     publisher: organizationRef,
-    url: `${BASE}/resources/reports/${report.slug}`,
+    url: `${BASE}/reports/${report.slug}`,
     encoding: {
       "@type": "MediaObject",
       contentUrl: `${BASE}${report.pdfPath}`,

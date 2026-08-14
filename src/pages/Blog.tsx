@@ -209,11 +209,11 @@ const Blog = () => {
           <WhatsAppButton label="Talk to our team" />
           <p className="mt-8 text-sm text-muted-foreground">
             Explore{" "}
-            <Link to="/resources/reports" className="text-primary hover:underline">market reports</Link>
+            <Link to="/reports" className="text-primary hover:underline">market reports</Link>
             {", "}
             <Link to="/services" className="text-primary hover:underline">services</Link>
             {", "}
-            <Link to="/technology" className="text-primary hover:underline">ZAFTYS TMS</Link>
+            <Link to="/zaftys-tms" className="text-primary hover:underline">ZAFTYS TMS</Link>
             {", "}
             <Link to="/industries" className="text-primary hover:underline">industries</Link>
             {", or "}

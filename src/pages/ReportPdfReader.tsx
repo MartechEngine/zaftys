@@ -26,7 +26,7 @@ const ReportPdfReader = () => {
       <SEO
         title={`Read  -  ${report.seoTitle}`}
         description={report.seoDescription}
-        canonical={`/resources/reports/${report.slug}/read`}
+        canonical={`/reports/${report.slug}/read`}
         robots="noindex, follow"
       />
 
@@ -34,7 +34,7 @@ const ReportPdfReader = () => {
         <div className="container mx-auto container-padding py-3 flex flex-wrap items-center justify-between gap-3">
           <div className="min-w-0">
             <Link
-              to={`/resources/reports/${report.slug}`}
+              to={`/reports/${report.slug}`}
               className="inline-flex items-center gap-2 text-sm text-primary font-semibold hover:underline"
             >
               <ArrowLeft size={16} /> Back to sneak peek

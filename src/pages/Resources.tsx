@@ -39,7 +39,7 @@ const Resources = () => {
         imageAlt={pageHeroAlts.resources}
       >
         <CTAGroup className="justify-start sm:justify-start">
-          <Link to="/resources/reports">
+          <Link to="/reports">
             <Button size="lg" variant="accent">
               Market Reports <ArrowRight className="ml-2" size={18} />
             </Button>
@@ -65,7 +65,7 @@ const Resources = () => {
                   Institutional market reports on global logistics and digital freight matching  -  size,
                   forecast, ToC, methodology, and free PDF downloads. {reportCount} reports available.
                 </p>
-                <Link to="/resources/reports">
+                <Link to="/reports">
                   <Button variant="accent" className="w-full sm:w-auto">
                     Browse reports <ArrowRight className="ml-2" size={16} />
                   </Button>

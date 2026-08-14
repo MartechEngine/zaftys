@@ -106,7 +106,7 @@ const Fleet = () => {
               <h2 className="text-3xl font-heading font-bold mb-2">Operational Capability</h2>
               <p className="text-gray-400 text-sm max-w-xl">Fleet size matters. Operational capability matters more.</p>
             </div>
-            <Link to="/technology">
+            <Link to="/zaftys-tms">
               <Button variant="on-dark-outline" className="mt-4 md:mt-0">
                 Explore ZAFTYS TMS
               </Button>
@@ -131,7 +131,7 @@ const Fleet = () => {
           <p className="text-muted-foreground mb-8 leading-relaxed">
             When demand exceeds our own fleet, ZAFTYS expands through the verified TranZfort network  -  one relationship, one communication channel, one operational standard.
           </p>
-          <Link to="/network">
+          <Link to="/tranzfort-network">
             <Button variant="outline" className="border-primary text-primary hover:bg-primary hover:text-white">
               About the Network <ArrowRight className="ml-2" size={16} />
             </Button>
