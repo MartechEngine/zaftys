@@ -50,8 +50,8 @@ const industrySlugs = [
 const staticUrls = [
   { path: "/", priority: "1.0", changefreq: "weekly", lastmod: today },
   { path: "/services", priority: "0.9", changefreq: "weekly", lastmod: today },
-  { path: "/network", priority: "0.9", changefreq: "weekly", lastmod: today },
-  { path: "/technology", priority: "0.9", changefreq: "weekly", lastmod: today },
+  { path: "/tranzfort-network", priority: "0.9", changefreq: "weekly", lastmod: today },
+  { path: "/zaftys-tms", priority: "0.9", changefreq: "weekly", lastmod: today },
   { path: "/fleet", priority: "0.8", changefreq: "monthly", lastmod: today },
   { path: "/industries", priority: "0.8", changefreq: "weekly", lastmod: today },
   ...industrySlugs.map((slug) => ({
@@ -65,7 +65,7 @@ const staticUrls = [
   { path: "/contact", priority: "0.8", changefreq: "monthly", lastmod: today },
   { path: "/careers", priority: "0.5", changefreq: "monthly", lastmod: today },
   { path: "/resources", priority: "0.8", changefreq: "weekly", lastmod: today },
-  { path: "/resources/reports", priority: "0.8", changefreq: "weekly", lastmod: today },
+  { path: "/reports", priority: "0.8", changefreq: "weekly", lastmod: today },
   { path: "/blog", priority: "0.8", changefreq: "weekly", lastmod: today },
   { path: "/privacy", priority: "0.3", changefreq: "yearly", lastmod: today },
   { path: "/terms", priority: "0.3", changefreq: "yearly", lastmod: today },
@@ -81,7 +81,7 @@ const blogUrls = blogPostUrls().map((p) => ({
 }));
 
 const marketReportUrls = reportUrls().map((p) => ({
-  path: `/resources/reports/${p.slug}`,
+  path: `/reports/${p.slug}`,
   priority: "0.7",
   changefreq: "monthly",
   lastmod: p.lastmod,

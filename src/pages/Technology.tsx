@@ -110,7 +110,7 @@ const Technology = () => {
       <SEO
         title={pageSeo.technology.title}
         description={pageSeo.technology.description}
-        canonical="/technology"
+        canonical="/zaftys-tms"
         schema={[
           organizationSchema,
           websiteSchema,
@@ -267,7 +267,7 @@ const Technology = () => {
             Related:{" "}
             <Link to="/services" className="underline hover:text-white">services</Link>
             {" · "}
-            <Link to="/network" className="underline hover:text-white">TranZfort network</Link>
+            <Link to="/tranzfort-network" className="underline hover:text-white">TranZfort network</Link>
             {" · "}
             <Link to="/fleet" className="underline hover:text-white">company fleet</Link>
             {" · "}

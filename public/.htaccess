@@ -16,9 +16,19 @@ Options -MultiViews
   RewriteRule ^og-image\.png$ - [L]
   RewriteRule ^favicon\.ico$ - [L]
 
-  # Legacy flagship report slug → 2027-2036 (server 301 for crawlers)
-  RewriteRule ^resources/reports/global-logistics-market-2026-2033/read/?$ /resources/reports/global-logistics-market-2027-2036/read [R=301,L]
-  RewriteRule ^resources/reports/global-logistics-market-2026-2033/?$ /resources/reports/global-logistics-market-2027-2036 [R=301,L]
+  # Product pages  -  menu-aligned slugs (server 301 for crawlers)
+  RewriteRule ^technology/?$ /zaftys-tms [R=301,L,QSA]
+  RewriteRule ^platform/?$ /zaftys-tms [R=301,L,QSA]
+  RewriteRule ^network/?$ /tranzfort-network [R=301,L,QSA]
+
+  # Reports catalog moved off /resources/reports
+  RewriteRule ^resources/reports/global-logistics-market-2026-2033/read/?$ /reports/global-logistics-market-2027-2036/read [R=301,L,QSA]
+  RewriteRule ^resources/reports/global-logistics-market-2026-2033/?$ /reports/global-logistics-market-2027-2036 [R=301,L,QSA]
+  RewriteRule ^reports/global-logistics-market-2026-2033/read/?$ /reports/global-logistics-market-2027-2036/read [R=301,L,QSA]
+  RewriteRule ^reports/global-logistics-market-2026-2033/?$ /reports/global-logistics-market-2027-2036 [R=301,L,QSA]
+  RewriteRule ^resources/reports/([^/]+)/read/?$ /reports/$1/read [R=301,L,QSA]
+  RewriteRule ^resources/reports/([^/]+)/?$ /reports/$1 [R=301,L,QSA]
+  RewriteRule ^resources/reports/?$ /reports [R=301,L,QSA]
 
   # Existing files/dirs (Vite assets, images)  -  serve as-is
   RewriteCond %{REQUEST_FILENAME} -f [OR]

@@ -24,13 +24,13 @@ const MarketReports = () => {
       <SEO
         title={pageSeo.reports.title}
         description={pageSeo.reports.description}
-        canonical="/resources/reports"
+        canonical="/reports"
         schema={[
           reportsCollectionSchema,
           breadcrumbSchema([
             { name: "Home", path: "/" },
             { name: "Resources", path: "/resources" },
-            { name: "Reports", path: "/resources/reports" },
+            { name: "Reports", path: "/reports" },
           ]),
         ]}
       />
@@ -67,7 +67,7 @@ const MarketReports = () => {
               >
                 {report.coverImage ? (
                   <Link
-                    to={`/resources/reports/${report.slug}`}
+                    to={`/reports/${report.slug}`}
                     className="block shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                   >
                     <ReportCover src={report.coverImage} alt="" decorative />
@@ -84,7 +84,7 @@ const MarketReports = () => {
                   </div>
                   <h3 className="font-heading font-bold text-navy mb-3 leading-snug text-lg">
                     <Link
-                      to={`/resources/reports/${report.slug}`}
+                      to={`/reports/${report.slug}`}
                       className="hover:text-primary transition-colors"
                     >
                       {report.title}
@@ -96,7 +96,7 @@ const MarketReports = () => {
                     </p>
                   ) : null}
                   <p className="text-sm text-muted-foreground leading-relaxed mb-6 flex-1">{report.summary}</p>
-                  <Link to={`/resources/reports/${report.slug}`} className="mt-auto">
+                  <Link to={`/reports/${report.slug}`} className="mt-auto">
                     <Button variant="accent" className="w-full">
                       View report <ArrowRight className="ml-2" size={16} />
                     </Button>

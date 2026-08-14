@@ -51,7 +51,7 @@ const Footer = () => {
     { name: "Careers", path: "/careers" },
     { name: "Resources", path: "/resources" },
     { name: "Blog", path: "/blog" },
-    { name: "Market Reports", path: "/resources/reports" },
+    { name: "Market Reports", path: "/reports" },
     { name: "Contact", path: "/contact" },
     { name: "Partner", path: "/partner" },
   ];
@@ -63,8 +63,8 @@ const Footer = () => {
   ];
 
   const platformLinks = [
-    { name: "ZAFTYS TMS", path: "/technology" },
-    { name: "TranZfort Network", path: "/network" },
+    { name: "ZAFTYS TMS", path: "/zaftys-tms" },
+    { name: "TranZfort Network", path: "/tranzfort-network" },
     { name: "Login", path: "/login" },
   ];
 

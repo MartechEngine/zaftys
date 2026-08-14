@@ -75,7 +75,7 @@ const META = {
       "steel-coil-transport-basics",
     ],
     heroImage: "/images/blog/tms-for-heavy-haul.jpg",
-    cta: { label: "Explore ZAFTYS TMS", to: "/technology" },
+    cta: { label: "Explore ZAFTYS TMS", to: "/zaftys-tms" },
   },
 };
 

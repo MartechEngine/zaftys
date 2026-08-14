@@ -26,7 +26,7 @@ const MarketReport = () => {
       <SEO
         title={report.seoTitle}
         description={report.seoDescription}
-        canonical={`/resources/reports/${report.slug}`}
+        canonical={`/reports/${report.slug}`}
         image={reportShareImage(report)}
         type="article"
         publishedTime={report.publishedAt}
@@ -35,8 +35,8 @@ const MarketReport = () => {
           breadcrumbSchema([
             { name: "Home", path: "/" },
             { name: "Resources", path: "/resources" },
-            { name: "Reports", path: "/resources/reports" },
-            { name: report.title, path: `/resources/reports/${report.slug}` },
+            { name: "Reports", path: "/reports" },
+            { name: report.title, path: `/reports/${report.slug}` },
           ]),
           marketReportSchema(report),
         ]}

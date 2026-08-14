@@ -78,7 +78,7 @@ export const pageSeo = {
   notFound: {
     title: "Page Not Found",
     description:
-      "This page does not exist. Return to ZAFTYS Logistics Services, Network, or Contact for freight quotes and logistics support.",
+      "This page does not exist. Return to ZAFTYS Logistics Services, TranZfort Network, or Contact for freight quotes and logistics support.",
   },
   blog: {
     title: "Blog  -  Industrial Logistics Insights",
