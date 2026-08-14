@@ -53,10 +53,10 @@ const Login = () => {
         </div>
 
         <p className="auth-tagline text-sm font-medium">
-          Operations become easier when everyone sees the same information.
+          Same trip data for dispatch, fleet, and the customer.
         </p>
         <p className="mt-2 text-xs text-[var(--auth-muted)]">
-          ZAFTYS TMS  -  dispatch, fleet, and customer visibility for industrial logistics.
+          ZAFTYS TMS. Invitation only. No public signup.
         </p>
 
         <form onSubmit={handleSubmit} className="mt-8 space-y-4">
@@ -95,7 +95,7 @@ const Login = () => {
 
           {mode === "user" ? (
             <p className="text-xs text-[var(--auth-muted)]">
-              Sign in as your company admin account. There is no public TMS signup  -  access is
+              Sign in as your company admin account. There is no public TMS signup. Access is
               provisioned for verified organisations.
             </p>
           ) : (

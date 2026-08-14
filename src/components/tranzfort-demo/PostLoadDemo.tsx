@@ -182,7 +182,7 @@ export function PostLoadDemo({ className, theme = "app" }: PostLoadDemoProps) {
 
       {state === "idle" && isApp && (
         <p className="text-[9px] text-center app-text-muted">
-          Truckers request  -  you approve verified drivers
+          Truckers request. You approve verified drivers.
         </p>
       )}
     </div>

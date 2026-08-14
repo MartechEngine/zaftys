@@ -12,6 +12,7 @@ import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { CTAGroup } from "@/components/CTAGroup";
 import ResponsiveImage from "@/components/ResponsiveImage";
 import { pageSeo } from "@/lib/page-seo";
+import { pageHeroCopy } from "@/lib/page-hero-copy";
 import { industryHubCards } from "@/lib/industries-data";
 import { breadcrumbSchema, organizationSchema } from "@/lib/schema";
 
@@ -34,9 +35,9 @@ const Industries = () => {
       />
 
       <PageHero
-        badge="Industries"
-        title="Industrial Logistics For Cement, Steel, Mining & Bulk  -  ZAFTYS Logistics."
-        description="Each vertical needs different assets, documentation, and timing. ZAFTYS Logistics builds transport programs around those realities  -  company-operated fleet first, TranZfort capacity when demand spikes, and TMS visibility on active lanes across India."
+        badge={pageHeroCopy.industries.badge}
+        title={pageHeroCopy.industries.h1}
+        description={pageHeroCopy.industries.lead}
         imageSrc={heroIndustries}
         imageAlt={pageHeroAlts.industries}
       >
@@ -55,9 +56,9 @@ const Industries = () => {
       <section className="section-padding bg-muted/30">
         <div className="container mx-auto container-padding">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-heading font-bold mb-4 text-navy">Specialized by Vertical</h2>
+            <h2 className="text-4xl font-heading font-bold mb-4 text-navy">Work we already know</h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Each industry runs on the same ZAFTYS stack  -  own fleet, TranZfort network, and TMS™ visibility.
+              Same three products on every vertical. Own fleet, ZAFTYS TMS, and TranZfort. The truck class and the gate rules change.
             </p>
           </div>
 
@@ -101,9 +102,9 @@ const Industries = () => {
         <div className="container mx-auto container-padding">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
             {[
-              { title: "Compliance Ready", desc: "Structured documentation, ePOD, and regulatory awareness on active lanes." },
-              { title: "Scalable Capacity", desc: "Own fleet for core lanes; TranZfort network for surge and spot overflow." },
-              { title: "Full Visibility", desc: "ZAFTYS TMS™ tracking for shippers who need real-time shipment status." },
+              { title: "The right class", desc: "LCV, heavy, container, tanker, or bulker, matched to the cargo, not a one-truck story." },
+              { title: "Marketplace cover", desc: "TranZfort when you need a truck we do not have that day. Listing and search are free. Broker fee on trucker bookings." },
+              { title: "Same TMS", desc: "Contracted trips can sit in ZAFTYS TMS so the plant is not chasing WhatsApp." },
             ].map((item) => (
               <div key={item.title} className="text-center p-6 rounded-lg border border-border bg-muted/10">
                 <h3 className="text-lg font-bold text-navy mb-2">{item.title}</h3>
@@ -127,7 +128,7 @@ const Industries = () => {
             {", "}
             <Link to="/zaftys-tms" className="underline hover:text-white">ZAFTYS TMS</Link>
             {", and "}
-            <Link to="/tranzfort-network" className="underline hover:text-white">TranZfort capacity</Link>.
+            <Link to="/tranzfort-network" className="underline hover:text-white">TranZfort marketplace</Link>.
           </p>
         </div>
       </section>

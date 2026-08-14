@@ -1,59 +1,59 @@
 /** Page titles & meta descriptions  -  keep titles ≤ ~55 chars before brand suffix */
 export const pageSeo = {
   home: {
-    title: "ZAFTYS Logistics  -  Industrial Freight",
+    title: "Commercial Transport, TMS and Freight Marketplace",
     description:
-      "ZAFTYS Logistics moves industrial freight across India with company-operated transport, ZAFTYS TMS visibility, and TranZfort capacity. Get a quote on WhatsApp.",
+      "Own trucks for LCV through tanker, trailer, tipper, reefer, parcel and ODC. ZAFTYS TMS for dispatch and tracking. TranZfort: post and search free, AI-powered matching, broker fee on trucker bookings. Quote on WhatsApp.",
   },
   services: {
-    title: "FTL, Contract & Heavy Haul Services",
+    title: "LCV, Heavy Load, Container, Tanker and Bulker Transport",
     description:
-      "ZAFTYS Logistics provides FTL, mining logistics, contract fleet, and overflow capacity on industrial corridors across India  -  own fleet, TranZfort, and TMS.",
+      "FTL and contract transport across LCV, heavy load, container, tanker and bulker trucks. Own fleet, TranZfort marketplace, and ZAFTYS TMS. Get a quote.",
   },
   fleet: {
-    title: "Company Fleet & Transport Capacity",
+    title: "Company Fleet and Commercial Truck Types",
     description:
-      "Company-operated heavy-haul assets from ZAFTYS Logistics, disciplined maintenance, and surge capacity through TranZfort. Built for industrial India.",
+      "ZAFTYS fleet matches the TranZfort picker: LCV, open truck, trailer, container, bulker, tanker, tipper, reefer, parcel, and ODC, with body styles and typical size bands.",
   },
   network: {
-    title: "TranZfort Network  -  Verified Capacity",
+    title: "TranZfort | AI-Powered Freight Marketplace",
     description:
-      "Scale capacity with ZAFTYS Logistics without extra vendors. Verified partners, centralized coordination, and TMS visibility on every trip.",
+      "Post or find a load for free. AI-powered matching. Broker fee to truckers on booked loads. Verified partners. Download the app.",
   },
   technology: {
-    title: "ZAFTYS TMS  -  Transport Management",
+    title: "ZAFTYS TMS | Transport Management System",
     description:
-      "ZAFTYS TMS by ZAFTYS Logistics: dispatch, GPS, ePOD, fleet records, and client visibility  -  the platform we run daily for shippers and operators.",
+      "ZAFTYS TMS is live TMS software for dispatch, GPS tracking, e-POD, fleet records and shipper visibility. Request a demo or log in at app.zaftys.com.",
   },
   industries: {
-    title: "Industries  -  Cement, Steel, Mining",
+    title: "Industries We Serve | Commercial Freight",
     description:
-      "ZAFTYS Logistics heavy-haul for cement, steel, coal, chemicals, manufacturing, FMCG, retail, and industrial supply chains across India.",
+      "Transport, TMS and TranZfort marketplace for cement, steel, mining, chemicals, manufacturing, FMCG and retail distribution in India.",
   },
   partner: {
-    title: "Fleet Partner Program  -  TranZfort",
+    title: "Join TranZfort | Fleet Partner Program",
     description:
-      "Register your fleet for verified industrial loads, payments through ZAFTYS Logistics, and operational tools as you scale.",
+      "Register your trucks on TranZfort. Search is free. We charge a broker fee on booked loads. Get paid through ZAFTYS on contracted trips.",
   },
   about: {
-    title: "About ZAFTYS Logistics",
+    title: "About ZAFTYS | Transport, TMS and Marketplace",
     description:
-      "About ZAFTYS Logistics: three generations of corridor experience, GST-compliant ops, own fleet, TranZfort capacity, and ZAFTYS TMS for industrial shippers.",
+      "ZAFTYS Logistics, Amravati: own commercial fleet, ZAFTYS TMS, and TranZfort. Post and search are free. Broker fee on trucker bookings. AI-powered matching. GST-compliant operations.",
   },
   contact: {
-    title: "Contact ZAFTYS Logistics",
+    title: "Contact ZAFTYS | Quote, TMS Demo, TranZfort",
     description:
-      "Contact ZAFTYS Logistics for WhatsApp-first industrial freight quotes, TMS demos, and partner enquiries. Amravati HQ · +91-927-092-3581.",
+      "WhatsApp ZAFTYS for a freight quote, a TMS demo, or TranZfort onboarding. Amravati, Maharashtra. +91-927-092-3581.",
   },
   careers: {
-    title: "Careers at ZAFTYS Logistics",
+    title: "Careers at ZAFTYS | Fleet, Dispatch, TMS",
     description:
-      "Join ZAFTYS Logistics in operations, dispatch, fleet, and technology roles supporting industrial freight across India.",
+      "Join ZAFTYS in operations, dispatch, fleet, and TMS roles. Commercial freight, marketplace matching, and a desk in Amravati.",
   },
   login: {
-    title: "Login  -  ZAFTYS TMS",
+    title: "Login | ZAFTYS TMS",
     description:
-      "Sign in to ZAFTYS TMS for dispatch, fleet, and customer visibility. Access is by invitation  -  no public signup.",
+      "Sign in to ZAFTYS TMS for dispatch, fleet, and customer visibility. Access is by invitation. No public signup.",
   },
   privacy: {
     title: "Privacy Policy",
@@ -81,18 +81,18 @@ export const pageSeo = {
       "This page does not exist. Return to ZAFTYS Logistics Services, TranZfort Network, or Contact for freight quotes and logistics support.",
   },
   blog: {
-    title: "Blog  -  Industrial Logistics Insights",
+    title: "Blog | Transport, TMS, and TranZfort",
     description:
-      "Practical guides from ZAFTYS Logistics on FTL empty miles, industrial shipment planning, cement and steel freight, and TMS for heavy-haul operations.",
+      "Practical guides from ZAFTYS Logistics on FTL empty miles, shipment planning, cement and steel freight, TMS, and TranZfort.",
   },
   resources: {
-    title: "Resources  -  Blog & Market Reports",
+    title: "Resources | Blog and Market Reports",
     description:
-      "ZAFTYS resources: industrial freight blog guides plus institutional market reports on global logistics and digital freight matching with free PDF downloads.",
+      "ZAFTYS resources: freight blog guides plus institutional market reports on global logistics and digital freight matching with free PDF downloads.",
   },
   reports: {
-    title: "Market Reports  -  Global Logistics & Digital Freight Matching",
+    title: "Market Reports | Global Logistics and Digital Freight",
     description:
-      "ZAFTYS Analytics market reports: global logistics market size & forecast 2027-2036 and digital freight matching platform revenue outlook  -  free institutional PDFs.",
+      "ZAFTYS Analytics market reports: global logistics market size and forecast 2027-2036, plus digital freight matching platform revenue. Free institutional PDFs.",
   },
 } as const;

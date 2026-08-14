@@ -395,7 +395,7 @@ export function MarketReportLayout({ report }: MarketReportLayoutProps) {
         <div className="container mx-auto container-padding max-w-3xl text-center">
           <h2 className="text-3xl font-heading font-bold mb-4">Need this applied to your lanes?</h2>
           <p className="text-gray-300 mb-8">
-            Share your corridor and load type  -  ZAFTYS Logistics will recommend a practical transport approach.
+            Share your corridor and load type. ZAFTYS Logistics will recommend a practical transport approach.
           </p>
           <CTAGroup>
             <ReportCta report={report} />

@@ -23,8 +23,8 @@ export const industries: readonly IndustryRecord[] = [
     slug: "cement",
     title: "Cement & Construction",
     description:
-      "High-volume tipper and bulk lanes with plant dispatch discipline  -  cement, clinker, aggregates, and project delivery where detention and loading windows matter.",
-    features: ["Tipper & bulk carriers", "Plant window coordination", "Multi-site dispatch"],
+      "Bulker and tipper work for cement, clinker, and aggregates. Plant windows, detention, and payload discipline on repeat corridors.",
+    features: ["Tipper and bulk carriers", "Plant window coordination", "Multi-site dispatch"],
     highlight: "Bulk volume & detention control",
     image: "/images/marketing/industry-cement.jpg",
     heroHeadline: "Plant Windows And Bulk Volume Need Disciplined Dispatch.",
@@ -35,8 +35,8 @@ export const industries: readonly IndustryRecord[] = [
     ],
     howZaftysHelps: [
       "Company-operated tipper and bulk fleet on repeat cement corridors.",
-      "TranZfort verified capacity when seasonal or project demand exceeds owned assets.",
-      "Shipment visibility through ZAFTYS TMS on active lanes  -  one partner, one channel.",
+      "Post on TranZfort when a plant window needs more trucks than we have that day.",
+      "Shipment visibility through ZAFTYS TMS on contracted trips.",
     ],
     corridors: [
       "Plant-to-project and plant-to-dealer lanes across Maharashtra, Gujarat, and central India.",
@@ -46,10 +46,10 @@ export const industries: readonly IndustryRecord[] = [
     equipment: ["16-35T tippers and bulk carriers", "Open-body for bagged and loose bulk", "Multi-axle for heavy project loads"],
     whatsappPrefill:
       "Hi ZAFTYS, I need a quote for Cement & Construction freight. Corridor:  Load type:  Volume:",
-    seoH1: "Cement & Construction Logistics",
-    seoTitle: "Cement Logistics  -  Tipper & Bulk Transport",
+    seoH1: "Cement and clinker that hit the plant window.",
+    seoTitle: "Cement Logistics | Bulker and Tipper",
     seoDescription:
-      "Cement, clinker, and aggregates transport with plant dispatch discipline. Own fleet, TranZfort overflow, and ZAFTYS TMS visibility.",
+      "Cement, clinker, and aggregates on tipper and bulker trucks. Own fleet, TranZfort marketplace, and ZAFTYS TMS.",
     faqs: [
       {
         question: "What cement freight does ZAFTYS handle?",
@@ -59,7 +59,7 @@ export const industries: readonly IndustryRecord[] = [
       {
         question: "How do you reduce detention at cement plants?",
         answer:
-          "We plan around plant windows, assign suitable tipper capacity, and keep dispatch coordination through one ZAFTYS channel  -  with TranZfort overflow when demand spikes.",
+          "We plan around plant windows and assign suitable tipper capacity. If the window needs more trucks, post on TranZfort. Listing is free.",
       },
       {
         question: "Can I track cement shipments?",
@@ -72,7 +72,7 @@ export const industries: readonly IndustryRecord[] = [
     slug: "coal-mining",
     title: "Coal & Mining",
     description:
-      "Rugged pit-to-plant and mine-to-mill movement for raw materials  -  built for tough terrain, site operations, and continuous dispatch cycles.",
+      "Tipper and bulker work from pit to plant. Tough terrain, site gates, and continuous dispatch cycles for coal, ore, and aggregates.",
     features: ["Heavy-duty tippers", "DGMS-aware operations", "24/7 site coverage"],
     highlight: "Mining corridor expertise",
     image: "/images/services/materials/mining.jpg",
@@ -84,8 +84,8 @@ export const industries: readonly IndustryRecord[] = [
     ],
     howZaftysHelps: [
       "Heavy-duty tipper programs aligned to mining and raw-material corridors.",
-      "Structured onboarding for network partners when surge capacity is required.",
-      "Central coordination through ZAFTYS  -  not multiple brokers or load boards.",
+      "Site papers and shift handover through the ZAFTYS desk.",
+      "Post on TranZfort when the site needs more tippers. Search is free. ZAFTYS bills trips we contract.",
     ],
     corridors: [
       "Coal and ore movement from mines to power plants and processing units.",
@@ -95,8 +95,8 @@ export const industries: readonly IndustryRecord[] = [
     equipment: ["35T+ heavy-duty tippers", "Reinforced bodies for abrasive loads", "Site-ready dispatch windows"],
     whatsappPrefill:
       "Hi ZAFTYS, I need a quote for Coal & Mining freight. Corridor:  Load type:  Volume:",
-    seoH1: "Coal & Mining Logistics",
-    seoTitle: "Coal & Mining Logistics  -  Tipper Transport",
+    seoH1: "Pit-to-plant freight for coal and ore.",
+    seoTitle: "Coal and Mining Logistics | Tipper",
     seoDescription:
       "Pit-to-plant and mine-to-mill freight with site discipline. Company fleet and verified TranZfort capacity through ZAFTYS.",
     faqs: [
@@ -108,7 +108,7 @@ export const industries: readonly IndustryRecord[] = [
       {
         question: "What happens when mining demand exceeds owned fleet?",
         answer:
-          "ZAFTYS scales through verified TranZfort partners while you keep one commercial relationship and centralized coordination.",
+          "Post the extra loads on TranZfort. Matching is AI-powered. Trips contracted through ZAFTYS stay on GST billing.",
       },
       {
         question: "Is site documentation handled consistently?",
@@ -121,8 +121,8 @@ export const industries: readonly IndustryRecord[] = [
     slug: "steel-metals",
     title: "Steel & Metals",
     description:
-      "Secure heavy-haul for coils, plates, billets, and structural loads  -  weighbridge coordination, axle discipline, and mill timing on repeat lanes.",
-    features: ["Flatbed & low-bed assets", "Weighbridge coordination", "Corridor predictability"],
+      "Heavy-load work for coils, plates, billets, and structurals. Weighbridge, axle limits, and mill windows on repeat lanes.",
+    features: ["Flatbed and low-bed assets", "Weighbridge coordination", "Corridor predictability"],
     highlight: "Heavy haul & mill timing",
     image: "/images/marketing/industry-steel-metals.jpg",
     heroHeadline: "Steel Moves Need Axle Discipline And Mill-Window Precision.",
@@ -134,7 +134,7 @@ export const industries: readonly IndustryRecord[] = [
     howZaftysHelps: [
       "Flatbed and low-bed fleet matched to coil, plate, and structural programs.",
       "Repeat lane discipline with structured LR, ePOD, and client visibility via TMS.",
-      "Overflow capacity through TranZfort when mill programs exceed owned fleet.",
+      "TranZfort when a mill program needs more trucks than we have that day.",
     ],
     corridors: [
       "Mill-to-fabricator and mill-to-warehouse lanes on industrial corridors.",
@@ -144,10 +144,10 @@ export const industries: readonly IndustryRecord[] = [
     equipment: ["Flatbed and low-bed trailers", "Multi-axle for heavy coils", "Open-body for lengths and structurals"],
     whatsappPrefill:
       "Hi ZAFTYS, I need a quote for Steel & Metals freight. Corridor:  Load type:  Weight:",
-    seoH1: "Steel & Metals Logistics",
-    seoTitle: "Steel Logistics  -  Coil & Heavy-Haul Transport",
+    seoH1: "Coils and plates with axle discipline.",
+    seoTitle: "Steel Logistics | Coil and Heavy Load",
     seoDescription:
-      "Secure heavy-haul for coils, plates, and structural steel with weighbridge discipline. Own fleet, TranZfort, and ZAFTYS TMS.",
+      "Secure heavy load for coils, plates, and structural steel with weighbridge discipline. Own fleet, TranZfort, and ZAFTYS TMS.",
     faqs: [
       {
         question: "Can ZAFTYS move steel coils and plates?",
@@ -178,10 +178,10 @@ export const industries: readonly IndustryRecord[] = [
     challenges: [
       "Bulk liquids and industrial chemicals need appropriate tanker or packaged handling.",
       "Route and documentation expectations vary by cargo class and corridor.",
-      "Consignors need accountable partners  -  not informal spot carriers.",
+      "Consignors need an accountable desk, not informal spot carriers.",
     ],
     howZaftysHelps: [
-      "Tanker and packaged programs scoped during consultation  -  honest capability matching.",
+      "Tanker and packaged programs scoped during consultation. Honest capability matching.",
       "Structured LR, proof of delivery, and communication through ZAFTYS operations.",
       "Visibility on active shipments without repeated dispatch follow-up calls.",
     ],
@@ -193,20 +193,20 @@ export const industries: readonly IndustryRecord[] = [
     equipment: ["Tanker assets where program scope allows", "Closed and covered body for packaged cargo", "Documented trip lifecycle via TMS"],
     whatsappPrefill:
       "Hi ZAFTYS, I need a quote for Chemicals freight. Corridor:  Load type:  Packaging:",
-    seoH1: "Chemical Logistics",
-    seoTitle: "Chemical Logistics  -  Bulk & Tanker Transport",
+    seoH1: "Tanker freight with the papers in order.",
+    seoTitle: "Chemical Logistics | Tanker Transport",
     seoDescription:
       "Compliance-focused chemical and bulk liquid transport with structured documentation and ZAFTYS TMS visibility.",
     faqs: [
       {
         question: "What chemical freight can ZAFTYS support?",
         answer:
-          "Industrial chemicals and bulk liquids where tanker or packaged handling fits the program  -  scoped honestly during consultation.",
+          "Industrial chemicals and bulk liquids where tanker or packaged handling fits the program. Scoped honestly during consultation.",
       },
       {
         question: "How is compliance handled?",
         answer:
-          "Documentation discipline, structured LR/POD, and accountable handover through ZAFTYS operations  -  not informal spot-only coordination.",
+          "Documentation discipline, structured LR and POD, and accountable handover through ZAFTYS. Not informal spot-only coordination.",
       },
       {
         question: "Can we see shipment status without calling dispatch?",
@@ -220,7 +220,7 @@ export const industries: readonly IndustryRecord[] = [
     title: "Manufacturing",
     description:
       "Multi-plant inbound and outbound flows with tight production windows, gate coordination, and SLA-driven dispatch.",
-    features: ["Plant-to-plant lanes", "SLA-driven dispatch", "Overflow via TranZfort"],
+    features: ["Plant-to-plant lanes", "SLA-driven dispatch", "TranZfort marketplace"],
     highlight: "Production window discipline",
     image: "/images/marketing/industry-manufacturing.jpg",
     heroHeadline: "Production Schedules Depend On Predictable Inbound And Outbound Freight.",
@@ -231,7 +231,7 @@ export const industries: readonly IndustryRecord[] = [
     ],
     howZaftysHelps: [
       "Dedicated and spot FTL programs with dispatch discipline on repeat lanes.",
-      "TranZfort network scales capacity during peaks  -  still one ZAFTYS relationship.",
+      "TranZfort for peak weeks. Listing and search are free. Broker fee on trucker bookings.",
       "TMS gives operations teams shipment status without manual follow-up.",
     ],
     corridors: [
@@ -242,8 +242,8 @@ export const industries: readonly IndustryRecord[] = [
     equipment: ["Open-body and closed body for varied SKU profiles", "FTL assignment for production-linked lanes", "Multi-stop routing where programs require"],
     whatsappPrefill:
       "Hi ZAFTYS, I need a quote for Manufacturing logistics. Corridor:  Load type:  Frequency:",
-    seoH1: "Manufacturing Logistics",
-    seoTitle: "Manufacturing Logistics  -  Plant-to-Plant FTL",
+    seoH1: "Plant-to-plant FTL on production windows.",
+    seoTitle: "Manufacturing Logistics | Plant-to-Plant FTL",
     seoDescription:
       "Inbound and outbound manufacturing freight with production-window discipline. Own fleet, TranZfort, and ZAFTYS TMS.",
     faqs: [
@@ -255,7 +255,7 @@ export const industries: readonly IndustryRecord[] = [
       {
         question: "How do you handle production peaks?",
         answer:
-          "Core lanes stay on owned or dedicated capacity; TranZfort verified partners cover surge without adding vendor complexity.",
+          "Core lanes stay on owned or dedicated trucks. Extra volume can go on TranZfort. Listing and search are free. We charge a broker fee to truckers on booked loads.",
       },
       {
         question: "What visibility do plant teams get?",
@@ -279,9 +279,9 @@ export const industries: readonly IndustryRecord[] = [
       "Lane cost visibility is hard without centralized trip and utilization data.",
     ],
     howZaftysHelps: [
-      "Regional FTL capacity on repeat corridors with structured dispatch.",
-      "ePOD and trip records through ZAFTYS TMS for OTIF confirmation.",
-      "Network overflow for seasonal peaks without adding vendor complexity.",
+      "Regional FTL and commercial LCV on repeat factory-to-DC corridors.",
+      "e-POD and trip records through ZAFTYS TMS for OTIF confirmation.",
+      "TranZfort for seasonal peaks. Listing and search are free. Broker fee on trucker bookings.",
     ],
     corridors: [
       "Factory-to-DC regional movement.",
@@ -291,15 +291,15 @@ export const industries: readonly IndustryRecord[] = [
     equipment: ["Closed body and open-body by SKU profile", "FTL for DC-bound loads", "Schedule-aligned dispatch windows"],
     whatsappPrefill:
       "Hi ZAFTYS, I need a quote for FMCG distribution. Corridor:  Load type:  Frequency:",
-    seoH1: "FMCG Logistics",
-    seoTitle: "FMCG Logistics  -  Regional FTL Distribution",
+    seoH1: "Factory-to-DC freight that makes OTIF.",
+    seoTitle: "FMCG Logistics | Regional FTL and LCV",
     seoDescription:
       "Regional FMCG distribution with OTIF focus and lane discipline. ZAFTYS fleet, TranZfort capacity, and TMS tracking.",
     faqs: [
       {
-        question: "Is ZAFTYS focused on industrial FTL or last-mile retail vans?",
+        question: "Do you run commercial LCV, or only last-mile vans?",
         answer:
-          "Primary focus is regional FTL and DC-oriented industrial distribution  -  not generic last-mile e-commerce vans.",
+          "We run commercial LCV for DC transfers, dealer drops, and packaged cargo on planned lanes. We do not do two-wheeler last mile or household shifting.",
       },
       {
         question: "How do you support OTIF goals?",
@@ -309,7 +309,7 @@ export const industries: readonly IndustryRecord[] = [
       {
         question: "Can seasonal peaks be covered?",
         answer:
-          "Yes. TranZfort overflow adds capacity for seasonal volume while you keep one ZAFTYS relationship.",
+          "Yes. Post seasonal loads on TranZfort. Matching is AI-powered. Trips we contract stay on GST billing.",
       },
     ],
   },
@@ -330,7 +330,7 @@ export const industries: readonly IndustryRecord[] = [
     howZaftysHelps: [
       "Structured FTL and multi-stop programs scoped to your network design.",
       "Digital proof of delivery and trip records through ZAFTYS TMS.",
-      "Single logistics partner for core lanes plus TranZfort for surge volume.",
+      "Single desk for core lanes. TranZfort when a DC program needs more trucks that week.",
     ],
     corridors: [
       "DC-to-store regional distribution.",
@@ -340,15 +340,15 @@ export const industries: readonly IndustryRecord[] = [
     equipment: ["Closed body for packaged retail freight", "Multi-drop capable assets where scoped", "ePOD-enabled trip completion"],
     whatsappPrefill:
       "Hi ZAFTYS, I need a quote for Retail Distribution. Corridor:  Load type:  Drops:",
-    seoH1: "Retail Distribution Logistics",
-    seoTitle: "Retail Distribution  -  DC-to-Store FTL",
+    seoH1: "DC and store freight with proof of delivery.",
+    seoTitle: "Retail Distribution | DC to Store FTL",
     seoDescription:
-      "DC-to-store and hub distribution with schedule discipline and ePOD. Own fleet and TranZfort overflow through ZAFTYS.",
+      "DC-to-store and hub distribution with schedule discipline and e-POD. Own fleet, TranZfort marketplace, and ZAFTYS TMS.",
     faqs: [
       {
         question: "Do you run DC-to-store programs?",
         answer:
-          "Yes, where FTL or multi-stop designs fit your network  -  scoped during program design with schedule and ePOD requirements.",
+          "Yes, where FTL, LCV, or multi-stop designs fit your network. Scoped during program design with schedule and e-POD requirements.",
       },
       {
         question: "How is proof of delivery handled?",
@@ -356,9 +356,9 @@ export const industries: readonly IndustryRecord[] = [
           "Digital ePOD and trip completion records through ZAFTYS TMS support OTIF confirmation for retail partners.",
       },
       {
-        question: "Can one partner cover core lanes and surge?",
+        question: "Can TranZfort cover surge on retail lanes?",
         answer:
-          "Core lanes run through ZAFTYS; TranZfort verified capacity covers surge without a new vendor stack.",
+          "Yes. Post the extra loads on TranZfort. Core contracted lanes still run through ZAFTYS.",
       },
     ],
   },
@@ -366,8 +366,8 @@ export const industries: readonly IndustryRecord[] = [
     slug: "industrial-logistics",
     title: "Industrial Logistics",
     description:
-      "Complex multi-plant and multi-stop freight for industrial shippers  -  contract and spot mix under one partner.",
-    features: ["Contract + spot mix", "Multi-stop routing", "Enterprise account coordination"],
+      "Multi-plant and multi-stop freight. Contract lanes on our fleet. Spot loads on TranZfort. TMS on the trips we run.",
+    features: ["Contract and spot mix", "Multi-stop routing", "Enterprise account coordination"],
     highlight: "Multi-plant complexity",
     image: "/images/marketing/industry-industrial-logistics.jpg",
     heroHeadline: "Multi-Plant Supply Chains Need One Accountable Logistics Partner.",
@@ -378,7 +378,7 @@ export const industries: readonly IndustryRecord[] = [
     ],
     howZaftysHelps: [
       "Enterprise-style account coordination with own fleet on core programs.",
-      "TranZfort verified network for overflow and spot without new vendor relationships.",
+      "TranZfort for spot loads and extra trucks. Listing and search are free. Broker fee on trucker bookings.",
       "TMS as the operational layer for dispatch, documentation, and client visibility.",
     ],
     corridors: [
@@ -386,18 +386,18 @@ export const industries: readonly IndustryRecord[] = [
       "Project and shutdown cargo on scheduled windows.",
       "Nationwide spot and contract mix on repeat and ad-hoc lanes.",
     ],
-    equipment: ["Asset mix aligned during program design  -  tipper, open, flatbed, tanker", "Dedicated fleet where contracts warrant", "Network capacity for surge and spot"],
+    equipment: ["Asset mix aligned during program design: LCV, tipper, open, flatbed, tanker", "Dedicated fleet where contracts warrant", "TranZfort for extra trucks on the day"],
     whatsappPrefill:
       "Hi ZAFTYS, I need a quote for Industrial Logistics. Corridor:  Load type:  Plants involved:",
-    seoH1: "Industrial Multi-Plant Logistics",
-    seoTitle: "Industrial Logistics  -  Multi-Plant Programs",
+    seoH1: "Multi-plant freight under one desk.",
+    seoTitle: "Industrial Logistics | Multi-Plant Programs",
     seoDescription:
       "Complex multi-plant industrial freight with contract and spot capacity. Own fleet, TranZfort network, and ZAFTYS TMS.",
     faqs: [
       {
         question: "Can ZAFTYS manage contract and spot together?",
         answer:
-          "Yes. Enterprise-style accounts combine owned fleet on core programs with TranZfort for spot and overflow under one partner.",
+          "Yes. Contracted lanes on company trucks. Spot and extra capacity on TranZfort. GST billing on trips we run.",
       },
       {
         question: "What visibility do multi-plant teams get?",

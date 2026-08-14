@@ -5,12 +5,12 @@ export type MaterialId = (typeof materialTypes)[number]["id"];
 
 /** Recommended truck ↔ material pairings for dispatch planning */
 export const truckToMaterials: Record<TruckId, readonly MaterialId[]> = {
+  lcv: ["fmcg"],
   "open-body": ["mining", "construction", "metals", "agriculture"],
-  tipper: ["mining", "construction"],
+  tipper: ["mining", "construction", "agriculture"],
   flatbed: ["metals", "construction"],
   tanker: ["energy"],
   container: ["fmcg", "construction"],
-  contract: ["mining", "construction", "metals", "energy", "fmcg", "agriculture"],
 };
 
 export function materialsForTruck(truckId: TruckId): MaterialId[] {

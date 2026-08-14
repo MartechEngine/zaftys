@@ -11,6 +11,7 @@ import { HeroEmailButton } from "@/components/HeroEmailButton";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { CTAGroup } from "@/components/CTAGroup";
 import { pageSeo } from "@/lib/page-seo";
+import { pageHeroCopy } from "@/lib/page-hero-copy";
 import { organizationSchema, localBusinessSchema, breadcrumbSchema } from "@/lib/schema";
 
 const About = () => {
@@ -18,36 +19,36 @@ const About = () => {
     {
       icon: Heart,
       title: "Integrity",
-      description: "We do what we say. Honest dealings and ethical practices are the bedrock of our 60-year legacy.",
+      description: "We do what we say. Honest dealings on every contracted trip.",
     },
     {
       icon: Target,
       title: "Precision",
-      description: "Logistics is about details. We leverage technology to ensure every shipment is tracked and timely.",
+      description: "Gates, papers, and timing. The TMS exists so those details are not lost in a chat.",
     },
     {
       icon: Eye,
-      title: "Client Focus",
-      description: "Your business goals are ours. We tailor our fleet and schedules to match your production cycles.",
+      title: "Client focus",
+      description: "Your production window is the schedule. We match truck class and dispatch to it.",
     },
     {
       icon: Leaf,
-      title: "Sustainability",
-      description: "Optimizing routes to reduce fuel consumption and building a greener supply chain for India.",
+      title: "Fuel-sensible routing",
+      description: "Fewer empty kilometres on lanes we run often. Better for cost and for fuel.",
     },
   ];
 
   const milestones = [
     { year: "1960s", title: "The Foundation", desc: "Started as a family trucking operation moving freight in India's industrial heartlands." },
     { year: "1990s", title: "National Corridors", desc: "Expanded across cross-country routes as India's infrastructure and industry grew." },
-    { year: "2010s", title: "Modern Heavy-Haul Fleet", desc: "Upgraded to multi-axle and tipper assets built for cement, steel, and mining loads." },
-    { year: "2020s", title: "Company & Platform", desc: "Formal operations with GST-compliant billing; launched TranZfort network and ZAFTYS TMS." },
+    { year: "2010s", title: "Wider fleet", desc: "Heavy load stayed. Distribution, tanker, and container work sat next to it." },
+    { year: "2020s", title: "TMS and marketplace", desc: "GST-compliant billing. TranZfort as a marketplace. ZAFTYS TMS opened to shippers and operators." },
   ];
 
   const todayPillars = [
-    { title: "Own Fleet", desc: "Company-owned heavy-haul trucks for direct suppliers and transporters." },
-    { title: "TranZfort", desc: "Verified logistics network scaling capacity across India  -  all through ZAFTYS." },
-    { title: "ZAFTYS TMS™", desc: "Transport & fleet management platform  -  internal ops and client product." },
+    { title: "Transport", desc: "Company fleet, LCV to bulker, on contracted lanes." },
+    { title: "ZAFTYS TMS", desc: "The dispatch system at app.zaftys.com. We use it. You can too." },
+    { title: "TranZfort", desc: "Post and search are free. AI-powered matching. Broker fee to truckers on booked loads." },
   ];
 
   return (
@@ -66,9 +67,9 @@ const About = () => {
         ]}
       />
       <PageHero
-        badge="Our Story"
-        title="About ZAFTYS Logistics  -  Industrial Freight Across India."
-        description="Three generations of corridor experience. GST-compliant operations combining company-operated fleet, TranZfort verified capacity, and ZAFTYS TMS for industrial shippers and transporters."
+        badge={pageHeroCopy.about.badge}
+        title={pageHeroCopy.about.h1}
+        description={pageHeroCopy.about.lead}
         imageSrc={heroAbout}
         imageAlt={pageHeroAlts.about}
       >
@@ -91,16 +92,16 @@ const About = () => {
             
             {/* Text Content */}
             <div className="animate-fade-in-up">
-              <h2 className="text-4xl font-heading font-bold mb-6 text-primary">Decades of Trust</h2>
+              <h2 className="text-4xl font-heading font-bold mb-6 text-primary">From family lanes to a GST desk</h2>
               <div className="space-y-6 text-lg text-muted-foreground leading-relaxed">
                 <p>
-                  ZAFTYS Logistics embodies six decades of family-operated freight experience  -  moving steel, cement, coal, and bulk cargo across India's industrial corridors.
+                  ZAFTYS started as a family trucking operation on Indian corridors. Hands-on dispatch. Showing up when it mattered. That is still how the yard works.
                 </p>
                 <p>
-                  For most of our history we operated in the traditional truck-owner category: hands-on dispatch, corridor relationships, and a reputation for showing up when it mattered. That operational DNA still defines how we work.
+                  The cargo got wider than cement and steel. So did the company: commercial LCV, container, tanker, and bulker, plus the TMS we dispatch on, plus TranZfort.
                 </p>
                 <p>
-                  We built formal operations with <strong className="text-foreground">GST-compliant billing and structured documentation</strong> to serve direct suppliers and large transporters  -  with own fleet, TranZfort network capacity, and ZAFTYS TMS powering every trip.
+                  Formal operations mean <strong className="text-foreground">GST-compliant billing and structured documentation</strong> on trips contracted through us. Own fleet when we have the truck. Marketplace when you need to post or find. Same Amravati desk.
                 </p>
               </div>
               
@@ -141,8 +142,8 @@ const About = () => {
       <section className="section-padding bg-muted/30">
         <div className="container mx-auto container-padding">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-heading font-bold text-navy mb-4">What We Do Today</h2>
-            <p className="text-muted-foreground max-w-2xl mx-auto">Transport operator and technology company  -  under one formal, GST-compliant operation.</p>
+            <h2 className="text-3xl font-heading font-bold text-navy mb-4">What we do today</h2>
+            <p className="text-muted-foreground max-w-2xl mx-auto">Three equal products under one GST-compliant company.</p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {todayPillars.map((pillar, index) => (
@@ -168,7 +169,7 @@ const About = () => {
                 </div>
                 <h3 className="text-2xl font-heading font-bold mb-4 text-navy">Our Mission</h3>
                 <p className="text-muted-foreground leading-relaxed">
-                  To move India's industrial freight with reliability, transparency, and scale  -  through own fleet, TranZfort network, and TMS™ technology. Every transaction runs through ZAFTYS.
+                  To move commercial freight in India with our own trucks, a TMS people actually log into, and a marketplace that does not charge truckers to look for work.
                 </p>
               </CardContent>
             </Card>
@@ -180,7 +181,7 @@ const About = () => {
                 </div>
                 <h3 className="text-2xl font-heading font-bold mb-4 text-navy">Our Vision</h3>
                 <p className="text-muted-foreground leading-relaxed">
-                  To be India's most trusted industrial logistics operator  -  combining decades of corridor experience with verified network capacity and transport technology built from real heavy-haul operations.
+                  To be the company a shipper can hire for the truck, the software, or the load board, without three different vendors.
                 </p>
               </CardContent>
             </Card>
@@ -194,9 +195,9 @@ const About = () => {
         
         <div className="container mx-auto container-padding relative z-10">
           <div className="text-center mb-16 animate-fade-in-up">
-            <h2 className="text-4xl md:text-5xl font-heading font-bold mb-4">Our Core Values</h2>
+            <h2 className="text-4xl md:text-5xl font-heading font-bold mb-4">Our values</h2>
             <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-              Principles that guide every mile we travel.
+              We do what we say. We match the truck to the window. We cut empty kilometres where we can.
             </p>
           </div>
 
@@ -218,10 +219,10 @@ const About = () => {
       <section className="py-24 bg-primary text-white">
         <div className="container mx-auto container-padding text-center">
           <h2 className="text-4xl font-heading font-bold mb-6 animate-fade-in-up">
-            Ready to Move With Us?
+            Ready to work with the same desk?
           </h2>
           <p className="text-xl mb-10 text-gray-200 max-w-2xl mx-auto font-light">
-            Partner with a team that has moved freight for three generations.
+            Quote the freight. Demo the TMS. Or put trucks on TranZfort.
           </p>
           <CTAGroup>
             <WhatsAppButton label="Chat on WhatsApp" />

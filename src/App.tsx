@@ -11,6 +11,7 @@ import { WhatsAppFab } from "./components/WhatsAppButton";
 import { initAnalytics, trackPageview } from "./lib/analytics";
 import { captureUtmFromLocation } from "./lib/utm";
 import { logVisit } from "./lib/visit-log";
+import { paths, reportPath, reportReadPath } from "./lib/site-paths";
 /** Eager Home: lazy Home painted Footer first, then shoved it down (~0.6 CLS). */
 import Home from "./pages/Home";
 
@@ -49,7 +50,7 @@ function LazyPage({ children }: { children: React.ReactNode }) {
 function ResourcesSlugRedirect() {
   const { slug } = useParams<{ slug: string }>();
   if (slug === "reports") {
-    return <Navigate to="/reports" replace />;
+    return <Navigate to={paths.reports} replace />;
   }
   return <Navigate to={slug ? `/blog/${slug}` : "/blog"} replace />;
 }
@@ -59,8 +60,8 @@ function LegacyReportRedirect({ read = false }: { read?: boolean }) {
   const target = slug === "global-logistics-market-2026-2033"
     ? "global-logistics-market-2027-2036"
     : slug;
-  if (!target) return <Navigate to="/reports" replace />;
-  return <Navigate to={read ? `/reports/${target}/read` : `/reports/${target}`} replace />;
+  if (!target) return <Navigate to={paths.reports} replace />;
+  return <Navigate to={read ? reportReadPath(target) : reportPath(target)} replace />;
 }
 
 const ScrollToTop = () => {
@@ -92,35 +93,35 @@ const AppShell = () => {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<LazyPage><About /></LazyPage>} />
-        <Route path="/zaftys-tms" element={<LazyPage><Technology /></LazyPage>} />
-        <Route path="/technology" element={<Navigate to="/zaftys-tms" replace />} />
-        <Route path="/platform" element={<Navigate to="/zaftys-tms" replace />} />
+        <Route path={paths.tms} element={<LazyPage><Technology /></LazyPage>} />
+        <Route path="/technology" element={<Navigate to={paths.tms} replace />} />
+        <Route path="/platform" element={<Navigate to={paths.tms} replace />} />
         <Route path="/services" element={<LazyPage><Services /></LazyPage>} />
         <Route path="/industries" element={<LazyPage><Industries /></LazyPage>} />
         <Route path="/industries/mining" element={<Navigate to="/industries/coal-mining" replace />} />
         <Route path="/industries/retail" element={<Navigate to="/industries/retail-distribution" replace />} />
         <Route path="/industries/:slug" element={<LazyPage><IndustryDetail /></LazyPage>} />
         <Route path="/fleet" element={<LazyPage><Fleet /></LazyPage>} />
-        <Route path="/tranzfort-network" element={<LazyPage><Network /></LazyPage>} />
-        <Route path="/network" element={<Navigate to="/tranzfort-network" replace />} />
+        <Route path={paths.network} element={<LazyPage><Network /></LazyPage>} />
+        <Route path="/network" element={<Navigate to={paths.network} replace />} />
         <Route path="/careers" element={<LazyPage><Careers /></LazyPage>} />
         <Route path="/partner" element={<LazyPage><Partner /></LazyPage>} />
         <Route path="/contact" element={<LazyPage><Contact /></LazyPage>} />
         <Route path="/blog" element={<LazyPage><Blog /></LazyPage>} />
         <Route path="/blog/:slug" element={<LazyPage><BlogPost /></LazyPage>} />
         <Route path="/resources" element={<LazyPage><Resources /></LazyPage>} />
-        <Route path="/reports" element={<LazyPage><MarketReports /></LazyPage>} />
+        <Route path={paths.reports} element={<LazyPage><MarketReports /></LazyPage>} />
         <Route
           path="/reports/global-logistics-market-2026-2033/read"
-          element={<Navigate to="/reports/global-logistics-market-2027-2036/read" replace />}
+          element={<Navigate to={reportReadPath("global-logistics-market-2027-2036")} replace />}
         />
         <Route
           path="/reports/global-logistics-market-2026-2033"
-          element={<Navigate to="/reports/global-logistics-market-2027-2036" replace />}
+          element={<Navigate to={reportPath("global-logistics-market-2027-2036")} replace />}
         />
         <Route path="/reports/:slug/read" element={<LazyPage><ReportPdfReader /></LazyPage>} />
         <Route path="/reports/:slug" element={<LazyPage><MarketReport /></LazyPage>} />
-        <Route path="/resources/reports" element={<Navigate to="/reports" replace />} />
+        <Route path="/resources/reports" element={<Navigate to={paths.reports} replace />} />
         <Route path="/resources/reports/:slug/read" element={<LegacyReportRedirect read />} />
         <Route path="/resources/reports/:slug" element={<LegacyReportRedirect />} />
         <Route path="/resources/:slug" element={<ResourcesSlugRedirect />} />

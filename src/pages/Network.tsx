@@ -15,12 +15,13 @@ import { Link } from "react-router-dom";
 import SEO from "@/components/SEO";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { CTAGroup } from "@/components/CTAGroup";
-import { externalLinks, networkHighlights } from "@/lib/constants";
+import { externalLinks, networkHighlights, WHATSAPP_POST_LOAD_MESSAGE } from "@/lib/constants";
 import { trackEvent } from "@/lib/analytics";
 import { pageSeo } from "@/lib/page-seo";
 import heroNetwork from "@/assets/hero-network.jpg";
 import { pageHeroAlts } from "@/lib/page-heroes";
 import { PageHero } from "@/components/PageHero";
+import { pageHeroCopy } from "@/lib/page-hero-copy";
 import {
   AppDemoFrame,
   LazyMatchFlowDemo,
@@ -42,57 +43,45 @@ const highlightLinks: (string | null)[] = [
 ];
 
 const pulseItems = [
-  { label: "Verified partners", sublabel: "Structured onboarding" },
-  { label: "Industrial corridors", sublabel: "Pan-India reach" },
-  { label: "Central coordination", sublabel: "Through ZAFTYS" },
-  { label: "GST compliant", sublabel: "Formal billing" },
+  { label: "Free to post", sublabel: "No listing fee" },
+  { label: "Free to find", sublabel: "No search fee" },
+  { label: "AI-powered matching", sublabel: "Corridor and vehicle" },
+  { label: "Broker fee", sublabel: "On trucker bookings" },
 ];
 
 const flowSteps = [
-  { title: "Customer requirement", desc: "Share shipment details, timelines, and cargo with ZAFTYS." },
-  { title: "Operational planning", desc: "We evaluate fleet availability, routes, and delivery priorities." },
-  { title: "Capacity assessment", desc: "Own fleet first; TranZfort network when additional vehicles are needed." },
-  { title: "Verified allocation", desc: "Suitable partners matched to operational and documentation standards." },
-  { title: "Centralized coordination", desc: "You continue working with ZAFTYS  -  not ad-hoc carriers." },
-  { title: "Shipment visibility", desc: "Progress monitored through ZAFTYS TMS throughout the trip." },
-  { title: "Delivery & documentation", desc: "Structured completion with standardized communication." },
+  { title: "Share the load or the empty truck", desc: "Post origin, destination, and vehicle class, or publish an available truck." },
+  { title: "Matching suggests a fit", desc: "AI-powered matching on corridor, body type, timing, and papers." },
+  { title: "You confirm", desc: "ZAFTYS coordinates trips that run through us. GST billing stays on our side." },
+  { title: "Status can follow in TMS", desc: "Contracted work can sit in ZAFTYS TMS so you are not chasing WhatsApp photos." },
 ];
 
 const networkBenefits = [
-  { title: "Flexible capacity", desc: "Scale transport without rebuilding your logistics process every time demand increases." },
-  { title: "One operational team", desc: "Continue with one logistics partner instead of coordinating multiple providers." },
-  { title: "Consistent communication", desc: "Shipment updates stay centralized through execution." },
-  { title: "Verified network", desc: "Partners complete structured onboarding before joining." },
-  { title: "Digital visibility", desc: "Operational information connected through ZAFTYS TMS." },
-  { title: "Faster response", desc: "Additional resources arranged when business conditions change." },
+  { title: "Free to post and find", desc: "No listing fee. No search fee. We charge a broker fee to truckers on booked loads." },
+  { title: "AI-powered matching", desc: "Suggestions use corridor, vehicle class, timing, and papers. You still confirm the booking." },
+  { title: "Verified truckers", desc: "RC, insurance, and onboarding before a partner shows as available." },
+  { title: "GST when we contract", desc: "Trips that run through ZAFTYS stay on our GST billing. The app listing itself is free." },
+  { title: "TMS on ZAFTYS trips", desc: "Contracted work can sit in ZAFTYS TMS so status is not only a WhatsApp thread." },
+  { title: "Built for the highway", desc: "Hindi and English on the road. Core features keep working when the signal drops." },
 ];
 
 const audienceCards = [
   {
-    title: "For suppliers",
+    title: "For shippers",
     accent: "text-[#0E8C84]",
     bullets: [
-      "Share load requirements through structured channels",
-      "Capacity coordinated centrally through ZAFTYS",
-      "Visibility through ZAFTYS TMS on active shipments",
+      "Post a load once. See suggested trucks.",
+      "Keep one commercial relationship when ZAFTYS is on the contract.",
+      "Visibility through ZAFTYS TMS on trips we run.",
     ],
   },
   {
-    title: "For transport partners",
+    title: "For truck owners",
     accent: "text-accent",
     bullets: [
-      "Access verified industrial loads on matched corridors",
-      "Structured onboarding before joining the network",
-      "Payments and coordination through ZAFTYS Logistics",
-    ],
-  },
-  {
-    title: "For ZAFTYS clients",
-    accent: "text-primary",
-    bullets: [
-      "You still contract with ZAFTYS Logistics only",
-      "We scale capacity through the network when our fleet is full",
-      "Same dispatch discipline, documentation, and accountability",
+      "Find commercial loads on corridors you already run.",
+      "Onboarding checks RC and papers.",
+      "Payments for ZAFTYS trips come through ZAFTYS.",
     ],
   },
 ];
@@ -162,15 +151,9 @@ const NetworkPage = () => {
       />
 
       <PageHero
-        badge="TranZfort Network · Live"
-        title={
-          <>
-            Verified Capacity Through ZAFTYS.
-            <br />
-            Scale Without The Complexity.
-          </>
-        }
-        description="TranZfort is live  -  verified transport partners, centralized coordination, and ZAFTYS TMS visibility on every lane. All commercial transactions through ZAFTYS Logistics."
+        badge={pageHeroCopy.network.badge}
+        title={pageHeroCopy.network.h1}
+        description={pageHeroCopy.network.lead}
         imageSrc={heroNetwork}
         imageAlt={pageHeroAlts.network}
       >
@@ -185,10 +168,13 @@ const NetworkPage = () => {
               Download TranZfort <ArrowRight className="ml-2" size={18} />
             </a>
           </Button>
-          <WhatsAppButton label="Request Capacity" tone="on-dark-outline" />
-          <Link to="/partner">
-            <Button size="lg" variant="on-dark-outline">Become a Partner</Button>
-          </Link>
+          <WhatsAppButton
+            label="Post a load"
+            tone="on-dark-outline"
+            message={WHATSAPP_POST_LOAD_MESSAGE}
+            placement="hero"
+            intent="post_load"
+          />
         </CTAGroup>
       </PageHero>
 
@@ -212,9 +198,9 @@ const NetworkPage = () => {
       <section id="explore-demo" className="section-padding bg-white scroll-mt-28 pt-10 md:pt-12">
         <div className="container mx-auto container-padding">
           <div className="text-center max-w-2xl mx-auto mb-8">
-            <h2 className="text-3xl md:text-4xl font-heading font-bold mb-3 text-navy">Try The App Flows</h2>
+            <h2 className="text-3xl md:text-4xl font-heading font-bold mb-3 text-navy">Try the app flows</h2>
             <p className="text-muted-foreground">
-              Preview supplier and trucker views below  -  then download the live TranZfort app to get started.
+              Preview shipper and trucker views below, then download the live TranZfort app.
             </p>
           </div>
           <div className="max-w-md mx-auto rounded-2xl border border-border bg-muted/10 shadow-lg p-4 sm:p-6">
@@ -227,9 +213,9 @@ const NetworkPage = () => {
       <section className="section-padding bg-muted/30">
         <div className="container mx-auto container-padding">
           <div className="text-center max-w-2xl mx-auto mb-10">
-            <h2 className="text-3xl md:text-4xl font-heading font-bold mb-3 text-navy">How TranZfort Works</h2>
+            <h2 className="text-3xl md:text-4xl font-heading font-bold mb-3 text-navy">How TranZfort works</h2>
             <p className="text-muted-foreground">
-              Own fleet first. Verified network when demand exceeds capacity. Tap simulate to watch a load go live.
+              Post a load or find a truck. Matching is AI-powered. Tap simulate to watch a load go live.
             </p>
           </div>
 
@@ -281,9 +267,9 @@ const NetworkPage = () => {
       <section className="section-padding bg-white">
         <div className="container mx-auto container-padding">
           <div className="text-center max-w-2xl mx-auto mb-10">
-            <h2 className="text-3xl md:text-4xl font-heading font-bold mb-3 text-navy">More Capacity. Less Complexity.</h2>
+            <h2 className="text-3xl md:text-4xl font-heading font-bold mb-3 text-navy">What you get in the marketplace</h2>
             <p className="text-muted-foreground">
-              TranZfort adds flexible capacity without adding vendors, communication channels, or operational risk.
+              Listing and search are free. AI-powered matching. We charge a broker fee to truckers on booked loads. GST billing when the trip runs through ZAFTYS.
             </p>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 max-w-5xl mx-auto">
@@ -299,20 +285,21 @@ const NetworkPage = () => {
         </div>
       </section>
 
-      {/* Audience  -  3 equal columns */}
+      {/* Audience  -  shipper + trucker only */}
       <section className="section-padding bg-muted/30">
         <div className="container mx-auto container-padding">
           <div className="text-center max-w-2xl mx-auto mb-10">
-            <h2 className="text-3xl md:text-4xl font-heading font-bold mb-3 text-navy">Built for Every Side of Freight</h2>
+            <h2 className="text-3xl md:text-4xl font-heading font-bold mb-3 text-navy">Built for both sides of the load</h2>
             <p className="text-muted-foreground">
-              Suppliers, transport partners, and ZAFTYS clients each get a structured experience  -  under one formal ZAFTYS operation.{" "}
+              Shippers post. Truckers book.{" "}
               <a href="#explore-demo" className="text-accent font-semibold hover:underline">
-                Try supplier &amp; trucker views ↑
+                Try both views
               </a>
+              . Existing ZAFTYS transport customers use the same app when they need a truck we do not have today.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
             {audienceCards.map((card) => (
               <Card key={card.title} className="border-none shadow-md h-full bg-white">
                 <CardContent className="p-6 flex flex-col h-full">
@@ -338,7 +325,7 @@ const NetworkPage = () => {
           <div className="text-center max-w-2xl mx-auto mb-10">
             <h2 className="text-3xl md:text-4xl font-heading font-bold mb-3 text-navy">Why TranZfort</h2>
             <p className="text-muted-foreground">
-              Operational tools built for Indian highways  -  not just city connectivity.
+              Hindi and English on the road. Built for highway work, not city-only apps.
             </p>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 max-w-5xl mx-auto">
@@ -353,30 +340,30 @@ const NetworkPage = () => {
       <section id="compare" className="section-padding bg-navy text-white scroll-mt-28">
         <div className="container mx-auto container-padding max-w-4xl">
           <div className="text-center mb-10">
-            <h2 className="text-3xl font-heading font-bold mb-3">Traditional Logistics vs ZAFTYS Ecosystem</h2>
+            <h2 className="text-3xl font-heading font-bold mb-3">Calling five brokers vs TranZfort</h2>
             <p className="text-gray-400 text-sm max-w-xl mx-auto">
-              One partner, one platform, one network  -  instead of fragmented vendors and disconnected tools.
+              Separate rates and WhatsApp groups, or one marketplace next to our fleet and TMS.
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="p-6 md:p-8 rounded-xl bg-white/5 border border-white/10 h-full">
               <h3 className="font-heading font-bold text-lg mb-5 flex items-center gap-2">
-                <X className="text-red-400 shrink-0" size={20} /> Traditional approach
+                <X className="text-red-400 shrink-0" size={20} /> Calling five brokers
               </h3>
               <ul className="space-y-3 text-gray-400 text-sm">
-                <li className="flex gap-2"><span className="text-red-400/80">·</span> Different transport companies and communication methods</li>
-                <li className="flex gap-2"><span className="text-red-400/80">·</span> You manage multiple transporters separately</li>
-                <li className="flex gap-2"><span className="text-red-400/80">·</span> Limited unified tracking or accountability</li>
+                <li className="flex gap-2"><span className="text-red-400/80">·</span> Separate rates and separate WhatsApp groups</li>
+                <li className="flex gap-2"><span className="text-red-400/80">·</span> You manage multiple transporters yourself</li>
+                <li className="flex gap-2"><span className="text-red-400/80">·</span> No shared tracking or one GST invoice</li>
               </ul>
             </div>
             <div className="p-6 md:p-8 rounded-xl bg-accent/10 border border-accent/30 h-full">
               <h3 className="font-heading font-bold text-lg mb-5 flex items-center gap-2">
-                <CheckCircle2 className="text-accent shrink-0" size={20} /> ZAFTYS + TranZfort
+                <CheckCircle2 className="text-accent shrink-0" size={20} /> TranZfort plus ZAFTYS
               </h3>
               <ul className="space-y-3 text-gray-200 text-sm">
-                <li className="flex gap-2"><span className="text-accent">·</span> One logistics partner and one communication channel</li>
-                <li className="flex gap-2"><span className="text-accent">·</span> Own fleet first; verified network scales when needed</li>
-                <li className="flex gap-2"><span className="text-accent">·</span> Visibility through ZAFTYS TMS™ on active lanes</li>
+                <li className="flex gap-2"><span className="text-accent">·</span> Post or find with no listing or search fee. Broker fee to truckers on booked loads</li>
+                <li className="flex gap-2"><span className="text-accent">·</span> Own fleet if we have the truck</li>
+                <li className="flex gap-2"><span className="text-accent">·</span> TMS on the trip we run</li>
               </ul>
             </div>
           </div>
@@ -386,9 +373,13 @@ const NetworkPage = () => {
       {/* CTA */}
       <section className="py-20 md:py-24 bg-primary text-white text-center">
         <div className="container mx-auto container-padding max-w-2xl">
-          <h2 className="text-3xl md:text-4xl font-heading font-bold mb-4">Need More Transport Capacity?</h2>
+          <h2 className="text-3xl md:text-4xl font-heading font-bold mb-4">Post a load or find a truck</h2>
           <p className="text-lg text-gray-200 mb-8">
-            Download TranZfort for partners, or WhatsApp ZAFTYS for freight capacity  -  one accountable logistics relationship.
+            Download TranZfort, or WhatsApp a load. Fleet owners can also{" "}
+            <Link to="/partner" className="underline hover:text-white font-semibold">
+              become a partner
+            </Link>
+            .
           </p>
           <CTAGroup>
             <Button asChild size="lg" variant="accent">
@@ -401,10 +392,13 @@ const NetworkPage = () => {
                 Download TranZfort <ArrowRight className="ml-2" size={18} />
               </a>
             </Button>
-            <WhatsAppButton label="Get a Freight Quote" tone="on-dark-outline" />
-            <Link to="/partner">
-              <Button size="lg" variant="on-dark-outline">Partner with ZAFTYS</Button>
-            </Link>
+            <WhatsAppButton
+              label="Post a load"
+              tone="on-dark-outline"
+              message={WHATSAPP_POST_LOAD_MESSAGE}
+              placement="cta"
+              intent="post_load"
+            />
           </CTAGroup>
           <p className="mt-8 text-sm text-gray-300">
             Also explore{" "}

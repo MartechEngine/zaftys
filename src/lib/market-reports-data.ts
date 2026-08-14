@@ -66,7 +66,7 @@ export const marketReports: readonly MarketReport[] = [
   report({
     slug: "global-logistics-market-2027-2036",
     title: "Global Logistics Market Size, Share & Forecast 2027-2036",
-    seoTitle: "Global Logistics Market Size & Forecast 2027-2036 | ZAFTYS",
+    seoTitle: "Global Logistics Market Size and Forecast 2027-2036",
     seoDescription:
       "Global logistics market research report: US$ 4,334.3 BN (2026) to US$ 11,344.7 BN (2036), 10.1% CAGR. Road freight, ocean, air, warehousing, TMS, regions & vendors — free PDF.",
     publishedAt: "2026-08-13",
@@ -187,7 +187,7 @@ export const marketReports: readonly MarketReport[] = [
   report({
     slug: "digital-freight-matching-market-2027-2036",
     title: "Digital Freight Matching Market Size & Forecast 2027-2036",
-    seoTitle: "Digital Freight Matching Market Size & Forecast 2027-2036 | ZAFTYS",
+    seoTitle: "Digital Freight Matching Market Size and Forecast 2027-2036",
     seoDescription:
       "Digital freight matching (DFM) market report: US$ 81.2 BN (2026) to US$ 1,314.0 BN (2036), 32.1% CAGR. Platform revenue, spot/contract matching, TMS APIs, regions — free PDF.",
     publishedAt: "2026-08-14",
@@ -315,6 +315,10 @@ export function listReports(): MarketReport[] {
   return [...marketReports].sort(
     (a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime(),
   );
+}
+
+export function latestReports(limit: number): MarketReport[] {
+  return listReports().slice(0, limit);
 }
 
 export function getReportBySlug(slug: string): MarketReport | undefined {

@@ -16,6 +16,8 @@ import { CTAGroup } from "@/components/CTAGroup";
 import { useToast } from "@/hooks/use-toast";
 import { trackEvent } from "@/lib/analytics";
 import { pageSeo } from "@/lib/page-seo";
+import { breadcrumbSchema } from "@/lib/schema";
+import { pageHeroCopy } from "@/lib/page-hero-copy";
 
 const Careers = () => {
   const { toast } = useToast();
@@ -109,11 +111,15 @@ const Careers = () => {
         title={pageSeo.careers.title}
         description={pageSeo.careers.description}
         canonical="/careers"
+        schema={breadcrumbSchema([
+          { name: "Home", path: "/" },
+          { name: "Careers", path: "/careers" },
+        ])}
       />
       <PageHero
-        badge="Join Our Team"
-        title="Careers At ZAFTYS Logistics  -  Operations & Technology."
-        description="Join ZAFTYS in Amravati and across our network  -  roles where corridor experience and transport technology solve real industrial freight problems."
+        badge={pageHeroCopy.careers.badge}
+        title={pageHeroCopy.careers.h1}
+        description={pageHeroCopy.careers.lead}
         imageSrc={heroCareers}
         imageAlt={pageHeroAlts.careers}
       >
@@ -134,17 +140,17 @@ const Careers = () => {
       <section className="section-padding bg-white">
         <div className="container mx-auto container-padding">
           <div className="max-w-4xl mx-auto text-center mb-16">
-            <h2 className="text-3xl font-heading font-bold mb-6 text-navy">More Than A Job Title.</h2>
+            <h2 className="text-3xl font-heading font-bold mb-6 text-navy">More than a job title.</h2>
             <p className="text-lg text-muted-foreground">
-              Whether you are behind the wheel, on the dispatch floor, or building software, your work directly supports businesses that depend on predictable logistics.
+              Whether you are behind the wheel, on the dispatch floor, or building ZAFTYS TMS, the work is real trips: commercial freight, marketplace matching, and a desk in Amravati.
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {[
-              { icon: Heart, title: "Wellness", desc: "Health and safety support appropriate to role  -  details communicated during hiring." },
+              { icon: Heart, title: "Wellness", desc: "Health and safety support appropriate to role. Details during hiring." },
               { icon: TrendingUp, title: "Growth", desc: "Clear paths to develop skills in operations, coordination, and technology." },
-              { icon: Trophy, title: "Rewards", desc: "Performance and safety recognition where applicable  -  structured through HR policy." },
+              { icon: Trophy, title: "Rewards", desc: "Performance and safety recognition where applicable, structured through HR policy." },
               { icon: Users, title: "Culture", desc: "A supportive environment rooted in operational discipline and family values." },
             ].map((item, index) => (
               <Card key={index} className="text-center hover:-translate-y-1 transition-transform duration-300 border-none shadow-lg bg-muted/10">
@@ -165,7 +171,7 @@ const Careers = () => {
       <section id="open-positions" className="section-padding bg-muted/30 scroll-mt-28">
         <div className="container mx-auto container-padding">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-heading font-bold mb-4 text-navy">Current Openings</h2>
+            <h2 className="text-3xl font-heading font-bold mb-4 text-navy">Current openings</h2>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
@@ -211,7 +217,7 @@ const Careers = () => {
         <div className="container mx-auto container-padding">
           <div className="max-w-2xl mx-auto">
             <div className="text-center mb-10">
-              <h2 className="text-3xl font-heading font-bold mb-4">Don't See Your Role?</h2>
+              <h2 className="text-3xl font-heading font-bold mb-4">Don't see your role?</h2>
               <p className="text-gray-300">
                 We're always looking for talent. Send us your details and we'll keep you on file.
               </p>

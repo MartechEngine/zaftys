@@ -18,6 +18,8 @@ import { useToast } from "@/hooks/use-toast";
 import { trackEvent } from "@/lib/analytics";
 import { externalLinks } from "@/lib/constants";
 import { pageSeo } from "@/lib/page-seo";
+import { breadcrumbSchema } from "@/lib/schema";
+import { pageHeroCopy } from "@/lib/page-hero-copy";
 import { Link } from "react-router-dom";
 
 const Partner = () => {
@@ -87,7 +89,7 @@ const Partner = () => {
     { step: "01", title: "Register", desc: "Submit company details, contact information, fleet size, and primary corridors." },
     { step: "02", title: "Verify", desc: "Our fleet team reviews registration, documentation, insurance, and operational readiness." },
     { step: "03", title: "Onboard", desc: "Orientation on communication standards, TranZfort app usage, and ZAFTYS workflows." },
-    { step: "04", title: "Operate & Earn", desc: "Begin accepting loads matched to your routes  -  with ongoing operations support." },
+    { step: "04", title: "Take loads", desc: "Accept matched loads on your routes. Payments for ZAFTYS trips come through ZAFTYS." },
   ];
 
   return (
@@ -96,11 +98,15 @@ const Partner = () => {
         title={pageSeo.partner.title}
         description={pageSeo.partner.description}
         canonical="/partner"
+        schema={breadcrumbSchema([
+          { name: "Home", path: "/" },
+          { name: "Become a Partner", path: "/partner" },
+        ])}
       />
       <PageHero
-        badge="Fleet Owners"
-        title="Join TranZfort  -  Industrial Loads With ZAFTYS Logistics."
-        description="Verified transport partners get structured industrial freight coordinated through ZAFTYS Logistics  -  clear payments, professional onboarding, and tools as you scale across India."
+        badge={pageHeroCopy.partner.badge}
+        title={pageHeroCopy.partner.h1}
+        description={pageHeroCopy.partner.lead}
         imageSrc={heroPartner}
         imageAlt={pageHeroAlts.partner}
       >
@@ -122,10 +128,10 @@ const Partner = () => {
         <div className="container mx-auto container-padding">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {[
-              { icon: Network, title: "Verified Network", desc: "Industrial freight opportunities on corridors where ZAFTYS operates." },
-              { icon: TrendingUp, title: "Better Utilization", desc: "Reduce empty return trips with backhaul-friendly matching." },
-              { icon: Shield, title: "Payments via ZAFTYS", desc: "Transparent GST-compliant billing through ZAFTYS Logistics." },
-              { icon: Zap, title: "TMS™ Access", desc: "Operational tools as your volume scales with ZAFTYS." },
+              { icon: Network, title: "Loads on your corridors", desc: "Commercial freight matched to lanes you already run. Search is free. We charge a broker fee on booked loads." },
+              { icon: TrendingUp, title: "Fewer empty returns", desc: "Find a load for the way back instead of deadheading the corridor." },
+              { icon: Shield, title: "Payments via ZAFTYS", desc: "GST-compliant billing through ZAFTYS on trips we contract." },
+              { icon: Zap, title: "TMS when you grow", desc: "Dispatch tools as your volume with ZAFTYS justifies it." },
             ].map((item, index) => (
               <Card key={index} className="text-center border-none shadow-lg hover:-translate-y-1 transition-transform duration-300">
                 <CardContent className="p-8">
@@ -145,7 +151,7 @@ const Partner = () => {
       <section className="section-padding bg-muted/30">
         <div className="container mx-auto container-padding">
           <div className="text-center mb-16">
-            <h2 className="text-3xl font-heading font-bold mb-4 text-navy">Simple Onboarding. Clear Standards.</h2>
+            <h2 className="text-3xl font-heading font-bold mb-4 text-navy">Simple onboarding. Clear standards.</h2>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
@@ -175,9 +181,9 @@ const Partner = () => {
         <div className="container mx-auto container-padding">
           <div className="max-w-3xl mx-auto">
             <div className="text-center mb-10">
-              <h2 className="text-3xl font-heading font-bold mb-4">Register Your Fleet</h2>
+              <h2 className="text-3xl font-heading font-bold mb-4">Register your fleet</h2>
               <p className="text-gray-300">
-                Start your journey with ZAFTYS today.
+                Papers, insurance, and corridors. Then the app.
               </p>
             </div>
 

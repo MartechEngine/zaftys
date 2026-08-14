@@ -1,6 +1,6 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Truck, Mountain, Factory, Route, Building, Network, ArrowRight, CheckCircle2, MapPin, BarChart3, Clock, FileText, Shield } from "lucide-react";
+import { Truck, Factory, Route, Network, ArrowRight, CheckCircle2 } from "lucide-react";
 import { Link } from "react-router-dom";
 import SEO from "@/components/SEO";
 import { HeroEmailButton } from "@/components/HeroEmailButton";
@@ -11,15 +11,16 @@ import { AppDemoFrame, LazyMatchFlowDemo, DemoDisclaimer } from "@/components/tr
 import { LazyTmsTripPeek, TmsDemoDisclaimer } from "@/components/tms-demo";
 import "@/styles/tranzfort-demo.css";
 import "@/styles/tms-demo.css";
-import { externalLinks, truckTypes, materialTypes, tsmCapabilities } from "@/lib/constants";
+import { externalLinks, vehicleClasses, materialTypes } from "@/lib/constants";
 import { trackEvent } from "@/lib/analytics";
 import { pageSeo } from "@/lib/page-seo";
 import { TransportationExplorer } from "@/components/TransportationExplorer";
 import { heroMailBodies, heroMailSubjects } from "@/lib/hero-ctas";
 import { PageHero } from "@/components/PageHero";
+import { pageHeroCopy } from "@/lib/page-hero-copy";
 import heroServices from "@/assets/hero-services.jpg";
 import { pageHeroAlts } from "@/lib/page-heroes";
-import { truckingServiceSchema, organizationSchema } from "@/lib/schema";
+import { truckingServiceSchema, organizationSchema, breadcrumbSchema } from "@/lib/schema";
 import { truckImageForId, materialImageForId } from "@/lib/services-images";
 
 const Services = () => {
@@ -27,56 +28,49 @@ const Services = () => {
     {
       id: "ftl",
       icon: Truck,
-      title: "Full Truckload (FTL) Transport",
-      description: "Dedicated trucks for large-volume heavy shipments with nationwide corridor coverage and TMS™ tracking.",
-      features: ["Heavy-haul multi-axle vehicles", "Pan-India industrial corridors", "Real-time TMS™ tracking", "Dedicated fleet assignment"],
-      highlight: "Dispatch discipline built over decades",
-    },
-    {
-      id: "mining",
-      icon: Mountain,
-      title: "Mining & Raw Material Logistics",
-      description: "Heavy-haul expertise for ores, aggregates, and raw materials with certified safety protocols.",
-      features: ["Reinforced heavy-duty tippers", "DGMS safety compliance", "Rugged terrain expertise", "24/7 site operations"],
-      highlight: "Built for mines, plants, and industrial sites",
+      title: "Full truckload (FTL)",
+      description:
+        "One dedicated truck, one cargo, one corridor. Any class: LCV, heavy load, container, tanker, or bulker.",
+      features: ["Any of the five vehicle classes", "Pan-India commercial corridors", "TMS tracking on contracted trips", "GST-compliant billing"],
+      highlight: "The truck matches the cargo, not the other way around",
     },
     {
       id: "contract",
       icon: Factory,
-      title: "Industrial Contract Logistics",
-      description: "Long-term dedicated support for direct suppliers and transporters with customized fleet programs.",
-      features: ["Customized fleet solutions", "Predictive scheduling", "Performance SLAs", "Dedicated account management"],
-      highlight: "Reliable capacity on repeat corridors",
+      title: "Contract fleet",
+      description:
+        "Assigned trucks and drivers on a plant, mill, or DC program. A season or a year. The class follows the lane.",
+      features: ["Dedicated vehicles on repeat windows", "Account desk that knows the gate", "Performance on the lane, not a one-off rate", "TMS visibility for the shipper"],
+      highlight: "Assigned capacity on corridors you run every week",
     },
     {
       id: "optimization",
       icon: Route,
-      title: "Smart Route & Load Optimization",
-      description: "Intelligent route planning and load balancing to cut empty miles on your active lanes.",
-      features: ["Corridor-based routing", "Return-load optimization", "Fuel efficiency monitoring", "Dynamic load balancing"],
-      highlight: "Cut empty miles on industrial lanes",
+      title: "Route and return-load planning",
+      description:
+        "Fewer empty kilometres on lanes we already run. Corridor planning, not a generic routing slogan.",
+      features: ["Return-load thinking on repeat lanes", "Plant and DC window awareness", "Fuel-sensible routing", "TranZfort when the return needs a posted load"],
+      highlight: "Cut empty returns on corridors we know",
     },
     {
-      id: "enterprise",
-      icon: Building,
-      title: "Enterprise Client Services",
-      description: "Holistic partnerships for large transporters with visibility, SLAs, and scalable capacity.",
-      features: ["Client tracking portal", "Dedicated support", "TranZfort overflow capacity", "Structured documentation"],
-      highlight: "Trusted by leading industrial shippers",
-    },
-    {
-      id: "overflow",
+      id: "marketplace",
       icon: Network,
-      title: "TranZfort Network Overflow",
-      description: "When our fleet is at capacity, verified partners on TranZfort fulfil loads  -  all coordinated through ZAFTYS.",
-      features: ["Verified operator network", "Structured load matching", "Same ZAFTYS accountability", "TMS™ visibility on every trip"],
-      highlight: "Scale without losing control",
+      title: "TranZfort marketplace cover",
+      description:
+        "Post the load on TranZfort when you need a truck we do not have that day. Listing and search are free. We charge a broker fee to truckers on booked loads. Trips contracted through ZAFTYS stay on GST billing.",
+      features: ["Free to post and find", "AI-powered matching", "Broker fee on trucker bookings", "TMS visibility on ZAFTYS trips"],
+      highlight: "Extra trucks on the same ZAFTYS contract",
     },
   ];
 
-  const tsmIcons = [MapPin, Clock, BarChart3, FileText, Truck, Shield];
-
-  const schema = [truckingServiceSchema, organizationSchema];
+  const schema = [
+    truckingServiceSchema,
+    organizationSchema,
+    breadcrumbSchema([
+      { name: "Home", path: "/" },
+      { name: "Services", path: "/services" },
+    ]),
+  ];
 
   return (
     <div className="min-h-screen bg-background font-sans">
@@ -88,9 +82,9 @@ const Services = () => {
       />
 
       <PageHero
-        badge="Industrial Trucking"
-        title="FTL, Contract & Heavy-Haul Logistics  -  ZAFTYS Logistics."
-        description="Transport programs for industrial cargo, plant windows, and compliance needs  -  company fleet, TranZfort overflow, and live ZAFTYS TMS visibility on every lane."
+        badge={pageHeroCopy.services.badge}
+        title={pageHeroCopy.services.h1}
+        description={pageHeroCopy.services.lead}
         imageSrc={heroServices}
         imageAlt={pageHeroAlts.services}
       >
@@ -110,37 +104,38 @@ const Services = () => {
       <section id="transportation-explorer" className="section-padding bg-muted/30 scroll-mt-28">
         <div className="container mx-auto container-padding">
           <div className="text-center mb-10 max-w-2xl mx-auto">
-            <h2 className="text-3xl md:text-4xl font-heading font-bold mb-3 text-navy">Match The Right Asset To Your Cargo</h2>
+            <h2 className="text-3xl md:text-4xl font-heading font-bold mb-3 text-navy">Match the right asset to the cargo</h2>
             <p className="text-base md:text-lg text-muted-foreground">
-              Pick a truck type or material to see typical pairings  -  the same discipline we use before every industrial dispatch.
+              Pick a body type or material. LCV pairs with FMCG and retail. Tippers and open body pair with bulk. Tankers pair with energy and chemicals.
             </p>
           </div>
           <TransportationExplorer />
         </div>
       </section>
 
-      {/* Truck types  -  6 cards, 3×2 */}
+      {/* Truck classes  -  5 classes + contract program, 3x2 */}
       <section id="trucks" className="section-padding bg-white scroll-mt-28">
         <div className="container mx-auto container-padding">
           <div className="text-center mb-16 max-w-3xl mx-auto">
-            <h2 className="text-4xl font-heading font-bold mb-4 text-navy">Truck Types We Deploy</h2>
+            <h2 className="text-4xl font-heading font-bold mb-4 text-navy">Truck classes we run</h2>
             <p className="text-lg text-muted-foreground">
-              Body type, payload, and material must align before dispatch  -  the same discipline on every industrial lane.
+              LCV, heavy load, container, tanker, and bulker, plus contract fleet. The full TranZfort type list is on Fleet.
             </p>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            {truckTypes.map((truck) => {
-              const img = truckImageForId(truck.id);
+            {vehicleClasses.map((item) => {
+              const img = truckImageForId(item.id);
               return (
-                <ImageContentCard
-                  key={truck.id}
-                  imageSrc={img.src}
-                  imageAlt={img.alt}
-                  title={truck.title}
-                  tagline={truck.tagline}
-                  description={truck.description}
-                  darkImageBg
-                />
+                <div key={item.id} id={item.kind === "class" ? item.id : undefined} className="scroll-mt-28 h-full">
+                  <ImageContentCard
+                    imageSrc={img.src}
+                    imageAlt={img.alt}
+                    title={item.title}
+                    tagline={item.tagline}
+                    description={item.description}
+                    darkImageBg
+                  />
+                </div>
               );
             })}
           </div>
@@ -151,9 +146,9 @@ const Services = () => {
       <section id="materials" className="section-padding bg-muted/30 scroll-mt-28">
         <div className="container mx-auto container-padding">
           <div className="text-center mb-16 max-w-3xl mx-auto">
-            <h2 className="text-4xl font-heading font-bold mb-4 text-navy">Materials We Move</h2>
+            <h2 className="text-4xl font-heading font-bold mb-4 text-navy">Materials we move</h2>
             <p className="text-lg text-muted-foreground">
-              Industrial commodities across mining, construction, metals, energy, FMCG, and agriculture on corridors across India.
+              Bulk, metals, chemicals, packaged cargo, and harvest freight. The truck class follows the material.
             </p>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -177,8 +172,8 @@ const Services = () => {
       <section id="transportation" className="section-padding bg-white">
         <div className="container mx-auto container-padding">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-heading font-bold mb-4 text-navy">Curated Service Programs</h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">How ZAFTYS packages capacity for direct suppliers and transporters.</p>
+            <h2 className="text-4xl font-heading font-bold mb-4 text-navy">How we package the work</h2>
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">FTL, contract fleet, return-load planning, and TranZfort when you need more trucks.</p>
           </div>
           <div className="space-y-20">
             {detailedServices.map((service, index) => (
@@ -202,7 +197,7 @@ const Services = () => {
                 <Card className={`border-none shadow-lg bg-muted/20 ${index % 2 === 1 ? "lg:col-start-1" : ""}`}>
                   <CardContent className="p-8">
                     <p className="text-sm font-semibold text-muted-foreground uppercase tracking-wider mb-4">Every program includes</p>
-                    {["Registered ZAFTYS contracts", "Own fleet + TranZfort overflow", "TMS™ tracking on active lanes"].map((line, i) => (
+                    {["Registered ZAFTYS contracts", "Own fleet plus TranZfort marketplace", "TMS tracking on active lanes"].map((line, i) => (
                       <div key={i} className="flex gap-3 mb-3 last:mb-0">
                         <CheckCircle2 className="text-primary shrink-0" size={18} />
                         <span className="text-sm">{line}</span>
@@ -216,120 +211,74 @@ const Services = () => {
         </div>
       </section>
 
-      {/* TMS  -  6 cards, 3×2 */}
       <section id="operations" className="section-padding bg-muted/30 scroll-mt-28">
         <div className="container mx-auto container-padding">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-16">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div>
-              <h2 className="text-4xl font-heading font-bold mb-4 text-navy">ZAFTYS TMS™ Operations</h2>
-              <p className="text-lg text-muted-foreground leading-relaxed">
-                The dispatch and visibility layer behind every move  -  live at app.zaftys.com for our fleet and for shippers and operators who want the same discipline.
+              <h2 className="text-4xl font-heading font-bold mb-4 text-navy">See the trip in ZAFTYS TMS</h2>
+              <p className="text-lg text-muted-foreground leading-relaxed mb-8">
+                Dispatch, GPS, and e-POD on contracted work. Full product detail lives on the TMS page.
               </p>
+              <Link to="/zaftys-tms">
+                <Button variant="accent">See ZAFTYS TMS <ArrowRight className="ml-2" size={16} /></Button>
+              </Link>
             </div>
             <div className="w-full">
               <LazyTmsTripPeek density="compact" className="min-h-[280px] rounded-xl shadow-xl" />
               <TmsDemoDisclaimer className="mt-3" />
             </div>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {tsmCapabilities.map((item, index) => {
-              const Icon = tsmIcons[index] ?? MapPin;
-              return (
-                <Card key={index} className="border-none shadow-sm bg-white">
-                  <CardContent className="p-6">
-                    <Icon className="text-primary mb-3" size={24} />
-                    <h3 className="font-heading font-bold text-navy mb-2">{item.title}</h3>
-                    <p className="text-sm text-muted-foreground">{item.desc}</p>
-                  </CardContent>
-                </Card>
-              );
-            })}
-          </div>
-          <div className="text-center mt-10 flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <Link to="/zaftys-tms">
-              <Button variant="accent">See ZAFTYS TMS <ArrowRight className="ml-2" size={16} /></Button>
-            </Link>
-            <Link to="/blog/planning-industrial-shipments" className="text-primary font-semibold hover:underline text-sm">
-              Read more: planning industrial shipments
-            </Link>
-          </div>
         </div>
       </section>
 
-      {/* TranZfort  -  interactive flow */}
       <section id="tranzfort" className="section-padding bg-navy text-white scroll-mt-28">
         <div className="container mx-auto container-padding">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start mb-16">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div>
-              <h2 className="text-4xl font-heading font-bold mb-4">TranZfort Capacity Layer</h2>
+              <h2 className="text-4xl font-heading font-bold mb-4">Need a truck we do not have today?</h2>
               <p className="text-gray-300 text-lg leading-relaxed mb-8">
-                When our fleet is full, TranZfort connects verified transport partners to industrial loads  -  all fulfilled through ZAFTYS coordination and accountability.
+                Post on TranZfort. Listing and search are free. We charge a broker fee to truckers on booked loads. Matching is AI-powered.
               </p>
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                {[
-                  { step: "1", title: "Post the load", desc: "Capacity published on TranZfort when needed." },
-                  { step: "2", title: "Truckers book", desc: "Verified operators on matched corridors." },
-                  { step: "3", title: "ZAFTYS delivers", desc: "Every trip through ZAFTYS accountability." },
-                ].map((item) => (
-                  <div key={item.step} className="p-4 rounded-xl bg-white/5 border border-white/10">
-                    <div className="text-accent font-bold text-sm mb-1">Step {item.step}</div>
-                    <h3 className="font-heading font-bold text-sm mb-1">{item.title}</h3>
-                    <p className="text-xs text-gray-400">{item.desc}</p>
-                  </div>
-                ))}
-              </div>
+              <CTAGroup>
+                <Button asChild size="lg" variant="accent">
+                  <a
+                    href={externalLinks.tranzfort}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => trackEvent("cta_tranzfort", { placement: "services" })}
+                  >
+                    Download TranZfort
+                  </a>
+                </Button>
+                <Link to="/tranzfort-network">
+                  <Button size="lg" variant="on-dark-outline">How matching works</Button>
+                </Link>
+              </CTAGroup>
             </div>
-            <AppDemoFrame
-              variant="panel"
-              title="Booking flow"
-              screen="app"
-              className="max-w-md mx-auto lg:ml-auto min-h-[280px] sm:min-h-[340px] md:min-h-[380px]"
-            >
-              <LazyMatchFlowDemo theme="app" />
-            </AppDemoFrame>
-            <DemoDisclaimer variant="on-dark" className="mt-3 max-w-md mx-auto lg:ml-auto" />
-          </div>
-          <CTAGroup>
-            <Button asChild size="lg" variant="accent">
-              <a
-                href={externalLinks.tranzfort}
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={() => trackEvent("cta_tranzfort", { placement: "services" })}
+            <div>
+              <AppDemoFrame
+                variant="panel"
+                title="Booking flow"
+                screen="app"
+                className="max-w-md mx-auto lg:ml-auto min-h-[280px] sm:min-h-[340px]"
               >
-                Explore TranZfort
-              </a>
-            </Button>
-            <Link to="/tranzfort-network">
-              <Button size="lg" variant="on-dark-outline">Network Page</Button>
-            </Link>
-            <Link to="/zaftys-tms">
-              <Button size="lg" variant="on-dark-outline">ZAFTYS TMS</Button>
-            </Link>
-          </CTAGroup>
-          <p className="mt-6 text-sm text-gray-400">
-            Also see{" "}
-            <Link to="/partner" className="text-accent hover:underline font-semibold">
-              partner program
-            </Link>
-            {" · "}
-            <Link to="/blog/planning-industrial-shipments" className="text-accent hover:underline font-semibold">
-              shipment planning guide
-            </Link>
-            {" · "}
-            <Link to="/blog/reduce-empty-return-trips" className="text-accent hover:underline font-semibold">
-              empty miles guide
-            </Link>
-          </p>
+                <LazyMatchFlowDemo theme="app" />
+              </AppDemoFrame>
+              <DemoDisclaimer variant="on-dark" className="mt-3 max-w-md mx-auto lg:ml-auto" />
+            </div>
+          </div>
         </div>
       </section>
 
       <section className="py-24 bg-primary text-white text-center">
         <div className="container mx-auto container-padding">
-          <h2 className="text-4xl font-heading font-bold mb-6">Ready to Move Your Freight?</h2>
-          <p className="text-xl mb-10 text-gray-200 max-w-2xl mx-auto">Get a quote on WhatsApp  -  tell us your corridor, load type, and volume.</p>
+          <h2 className="text-4xl font-heading font-bold mb-6">Need a truck for this corridor?</h2>
+          <p className="text-xl mb-10 text-gray-200 max-w-2xl mx-auto">WhatsApp the origin, destination, and vehicle class. We quote company fleet first.</p>
           <CTAGroup>
             <WhatsAppButton label="Get a Quote on WhatsApp" />
+            <Link to="/tranzfort-network">
+              <Button size="lg" variant="on-dark-outline">Open TranZfort</Button>
+            </Link>
           </CTAGroup>
         </div>
       </section>

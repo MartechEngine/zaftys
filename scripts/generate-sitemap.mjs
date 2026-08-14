@@ -36,16 +36,13 @@ function reportUrls() {
   return reports;
 }
 
-const industrySlugs = [
-  "cement",
-  "coal-mining",
-  "steel-metals",
-  "chemicals",
-  "manufacturing",
-  "fmcg",
-  "retail-distribution",
-  "industrial-logistics",
-];
+function industrySlugsFromData() {
+  const src = fs.readFileSync(path.join(root, "src", "lib", "industries-data.ts"), "utf8");
+  const part = src.split("INDUSTRY_SLUG_ALIASES")[0];
+  return [...part.matchAll(/slug:\s*"([^"]+)"/g)].map((m) => m[1]);
+}
+
+const industrySlugs = industrySlugsFromData();
 
 const staticUrls = [
   { path: "/", priority: "1.0", changefreq: "weekly", lastmod: today },

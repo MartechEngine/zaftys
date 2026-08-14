@@ -10,13 +10,12 @@ import SEO from "@/components/SEO";
 import { PageHero } from "@/components/PageHero";
 import heroContact from "@/assets/hero-contact.jpg";
 import { pageHeroAlts } from "@/lib/page-heroes";
-import { heroMailBodies, heroMailSubjects } from "@/lib/hero-ctas";
 import { useToast } from "@/hooks/use-toast";
 import { trackEvent } from "@/lib/analytics";
-import { HeroEmailButton } from "@/components/HeroEmailButton";
 import { CTAGroup } from "@/components/CTAGroup";
 import { whatsappUrl, companyAddress } from "@/lib/constants";
 import { pageSeo } from "@/lib/page-seo";
+import { pageHeroCopy } from "@/lib/page-hero-copy";
 import { organizationSchema, localBusinessSchema, breadcrumbSchema } from "@/lib/schema";
 import { Link } from "react-router-dom";
 
@@ -124,27 +123,32 @@ const Contact = () => {
         ]}
       />
       <PageHero
-        badge="Contact"
-        title="Contact ZAFTYS Logistics For Industrial Freight Quotes."
-        description="WhatsApp-first quotes from our Amravati team  -  industrial freight, ZAFTYS TMS demos, and TranZfort partnership enquiries across India."
+        badge={pageHeroCopy.contact.badge}
+        title={pageHeroCopy.contact.h1}
+        description={pageHeroCopy.contact.lead}
         imageSrc={heroContact}
         imageAlt={pageHeroAlts.contact}
       >
         <CTAGroup className="justify-start sm:justify-start">
-          <HeroEmailButton
-            label="Email Our Team"
-            subject={heroMailSubjects.contact}
-            body="Hi ZAFTYS,\n\nI'd like to get in touch about:\n\n"
-          />
+          <Button asChild size="lg" variant="accent">
+            <a
+              href={whatsappUrl()}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => trackEvent("cta_whatsapp", { placement: "hero", intent: "quote" })}
+            >
+              Get a freight quote
+            </a>
+          </Button>
           <Button asChild size="lg" variant="on-dark-outline">
-            <a href="#contact-form">Send a Message</a>
+            <a href="#contact-form">Send a message</a>
           </Button>
         </CTAGroup>
       </PageHero>
 
       {/* Contact Info Grid */}
-      <section className="py-16 bg-white border-b border-border relative -mt-10 mx-4 md:mx-8 lg:mx-16 rounded-xl shadow-lg z-20">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 px-6 md:px-12">
+      <section className="py-16 bg-white border-b border-border relative -mt-10 mx-5 sm:mx-8 lg:mx-12 xl:mx-16 rounded-xl shadow-lg z-20">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 container-padding">
           {contactInfo.map((info, index) => (
             <div key={index} className="text-center group">
               <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4 text-primary group-hover:scale-110 transition-transform">
@@ -172,7 +176,7 @@ const Contact = () => {
             <Card className="overflow-hidden animate-scale-in border-none shadow-2xl">
               <div className="relative w-full h-96 bg-muted">
                 <iframe
-                  title="ZAFTYS Logistics  -  Amravati office location"
+                  title="ZAFTYS Logistics Amravati office location"
                   src={companyAddress.mapsEmbedUrl}
                   className="absolute inset-0 h-full w-full border-0"
                   loading="lazy"
@@ -301,9 +305,10 @@ const Contact = () => {
                         <SelectValue placeholder="Select a topic" />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="quote">Getting a Freight Quote</SelectItem>
-                        <SelectItem value="demo">TMS Platform Demo</SelectItem>
-                        <SelectItem value="partner">Partner / Fleet Owner</SelectItem>
+                        <SelectItem value="quote">Freight quote (any truck class)</SelectItem>
+                        <SelectItem value="demo">ZAFTYS TMS demo</SelectItem>
+                        <SelectItem value="tranzfort-post">TranZfort (post loads)</SelectItem>
+                        <SelectItem value="tranzfort-find">TranZfort (find loads)</SelectItem>
                         <SelectItem value="careers">Careers</SelectItem>
                         <SelectItem value="support">Support</SelectItem>
                       </SelectContent>

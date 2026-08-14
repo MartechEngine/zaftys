@@ -13,7 +13,8 @@ import ResponsiveImage from "@/components/ResponsiveImage";
 import heroResources from "@/assets/hero-resources.jpg";
 import { pageHeroAlts } from "@/lib/page-heroes";
 import { pageSeo } from "@/lib/page-seo";
-import { blogPageSchema } from "@/lib/schema";
+import { pageHeroCopy } from "@/lib/page-hero-copy";
+import { blogPageSchema, breadcrumbSchema } from "@/lib/schema";
 import {
   type BlogCategory,
   blogCategoryLabels,
@@ -66,13 +67,19 @@ const Blog = () => {
         title={pageSeo.blog.title}
         description={pageSeo.blog.description}
         canonical="/blog"
-        schema={blogPageSchema}
+        schema={[
+          blogPageSchema,
+          breadcrumbSchema([
+            { name: "Home", path: "/" },
+            { name: "Blog", path: "/blog" },
+          ]),
+        ]}
       />
 
       <PageHero
-        badge="Blog"
-        title="Practical logistics knowledge from ZAFTYS Logistics operations"
-        description="Guides on industrial FTL, plant windows, steel and cement freight, and what matters in a heavy-haul TMS  -  written for shippers and operators who plan real trips."
+        badge={pageHeroCopy.blog.badge}
+        title={pageHeroCopy.blog.h1}
+        description={pageHeroCopy.blog.lead}
         imageSrc={heroResources}
         imageAlt={pageHeroAlts.resources}
       >
@@ -114,7 +121,7 @@ const Blog = () => {
                 {featured.heroImage ? (
                   <ResponsiveImage
                     src={featured.heroImage}
-                    alt={`${featured.title}  -  ZAFTYS Blog`}
+                    alt={`${featured.title} | ZAFTYS Blog`}
                     aspectRatio="16/10"
                     objectFit="cover"
                     className="h-full min-h-[220px]"
@@ -150,7 +157,7 @@ const Blog = () => {
                   {post.heroImage ? (
                     <ResponsiveImage
                       src={post.heroImage}
-                      alt={`${post.title}  -  ZAFTYS Blog`}
+                      alt={`${post.title} | ZAFTYS Blog`}
                       aspectRatio="16/10"
                       objectFit="cover"
                       className="rounded-t-xl"
@@ -187,7 +194,7 @@ const Blog = () => {
         <div className="container mx-auto container-padding max-w-2xl text-center">
           <h2 className="text-3xl font-heading font-bold text-navy mb-3">Stay updated</h2>
           <p className="text-muted-foreground mb-6">
-            Occasional operational notes and company updates  -  no spam.
+            Occasional operational notes and company updates. No spam.
           </p>
           <form onSubmit={handleNewsletter} className="flex flex-col sm:flex-row gap-3 max-w-lg mx-auto mb-2">
             <input type="text" name="website" tabIndex={-1} autoComplete="off" className="hidden" aria-hidden="true" />
@@ -214,6 +221,8 @@ const Blog = () => {
             <Link to="/services" className="text-primary hover:underline">services</Link>
             {", "}
             <Link to="/zaftys-tms" className="text-primary hover:underline">ZAFTYS TMS</Link>
+            {", "}
+            <Link to="/tranzfort-network" className="text-primary hover:underline">TranZfort</Link>
             {", "}
             <Link to="/industries" className="text-primary hover:underline">industries</Link>
             {", or "}

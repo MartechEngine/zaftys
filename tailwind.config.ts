@@ -8,8 +8,12 @@ export default {
   theme: {
     container: {
       center: true,
-      padding: "2rem",
+      padding: "0",
       screens: {
+        sm: "640px",
+        md: "768px",
+        lg: "1024px",
+        xl: "1280px",
         "2xl": "1400px",
       },
     },
@@ -128,6 +132,14 @@ export default {
           from: { transform: "translateX(0)" },
           to: { transform: "translateX(-50%)" },
         },
+        "scroll-rtl": {
+          from: { transform: "translateX(0)" },
+          to: { transform: "translateX(-50%)" },
+        },
+        "scroll-ltr": {
+          from: { transform: "translateX(-50%)" },
+          to: { transform: "translateX(0)" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
@@ -142,6 +154,8 @@ export default {
         "pulse-glow": "pulse-glow 3s ease-in-out infinite",
         "shimmer": "shimmer 3s infinite",
         "tranzfort-scroll": "tranzfort-scroll 28s linear infinite",
+        "scroll-rtl": "scroll-rtl 22s linear infinite",
+        "scroll-ltr": "scroll-ltr 28s linear infinite",
       },
     },
   },

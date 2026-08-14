@@ -16,7 +16,7 @@ export const organizationSchema = {
   logo: `${BASE}/logo-header.png`,
   sameAs: [
     "https://www.linkedin.com/company/zaftys",
-    "https://www.tranzfort.com",
+    "https://tranzfort.com",
     "https://app.zaftys.com",
   ],
   contactPoint: {
@@ -74,20 +74,20 @@ export const logisticsServiceSchema = {
   url: BASE,
   image: `${BASE}/og-image.png`,
   description:
-    "Industrial freight transport with company-operated fleet, ZAFTYS TMS visibility, and TranZfort network capacity across India.",
+    "Commercial transport, a transport management system, and TranZfort, an AI-powered freight marketplace in India.",
   provider: organizationRef,
   areaServed: { "@type": "Country", name: "India" },
-  serviceType: "Heavy freight and industrial trucking",
+  serviceType: "Commercial freight transport, TMS software, and freight marketplace",
 };
 
 export const truckingServiceSchema = {
   "@context": "https://schema.org",
   "@type": "Service",
-  serviceType: "Industrial trucking and logistics",
+  serviceType: "Commercial trucking and logistics",
   provider: organizationRef,
   areaServed: { "@type": "Country", name: "India" },
   description:
-    "FTL, mining logistics, contract fleet, and overflow capacity on industrial corridors across India.",
+    "FTL and contract transport across LCV, open truck, trailer, container, bulker, tanker, tipper, reefer, parcel, and ODC, plus TranZfort marketplace capacity.",
 };
 
 export const softwareApplicationSchema = {
@@ -104,7 +104,8 @@ export const softwareApplicationSchema = {
   description:
     "Transport and fleet management platform for dispatch, GPS tracking, ePOD, fleet records, and client visibility.",
   provider: organizationRef,
-  url: "https://app.zaftys.com",
+  url: `${BASE}/zaftys-tms`,
+  installUrl: "https://app.zaftys.com",
 };
 
 export const blogPageSchema = {
@@ -112,7 +113,7 @@ export const blogPageSchema = {
   "@type": "CollectionPage",
   name: "ZAFTYS Blog",
   description:
-    "Practical logistics guides from corridor operations  -  industrial FTL, plant windows, steel and cement freight, and TMS.",
+    "Practical logistics guides from corridor operations: FTL, plant windows, steel and cement freight, TMS, and TranZfort.",
   publisher: organizationRef,
   url: `${BASE}/blog`,
 };
@@ -132,7 +133,7 @@ export const reportsCollectionSchema = {
   "@type": "CollectionPage",
   name: "ZAFTYS Analytics Market Reports",
   description:
-    "Institutional market research on the global logistics market and digital freight matching platforms — size, forecast, segments, and competitive outlook.",
+    "Institutional market research on the global logistics market and digital freight matching platforms: size, forecast, segments, and competitive outlook.",
   publisher: organizationRef,
   url: `${BASE}/reports`,
 };

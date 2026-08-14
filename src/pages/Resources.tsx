@@ -8,6 +8,7 @@ import { CTAGroup } from "@/components/CTAGroup";
 import heroResources from "@/assets/hero-resources.jpg";
 import { pageHeroAlts } from "@/lib/page-heroes";
 import { pageSeo } from "@/lib/page-seo";
+import { pageHeroCopy } from "@/lib/page-hero-copy";
 import { breadcrumbSchema, resourcesHubSchema } from "@/lib/schema";
 import { listReports } from "@/lib/market-reports-data";
 import { listPosts } from "@/lib/blog-data";
@@ -32,9 +33,9 @@ const Resources = () => {
       />
 
       <PageHero
-        badge="Resources"
-        title="ZAFTYS Logistics Resources  -  Blog & Market Reports."
-        description="Practical corridor guides plus institutional market research on global logistics and digital freight matching from ZAFTYS Analytics."
+        badge={pageHeroCopy.resources.badge}
+        title={pageHeroCopy.resources.h1}
+        description={pageHeroCopy.resources.lead}
         imageSrc={heroResources}
         imageAlt={pageHeroAlts.resources}
       >
@@ -62,8 +63,7 @@ const Resources = () => {
                 </div>
                 <h2 className="text-2xl font-heading font-bold text-navy mb-3">Market Reports</h2>
                 <p className="text-muted-foreground leading-relaxed mb-6 flex-1">
-                  Institutional market reports on global logistics and digital freight matching  -  size,
-                  forecast, ToC, methodology, and free PDF downloads. {reportCount} reports available.
+                  Institutional market reports on global logistics and digital freight matching: size, forecast, ToC, methodology, and free PDF downloads. {reportCount} reports available.
                 </p>
                 <Link to="/reports">
                   <Button variant="accent" className="w-full sm:w-auto">
@@ -80,8 +80,8 @@ const Resources = () => {
                 </div>
                 <h2 className="text-2xl font-heading font-bold text-navy mb-3">Blog</h2>
                 <p className="text-muted-foreground leading-relaxed mb-6 flex-1">
-                  Practical guides on plant windows, steel and cement freight, empty miles, and TMS for
-                  heavy-haul operations. {postCount} articles published.
+                  Practical guides on plant windows, FTL, empty kilometres, TMS, and the marketplace.
+                  {postCount} articles published.
                 </p>
                 <Link to="/blog">
                   <Button variant="outline" className="w-full sm:w-auto border-primary text-primary hover:bg-primary hover:text-white">

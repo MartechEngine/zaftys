@@ -9,9 +9,11 @@ import { heroMailBodies, heroMailSubjects } from "@/lib/hero-ctas";
 import { HeroEmailButton } from "@/components/HeroEmailButton";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { CTAGroup } from "@/components/CTAGroup";
-import ImageContentCard from "@/components/ImageContentCard";
-import { truckTypes } from "@/lib/constants";
+import ResponsiveImage from "@/components/ResponsiveImage";
+import { marketplaceVehicleCatalog } from "@/lib/vehicle-catalog";
 import { pageSeo } from "@/lib/page-seo";
+import { breadcrumbSchema } from "@/lib/schema";
+import { pageHeroCopy } from "@/lib/page-hero-copy";
 import { truckImageForId } from "@/lib/services-images";
 
 const Fleet = () => {
@@ -25,9 +27,9 @@ const Fleet = () => {
   ];
 
   const fleetHighlights = [
-    { title: "Company operated fleet", desc: "Owned assets on key industrial corridors with standardized operating procedures." },
-    { title: "Verified partner network", desc: "TranZfort capacity when demand exceeds owned fleet  -  still through ZAFTYS." },
-    { title: "Industrial ready assets", desc: "Configurations matched to bulk, heavy-haul, and scheduled industrial freight." },
+    { title: "Company operated fleet", desc: "Owned assets on commercial corridors with standardized operating procedures." },
+    { title: "Verified marketplace", desc: "TranZfort when you need more trucks than we have that day. Still billed through ZAFTYS on contracted trips." },
+    { title: "Classes we run", desc: "The same commercial types as TranZfort: LCV, open truck, trailer, container, bulker, tanker, tipper, reefer, parcel, and ODC." },
   ];
 
   return (
@@ -36,12 +38,16 @@ const Fleet = () => {
         title={pageSeo.fleet.title}
         description={pageSeo.fleet.description}
         canonical="/fleet"
+        schema={breadcrumbSchema([
+          { name: "Home", path: "/" },
+          { name: "Fleet", path: "/fleet" },
+        ])}
       />
 
       <PageHero
-        badge="Fleet & Capacity"
-        title="ZAFTYS Logistics Company Fleet For Heavy-Haul Freight."
-        description="Company-operated tippers, flatbeds, and multi-axle assets on industrial corridors across India  -  with TranZfort surge capacity and ZAFTYS TMS visibility when your lanes need to scale."
+        badge={pageHeroCopy.fleet.badge}
+        title={pageHeroCopy.fleet.h1}
+        description={pageHeroCopy.fleet.lead}
         imageSrc={heroFleet}
         imageAlt={pageHeroAlts.fleet}
       >
@@ -58,44 +64,66 @@ const Fleet = () => {
       </PageHero>
 
       <section className="section-padding bg-white">
-        <div className="container mx-auto container-padding max-w-3xl text-center mb-16">
-          <h2 className="text-3xl font-heading font-bold mb-4 text-navy">More Than Vehicles</h2>
-          <p className="text-muted-foreground leading-relaxed">
-            Owning trucks does not automatically create dependable logistics. Professional transport requires disciplined planning, standardized procedures, experienced people, and continuous improvement  -  every shipment follows the same operational standard.
-          </p>
-        </div>
+        <div className="container mx-auto container-padding">
+          <div className="max-w-3xl mx-auto text-center mb-16">
+            <h2 className="text-3xl font-heading font-bold mb-4 text-navy">More than a body type</h2>
+            <p className="text-muted-foreground leading-relaxed">
+              Owning trucks is not the same as running a lane. Planning, loading, papers, and close-out sit with us. Every contracted trip can report through ZAFTYS TMS.
+            </p>
+          </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
-          {fleetHighlights.map((item, index) => (
-            <div key={index} className="p-6 rounded-xl bg-muted/20 border border-border text-center">
-              <h3 className="font-heading font-bold text-navy mb-2">{item.title}</h3>
-              <p className="text-sm text-muted-foreground leading-relaxed">{item.desc}</p>
-            </div>
-          ))}
-        </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+            {fleetHighlights.map((item, index) => (
+              <div key={index} className="p-6 rounded-xl bg-muted/20 border border-border text-center">
+                <h3 className="font-heading font-bold text-navy mb-2">{item.title}</h3>
+                <p className="text-sm text-muted-foreground leading-relaxed">{item.desc}</p>
+              </div>
+            ))}
+          </div>
 
-        <div className="text-center mb-12">
-          <h2 className="text-4xl font-heading font-bold mb-4 text-navy">The Right Truck for the Job</h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Body type, payload, and material must align before dispatch  -  the same discipline on every industrial lane.
-          </p>
-        </div>
+          <div className="text-center mb-12">
+            <h2 className="text-4xl font-heading font-bold mb-4 text-navy">Commercial types we cover</h2>
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+              The same categories and body styles as TranZfort post and trucker filter. Typical sizes are the bands the app shows. Contract fleet is a program, not a body type.
+            </p>
+          </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-          {truckTypes.map((truck) => {
-            const img = truckImageForId(truck.id);
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          {marketplaceVehicleCatalog.map((item) => {
+            const img = truckImageForId(item.imageId);
             return (
-              <ImageContentCard
-                key={truck.id}
-                imageSrc={img.src}
-                imageAlt={img.alt}
-                title={truck.title}
-                tagline={truck.tagline}
-                description={truck.description}
-                darkImageBg
-              />
+              <article
+                key={item.id}
+                className="grid grid-cols-1 sm:grid-cols-[11rem_1fr] overflow-hidden rounded-xl border border-border bg-white shadow-md"
+              >
+                <div className="bg-black">
+                  <ResponsiveImage
+                    src={img.src}
+                    alt={img.alt}
+                    aspectRatio="3/2"
+                    objectFit="contain"
+                    className="bg-black"
+                  />
+                </div>
+                <div className="p-6">
+                  <h3 className="text-2xl font-heading font-bold text-navy mb-3">{item.title}</h3>
+                  <ul className="flex flex-wrap gap-2 mb-4">
+                    {item.bodyStyles.map((style) => (
+                      <li
+                        key={style}
+                        className="rounded-full bg-muted px-3 py-1 text-xs font-semibold uppercase tracking-wide text-navy"
+                      >
+                        {style}
+                      </li>
+                    ))}
+                  </ul>
+                  <p className="text-sm font-medium text-navy/80 mb-2">{item.typical}</p>
+                  <p className="text-sm text-muted-foreground leading-relaxed">{item.description}</p>
+                </div>
+              </article>
             );
           })}
+          </div>
         </div>
       </section>
 
@@ -103,8 +131,8 @@ const Fleet = () => {
         <div className="container mx-auto container-padding">
           <div className="flex flex-col md:flex-row items-center justify-between mb-12">
             <div>
-              <h2 className="text-3xl font-heading font-bold mb-2">Operational Capability</h2>
-              <p className="text-gray-400 text-sm max-w-xl">Fleet size matters. Operational capability matters more.</p>
+              <h2 className="text-3xl font-heading font-bold mb-2">How we run the trucks</h2>
+              <p className="text-gray-400 text-sm max-w-xl">Fleet size matters. How the lane is run matters more.</p>
             </div>
             <Link to="/zaftys-tms">
               <Button variant="on-dark-outline" className="mt-4 md:mt-0">
@@ -127,13 +155,13 @@ const Fleet = () => {
 
       <section className="section-padding bg-muted/30">
         <div className="container mx-auto container-padding text-center max-w-3xl">
-          <h2 className="text-3xl font-heading font-bold mb-4 text-navy">Ready When Your Business Grows</h2>
+          <h2 className="text-3xl font-heading font-bold mb-4 text-navy">When you need more trucks</h2>
           <p className="text-muted-foreground mb-8 leading-relaxed">
-            When demand exceeds our own fleet, ZAFTYS expands through the verified TranZfort network  -  one relationship, one communication channel, one operational standard.
+            When a lane needs more vehicles than we have that day, post on TranZfort. Listing and search are free. We charge a broker fee to truckers on booked loads. Matching is AI-powered.
           </p>
           <Link to="/tranzfort-network">
             <Button variant="outline" className="border-primary text-primary hover:bg-primary hover:text-white">
-              About the Network <ArrowRight className="ml-2" size={16} />
+              About TranZfort <ArrowRight className="ml-2" size={16} />
             </Button>
           </Link>
         </div>
@@ -141,9 +169,9 @@ const Fleet = () => {
 
       <section className="py-20 bg-primary text-white text-center">
         <div className="container mx-auto container-padding">
-          <h2 className="text-4xl font-heading font-bold mb-6">Need Reliable Fleet Capacity?</h2>
+          <h2 className="text-4xl font-heading font-bold mb-6">Need trucks on a lane?</h2>
           <p className="text-xl text-gray-200 mb-8 max-w-2xl mx-auto font-light">
-            Recurring industrial transport, dedicated programs, or surge capacity  -  our team will recommend the right fleet strategy for your business.
+            Recurring contract work, a one-off FTL, or a TranZfort post. Tell us the corridor and the vehicle class.
           </p>
           <CTAGroup>
             <WhatsAppButton label="Request Fleet Availability" />

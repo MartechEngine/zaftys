@@ -22,6 +22,7 @@ import { heroMailBodies, heroMailSubjects } from "@/lib/hero-ctas";
 import { HeroEmailButton } from "@/components/HeroEmailButton";
 import { externalLinks } from "@/lib/constants";
 import { pageSeo } from "@/lib/page-seo";
+import { pageHeroCopy } from "@/lib/page-hero-copy";
 import { LazyTmsTripPeek, TmsDemoDisclaimer } from "@/components/tms-demo";
 import "@/styles/tms-demo.css";
 import {
@@ -29,13 +30,14 @@ import {
   organizationSchema,
   websiteSchema,
   faqPageSchema,
+  breadcrumbSchema,
 } from "@/lib/schema";
 
 const liveToday = [
-  "Dispatch & trip lifecycle in production at app.zaftys.com",
-  "Client portal for shipment visibility and ePOD",
+  "Dispatch and trip lifecycle in production at app.zaftys.com",
+  "Client portal for shipment visibility and e-POD",
   "Fleet, driver, and document records on one system",
-  "Built for industrial freight  -  plant windows, multi-axle, weighbridge reality",
+  "Built next to real gates: plant windows, weighbridge, multi-axle, LCV drops",
 ] as const;
 
 const technologyFaqs = [
@@ -47,12 +49,12 @@ const technologyFaqs = [
   {
     question: "Who should use ZAFTYS TMS?",
     answer:
-      "Industrial shippers who need shipment visibility, and fleet operators who want dispatch, fleet records, documentation, and trip reporting in one platform.",
+      "Shippers who need shipment visibility, and fleet operators who want dispatch, fleet records, documentation, and trip reporting in one platform. It is not limited to heavy-haul work.",
   },
   {
     question: "How is this different from generic TMS tools?",
     answer:
-      "ZAFTYS TMS is shaped by heavy-haul operations  -  multi-axle assets, plant loading windows, weighbridge loops, and scaling capacity through TranZfort when owned fleet is full.",
+      "ZAFTYS TMS is shaped by our own transport desk: plant loading windows, weighbridge loops, LCV drops, multi-axle work, and TranZfort when a trip needs a partner truck.",
   },
 ] as const;
 
@@ -60,32 +62,32 @@ const Technology = () => {
   const features = [
     {
       icon: MapPin,
-      title: "Real-Time GPS Tracking",
+      title: "Live GPS tracking",
       description: "Live location updates, dynamic ETAs, and route deviation alerts on an interactive map.",
     },
     {
       icon: Clock,
-      title: "Dispatch & Trip Management",
+      title: "Dispatch and trip management",
       description: "Create, assign, and monitor trips with automated status updates across your operation.",
     },
     {
       icon: Smartphone,
-      title: "Driver Mobile App",
+      title: "Driver mobile app",
       description: "Drivers receive routes, load details, and upload digital proof of delivery (ePOD) instantly.",
     },
     {
       icon: Truck,
-      title: "Fleet Management",
+      title: "Fleet management",
       description: "Vehicle registry, driver records, document expiry alerts, and maintenance scheduling.",
     },
     {
       icon: BarChart3,
-      title: "Performance Analytics",
+      title: "Performance analytics",
       description: "Lane costs, utilization, delay analysis, and operational reporting for smarter decisions.",
     },
     {
       icon: FileText,
-      title: "Digital Documentation",
+      title: "Digital documentation",
       description: "Secure storage for compliance docs, invoices, LR copies, and bills of lading.",
     },
   ];
@@ -93,15 +95,15 @@ const Technology = () => {
   const buyerPaths = [
     {
       icon: Users,
-      title: "For Shippers & Transporters",
-      description: "Outsource freight with full visibility  -  track every shipment through the client portal in real time.",
-      bullets: ["Live shipment tracking", "ePOD and document access", "Lane performance reports"],
+      title: "For shippers",
+      description: "See the load without calling the control room. Track shipments and pull e-POD from the client portal.",
+      bullets: ["Live shipment tracking", "e-POD and document access", "Lane performance reports"],
     },
     {
       icon: Truck,
-      title: "For Fleet Operators",
-      description: "Run dispatch, fleet, and billing on one platform  -  the same tools ZAFTYS uses internally.",
-      bullets: ["Dispatch dashboard", "Driver & vehicle management", "Trip lifecycle & billing"],
+      title: "For fleet operators",
+      description: "Run dispatch, fleet, and billing on the same stack ZAFTYS uses internally.",
+      bullets: ["Dispatch dashboard", "Driver and vehicle management", "Trip lifecycle and billing"],
     },
   ];
 
@@ -116,24 +118,28 @@ const Technology = () => {
           websiteSchema,
           softwareApplicationSchema,
           faqPageSchema(technologyFaqs),
+          breadcrumbSchema([
+            { name: "Home", path: "/" },
+            { name: "ZAFTYS TMS", path: "/zaftys-tms" },
+          ]),
         ]}
       />
 
       <PageHero
-        badge="ZAFTYS TMS™ · Live"
-        title="ZAFTYS Logistics TMS  -  Transport Management For Industrial Freight."
-        description="ZAFTYS TMS is live  -  dispatch, fleet, driver, documentation, and customer visibility in one platform. We run it every day on our own fleet and offer the same operational discipline to shippers and operators."
+        badge={pageHeroCopy.technology.badge}
+        title={pageHeroCopy.technology.h1}
+        description={pageHeroCopy.technology.lead}
         imageSrc={heroTechnology}
         imageAlt={pageHeroAlts.technology}
       >
         <CTAGroup className="justify-start sm:justify-start">
           <Button asChild size="lg" variant="accent">
             <a href={externalLinks.app} target="_blank" rel="noopener noreferrer">
-              Login to Portal <ArrowRight className="ml-2" size={18} />
+              Login to portal <ArrowRight className="ml-2" size={18} />
             </a>
           </Button>
           <HeroEmailButton
-            label="Request a Demo"
+            label="Request a demo"
             variant="on-dark-outline"
             subject={heroMailSubjects.demo}
             body={heroMailBodies.demo}
@@ -145,7 +151,7 @@ const Technology = () => {
         <div className="container mx-auto container-padding">
           <div className="flex flex-col lg:flex-row items-center gap-16">
             <div className="lg:w-1/2">
-              <h2 className="text-4xl font-heading font-bold mb-6 text-navy">In Production Today</h2>
+              <h2 className="text-4xl font-heading font-bold mb-6 text-navy">In production today</h2>
               <p className="text-lg text-muted-foreground mb-6 leading-relaxed">
                 ZAFTYS TMS is not a slide deck. It connects planning, dispatch, fleet records, driver activity, documentation, and customer visibility throughout the shipment lifecycle.
               </p>
@@ -183,9 +189,9 @@ const Technology = () => {
       <section className="section-padding bg-muted/30">
         <div className="container mx-auto container-padding">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-heading font-bold mb-4 text-navy">ZAFTYS TMS Capabilities</h2>
+            <h2 className="text-4xl font-heading font-bold mb-4 text-navy">What the TMS does</h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Everything you need to manage heavy freight operations, in one place.
+              Dispatch, GPS, e-POD, fleet records, and shipper visibility. Written as the work, not a feature list.
             </p>
           </div>
 
@@ -208,7 +214,7 @@ const Technology = () => {
       <section className="section-padding bg-white">
         <div className="container mx-auto container-padding">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-heading font-bold text-navy mb-4">Who It&apos;s For</h2>
+            <h2 className="text-3xl font-heading font-bold text-navy mb-4">Who it is for</h2>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
             {buyerPaths.map((path) => (
@@ -249,7 +255,7 @@ const Technology = () => {
       <section className="section-padding bg-navy text-white relative overflow-hidden">
         <div className="absolute inset-0 opacity-10 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMiIgY3k9IjIiIHI9IjIiIGZpbGw9InJnYmEoMjU1LDI1NSwyNTUsMC4wNSkiLz48L3N2Zz4=')]" />
         <div className="container mx-auto container-padding relative z-10 text-center">
-          <h2 className="text-4xl font-heading font-bold mb-6">Start With The Live Portal</h2>
+          <h2 className="text-4xl font-heading font-bold mb-6">Start with the live portal</h2>
           <p className="text-xl text-gray-300 mb-10 max-w-2xl mx-auto">
             Log in at app.zaftys.com, or request a guided demo for your operations team.
           </p>
@@ -260,14 +266,14 @@ const Technology = () => {
               </a>
             </Button>
             <Link to="/contact">
-              <Button size="lg" variant="on-dark-outline">Book a Demo</Button>
+              <Button size="lg" variant="on-dark-outline">Book a demo</Button>
             </Link>
           </CTAGroup>
           <p className="mt-8 text-sm text-gray-300">
             Related:{" "}
             <Link to="/services" className="underline hover:text-white">services</Link>
             {" · "}
-            <Link to="/tranzfort-network" className="underline hover:text-white">TranZfort network</Link>
+            <Link to="/tranzfort-network" className="underline hover:text-white">TranZfort</Link>
             {" · "}
             <Link to="/fleet" className="underline hover:text-white">company fleet</Link>
             {" · "}

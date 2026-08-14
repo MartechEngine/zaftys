@@ -24,9 +24,10 @@ const ReportPdfReader = () => {
   return (
     <div className="min-h-screen bg-background font-sans flex flex-col">
       <SEO
-        title={`Read  -  ${report.seoTitle}`}
+        title={report.seoTitle}
         description={report.seoDescription}
-        canonical={`/reports/${report.slug}/read`}
+        canonical={`/reports/${report.slug}`}
+        noindex
         robots="noindex, follow"
       />
 

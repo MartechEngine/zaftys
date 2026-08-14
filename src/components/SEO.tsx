@@ -8,6 +8,8 @@ interface SEOProps {
   type?: string;
   schema?: Record<string, unknown> | Record<string, unknown>[];
   noindex?: boolean;
+  /** Full robots content. Overrides the default noindex,nofollow when noindex is set. */
+  robots?: string;
   /** ISO date  -  blog article published */
   publishedTime?: string;
   /** ISO date  -  blog article modified */
@@ -18,6 +20,18 @@ const BASE_URL = "https://zaftys.com";
 const SITE_TITLE = "ZAFTYS Logistics";
 const DEFAULT_OG_IMAGE = "/og-image.png";
 
+function brandedTitle(title: string): string {
+  if (title === SITE_TITLE || title.includes(SITE_TITLE) || /\bZAFTYS\b/.test(title)) {
+    return title;
+  }
+  return `${title} | ${SITE_TITLE}`;
+}
+
+function absoluteUrl(path?: string): string {
+  if (!path || path === "/") return `${BASE_URL}/`;
+  return `${BASE_URL}${path}`;
+}
+
 const SEO = ({
   title,
   description,
@@ -26,30 +40,29 @@ const SEO = ({
   type = "website",
   schema,
   noindex = false,
+  robots,
   publishedTime,
   modifiedTime,
 }: SEOProps) => {
-  const fullTitle =
-    title === SITE_TITLE || title.includes(SITE_TITLE) ? title : `${title} | ${SITE_TITLE}`;
-  const currentUrl = canonical ? `${BASE_URL}${canonical}` : BASE_URL;
+  const fullTitle = brandedTitle(title);
+  const robotsContent = robots ?? (noindex ? "noindex, nofollow" : undefined);
+  const pageUrl = canonical != null ? absoluteUrl(canonical) : BASE_URL;
   const imageUrl = image.startsWith("http") ? image : `${BASE_URL}${image}`;
+  const showCanonical = canonical != null || !robotsContent;
 
   return (
     <Helmet>
       <title>{fullTitle}</title>
       <meta name="description" content={description} />
-      {noindex ? (
-        <meta name="robots" content="noindex, nofollow" />
-      ) : (
-        <link rel="canonical" href={currentUrl} />
-      )}
+      {robotsContent ? <meta name="robots" content={robotsContent} /> : null}
+      {showCanonical ? <link rel="canonical" href={pageUrl} /> : null}
 
       <meta property="og:type" content={type} />
       <meta property="og:site_name" content={SITE_TITLE} />
       <meta property="og:locale" content="en_IN" />
       <meta property="og:title" content={fullTitle} />
       <meta property="og:description" content={description} />
-      <meta property="og:url" content={noindex ? BASE_URL : currentUrl} />
+      <meta property="og:url" content={showCanonical ? pageUrl : BASE_URL} />
       <meta property="og:image" content={imageUrl} />
       <meta property="og:image:width" content="1200" />
       <meta property="og:image:height" content="630" />

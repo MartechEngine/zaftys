@@ -9,7 +9,7 @@ import { DemoTabBar } from "./DemoTabBar";
 type Tab = "supplier" | "trucker";
 
 const TABS = [
-  { id: "supplier" as const, label: "Supplier flow" },
+  { id: "supplier" as const, label: "Shipper flow" },
   { id: "trucker" as const, label: "Trucker flow" },
 ] as const;
 

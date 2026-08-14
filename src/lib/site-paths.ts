@@ -1,4 +1,4 @@
-/** Canonical public paths  -  keep menu labels, sitemap, and redirects in sync. */
+/** Canonical public paths. Keep menu labels, sitemap, and redirects in sync. */
 
 export const paths = {
   tms: "/zaftys-tms",

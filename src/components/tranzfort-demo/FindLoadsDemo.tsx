@@ -147,7 +147,7 @@ export function FindLoadsDemo({ compact, className, theme = "app" }: FindLoadsDe
             isApp ? "app-text-muted" : "text-white/55",
           )}
         >
-          Tap Find loads  -  matches appear in under a second.
+          Tap Find loads. Matches appear in under a second.
         </p>
       )}
     </div>

@@ -2,10 +2,18 @@
 # Copied into dist/ by Vite (public/) and deploy workflow
 
 Options -MultiViews
+DirectoryIndex index.html
 
 <IfModule mod_rewrite.c>
   RewriteEngine On
   RewriteBase /
+
+  # Apex host. Canonicals and sitemap use zaftys.com.
+  RewriteCond %{HTTP_HOST} ^www\.zaftys\.com$ [NC]
+  RewriteRule ^ https://zaftys.com%{REQUEST_URI} [R=301,L]
+
+  RewriteCond %{THE_REQUEST} \s/+index\.html[\s?] [NC]
+  RewriteRule ^index\.html$ / [R=301,L]
 
   # Never rewrite API, static crawler files, or existing assets
   RewriteRule ^api/ - [L]
@@ -21,6 +29,10 @@ Options -MultiViews
   RewriteRule ^platform/?$ /zaftys-tms [R=301,L,QSA]
   RewriteRule ^network/?$ /tranzfort-network [R=301,L,QSA]
 
+  # Industry slug aliases
+  RewriteRule ^industries/mining/?$ /industries/coal-mining [R=301,L,QSA]
+  RewriteRule ^industries/retail/?$ /industries/retail-distribution [R=301,L,QSA]
+
   # Reports catalog moved off /resources/reports
   RewriteRule ^resources/reports/global-logistics-market-2026-2033/read/?$ /reports/global-logistics-market-2027-2036/read [R=301,L,QSA]
   RewriteRule ^resources/reports/global-logistics-market-2026-2033/?$ /reports/global-logistics-market-2027-2036 [R=301,L,QSA]
@@ -30,9 +42,14 @@ Options -MultiViews
   RewriteRule ^resources/reports/([^/]+)/?$ /reports/$1 [R=301,L,QSA]
   RewriteRule ^resources/reports/?$ /reports [R=301,L,QSA]
 
+  # Collapse trailing slashes. Skip real directories except /reports/ (PDF folder vs SPA catalog).
+  RewriteRule ^reports/$ /reports [R=301,L]
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule ^(.+)/$ /$1 [R=301,L]
+
   # SPA catalog lives at /reports while PDFs stay in the /reports/ directory
   RewriteRule ^reports/?$ index.html [END]
-  RewriteRule ^reports/([^/.]+)/read/?$ index.html [END]
+  RewriteRule ^reports/([^/.]+)/read/?$ index.html [END,E=NOINDEX:1]
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteRule ^reports/([^/.]+)/?$ index.html [END]
 
@@ -41,15 +58,22 @@ Options -MultiViews
   RewriteCond %{REQUEST_FILENAME} -d
   RewriteRule ^ - [L]
 
-  # SPA fallback
-  RewriteRule ^ index.html [L]
+  # Known SPA routes only. Unknown paths fall through to a real 404.
+  # Keep in sync with src/App.tsx.
+  RewriteRule ^(about|zaftys-tms|services|fleet|tranzfort-network|careers|partner|contact|privacy|terms|cookies|legal-notice|login)/?$ index.html [END]
+  RewriteRule ^blog(?:/[A-Za-z0-9-]+)?/?$ index.html [END]
+  RewriteRule ^industries(?:/[A-Za-z0-9-]+)?/?$ index.html [END]
+  RewriteRule ^resources(?:/[A-Za-z0-9-]+)?/?$ index.html [END]
 </IfModule>
+
+ErrorDocument 404 /index.html
 
 # Prefer HTML sneak-peek pages over raw PDF URLs in search
 <IfModule mod_headers.c>
   <FilesMatch "\.pdf$">
     Header set X-Robots-Tag "noindex, follow"
   </FilesMatch>
+  Header set X-Robots-Tag "noindex, follow" env=NOINDEX
 </IfModule>
 
 # Correct types for crawlers

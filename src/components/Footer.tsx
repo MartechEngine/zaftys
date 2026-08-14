@@ -47,13 +47,10 @@ const Footer = () => {
   };
 
   const companyLinks = [
+    { name: "Home", path: "/" },
     { name: "About Us", path: "/about" },
     { name: "Careers", path: "/careers" },
-    { name: "Resources", path: "/resources" },
-    { name: "Blog", path: "/blog" },
-    { name: "Market Reports", path: "/reports" },
     { name: "Contact", path: "/contact" },
-    { name: "Partner", path: "/partner" },
   ];
 
   const servicesLinks = [
@@ -62,10 +59,17 @@ const Footer = () => {
     { name: "Industries", path: "/industries" },
   ];
 
-  const platformLinks = [
+  const technologyLinks = [
     { name: "ZAFTYS TMS", path: "/zaftys-tms" },
-    { name: "TranZfort Network", path: "/tranzfort-network" },
+    { name: "TranZfort", path: "/tranzfort-network" },
+    { name: "Become a Partner", path: "/partner" },
     { name: "Login", path: "/login" },
+  ];
+
+  const resourcesLinks = [
+    { name: "Blog", path: "/blog" },
+    { name: "Market Reports", path: "/reports" },
+    { name: "All resources", path: "/resources" },
   ];
 
   const legal = [
@@ -82,7 +86,7 @@ const Footer = () => {
           <div>
             <img src={logoFooter} alt="ZAFTYS Logistics" className="h-14 w-auto mb-6" loading="lazy" />
             <p className="text-gray-400 max-w-md text-lg leading-relaxed">
-              Heavy industrial freight across India. Own fleet, TranZfort network, and ZAFTYS TMS™  -  three generations of corridor experience.
+              Own commercial fleet, ZAFTYS TMS, and TranZfort. Listing and search are free. Broker fee on trucker bookings. AI-powered matching. GST-compliant operations from Amravati, Maharashtra.
             </p>
             <a
               href={externalLinks.tranzfort}
@@ -91,12 +95,12 @@ const Footer = () => {
               onClick={() => trackEvent("cta_tranzfort", { placement: "footer" })}
               className="inline-flex items-center gap-2 mt-4 text-accent hover:text-accent-light text-sm font-semibold transition-colors"
             >
-              Explore TranZfort network <ArrowRight size={14} />
+              Explore TranZfort marketplace <ArrowRight size={14} />
             </a>
           </div>
           <div>
-            <h3 className="text-xl font-heading font-bold mb-4">Stay Updated</h3>
-            <p className="text-gray-400 mb-4">Get the latest industry insights and company news.</p>
+            <h3 className="text-xl font-heading font-bold mb-4">Stay updated</h3>
+            <p className="text-gray-400 mb-4">Occasional operational notes and company updates. No spam.</p>
             <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3">
               <input type="text" name="website" tabIndex={-1} autoComplete="off" className="hidden" aria-hidden="true" />
               <Input
@@ -112,7 +116,7 @@ const Footer = () => {
               </Button>
             </form>
             <p className="text-gray-500 text-xs mt-3">
-              Insights and company updates. Unsubscribe anytime at {SUBSCRIBERS_EMAIL}.
+              Unsubscribe anytime at {SUBSCRIBERS_EMAIL}.
             </p>
           </div>
         </div>
@@ -167,20 +171,7 @@ const Footer = () => {
           </div>
 
           <div>
-            <h4 className="text-lg font-bold text-white mb-6 font-heading uppercase tracking-wider">Company</h4>
-            <ul className="space-y-3">
-              {companyLinks.map((link) => (
-                <li key={link.name}>
-                  <Link to={link.path} className="text-gray-400 hover:text-accent transition-colors inline-flex items-center">
-                    {link.name}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div>
-            <h4 className="text-lg font-bold text-white mb-6 font-heading uppercase tracking-wider">Services</h4>
+            <h4 className="text-lg font-bold text-white mb-6 font-heading uppercase tracking-wider">Transport</h4>
             <ul className="space-y-3">
               {servicesLinks.map((link) => (
                 <li key={link.name}>
@@ -195,7 +186,7 @@ const Footer = () => {
           <div>
             <h4 className="text-lg font-bold text-white mb-6 font-heading uppercase tracking-wider">Technology</h4>
             <ul className="space-y-3">
-              {platformLinks.map((link) => (
+              {technologyLinks.map((link) => (
                 <li key={link.name}>
                   <Link to={link.path} className="text-gray-400 hover:text-accent transition-colors">
                     {link.name}
@@ -217,17 +208,38 @@ const Footer = () => {
           </div>
 
           <div>
-            <h4 className="text-lg font-bold text-white mb-6 font-heading uppercase tracking-wider">Follow Us</h4>
-            <div className="flex gap-4">
-              <a
-                href={externalLinks.linkedin}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-gray-400 hover:bg-accent hover:text-white transition-all duration-300"
-              >
-                <Linkedin size={20} />
-              </a>
-            </div>
+            <h4 className="text-lg font-bold text-white mb-6 font-heading uppercase tracking-wider">Company</h4>
+            <ul className="space-y-3">
+              {companyLinks.map((link) => (
+                <li key={link.name}>
+                  <Link to={link.path} className="text-gray-400 hover:text-accent transition-colors inline-flex items-center">
+                    {link.name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div>
+            <h4 className="text-lg font-bold text-white mb-6 font-heading uppercase tracking-wider">Resources</h4>
+            <ul className="space-y-3">
+              {resourcesLinks.map((link) => (
+                <li key={link.name}>
+                  <Link to={link.path} className="text-gray-400 hover:text-accent transition-colors">
+                    {link.name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+            <a
+              href={externalLinks.linkedin}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-6 w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-gray-400 hover:bg-accent hover:text-white transition-all duration-300"
+              aria-label="ZAFTYS on LinkedIn"
+            >
+              <Linkedin size={20} />
+            </a>
           </div>
         </div>
       </div>

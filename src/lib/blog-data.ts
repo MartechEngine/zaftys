@@ -40,14 +40,14 @@ export const blogCategoryLabels: Record<BlogCategory, string> = {
 export const blogPosts: readonly BlogPost[] = [
   {
     slug: "tms-for-heavy-haul",
-    title: "TMS for Heavy-Haul Freight: What Matters Beyond GPS Tracking",
-    seoTitle: "TMS for Heavy-Haul Freight Beyond GPS",
-    seoDescription: "What industrial shippers and fleet operators should evaluate in a TMS: dispatch, ePOD, plant windows, documents, and visibility beyond a map pin.",
+    title: "TMS Beyond GPS: Dispatch, Documents, and Plant Windows",
+    seoTitle: "TMS Beyond GPS | Dispatch and e-POD",
+    seoDescription: "What shippers and fleet operators should evaluate in a TMS: dispatch, e-POD, plant windows, documents, and visibility beyond a map pin.",
     category: "technology",
     publishedAt: "2026-08-06",
-    updatedAt: "2026-08-07",
+    updatedAt: "2026-08-14",
     author: "ZAFTYS Operations",
-    summary: "GPS alone is not a transport management system. For heavy-haul freight, the platform must support dispatch discipline, documentation, and plant-window reality.",
+    summary: "GPS alone is not a transport management system. The platform must support dispatch, documentation, plant windows, and commercial LCV work, not only a map pin.",
     readMinutes: 7,
     heroImage: "/images/blog/tms-for-heavy-haul.jpg",
     relatedSlugs: ["planning-industrial-shipments","reduce-empty-return-trips","steel-coil-transport-basics"],
@@ -57,8 +57,8 @@ export const blogPosts: readonly BlogPost[] = [
         answer: "No. Tracking shows where a vehicle is. A TMS connects planning, assignment, trip status, documentation, and client visibility.",
       },
       {
-        question: "What should heavy-haul operators look for in a TMS?",
-        answer: "Dispatch that handles multi-axle and tipper programs, ePOD and LR records, fleet readiness signals, and reporting that reflects exceptions, not only last location.",
+        question: "What should operators look for in a TMS?",
+        answer: "Dispatch that handles LCV drops, multi-axle, and tipper programs, e-POD and LR records, fleet readiness signals, and reporting that reflects exceptions, not only last location.",
       },
       {
         question: "Can shippers use ZAFTYS TMS without running their own fleet?",
@@ -71,9 +71,9 @@ export const blogPosts: readonly BlogPost[] = [
     ],
     sections: [
       {
-        heading: "GPS alone isn't enough on industrial corridors",
+        heading: "GPS alone is not enough on real corridors",
         paragraphs: [
-          "A lot of teams buy tracking and assume they've digitised transport. On cement, steel, and mining lanes, location is only part of the job. The hard bits are loading windows, weighbridge loops, document handovers, axle-aware assignment, and exception communication.",
+          "A lot of teams buy tracking and assume they have digitised transport. On cement, steel, mining, and DC lanes, location is only part of the job. The hard bits are loading windows, weighbridge loops, document handovers, axle-aware assignment, and exception communication.",
           "When those steps live in WhatsApp and spreadsheets, GPS becomes one more screen to check. It isn't a system of record.",
           "A pin answers \"where is the truck?\" A TMS should help answer:",
         ],
@@ -86,10 +86,10 @@ export const blogPosts: readonly BlogPost[] = [
         ],
       },
       {
-        heading: "What a heavy-haul TMS should connect",
+        heading: "What a working TMS should connect",
         paragraphs: [
           "Useful platforms tie planning to execution on one trip lifecycle:",
-          "Reporting should show lane cost and exceptions, not only last location. Industry pieces on empty returns also keep linking visibility to utilisation (for example [TapTap on empty return trips](https://taptap.in/blog/technology-eliminate-empty-return-trips-transport-services-india/)); the point for heavy haul is the same: status has to be usable for decisions.",
+          "Reporting should show lane cost and exceptions, not only last location. Industry pieces on empty returns also keep linking visibility to utilisation (for example [TapTap on empty return trips](https://taptap.in/blog/technology-eliminate-empty-return-trips-transport-services-india/)); the point is the same: status has to be usable for decisions.",
         ],
         bullets: [
           "Dispatch and assignment matched to asset type and corridor (tipper vs flatbed vs tanker matters).",
@@ -103,14 +103,14 @@ export const blogPosts: readonly BlogPost[] = [
       {
         heading: "Plant windows and multi-axle reality",
         paragraphs: [
-          "Generic last-mile tools often assume simple pickups and urban stops. Industrial freight needs room for:",
-          "ZAFTYS TMS was shaped by those conditions. We run it on our own fleet daily and scale overflow through [TranZfort](https://www.tranzfort.com) while keeping one operational view (also summarised on [/tranzfort-network](/tranzfort-network)).",
+          "Generic last-mile tools often assume simple pickups and urban stops. Commercial freight needs room for:",
+          "ZAFTYS TMS was shaped by those conditions. We run it on our own fleet daily. Extra trucks can be posted or found on [TranZfort](https://www.tranzfort.com), with the trip still visible in TMS when we run it (also summarised on [TranZfort marketplace](/tranzfort-network)).",
         ],
         bullets: [
           "Plant queues and slot discipline ([cement loading windows](/blog/cement-plant-loading-windows))",
           "Mill securement and weighbridge loops ([steel coil basics](/blog/steel-coil-transport-basics))",
           "Axle limits and permit-aware routing",
-          "Surge capacity when owned fleet is full",
+          "Surge capacity when you post on TranZfort instead of adding random vendors",
         ],
       },
       {
@@ -122,7 +122,7 @@ export const blogPosts: readonly BlogPost[] = [
       {
         heading: "How to evaluate before you buy",
         paragraphs: [
-          "Ask vendors to walk a real industrial trip in the demo:",
+          "Ask vendors to walk a real commercial trip in the demo:",
           "If the demo only shows a map pin moving, keep looking.",
           "Also ask:",
           "Prefer platforms used in live ops, not only slide decks.",
@@ -133,10 +133,10 @@ export const blogPosts: readonly BlogPost[] = [
           "Transit exception (delay, diversion, detention)",
           "Delivery and ePOD",
           "Shipper visibility without calling the control room",
-          "Who runs this platform on live heavy-haul operations today?",
-          "How are multi-axle / tipper programs modelled?",
-          "Where do LR and ePOD live relative to the trip?",
-          "How does overflow capacity appear in the same operational picture?",
+          "Who runs this platform on live transport operations today?",
+          "How are LCV, multi-axle, and tipper programs modelled?",
+          "Where do LR and e-POD live relative to the trip?",
+          "How does a TranZfort load appear in the same operational picture?",
         ],
       },
       {
@@ -148,7 +148,7 @@ export const blogPosts: readonly BlogPost[] = [
         bullets: [
           "Shippers need shipment status, documents, and exception clarity without calling the control room for every load.",
           "Fleet operators need dispatch assignment, vehicle/driver readiness, and trip close-out across their assets.",
-          "Hybrid industrial logistics companies (like ZAFTYS) need both views, plus a way to bring verified overflow into the same picture.",
+          "Hybrid companies like ZAFTYS need both views, plus a way to bring a TranZfort trip into the same picture when we contract it.",
         ],
       },
       {
@@ -161,7 +161,7 @@ export const blogPosts: readonly BlogPost[] = [
           "Milestones are optional and chat stays the source of truth",
           "Documents get uploaded days after delivery",
           "Plant/mill window data never enters the trip record",
-          "Overflow partners are onboarded without process standards",
+          "TranZfort partners are onboarded without process standards",
         ],
       },
       {
@@ -175,7 +175,7 @@ export const blogPosts: readonly BlogPost[] = [
         heading: "What ZAFTYS offers",
         paragraphs: [
           "[ZAFTYS TMS](/zaftys-tms) is live for dispatch, fleet, documentation, and customer visibility. We run it every day and offer the same operational discipline to shippers and operators at [app.zaftys.com](https://app.zaftys.com).",
-          "Shippers using ZAFTYS logistics get portal visibility. Fleet operators can adopt the platform for their own ops. When overflow is needed, capacity stays coordinated through ZAFTYS and [TranZfort](https://www.tranzfort.com). See also [services](/services).",
+          "Shippers using ZAFTYS logistics get portal visibility. Fleet operators can adopt the platform for their own ops. When you need a truck we do not have that day, post on [TranZfort](https://www.tranzfort.com). See also [services](/services).",
         ],
       },
       {
@@ -194,7 +194,7 @@ export const blogPosts: readonly BlogPost[] = [
       {
         heading: "What to do next",
         paragraphs: [
-          "Explore ZAFTYS TMS on the technology page, log in to the portal, or ask for a guided demo that walks an industrial trip. Not only a tracking screen.",
+          "Explore ZAFTYS TMS on the TMS page, log in to the portal, or ask for a guided demo that walks a real trip. Not only a tracking screen.",
         ],
       },
       {
@@ -205,7 +205,6 @@ export const blogPosts: readonly BlogPost[] = [
         bullets: [
           "[Empty return trips and visibility in India transport (TapTap)](https://taptap.in/blog/technology-eliminate-empty-return-trips-transport-services-india/)",
           "[ZAFTYS TMS](/zaftys-tms) · [app.zaftys.com](https://app.zaftys.com) · [TranZfort](https://www.tranzfort.com)",
-          "---",
         ],
       },
     ],
@@ -213,12 +212,12 @@ export const blogPosts: readonly BlogPost[] = [
   },
   {
     slug: "steel-coil-transport-basics",
-    title: "Steel Coil Transport Basics: Axle Discipline & Weighbridge Reality",
-    seoTitle: "Steel Coil Transport: Axle & Weighbridge",
+    title: "Steel Coil Transport Basics: Axle Discipline and Weighbridge Reality",
+    seoTitle: "Steel Coil Transport: Axle and Weighbridge",
     seoDescription: "Practical guidance on steel coil and plate transport: bed type, securement principles, axle limits, mill windows, and weighbridge discipline across India.",
     category: "industries",
     publishedAt: "2026-08-05",
-    updatedAt: "2026-08-07",
+    updatedAt: "2026-08-14",
     author: "ZAFTYS Operations",
     summary: "Coils and plates fail quietly when bed type, strapping, or axle planning is wrong. This guide covers the basics shippers and mill teams should align before dispatch.",
     readMinutes: 7,
@@ -235,7 +234,7 @@ export const blogPosts: readonly BlogPost[] = [
       },
       {
         question: "How does ZAFTYS support steel freight?",
-        answer: "Company-operated flatbed/low-bed programs, [TranZfort](https://www.tranzfort.com) overflow when demand spikes, and ZAFTYS TMS visibility for trip and document status.",
+        answer: "Company-operated flatbed and low-bed programs, [TranZfort](https://www.tranzfort.com) when you need more trucks that day, and ZAFTYS TMS for trip and document status.",
       },
       {
         question: "Who owns securement standards?",
@@ -320,7 +319,7 @@ export const blogPosts: readonly BlogPost[] = [
       {
         heading: "When demand exceeds owned fleet",
         paragraphs: [
-          "Peak mill programs may need more capacity. Through ZAFTYS, overflow can move via verified [TranZfort](https://www.tranzfort.com) partners while commercial accountability stays with ZAFTYS Logistics (also described on [/tranzfort-network](/tranzfort-network)). Random capacity without securement standards is a quality risk. Overflow still has to meet coil discipline.",
+          "Peak mill programs may need more trucks. Post those loads on [TranZfort](https://www.tranzfort.com). Listing is free. Trips contracted through ZAFTYS stay on GST billing (also described on [TranZfort marketplace](/tranzfort-network)). Random capacity without securement standards is a quality risk. Marketplace cover still has to meet coil discipline.",
         ],
       },
       {
@@ -334,7 +333,7 @@ export const blogPosts: readonly BlogPost[] = [
         heading: "Incident and claim hygiene",
         paragraphs: [
           "When damage or axle issues happen, weak documentation turns a technical problem into a commercial fight. Keep:",
-          "A TMS-backed trip record helps because evidence sits with the shipment, not in lost chats. See [TMS for heavy-haul](/blog/tms-for-heavy-haul).",
+          "A TMS-backed trip record helps because evidence sits with the shipment, not in lost chats. See [TMS beyond GPS](/blog/tms-for-heavy-haul).",
         ],
         bullets: [
           "Pre-load photos / condition notes where the mill process allows",
@@ -372,7 +371,7 @@ export const blogPosts: readonly BlogPost[] = [
       {
         heading: "What to do next",
         paragraphs: [
-          "Share coil/plate profile, corridor, and mill window constraints. We'll recommend a heavy-haul approach for your steel program.",
+          "Share coil and plate profile, corridor, and mill window constraints. We will recommend a heavy-load approach for your steel program.",
         ],
       },
       {
@@ -385,7 +384,6 @@ export const blogPosts: readonly BlogPost[] = [
           "[Tata Steel road standards restraint guidelines (PDF)](https://products.tatasteelnederland.com/sites/producttsn/files/tata-steel-logistics-road-standards-restraint-guidelines-3.3-en.pdf)",
           "[MoRTH axle / GVW schedule reference (PDF summary)](https://kline.co.in/pdf/weight-restriction.pdf)",
           "[TranZfort](https://www.tranzfort.com) · [Steel & metals at ZAFTYS](/industries/steel-metals)",
-          "---",
         ],
       },
     ],
@@ -394,11 +392,11 @@ export const blogPosts: readonly BlogPost[] = [
   {
     slug: "cement-plant-loading-windows",
     title: "Cement Plant Loading Windows & Detention: What Shippers Should Expect",
-    seoTitle: "Cement Plant Loading Windows & Detention",
+    seoTitle: "Cement Plant Loading Windows and Detention",
     seoDescription: "How plant loading windows, tipper fit, weighbridge queues, and detention affect cement logistics, and how disciplined dispatch reduces surprises for shippers in India.",
     category: "industries",
     publishedAt: "2026-08-04",
-    updatedAt: "2026-08-07",
+    updatedAt: "2026-08-14",
     author: "ZAFTYS Operations",
     summary: "Detention and queue time can erase corridor planning. Align tipper capacity, plant windows, and documentation before the vehicle reaches the gate.",
     readMinutes: 7,
@@ -415,7 +413,7 @@ export const blogPosts: readonly BlogPost[] = [
       },
       {
         question: "Does ZAFTYS handle bagged and bulk cement?",
-        answer: "Yes. Tipper and bulk programs support plant-to-project and plant-to-dealer lanes, with [TranZfort](https://www.tranzfort.com) overflow when demand exceeds owned fleet.",
+        answer: "Yes. Tipper and bulk programs support plant-to-project and plant-to-dealer lanes. Extra volume can go on [TranZfort](https://www.tranzfort.com) when we do not have the truck that day.",
       },
       {
         question: "Should we track only total plant time?",
@@ -512,7 +510,7 @@ export const blogPosts: readonly BlogPost[] = [
         heading: "Seasonal surge without losing the plot",
         paragraphs: [
           "Cement demand spikes around infrastructure pushes, construction cycles, and plant maintenance catch-up. Surge weeks are when many shippers add the most transporters and lose the most control.",
-          "Calmer pattern: lock core lanes with a primary partner, pre-agree overflow rules, keep one escalation channel. [TranZfort](https://www.tranzfort.com) is for verified capacity under ZAFTYS coordination (see also [/tranzfort-network](/tranzfort-network)), not anonymous last-minute chaos.",
+          "Calmer pattern: lock core lanes with a primary partner, pre-agree how extra loads get posted, keep one escalation channel. [TranZfort](https://www.tranzfort.com) is a free marketplace under ZAFTYS coordination (see also [TranZfort marketplace](/tranzfort-network)), not anonymous last-minute chaos.",
         ],
       },
       {
@@ -524,7 +522,7 @@ export const blogPosts: readonly BlogPost[] = [
         bullets: [
           "Company-operated tipper and bulk programs on repeat plant-to-project and plant-to-dealer lanes",
           "Planning around plant windows rather than ad-hoc spot calls",
-          "TranZfort overflow when seasonal or project demand exceeds owned fleet",
+          "TranZfort when seasonal or project demand needs more trucks than we have that day",
           "One commercial channel so exceptions have an owner",
         ],
       },
@@ -544,7 +542,7 @@ export const blogPosts: readonly BlogPost[] = [
       {
         heading: "What to do next",
         paragraphs: [
-          "If cement detention is eating your corridor plan, share plant locations, material type, and weekly volume. We'll recommend a tipper/bulk approach matched to your windows. Also see [services](/services).",
+          "If cement detention is eating your corridor plan, share plant locations, material type, and weekly volume. We will recommend a tipper or bulk approach matched to your windows. Also see [services](/services).",
         ],
       },
       {
@@ -557,7 +555,6 @@ export const blogPosts: readonly BlogPost[] = [
           "[Logistics software notes for cement plant TAT stages (Fretron)](https://www.fretron.com/blog/best-logistics-software-cement-industry-india-2026/)",
           "[Cement logistics optimisation: detention and unloading (Intugine)](https://library.intugine.com/cement-logistics-optimization-intugine)",
           "[TranZfort](https://www.tranzfort.com) · [Cement logistics at ZAFTYS](/industries/cement)",
-          "---",
         ],
       },
     ],
@@ -565,14 +562,14 @@ export const blogPosts: readonly BlogPost[] = [
   },
   {
     slug: "planning-industrial-shipments",
-    title: "Planning Industrial Shipments: Body Type, Payload & Plant Windows",
-    seoTitle: "Planning Industrial Shipments: Body & Payload",
-    seoDescription: "A practical checklist for planning industrial FTL: body type, payload, plant windows, documentation, weighbridge steps, and when to reserve overflow capacity.",
+    title: "Planning Commercial Shipments: Body Type, Payload, and Plant Windows",
+    seoTitle: "Planning Shipments | Body Type and Payload",
+    seoDescription: "A practical checklist for planning FTL: body type, payload, plant windows, documentation, weighbridge steps, and when to post extra loads on TranZfort.",
     category: "operations",
     publishedAt: "2026-08-03",
-    updatedAt: "2026-08-07",
+    updatedAt: "2026-08-14",
     author: "ZAFTYS Operations",
-    summary: "Most industrial freight failures start before the vehicle moves. Align cargo, asset, plant timing, and paperwork in one plan.",
+    summary: "Most freight failures start before the vehicle moves. Align cargo, asset, plant timing, and paperwork in one plan. Include LCV when a trailer is the wrong tool.",
     readMinutes: 7,
     heroImage: "/images/blog/planning-industrial-shipments.jpg",
     relatedSlugs: ["reduce-empty-return-trips","cement-plant-loading-windows","tms-for-heavy-haul"],
@@ -582,8 +579,8 @@ export const blogPosts: readonly BlogPost[] = [
         answer: "Origin and destination, material type, approximate weight or volume, preferred body type, loading window, and documentation or permit requirements.",
       },
       {
-        question: "When should overflow capacity be planned?",
-        answer: "When demand may exceed dedicated or owned fleet: seasonal peaks, shutdowns, multi-plant surges. Plan early so verified partners can be staged.",
+        question: "When should extra trucks be planned on TranZfort?",
+        answer: "When demand may exceed dedicated or owned fleet: seasonal peaks, shutdowns, multi-plant surges. Post early so matching can run before the window.",
       },
       {
         question: "How does ZAFTYS help with shipment planning?",
@@ -596,10 +593,10 @@ export const blogPosts: readonly BlogPost[] = [
     ],
     sections: [
       {
-        heading: "Most industrial freight fails before the truck moves",
+        heading: "Most freight fails before the truck moves",
         paragraphs: [
           "When a shipment goes sideways, people blame the driver, the traffic, or \"the transporter.\" Dig a bit and you'll often find incomplete planning: wrong body type, fuzzy payload, plant window treated as a soft preference, or paperwork started after delivery.",
-          "Industrial freight covers tipper bulk, bagged cement, coils and plates, tanks, closed-body SKUs, project pieces. If you're only talking rate and distance, you haven't chosen a truck yet. You've chosen a hope.",
+          "Commercial freight covers tipper bulk, bagged cement, coils and plates, tanks, closed-body SKUs, LCV drops, project pieces. If you are only talking rate and distance, you have not chosen a truck yet. You have chosen a hope.",
         ],
       },
       {
@@ -621,10 +618,11 @@ export const blogPosts: readonly BlogPost[] = [
         heading: "Body type is a safety call",
         paragraphs: [
           "Rough guide to common configs:",
-          "Unsure? Ask for a recommendation against the cargo brief, not against a generic \"FTL truck\" label. See how we match [fleet and capacity](/fleet) to industrial lanes.",
+          "Unsure? Ask for a recommendation against the cargo brief, not against a generic \"FTL truck\" label. See how we match [fleet](/fleet) to the class.",
         ],
         bullets: [
-          "Tipper / dumper: loose bulk that tips out (aggregates, ore, some cement and mining outbound). Bad fit for sealed loads or cargo that can't take tip angles.",
+          "LCV: DC transfers, dealer drops, and packaged cargo on planned lanes. Not house shifting. Not two-wheeler last mile.",
+          "Tipper / dumper: loose bulk that tips out (aggregates, ore, some cement and mining outbound). Bad fit for sealed loads or cargo that cannot take tip angles.",
           "Open body / high-side: bagged cement, many bulk solids, steel lengths when secured properly.",
           "Flatbed / low-bed: coils, plates, machinery, pipes, project cargo. Axle planning matters a lot here.",
           "Tanker / bulk carrier: liquids and powders with compartment and cleanliness rules.",
@@ -665,11 +663,11 @@ export const blogPosts: readonly BlogPost[] = [
         paragraphs: [
           "When volume spikes (seasonal cement, mill catch-up, multi-plant surges), adding random transporters often raises coordination cost more than it adds reliable capacity.",
           "A cleaner pattern:",
-          "ZAFTYS runs own fleet with overflow through [TranZfort](https://www.tranzfort.com) under ZAFTYS Logistics billing and coordination. More on that on our [network](/tranzfort-network) and [services](/services) pages.",
+          "ZAFTYS runs own fleet. Extra loads go on [TranZfort](https://www.tranzfort.com). Trips we contract stay on GST billing. More on that on our [marketplace](/tranzfort-network) and [services](/services) pages.",
         ],
         bullets: [
           "Cover core lanes with company-operated fleet where you can.",
-          "Stage verified overflow early when forecast exceeds owned assets.",
+          "Post extra loads on TranZfort early when the forecast exceeds owned trucks.",
           "Keep commercial accountability with one partner so exceptions have an owner.",
         ],
       },
@@ -685,7 +683,7 @@ export const blogPosts: readonly BlogPost[] = [
           "Plant/site windows and contacts",
           "Weighbridge / permit / documentation list",
           "Fallback if the window slips",
-          "Whether overflow must be reserved now",
+          "Whether extra trucks must be posted on TranZfort now",
           "Visibility expectation (who sees status, and how)",
         ],
       },
@@ -718,7 +716,7 @@ export const blogPosts: readonly BlogPost[] = [
       {
         heading: "What to do next",
         paragraphs: [
-          "Share your corridor, load type, and volume with our team. We'll recommend a transport approach across own fleet and verified capacity, without turning peak weeks into a multi-vendor scramble. Start from [services](/services) if you want the service map first.",
+          "Share your corridor, load type, and volume with our team. We will recommend a transport approach across own fleet and TranZfort, without turning peak weeks into a multi-vendor scramble. Start from [services](/services) if you want the service map first.",
         ],
       },
       {
@@ -729,22 +727,21 @@ export const blogPosts: readonly BlogPost[] = [
         bullets: [
           "[Cement logistics challenges in India (Fretron)](https://www.fretron.com/blog/logistics-challenges-in-cement-industry/)",
           "[TranZfort](https://www.tranzfort.com) · [ZAFTYS services](/services) · [ZAFTYS TMS](/zaftys-tms) · [Fleet](/fleet)",
-          "---",
         ],
       },
     ],
-    cta: { label: "Explore industrial services", to: "/services" },
+    cta: { label: "Explore transport services", to: "/services" },
   },
   {
     slug: "reduce-empty-return-trips",
-    title: "How To Reduce Empty Return Trips on Industrial FTL Lanes",
+    title: "How To Reduce Empty Return Trips on FTL Lanes",
     seoTitle: "Reduce Empty Return Trips on FTL Lanes",
-    seoDescription: "Practical ways to cut empty return kilometres on industrial FTL corridors: corridor planning, backhaul discipline, KPIs, and capacity coordination without extra vendor chaos.",
+    seoDescription: "Practical ways to cut empty return kilometres on FTL corridors: corridor planning, backhaul discipline, KPIs, and TranZfort when you need a return load.",
     category: "operations",
     publishedAt: "2026-08-02",
-    updatedAt: "2026-08-07",
+    updatedAt: "2026-08-14",
     author: "ZAFTYS Operations",
-    summary: "Empty returns waste fuel, time, and margin. Industrial programs improve when corridors, schedules, and overflow capacity are planned together.",
+    summary: "Empty returns waste fuel, time, and margin. Programs improve when corridors, schedules, and marketplace cover are planned together.",
     readMinutes: 7,
     heroImage: "/images/blog/reduce-empty-return-trips.jpg",
     relatedSlugs: ["planning-industrial-shipments","tms-for-heavy-haul","cement-plant-loading-windows"],
@@ -759,7 +756,7 @@ export const blogPosts: readonly BlogPost[] = [
       },
       {
         question: "How does a network help with backhaul?",
-        answer: "Verified capacity can surface return opportunities when owned fleet alone can't fill both directions. Through ZAFTYS, [TranZfort](https://www.tranzfort.com) overflow still sits under one commercial relationship.",
+        answer: "Verified capacity can surface return opportunities when owned fleet alone cannot fill both directions. Post or find the return on [TranZfort](https://www.tranzfort.com). Trips we contract still sit under ZAFTYS GST billing.",
       },
       {
         question: "What KPI should we start with?",
@@ -839,10 +836,10 @@ export const blogPosts: readonly BlogPost[] = [
         ],
       },
       {
-        heading: "Use overflow carefully",
+        heading: "Use TranZfort carefully",
         paragraphs: [
-          "Extra trucks can cover outbound gaps. They can also create more empty repositioning if partners are random. When owned fleet can't cover both directions, prefer verified capacity under one commercial relationship.",
-          "Through ZAFTYS, overflow can move via [TranZfort](https://www.tranzfort.com) (and our [network page](/tranzfort-network)) while accountability stays with ZAFTYS Logistics. That doesn't invent reverse freight out of thin air. It cuts the chaos of adding unmanaged vendors when you need surge capacity on planned corridors.",
+          "Extra trucks can cover outbound gaps. They can also create more empty repositioning if partners are random. When owned fleet cannot cover both directions, post or find on TranZfort instead of adding unmanaged vendors.",
+          "Through ZAFTYS, extra trucks can move via [TranZfort](https://www.tranzfort.com) (and our [marketplace page](/tranzfort-network)) while billing stays with ZAFTYS on contracted trips. That does not invent reverse freight out of thin air. It cuts the chaos of adding unmanaged vendors when you need more trucks on planned corridors.",
         ],
       },
       {
@@ -855,13 +852,13 @@ export const blogPosts: readonly BlogPost[] = [
           "Ask your logistics partner for empty km % and detention hours on those corridors for the last 60 to 90 days.",
           "Align plant/site windows with a realistic return opportunity, or price empty repositioning openly.",
           "Stop adding random transporters for peak weeks without a corridor plan (see [planning industrial shipments](/blog/planning-industrial-shipments)).",
-          "Prefer partners who can run own fleet plus a verified network under one account ([services](/services)).",
+          "Prefer partners who can run own fleet plus TranZfort under one GST desk ([services](/services)).",
         ],
       },
       {
         heading: "What to do next",
         paragraphs: [
-          "If you want a corridor-level view of empty returns on your lanes, share origin, destination, load type, and weekly volume on WhatsApp. We'll suggest a practical approach. We won't promise zero empty kilometres. You can also skim [services](/services) and [network](/tranzfort-network) for how own fleet and overflow sit under one account.",
+          "If you want a corridor-level view of empty returns on your lanes, share origin, destination, load type, and weekly volume on WhatsApp. We will suggest a practical approach. We will not promise zero empty kilometres. You can also skim [services](/services) and [TranZfort](/tranzfort-network) for how own fleet and the marketplace sit next to each other.",
         ],
       },
       {
@@ -873,8 +870,7 @@ export const blogPosts: readonly BlogPost[] = [
           "[Backhaul Optimisation in Indian Trucking (PTC)](https://www.ptccorp.in/backhaul-optimisation-indian-trucking-empty-miles-reduction-ftl-india/)",
           "[Backhaul Logistics Strategy for Pan-India FTL (PTC)](https://www.ptccorp.in/backhaul-logistics-strategy-pan-india-ftl/)",
           "[How technology addresses empty return trips in India transport (TapTap)](https://taptap.in/blog/technology-eliminate-empty-return-trips-transport-services-india/)",
-          "[TranZfort](https://www.tranzfort.com) · [ZAFTYS network](/tranzfort-network) · [ZAFTYS TMS](/zaftys-tms)",
-          "---",
+          "[TranZfort](https://www.tranzfort.com) · [TranZfort marketplace](/tranzfort-network) · [ZAFTYS TMS](/zaftys-tms)",
         ],
       },
     ],

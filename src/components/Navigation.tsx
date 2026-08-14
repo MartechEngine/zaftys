@@ -11,41 +11,55 @@ import { cn } from "@/lib/utils";
 const quoteMailto = mailtoCompany(heroMailSubjects.quote, heroMailBodies.quote);
 
 type NavItem = { name: string; path: string };
-type NavGroup = { id: string; label: string; items: readonly NavItem[] };
+type NavGroup = { type: "group"; id: string; label: string; items: readonly NavItem[] };
+type NavLink = { type: "link"; id: string; label: string; path: string };
+type NavEntry = NavGroup | NavLink;
 
-const navGroups: readonly NavGroup[] = [
+const navEntries: readonly NavEntry[] = [
   {
-    id: "solutions",
-    label: "Solutions",
+    type: "link",
+    id: "home",
+    label: "Home",
+    path: "/",
+  },
+  {
+    type: "group",
+    id: "transport",
+    label: "Transport",
     items: [
       { name: "Services", path: "/services" },
-      { name: "Industries", path: "/industries" },
       { name: "Fleet", path: "/fleet" },
+      { name: "Industries", path: "/industries" },
     ],
   },
   {
+    type: "group",
     id: "technology",
     label: "Technology",
     items: [
       { name: "ZAFTYS TMS", path: "/zaftys-tms" },
-      { name: "TranZfort Network", path: "/tranzfort-network" },
+      { name: "TranZfort", path: "/tranzfort-network" },
+      { name: "Become a Partner", path: "/partner" },
     ],
   },
   {
+    type: "group",
     id: "company",
     label: "Company",
     items: [
       { name: "About", path: "/about" },
-      { name: "Partner", path: "/partner" },
       { name: "Contact", path: "/contact" },
+      { name: "Careers", path: "/careers" },
     ],
   },
   {
+    type: "group",
     id: "resources",
     label: "Resources",
     items: [
       { name: "Blog", path: "/blog" },
-      { name: "Reports", path: "/reports" },
+      { name: "Market Reports", path: "/reports" },
+      { name: "All resources", path: "/resources" },
     ],
   },
 ];
@@ -59,18 +73,27 @@ function pathMatches(pathname: string, path: string): boolean {
   return false;
 }
 
-function groupIsActive(pathname: string, group: NavGroup): boolean {
-  if (group.id === "resources") {
+function entryIsActive(pathname: string, entry: NavEntry): boolean {
+  if (entry.type === "link") {
+    return pathMatches(pathname, entry.path);
+  }
+  if (entry.id === "company") {
+    return entry.items.some((item) => pathMatches(pathname, item.path));
+  }
+  if (entry.id === "resources") {
     return (
+      entry.items.some((item) => pathMatches(pathname, item.path)) ||
       pathname === "/resources" ||
-      pathname.startsWith("/resources/") ||
-      pathname === "/blog" ||
-      pathname.startsWith("/blog/") ||
-      pathname === "/reports" ||
-      pathname.startsWith("/reports/")
+      pathname.startsWith("/resources/")
     );
   }
-  return group.items.some((item) => pathMatches(pathname, item.path));
+  if (entry.id === "technology") {
+    return (
+      entry.items.some((item) => pathMatches(pathname, item.path)) ||
+      pathname === "/login"
+    );
+  }
+  return entry.items.some((item) => pathMatches(pathname, item.path));
 }
 
 const Navigation = () => {
@@ -116,34 +139,48 @@ const Navigation = () => {
           </Link>
 
           <div className="hidden xl:flex items-center space-x-1">
-            {navGroups.map((group) => {
-              const active = groupIsActive(location.pathname, group);
-              const open = openDesktopGroup === group.id;
+            {navEntries.map((entry) => {
+              const active = entryIsActive(location.pathname, entry);
+              if (entry.type === "link") {
+                return (
+                  <Link
+                    key={entry.id}
+                    to={entry.path}
+                    className={cn(
+                      "px-2.5 py-2 rounded-md text-sm font-bold transition-colors uppercase tracking-wide",
+                      active ? "text-accent" : "text-navy hover:text-accent hover:bg-navy/5",
+                    )}
+                  >
+                    {entry.label}
+                  </Link>
+                );
+              }
+              const open = openDesktopGroup === entry.id;
               return (
                 <div
-                  key={group.id}
+                  key={entry.id}
                   className="relative"
-                  onMouseEnter={() => setOpenDesktopGroup(group.id)}
+                  onMouseEnter={() => setOpenDesktopGroup(entry.id)}
                   onMouseLeave={() => setOpenDesktopGroup(null)}
                 >
                   <button
                     type="button"
                     className={cn(
-                      "px-3 py-2 rounded-md text-sm font-bold transition-colors uppercase tracking-wide inline-flex items-center gap-1",
+                      "px-2.5 py-2 rounded-md text-sm font-bold transition-colors uppercase tracking-wide inline-flex items-center gap-1",
                       active
                         ? "text-accent"
                         : "text-navy hover:text-accent hover:bg-navy/5",
                     )}
                     aria-expanded={open}
                     aria-haspopup="true"
-                    onClick={() => setOpenDesktopGroup(open ? null : group.id)}
+                    onClick={() => setOpenDesktopGroup(open ? null : entry.id)}
                   >
-                    {group.label} <ChevronDown size={14} />
+                    {entry.label} <ChevronDown size={14} />
                   </button>
                   {open ? (
                     <div className="absolute left-0 top-full pt-1 min-w-[220px]">
                       <div className="rounded-lg border border-border bg-white shadow-lg py-2">
-                        {group.items.map((link) => (
+                        {entry.items.map((link) => (
                           <Link
                             key={link.path}
                             to={link.path}
@@ -195,14 +232,30 @@ const Navigation = () => {
         {isMobileMenuOpen && (
           <div className="xl:hidden py-4 animate-fade-in bg-white border-t border-gray-100 shadow-xl max-h-[calc(100vh-80px)] overflow-y-auto">
             <div className="flex flex-col space-y-1">
-              {navGroups.map((group) => {
-                const active = groupIsActive(location.pathname, group);
-                const open = openMobileGroup === group.id;
+              {navEntries.map((entry) => {
+                const active = entryIsActive(location.pathname, entry);
+                if (entry.type === "link") {
+                  return (
+                    <Link
+                      key={entry.id}
+                      to={entry.path}
+                      className={cn(
+                        "px-4 py-3 text-sm font-bold transition-colors uppercase tracking-wide",
+                        active
+                          ? "text-accent bg-accent/5 border-l-4 border-accent"
+                          : "text-navy hover:text-accent hover:bg-gray-50",
+                      )}
+                    >
+                      {entry.label}
+                    </Link>
+                  );
+                }
+                const open = openMobileGroup === entry.id;
                 return (
-                  <div key={group.id}>
+                  <div key={entry.id}>
                     <button
                       type="button"
-                      onClick={() => setOpenMobileGroup(open ? null : group.id)}
+                      onClick={() => setOpenMobileGroup(open ? null : entry.id)}
                       className={cn(
                         "w-full px-4 py-3 text-sm font-bold transition-colors uppercase tracking-wide text-left flex items-center justify-between",
                         active
@@ -211,12 +264,12 @@ const Navigation = () => {
                       )}
                       aria-expanded={open}
                     >
-                      {group.label}
+                      {entry.label}
                       <ChevronDown size={16} className={cn("transition-transform", open && "rotate-180")} />
                     </button>
                     {open ? (
                       <div className="pl-4 pb-2 space-y-1">
-                        {group.items.map((link) => (
+                        {entry.items.map((link) => (
                           <Link
                             key={link.path}
                             to={link.path}

@@ -43,9 +43,9 @@ const IndustryDetail = () => {
       <PageHero
         badge={industry.title}
         title={industry.seoH1}
-        description={`${industry.heroHeadline} ${industry.description}`}
+        description={industry.description}
         imageSrc={industry.image}
-        imageAlt={`${industry.title} logistics  -  ZAFTYS heavy freight`}
+        imageAlt={`${industry.title} freight by ZAFTYS`}
         prepend={
           <Link
             to="/industries"
@@ -82,7 +82,7 @@ const IndustryDetail = () => {
 
             <TabsContent value="overview" forceMount className="space-y-8 data-[state=inactive]:hidden">
               <div>
-                <h2 className="text-2xl font-heading font-bold text-navy mb-6">Operational Challenges</h2>
+                <h2 className="text-2xl font-heading font-bold text-navy mb-6">Operational challenges</h2>
                 <ul className="space-y-4">
                   {industry.challenges.map((item) => (
                     <li key={item} className="flex items-start gap-3 text-muted-foreground leading-relaxed">
@@ -98,9 +98,9 @@ const IndustryDetail = () => {
             </TabsContent>
 
             <TabsContent value="operations" forceMount className="data-[state=inactive]:hidden">
-              <h2 className="text-2xl font-heading font-bold text-navy mb-4">How ZAFTYS Supports This Vertical</h2>
+              <h2 className="text-2xl font-heading font-bold text-navy mb-4">How ZAFTYS supports this vertical</h2>
               <p className="text-muted-foreground mb-8">
-                Own fleet first. Verified TranZfort network when demand exceeds capacity. Visibility through ZAFTYS TMS  -  one partner throughout.
+                Company trucks when we have the class. TranZfort to post or find a load. ZAFTYS TMS on trips we run.
               </p>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 {industry.howZaftysHelps.map((item) => (
@@ -112,7 +112,7 @@ const IndustryDetail = () => {
             </TabsContent>
 
             <TabsContent value="equipment" forceMount className="data-[state=inactive]:hidden">
-              <h2 className="text-2xl font-heading font-bold text-navy mb-8">Typical Corridors & Equipment</h2>
+              <h2 className="text-2xl font-heading font-bold text-navy mb-8">Typical corridors and equipment</h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
                 <div>
                   <h3 className="font-heading font-bold text-navy mb-4">Corridors we plan for</h3>
@@ -169,7 +169,7 @@ const IndustryDetail = () => {
                 Explore services
               </Link>
               <Link to="/tranzfort-network" className="text-primary font-semibold hover:underline">
-                TranZfort network
+                TranZfort marketplace
               </Link>
               <Link to="/zaftys-tms" className="text-primary font-semibold hover:underline">
                 ZAFTYS TMS
@@ -202,9 +202,9 @@ const IndustryDetail = () => {
 
       <section className="section-padding bg-navy text-white">
         <div className="container mx-auto container-padding max-w-3xl text-center">
-          <h2 className="text-3xl font-heading font-bold mb-4">Get a Quote for {industry.title}</h2>
+          <h2 className="text-3xl font-heading font-bold mb-4">Get a quote for {industry.title}</h2>
           <p className="text-gray-300 mb-8">
-            Share your corridor, load type, and volume on WhatsApp  -  our team will recommend a suitable transport approach.
+            WhatsApp the corridor, load type, and vehicle class. We quote company fleet, or you can post on TranZfort.
           </p>
           <CTAGroup>
             <WhatsAppButton label="Chat on WhatsApp" message={industry.whatsappPrefill} />

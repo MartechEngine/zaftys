@@ -7,7 +7,7 @@ import { pageSeo } from "@/lib/page-seo";
 
 const NotFound = () => {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-navy text-white px-4">
+    <div className="min-h-screen flex items-center justify-center bg-navy text-white px-5 sm:px-8">
       <SEO
         title={pageSeo.notFound.title}
         description={pageSeo.notFound.description}
@@ -15,9 +15,9 @@ const NotFound = () => {
       />
       <div className="text-center">
         <h1 className="text-9xl font-heading font-bold text-accent mb-4 opacity-20 animate-pulse">404</h1>
-        <h2 className="text-4xl font-bold mb-6 relative z-10 -mt-16">Page Not Found</h2>
+        <h2 className="text-4xl font-bold mb-6 relative z-10 -mt-16">This page is not here.</h2>
         <p className="text-xl text-gray-300 mb-8 max-w-md mx-auto">
-          The route you are looking for doesn't exist. It might have been moved or deleted.
+          Try home, services, or contact. ZAFTYS TMS and TranZfort are also a click away.
         </p>
         <CTAGroup>
           <Link to="/">
@@ -32,6 +32,11 @@ const NotFound = () => {
             <Button size="lg" variant="on-dark-outline">Contact</Button>
           </Link>
         </CTAGroup>
+        <p className="mt-6 text-sm text-gray-400">
+          <Link to="/zaftys-tms" className="underline hover:text-white">ZAFTYS TMS</Link>
+          {" · "}
+          <Link to="/tranzfort-network" className="underline hover:text-white">TranZfort</Link>
+        </p>
       </div>
     </div>
   );

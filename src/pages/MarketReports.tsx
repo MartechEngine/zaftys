@@ -9,6 +9,7 @@ import { ReportCover } from "@/components/market-reports/ReportCover";
 import heroResources from "@/assets/hero-resources.jpg";
 import { pageHeroAlts } from "@/lib/page-heroes";
 import { pageSeo } from "@/lib/page-seo";
+import { pageHeroCopy } from "@/lib/page-hero-copy";
 import { breadcrumbSchema, reportsCollectionSchema } from "@/lib/schema";
 import {
   REPORT_SEGMENT_LABEL,
@@ -36,9 +37,9 @@ const MarketReports = () => {
       />
 
       <PageHero
-        badge="Market Reports"
-        title="ZAFTYS Analytics Market Reports  -  Logistics & Digital Freight."
-        description="Institutional market research on global logistics and digital freight matching  -  open a report for the sneak peek, then download or read the full PDF."
+        badge={pageHeroCopy.reports.badge}
+        title={pageHeroCopy.reports.h1}
+        description={pageHeroCopy.reports.lead}
         imageSrc={heroResources}
         imageAlt={pageHeroAlts.reports}
       >

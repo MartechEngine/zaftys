@@ -4,22 +4,22 @@ const SCREENS = [
   {
     title: "Join",
     src: "/images/tranzfort/join.jpg",
-    alt: "TranZfort app  -  join and register screen",
+    alt: "TranZfort app: join and register screen",
   },
   {
     title: "Search",
     src: "/images/tranzfort/search.jpg",
-    alt: "TranZfort app  -  search loads screen",
+    alt: "TranZfort app: search loads screen",
   },
   {
     title: "Browse",
     src: "/images/tranzfort/browse.jpg",
-    alt: "TranZfort app  -  browse marketplace screen",
+    alt: "TranZfort app: browse marketplace screen",
   },
   {
     title: "Book",
     src: "/images/tranzfort/book.jpg",
-    alt: "TranZfort app  -  book a load screen",
+    alt: "TranZfort app: book a load screen",
   },
 ] as const;
 
