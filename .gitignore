@@ -20,7 +20,10 @@ config/zaftys-secrets.php
 public/config/zaftys-secrets.php
 public/config/rate-limit/
 .image-backups/
+
+# TMS is a separate repo. Never nest or commit it here.
 app-tsm/
+_quarantine-app-tsm-do-not-edit/
 
 # Editor directories and files
 .vscode/*

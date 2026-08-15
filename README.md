@@ -98,3 +98,15 @@ Create `MIGRATE_TOKEN` once, for example:
 openssl rand -hex 32
 ```
 
+## Related products (separate repositories)
+
+This repo is **only** the public marketing site (`zaftys.com`). Do not put the TMS or TranZfort apps in this folder.
+
+| Product | Local folder | GitHub | GitHub account |
+|---|---|---|---|
+| Marketing site (this repo) | `C:\Users\Public\project\New folder\zaftys-main` | https://github.com/MartechEngine/zaftys | martechengine@gmail.com |
+| ZAFTYS TMS | `C:\Users\Public\project\app-tsm` | https://github.com/zaftyslogistics-code/app-tsm | zaftyslogistics@gmail.com |
+| TranZfort | `C:\Users\Public\project\tranzfort-lab` | https://github.com/zaftyslogistics-code/tranzfort-lab | zaftyslogistics@gmail.com |
+
+Open each product in its own Cursor window. Switch `gh` to the matching account before push/PR.
+
