@@ -20,11 +20,9 @@ import heroTechnology from "@/assets/hero-technology.jpg";
 import { pageHeroAlts } from "@/lib/page-heroes";
 import { heroMailBodies, heroMailSubjects } from "@/lib/hero-ctas";
 import { HeroEmailButton } from "@/components/HeroEmailButton";
-import { externalLinks } from "@/lib/constants";
 import { pageSeo } from "@/lib/page-seo";
 import { pageHeroCopy } from "@/lib/page-hero-copy";
-import { LazyTmsTripPeek, TmsDemoDisclaimer } from "@/components/tms-demo";
-import "@/styles/tms-demo.css";
+import { LazyTmsScreensCarousel } from "@/components/LazyTmsScreensCarousel";
 import {
   softwareApplicationSchema,
   organizationSchema,
@@ -63,7 +61,7 @@ const Technology = () => {
     {
       icon: MapPin,
       title: "Live GPS tracking",
-      description: "Live location updates, dynamic ETAs, and route deviation alerts on an interactive map.",
+      description: "Live location updates, dynamic ETAs, and route deviation alerts on the dispatch map.",
     },
     {
       icon: Clock,
@@ -134,9 +132,9 @@ const Technology = () => {
       >
         <CTAGroup className="justify-start sm:justify-start">
           <Button asChild size="lg" variant="accent">
-            <a href={externalLinks.app} target="_blank" rel="noopener noreferrer">
+            <Link to="/login">
               Login to portal <ArrowRight className="ml-2" size={18} />
-            </a>
+            </Link>
           </Button>
           <HeroEmailButton
             label="Request a demo"
@@ -179,8 +177,7 @@ const Technology = () => {
             </div>
 
             <div className="lg:w-1/2 w-full">
-              <LazyTmsTripPeek density="full" className="min-h-[360px] rounded-xl shadow-2xl" />
-              <TmsDemoDisclaimer className="mt-3" />
+              <LazyTmsScreensCarousel />
             </div>
           </div>
         </div>
@@ -261,9 +258,7 @@ const Technology = () => {
           </p>
           <CTAGroup>
             <Button asChild size="lg" variant="accent">
-              <a href={externalLinks.app} target="_blank" rel="noopener noreferrer">
-                Login to app.zaftys.com
-              </a>
+              <Link to="/login">Login to portal</Link>
             </Button>
             <Link to="/contact">
               <Button size="lg" variant="on-dark-outline">Book a demo</Button>

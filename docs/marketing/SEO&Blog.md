@@ -4,8 +4,8 @@
 |-------|-------|
 | **Project** | `zaftys-main`  -  marketing site (`zaftys.com`) |
 | **Purpose** | Master tracker for SEO improvements, keyword strategy, and Knowledge Center / blog content |
-| **Status** | Blog v1 shipped; Wave 3 copy done on `seo-improvements`. Pending: deploy/GSC/GA4, prerender, CWV, blog backlog |
-| **Last updated** | 6 August 2026 |
+| **Status** | Reports at `/reports`; Blog at `/blog`. Next: 5 more posts (content pending). Deploy deferred. |
+| **Last updated** | 16 August 2026 |
 | **Related** | `copy-v2-l.md` (approved meta), `marketing-website-sitemap-new.md` (IA), `copy-v2-i.md` (Knowledge Center copy), `project-idea.md` |
 
 ---
@@ -42,27 +42,17 @@ Mark items `[x]` when shipped. Add notes under each item if scope changes.
 
 ### Sitemap
 
-- [ ] **Fix live `https://zaftys.com/sitemap.xml` returning HTTP 500**  
-  - `robots.txt` points crawlers here; a 500 blocks discovery.  
-  - Confirm host serves `public/sitemap.xml` (or generated equivalent) correctly.  
-  - **Repo:** expanded sitemap ready  -  **deploy required** to clear live 500.
+- [x] **Fix live `https://zaftys.com/sitemap.xml` returning HTTP 500** (live HEAD is 200; `sitemap.php` remains the Hostinger-safe GSC URL).
 
-- [x] **Regenerate / expand `public/sitemap.xml`**  -  core + `/network` + 8 industry URLs + `/blog` + 5 posts + legal; excludes `/login`. `/resources` redirects to `/blog` (not listed).
+- [x] **Regenerate / expand `public/sitemap.xml`**  -  core + product slugs + industries + `/blog` + posts + `/resources` hub + `/reports` + report detail URLs + legal; excludes `/login` and PDF reader `/read` pages. `/resources/reports` 301s to `/reports`.
 
-- [x] **Refresh `<lastmod>`** dates to `2026-08-06`.
-- [ ] **Submit sitemap in Google Search Console** and request indexing for top commercial URLs.
-- [ ] **Optional later:** generate sitemap at build time from the route list so it cannot drift.
+- [x] **Refresh `<lastmod>`** from page data (`updatedAt` for reports and blog posts).
+- [x] **Submit sitemap in Google Search Console** and request indexing for `/reports` + flagship report (DFM already indexed). Re-submit `sitemap.php` once after next deploy.
+- [x] **Generate sitemap at build time** (`scripts/generate-sitemap.mjs` in `npm run build`).
 
 ### Rendering (SPA)
 
-- [ ] **Address client-side rendering gap**  
-  - Stack: Vite + React Router + `react-helmet-async`.  
-  - Titles, descriptions, H1, and body depend on JS. Google can render, but depth pages index slowly / unreliably.  
-  - Options (pick one):
-    - Prerender marketing routes at build (`vite-plugin-ssg`, `react-snap`, or similar)
-    - Migrate marketing to SSG/SSR (Astro / Next static)
-    - Edge HTML snapshots for bots  
-  - Goal: first HTML response includes correct `<title>`, meta description, canonical, and primary H1.
+- [x] **Address client-side rendering gap** (build-time Playwright snapshots of sitemap routes into `dist/<path>/index.html`; Apache serves them without a trailing slash). Still optional later: full SSG/SSR framework migration.
 
 ### Hosting / deep links
 
@@ -97,7 +87,7 @@ Mark items `[x]` when shipped. Add notes under each item if scope changes.
 - [x] **`noindex` on `/login`**
 - [x] **`noindex` on 404**  -  no `/404` canonical
 - [x] **Fix NotFound canonical**  -  omitted when `noindex`
-- [x] **Resources hub `noindex`** until articles publish  -  **superseded:** `/resources` redirects to indexable `/blog` (5 posts live)
+- [x] **Resources hub live at `/resources`**  -  Blog + Reports hub (not a redirect to `/blog`; `/blog` URLs kept for GSC). Reports catalog is `/reports`.
 
 ### Industry detail pages (highest organic inventory)
 
@@ -143,14 +133,14 @@ Mark items `[x]` when shipped. Add notes under each item if scope changes.
 ### Images & accessibility
 
 - [x] Meaningful `alt` text on page heroes (`page-heroes.ts`) and Home industry/TMS imagery  -  continue spot-checks when adding assets.
-- [ ] Compress hero/industry images; prefer modern formats where host allows.
+- [x] **Compress TMS screenshots** to WebP (`public/images/tms/*.webp`). Hero/industry JPG pass still optional.
 - [ ] Optional: image sitemap for key visuals later.
 
 ### Performance / CWV (affects rankings)
 
-- [ ] Audit LCP on Home (full-bleed hero) and Network (demo bundles).  
-- [ ] Lazy-load demos below fold (partially done); ensure fonts and hero images do not block LCP.  
-- [ ] Review unused JS on marketing routes.
+- [x] **Home LCP** uses capped hero WebP preload; Network/Services use screenshot carousels (interactives removed).
+- [x] **Lazy-load** TMS/TranZfort carousels near viewport.
+- [ ] Review unused JS on marketing routes after next deploy (Playwright prerender is local-only).
 
 ---
 
@@ -316,7 +306,7 @@ One primary SEO job per URL  -  avoid making Home compete for every cluster.
 | Feed WhatsApp / demo leads | Soft CTA  -  not hard sell |
 
 **Public label:** Blog (header + footer).  
-**Routes:** `/blog` (index), `/blog/:slug` (posts). `/resources` → `/blog` (redirect).  
+**Routes:** `/blog` (index), `/blog/:slug` (posts). `/resources` is the hub. Reports catalog is `/reports`.  
 **Data:** `src/lib/blog-data.ts`  -  typed TS modules (no CMS/MDX for v1).  
 **Copy rules:** `copy-v2-a` + this file.
 
@@ -355,7 +345,7 @@ One primary SEO job per URL  -  avoid making Home compete for every cluster.
 
 ## 4.4 Blog technical SEO
 
-- [x] Article routes under `/blog/[slug]` (IA decision: public **Blog**; `/resources` redirects).
+- [x] Article routes under `/blog/[slug]` (IA: public **Blog** kept; `/resources` is hub; reports at `/reports`).
 - [x] Add each URL to sitemap on publish.
 - [x] `BlogPosting` JSON-LD (headline, datePublished, author/publisher, image).
 - [x] Canonical per article; OG type `article`.
@@ -370,7 +360,7 @@ One primary SEO job per URL  -  avoid making Home compete for every cluster.
 | Item | Status |
 |------|--------|
 | Hub page `/blog` | ✅ Live |
-| `/resources` → `/blog` redirect | ✅ Live |
+| `/resources` hub + `/reports` catalog | ✅ Live |
 | Categories UI | ✅ Live |
 | Article pages | ✅ Live |
 | Published articles | ✅ 5 launch posts |
@@ -417,7 +407,7 @@ These are not classic “meta tag” tasks but they affect how pages rank and co
 |------|----------|
 | Aug 2026 | Catalogue all SEO improvements in this file before implementation waves |
 | Aug 2026 | Treat TMS + TranZfort as **live products** in marketing; Knowledge articles are the remaining content gap |
-| Aug 2026 | Public **Blog** at `/blog` + `/blog/:slug`; `/resources` redirects; 5 launch posts shipped |
+| Aug 2026 | Public **Blog** at `/blog` + `/blog/:slug`; `/resources` hub; Market Reports at `/reports` |
 | Aug 2026 | Prefer `/resources/` for educational content (not a separate `/blog` brand) unless IA changes → **superseded** by Blog IA |
 | Aug 2026 | Do not chase bare “freight marketplace India” or bare “TMS India” as primary landers |
 | Jul 2026 | Meta defaults and per-page titles defined in `copy-v2-l.md`  -  shorten further for SERP CTR |

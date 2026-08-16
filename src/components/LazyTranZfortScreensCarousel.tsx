@@ -7,10 +7,11 @@ const TranZfortScreensCarousel = lazy(() =>
 
 type Props = {
   className?: string;
+  surface?: "navy" | "light";
 };
 
 /** Defer carousel images/animation until near viewport. */
-export function LazyTranZfortScreensCarousel({ className }: Props) {
+export function LazyTranZfortScreensCarousel({ className, surface = "navy" }: Props) {
   const ref = useRef<HTMLDivElement>(null);
   const [show, setShow] = useState(false);
 
@@ -30,14 +31,16 @@ export function LazyTranZfortScreensCarousel({ className }: Props) {
     return () => io.disconnect();
   }, []);
 
+  const skeleton = surface === "light" ? "bg-muted" : "bg-white/5";
+
   return (
     <div ref={ref} className={cn("min-h-[320px]", className)}>
       {show ? (
-        <Suspense fallback={<div className="min-h-[320px] rounded-xl bg-white/5 animate-pulse" aria-hidden />}>
-          <TranZfortScreensCarousel />
+        <Suspense fallback={<div className={cn("min-h-[320px] rounded-xl animate-pulse", skeleton)} aria-hidden />}>
+          <TranZfortScreensCarousel className={className} surface={surface} />
         </Suspense>
       ) : (
-        <div className="min-h-[320px] rounded-xl bg-white/5" aria-hidden />
+        <div className={cn("min-h-[320px] rounded-xl", skeleton)} aria-hidden />
       )}
     </div>
   );

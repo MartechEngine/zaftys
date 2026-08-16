@@ -2,6 +2,7 @@ import { getUtmAttribution } from "@/lib/utm";
 
 export function logVisit(path: string): void {
   if (typeof window === "undefined") return;
+  if (navigator.webdriver) return;
 
   const utm = getUtmAttribution();
   const payload = JSON.stringify({

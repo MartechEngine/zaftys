@@ -17,10 +17,15 @@ const today = new Date().toISOString().slice(0, 10);
 function blogPostUrls() {
   const src = fs.readFileSync(path.join(root, "src", "lib", "blog-data.ts"), "utf8");
   const posts = [];
-  const re = /slug:\s*"([^"]+)"[\s\S]*?publishedAt:\s*"([^"]+)"/g;
-  let m;
-  while ((m = re.exec(src))) {
-    posts.push({ slug: m[1], lastmod: m[2] });
+  const starts = [...src.matchAll(/slug:\s*"([^"]+)",\s*\r?\n\s*title:/g)];
+  for (let i = 0; i < starts.length; i++) {
+    const slug = starts[i][1];
+    const from = starts[i].index;
+    const to = i + 1 < starts.length ? starts[i + 1].index : src.length;
+    const block = src.slice(from, to);
+    const published = block.match(/publishedAt:\s*"([^"]+)"/);
+    const updated = block.match(/updatedAt:\s*"([^"]+)"/);
+    if (published) posts.push({ slug, lastmod: updated?.[1] ?? published[1] });
   }
   return posts;
 }
@@ -28,10 +33,13 @@ function blogPostUrls() {
 function reportUrls() {
   const src = fs.readFileSync(path.join(root, "src", "lib", "market-reports-data.ts"), "utf8");
   const reports = [];
-  const re = /slug:\s*"([^"]+)"[\s\S]*?publishedAt:\s*"([^"]+)"/g;
-  let m;
-  while ((m = re.exec(src))) {
-    reports.push({ slug: m[1], lastmod: m[2] });
+  for (const block of src.split(/report\(\{/).slice(1)) {
+    const slug = block.match(/slug:\s*"([^"]+)"/);
+    const published = block.match(/publishedAt:\s*"([^"]+)"/);
+    const updated = block.match(/updatedAt:\s*"([^"]+)"/);
+    if (slug && published) {
+      reports.push({ slug: slug[1], lastmod: updated?.[1] ?? published[1] });
+    }
   }
   return reports;
 }

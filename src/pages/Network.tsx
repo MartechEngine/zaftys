@@ -22,23 +22,17 @@ import heroNetwork from "@/assets/hero-network.jpg";
 import { pageHeroAlts } from "@/lib/page-heroes";
 import { PageHero } from "@/components/PageHero";
 import { pageHeroCopy } from "@/lib/page-hero-copy";
-import {
-  AppDemoFrame,
-  LazyMatchFlowDemo,
-  LazyPersonaTabDemo,
-  DemoDisclaimer,
-} from "@/components/tranzfort-demo";
-import "@/styles/tranzfort-demo.css";
+import { LazyTranZfortScreensCarousel } from "@/components/LazyTranZfortScreensCarousel";
 import { breadcrumbSchema, organizationSchema } from "@/lib/schema";
 
 const highlightIcons = [Route, Mic, Smartphone, Shield, Network, Users] as const;
 
 const highlightLinks: (string | null)[] = [
-  "#booking-flow",
-  "#explore-demo",
+  "#how-it-works",
+  "#explore-app",
   null,
   "/partner",
-  "#booking-flow",
+  "#how-it-works",
   "#compare",
 ];
 
@@ -194,70 +188,48 @@ const NetworkPage = () => {
         </div>
       </section>
 
-      {/* Explore TranZfort  -  persona demo */}
-      <section id="explore-demo" className="section-padding bg-white scroll-mt-28 pt-10 md:pt-12">
+      <section id="explore-app" className="section-padding bg-white scroll-mt-28 pt-10 md:pt-12">
         <div className="container mx-auto container-padding">
           <div className="text-center max-w-2xl mx-auto mb-8">
-            <h2 className="text-3xl md:text-4xl font-heading font-bold mb-3 text-navy">Try the app flows</h2>
+            <h2 className="text-3xl md:text-4xl font-heading font-bold mb-3 text-navy">Inside the TranZfort app</h2>
             <p className="text-muted-foreground">
-              Preview shipper and trucker views below, then download the live TranZfort app.
+              Join, search, browse, and book. Download the live app when you are ready to post or find a load.
             </p>
           </div>
-          <div className="max-w-md mx-auto rounded-2xl border border-border bg-muted/10 shadow-lg p-4 sm:p-6">
-            <LazyPersonaTabDemo variant="panel" surface="light" showDisclaimer />
-          </div>
+          <LazyTranZfortScreensCarousel surface="light" />
         </div>
       </section>
 
-      {/* How it works + booking demo  -  unified card */}
-      <section className="section-padding bg-muted/30">
+      <section id="how-it-works" className="section-padding bg-muted/30 scroll-mt-28">
         <div className="container mx-auto container-padding">
           <div className="text-center max-w-2xl mx-auto mb-10">
             <h2 className="text-3xl md:text-4xl font-heading font-bold mb-3 text-navy">How TranZfort works</h2>
             <p className="text-muted-foreground">
-              Post a load or find a truck. Matching is AI-powered. Tap simulate to watch a load go live.
+              Post a load or find a truck. Matching is AI-powered. You still confirm the booking.
             </p>
           </div>
 
-          <div className="max-w-6xl mx-auto rounded-2xl border border-border bg-white shadow-lg overflow-hidden">
-            <div className="grid grid-cols-1 lg:grid-cols-5 lg:min-h-[420px]">
-              <div className="lg:col-span-3 p-6 md:p-8 border-b lg:border-b-0 lg:border-r border-border">
-                <ol className="relative space-y-0">
-                  {flowSteps.map((step, index) => (
-                    <li key={step.title} className="relative flex gap-4 pb-6 last:pb-0">
-                      {index < flowSteps.length - 1 && (
-                        <span
-                          className="absolute left-[11px] top-7 bottom-0 w-px bg-border"
-                          aria-hidden
-                        />
-                      )}
-                      <span className="relative z-10 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-accent/15 text-[11px] font-bold text-accent ring-4 ring-white">
-                        {index + 1}
-                      </span>
-                      <div className="pt-0.5 min-w-0">
-                        <h3 className="text-sm font-heading font-bold text-navy">{step.title}</h3>
-                        <p className="text-sm text-muted-foreground leading-relaxed mt-0.5">{step.desc}</p>
-                      </div>
-                    </li>
-                  ))}
-                </ol>
-              </div>
-
-              <div
-                id="booking-flow"
-                className="lg:col-span-2 p-6 md:p-8 bg-muted/20 flex flex-col scroll-mt-28 lg:sticky lg:top-24 lg:self-start"
-              >
-                <p className="text-xs font-bold uppercase tracking-wider text-muted-foreground mb-4">Interactive demo</p>
-                <AppDemoFrame
-                  variant="panel"
-                  title="Booking flow"
-                  screen="app"
-                  className="flex-1 min-h-[260px] sm:min-h-[300px]"
-                >
-                  <LazyMatchFlowDemo theme="app" />
-                </AppDemoFrame>
-                <DemoDisclaimer className="mt-3" />
-              </div>
+          <div className="max-w-3xl mx-auto rounded-2xl border border-border bg-white shadow-lg overflow-hidden">
+            <div className="p-6 md:p-8">
+              <ol className="relative space-y-0">
+                {flowSteps.map((step, index) => (
+                  <li key={step.title} className="relative flex gap-4 pb-6 last:pb-0">
+                    {index < flowSteps.length - 1 && (
+                      <span
+                        className="absolute left-[11px] top-7 bottom-0 w-px bg-border"
+                        aria-hidden
+                      />
+                    )}
+                    <span className="relative z-10 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-accent/15 text-[11px] font-bold text-accent ring-4 ring-white">
+                      {index + 1}
+                    </span>
+                    <div className="pt-0.5 min-w-0">
+                      <h3 className="text-sm font-heading font-bold text-navy">{step.title}</h3>
+                      <p className="text-sm text-muted-foreground leading-relaxed mt-0.5">{step.desc}</p>
+                    </div>
+                  </li>
+                ))}
+              </ol>
             </div>
           </div>
         </div>
@@ -292,8 +264,8 @@ const NetworkPage = () => {
             <h2 className="text-3xl md:text-4xl font-heading font-bold mb-3 text-navy">Built for both sides of the load</h2>
             <p className="text-muted-foreground">
               Shippers post. Truckers book.{" "}
-              <a href="#explore-demo" className="text-accent font-semibold hover:underline">
-                Try both views
+              <a href="#explore-app" className="text-accent font-semibold hover:underline">
+                See the app screens
               </a>
               . Existing ZAFTYS transport customers use the same app when they need a truck we do not have today.
             </p>

@@ -12,6 +12,7 @@ export const organizationSchema = {
   "@type": "Organization",
   "@id": ORG_ID,
   name: legalEntity.name,
+  alternateName: ["ZAFTYS", "Zaftys"],
   url: BASE,
   logo: `${BASE}/logo-header.png`,
   sameAs: [
@@ -41,6 +42,7 @@ export const websiteSchema = {
   "@context": "https://schema.org",
   "@type": "WebSite",
   name: legalEntity.name,
+  alternateName: ["ZAFTYS"],
   url: BASE,
   publisher: organizationRef,
   inLanguage: "en-IN",
@@ -51,6 +53,7 @@ export const localBusinessSchema = {
   "@type": "LocalBusiness",
   "@id": `${BASE}/#localbusiness`,
   name: legalEntity.name,
+  alternateName: ["ZAFTYS", "Zaftys"],
   image: `${BASE}/logo-header.png`,
   url: BASE,
   telephone: "+91-927-092-3581",
@@ -148,7 +151,11 @@ export function marketReportSchema(report: {
   publishedAt: string;
   updatedAt?: string;
   pdfPath: string;
+  coverImage?: string;
 }): Record<string, unknown> {
+  const imagePath = (report.coverImage ?? "/og-image.png").split("?")[0] || "/og-image.png";
+  const image = imagePath.startsWith("http") ? imagePath : `${BASE}${imagePath}`;
+
   return {
     "@context": "https://schema.org",
     "@type": "Report",
@@ -162,6 +169,7 @@ export function marketReportSchema(report: {
       url: BASE,
     },
     publisher: organizationRef,
+    image,
     url: `${BASE}/reports/${report.slug}`,
     encoding: {
       "@type": "MediaObject",

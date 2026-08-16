@@ -18,7 +18,7 @@ import { externalLinks, homeProducts, homeIndustries, vehicleClasses, homeTrustS
 import { trackEvent } from "@/lib/analytics";
 import { pageSeo } from "@/lib/page-seo";
 import { logisticsServiceSchema, organizationSchema, websiteSchema, localBusinessSchema } from "@/lib/schema";
-import { LazyTmsTripPeek, TmsDemoDisclaimer } from "@/components/tms-demo";
+import { LazyTmsScreensCarousel } from "@/components/LazyTmsScreensCarousel";
 import { LazyHomeReportsTeasers } from "@/components/LazyHomeReportsTeasers";
 import { LazyHomeBlogTeasers } from "@/components/LazyHomeBlogTeasers";
 import type { LucideIcon } from "lucide-react";
@@ -73,6 +73,9 @@ const Home = () => {
         </div>
         <div className="container mx-auto container-padding relative z-10">
           <div className="max-w-4xl text-white">
+            <p className="text-sm font-semibold uppercase tracking-widest text-accent mb-4 animate-fade-in-up">
+              ZAFTYS Logistics
+            </p>
             <h1 className="text-5xl md:text-6xl lg:text-7xl font-heading font-bold mb-6 animate-fade-in-up leading-tight">
               Hire the truck.
               <br />
@@ -95,7 +98,7 @@ const Home = () => {
                     Get a freight quote <ArrowRight className="ml-2" size={20} />
                   </a>
                 </Button>
-                <Link to="/zaftys-tms">
+                <Link to="/login">
                   <Button size="lg" variant="on-dark-outline">
                     See ZAFTYS TMS
                   </Button>
@@ -213,8 +216,7 @@ const Home = () => {
         <div className="container mx-auto container-padding">
           <div className="flex flex-col lg:flex-row items-center gap-16">
             <div className="lg:w-1/2 order-2 lg:order-1 w-full">
-              <LazyTmsTripPeek density="compact" className="min-h-[280px] rounded-xl shadow-2xl" />
-              <TmsDemoDisclaimer className="mt-3" />
+              <LazyTmsScreensCarousel />
             </div>
             <div className="lg:w-1/2 order-1 lg:order-2">
               <div className="inline-block px-3 py-1 rounded-full bg-primary/10 text-primary text-sm font-semibold mb-6 border border-primary/20">
@@ -227,7 +229,7 @@ const Home = () => {
                 ZAFTYS TMS is live at app.zaftys.com: dispatch, GPS, e-POD, fleet records, and a shipper portal. Built next to real gates, not only a map pin.
               </p>
               <CTAGroup>
-                <Link to="/zaftys-tms">
+                <Link to="/login">
                   <Button variant="accent">See ZAFTYS TMS</Button>
                 </Link>
                 <Link to="/contact">
@@ -280,6 +282,10 @@ const Home = () => {
               Partner
             </Link>
             {" · "}
+            <Link to="/reports" className="text-primary font-semibold hover:underline">
+              Market reports
+            </Link>
+            {" · "}
             <Link to="/contact" className="text-primary font-semibold hover:underline">
               Contact
             </Link>
@@ -324,7 +330,7 @@ const Home = () => {
           </p>
           <CTAGroup>
             <WhatsAppButton label="Chat on WhatsApp" />
-            <Link to="/zaftys-tms">
+            <Link to="/login">
               <Button size="lg" variant="on-dark-outline">See ZAFTYS TMS</Button>
             </Link>
             <Link to="/tranzfort-network">

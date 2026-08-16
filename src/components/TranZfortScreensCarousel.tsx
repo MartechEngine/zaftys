@@ -28,6 +28,8 @@ const SCROLL_TRACK = [...SCREENS, ...SCREENS];
 
 type TranZfortScreensCarouselProps = {
   className?: string;
+  /** navy = Home-style edge fade; light = white/muted sections */
+  surface?: "navy" | "light";
 };
 
 function PhoneFrame({ src, alt, title }: { src: string; alt: string; title: string }) {
@@ -49,16 +51,17 @@ function PhoneFrame({ src, alt, title }: { src: string; alt: string; title: stri
   );
 }
 
-export function TranZfortScreensCarousel({ className }: TranZfortScreensCarouselProps) {
+export function TranZfortScreensCarousel({ className, surface = "navy" }: TranZfortScreensCarouselProps) {
+  const fadeFrom = surface === "navy" ? "from-navy" : "from-white";
+
   return (
     <div className={cn("relative w-full overflow-hidden", className)}>
-      {/* Edge fade into navy section */}
       <div
-        className="pointer-events-none absolute inset-y-0 left-0 z-10 w-12 sm:w-20 bg-gradient-to-r from-navy to-transparent"
+        className={cn("pointer-events-none absolute inset-y-0 left-0 z-10 w-12 sm:w-20 bg-gradient-to-r to-transparent", fadeFrom)}
         aria-hidden
       />
       <div
-        className="pointer-events-none absolute inset-y-0 right-0 z-10 w-12 sm:w-20 bg-gradient-to-l from-navy to-transparent"
+        className={cn("pointer-events-none absolute inset-y-0 right-0 z-10 w-12 sm:w-20 bg-gradient-to-l to-transparent", fadeFrom)}
         aria-hidden
       />
 

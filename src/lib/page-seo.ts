@@ -1,7 +1,7 @@
 /** Page titles & meta descriptions  -  keep titles ≤ ~55 chars before brand suffix */
 export const pageSeo = {
   home: {
-    title: "Commercial Transport, TMS and Freight Marketplace",
+    title: "ZAFTYS Logistics | Transport, TMS and Marketplace",
     description:
       "Own trucks for LCV through tanker, trailer, tipper, reefer, parcel and ODC. ZAFTYS TMS for dispatch and tracking. TranZfort: post and search free, AI-powered matching, broker fee on trucker bookings. Quote on WhatsApp.",
   },

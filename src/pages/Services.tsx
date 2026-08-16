@@ -7,10 +7,8 @@ import { HeroEmailButton } from "@/components/HeroEmailButton";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { CTAGroup } from "@/components/CTAGroup";
 import ImageContentCard from "@/components/ImageContentCard";
-import { AppDemoFrame, LazyMatchFlowDemo, DemoDisclaimer } from "@/components/tranzfort-demo";
-import { LazyTmsTripPeek, TmsDemoDisclaimer } from "@/components/tms-demo";
-import "@/styles/tranzfort-demo.css";
-import "@/styles/tms-demo.css";
+import { LazyTmsScreensCarousel } from "@/components/LazyTmsScreensCarousel";
+import { LazyTranZfortScreensCarousel } from "@/components/LazyTranZfortScreensCarousel";
 import { externalLinks, vehicleClasses, materialTypes } from "@/lib/constants";
 import { trackEvent } from "@/lib/analytics";
 import { pageSeo } from "@/lib/page-seo";
@@ -219,13 +217,12 @@ const Services = () => {
               <p className="text-lg text-muted-foreground leading-relaxed mb-8">
                 Dispatch, GPS, and e-POD on contracted work. Full product detail lives on the TMS page.
               </p>
-              <Link to="/zaftys-tms">
+              <Link to="/login">
                 <Button variant="accent">See ZAFTYS TMS <ArrowRight className="ml-2" size={16} /></Button>
               </Link>
             </div>
             <div className="w-full">
-              <LazyTmsTripPeek density="compact" className="min-h-[280px] rounded-xl shadow-xl" />
-              <TmsDemoDisclaimer className="mt-3" />
+              <LazyTmsScreensCarousel />
             </div>
           </div>
         </div>
@@ -255,16 +252,8 @@ const Services = () => {
                 </Link>
               </CTAGroup>
             </div>
-            <div>
-              <AppDemoFrame
-                variant="panel"
-                title="Booking flow"
-                screen="app"
-                className="max-w-md mx-auto lg:ml-auto min-h-[280px] sm:min-h-[340px]"
-              >
-                <LazyMatchFlowDemo theme="app" />
-              </AppDemoFrame>
-              <DemoDisclaimer variant="on-dark" className="mt-3 max-w-md mx-auto lg:ml-auto" />
+            <div className="min-w-0">
+              <LazyTranZfortScreensCarousel />
             </div>
           </div>
         </div>

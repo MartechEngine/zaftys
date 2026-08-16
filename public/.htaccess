@@ -3,6 +3,8 @@
 
 Options -MultiViews
 DirectoryIndex index.html
+# Pretty URLs stay slash-free; prerender writes path/index.html (see prerender.mjs).
+DirectorySlash Off
 
 <IfModule mod_rewrite.c>
   RewriteEngine On
@@ -42,21 +44,22 @@ DirectoryIndex index.html
   RewriteRule ^resources/reports/([^/]+)/?$ /reports/$1 [R=301,L,QSA]
   RewriteRule ^resources/reports/?$ /reports [R=301,L,QSA]
 
-  # Collapse trailing slashes. Skip real directories except /reports/ (PDF folder vs SPA catalog).
-  RewriteRule ^reports/$ /reports [R=301,L]
-  RewriteCond %{REQUEST_FILENAME} !-d
+  # Collapse trailing slashes (including dirs that exist for prerender HTML).
   RewriteRule ^(.+)/$ /$1 [R=301,L]
 
-  # SPA catalog lives at /reports while PDFs stay in the /reports/ directory
+  # Existing files (Vite assets, PDFs, images)
+  RewriteCond %{REQUEST_FILENAME} -f
+  RewriteRule ^ - [L]
+
+  # Prerendered HTML: /about → /about/index.html (URL stays /about)
+  RewriteCond %{DOCUMENT_ROOT}/$1/index.html -f
+  RewriteRule ^(.+)$ $1/index.html [END]
+
+  # SPA catalog + report pages if prerender output is missing
   RewriteRule ^reports/?$ index.html [END]
   RewriteRule ^reports/([^/.]+)/read/?$ index.html [END,E=NOINDEX:1]
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteRule ^reports/([^/.]+)/?$ index.html [END]
-
-  # Existing files/dirs (Vite assets, images)  -  serve as-is
-  RewriteCond %{REQUEST_FILENAME} -f [OR]
-  RewriteCond %{REQUEST_FILENAME} -d
-  RewriteRule ^ - [L]
 
   # Known SPA routes only. Unknown paths fall through to a real 404.
   # Keep in sync with src/App.tsx.

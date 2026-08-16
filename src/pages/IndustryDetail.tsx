@@ -190,9 +190,24 @@ const IndustryDetail = () => {
                   Read more: coil transport basics
                 </Link>
               ) : null}
-              {industry.slug === "coal-mining" ? (
+              {industry.slug === "coal-mining" || industry.slug === "industrial-logistics" ? (
                 <Link to="/blog/planning-industrial-shipments" className="text-primary font-semibold hover:underline">
-                  Read more: planning industrial shipments
+                  Read more: planning commercial shipments
+                </Link>
+              ) : null}
+              {industry.slug === "manufacturing" ? (
+                <Link to="/blog/tms-evaluation-guide-indian-manufacturers" className="text-primary font-semibold hover:underline">
+                  Read more: TMS evaluation for manufacturers
+                </Link>
+              ) : null}
+              {industry.slug === "chemicals" ? (
+                <Link to="/blog/planning-industrial-shipments" className="text-primary font-semibold hover:underline">
+                  Read more: body type, payload, and plant windows
+                </Link>
+              ) : null}
+              {industry.slug === "fmcg" || industry.slug === "retail-distribution" ? (
+                <Link to="/blog/reduce-empty-return-trips" className="text-primary font-semibold hover:underline">
+                  Read more: empty return trips on FTL
                 </Link>
               ) : null}
             </div>
