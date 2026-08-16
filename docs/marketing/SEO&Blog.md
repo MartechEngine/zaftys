@@ -4,9 +4,9 @@
 |-------|-------|
 | **Project** | `zaftys-main`  -  marketing site (`zaftys.com`) |
 | **Purpose** | Master tracker for SEO improvements, keyword strategy, and Knowledge Center / blog content |
-| **Status** | Reports at `/reports`; Blog at `/blog`. Next: 5 more posts (content pending). Deploy deferred. |
-| **Last updated** | 16 August 2026 |
-| **Related** | `copy-v2-l.md` (approved meta), `marketing-website-sitemap-new.md` (IA), `copy-v2-i.md` (Knowledge Center copy), `project-idea.md` |
+| **Status** | Reports at `/reports`; Blog at `/blog` (Basics + Deep-researched templates). Deploy deferred. |
+| **Last updated** | 17 August 2026 |
+| **Related** | `copy-v2-l.md` (approved meta), `marketing-website-sitemap-new.md` (IA), `copy-v2-i.md` (Knowledge Center copy), `project-idea.md`, `docs/blog-report-layout-design.md` (**Basics Blog Template**) |
 
 ---
 
@@ -307,6 +307,7 @@ One primary SEO job per URL  -  avoid making Home compete for every cluster.
 
 **Public label:** Blog (header + footer).  
 **Routes:** `/blog` (index), `/blog/:slug` (posts). `/resources` is the hub. Reports catalog is `/reports`.  
+**Template:** **Basics Blog Template** (default) or **Deep-researched Blog Template** (`template: "deep-research"`)  -  see `docs/blog-report-layout-design.md`.  
 **Data:** `src/lib/blog-data.ts`  -  typed TS modules (no CMS/MDX for v1).  
 **Copy rules:** `copy-v2-a` + this file.
 
@@ -317,6 +318,7 @@ One primary SEO job per URL  -  avoid making Home compete for every cluster.
 - No fake stats or fake testimonials.
 - Prefer operational specificity (plant windows, weighbridge, tipper payload, LR/ePOD).
 - Standardize product name: **ZAFTYS TMS**; TranZfort as capacity network / app.
+- Each article uses **Basics Blog Template** unless marked Deep-researched (`template: "deep-research"`: KPI strip, chapter TOC, denser exhibits, references rail).
 - Each article: unique title (~50-60 chars), meta description (~140-155), H1, FAQ optional, internal links, OG image.
 
 ## 4.3 Article backlog
@@ -325,16 +327,17 @@ One primary SEO job per URL  -  avoid making Home compete for every cluster.
 
 | Slug | Title | Cluster | CTA |
 |------|-------|---------|-----|
-| `reduce-empty-return-trips` | How To Reduce Empty Return Trips on Industrial FTL Lanes | empty miles / backhaul | WhatsApp |
-| `planning-industrial-shipments` | Planning Industrial Shipments: Body Type, Payload & Plant Windows | industrial shipment planning | `/services` |
-| `cement-plant-loading-windows` | Cement Plant Loading Windows & Detention | cement logistics | `/industries/cement` |
-| `steel-coil-transport-basics` | Steel Coil Transport Basics | steel coil transport | `/industries/steel-metals` |
-| `tms-for-heavy-haul` | TMS for Heavy-Haul Freight Beyond GPS | TMS for industrial freight | `/technology` |
-| `tms-evaluation-guide-indian-manufacturers` | TMS Evaluation Guide for Indian Manufacturers | choose TMS India / manufacturing TMS | `/zaftys-tms` |
-| `india-axle-load-gvw-limits-heavy-freight` | India Axle Load Norms and GVW Limits Guide | MoRTH axle / GVW / Section 194 | `/zaftys-tms` |
-| `spot-market-vs-dedicated-fleet-india` | Spot Market vs Dedicated Contract Fleets in India | spot vs dedicated / hybrid FTL sourcing / spot freight rates India | `/tranzfort-network` |
-| `plant-detention-tat-yard-gate-india` | Plant Detention and Turnaround Time (TAT) India | plant detention / truck TAT / in-plant logistics / yard management | `/zaftys-tms` |
-| `epod-fastag-eway-bill-billing-india` | ePOD and e-Way Bill Freight Billing India | ePOD / electronic proof of delivery / GST e-Way Bill / three-way freight invoice match | `/zaftys-tms` |
+| `reduce-empty-return-trips` | Reduce Empty Return Trips India \| FTL Backhaul | empty return trips India / FTL backhaul | WhatsApp quote |
+| `planning-industrial-shipments` | FTL Shipment Planning India \| Body and Payload | FTL shipment planning India / body payload | `/services` |
+| `cement-plant-loading-windows` | Cement Plant Loading Windows and Detention India | cement plant loading windows / detention India | `/industries/cement` |
+| `steel-coil-transport-basics` | Steel Coil Transport India \| Axle Weighbridge | steel coil transport India / axle weighbridge | `/industries/steel-metals` |
+| `tms-for-heavy-haul` | TMS Beyond GPS India \| Dispatch and e-POD | TMS beyond GPS India / e-POD dispatch | `/zaftys-tms` |
+| `tms-evaluation-guide-indian-manufacturers` | TMS Evaluation Guide India \| Manufacturers 2026 | choose TMS India / manufacturing TMS 2026 | Mid: `/zaftys-tms`; end: `/contact` quote |
+| `india-axle-load-gvw-limits-heavy-freight` | India Axle Load Norms and GVW Limits | MoRTH axle load / GVW / Section 194 | `/contact` quote |
+| `spot-market-vs-dedicated-fleet-india` | Spot vs Dedicated Fleet India \| FTL Sourcing | spot vs dedicated fleet India / hybrid FTL | `/contact` quote |
+| `plant-detention-tat-yard-gate-india` | Plant Detention and TAT India \| Yard Gate | plant detention / truck TAT / yard gate India | `/contact` quote |
+| `epod-fastag-eway-bill-billing-india` | ePOD and e-Way Bill Compliance India | ePOD / GST e-Way Bill / freight billing India | `/contact` quote |
+| `container-trucking-logistics-india` | Container Trucking India \| JNPT Mundra Backhaul | container trucking India / JNPT Mundra / chassis GVW / return loads / backhaul | Primary `/contact`; mid TMS + TranZfort (Deep research) |
 
 ### Still to write
 
@@ -366,8 +369,8 @@ One primary SEO job per URL  -  avoid making Home compete for every cluster.
 | Hub page `/blog` | ✅ Live |
 | `/resources` hub + `/reports` catalog | ✅ Live |
 | Categories UI | ✅ Live |
-| Article pages | ✅ Live |
-| Published articles | ✅ 10 posts (launch set + TMS + axle + spot + plant TAT + ePOD billing) |
+| Article pages | ✅ Live (Basics Blog Template) |
+| Published articles | ✅ 11 posts (launch set + TMS + axle + spot + plant TAT + ePOD billing + container deep research) |
 | Blog sitemap entries | ✅ Hub + posts from `blog-data.ts` |
 | Header / footer / home teaser | ✅ Live |
 | RSS (optional) | ⬜ Later |

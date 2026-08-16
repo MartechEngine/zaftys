@@ -1,3 +1,4 @@
+/** Basics Blog Template  -  shared shell for every `/blog/:slug` post. */
 import { Link } from "react-router-dom";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
@@ -15,12 +16,12 @@ import {
   sectionAnchor,
 } from "@/lib/blog-data";
 
+/** Renders one post with the Basics Blog Template (wide shell, TOC rail, takeaways, exhibits, mid-CTA). */
 type BlogPostLayoutProps = {
   post: BlogPost;
 };
 
-function PostCta({ post, onDark = false }: { post: BlogPost; onDark?: boolean }) {
-  const cta = post.cta;
+function PostCtaButton({ cta, onDark = false }: { cta: BlogPost["cta"]; onDark?: boolean }) {
   if ("to" in cta) {
     return (
       <Link to={cta.to}>
@@ -31,6 +32,10 @@ function PostCta({ post, onDark = false }: { post: BlogPost; onDark?: boolean })
     );
   }
   return <WhatsAppButton label={cta.label} />;
+}
+
+function PostCta({ post, onDark = false }: { post: BlogPost; onDark?: boolean }) {
+  return <PostCtaButton cta={post.cta} onDark={onDark} />;
 }
 
 function RichText({ text }: { text: string }) {
@@ -64,16 +69,26 @@ function RichText({ text }: { text: string }) {
   );
 }
 
-function MidArticleCta({ post }: { post: BlogPost }) {
+function MidArticleCta({
+  post,
+  band,
+}: {
+  post: BlogPost;
+  band?: { eyebrow: string; title: string; body: string; cta?: BlogPost["cta"] };
+}) {
+  const eyebrow = band?.eyebrow ?? "Need trucks, not another login";
+  const title = band?.title ?? "Request a freight quote for your corridor";
+  const body =
+    band?.body ??
+    "Share origin, destination, body type, and weekly volume. We place capacity as your transport partner: own fleet, empaneled trucks, and overflow when peaks hit.";
+  const cta = band?.cta ?? post.cta;
   return (
     <div className="my-10 rounded-xl bg-navy px-6 py-8 text-white md:px-8">
-      <p className="text-[10px] font-heading font-bold tracking-widest text-white/60">Bring the scorecard</p>
-      <h2 className="mt-2 font-heading text-2xl font-bold normal-case tracking-normal">Walk gate, weigh, LR, and a spot truck</h2>
-      <p className="mt-3 max-w-xl text-sm leading-relaxed text-white/90">
-        Use the 25-point list in a live demo. We dispatch on ZAFTYS TMS and still run trucks. Ask for the plant, not a moving pin.
-      </p>
+      <p className="text-[10px] font-heading font-bold tracking-widest text-white/60">{eyebrow}</p>
+      <h2 className="mt-2 font-heading text-2xl font-bold normal-case tracking-normal">{title}</h2>
+      <p className="mt-3 max-w-xl text-sm leading-relaxed text-white/90">{body}</p>
       <div className="mt-6">
-        <PostCta post={post} onDark />
+        <PostCtaButton cta={cta} onDark />
       </div>
     </div>
   );
@@ -207,7 +222,18 @@ export function BlogPostLayout({ post }: BlogPostLayoutProps) {
                     {section.exhibits?.map((exhibit, exhibitIndex) => (
                       <BlogExhibitBlock key={`${section.heading}-${exhibit.kind}-${exhibitIndex}`} exhibit={exhibit} />
                     ))}
-                    {post.midCtaAfterHeading && section.heading === post.midCtaAfterHeading ? (
+                    {post.midCtas
+                      ?.filter((band) => band.afterHeading === section.heading)
+                      .map((band) => (
+                        <MidArticleCta
+                          key={`${band.afterHeading}-${band.title}`}
+                          post={post}
+                          band={band}
+                        />
+                      ))}
+                    {!post.midCtas?.length &&
+                    post.midCtaAfterHeading &&
+                    section.heading === post.midCtaAfterHeading ? (
                       <MidArticleCta post={post} />
                     ) : null}
                   </section>
@@ -338,18 +364,31 @@ export function BlogPostLayout({ post }: BlogPostLayoutProps) {
 
       <section className="section-padding bg-navy text-white">
         <div className="container mx-auto container-padding max-w-3xl text-center">
-          <h2 className="mb-4 font-heading text-3xl font-bold normal-case tracking-normal">Next step</h2>
+          <h2 className="mb-4 font-heading text-3xl font-bold normal-case tracking-normal">Need trucks first?</h2>
           <p className="mb-8 text-gray-300">
-            Prefer a practical conversation over another form? Share your corridor and load type. We will recommend a suitable approach.
+            Most readers need corridor capacity, not a new login. Share origin, destination, body type, and weekly volume.
+            We place trailers as your transport partner. Need software or a load board afterward? Use the links below.
           </p>
           <CTAGroup>
             <PostCta post={post} onDark />
-            <Link to="/blog">
+            <Link to="/zaftys-tms">
               <Button size="lg" variant="on-dark-outline">
-                Back to Blog
+                Explore ZAFTYS TMS
+              </Button>
+            </Link>
+            <Link to="/tranzfort-network">
+              <Button size="lg" variant="on-dark-outline">
+                Explore TranZfort
               </Button>
             </Link>
           </CTAGroup>
+          <p className="mt-6 text-sm text-white/55">
+            Or return to the{" "}
+            <Link to="/blog" className="font-semibold text-cyan hover:underline">
+              blog index
+            </Link>
+            .
+          </p>
         </div>
       </section>
     </>

@@ -234,6 +234,9 @@ const IndustryDetail = () => {
                   <Link to="/blog/epod-fastag-eway-bill-billing-india" className="text-primary font-semibold hover:underline">
                     Read more: ePOD and e-Way Bill billing
                   </Link>
+                  <Link to="/blog/container-trucking-logistics-india" className="text-primary font-semibold hover:underline">
+                    Read more: container trucking deep research
+                  </Link>
                 </>
               ) : null}
               {industry.slug === "chemicals" ? (

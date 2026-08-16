@@ -52,7 +52,7 @@ export const pageHeroCopy = {
   blog: {
     badge: "Blog",
     h1: "What we learned moving freight.",
-    lead: "Notes from ZAFTYS operations: FTL planning, plant windows, TMS, and how a free marketplace changes empty kilometres.",
+    lead: "Deep research and operations notes from ZAFTYS: container trucking, TMS, plant TAT, axle and GVW, and how backhaul and capacity networks cut empty kilometres.",
   },
   resources: {
     badge: "Resources",

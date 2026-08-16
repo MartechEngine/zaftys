@@ -1,12 +1,21 @@
-/** ZAFTYS Blog  -  typed content modules (ported from docs/marketing/blog-posts.md) */
+/** ZAFTYS Blog  -  typed content for Basics and Deep-researched templates. */
 
 import { tmsEvalExhibits, tmsEvalTakeaways } from "@/lib/blog-exhibits-tms-eval";
 import { axleGvwExhibits, axleGvwTakeaways } from "@/lib/blog-exhibits-axle-gvw";
 import { spotDedicatedExhibits, spotDedicatedTakeaways } from "@/lib/blog-exhibits-spot-dedicated";
 import { plantTatExhibits, plantTatTakeaways } from "@/lib/blog-exhibits-plant-tat";
 import { epodBillingExhibits, epodBillingTakeaways } from "@/lib/blog-exhibits-epod-billing";
+import {
+  containerIndiaExhibits,
+  containerIndiaKpis,
+  containerIndiaTakeaways,
+  containerIndiaReferences,
+} from "@/lib/blog-exhibits-container-india";
 
 export type BlogCategory = "operations" | "industries" | "technology";
+
+/** Defaults to Basics when omitted. */
+export type BlogTemplate = "basics" | "deep-research";
 
 export type BlogCta =
   | { label: string; to: string }
@@ -16,6 +25,20 @@ export type BlogDonutSlice = {
   label: string;
   value: number;
   color?: string;
+};
+
+export type BlogKpi = {
+  value: string;
+  label: string;
+  detail?: string;
+};
+
+export type BlogMidCta = {
+  afterHeading: string;
+  eyebrow: string;
+  title: string;
+  body: string;
+  cta?: BlogCta;
 };
 
 export type BlogExhibit =
@@ -69,13 +92,34 @@ export type BlogExhibit =
       caption: string;
       source?: string;
       items: readonly { label: string; detail: string; low?: number; high?: number; suffix?: string }[];
+    }
+  | {
+      kind: "callout";
+      caption: string;
+      source?: string;
+      items: readonly { title: string; body: string; tone?: "navy" | "teal" | "warm" }[];
+    }
+  | {
+      kind: "flow";
+      caption: string;
+      source?: string;
+      items: readonly { title: string; body: string }[];
     };
+
+export type BlogSubsection = {
+  heading: string;
+  paragraphs: readonly string[];
+  bullets?: readonly string[];
+  exhibits?: readonly BlogExhibit[];
+};
 
 export type BlogSection = {
   heading: string;
   paragraphs: readonly string[];
   bullets?: readonly string[];
   exhibits?: readonly BlogExhibit[];
+  /** Deep-researched: nested H3 chapters (also drive hierarchical TOC). */
+  subsections?: readonly BlogSubsection[];
 };
 
 export type BlogPost = {
@@ -90,13 +134,23 @@ export type BlogPost = {
   author: string;
   summary: string;
   readMinutes: number;
+  /** Defaults to Basics Blog Template. */
+  template?: BlogTemplate;
+  /** Deep-researched: dimensions covered under the H1. */
+  subtitle?: string;
+  /** Deep-researched: exec KPI strip under the hero. */
+  kpis?: readonly BlogKpi[];
   heroImage?: string;
   /** Image alt when the filename/title is not enough for search. */
   heroAlt?: string;
   /** Four-line box under the hero. */
   takeaways?: readonly string[];
-  /** Insert the post CTA band after this H2 (exact heading match). */
+  /** Basics: insert the post CTA band after this H2 (exact heading match). */
   midCtaAfterHeading?: string;
+  /** Deep-researched: one or more mid-article CTA bands (data-driven copy). */
+  midCtas?: readonly BlogMidCta[];
+  /** Deep-researched: compact sources list for the rail and end matter. */
+  references?: readonly string[];
   relatedSlugs: readonly string[];
   faqs: readonly { question: string; answer: string }[];
   sections: readonly BlogSection[];
@@ -120,8 +174,9 @@ export const blogPosts: readonly BlogPost[] = [
   {
     slug: "tms-for-heavy-haul",
     title: "TMS Beyond GPS: Dispatch, Documents, and Plant Windows",
-    seoTitle: "TMS Beyond GPS | Dispatch and e-POD",
-    seoDescription: "What shippers and fleet operators should evaluate in a TMS: dispatch, e-POD, plant windows, documents, and visibility beyond a map pin.",
+    seoTitle: "TMS Beyond GPS India | Dispatch and e-POD",
+    seoDescription:
+      "TMS beyond GPS for Indian FTL: dispatch, e-POD, plant windows, documents, and trip visibility shippers and fleet operators should evaluate before buying.",
     category: "technology",
     publishedAt: "2026-08-06",
     updatedAt: "2026-08-14",
@@ -298,8 +353,9 @@ export const blogPosts: readonly BlogPost[] = [
   {
     slug: "steel-coil-transport-basics",
     title: "Steel Coil Transport Basics: Axle Discipline and Weighbridge Reality",
-    seoTitle: "Steel Coil Transport: Axle and Weighbridge",
-    seoDescription: "Practical guidance on steel coil and plate transport: bed type, securement principles, axle limits, mill windows, and weighbridge discipline across India.",
+    seoTitle: "Steel Coil Transport India | Axle Weighbridge",
+    seoDescription:
+      "Steel coil and plate transport in India: bed type, securement, axle limits, mill windows, and weighbridge discipline for heavy FTL lanes.",
     category: "industries",
     publishedAt: "2026-08-05",
     updatedAt: "2026-08-14",
@@ -483,8 +539,9 @@ export const blogPosts: readonly BlogPost[] = [
   {
     slug: "cement-plant-loading-windows",
     title: "Cement Plant Loading Windows & Detention: What Shippers Should Expect",
-    seoTitle: "Cement Plant Loading Windows and Detention",
-    seoDescription: "How plant loading windows, tipper fit, weighbridge queues, and detention affect cement logistics, and how disciplined dispatch reduces surprises for shippers in India.",
+    seoTitle: "Cement Plant Loading Windows and Detention India",
+    seoDescription:
+      "Cement plant loading windows, tipper fit, weighbridge queues, and detention in India: what shippers should expect and how disciplined dispatch helps.",
     category: "industries",
     publishedAt: "2026-08-04",
     updatedAt: "2026-08-14",
@@ -660,8 +717,9 @@ export const blogPosts: readonly BlogPost[] = [
   {
     slug: "planning-industrial-shipments",
     title: "Planning Commercial Shipments: Body Type, Payload, and Plant Windows",
-    seoTitle: "Planning Shipments | Body Type and Payload",
-    seoDescription: "A practical checklist for planning FTL: body type, payload, plant windows, documentation, weighbridge steps, and when to post extra loads on TranZfort.",
+    seoTitle: "FTL Shipment Planning India | Body and Payload",
+    seoDescription:
+      "Plan industrial FTL shipments in India: body type, payload, plant windows, documents, weighbridge steps, and when to add overflow capacity.",
     category: "operations",
     publishedAt: "2026-08-03",
     updatedAt: "2026-08-14",
@@ -838,8 +896,9 @@ export const blogPosts: readonly BlogPost[] = [
   {
     slug: "reduce-empty-return-trips",
     title: "How To Reduce Empty Return Trips on FTL Lanes",
-    seoTitle: "Reduce Empty Return Trips on FTL Lanes",
-    seoDescription: "Practical ways to cut empty return kilometres on FTL corridors: corridor planning, backhaul discipline, KPIs, and TranZfort when you need a return load.",
+    seoTitle: "Reduce Empty Return Trips India | FTL Backhaul",
+    seoDescription:
+      "Cut empty return kilometres on Indian FTL corridors: corridor planning, backhaul matching, KPIs, and when to use a network for return loads.",
     category: "operations",
     publishedAt: "2026-08-02",
     updatedAt: "2026-08-14",
@@ -853,7 +912,7 @@ export const blogPosts: readonly BlogPost[] = [
       "Pair lanes, match body type on the return, and use TranZfort when cover is missing.",
     ],
     midCtaAfterHeading: "What you can do this month",
-    relatedSlugs: ["spot-market-vs-dedicated-fleet-india","planning-industrial-shipments","tms-for-heavy-haul"],
+    relatedSlugs: ["spot-market-vs-dedicated-fleet-india","container-trucking-logistics-india","planning-industrial-shipments"],
     faqs: [
       {
         question: "What causes empty return trips on industrial FTL?",
@@ -988,12 +1047,12 @@ export const blogPosts: readonly BlogPost[] = [
   {
     slug: "tms-evaluation-guide-indian-manufacturers",
     title: "TMS Evaluation Guide for Indian Manufacturers: How to Choose the Right Transportation System in 2026",
-    seoTitle: "TMS Evaluation Guide for Indian Manufacturers",
+    seoTitle: "TMS Evaluation Guide India | Manufacturers 2026",
     seoDescription:
-      "How to choose a TMS for Indian manufacturers: transportation management system demos for FTL yards, weighbridges, e-Way Bill, e-POD, and a 25-point checklist.",
+      "How to choose a TMS for Indian manufacturers in 2026: FTL yards, weighbridges, e-Way Bill, e-POD, hybrid fleet, and a 25-point demo checklist.",
     category: "technology",
-    publishedAt: "2026-08-17",
-    updatedAt: "2026-08-17",
+    publishedAt: "2026-08-14",
+    updatedAt: "2026-08-14",
     author: "ZAFTYS Operations",
     summary:
       "Most global transportation management systems are built for Western parcel or LTL networks. Indian manufacturers run heavy FTL, multi-axle trailers, spot brokers, weighbridges, and gate queues. This TMS evaluation guide covers the landscape, five pillars, a 25-point demo scorecard, and a six-week rollout. Score vendors on those jobs, not on a map with moving dots.",
@@ -1003,6 +1062,15 @@ export const blogPosts: readonly BlogPost[] = [
       "Dispatch screens and a multi-axle truck at an Indian manufacturing plant weighbridge, used to evaluate a TMS",
     takeaways: tmsEvalTakeaways,
     midCtaAfterHeading: "A 25-point demo checklist",
+    midCtas: [
+      {
+        afterHeading: "A 25-point demo checklist",
+        eyebrow: "Bring the scorecard",
+        title: "Walk gate, weigh, LR, and a spot truck in ZAFTYS TMS",
+        body: "Use the 25-point list in a live demo. We dispatch on ZAFTYS TMS and still run trucks. Ask for the plant, not a moving pin.",
+        cta: { label: "Explore ZAFTYS TMS", to: "/zaftys-tms" },
+      },
+    ],
     relatedSlugs: [
       "epod-fastag-eway-bill-billing-india",
       "plant-detention-tat-yard-gate-india",
@@ -1172,17 +1240,17 @@ export const blogPosts: readonly BlogPost[] = [
         ],
       },
     ],
-    cta: { label: "Explore ZAFTYS TMS", to: "/zaftys-tms" },
+    cta: { label: "Request a freight quote", to: "/contact" },
   },
   {
     slug: "india-axle-load-gvw-limits-heavy-freight",
     title: "Understanding India's Axle Load Norms and GVW Limits: How Heavy Freight Shippers Avoid Penalties and Plant Delays",
-    seoTitle: "Axle Load Norms and GVW Limits in India",
+    seoTitle: "India Axle Load Norms and GVW Limits",
     seoDescription:
-      "India axle load norms and gross vehicle weight (GVW) limits for heavy freight: MoRTH bands, Section 194 overloading fines, plant weighbridge control, and a compliance checklist.",
+      "India axle load norms and GVW limits for heavy freight: MoRTH bands, Section 194 overloading fines, plant weighbridge control, and a compliance checklist.",
     category: "operations",
-    publishedAt: "2026-08-17",
-    updatedAt: "2026-08-17",
+    publishedAt: "2026-08-10",
+    updatedAt: "2026-08-10",
     author: "ZAFTYS Operations",
     summary:
       "Heavy FTL in India fails when total gross vehicle weight (GVW) looks legal but one axle group is already over MoRTH axle load limits. This guide covers axle load norms, GVW bands, Section 194 overloading fines, industry traps, and a plant weighbridge loop you can audit before the truck hits the highway.",
@@ -1192,10 +1260,19 @@ export const blogPosts: readonly BlogPost[] = [
       "Multi-axle flatbed at an Indian plant weighbridge with heavy industrial cargo ready for axle and GVW checks",
     takeaways: axleGvwTakeaways,
     midCtaAfterHeading: "A 20-point axle compliance checklist",
+    midCtas: [
+      {
+        afterHeading: "A 20-point axle compliance checklist",
+        eyebrow: "Need legal trailers on the lane",
+        title: "Request a freight quote with the right axle class",
+        body: "Share cargo density, origin plant, destination, and preferred body type. We place MoRTH-safe capacity as your transport partner before a software rollout.",
+        cta: { label: "Request a freight quote", to: "/contact" },
+      },
+    ],
     relatedSlugs: [
+      "container-trucking-logistics-india",
       "steel-coil-transport-basics",
       "tms-evaluation-guide-indian-manufacturers",
-      "spot-market-vs-dedicated-fleet-india",
     ],
     faqs: [
       {
@@ -1341,18 +1418,18 @@ export const blogPosts: readonly BlogPost[] = [
         ],
       },
     ],
-    cta: { label: "Explore ZAFTYS TMS", to: "/zaftys-tms" },
+    cta: { label: "Request a freight quote", to: "/contact" },
   },
   {
     slug: "spot-market-vs-dedicated-fleet-india",
     title:
       "Spot Market vs Dedicated Contract Fleets in India: Hybrid Industrial Freight Strategy",
-    seoTitle: "Spot vs Dedicated Fleets for FTL in India",
+    seoTitle: "Spot vs Dedicated Fleet India | FTL Sourcing",
     seoDescription:
-      "Compare spot market vs dedicated contract fleets for industrial full truckload (FTL) in India. Hybrid sourcing, backhaul, and a 25-point checklist.",
+      "Spot market vs dedicated contract fleets for industrial FTL in India: hybrid sourcing, backhaul, overflow rules, and a 25-point freight checklist.",
     category: "operations",
-    publishedAt: "2026-08-17",
-    updatedAt: "2026-08-17",
+    publishedAt: "2026-08-13",
+    updatedAt: "2026-08-13",
     author: "ZAFTYS Operations",
     summary:
       "Spot market vs dedicated contract fleets for industrial full truckload (FTL) in India: when contract capacity wins, when spot freight rates help, how to size a hybrid freight strategy, cut empty returns, and audit sourcing with a 25-point checklist.",
@@ -1362,6 +1439,15 @@ export const blogPosts: readonly BlogPost[] = [
       "Spot market vs dedicated contract fleet trucks at an Indian plant gate for industrial full truckload freight",
     takeaways: spotDedicatedTakeaways,
     midCtaAfterHeading: "A 25-point freight sourcing checklist",
+    midCtas: [
+      {
+        afterHeading: "A 25-point freight sourcing checklist",
+        eyebrow: "Hybrid capacity, one transport desk",
+        title: "Request a quote for dedicated plus overflow lanes",
+        body: "Share stable corridor volume and peak surplus. We run contract capacity and place verified overflow when indents miss the SLA window, without forcing a marketplace login first.",
+        cta: { label: "Request a freight quote", to: "/contact" },
+      },
+    ],
     relatedSlugs: [
       "plant-detention-tat-yard-gate-india",
       "tms-evaluation-guide-indian-manufacturers",
@@ -1569,18 +1655,18 @@ export const blogPosts: readonly BlogPost[] = [
         ],
       },
     ],
-    cta: { label: "Explore TranZfort Network", to: "/tranzfort-network" },
+    cta: { label: "Request a freight quote", to: "/contact" },
   },
   {
     slug: "plant-detention-tat-yard-gate-india",
     title:
       "Plant Detention and Turnaround Time (TAT) in India: Yard and Gate Operations Guide",
-    seoTitle: "Plant Detention and Turnaround Time India",
+    seoTitle: "Plant Detention and TAT India | Yard Gate",
     seoDescription:
-      "Reduce plant detention and truck turnaround time (TAT) at Indian yards: five-stage gate-to-exit, weighbridge, loading slots, and a 25-point checklist.",
+      "Reduce plant detention and truck turnaround time (TAT) at Indian yards: five-stage gate-to-exit, weighbridge, loading slots, and a 25-point audit.",
     category: "operations",
-    publishedAt: "2026-08-17",
-    updatedAt: "2026-08-17",
+    publishedAt: "2026-08-12",
+    updatedAt: "2026-08-12",
     author: "ZAFTYS Operations",
     summary:
       "Plant detention and long truck turnaround time (TAT) often cost more than highway transit on industrial full truckload (FTL). This in-plant logistics and yard management guide covers five-stage TAT, free-time clocks, loading slots, weighbridge lock, and a 25-point plant audit for Indian manufacturers.",
@@ -1590,6 +1676,15 @@ export const blogPosts: readonly BlogPost[] = [
       "Truck turnaround at an Indian manufacturing plant gate and yard for plant detention and TAT control",
     takeaways: plantTatTakeaways,
     midCtaAfterHeading: "A 25-point plant detention and TAT checklist",
+    midCtas: [
+      {
+        afterHeading: "A 25-point plant detention and TAT checklist",
+        eyebrow: "Cut detention with the right trucks and windows",
+        title: "Request a freight quote sized to your plant TAT",
+        body: "Share gate windows, body type, and weekly volume. We place capacity that can hit your free-time clocks, and we can layer yard control later if you need it.",
+        cta: { label: "Request a freight quote", to: "/contact" },
+      },
+    ],
     relatedSlugs: [
       "epod-fastag-eway-bill-billing-india",
       "tms-evaluation-guide-indian-manufacturers",
@@ -1790,18 +1885,18 @@ export const blogPosts: readonly BlogPost[] = [
         ],
       },
     ],
-    cta: { label: "Explore ZAFTYS TMS", to: "/zaftys-tms" },
+    cta: { label: "Request a freight quote", to: "/contact" },
   },
   {
     slug: "epod-fastag-eway-bill-billing-india",
     title:
       "ePOD, FASTag, and e-Way Bill Compliance in India: Cut Freight Billing Delays",
-    seoTitle: "ePOD and e-Way Bill Freight Billing India",
+    seoTitle: "ePOD and e-Way Bill Compliance India",
     seoDescription:
-      "Automate electronic proof of delivery (ePOD) and GST e-Way Bill compliance for Indian freight billing: three-way match and a 25-point checklist.",
+      "ePOD, FASTag, and GST e-Way Bill compliance for Indian freight billing: three-way invoice match, exception queues, and a 25-point finance checklist.",
     category: "operations",
-    publishedAt: "2026-08-17",
-    updatedAt: "2026-08-17",
+    publishedAt: "2026-08-11",
+    updatedAt: "2026-08-11",
     author: "ZAFTYS Operations",
     summary:
       "Automate electronic proof of delivery (ePOD), GST e-Way Bill compliance, and freight invoice matching in India. This guide covers paper LR delays, FASTag corridor proof where available, three-way billing match, exception queues, IRN hygiene, and a 25-point finance audit for manufacturers.",
@@ -1811,6 +1906,15 @@ export const blogPosts: readonly BlogPost[] = [
       "Electronic proof of delivery ePOD, FASTag corridor proof, and GST e-Way Bill freight billing compliance in India",
     takeaways: epodBillingTakeaways,
     midCtaAfterHeading: "A 25-point ePOD and e-Way Bill checklist",
+    midCtas: [
+      {
+        afterHeading: "A 25-point ePOD and e-Way Bill checklist",
+        eyebrow: "Clean bills start with clean trips",
+        title: "Request a freight quote with settlement-ready partners",
+        body: "Share corridor, volume, and billing pain. We place transport capacity first. If you later need ePOD and e-Way Bill control in one TMS view, we can walk that path separately.",
+        cta: { label: "Request a freight quote", to: "/contact" },
+      },
+    ],
     relatedSlugs: [
       "plant-detention-tat-yard-gate-india",
       "tms-evaluation-guide-indian-manufacturers",
@@ -2028,14 +2132,337 @@ export const blogPosts: readonly BlogPost[] = [
         ],
       },
     ],
-    cta: { label: "Explore ZAFTYS TMS", to: "/zaftys-tms" },
+    cta: { label: "Request a freight quote", to: "/contact" },
+  },
+  {
+    slug: "container-trucking-logistics-india",
+    title: "Container Trucking in India: Ports, Chassis, and Backhaul",
+    seoTitle: "Container Trucking India | JNPT Mundra Backhaul",
+    seoDescription:
+      "Container trucking India: JNPT and Mundra hinterlands, chassis and GVW, trailer surge, return loads, brokers vs marketplaces. Clear TEU, USD, and INR units.",
+    category: "operations",
+    publishedAt: "2026-08-17",
+    updatedAt: "2026-08-17",
+    author: "ZAFTYS Operations",
+    template: "deep-research",
+    subtitle:
+      "Geopolitical chokepoints · three scarcities · JNPT / Mundra trailer surge · backhaul and return loads · chassis and GVW · hybrid capacity · maturity model",
+    summary:
+      "Ocean shocks hit Indian inland depots before they show at the plant gate. This deep guide maps TEU pressure at JNPA and Mundra, separates ocean-box scarcity from trailer scarcity, and covers return-load economics, chassis selection, and hybrid base-plus-overflow capacity with clear units: TEUs, USD, and ₹.",
+    readMinutes: 30,
+    heroImage: "/images/blog/container-trucking-logistics-india.jpg",
+    heroAlt: "Container trailers and stacked boxes at an Indian port hinterland yard | ZAFTYS Blog",
+    kpis: containerIndiaKpis,
+    takeaways: containerIndiaTakeaways,
+    references: containerIndiaReferences,
+    midCtas: [
+      {
+        afterHeading: "Western gateway trailer surge at JNPT and Mundra",
+        eyebrow: "Need trailers, not another login",
+        title: "Request a western-gateway container freight quote",
+        body: "Share JNPT or Mundra, inland plant or CFS, body mix (20ft / 40ft HQ), and weekly volume. We place capacity as your transport partner: own fleet, empaneled trucks, and overflow when peaks hit.",
+        cta: { label: "Request a freight quote", to: "/contact" },
+      },
+      {
+        afterHeading: "Chassis configurations and axle norms",
+        eyebrow: "Right chassis before the highway",
+        title: "Quote the body mix your cargo actually needs",
+        body: "Tell us density, 20ft vs 40ft high cube, and the inland plant window. We will propose a legal GVW-safe trailer mix for the corridor, without forcing a software rollout first.",
+        cta: { label: "Request a freight quote", to: "/contact" },
+      },
+      {
+        afterHeading: "Backhaul and deadheading",
+        eyebrow: "Return loads on a wider network",
+        title: "Match import delivery to a nearby export pickup",
+        body: "When you want marketplace overflow for return legs, listing and search on TranZfort are free. A broker fee applies on booked loads. Prefer a managed transport quote instead? Use contact.",
+        cta: { label: "Explore TranZfort", to: "/tranzfort-network" },
+      },
+      {
+        afterHeading: "Container control maturity",
+        eyebrow: "When the gap is control, not trucks",
+        title: "Walk Manual vs Controlled on your corridor",
+        body: "Bring empty-km, plant TAT, and invoice-cycle numbers from the last 90 days. We will map which control domain blocks the next dependency in ZAFTYS TMS.",
+        cta: { label: "Explore ZAFTYS TMS", to: "/zaftys-tms" },
+      },
+    ],
+    relatedSlugs: [
+      "india-axle-load-gvw-limits-heavy-freight",
+      "reduce-empty-return-trips",
+      "spot-market-vs-dedicated-fleet-india",
+      "tms-evaluation-guide-indian-manufacturers",
+    ],
+    faqs: [
+      {
+        question: "What is a TEU, and how is it different from rupees or dollars?",
+        answer:
+          "A twenty-foot equivalent unit (TEU) counts container volume: one TEU equals one standard 20ft box; a 40ft box is about two TEUs. Port and ocean figures in this guide are TEUs (boxes), not money. Ocean spot rates are in United States dollars (USD) per container. Domestic truck examples such as ₹2,400 per tonne are Indian rupees (INR) per tonne of cargo.",
+      },
+      {
+        question: "What is the difference between an ISO container trailer and a 32ft domestic container truck?",
+        answer:
+          "An ISO trailer is an open chassis that carries marine containers (20ft, 40ft, 40ft high cube) locked with twist locks for export-import (EXIM) ocean moves. A 32ft single-axle (SXL) or multi-axle (MXL) truck is a rigid enclosed body for high-volume domestic freight. Payload and gross vehicle weight (GVW) rules differ; do not treat them as interchangeable for ocean boxes.",
+      },
+      {
+        question: "How does ULIP help container tracking for Indian shippers?",
+        answer:
+          "The Unified Logistics Interface Platform (ULIP) aggregates many government and private logistics systems. When your transport management system (TMS) is connected, you can verify vehicle and driver masters and pull FASTag and related transit evidence into one view. Coverage still depends on which APIs you enable and how operators use the alerts.",
+      },
+      {
+        question: "How does backhaul matching lower round-trip container freight?",
+        answer:
+          "When an import trailer would return empty to the port, matching it to a nearby export load lets the fleet earn on both legs. Shippers can then negotiate single-leg pricing in Indian rupees. Savings bands of roughly 15% to 35% appear when both legs clear on the same corridor.",
+      },
+      {
+        question: "How do systems reduce MoRTH overloading risk on container trailers?",
+        answer:
+          "Capture registration and axle class at gate, read legal gross vehicle weight (GVW) from Ministry of Road Transport and Highways (MoRTH) rules, and connect the weighbridge so an overloaded gross cannot print a clean gate pass. Section 194 fines and roadside offloading still apply when discipline fails. See also our [axle load and GVW guide](/blog/india-axle-load-gvw-limits-heavy-freight).",
+      },
+      {
+        question: "What is the difference between an ICD and a CFS?",
+        answer:
+          "An inland container depot (ICD) is an inland facility where export-import containers are handled away from the seaport, often with rail connectivity. A container freight station (CFS) is where boxes are stuffed or de-stuffed and customs-related handling happens, usually near a port or ICD. Many corridors use both; your milestone chain should name which facility actually moved the box.",
+      },
+      {
+        question: "What does deadheading mean on container corridors?",
+        answer:
+          "Deadheading means the trailer runs without paying cargo, most often the empty return from an inland plant back toward the port. That empty leg is why many imports still price as round-trip rates in Indian rupees. Matching a nearby export load turns the return into revenue and supports single-leg pricing.",
+      },
+      {
+        question: "Why do JNPT or Mundra yards fill when berths still look fine?",
+        answer:
+          "Berth productivity moves boxes onto the quay. Evacuation needs container trailers and drivers. When placement thins after vessel bunching, rake discharge, or CFS backlog clearance, terminal and CFS yards stack even though the vessel operation looked healthy. Treat trailer scarcity as a separate risk from ocean-box scarcity.",
+      },
+      {
+        question: "What is base load versus surge load for western gateway trucking?",
+        answer:
+          "Base load is the repeating weekly EXIM pattern you cover with empaneled or contract trailers. Surge load is the same-week spike from vessel bunching, rail discharge, CFS clearance, or empty high-cube reposition. Hybrid programmes keep a stable base and buy overflow capacity for peaks instead of parking idle chassis for rare weeks.",
+      },
+      {
+        question: "How should organised networks buy container road capacity?",
+        answer:
+          "Specify chassis mix, GVW class, document masters, FASTag, ePOD, free-time clocks, empty-return rules, and placement SLAs in the RFQ. Pilot one western corridor, measure placement hit-rate and turnaround for 30 to 90 days, then widen. Do not scale on a national heatmap before the first corridor's denominators improve.",
+      },
+      {
+        question: "Why do truckers accept low rates on return loads?",
+        answer:
+          "Because the empty return still burns diesel, driver time, insurance, and capital with zero revenue. A modest paid backhaul often improves trip contribution after variable cost even when the ₹ per kilometre looks weaker than the outbound leg. Waiting one or two days for a perfect rate can erase the same margin through idle utilisation.",
+      },
+      {
+        question: "Do phone brokers still matter if digital marketplaces exist?",
+        answer:
+          "Yes. Most Indian truck capacity still sits with small operators who depend on brokers or attached work for continuous loads. Digital freight remains early-stage as a share of road freight. Marketplaces widen the search radius and add verification when body type and free time fit; they do not erase the broker's role in tomorrow-morning placement.",
+      },
+      {
+        question: "What is street-turn or container reuse versus a trailer return load?",
+        answer:
+          "A trailer return load puts paying cargo on the chassis for the trip home. Street-turn or reuse matches an empty ocean box from an import destuff to a nearby export stuffing booking, usually with shipping-line approval, so the box does not deadhead to a nominated depot first. Both cut empty kilometres; they solve different scarcities and should not be conflated in the RFQ.",
+      },
+    ],
+    sections: [
+      {
+        heading: "How to read the numbers in this guide",
+        paragraphs: [
+          "Three unit families appear throughout. Do not mix them. Twenty-foot equivalent units (TEUs) count containers. United States dollars (USD) price ocean freight per box. Indian rupees (₹ / INR) price domestic truck moves, usually per tonne of cargo on the examples below.",
+          "Short forms such as JNPA, ICD, GVW, ULIP, and ePOD are expanded on first use in each chapter and collected in the table under this section. If a figure looks like money but sits next to a port name, check whether the caption says TEUs (boxes) or USD / INR (currency).",
+        ],
+        exhibits: containerIndiaExhibits["How to read the numbers in this guide"],
+      },
+      {
+        heading: "The macro storm and the Indian hinterland",
+        paragraphs: [
+          "In container logistics, a highway delay often starts thousands of nautical miles away. Over the past two years, friction at maritime chokepoints reshaped empty-container availability, ocean rates in USD per box, and exporter working capital for Indian plants that never see a vessel.",
+          "Rerouting Asia-Europe and related trades around the Cape of Good Hope adds distance and days. That longer cycle absorbs vessel capacity measured in TEU slots on ships and leaves inland container depots (ICDs) short of the dry and high-cube boxes factories need. Panama Canal draught limits added a second shock for India to US East Coast and Gulf moves.",
+        ],
+        exhibits: containerIndiaExhibits["The macro storm and the Indian hinterland"],
+        subsections: [
+          {
+            heading: "Cape of Good Hope rerouting",
+            paragraphs: [
+              "A typical move from Jawaharlal Nehru Port (JNPT / JNPA, Nhava Sheva) or Mundra to Felixstowe, Rotterdam, or Hamburg stretched from roughly 22 to 25 days toward 38 to 45 days on stressed routings. Longer sails absorb on the order of 1.3 million to 1.8 million TEUs of global vessel capacity (ship slots), tightening equipment even on trades that never touch the Red Sea.",
+              "Voyage expense rises with bunker fuel, charter, and insurance. Public studies have cited on the order of USD 1.7 million extra cost per vessel round trip in severe cases (dollars per ship sailing, not per container). Carriers translate that into per-box surcharges in USD. Treat any single dollar figure as directional until your carrier circular is in hand.",
+            ],
+          },
+          {
+            heading: "Panama Canal draught restrictions",
+            paragraphs: [
+              "Low water in Gatun Lake forced draught and daily transit caps. Auction bids to jump queues reportedly touched about USD 4.0 million per ship at peaks (queue-jump money, not freight per box). Carriers responded with Panama Canal surcharges often quoted in the USD 300 to USD 800 band per 40ft high-cube container on Indian export cargo bound for US East Coast and Gulf ports.",
+              "For Indian exporters of engineering goods, chemicals, and textiles into US East Coast and Gulf destinations, the practical hit is dual: higher USD per box and less predictable transit. Procurement teams that still budget on pre-draught contract baselines discover the gap only when the invoice arrives. Keep ocean and inland INR trucking budgets separate so a Panama surcharge is not mistaken for a domestic rate hike.",
+            ],
+          },
+          {
+            heading: "Direct impact on Indian exporters",
+            paragraphs: [
+              "Shipping lines prioritize empty repositioning to higher-yield lanes. Inland depots in North and Central India feel dry 20ft and 40ft high-cube shortages first. Exporter payment clocks tied to destination Bill of Lading stretch when the sea leg adds two weeks, pushing micro, small and medium enterprises (MSMEs) onto expensive working capital as days sales outstanding (DSO) rises.",
+              "On domestic highways, diesel still dominates truck cost in Indian rupees. CRISIL-style framing often puts every ₹5 per litre diesel rise near a 2.5% to 2.8% freight rate push. Fuel adjustment factors then lift container truck rates another few percent on major corridors when associations pass costs through.",
+            ],
+            exhibits: containerIndiaExhibits["Corridor rate bands under disruption"],
+          },
+          {
+            heading: "Three scarcities",
+            paragraphs: [
+              "Indian EXIM teams often collapse three different failures into one phrase: container shortage. That muddle produces the wrong purchase order. Separate ocean-box scarcity, inland empty scarcity at the ICD, and road trailer or driver scarcity before you buy capacity, chassis, or software.",
+              "Marketplace overflow and empaneled trailers fix the third scarcity during western gateway peaks. They cannot invent a missing high cube on the next sailing. Use the tiles below before blaming 'the market' in one sentence.",
+            ],
+            exhibits: containerIndiaExhibits["Three scarcities"],
+          },
+        ],
+      },
+      {
+        heading: "Market analytics and modal split",
+        paragraphs: [
+          "India handled about 12.28 million TEUs of port container throughput in recent Ministry of Ports, Shipping and Waterways (MoPSW) framing, inside a South Asia equipment pool often cited near 24 million TEUs. These are container units handled, not industry revenue. Two western gateways, JNPA and Mundra, still concentrate most export-import (EXIM) boxes.",
+          "Road carries most domestic freight by tonne-kilometre and a large share of hinterland container moves (port to inland plant or depot). Rail matters on long Dedicated Freight Corridor (DFC) rakes, but first mile and last mile remain truck. Coastal shipping and inland waterways transport (IWT) are growing under Sagarmala, yet remain a small modal slice.",
+        ],
+        exhibits: containerIndiaExhibits["Market analytics and modal split"],
+        subsections: [
+          {
+            heading: "Gateway hinterlands",
+            paragraphs: [
+              "JNPA set a record near 7.94 million TEUs in calendar year 2025 framing. Mundra (Adani Ports and Special Economic Zone / APSEZ terminals) operates at multi-million TEU scale. Chennai and Kattupalli serve the southern auto and electronics belt. Hazira and Pipavav feed Gujarat industry. East coast gateways cover mineral and cross-border flows. Vallarpadam International Container Transshipment Terminal (ICTT) at Cochin handles southern and transshipment traffic.",
+              "Third-party research houses publish multi-billion USD valuations for Indian container logistics and for commercial trucking overall. Those figures are US dollar revenue estimates, not TEU counts and not ZAFTYS audited total addressable market (TAM). Prefer MoPSW, JNPA, and NITI Aayog sources for board-facing volume claims.",
+              "As western gateways push more long-haul volume onto rail into Northwest and NCR nodes, trucking peaks do not vanish. They shift to terminal gates, CFS cycles, inland last mile, and empty returns. Plan trailer capacity for those handoffs, not only for the full port-to-plant road haul of five years ago.",
+            ],
+            exhibits: containerIndiaExhibits["Gateway hinterlands"],
+          },
+        ],
+      },
+      {
+        heading: "Western gateway trailer surge at JNPT and Mundra",
+        paragraphs: [
+          "Public 2026 market patterns around India's western gateways made a blunt point: yards can stack while berths still look productive. Import evacuation and empty reposition need container trailers and drivers. When placement thins after vessel bunching, rake discharge, CFS backlog clearance, or empty high-cube reposition orders, detention clocks start even if the ocean box exists.",
+          "Treat this as trailer scarcity, not a generic 'container shortage.' Hybrid programmes keep a stable base of empaneled trailers for repeating weekly EXIM work, then buy same-week overflow for surge days. [TranZfort](/tranzfort-network) listing and search are free; a broker fee applies on booked loads. Size the year-round fleet to the base, not to the worst week.",
+          "The exhibits below show base versus surge, four common triggers, the evacuation cycle, a teaching split of planned versus overflow trips, and the productivity levers operators reach for when pools tighten. Figures are teaching aids. Confirm live terminal and CFS conditions before budgeting.",
+        ],
+        exhibits: containerIndiaExhibits["Western gateway trailer surge at JNPT and Mundra"],
+      },
+      {
+        heading: "Chassis configurations and axle norms",
+        paragraphs: [
+          "Wrong chassis choice wastes cubic capacity or invites Motor Vehicles Act Section 194 overloading exposure. Dense engineering goods want 20ft ISO capacity. High-volume domestic retail often wants 32ft single-axle (SXL) or multi-axle (MXL) rigid bodies. EXIM ocean work lives on 40ft and 40ft high-cube (HQ) tractor-trailers. Reefers and over-dimensional cargo (ODC) need their own tare weight and permit math.",
+          "Ministry of Road Transport and Highways (MoRTH) gazette notifications define legal gross vehicle weight (GVW) by axle and tyre layout, in metric tonnes. A 32ft SXL on six tyres is not a 40ft HQ on eighteen tyres. Weighbridge lock before the highway is cheaper than roadside offloading.",
+          "Use the payload bar chart as a planning aid, not a dispatch plate. Confirm OEM ratings and state Regional Transport Office (RTO) practice. When in doubt, treat the lower payload band as the working limit and keep a buffer for dunnage, twist locks, and fuel.",
+        ],
+        exhibits: containerIndiaExhibits["Chassis configurations and axle norms"],
+      },
+      {
+        heading: "Digital logistics stack",
+        paragraphs: [
+          "India already built public digital rails for freight. The Unified Logistics Interface Platform (ULIP) connects dozens of systems. Logistics Data Bank (LDB), operated with NICDC Logistics Data Services (NLDS), puts radio-frequency identification (RFID) milestones across ports, inland container depots (ICDs), and container freight stations (CFSs). ICEGATE (Indian Customs EDI Gateway) and Goods and Services Tax (GST) e-Way Bill rules sit at the customs and distance compliance edge.",
+          "None of that helps if dispatch still runs on WhatsApp. The useful pattern is a single transport management system (TMS) view that shows masters, milestones, and exceptions operators will actually clear. The milestone journey exhibit below is the chain a control tower should see for one box. Gaps in that chain are where phone trees still hide delay.",
+          "Treat any claim of fully automatic e-Way Bill extension or customs clearance as a demo ask, not a slide promise. Distance validity rules change; keep a human in the loop and design alerts from remaining kilometres plus plant wait buffer.",
+        ],
+        exhibits: containerIndiaExhibits["Digital logistics stack"],
+      },
+      {
+        heading: "Backhaul and deadheading",
+        paragraphs: [
+          "Deadheading means running a trailer with no paying cargo. It is still one of the largest avoidable costs in Indian container trucking. NITI / RMI-linked framing often puts empty commercial truck kilometres near 30% to 40% nationally (published bands vary). Productivity studies also note Indian long-haul trucks covering roughly 250 to 300 km per day versus much higher developed-market benchmarks: empty returns and waiting for the next load explain a large share of that gap, not road quality alone.",
+          "For the trucker, the return leg decides whether the trip survives. Diesel, driver wages, insurance, and capital costs already sit on the asset. An empty hinterland return burns them with zero revenue. Industry studies of fragmented fleets cite trucks idle 24 to 48 hours hunting a load and working only about 18 to 20 days in many months. A late match can cost as much as a deadhead. That is why a modest paid return often beats a planned empty when you judge contribution after variable cost, not vanity rupees per kilometre.",
+          "Who finds those returns today? Public structure work (IIMA and later industry notes) still describes the same stack: pure or small fleet owners (often one to five trucks, a large majority of operators), phone brokers who attach dozens of trucks, organised transporters with contracts plus overflow, and early-stage digital freight networks. Redseer-style framing puts digital freight penetration under about 2% of road freight: brokers are not obsolete; they remain the default matching layer. Digital boards widen the search radius when body type, documents, and free time fit.",
+        ],
+        exhibits: containerIndiaExhibits["Backhaul and deadheading"],
+        subsections: [
+          {
+            heading: "Shipper rate math and EXIM match loops",
+            paragraphs: [
+              "Illustrative corridor math in Indian rupees: a single-leg rate near ₹2,400 per tonne of cargo with a matched backhaul versus about ₹3,900 per tonne when the trailer returns empty. These are INR road examples, not USD ocean rates and not prices per container. When both legs clear, shippers can unlock single-leg pricing; truckers protect trip contribution. Matching import delivery to a nearby export plant is how networks like [TranZfort](/tranzfort-network) earn their keep. Listing and search are free; a broker fee applies on booked loads.",
+              "Keep two EXIM empties separate. Trailer deadhead is a paying-cargo problem on the chassis. Empty ocean-box reposition is a shipping-line equipment problem: the importer returns a box to a nominated depot while an exporter elsewhere pays another truck to fetch an empty high cube. Street-turn or triangulation platforms exist in the market when lines approve reuse. That is adjacent industry practice, not the same product as a trailer load board.",
+              "Match constraints still kill good intentions: wrong chassis, expired free time, export plant outside radius, or dirty papers. Sometimes a planned empty reposition is cleaner. For corridor KPIs and triangular routing detail, use the Basics guide on [empty return trips](/blog/reduce-empty-return-trips). Start on one corridor where both import and export volume exist within a practical empty reposition radius.",
+            ],
+            exhibits: containerIndiaExhibits["Shipper rate math and EXIM match loops"],
+          },
+        ],
+      },
+      {
+        heading: "Broker vs GPS vs digital network",
+        paragraphs: [
+          "A phone broker can still place a trailer tomorrow morning. That speed matters when a vessel cutoff is tonight. A basic Global Positioning System (GPS) pin can still fail when the box is at an inland container depot without a clean milestone. Neither tool is useless. Neither tool is a control tower.",
+          "Evaluate the stack on tracking, backhaul, gate hygiene, e-Way Bill risk, electronic proof of delivery (ePOD) cycle, and invoice match in one workshop, not on a map demo alone. Bring a real corridor name, a sample overweight scenario, and a sample invoice pack. The comparison table shows capability contrast; the workshop asks and three outcome lanes below show how to pass or fail the room without a 25-point tap sheet.",
+        ],
+        exhibits: containerIndiaExhibits["Broker vs GPS vs digital network"],
+      },
+      {
+        heading: "Buying container road capacity for organised networks",
+        paragraphs: [
+          "Organised networks and shipper-direct plants share the same western roads. They do not share the same responsibility packet. A plant lane usually owns detention politics and empty-return negotiation. A network overflow booking owns placement hit-rate against a customer SLA. Write both into the rate card before the peak week.",
+          "If the RFQ only says 'provide containers,' expect mismatched trailers and invoice disputes. Spec chassis mix, GVW class, document masters, FASTag, ePOD, free-time clocks, empty-return rules, and placement SLAs like an engineer. Then earn the right to scale: pilot one JNPT or Mundra corridor, measure for 30 to 90 days, convert the lane to a repeat rate card, and add the second gateway last.",
+          "On corridors we operate, the working pattern is hybrid: dedicated and empaneled trailers for base EXIM volume, marketplace overflow when vessel, rake, or CFS spikes hit. We prove corridor by corridor. We do not invent TEU share claims for any gateway. Listing and search on TranZfort stay free; a broker fee applies on booked loads.",
+        ],
+        exhibits: containerIndiaExhibits["Buying container road capacity for organised networks"],
+      },
+      {
+        heading: "Container control maturity",
+        paragraphs: [
+          "Many operator guides end with a numbered tap-to-score checklist. This dossier uses a different tool: a maturity model. Place each control domain in Manual, Partial digital, or Controlled using evidence from the last 90 days. The goal is diagnosis and investment order, not a workshop score out of 125.",
+          "Most Indian EXIM shippers sit in Partial digital: a map or spreadsheet exists, but chassis discipline, inland milestones, backhaul, and settlement do not share one truth. The matrix below shows what each band looks like in practice. The stacked bar is a teaching split of where freight value usually leaks when programs stay Manual or Partial. It is not a measured share of your P&L.",
+        ],
+        exhibits: containerIndiaExhibits["Container control maturity"],
+        subsections: [
+          {
+            heading: "How to run the maturity review",
+            paragraphs: [
+              "Bring plant, port liaison, procurement, and finance into one room. For each domain, demand the evidence pack in the tiles: weighbridge near-misses, a sample milestone trail, empty-return percent, and median days from unload to approved invoice. If the pack is missing, the domain is still Partial at best.",
+              "Do not average the five domains into one vanity label. A Controlled settlement path on paper LRs still means Manual cash. A Controlled map with no GVW lock still means Manual payload risk. Rank the weakest Controlled gap that blocks the next build dependency.",
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Dependency-led build sequence",
+        paragraphs: [
+          "A fixed six-week rollout chart often fails on EXIM work. Security review, weighbridge vendors, and transporter behaviour do not obey a poster calendar. What must stay fixed is dependency order: baseline before APIs, GVW lock before celebrating visibility, milestones before backhaul matching, and settlement last so cash follows the operational truth.",
+          "Start on one corridor with real volume and real pain. Prove empty-kilometre share, plant turnaround time (TAT), and invoice cycle in Indian rupees. Then expand plants and inland container depots. The sequence, failure modes, effort table, and pilot criteria below replace a three-box Weeks 1 to 6 template.",
+        ],
+        exhibits: containerIndiaExhibits["Dependency-led build sequence"],
+        subsections: [
+          {
+            heading: "Why calendar-first programs stall",
+            paragraphs: [
+              "Teams buy a TMS demo, schedule six weeks, and skip baseline. Vendors then optimise the metric that looks good on a slide. Or finance demands automated invoices before gate timestamps exist, so electronic proof of delivery (ePOD) is still a photo in chat. Or sales promises backhaul savings while every indent still prices as a round trip in INR.",
+              "Dependency-led builds feel slower in the first month and faster by month three, because rework drops. Use the effort table as a planning band after IT and plant security say yes, not as a contractual go-live date.",
+            ],
+          },
+        ],
+      },
+      {
+        heading: "What good programs tend to show",
+        paragraphs: [
+          "When manufacturers combine chassis discipline, digital milestones, and backhaul matching, freight cost in INR, turnaround time (TAT), empty runs, and billing cycle time usually move in a directional way. The bands below are percent or day outcomes, not TEU counts. They are planning bands from corridor work, not a guarantee for every plant.",
+          "Before you celebrate a percentage, freeze denominators. The 90-day measurement recipe and leadership one-pager below keep units honest: empty-km as a share, TAT in hours, freight in INR, billing in calendar days. Measure your last 90 days first. Then judge the program on exceptions cleared and corridors improved, not a single vanity percentage.",
+          "Pair this deep guide with [axle load and GVW](/blog/india-axle-load-gvw-limits-heavy-freight), [empty return trips](/blog/reduce-empty-return-trips), [spot vs dedicated fleets](/blog/spot-market-vs-dedicated-fleet-india), and the [TMS evaluation guide](/blog/tms-evaluation-guide-indian-manufacturers). Login for operators is at [app.zaftys.com](https://app.zaftys.com).",
+        ],
+        exhibits: containerIndiaExhibits["What good programs tend to show"],
+      },
+    ],
+    cta: { label: "Request a freight quote", to: "/contact" },
   },
 ];
 
 export function listPosts(): BlogPost[] {
-  return [...blogPosts].sort(
-    (a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime(),
+  return [...blogPosts].sort(comparePostsByRecency);
+}
+
+/** Prefer newer publishedAt; tie-break on updatedAt so same-day posts order cleanly. */
+export function comparePostsByRecency(a: BlogPost, b: BlogPost): number {
+  const byPublished =
+    new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime();
+  if (byPublished !== 0) return byPublished;
+  return (
+    new Date(postModifiedAt(b)).getTime() - new Date(postModifiedAt(a)).getTime()
   );
+}
+
+/**
+ * Featured card on /blog: latest deep-research post in the set when any exist;
+ * otherwise the newest post. Pass an already-filtered list (e.g. category tab).
+ */
+export function pickFeaturedPost(posts: readonly BlogPost[]): BlogPost | undefined {
+  if (posts.length === 0) return undefined;
+  const deep = posts.filter((post) => post.template === "deep-research");
+  if (deep.length > 0) {
+    return [...deep].sort(comparePostsByRecency)[0];
+  }
+  return [...posts].sort(comparePostsByRecency)[0];
 }
 
 export function getPostBySlug(slug: string): BlogPost | undefined {

@@ -1,6 +1,14 @@
-import { useState, type ReactNode } from "react";
+/** Blog exhibits for Basics and Deep-researched templates. */
+import { createContext, useContext, useState, type ReactNode } from "react";
 import type { BlogExhibit } from "@/lib/blog-data";
 import { zaftysViz } from "@/lib/blog-exhibits-tms-eval";
+import { cn } from "@/lib/utils";
+
+const DeepExhibitContext = createContext(false);
+
+export function DeepResearchExhibitProvider({ children }: { children: ReactNode }) {
+  return <DeepExhibitContext.Provider value={true}>{children}</DeepExhibitContext.Provider>;
+}
 
 function FigureChrome({
   caption,
@@ -11,10 +19,21 @@ function FigureChrome({
   source?: string;
   children: ReactNode;
 }) {
+  const deep = useContext(DeepExhibitContext);
   return (
-    <figure className="my-8 rounded-xl border border-border bg-[#F8FAFC] p-4 md:p-6">
+    <figure
+      className={cn(
+        "my-8 rounded-xl border p-4 md:p-6",
+        deep ? "deep-figure border-navy/15" : "border-border bg-[#F8FAFC]",
+      )}
+    >
       {caption ? (
-        <figcaption className="mb-4 font-heading text-sm font-bold normal-case tracking-normal text-navy">
+        <figcaption
+          className={cn(
+            "font-heading text-sm font-bold normal-case tracking-normal",
+            deep ? "deep-figure-caption" : "mb-4 text-navy",
+          )}
+        >
           {caption}
         </figcaption>
       ) : null}
@@ -129,6 +148,11 @@ const scorecardGroups: Record<string, { label: string; weight: string; color: st
   Invoice: { label: "Invoice audit", weight: "20%", color: zaftysViz.primaryBright },
   Detention: { label: "Detention control", weight: "20%", color: zaftysViz.teal },
   ERP: { label: "ERP and reporting", weight: "10%", color: zaftysViz.warm },
+  Chassis: { label: "Chassis and payload", weight: "25%", color: zaftysViz.navy },
+  Digital: { label: "Digital stack", weight: "25%", color: zaftysViz.primary },
+  FleetBackhaul: { label: "Fleet and backhaul", weight: "20%", color: zaftysViz.primaryBright },
+  YardPort: { label: "Yard and port gate", weight: "20%", color: zaftysViz.teal },
+  FinanceSettle: { label: "Settlement and ERP", weight: "10%", color: zaftysViz.warm },
 };
 
 function ScorePips({ value, onChange }: { value: number; onChange: (n: number) => void }) {
@@ -466,17 +490,75 @@ export function BlogExhibitBlock({ exhibit }: { exhibit: BlogExhibit }) {
     );
   }
 
-  return (
-    <FigureChrome caption={exhibit.caption} source={exhibit.source}>
-      <ol className="grid gap-3 md:grid-cols-3">
-        {exhibit.items.map((item) => (
-          <li key={item.phase} className="rounded-lg border border-navy/10 bg-white p-4">
-            <p className="text-[10px] font-heading font-bold tracking-widest text-[#0D9488]">{item.phase}</p>
-            <h3 className="mt-1 font-heading text-sm font-bold normal-case tracking-normal text-navy">{item.title}</h3>
-            <p className="mt-2 text-sm leading-relaxed text-navy/90">{item.body}</p>
-          </li>
-        ))}
-      </ol>
-    </FigureChrome>
-  );
+  if (exhibit.kind === "callout") {
+    const toneBorder: Record<string, string> = {
+      navy: "border-navy/20 bg-white",
+      teal: "border-[#0D9488]/35 bg-[#F0FDFA]",
+      warm: "border-[#D97706]/35 bg-[#FFFBEB]",
+    };
+    const toneTitle: Record<string, string> = {
+      navy: "text-navy",
+      teal: "text-[#0D9488]",
+      warm: "text-[#B45309]",
+    };
+    return (
+      <FigureChrome caption={exhibit.caption} source={exhibit.source}>
+        <div className={`grid gap-4 ${exhibit.items.length > 1 ? "md:grid-cols-2" : ""}`}>
+          {exhibit.items.map((item) => {
+            const tone = item.tone ?? "navy";
+            return (
+              <div key={item.title} className={`rounded-xl border p-5 ${toneBorder[tone]}`}>
+                <h3 className={`font-heading text-sm font-bold normal-case tracking-normal ${toneTitle[tone]}`}>
+                  {item.title}
+                </h3>
+                <p className="mt-2 text-sm leading-relaxed text-navy/90">{item.body}</p>
+              </div>
+            );
+          })}
+        </div>
+      </FigureChrome>
+    );
+  }
+
+  if (exhibit.kind === "flow") {
+    return (
+      <FigureChrome caption={exhibit.caption} source={exhibit.source}>
+        <ol className="grid gap-3 md:grid-cols-3">
+          {exhibit.items.map((item, index) => (
+            <li key={item.title} className="relative rounded-xl border border-navy/10 bg-white p-5 shadow-sm">
+              <p className="text-[10px] font-heading font-bold tracking-widest text-[#0D9488]">
+                {String(index + 1).padStart(2, "0")}
+              </p>
+              <h3 className="mt-1 font-heading text-sm font-bold normal-case tracking-normal text-navy">{item.title}</h3>
+              <p className="mt-2 text-sm leading-relaxed text-navy/90">{item.body}</p>
+              {index < exhibit.items.length - 1 ? (
+                <span
+                  className="pointer-events-none absolute -right-2 top-1/2 hidden h-px w-4 -translate-y-1/2 bg-navy/20 md:block"
+                  aria-hidden="true"
+                />
+              ) : null}
+            </li>
+          ))}
+        </ol>
+      </FigureChrome>
+    );
+  }
+
+  if (exhibit.kind === "timeline") {
+    return (
+      <FigureChrome caption={exhibit.caption} source={exhibit.source}>
+        <ol className="grid gap-3 md:grid-cols-3">
+          {exhibit.items.map((item) => (
+            <li key={item.phase} className="rounded-lg border border-navy/10 bg-white p-4">
+              <p className="text-[10px] font-heading font-bold tracking-widest text-[#0D9488]">{item.phase}</p>
+              <h3 className="mt-1 font-heading text-sm font-bold normal-case tracking-normal text-navy">{item.title}</h3>
+              <p className="mt-2 text-sm leading-relaxed text-navy/90">{item.body}</p>
+            </li>
+          ))}
+        </ol>
+      </FigureChrome>
+    );
+  }
+
+  return null;
 }

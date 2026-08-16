@@ -1,22 +1,54 @@
-# Blog and report exhibit layout  -  design
+# Blog templates  -  Basics and Deep-researched
 
 | Field | Value |
 |-------|-------|
+| **Templates** | **Basics Blog Template** (default) · **Deep-researched Blog Template** |
 | **Project** | `zaftys-main` marketing site (`zaftys.com`) |
-| **Branch** | `blogs-and-reports` (created 16 Aug 2026 from `main` after `29cce3c` was pushed) |
-| **Purpose** | Layout, visual density, and exhibit plan for blog posts. First implementation target is one article only. |
-| **Status** | Layout + exhibits shipped for TMS evaluation and axle/GVW posts on `blogs-and-reports`. |
-| **Posts with exhibits** | `tms-evaluation-guide-indian-manufacturers`, `india-axle-load-gvw-limits-heavy-freight` |
-| **First post** | `tms-evaluation-guide-indian-manufacturers`  -  `/blog/tms-evaluation-guide-indian-manufacturers` |
+| **Branch** | `blogs-and-reports` |
+| **Purpose** | Site-wide blog layout, visual density, and exhibit plan for `/blog/:slug` posts. |
+| **Status** | Basics shipped. Deep-researched uses distinct research-dossier chrome (navy masthead, slate canvas, left chapter rail). |
+| **Renderers** | Basics: `BlogPostLayout.tsx`. Deep: `DeepResearchBlogLayout.tsx`. Shared: `BlogExhibits.tsx`. |
+| **Content model** | `src/lib/blog-data.ts` (`BlogPost.template`, exhibits, takeaways, KPIs, mid CTAs, references) |
 | **Visual factory** | `C:\Users\Public\project\market-research-reports-agent` (`research_os.visualizations`) |
-| **Related** | `src/components/blog/BlogPostLayout.tsx`, `src/lib/blog-data.ts`, `docs/marketing/SEO&Blog.md`, reports-agent `docs/26-Brand-And-Report-Template.md` |
-| **Last updated** | 16 August 2026 |
+| **Related** | `docs/marketing/SEO&Blog.md`, reports-agent `docs/26-Brand-And-Report-Template.md` |
+| **Last updated** | 17 August 2026 |
+
+## Template comparison
+
+| | Basics Blog Template | Deep-researched Blog Template |
+|--|----------------------|-------------------------------|
+| Field | `template` omitted or `"basics"` | `template: "deep-research"` |
+| Job | Operator guides | Long-form market + ops analytics |
+| Density | ~8 to 19 exhibits on dense guides | Exec KPI strip + ~15 to 25 exhibits |
+| Page surface | White article canvas | Cool slate dossier canvas (`.deep-research-blog`) |
+| Hero | White header + inset rounded hero | Full-bleed navy masthead + cover panel |
+| KPIs | Optional simple chips | Overlapping white KPI band (cyan underlines) |
+| Navigation | Right sticky flat TOC | Left sticky dossier chapter rail + active hash |
+| Body | Flat H2 sections | White chapter panels with cyan left spine |
+| Takeaways | Gray bordered box | Navy-header dossier strip (2-col) |
+| Mid CTAs | Solid navy band | Light panel + cyan border + accent button |
+| Exhibits | Light gray `FigureChrome` | Navy caption bar + cyan accent (via context) |
+| References | Optional section bullets | Footnotes band with numbered mono list |
+| Mid CTAs data | One `midCtaAfterHeading` | One or more `midCtas[]` (data-driven copy) |
+| First deep post |  | `container-trucking-logistics-india` |
+
+Deep posts stay blog articles (not PDF product pages). Steal report trust cues (navy masthead, KPIs, hierarchical TOC, citations), not MarketsandMarkets paywall chrome.
+
+### Deep visual contract (do not drift toward Basics)
+
+1. Always wrap in `.deep-research-blog` and use navy masthead + slate canvas.
+2. Chapter rail stays on the **left** (Basics keeps TOC on the right).
+3. Every H2 chapter is a white panel with cyan spine.
+4. Mid-CTAs never reuse the Basics solid navy box.
+5. Exhibit chrome must go through `DeepResearchExhibitProvider` so captions use the navy bar.
 
 ---
 
 ## 1. Why this file exists
 
-Blog posts currently look empty and thin on wide screens: a single ~768px column, all-caps title, muted gray body, one hero photo, then heading / paragraph / bullets until FAQ. Related posts are text-only cards. There is no TOC, no rail, no in-body table, no figure, no chart.
+This document defines the **Basics Blog Template**: the default page architecture for every ZAFTYS blog post.
+
+Earlier blog posts looked empty and thin on wide screens: a single ~768px column, all-caps title, muted gray body, one hero photo, then heading / paragraph / bullets until FAQ. Related posts were text-only cards. There was no TOC, no rail, no in-body table, no figure, no chart.
 
 We already generate institutional charts, donuts, tables, and infographics in the market-research reports agent (ZAFTYS tokens, SVG/PNG, Typst). The marketing blog does not consume any of that.
 
@@ -70,7 +102,7 @@ Readable line length is not the enemy. **Missing chrome and missing exhibits** a
 
 ---
 
-## 3. Target layout (all blog posts, starting with this one)
+## 3. Basics Blog Template (site-wide default)
 
 ### 3.1 Widths
 

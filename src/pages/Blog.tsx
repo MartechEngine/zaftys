@@ -17,26 +17,48 @@ import { pageHeroCopy } from "@/lib/page-hero-copy";
 import { blogPageSchema, breadcrumbSchema } from "@/lib/schema";
 import {
   type BlogCategory,
+  type BlogPost,
   blogCategoryLabels,
   formatPostDate,
   listPosts,
+  pickFeaturedPost,
 } from "@/lib/blog-data";
 import { useToast } from "@/hooks/use-toast";
 import { subscribeNewsletter } from "@/lib/newsletter";
 import { SUBSCRIBERS_EMAIL } from "@/lib/constants";
+import { cn } from "@/lib/utils";
 
-const categoryFilters: Array<"all" | BlogCategory> = ["all", "operations", "industries", "technology"];
+type BlogFilter = "all" | "deep-research" | BlogCategory;
+
+const categoryFilters: Array<{ key: BlogFilter; label: string }> = [
+  { key: "all", label: "All" },
+  { key: "deep-research", label: "Deep research" },
+  { key: "operations", label: "Operations" },
+  { key: "industries", label: "Industries" },
+  { key: "technology", label: "Technology" },
+];
+
+function isDeepResearch(post: BlogPost): boolean {
+  return post.template === "deep-research";
+}
 
 const Blog = () => {
   const posts = useMemo(() => listPosts(), []);
-  const [filter, setFilter] = useState<"all" | BlogCategory>("all");
+  const [filter, setFilter] = useState<BlogFilter>("all");
   const [email, setEmail] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
 
-  const filtered = filter === "all" ? posts : posts.filter((p) => p.category === filter);
-  const featured = filtered[0];
-  const rest = filtered.slice(1);
+  const filtered = useMemo(() => {
+    if (filter === "all") return posts;
+    if (filter === "deep-research") return posts.filter(isDeepResearch);
+    return posts.filter((p) => p.category === filter);
+  }, [filter, posts]);
+  const featured = useMemo(() => pickFeaturedPost(filtered), [filtered]);
+  const rest = useMemo(
+    () => (featured ? filtered.filter((post) => post.slug !== featured.slug) : filtered),
+    [filtered, featured],
+  );
 
   const handleNewsletter = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -96,18 +118,23 @@ const Blog = () => {
       <section id="posts" className="section-padding bg-white scroll-mt-28">
         <div className="container mx-auto container-padding">
           <div className="flex flex-wrap gap-2 mb-10 justify-center">
-            {categoryFilters.map((key) => (
+            {categoryFilters.map(({ key, label }) => (
               <button
                 key={key}
                 type="button"
                 onClick={() => setFilter(key)}
-                className={`px-4 py-2 text-sm font-semibold rounded-md transition-colors ${
+                className={cn(
+                  "px-4 py-2 text-sm font-semibold rounded-md transition-colors",
                   filter === key
-                    ? "bg-primary text-white"
-                    : "bg-muted text-navy hover:bg-muted/80"
-                }`}
+                    ? key === "deep-research"
+                      ? "bg-navy text-white ring-2 ring-cyan/60 ring-offset-2"
+                      : "bg-primary text-white"
+                    : key === "deep-research"
+                      ? "bg-[hsl(190_80%_92%)] text-navy border border-cyan/40 hover:bg-[hsl(190_80%_88%)]"
+                      : "bg-muted text-navy hover:bg-muted/80",
+                )}
               >
-                {key === "all" ? "All" : blogCategoryLabels[key]}
+                {label}
               </button>
             ))}
           </div>
@@ -115,7 +142,12 @@ const Blog = () => {
           {featured ? (
             <Link
               to={`/blog/${featured.slug}`}
-              className="block mb-12 group rounded-xl border border-border overflow-hidden hover:border-primary/40 transition-colors"
+              className={cn(
+                "block mb-12 group rounded-xl border overflow-hidden transition-colors",
+                isDeepResearch(featured)
+                  ? "border-cyan/40 hover:border-cyan/70 bg-[#F4F9FB]"
+                  : "border-border hover:border-primary/40",
+              )}
             >
               <div className="grid grid-cols-1 lg:grid-cols-2">
                 {featured.heroImage ? (
@@ -131,10 +163,18 @@ const Blog = () => {
                 )}
                 <div className="p-8 lg:p-10 flex flex-col justify-center">
                   <div className="flex flex-wrap items-center gap-3 mb-3 text-sm text-muted-foreground">
+                    {isDeepResearch(featured) ? (
+                      <Badge className="bg-navy text-cyan uppercase tracking-wide text-[10px] hover:bg-navy">
+                        Deep research
+                      </Badge>
+                    ) : null}
                     <Badge variant="outline" className="uppercase tracking-wide text-[10px]">
                       Featured · {blogCategoryLabels[featured.category]}
                     </Badge>
                     <time dateTime={featured.publishedAt}>{formatPostDate(featured.publishedAt)}</time>
+                    {isDeepResearch(featured) ? (
+                      <span className="text-xs text-[#0B7F8A] font-semibold">{featured.sections.length} chapters</span>
+                    ) : null}
                   </div>
                   <h2 className="text-2xl md:text-3xl font-heading font-bold text-navy mb-3 group-hover:text-primary transition-colors">
                     {featured.title}
@@ -147,24 +187,44 @@ const Blog = () => {
               </div>
             </Link>
           ) : (
-            <p className="text-center text-muted-foreground mb-12">No posts in this category yet.</p>
+            <p className="text-center text-muted-foreground mb-12">
+              {filter === "deep-research" ? "No deep research posts yet." : "No posts in this category yet."}
+            </p>
           )}
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {rest.map((post) => (
-              <Card key={post.slug} className="border-none shadow-sm hover:shadow-md transition-shadow h-full bg-white">
+              <Card
+                key={post.slug}
+                className={cn(
+                  "shadow-sm hover:shadow-md transition-shadow h-full bg-white",
+                  isDeepResearch(post) ? "border border-cyan/35" : "border-none",
+                )}
+              >
                 <CardContent className="p-0 flex flex-col h-full">
                   {post.heroImage ? (
-                    <ResponsiveImage
-                      src={post.heroImage}
-                      alt={`${post.title} | ZAFTYS Blog`}
-                      aspectRatio="16/10"
-                      objectFit="cover"
-                      className="rounded-t-xl"
-                    />
+                    <div className="relative">
+                      <ResponsiveImage
+                        src={post.heroImage}
+                        alt={`${post.title} | ZAFTYS Blog`}
+                        aspectRatio="16/10"
+                        objectFit="cover"
+                        className="rounded-t-xl"
+                      />
+                      {isDeepResearch(post) ? (
+                        <span className="absolute left-3 top-3 rounded bg-navy px-2.5 py-1 text-[10px] font-heading font-bold uppercase tracking-widest text-cyan shadow-sm">
+                          Deep research
+                        </span>
+                      ) : null}
+                    </div>
                   ) : null}
                   <div className="p-6 flex flex-col flex-1">
                     <div className="flex flex-wrap items-center gap-2 mb-3 text-xs text-muted-foreground">
+                      {isDeepResearch(post) && !post.heroImage ? (
+                        <Badge className="bg-navy text-cyan uppercase tracking-wide text-[10px] hover:bg-navy">
+                          Deep research
+                        </Badge>
+                      ) : null}
                       <Badge variant="secondary" className="text-[10px] uppercase tracking-wide">
                         {blogCategoryLabels[post.category]}
                       </Badge>
@@ -175,7 +235,7 @@ const Blog = () => {
                         {post.title}
                       </Link>
                     </h3>
-                    <p className="text-sm text-muted-foreground leading-relaxed mb-4 flex-1">{post.summary}</p>
+                    <p className="text-sm text-muted-foreground leading-relaxed mb-4 flex-1 line-clamp-4">{post.summary}</p>
                     <Link
                       to={`/blog/${post.slug}`}
                       className="inline-flex items-center text-primary font-semibold text-sm"

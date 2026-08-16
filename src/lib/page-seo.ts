@@ -81,9 +81,9 @@ export const pageSeo = {
       "This page does not exist. Return to ZAFTYS Logistics Services, TranZfort Network, or Contact for freight quotes and logistics support.",
   },
   blog: {
-    title: "Blog | TMS, FTL Planning, Cement and Steel Freight",
+    title: "Blog | Container Trucking, TMS, FTL and Plant Ops",
     description:
-      "ZAFTYS guides on choosing a TMS for Indian manufacturers, MoRTH axle and GVW limits, FTL empty miles, shipment planning, cement plant windows, and steel coil transport.",
+      "ZAFTYS deep research and guides: container trucking India, TMS evaluation, axle and GVW, spot vs dedicated fleets, plant detention and TAT, ePOD and e-Way Bill, cement and steel freight.",
   },
   resources: {
     title: "Resources | Blog and Market Reports",
