@@ -18,7 +18,7 @@ const BlogPost = () => {
     breadcrumbSchema([
       { name: "Home", path: "/" },
       { name: "Blog", path: "/blog" },
-      { name: post.title, path: `/blog/${post.slug}` },
+      { name: post.seoTitle, path: `/blog/${post.slug}` },
     ]),
     blogPostingSchema(post),
     faqPageSchema(post.faqs),

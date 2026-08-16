@@ -330,6 +330,11 @@ One primary SEO job per URL  -  avoid making Home compete for every cluster.
 | `cement-plant-loading-windows` | Cement Plant Loading Windows & Detention | cement logistics | `/industries/cement` |
 | `steel-coil-transport-basics` | Steel Coil Transport Basics | steel coil transport | `/industries/steel-metals` |
 | `tms-for-heavy-haul` | TMS for Heavy-Haul Freight Beyond GPS | TMS for industrial freight | `/technology` |
+| `tms-evaluation-guide-indian-manufacturers` | TMS Evaluation Guide for Indian Manufacturers | choose TMS India / manufacturing TMS | `/zaftys-tms` |
+| `india-axle-load-gvw-limits-heavy-freight` | India Axle Load Norms and GVW Limits Guide | MoRTH axle / GVW / Section 194 | `/zaftys-tms` |
+| `spot-market-vs-dedicated-fleet-india` | Spot Market vs Dedicated Contract Fleets in India | spot vs dedicated / hybrid FTL sourcing / spot freight rates India | `/tranzfort-network` |
+| `plant-detention-tat-yard-gate-india` | Plant Detention and Turnaround Time (TAT) India | plant detention / truck TAT / in-plant logistics / yard management | `/zaftys-tms` |
+| `epod-fastag-eway-bill-billing-india` | ePOD and e-Way Bill Freight Billing India | ePOD / electronic proof of delivery / GST e-Way Bill / three-way freight invoice match | `/zaftys-tms` |
 
 ### Still to write
 
@@ -340,7 +345,6 @@ One primary SEO job per URL  -  avoid making Home compete for every cluster.
 | P1 | Choosing The Right Logistics Partner | shipper evaluation | Backlog |
 | P2 | Vehicle Dispatch Checklist | checklist / featured snippet | Backlog |
 | P2 | Pit-to-plant tipper operations overview | mining logistics | Backlog |
-| P2 | Own fleet vs network capacity  -  when to scale | TranZfort / capacity | Backlog |
 | P2 | Corridor playbook: Maharashtra industrial lanes | geo long-tail | Backlog |
 
 ## 4.4 Blog technical SEO
@@ -363,8 +367,8 @@ One primary SEO job per URL  -  avoid making Home compete for every cluster.
 | `/resources` hub + `/reports` catalog | ✅ Live |
 | Categories UI | ✅ Live |
 | Article pages | ✅ Live |
-| Published articles | ✅ 5 launch posts |
-| Blog sitemap entries | ✅ Hub + 5 posts |
+| Published articles | ✅ 10 posts (launch set + TMS + axle + spot + plant TAT + ePOD billing) |
+| Blog sitemap entries | ✅ Hub + posts from `blog-data.ts` |
 | Header / footer / home teaser | ✅ Live |
 | RSS (optional) | ⬜ Later |
 | CMS / MDX | ⬜ Out of scope v1 |
@@ -380,7 +384,7 @@ These are not classic “meta tag” tasks but they affect how pages rank and co
 | `/technology` | ✅ Live product proof + Login primary | Maintain; add real screenshots later |
 | `/network` | ✅ Download TranZfort primary; demos secondary | Maintain |
 | Home TMS band | ✅ Live portal language (Wave 3) | Maintain |
-| Blog | ✅ 5 posts on `/blog` (indexable) | Expand backlog |
+| Blog | ✅ 10 posts on `/blog` (indexable) | Expand backlog |
 | Naming | ✅ **ZAFTYS TMS** on public copy | Maintain |
 | zaftys ↔ TranZfort sites | zaftys.com aligned; tranzfort.com open | Shared claim rules on TZ site |
 
