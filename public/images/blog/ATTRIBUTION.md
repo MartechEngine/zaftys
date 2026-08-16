@@ -9,6 +9,7 @@ Images live in `public/images/blog/`.
 | cement-plant-loading-windows | `/images/blog/cement-plant-loading-windows.jpg` | Generated for ZAFTYS blog (tipper at plant) |
 | steel-coil-transport-basics | `/images/blog/steel-coil-transport-basics.jpg` | Generated for ZAFTYS blog (coils on flatbed) |
 | tms-for-heavy-haul | `/images/blog/tms-for-heavy-haul.jpg` | Generated for ZAFTYS blog (dispatch desk / TMS) |
+| container-trucking-logistics-india | `/images/blog/container-trucking-logistics-india.jpg` | Generated for ZAFTYS blog (port hinterland containers) |
 
 ## Scripts
 

@@ -181,14 +181,39 @@ const IndustryDetail = () => {
                 Contact
               </Link>
               {industry.slug === "cement" ? (
-                <Link to="/blog/cement-plant-loading-windows" className="text-primary font-semibold hover:underline">
-                  Read more: plant loading windows
-                </Link>
+                <>
+                  <Link to="/blog/cement-plant-loading-windows" className="text-primary font-semibold hover:underline">
+                    Read more: plant loading windows
+                  </Link>
+                  <Link to="/blog/india-axle-load-gvw-limits-heavy-freight" className="text-primary font-semibold hover:underline">
+                    Read more: axle load and GVW limits
+                  </Link>
+                  <Link to="/blog/plant-detention-tat-yard-gate-india" className="text-primary font-semibold hover:underline">
+                    Read more: plant detention and TAT
+                  </Link>
+                  <Link to="/blog/epod-fastag-eway-bill-billing-india" className="text-primary font-semibold hover:underline">
+                    Read more: ePOD and e-Way Bill billing
+                  </Link>
+                </>
               ) : null}
               {industry.slug === "steel-metals" ? (
-                <Link to="/blog/steel-coil-transport-basics" className="text-primary font-semibold hover:underline">
-                  Read more: coil transport basics
-                </Link>
+                <>
+                  <Link to="/blog/steel-coil-transport-basics" className="text-primary font-semibold hover:underline">
+                    Read more: coil transport basics
+                  </Link>
+                  <Link to="/blog/india-axle-load-gvw-limits-heavy-freight" className="text-primary font-semibold hover:underline">
+                    Read more: axle load and GVW limits
+                  </Link>
+                  <Link to="/blog/spot-market-vs-dedicated-fleet-india" className="text-primary font-semibold hover:underline">
+                    Read more: spot vs dedicated fleets
+                  </Link>
+                  <Link to="/blog/plant-detention-tat-yard-gate-india" className="text-primary font-semibold hover:underline">
+                    Read more: plant detention and TAT
+                  </Link>
+                  <Link to="/blog/epod-fastag-eway-bill-billing-india" className="text-primary font-semibold hover:underline">
+                    Read more: ePOD and e-Way Bill billing
+                  </Link>
+                </>
               ) : null}
               {industry.slug === "coal-mining" || industry.slug === "industrial-logistics" ? (
                 <Link to="/blog/planning-industrial-shipments" className="text-primary font-semibold hover:underline">
@@ -196,19 +221,46 @@ const IndustryDetail = () => {
                 </Link>
               ) : null}
               {industry.slug === "manufacturing" ? (
-                <Link to="/blog/tms-evaluation-guide-indian-manufacturers" className="text-primary font-semibold hover:underline">
-                  Read more: TMS evaluation for manufacturers
-                </Link>
+                <>
+                  <Link to="/blog/tms-evaluation-guide-indian-manufacturers" className="text-primary font-semibold hover:underline">
+                    Read more: TMS evaluation for manufacturers
+                  </Link>
+                  <Link to="/blog/spot-market-vs-dedicated-fleet-india" className="text-primary font-semibold hover:underline">
+                    Read more: spot vs dedicated fleets
+                  </Link>
+                  <Link to="/blog/plant-detention-tat-yard-gate-india" className="text-primary font-semibold hover:underline">
+                    Read more: plant detention and TAT
+                  </Link>
+                  <Link to="/blog/epod-fastag-eway-bill-billing-india" className="text-primary font-semibold hover:underline">
+                    Read more: ePOD and e-Way Bill billing
+                  </Link>
+                  <Link to="/blog/container-trucking-logistics-india" className="text-primary font-semibold hover:underline">
+                    Read more: container trucking deep research
+                  </Link>
+                </>
               ) : null}
               {industry.slug === "chemicals" ? (
-                <Link to="/blog/planning-industrial-shipments" className="text-primary font-semibold hover:underline">
-                  Read more: body type, payload, and plant windows
-                </Link>
+                <>
+                  <Link to="/blog/planning-industrial-shipments" className="text-primary font-semibold hover:underline">
+                    Read more: body type, payload, and plant windows
+                  </Link>
+                  <Link to="/blog/plant-detention-tat-yard-gate-india" className="text-primary font-semibold hover:underline">
+                    Read more: plant detention and TAT
+                  </Link>
+                </>
               ) : null}
               {industry.slug === "fmcg" || industry.slug === "retail-distribution" ? (
-                <Link to="/blog/reduce-empty-return-trips" className="text-primary font-semibold hover:underline">
-                  Read more: empty return trips on FTL
-                </Link>
+                <>
+                  <Link to="/blog/reduce-empty-return-trips" className="text-primary font-semibold hover:underline">
+                    Read more: empty return trips on FTL
+                  </Link>
+                  <Link to="/blog/spot-market-vs-dedicated-fleet-india" className="text-primary font-semibold hover:underline">
+                    Read more: spot vs dedicated fleets
+                  </Link>
+                  <Link to="/blog/epod-fastag-eway-bill-billing-india" className="text-primary font-semibold hover:underline">
+                    Read more: ePOD and e-Way Bill billing
+                  </Link>
+                </>
               ) : null}
             </div>
           </div>

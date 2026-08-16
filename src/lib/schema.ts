@@ -182,7 +182,9 @@ export function marketReportSchema(report: {
 export function blogPostingSchema(post: {
   slug: string;
   title: string;
+  seoTitle?: string;
   seoDescription: string;
+  category?: string;
   publishedAt: string;
   updatedAt?: string;
   author: string;
@@ -194,11 +196,22 @@ export function blogPostingSchema(post: {
       : `${BASE}${post.heroImage}`
     : `${BASE}/og-image.png`;
 
+  const categoryLabel =
+    post.category === "operations"
+      ? "Operations"
+      : post.category === "industries"
+        ? "Industries"
+        : post.category === "technology"
+          ? "Technology"
+          : undefined;
+
   return {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
-    headline: post.title,
+    headline: post.seoTitle || post.title,
+    alternativeHeadline: post.title,
     description: post.seoDescription,
+    inLanguage: "en-IN",
     datePublished: post.publishedAt,
     dateModified: post.updatedAt ?? post.publishedAt,
     author: {
@@ -208,11 +221,13 @@ export function blogPostingSchema(post: {
     },
     publisher: organizationRef,
     image,
+    ...(categoryLabel ? { articleSection: categoryLabel } : {}),
     mainEntityOfPage: {
       "@type": "WebPage",
       "@id": `${BASE}/blog/${post.slug}`,
     },
     url: `${BASE}/blog/${post.slug}`,
+    isAccessibleForFree: true,
   };
 }
 

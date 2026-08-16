@@ -1,6 +1,7 @@
 import { useParams } from "react-router-dom";
 import SEO from "@/components/SEO";
 import { BlogPostLayout } from "@/components/blog/BlogPostLayout";
+import { DeepResearchBlogLayout } from "@/components/blog/DeepResearchBlogLayout";
 import { getPostBySlug, postModifiedAt } from "@/lib/blog-data";
 import { blogPostingSchema, breadcrumbSchema, faqPageSchema } from "@/lib/schema";
 import NotFound from "@/pages/NotFound";
@@ -18,11 +19,13 @@ const BlogPost = () => {
     breadcrumbSchema([
       { name: "Home", path: "/" },
       { name: "Blog", path: "/blog" },
-      { name: post.title, path: `/blog/${post.slug}` },
+      { name: post.seoTitle, path: `/blog/${post.slug}` },
     ]),
     blogPostingSchema(post),
     faqPageSchema(post.faqs),
   ];
+
+  const Layout = post.template === "deep-research" ? DeepResearchBlogLayout : BlogPostLayout;
 
   return (
     <div className="min-h-screen bg-background font-sans">
@@ -36,7 +39,7 @@ const BlogPost = () => {
         modifiedTime={postModifiedAt(post)}
         schema={schema}
       />
-      <BlogPostLayout post={post} />
+      <Layout post={post} />
     </div>
   );
 };
