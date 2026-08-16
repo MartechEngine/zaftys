@@ -68,7 +68,7 @@ export const marketReports: readonly MarketReport[] = [
     title: "Global Logistics Market Size, Share & Forecast 2027-2036",
     seoTitle: "Global Logistics Market Size and Forecast 2027-2036",
     seoDescription:
-      "Global logistics market research report: US$ 4,334.3 BN (2026) to US$ 11,344.7 BN (2036), 10.1% CAGR. Road freight, ocean, air, warehousing, TMS, regions & vendors — free PDF.",
+      "Global logistics market research report: US$ 4,334.3 BN (2026) to US$ 11,344.7 BN (2036), 10.1% CAGR. Road freight, ocean, air, warehousing, TMS, regions & vendors — unlock PDF with company email.",
     publishedAt: "2026-08-13",
     updatedAt: "2026-08-13",
     reportId: "ZAF-LOGISTICS-2027-2036",
@@ -189,7 +189,7 @@ export const marketReports: readonly MarketReport[] = [
     title: "Digital Freight Matching Market Size & Forecast 2027-2036",
     seoTitle: "Digital Freight Matching Market Size and Forecast 2027-2036",
     seoDescription:
-      "Digital freight matching (DFM) market report: US$ 81.2 BN (2026) to US$ 1,314.0 BN (2036), 32.1% CAGR. Platform revenue, spot/contract matching, TMS APIs, 22 countries — free PDF.",
+      "Digital freight matching (DFM) market report: US$ 81.2 BN (2026) to US$ 1,314.0 BN (2036), 32.1% CAGR. Platform revenue, spot/contract matching, TMS APIs, 22 countries — unlock PDF with company email.",
     publishedAt: "2026-08-14",
     updatedAt: "2026-08-16",
     reportId: "ZAF-DFM-2027-2036",

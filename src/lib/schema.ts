@@ -171,10 +171,11 @@ export function marketReportSchema(report: {
     publisher: organizationRef,
     image,
     url: `${BASE}/reports/${report.slug}`,
+    // PDF is gated behind company-email unlock — do not advertise a public contentUrl.
     encoding: {
       "@type": "MediaObject",
-      contentUrl: `${BASE}${report.pdfPath}`,
       encodingFormat: "application/pdf",
+      name: `${report.title} (PDF)`,
     },
   };
 }

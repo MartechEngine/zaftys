@@ -88,7 +88,7 @@ export const pageSeo = {
   resources: {
     title: "Resources | Blog and Market Reports",
     description:
-      "ZAFTYS resources: freight blog guides plus institutional market reports on global logistics and digital freight matching with free PDF downloads.",
+      "ZAFTYS resources: freight blog guides plus institutional market reports on global logistics and digital freight matching with gated PDF downloads.",
   },
   reports: {
     title: "Market Reports | Global Logistics and Digital Freight",

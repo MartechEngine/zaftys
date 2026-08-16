@@ -12,7 +12,9 @@ export type AnalyticsEvent =
   | "form_careers_success"
   | "newsletter_subscribe_success"
   | "report_view"
-  | "report_pdf_open";
+  | "report_pdf_open"
+  | "report_lead_submit"
+  | "report_download";
 
 declare global {
   interface Window {

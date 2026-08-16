@@ -12,14 +12,25 @@ function zaftys_ip_hash(): string
     return hash('sha256', $salt . '|' . zaftys_client_ip());
 }
 
+/**
+ * Shared footer for lead / subscribe alert emails: IP + approx city/region/country/ISP.
+ * Uses the same ipwho.is lookup as visit tracking (see _geo.php).
+ */
 function zaftys_email_client_meta(): string
 {
+    require_once __DIR__ . '/_geo.php';
+
     $ip = zaftys_client_ip();
     $out = "\nIP: {$ip}\n";
     $ref = trim((string) ($_SERVER['HTTP_REFERER'] ?? ''));
     if ($ref !== '') {
         $out .= 'Page: ' . zaftys_clip($ref, 512) . "\n";
     }
+
+    $pdo = function_exists('zaftys_pdo') ? zaftys_pdo() : null;
+    $geo = $pdo ? zaftys_geo_for_ip($pdo, $ip) : zaftys_geo_lookup_remote($ip);
+    $out .= zaftys_geo_email_line($geo);
+
     return $out;
 }
 

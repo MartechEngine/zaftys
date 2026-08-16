@@ -63,7 +63,7 @@ const Resources = () => {
                 </div>
                 <h2 className="text-2xl font-heading font-bold text-navy mb-3">Market Reports</h2>
                 <p className="text-muted-foreground leading-relaxed mb-6 flex-1">
-                  Institutional market reports on global logistics and digital freight matching: size, forecast, ToC, methodology, and free PDF downloads. {reportCount} reports available.
+                  Institutional market reports on global logistics and digital freight matching: size, forecast, ToC, methodology, and gated PDF downloads (company email required). {reportCount} reports available.
                 </p>
                 <Link to="/reports">
                   <Button variant="accent" className="w-full sm:w-auto">

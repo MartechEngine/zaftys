@@ -1,0 +1,11 @@
+# Block direct PDF downloads — serve only via /api/report-pdf.php after email gate.
+<IfModule mod_authz_core.c>
+  <FilesMatch "\.(?i:pdf)$">
+    Require all denied
+  </FilesMatch>
+</IfModule>
+<IfModule !mod_authz_core.c>
+  <FilesMatch "\.(?i:pdf)$">
+    Deny from all
+  </FilesMatch>
+</IfModule>

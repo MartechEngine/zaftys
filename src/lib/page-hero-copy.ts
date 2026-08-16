@@ -62,6 +62,6 @@ export const pageHeroCopy = {
   reports: {
     badge: "Market reports",
     h1: "Research on logistics and digital freight.",
-    lead: "Open a report for the sneak peek, then download or read the full PDF. Free institutional research from ZAFTYS Analytics.",
+    lead: "Open a report for the sneak peek, then unlock the full PDF with your company email. Institutional research from ZAFTYS Analytics.",
   },
 } as const;

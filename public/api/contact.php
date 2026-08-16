@@ -1,7 +1,6 @@
 <?php
 require_once __DIR__ . '/_bootstrap.php';
 require_once __DIR__ . '/_db.php';
-require_once __DIR__ . '/_geo.php';
 
 if (!zaftys_rate_limit('contact')) {
     echo json_encode(['success' => true, 'message' => 'Message sent successfully']);
@@ -50,10 +49,6 @@ if ($pin !== '') {
 }
 $body .= "\nMessage:\n{$message}\n";
 $body .= zaftys_email_client_meta();
-$pdo = zaftys_pdo();
-$ip = zaftys_client_ip();
-$geo = $pdo ? zaftys_geo_for_ip($pdo, $ip) : zaftys_geo_lookup_remote($ip);
-$body .= zaftys_geo_email_line($geo);
 
 if (zaftys_smtp_send($to, $subject, $body, $email)) {
     echo json_encode(['success' => true, 'message' => 'Message sent successfully']);

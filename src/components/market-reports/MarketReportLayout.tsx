@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { ArrowRight, BookOpen, Download, FileText } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -6,6 +6,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { CTAGroup } from "@/components/CTAGroup";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { ReportCover } from "@/components/market-reports/ReportCover";
+import { ReportDownloadGate } from "@/components/market-reports/ReportDownloadGate";
 import {
   type MarketReport,
   type ReportTocItem,
@@ -53,7 +54,7 @@ function reportTrust(report: MarketReport) {
   return [
     { label: "Shipper-facing", detail: "Built for industrial freight decisions" },
     { label: "Ops context", detail: "Corridor notes grounded in live lanes" },
-    { label: "Free PDF", detail: "Download or read the full report online" },
+    { label: "Email unlock", detail: "Company email unlocks download and online reading" },
   ] as const;
 }
 
@@ -61,32 +62,49 @@ function DownloadButtons({
   report,
   className,
   accent = true,
+  onDark = false,
 }: {
   report: MarketReport;
   className?: string;
   accent?: boolean;
+  onDark?: boolean;
 }) {
+  const navigate = useNavigate();
+
   return (
-    <CTAGroup className={cn("justify-start", className)}>
-      <Button asChild size="lg" variant={accent ? "accent" : "secondary"}>
-        <a href={report.pdfPath} download>
-          <Download className="mr-2" size={18} /> Download PDF
-        </a>
-      </Button>
-      <Link to={`/reports/${report.slug}/read`}>
-        <Button
-          size="lg"
-          variant="outline"
-          className={
-            accent
-              ? "border-primary text-primary hover:bg-primary hover:text-white"
-              : "border-white/40 bg-transparent text-white hover:bg-white/10 hover:text-white"
-          }
-        >
-          <BookOpen className="mr-2" size={18} /> Read online
-        </Button>
-      </Link>
-    </CTAGroup>
+    <ReportDownloadGate
+      reportSlug={report.slug}
+      reportTitle={report.title}
+      onUnlockedRead={() => navigate(`/reports/${report.slug}/read`)}
+    >
+      {({ requestDownload, requestRead }) => (
+        <CTAGroup className={cn("justify-start", className)}>
+          <Button
+            type="button"
+            size="lg"
+            variant={accent ? "accent" : onDark ? "on-dark-outline" : "secondary"}
+            onClick={requestDownload}
+          >
+            <Download className="mr-2" size={18} /> Download PDF
+          </Button>
+          <Button
+            type="button"
+            size="lg"
+            variant="outline"
+            className={
+              onDark
+                ? "border-white/40 bg-transparent text-white hover:bg-white/10 hover:text-white"
+                : accent
+                  ? "border-primary text-primary hover:bg-primary hover:text-white"
+                  : undefined
+            }
+            onClick={requestRead}
+          >
+            <BookOpen className="mr-2" size={18} /> Read online
+          </Button>
+        </CTAGroup>
+      )}
+    </ReportDownloadGate>
   );
 }
 
@@ -204,18 +222,32 @@ export function MarketReportLayout({ report }: MarketReportLayoutProps) {
                 )}
                 <div className="p-5 space-y-3">
                   <p className="text-sm text-muted-foreground leading-relaxed">
-                    Free {report.pageCount}-page PDF. Download it, or read it in your browser.
+                    Unlock the {report.pageCount}-page PDF with your company email, then download or read in your browser.
                   </p>
-                  <Button asChild size="lg" variant="accent" className="w-full">
-                    <a href={report.pdfPath} download>
-                      <Download className="mr-2" size={18} /> Download PDF
-                    </a>
-                  </Button>
-                  <Link to={`/reports/${report.slug}/read`} className="block">
-                    <Button size="lg" variant="outline" className="w-full border-primary text-primary">
-                      <BookOpen className="mr-2" size={18} /> Read online
-                    </Button>
-                  </Link>
+                  <ReportDownloadGate
+                    reportSlug={report.slug}
+                    reportTitle={report.title}
+                    onUnlockedRead={() => {
+                      window.location.assign(`/reports/${report.slug}/read`);
+                    }}
+                  >
+                    {({ requestDownload, requestRead }) => (
+                      <div className="space-y-3">
+                        <Button type="button" size="lg" variant="accent" className="w-full" onClick={requestDownload}>
+                          <Download className="mr-2" size={18} /> Download PDF
+                        </Button>
+                        <Button
+                          type="button"
+                          size="lg"
+                          variant="outline"
+                          className="w-full border-primary text-primary"
+                          onClick={requestRead}
+                        >
+                          <BookOpen className="mr-2" size={18} /> Read online
+                        </Button>
+                      </div>
+                    )}
+                  </ReportDownloadGate>
                   {"whatsapp" in report.cta ? (
                     <div className="pt-1">
                       <WhatsAppButton label="Discuss on WhatsApp" className="w-full" />
