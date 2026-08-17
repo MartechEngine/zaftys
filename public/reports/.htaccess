@@ -1,4 +1,8 @@
 # Block direct PDF downloads — serve only via /api/report-pdf.php after email gate.
+# DirectorySlash Off: this folder is also the /reports catalog URL. If Apache
+# adds a trailing slash here, parent htaccess strips it → redirect loop (GSC fail).
+DirectorySlash Off
+
 <IfModule mod_authz_core.c>
   <FilesMatch "\.(?i:pdf)$">
     Require all denied
@@ -7,5 +11,5 @@
 <IfModule !mod_authz_core.c>
   <FilesMatch "\.(?i:pdf)$">
     Deny from all
-  </FilesMatch>
+    </FilesMatch>
 </IfModule>
