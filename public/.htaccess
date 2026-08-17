@@ -30,11 +30,11 @@ DirectorySlash Off
   RewriteRule ^files/market-reports/.*\.pdf$ - [F,L]
   RewriteRule ^reports/[^/]+\.pdf$ - [F,L]
 
-  # Catalog: serve HTML for both slash variants. A 301 between /reports and
-  # /reports/ still loops on Hostinger (physical prerender dir + CDN 301 cache).
+  # Catalog page (prerendered reports/index.html). Match slash-free URL only so
+  # /reports/ can 301 to /reports like every other route.
   RewriteCond %{DOCUMENT_ROOT}/reports/index.html -f
-  RewriteRule ^reports/?$ reports/index.html [END]
-  RewriteRule ^reports/?$ index.html [END]
+  RewriteRule ^reports$ reports/index.html [END]
+  RewriteRule ^reports$ index.html [END]
 
   # Product pages  -  menu-aligned slugs (server 301 for crawlers)
   RewriteRule ^technology/?$ /zaftys-tms [R=301,L,QSA]
@@ -55,8 +55,6 @@ DirectorySlash Off
   RewriteRule ^resources/reports/?$ /reports [R=301,L,QSA]
 
   # Collapse trailing slashes (including dirs that exist for prerender HTML).
-  # Never 301 /reports/ — Hostinger CDN cached that bounce against DirectorySlash.
-  RewriteCond %{REQUEST_URI} !^/reports/$
   RewriteRule ^(.+)/$ /$1 [R=301,L]
 
   # Existing files (Vite assets, PDFs, images)
@@ -68,7 +66,7 @@ DirectorySlash Off
   RewriteRule ^(.+)$ $1/index.html [END]
 
   # SPA catalog + report pages if prerender output is missing
-  RewriteRule ^reports/?$ index.html [END]
+  RewriteRule ^reports$ index.html [END]
   RewriteRule ^reports/([^/.]+)/read/?$ index.html [END,E=NOINDEX:1]
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteRule ^reports/([^/.]+)/?$ index.html [END]

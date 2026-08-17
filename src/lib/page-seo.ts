@@ -93,6 +93,6 @@ export const pageSeo = {
   reports: {
     title: "Market Reports | Global Logistics and Digital Freight",
     description:
-      "ZAFTYS Analytics market reports: global logistics market size and forecast 2027-2036, plus digital freight matching platform revenue. Free institutional PDFs.",
+      "ZAFTYS Analytics market reports: global logistics market size and forecast 2027-2036, plus digital freight matching platform revenue. Unlock PDFs with a company email.",
   },
 } as const;
