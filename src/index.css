@@ -211,6 +211,7 @@ All colors MUST be HSL.
     --deep-cyan-soft: hsl(190 80% 92%);
     --deep-masthead: linear-gradient(135deg, hsl(220, 60%, 12%) 0%, hsl(220, 50%, 22%) 55%, hsl(215, 35%, 28%) 100%);
     background-color: var(--deep-canvas);
+    overflow-x: clip;
   }
 
   .deep-research-blog .deep-masthead {
@@ -237,7 +238,9 @@ All colors MUST be HSL.
   .deep-research-blog .deep-figure {
     border-color: color-mix(in srgb, var(--deep-ink) 18%, transparent);
     background: #f4f7fb;
-    overflow: hidden;
+    max-width: 100%;
+    min-width: 0;
+    overflow-x: auto;
   }
 
   .deep-research-blog .deep-figure-caption {

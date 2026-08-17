@@ -92,7 +92,7 @@ function ProseBlock({
   return (
     <div className="max-w-3xl">
       {paragraphs.map((paragraph, index) => (
-        <p key={`${index}-${paragraph.slice(0, 24)}`} className="mb-4 leading-relaxed text-navy/90">
+        <p key={`${index}-${paragraph.slice(0, 24)}`} className="mb-4 break-words leading-relaxed text-navy/90">
           <RichText text={paragraph} />
         </p>
       ))}
@@ -191,7 +191,7 @@ export function DeepResearchBlogLayout({ post }: DeepResearchBlogLayoutProps) {
 
   return (
     <DeepResearchExhibitProvider>
-      <div className="deep-research-blog">
+      <div className="deep-research-blog min-w-0">
         <header className="deep-masthead text-white">
           <div className="container mx-auto container-padding max-w-7xl pb-16 pt-10 md:pb-20 md:pt-12">
             <nav aria-label="Breadcrumb" className="mb-8 text-sm text-white/65">
@@ -229,7 +229,7 @@ export function DeepResearchBlogLayout({ post }: DeepResearchBlogLayoutProps) {
                   <span aria-hidden="true">·</span>
                   <span>{post.author}</span>
                 </div>
-                <h1 className="max-w-3xl text-3xl font-heading font-bold leading-tight normal-case tracking-normal text-white md:text-4xl lg:text-[2.75rem]">
+                <h1 className="max-w-3xl break-words text-3xl font-heading font-bold leading-tight normal-case tracking-normal text-white md:text-4xl lg:text-[2.75rem]">
                   {post.title}
                 </h1>
                 {post.subtitle ? (
@@ -257,11 +257,11 @@ export function DeepResearchBlogLayout({ post }: DeepResearchBlogLayoutProps) {
 
         {post.kpis && post.kpis.length > 0 ? (
           <div className="container mx-auto container-padding relative z-10 max-w-7xl -mt-10 md:-mt-12">
-            <div className="deep-kpi-band overflow-x-auto rounded-xl border border-navy/10 bg-white p-4 md:p-5">
-              <div className="flex min-w-max gap-4 md:min-w-0 md:grid md:grid-cols-3 lg:grid-cols-6 md:gap-3">
+            <div className="deep-kpi-band min-w-0 rounded-xl border border-navy/10 bg-white p-4 md:p-5">
+              <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-6 md:gap-3">
                 {post.kpis.map((kpi) => (
-                  <div key={kpi.label} className="w-40 shrink-0 md:w-auto">
-                    <p className="deep-kpi-value inline-block pb-1 font-heading text-2xl font-bold normal-case tracking-normal text-navy">
+                  <div key={kpi.label} className="min-w-0">
+                    <p className="deep-kpi-value inline-block max-w-full break-words pb-1 font-heading text-xl font-bold normal-case tracking-normal text-navy sm:text-2xl">
                       {kpi.value}
                     </p>
                     <p className="mt-2 text-xs font-semibold leading-snug text-navy">{kpi.label}</p>
@@ -277,7 +277,7 @@ export function DeepResearchBlogLayout({ post }: DeepResearchBlogLayoutProps) {
 
         <article className="pb-16 pt-10 md:pb-24 md:pt-12">
           <div className="container mx-auto container-padding max-w-7xl">
-            <div className="grid gap-10 xl:grid-cols-[16rem_minmax(0,1fr)]">
+            <div className="grid min-w-0 gap-10 xl:grid-cols-[16rem_minmax(0,1fr)]">
               <aside className="hidden xl:block">
                 <div className="sticky top-28 space-y-5">
                   <nav
@@ -344,7 +344,7 @@ export function DeepResearchBlogLayout({ post }: DeepResearchBlogLayoutProps) {
                 </div>
               </aside>
 
-              <div>
+              <div className="min-w-0">
                 {post.takeaways && post.takeaways.length > 0 ? (
                   <aside className="mb-10 overflow-hidden rounded-xl border border-navy/10 bg-white shadow-sm">
                     <div className="border-b border-navy/10 bg-navy px-5 py-3">
@@ -359,7 +359,7 @@ export function DeepResearchBlogLayout({ post }: DeepResearchBlogLayoutProps) {
                           <span className="font-heading text-sm font-bold text-[#0B7F8A]">
                             {String(index + 1).padStart(2, "0")}
                           </span>
-                          <span className="text-sm leading-relaxed text-navy/90">{item}</span>
+                          <span className="min-w-0 text-sm leading-relaxed text-navy/90">{item}</span>
                         </li>
                       ))}
                     </ol>
@@ -388,7 +388,7 @@ export function DeepResearchBlogLayout({ post }: DeepResearchBlogLayoutProps) {
                     <section
                       key={section.heading}
                       id={sectionAnchor(section.heading)}
-                      className="deep-chapter-spine scroll-mt-28 rounded-r-xl rounded-l-sm border border-navy/10 border-l-0 bg-white px-5 py-8 shadow-sm md:px-8 md:py-10"
+                      className="deep-chapter-spine scroll-mt-28 min-w-0 rounded-r-xl rounded-l-sm border border-navy/10 border-l-0 bg-white px-5 py-8 shadow-sm md:px-8 md:py-10"
                     >
                       <p className="text-[10px] font-heading font-bold tracking-widest text-[#0B7F8A]">
                         Chapter {String(sectionIndex + 1).padStart(2, "0")}
@@ -436,7 +436,7 @@ export function DeepResearchBlogLayout({ post }: DeepResearchBlogLayoutProps) {
                       Public sources below are for orientation. They are not ZAFTYS audited financials. Read the
                       originals before a number goes into a board pack.
                     </p>
-                    <ol className="max-w-3xl space-y-2 font-mono text-[12px] leading-relaxed text-navy/85">
+                    <ol className="max-w-3xl space-y-2 break-words font-mono text-[12px] leading-relaxed text-navy/85">
                       {post.references.map((item, index) => (
                         <li key={item} className="flex gap-3">
                           <span className="shrink-0 text-[#0B7F8A]">[{index + 1}]</span>

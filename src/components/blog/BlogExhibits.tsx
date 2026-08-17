@@ -23,7 +23,7 @@ function FigureChrome({
   return (
     <figure
       className={cn(
-        "my-8 rounded-xl border p-4 md:p-6",
+        "my-8 min-w-0 max-w-full rounded-xl border p-4 md:p-6",
         deep ? "deep-figure border-navy/15" : "border-border bg-[#F8FAFC]",
       )}
     >
@@ -56,7 +56,7 @@ function Donut({ slices, caption }: { slices: readonly { label: string; value: n
 
   return (
     <div className="flex flex-col items-center gap-8 lg:flex-row lg:items-center lg:gap-12">
-      <svg viewBox="0 0 280 280" className="h-72 w-72 shrink-0 md:h-80 md:w-80 lg:h-96 lg:w-96" role="img" aria-label={caption}>
+      <svg viewBox="0 0 280 280" className="h-auto w-full max-w-[17.5rem] shrink-0 sm:max-w-[20rem] md:h-80 md:w-80 md:max-w-none lg:h-96 lg:w-96" role="img" aria-label={caption}>
         <circle cx={cx} cy={cx} r={radius} fill="none" stroke="#E8EEF7" strokeWidth={stroke} />
         <g transform={`rotate(-90 ${cx} ${cx})`}>
           {slices.map((slice, index) => {
@@ -308,37 +308,59 @@ export function BlogExhibitBlock({ exhibit }: { exhibit: BlogExhibit }) {
         ) : exhibit.variant === "compare" ? (
           <CompareTable headers={exhibit.headers} rows={exhibit.rows} />
         ) : (
-          <div className="-mx-1 overflow-x-auto">
-            <table className="w-full min-w-[36rem] border-collapse text-left text-sm">
-              <thead>
-                <tr className="border-b border-navy/15 bg-white">
-                  {exhibit.headers.map((header) => (
-                    <th key={header} className="px-3 py-2 font-heading text-xs font-bold normal-case tracking-normal text-navy">
-                      {header}
-                    </th>
+          <>
+            <div className="space-y-3 md:hidden">
+              {exhibit.rows.map((row, rowIndex) => (
+                <div key={rowIndex} className="overflow-hidden rounded-lg border border-navy/10 bg-white">
+                  {row.map((cell, cellIndex) => (
+                    <div
+                      key={`${rowIndex}-${cellIndex}`}
+                      className={cn(
+                        "px-3 py-2.5",
+                        cellIndex === 0 ? "bg-navy/[0.04]" : "border-t border-navy/10",
+                      )}
+                    >
+                      <p className="text-[10px] font-heading font-bold tracking-widest text-navy/50">
+                        {exhibit.headers[cellIndex]}
+                      </p>
+                      <p className="mt-0.5 break-words text-sm leading-relaxed text-navy/90">{cell}</p>
+                    </div>
                   ))}
-                </tr>
-              </thead>
-              <tbody>
-                {exhibit.rows.map((row, rowIndex) => (
-                  <tr key={rowIndex} className={rowIndex % 2 === 0 ? "bg-white/70" : "bg-[#EEF3F8]"}>
-                    {row.map((cell, cellIndex) => (
-                      <td
-                        key={`${rowIndex}-${cellIndex}`}
-                        className={`px-3 py-2.5 align-top leading-relaxed text-navy/90 ${
-                          cellIndex === row.length - 1 && exhibit.headers[cellIndex] === "Score"
-                            ? "w-16 border-l border-dashed border-navy/20"
-                            : ""
-                        }`}
-                      >
-                        {cell}
-                      </td>
+                </div>
+              ))}
+            </div>
+            <div className="hidden min-w-0 overflow-x-auto md:block">
+              <table className="w-full min-w-[36rem] border-collapse text-left text-sm">
+                <thead>
+                  <tr className="border-b border-navy/15 bg-white">
+                    {exhibit.headers.map((header) => (
+                      <th key={header} className="px-3 py-2 font-heading text-xs font-bold normal-case tracking-normal text-navy">
+                        {header}
+                      </th>
                     ))}
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+                </thead>
+                <tbody>
+                  {exhibit.rows.map((row, rowIndex) => (
+                    <tr key={rowIndex} className={rowIndex % 2 === 0 ? "bg-white/70" : "bg-[#EEF3F8]"}>
+                      {row.map((cell, cellIndex) => (
+                        <td
+                          key={`${rowIndex}-${cellIndex}`}
+                          className={`px-3 py-2.5 align-top leading-relaxed text-navy/90 ${
+                            cellIndex === row.length - 1 && exhibit.headers[cellIndex] === "Score"
+                              ? "w-16 border-l border-dashed border-navy/20"
+                              : ""
+                          }`}
+                        >
+                          {cell}
+                        </td>
+                      ))}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </>
         )}
       </FigureChrome>
     );
@@ -406,8 +428,8 @@ export function BlogExhibitBlock({ exhibit }: { exhibit: BlogExhibit }) {
         <ul className="space-y-3">
           {exhibit.items.map((item) => (
             <li key={item.label}>
-              <div className="mb-1 flex items-baseline justify-between gap-3 text-sm">
-                <span className="font-medium text-navy">{item.label}</span>
+              <div className="mb-1 flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1 text-sm">
+                <span className="min-w-0 break-words font-medium text-navy">{item.label}</span>
                 <span className="shrink-0 font-heading text-sm font-bold text-navy">
                   {item.value} {exhibit.unit}
                 </span>
@@ -430,7 +452,7 @@ export function BlogExhibitBlock({ exhibit }: { exhibit: BlogExhibit }) {
     const palette = [zaftysViz.navy, zaftysViz.primaryBright, zaftysViz.teal, zaftysViz.warm];
     return (
       <FigureChrome caption={exhibit.caption} source={exhibit.source}>
-        <div className="flex h-12 overflow-hidden rounded-full">
+        <div className="flex min-h-10 overflow-hidden rounded-full sm:min-h-12">
           {exhibit.items.map((item, index) => (
             <div
               key={item.label}
@@ -440,7 +462,7 @@ export function BlogExhibitBlock({ exhibit }: { exhibit: BlogExhibit }) {
                 background: item.color ?? palette[index % palette.length],
               }}
             >
-              {item.value}%
+              <span className="hidden px-0.5 sm:inline">{item.value}%</span>
             </div>
           ))}
         </div>
