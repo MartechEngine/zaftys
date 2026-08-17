@@ -30,6 +30,12 @@ DirectorySlash Off
   RewriteRule ^files/market-reports/.*\.pdf$ - [F,L]
   RewriteRule ^reports/[^/]+\.pdf$ - [F,L]
 
+  # Catalog: serve HTML for both slash variants. A 301 between /reports and
+  # /reports/ still loops on Hostinger (physical prerender dir + CDN 301 cache).
+  RewriteCond %{DOCUMENT_ROOT}/reports/index.html -f
+  RewriteRule ^reports/?$ reports/index.html [END]
+  RewriteRule ^reports/?$ index.html [END]
+
   # Product pages  -  menu-aligned slugs (server 301 for crawlers)
   RewriteRule ^technology/?$ /zaftys-tms [R=301,L,QSA]
   RewriteRule ^platform/?$ /zaftys-tms [R=301,L,QSA]
@@ -49,6 +55,8 @@ DirectorySlash Off
   RewriteRule ^resources/reports/?$ /reports [R=301,L,QSA]
 
   # Collapse trailing slashes (including dirs that exist for prerender HTML).
+  # Never 301 /reports/ — Hostinger CDN cached that bounce against DirectorySlash.
+  RewriteCond %{REQUEST_URI} !^/reports/$
   RewriteRule ^(.+)/$ /$1 [R=301,L]
 
   # Existing files (Vite assets, PDFs, images)
@@ -81,6 +89,8 @@ ErrorDocument 404 /index.html
     Header set X-Robots-Tag "noindex, follow"
   </FilesMatch>
   Header set X-Robots-Tag "noindex, follow" env=NOINDEX
+  # Do not let hCDN store slash 301s (that cache caused the /reports loop).
+  Header always set Cache-Control "no-store" "expr=%{REQUEST_STATUS} =~ m#^30#"
 </IfModule>
 
 # Correct types for crawlers
