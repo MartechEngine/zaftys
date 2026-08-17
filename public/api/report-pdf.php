@@ -78,7 +78,7 @@ if (!$row) {
     exit;
 }
 
-$path = dirname(__DIR__) . '/reports/' . $files[$slug];
+$path = dirname(__DIR__) . '/files/market-reports/' . $files[$slug];
 if (!is_readable($path)) {
     http_response_code(404);
     header('Content-Type: application/json');

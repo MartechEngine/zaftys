@@ -57,7 +57,7 @@ function report(
 ): MarketReport {
   return {
     segment: "logistics-supply-chain",
-    pdfPath: partial.pdfPath ?? `/reports/${partial.slug}.pdf`,
+    pdfPath: partial.pdfPath ?? `/files/market-reports/${partial.slug}.pdf`,
     ...partial,
   };
 }
@@ -74,8 +74,8 @@ export const marketReports: readonly MarketReport[] = [
     reportId: "ZAF-LOGISTICS-2027-2036",
     subtitle:
       "Institutional market intelligence on transportation, warehousing, and related logistics services — by mode, application, technology, end user, and geography. Historical 2017-2026; forecast 2027-2036.",
-    coverImage: "/reports/covers/global-logistics-market-2027-2036-preview.png?v=2",
-    pdfPath: "/reports/global-logistics-market-2027-2036.pdf",
+    coverImage: "/images/reports/global-logistics-market-2027-2036-preview.png?v=2",
+    pdfPath: "/files/market-reports/global-logistics-market-2027-2036.pdf",
     pageCount: 238,
     summary:
       "ZAFTYS Analytics models the global logistics market from US$ 4,334.3 BN in 2026 to US$ 11,344.7 BN by 2036 (10.1% CAGR), with segment cuts across road freight (FTL/LTL/express), ocean, air, rail & intermodal, warehousing, cold chain, TMS/WMS, end users, and regional deep-dives.",
@@ -195,8 +195,8 @@ export const marketReports: readonly MarketReport[] = [
     reportId: "ZAF-DFM-2027-2036",
     subtitle:
       "Institutional research on digital freight matching platforms and marketplaces — platform / matching-service revenue (not matched freight GMV). Historical 2021-2026; forecast 2027-2036. Bank dfm-institutional-220.",
-    coverImage: "/reports/covers/digital-freight-matching-market-2027-2036-preview.jpg?v=3",
-    pdfPath: "/reports/digital-freight-matching-market-2027-2036.pdf",
+    coverImage: "/images/reports/digital-freight-matching-market-2027-2036-preview.jpg?v=3",
+    pdfPath: "/files/market-reports/digital-freight-matching-market-2027-2036.pdf",
     pageCount: 214,
     summary:
       "ZAFTYS Analytics models digital freight matching platform revenue at US$ 81.2 BN in 2026, expanding to US$ 1,314.0 BN by 2036 (32.1% CAGR). Coverage spans spot and contract lane matching, multimodal orchestration, dynamic pricing, eBOL/docs, payments & factoring, analytics, mobile/web/API access, modes, verticals, 22 country deep-dives, and 15 operator profiles.",

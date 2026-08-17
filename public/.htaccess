@@ -26,11 +26,9 @@ DirectorySlash Off
   RewriteRule ^og-image\.png$ - [L]
   RewriteRule ^favicon\.ico$ - [L]
 
-  # Catalog URL is also a real folder (covers + PDFs). Serve the HTML first so
-  # Apache DirectorySlash (/reports → /reports/) cannot fight the slash-strip below.
-  RewriteCond %{DOCUMENT_ROOT}/reports/index.html -f
-  RewriteRule ^reports/?$ reports/index.html [END]
-  RewriteRule ^reports/?$ index.html [END]
+  # Block leftover or direct PDF URLs (gated files live under /files/market-reports/)
+  RewriteRule ^files/market-reports/.*\.pdf$ - [F,L]
+  RewriteRule ^reports/[^/]+\.pdf$ - [F,L]
 
   # Product pages  -  menu-aligned slugs (server 301 for crawlers)
   RewriteRule ^technology/?$ /zaftys-tms [R=301,L,QSA]
@@ -51,8 +49,6 @@ DirectorySlash Off
   RewriteRule ^resources/reports/?$ /reports [R=301,L,QSA]
 
   # Collapse trailing slashes (including dirs that exist for prerender HTML).
-  # Skip /reports/ — that path is a real folder; stripping it 301-loops with DirectorySlash.
-  RewriteCond %{REQUEST_URI} !^/reports/$
   RewriteRule ^(.+)/$ /$1 [R=301,L]
 
   # Existing files (Vite assets, PDFs, images)
