@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 
+const TMS_SCREEN_W = 1536;
+const TMS_SCREEN_H = 1024;
+
 const SCREENS = [
   {
     title: "Command Center",
@@ -14,13 +17,13 @@ const SCREENS = [
   },
   {
     title: "Shipments",
-    src: "/images/tms/shipments.webp",
-    alt: "ZAFTYS TMS Shipments list for active and pending trips",
+    src: "/images/tms/shipments.webp?v=2",
+    alt: "ZAFTYS TMS Shipments screen listing live loads, trip status, origin-destination lanes, and TranZfort marketplace updates",
   },
   {
     title: "Live Map",
-    src: "/images/tms/map.webp",
-    alt: "ZAFTYS TMS live dispatch map",
+    src: "/images/tms/map.webp?v=2",
+    alt: "ZAFTYS TMS Live Map with real-time GPS tracking of own-fleet and network vehicles across Indian lanes",
   },
   {
     title: "Network",
@@ -69,6 +72,9 @@ export function TmsScreensCarousel({ className }: TmsScreensCarouselProps) {
               key={screen.src}
               src={screen.src}
               alt={screen.alt}
+              width={TMS_SCREEN_W}
+              height={TMS_SCREEN_H}
+              decoding="async"
               loading={i === 0 ? "eager" : "lazy"}
               className={cn(
                 "absolute inset-0 h-full w-full object-cover object-top transition-opacity duration-700 ease-out",

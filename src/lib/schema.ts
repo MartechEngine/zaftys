@@ -109,6 +109,35 @@ export const softwareApplicationSchema = {
   provider: organizationRef,
   url: `${BASE}/zaftys-tms`,
   installUrl: "https://app.zaftys.com",
+  screenshot: [
+    {
+      "@type": "ImageObject",
+      url: `${BASE}/images/tms/command-center.webp`,
+      caption: "ZAFTYS TMS Command Center with live KPIs and exception queue",
+    },
+    {
+      "@type": "ImageObject",
+      url: `${BASE}/images/tms/dispatch.webp`,
+      caption: "ZAFTYS TMS Dispatch board with backlog and TranZfort post actions",
+    },
+    {
+      "@type": "ImageObject",
+      url: `${BASE}/images/tms/shipments.webp`,
+      caption:
+        "ZAFTYS TMS Shipments screen listing live loads, trip status, origin-destination lanes, and TranZfort marketplace updates",
+    },
+    {
+      "@type": "ImageObject",
+      url: `${BASE}/images/tms/map.webp`,
+      caption:
+        "ZAFTYS TMS Live Map with real-time GPS tracking of own-fleet and network vehicles across Indian lanes",
+    },
+    {
+      "@type": "ImageObject",
+      url: `${BASE}/images/tms/network.webp`,
+      caption: "ZAFTYS TMS network view for partner capacity and lane coverage",
+    },
+  ],
 };
 
 export const blogPageSchema = {
