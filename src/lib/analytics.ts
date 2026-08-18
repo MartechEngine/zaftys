@@ -38,12 +38,15 @@ export function isAnalyticsEnabled(): boolean {
 
 let bootstrapped = false;
 let loadScheduled = false;
+let pendingPageview: { path: string; title?: string } | null = null;
 
 function ensureGtag(): void {
   window.dataLayer = window.dataLayer || [];
   if (!window.gtag) {
-    window.gtag = (...args: unknown[]) => {
-      window.dataLayer?.push(args);
+    // Must push `arguments`, not a rest array — gtag.js ignores queued Array hits.
+    window.gtag = function gtag() {
+      // eslint-disable-next-line prefer-rest-params
+      window.dataLayer?.push(arguments);
     };
   }
 }
@@ -81,10 +84,15 @@ function loadVendors(): void {
   const clarity = clarityId();
   const ga = gaMeasurementId();
   if (clarity) loadClarity(clarity);
-  if (ga) loadGa4(ga);
+  if (ga) {
+    loadGa4(ga);
+    const queued = pendingPageview;
+    pendingPageview = null;
+    if (queued) sendPageview(queued.path, queued.title);
+  }
 }
 
-/** Schedule third-party tags after first real interaction (or 15s fallback). */
+/** Load tags on idle, first interaction, or after 2s — not 15s (Realtime looked empty). */
 export function initAnalytics(): void {
   if (typeof window === "undefined" || loadScheduled) return;
   if (!isAnalyticsEnabled()) return;
@@ -92,28 +100,33 @@ export function initAnalytics(): void {
 
   const events: Array<keyof WindowEventMap> = ["pointerdown", "keydown", "touchstart"];
   let fallbackTimer = 0;
+  let idleId = 0;
 
   const cleanup = () => {
     window.clearTimeout(fallbackTimer);
+    if (idleId && "cancelIdleCallback" in window) {
+      window.cancelIdleCallback(idleId);
+    }
     for (const event of events) {
-      window.removeEventListener(event, onInteract);
+      window.removeEventListener(event, onReady);
     }
   };
 
-  const onInteract = () => {
+  const onReady = () => {
     cleanup();
     loadVendors();
   };
 
   for (const event of events) {
-    window.addEventListener(event, onInteract, { once: true, passive: true });
+    window.addEventListener(event, onReady, { once: true, passive: true });
   }
-  // Outside typical Lighthouse mobile measurement window; real users interact sooner.
-  fallbackTimer = window.setTimeout(onInteract, 15000);
+  if ("requestIdleCallback" in window) {
+    idleId = window.requestIdleCallback(onReady, { timeout: 2000 });
+  }
+  fallbackTimer = window.setTimeout(onReady, 2000);
 }
 
-export function trackPageview(path: string, title?: string): void {
-  captureUtmFromLocation();
+function sendPageview(path: string, title?: string): void {
   const ga = gaMeasurementId();
   if (!ga) return;
   ensureGtag();
@@ -122,6 +135,16 @@ export function trackPageview(path: string, title?: string): void {
     page_title: title || document.title,
     page_location: `${window.location.origin}${path}`,
   });
+}
+
+export function trackPageview(path: string, title?: string): void {
+  captureUtmFromLocation();
+  if (!gaMeasurementId()) return;
+  if (!bootstrapped) {
+    pendingPageview = { path, title };
+    return;
+  }
+  sendPageview(path, title);
 }
 
 export function trackEvent(event: AnalyticsEvent, props?: Record<string, string>): void {
