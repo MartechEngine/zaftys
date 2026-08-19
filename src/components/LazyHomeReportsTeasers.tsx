@@ -3,7 +3,7 @@ import { lazy, Suspense, useEffect, useRef, useState } from "react";
 const HomeReportsTeasersLazy = lazy(() => import("./HomeReportsTeasers"));
 
 /** Loads report teasers (covers + report data) only when near viewport. */
-export function LazyHomeReportsTeasers() {
+export function LazyHomeReportsTeasers({ embedded = false }: { embedded?: boolean }) {
   const ref = useRef<HTMLDivElement>(null);
   const [show, setShow] = useState(false);
 
@@ -27,7 +27,7 @@ export function LazyHomeReportsTeasers() {
     <div ref={ref}>
       {show ? (
         <Suspense fallback={<div className="section-padding min-h-[280px]" aria-hidden />}>
-          <HomeReportsTeasersLazy />
+          <HomeReportsTeasersLazy embedded={embedded} />
         </Suspense>
       ) : (
         <div className="section-padding min-h-[280px]" aria-hidden />

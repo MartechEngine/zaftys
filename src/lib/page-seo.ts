@@ -1,9 +1,29 @@
 /** Page titles & meta descriptions  -  keep titles ≤ ~55 chars before brand suffix */
 export const pageSeo = {
   home: {
-    title: "ZAFTYS Logistics | Transport, TMS and Marketplace",
+    title: "ZAFTYS | 3PL Transportation and Contract Logistics",
     description:
-      "Own trucks for LCV through tanker, trailer, tipper, reefer, parcel and ODC. ZAFTYS TMS for dispatch and tracking. TranZfort: post and search free, AI-powered matching, broker fee on trucker bookings. Quote on WhatsApp.",
+      "Technology-enabled transportation and logistics. Owned heavy-vehicle capacity, contract logistics, verified partner network, and ZAFTYS TMS. Request transportation across India.",
+  },
+  logistics: {
+    title: "Logistics Services | 3PL and Contract Transportation",
+    description:
+      "ZAFTYS logistics: 3PL transportation, contract logistics, dedicated fleet, industrial freight, and container movements. Owned fleet plus verified network.",
+  },
+  networkHub: {
+    title: "Transportation Network | Tranzfort and Partners",
+    description:
+      "ZAFTYS transportation network: Tranzfort digital freight network, verified transporter partners, and truck capacity sourcing.",
+  },
+  technologyHub: {
+    title: "Transportation Technology | ZAFTYS TMS",
+    description:
+      "ZAFTYS technology for transportation operations: TMS, fleet management, tracking, visibility, and logistics APIs.",
+  },
+  intelligenceHub: {
+    title: "Logistics Intelligence | Analytics and AI",
+    description:
+      "ZAFTYS intelligence: analytics, freight rate intelligence, market reports, and supply chain AI built on real logistics operations.",
   },
   services: {
     title: "LCV, Heavy Load, Container, Tanker and Bulker Transport",

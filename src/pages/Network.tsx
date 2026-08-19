@@ -23,6 +23,7 @@ import { pageHeroAlts } from "@/lib/page-heroes";
 import { PageHero } from "@/components/PageHero";
 import { pageHeroCopy } from "@/lib/page-hero-copy";
 import { LazyTranZfortScreensCarousel } from "@/components/LazyTranZfortScreensCarousel";
+import { paths } from "@/lib/site-paths";
 import { breadcrumbSchema, organizationSchema } from "@/lib/schema";
 
 const highlightIcons = [Route, Mic, Smartphone, Shield, Network, Users] as const;
@@ -134,12 +135,13 @@ const NetworkPage = () => {
       <SEO
         title={pageSeo.network.title}
         description={pageSeo.network.description}
-        canonical="/tranzfort-network"
+        canonical={paths.network.tranzfort}
         schema={[
           organizationSchema,
           breadcrumbSchema([
             { name: "Home", path: "/" },
-            { name: "TranZfort Network", path: "/tranzfort-network" },
+            { name: "Network", path: paths.network.hub },
+            { name: "Tranzfort", path: paths.network.tranzfort },
           ]),
         ]}
       />

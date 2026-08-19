@@ -23,6 +23,7 @@ import { HeroEmailButton } from "@/components/HeroEmailButton";
 import { pageSeo } from "@/lib/page-seo";
 import { pageHeroCopy } from "@/lib/page-hero-copy";
 import { LazyTmsScreensCarousel } from "@/components/LazyTmsScreensCarousel";
+import { paths } from "@/lib/site-paths";
 import {
   softwareApplicationSchema,
   organizationSchema,
@@ -110,7 +111,7 @@ const Technology = () => {
       <SEO
         title={pageSeo.technology.title}
         description={pageSeo.technology.description}
-        canonical="/zaftys-tms"
+        canonical={paths.technology.tms}
         schema={[
           organizationSchema,
           websiteSchema,
@@ -118,7 +119,8 @@ const Technology = () => {
           faqPageSchema(technologyFaqs),
           breadcrumbSchema([
             { name: "Home", path: "/" },
-            { name: "ZAFTYS TMS", path: "/zaftys-tms" },
+            { name: "Technology", path: paths.technology.hub },
+            { name: "ZAFTYS TMS", path: paths.technology.tms },
           ]),
         ]}
       />

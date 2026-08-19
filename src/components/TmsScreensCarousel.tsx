@@ -1,8 +1,4 @@
-import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
-
-const TMS_SCREEN_W = 1536;
-const TMS_SCREEN_H = 1024;
 
 const SCREENS = [
   {
@@ -18,12 +14,12 @@ const SCREENS = [
   {
     title: "Shipments",
     src: "/images/tms/shipments.webp?v=2",
-    alt: "ZAFTYS TMS Shipments screen listing live loads, trip status, origin-destination lanes, and TranZfort marketplace updates",
+    alt: "ZAFTYS TMS Shipments screen listing live loads and trip status",
   },
   {
     title: "Live Map",
     src: "/images/tms/map.webp?v=2",
-    alt: "ZAFTYS TMS Live Map with real-time GPS tracking of own-fleet and network vehicles across Indian lanes",
+    alt: "ZAFTYS TMS Live Map with real-time GPS tracking",
   },
   {
     title: "Network",
@@ -32,80 +28,71 @@ const SCREENS = [
   },
 ] as const;
 
+/** Duplicated for seamless infinite scroll loop */
+const SCROLL_TRACK = [...SCREENS, ...SCREENS];
+
 type TmsScreensCarouselProps = {
   className?: string;
+  /** navy = dark band; light = white; muted = muted/30 section backgrounds */
+  surface?: "navy" | "light" | "muted";
 };
 
-export function TmsScreensCarousel({ className }: TmsScreensCarouselProps) {
-  const [index, setIndex] = useState(0);
-
-  useEffect(() => {
-    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (reduce) return;
-    const id = window.setInterval(() => {
-      setIndex((i) => (i + 1) % SCREENS.length);
-    }, 4200);
-    return () => window.clearInterval(id);
-  }, []);
-
-  const active = SCREENS[index];
-
+function BrowserFrame({ src, alt, title }: { src: string; alt: string; title: string }) {
   return (
-    <div className={cn("w-full", className)}>
+    <div className="relative w-[260px] shrink-0 sm:w-[280px]">
       <div
         className={cn(
-          "overflow-hidden rounded-xl border border-border/80 bg-navy shadow-2xl",
-          "ring-1 ring-black/5",
+          "overflow-hidden rounded-xl shadow-2xl ring-1 ring-white/10",
+          "border border-white/10 bg-[#0b1220]",
         )}
       >
-        <div className="flex items-center gap-2 border-b border-white/10 bg-navy/95 px-3 py-2.5">
-          <span className="size-2.5 rounded-full bg-white/25" aria-hidden />
-          <span className="size-2.5 rounded-full bg-white/25" aria-hidden />
-          <span className="size-2.5 rounded-full bg-white/25" aria-hidden />
-          <p className="ml-2 truncate text-[11px] font-medium tracking-wide text-white/55">
-            app.zaftys.com · {active.title}
+        <div className="flex items-center gap-2 border-b border-white/10 bg-navy/95 px-3 py-2">
+          <span className="size-2 rounded-full bg-red-400/80" aria-hidden />
+          <span className="size-2 rounded-full bg-amber-400/80" aria-hidden />
+          <span className="size-2 rounded-full bg-emerald-400/80" aria-hidden />
+          <p className="ml-1 truncate text-[10px] font-medium tracking-wide text-white/50">
+            app.zaftys.com · {title}
           </p>
         </div>
-        <div className="relative aspect-[16/10] bg-[#0b1220]">
-          {SCREENS.map((screen, i) => (
-            <img
-              key={screen.src}
-              src={screen.src}
-              alt={screen.alt}
-              width={TMS_SCREEN_W}
-              height={TMS_SCREEN_H}
-              decoding="async"
-              loading={i === 0 ? "eager" : "lazy"}
-              className={cn(
-                "absolute inset-0 h-full w-full object-cover object-top transition-opacity duration-700 ease-out",
-                i === index ? "opacity-100" : "opacity-0",
-              )}
-            />
-          ))}
+        <div className="aspect-[16/10] overflow-hidden bg-[#0b1220]">
+          <img src={src} alt={alt} loading="lazy" decoding="async" className="h-full w-full object-cover object-top" />
         </div>
       </div>
+      <p className="mt-3 text-center text-xs font-bold uppercase tracking-widest text-accent">{title}</p>
+    </div>
+  );
+}
+
+export function TmsScreensCarousel({ className, surface = "light" }: TmsScreensCarouselProps) {
+  const fadeFrom =
+    surface === "navy" ? "from-navy" : surface === "muted" ? "from-muted/30" : "from-white";
+
+  return (
+    <div className={cn("relative w-full overflow-hidden", className)}>
+      <div
+        className={cn("pointer-events-none absolute inset-y-0 left-0 z-10 w-12 sm:w-20 bg-gradient-to-r to-transparent", fadeFrom)}
+        aria-hidden
+      />
+      <div
+        className={cn("pointer-events-none absolute inset-y-0 right-0 z-10 w-12 sm:w-20 bg-gradient-to-l to-transparent", fadeFrom)}
+        aria-hidden
+      />
 
       <div
-        className="mt-4 flex flex-wrap items-center justify-center gap-2"
-        role="tablist"
-        aria-label="ZAFTYS TMS screens"
+        className={cn(
+          "flex w-max gap-8 py-2",
+          "animate-tranzfort-scroll motion-reduce:animate-none motion-reduce:flex-wrap motion-reduce:justify-center motion-reduce:gap-6 motion-reduce:w-full",
+          "hover:[animation-play-state:paused]",
+        )}
+        aria-label="ZAFTYS TMS screens: Command Center, Dispatch, Shipments, Live Map, Network"
       >
-        {SCREENS.map((screen, i) => (
-          <button
-            key={screen.title}
-            type="button"
-            role="tab"
-            aria-selected={i === index}
-            onClick={() => setIndex(i)}
-            className={cn(
-              "rounded-md px-3 py-1.5 text-xs font-semibold uppercase tracking-wider transition-colors",
-              i === index
-                ? "bg-primary text-primary-foreground"
-                : "bg-muted text-muted-foreground hover:text-foreground",
-            )}
-          >
-            {screen.title}
-          </button>
+        {SCROLL_TRACK.map((item, index) => (
+          <BrowserFrame
+            key={`${item.title}-${index}`}
+            src={item.src}
+            alt={item.alt}
+            title={item.title}
+          />
         ))}
       </div>
     </div>

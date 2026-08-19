@@ -4,6 +4,26 @@
  * No em dash, en dash, or spaced hyphen used as a dash.
  */
 export const pageHeroCopy = {
+  logistics: {
+    badge: "ZAFTYS Logistics",
+    h1: "Reliable transportation capacity for demanding freight.",
+    lead: "3PL transportation and contract logistics for industrial and commercial freight. Owned heavy-vehicle capacity, verified partner network, and the TMS we dispatch on.",
+  },
+  networkHub: {
+    badge: "Transportation Network",
+    h1: "ZAFTYS operates. Tranzfort connects.",
+    lead: "Owned fleet when we have the truck. Verified partner capacity when the lane needs more. Tranzfort extends the network digitally.",
+  },
+  technologyHub: {
+    badge: "Transportation Technology",
+    h1: "Run your transportation operation from one platform.",
+    lead: "ZAFTYS TMS brings planning, dispatch, tracking, delivery documentation, and analytics into one system we use on our own trips every day.",
+  },
+  intelligenceHub: {
+    badge: "Logistics Intelligence",
+    h1: "Turn transportation data into decisions.",
+    lead: "Analytics, freight intelligence, market research, and AI built around real logistics operations. Capabilities labeled by availability.",
+  },
   services: {
     badge: "Commercial transport",
     h1: "LCV to bulker. The class that fits the cargo.",

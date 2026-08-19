@@ -65,32 +65,47 @@ export function whatsappUrl(message = WHATSAPP_DEFAULT_MESSAGE): string {
 
 /** Grid rule: card counts should divide evenly into row columns (2, 3, or 4). */
 
-export const homeProducts = [
+export const homeLogisticsServices = [
   {
-    id: "transport",
-    title: "Transport",
-    description:
-      "Company trucks across the TranZfort catalog. Quote on WhatsApp.",
-    link: "/services",
-    cta: "See truck classes",
+    id: "3pl",
+    title: "3PL Transportation",
+    description: "Transportation execution with owned fleet and verified partner capacity.",
+    link: "/logistics/3pl-transportation",
   },
   {
-    id: "tms",
-    title: "ZAFTYS TMS",
-    description:
-      "Dispatch, GPS, e-POD, and shipper visibility. We run it on our own trips. Login at app.zaftys.com.",
-    link: "/zaftys-tms",
-    cta: "See ZAFTYS TMS",
+    id: "contract",
+    title: "Contract Logistics",
+    description: "Dedicated programs for recurring freight with SLA management.",
+    link: "/logistics/contract-logistics",
   },
   {
-    id: "marketplace",
-    title: "TranZfort marketplace",
-    description:
-      "Post a load or find a load. AI-powered matching. Listing and search are free. We charge a broker fee to truckers on booked loads.",
-    link: "/tranzfort-network",
-    cta: "Open TranZfort",
+    id: "dedicated",
+    title: "Dedicated Fleet",
+    description: "Assigned trucks and drivers on plant, mill, or DC programs.",
+    link: "/logistics/dedicated-fleet",
+  },
+  {
+    id: "industrial",
+    title: "Industrial Freight",
+    description: "Heavy freight for steel, cement, mining, and project cargo.",
+    link: "/logistics/industrial-freight",
+  },
+  {
+    id: "container",
+    title: "Container Transportation",
+    description: "Port-to-market, factory-to-port, and city movements.",
+    link: "/logistics/container-transportation",
+  },
+  {
+    id: "fleet",
+    title: "Our Fleet",
+    description: "Owned heavy-vehicle capacity from LCV through ODC.",
+    link: "/fleet",
   },
 ] as const;
+
+/** @deprecated Use homeLogisticsServices */
+export const homeProducts = homeLogisticsServices;
 
 /** 6 catalogue cards: 5 vehicle classes + contract as a program (2 rows x 3 cols) */
 export const vehicleClasses = [
@@ -161,6 +176,41 @@ export const homeIndustries = [
   { name: "Retail Distribution", slug: "retail-distribution", image: "/images/marketing/industry-retail.jpg" },
   { name: "Industrial Logistics", slug: "industrial-logistics", image: "/images/marketing/industry-industrial-logistics.jpg" },
 ] as const;
+
+/** 3 operating-model pillars for homepage section 2 (not a service catalog) */
+export const homeOperatingModel = [
+  {
+    id: "fleet",
+    step: "01",
+    title: "Owned fleet",
+    description: "Company trucks from LCV through ODC on corridors we run every week.",
+    link: "/fleet",
+  },
+  {
+    id: "contract",
+    step: "02",
+    title: "Contract logistics",
+    description: "Dedicated programs for recurring plant, mill, and DC freight with SLA management.",
+    link: "/logistics/contract-logistics",
+  },
+  {
+    id: "network",
+    step: "03",
+    title: "Network capacity",
+    description: "Verified Tranzfort partners when surge exceeds owned fleet. Always labeled clearly.",
+    link: "/network/tranzfort",
+  },
+] as const;
+
+/** 4 primary services on homepage — full list lives on /logistics */
+export const homeFeaturedLogisticsServices = homeLogisticsServices.filter((s) =>
+  (["3pl", "contract", "industrial", "container"] as const).includes(s.id as "3pl" | "contract" | "industrial" | "container"),
+);
+
+/** 4 primary industries on homepage — full grid on /industries */
+export const homeFeaturedIndustries = homeIndustries.filter((i) =>
+  (["cement", "steel-metals", "coal-mining", "manufacturing"] as const).includes(i.slug as "cement" | "steel-metals" | "coal-mining" | "manufacturing"),
+);
 
 export const truckTypes = [
   {
@@ -244,12 +294,12 @@ export const networkHighlights = [
   { title: "GST on ZAFTYS trips", desc: "Trips contracted through ZAFTYS stay on GST billing." },
 ] as const;
 
-/** Qualitative trust strip  -  no unverified numeric claims (copy-v2-b) */
+/** Qualitative trust strip — verified labels only */
 export const homeTrustStrip = [
-  { label: "Own Fleet", sublabel: "LCV to ODC" },
-  { label: "ZAFTYS TMS", sublabel: "Live at app.zaftys.com" },
-  { label: "TranZfort", sublabel: "Free to post and find" },
-  { label: "GST Compliant", sublabel: "Formal billing and invoicing" },
-  { label: "Pan-India", sublabel: "Commercial corridors" },
-  { label: "24/7 Dispatch", sublabel: "Operations support" },
+  { label: "Own Fleet", sublabel: "Heavy vehicle capacity" },
+  { label: "Partner Network", sublabel: "Verified carriers" },
+  { label: "Contract Logistics", sublabel: "Recurring freight" },
+  { label: "ZAFTYS TMS", sublabel: "Live dispatch system" },
+  { label: "Pan-India", sublabel: "Freight corridors" },
+  { label: "60+ Years", sublabel: "Trucking heritage" },
 ] as const;

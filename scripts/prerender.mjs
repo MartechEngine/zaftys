@@ -18,7 +18,7 @@ const PORT = 4173;
 const ORIGIN = `http://127.0.0.1:${PORT}`;
 const CONCURRENCY = 3;
 const HOME_TITLE =
-  "Commercial Transport, TMS and Freight Marketplace | ZAFTYS Logistics";
+  "ZAFTYS | 3PL Transportation and Contract Logistics";
 
 function routesFromSitemap() {
   const xml = fs.readFileSync(path.join(dist, "sitemap.xml"), "utf8");

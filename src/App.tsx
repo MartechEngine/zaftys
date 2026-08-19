@@ -11,8 +11,7 @@ import { WhatsAppFab } from "./components/WhatsAppButton";
 import { initAnalytics, trackPageview } from "./lib/analytics";
 import { captureUtmFromLocation } from "./lib/utm";
 import { logVisit } from "./lib/visit-log";
-import { paths, reportPath, reportReadPath } from "./lib/site-paths";
-/** Eager Home: lazy Home painted Footer first, then shoved it down (~0.6 CLS). */
+import { paths, legacyNetworkPath, legacyTmsPath, reportPath, reportReadPath } from "./lib/site-paths";
 import Home from "./pages/Home";
 
 const About = lazy(() => import("./pages/About"));
@@ -37,6 +36,56 @@ const Cookies = lazy(() => import("./pages/Cookies"));
 const LegalNotice = lazy(() => import("./pages/LegalNotice"));
 const Login = lazy(() => import("./pages/Login"));
 
+const LogisticsHub = lazy(() => import("./pages/logistics/LogisticsHub"));
+const ThreePlTransportation = lazy(() =>
+  import("./pages/logistics/LogisticsSolutions").then((m) => ({ default: m.ThreePlTransportation })),
+);
+const ContractLogistics = lazy(() =>
+  import("./pages/logistics/LogisticsSolutions").then((m) => ({ default: m.ContractLogistics })),
+);
+const DedicatedFleetPage = lazy(() =>
+  import("./pages/logistics/LogisticsSolutions").then((m) => ({ default: m.DedicatedFleet })),
+);
+const IndustrialFreight = lazy(() =>
+  import("./pages/logistics/LogisticsSolutions").then((m) => ({ default: m.IndustrialFreight })),
+);
+const ContainerTransportation = lazy(() =>
+  import("./pages/logistics/LogisticsSolutions").then((m) => ({ default: m.ContainerTransportation })),
+);
+
+const NetworkHub = lazy(() => import("./pages/network/NetworkHub"));
+const TransporterNetwork = lazy(() =>
+  import("./pages/network/NetworkSolutions").then((m) => ({ default: m.TransporterNetwork })),
+);
+const TruckCapacity = lazy(() =>
+  import("./pages/network/NetworkSolutions").then((m) => ({ default: m.TruckCapacity })),
+);
+
+const TechnologyHub = lazy(() => import("./pages/technology/TechnologyHub"));
+const FleetManagement = lazy(() =>
+  import("./pages/technology/TechnologySolutions").then((m) => ({ default: m.FleetManagement })),
+);
+const TrackingVisibility = lazy(() =>
+  import("./pages/technology/TechnologySolutions").then((m) => ({ default: m.TrackingVisibility })),
+);
+const LogisticsApis = lazy(() =>
+  import("./pages/technology/TechnologySolutions").then((m) => ({ default: m.LogisticsApis })),
+);
+
+const IntelligenceHub = lazy(() => import("./pages/intelligence/IntelligenceHub"));
+const ZaftysAnalytics = lazy(() =>
+  import("./pages/intelligence/IntelligenceSolutions").then((m) => ({ default: m.ZaftysAnalytics })),
+);
+const FreightRateIntelligence = lazy(() =>
+  import("./pages/intelligence/IntelligenceSolutions").then((m) => ({ default: m.FreightRateIntelligence })),
+);
+const MarketIntelligence = lazy(() =>
+  import("./pages/intelligence/IntelligenceSolutions").then((m) => ({ default: m.MarketIntelligence })),
+);
+const SupplyChainAi = lazy(() =>
+  import("./pages/intelligence/IntelligenceSolutions").then((m) => ({ default: m.SupplyChainAi })),
+);
+
 const PageFallback = () => (
   <div className="min-h-[40vh] flex items-center justify-center" role="status" aria-label="Loading page">
     <div className="h-8 w-8 animate-spin rounded-full border-2 border-primary border-t-transparent" />
@@ -52,7 +101,7 @@ function ResourcesSlugRedirect() {
   if (slug === "reports") {
     return <Navigate to={paths.reports} replace />;
   }
-  return <Navigate to={slug ? `/blog/${slug}` : "/blog"} replace />;
+  return <Navigate to={slug ? `/blog/${slug}` : paths.blog} replace />;
 }
 
 function LegacyReportRedirect({ read = false }: { read?: boolean }) {
@@ -84,7 +133,7 @@ const ScrollToTop = () => {
 
 const AppShell = () => {
   const { pathname } = useLocation();
-  const isAuthPage = pathname === "/login";
+  const isAuthPage = pathname === paths.login;
 
   return (
     <>
@@ -92,24 +141,55 @@ const AppShell = () => {
       {!isAuthPage && <Navigation />}
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/about" element={<LazyPage><About /></LazyPage>} />
-        <Route path={paths.tms} element={<LazyPage><Technology /></LazyPage>} />
-        <Route path="/technology" element={<Navigate to={paths.tms} replace />} />
-        <Route path="/platform" element={<Navigate to={paths.tms} replace />} />
-        <Route path="/services" element={<LazyPage><Services /></LazyPage>} />
-        <Route path="/industries" element={<LazyPage><Industries /></LazyPage>} />
+
+        {/* Logistics */}
+        <Route path={paths.logistics.hub} element={<LazyPage><LogisticsHub /></LazyPage>} />
+        <Route path={paths.logistics.threePl} element={<LazyPage><ThreePlTransportation /></LazyPage>} />
+        <Route path={paths.logistics.contract} element={<LazyPage><ContractLogistics /></LazyPage>} />
+        <Route path={paths.logistics.dedicated} element={<LazyPage><DedicatedFleetPage /></LazyPage>} />
+        <Route path={paths.logistics.industrial} element={<LazyPage><IndustrialFreight /></LazyPage>} />
+        <Route path={paths.logistics.container} element={<LazyPage><ContainerTransportation /></LazyPage>} />
+
+        {/* Network */}
+        <Route path={paths.network.hub} element={<LazyPage><NetworkHub /></LazyPage>} />
+        <Route path={paths.network.tranzfort} element={<LazyPage><Network /></LazyPage>} />
+        <Route path={paths.network.transporterNetwork} element={<LazyPage><TransporterNetwork /></LazyPage>} />
+        <Route path={paths.network.truckCapacity} element={<LazyPage><TruckCapacity /></LazyPage>} />
+
+        {/* Technology */}
+        <Route path={paths.technology.hub} element={<LazyPage><TechnologyHub /></LazyPage>} />
+        <Route path={paths.technology.tms} element={<LazyPage><Technology /></LazyPage>} />
+        <Route path={paths.technology.fleetManagement} element={<LazyPage><FleetManagement /></LazyPage>} />
+        <Route path={paths.technology.tracking} element={<LazyPage><TrackingVisibility /></LazyPage>} />
+        <Route path={paths.technology.apis} element={<LazyPage><LogisticsApis /></LazyPage>} />
+
+        {/* Intelligence */}
+        <Route path={paths.intelligence.hub} element={<LazyPage><IntelligenceHub /></LazyPage>} />
+        <Route path={paths.intelligence.analytics} element={<LazyPage><ZaftysAnalytics /></LazyPage>} />
+        <Route path={paths.intelligence.freightRates} element={<LazyPage><FreightRateIntelligence /></LazyPage>} />
+        <Route path={paths.intelligence.marketIntelligence} element={<LazyPage><MarketIntelligence /></LazyPage>} />
+        <Route path={paths.intelligence.ai} element={<LazyPage><SupplyChainAi /></LazyPage>} />
+
+        {/* Legacy redirects */}
+        <Route path="/services" element={<Navigate to={paths.logistics.hub} replace />} />
+        <Route path={legacyNetworkPath} element={<Navigate to={paths.network.tranzfort} replace />} />
+        <Route path={legacyTmsPath} element={<Navigate to={paths.technology.tms} replace />} />
+        <Route path="/platform" element={<Navigate to={paths.technology.tms} replace />} />
+        <Route path="/technology" element={<Navigate to={paths.technology.hub} replace />} />
+
+        {/* Existing pages */}
+        <Route path={paths.about} element={<LazyPage><About /></LazyPage>} />
+        <Route path={paths.fleet} element={<LazyPage><Fleet /></LazyPage>} />
+        <Route path={paths.industries} element={<LazyPage><Industries /></LazyPage>} />
         <Route path="/industries/mining" element={<Navigate to="/industries/coal-mining" replace />} />
         <Route path="/industries/retail" element={<Navigate to="/industries/retail-distribution" replace />} />
         <Route path="/industries/:slug" element={<LazyPage><IndustryDetail /></LazyPage>} />
-        <Route path="/fleet" element={<LazyPage><Fleet /></LazyPage>} />
-        <Route path={paths.network} element={<LazyPage><Network /></LazyPage>} />
-        <Route path="/network" element={<Navigate to={paths.network} replace />} />
-        <Route path="/careers" element={<LazyPage><Careers /></LazyPage>} />
-        <Route path="/partner" element={<LazyPage><Partner /></LazyPage>} />
-        <Route path="/contact" element={<LazyPage><Contact /></LazyPage>} />
-        <Route path="/blog" element={<LazyPage><Blog /></LazyPage>} />
+        <Route path={paths.partner} element={<LazyPage><Partner /></LazyPage>} />
+        <Route path={paths.contact} element={<LazyPage><Contact /></LazyPage>} />
+        <Route path={paths.careers} element={<LazyPage><Careers /></LazyPage>} />
+        <Route path={paths.blog} element={<LazyPage><Blog /></LazyPage>} />
         <Route path="/blog/:slug" element={<LazyPage><BlogPost /></LazyPage>} />
-        <Route path="/resources" element={<LazyPage><Resources /></LazyPage>} />
+        <Route path={paths.resources} element={<LazyPage><Resources /></LazyPage>} />
         <Route path={paths.reports} element={<LazyPage><MarketReports /></LazyPage>} />
         <Route
           path="/reports/global-logistics-market-2026-2033/read"
@@ -129,7 +209,7 @@ const AppShell = () => {
         <Route path="/terms" element={<LazyPage><Terms /></LazyPage>} />
         <Route path="/cookies" element={<LazyPage><Cookies /></LazyPage>} />
         <Route path="/legal-notice" element={<LazyPage><LegalNotice /></LazyPage>} />
-        <Route path="/login" element={<LazyPage><Login /></LazyPage>} />
+        <Route path={paths.login} element={<LazyPage><Login /></LazyPage>} />
         <Route path="*" element={<NotFound />} />
       </Routes>
       {!isAuthPage && (

@@ -3,27 +3,19 @@ import { Link } from "react-router-dom";
 import { latestPosts } from "@/lib/blog-data";
 import { cn } from "@/lib/utils";
 
+type HomeBlogTeasersProps = {
+  embedded?: boolean;
+};
+
 /** Isolated so Home can lazy-load blog-data off the critical path. */
-export default function HomeBlogTeasers() {
-  const posts = latestPosts(6);
+export default function HomeBlogTeasers({ embedded = false }: HomeBlogTeasersProps) {
+  const posts = latestPosts(embedded ? 4 : 6);
   if (posts.length === 0) return null;
 
   const track = posts.length === 1 ? posts : [...posts, ...posts];
 
-  return (
-    <section className="py-12 bg-white" aria-labelledby="home-blog-heading">
-      <div className="container mx-auto container-padding">
-        <div className="flex items-baseline justify-between gap-4 mb-6">
-          <h2 id="home-blog-heading" className="text-3xl font-heading font-bold text-navy">
-            Latest from the blog
-          </h2>
-          <Link to="/blog" className="text-sm text-primary font-semibold hover:underline inline-flex items-center shrink-0">
-            View all posts <ArrowRight className="ml-1.5" size={14} />
-          </Link>
-        </div>
-      </div>
-
-      <div className="relative overflow-hidden">
+  const carousel = (
+    <div className="relative overflow-hidden">
         <div
           className="pointer-events-none absolute inset-y-0 left-0 z-10 w-8 sm:w-16 bg-gradient-to-r from-white to-transparent"
           aria-hidden
@@ -65,6 +57,37 @@ export default function HomeBlogTeasers() {
           ))}
         </div>
       </div>
+  );
+
+  if (embedded) {
+    return (
+      <div aria-labelledby="home-blog-heading">
+        <div className="flex items-baseline justify-between gap-4 mb-4">
+          <h3 id="home-blog-heading" className="text-lg font-heading font-bold text-navy">
+            From the blog
+          </h3>
+          <Link to="/blog" className="text-sm text-primary font-semibold hover:underline inline-flex items-center shrink-0">
+            All posts <ArrowRight className="ml-1.5" size={14} />
+          </Link>
+        </div>
+        {carousel}
+      </div>
+    );
+  }
+
+  return (
+    <section className="py-12 bg-white" aria-labelledby="home-blog-heading">
+      <div className="container mx-auto container-padding">
+        <div className="flex items-baseline justify-between gap-4 mb-6">
+          <h2 id="home-blog-heading" className="text-3xl font-heading font-bold text-navy">
+            Latest from the blog
+          </h2>
+          <Link to="/blog" className="text-sm text-primary font-semibold hover:underline inline-flex items-center shrink-0">
+            View all posts <ArrowRight className="ml-1.5" size={14} />
+          </Link>
+        </div>
+      </div>
+      {carousel}
     </section>
   );
 }
