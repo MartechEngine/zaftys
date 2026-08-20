@@ -1,12 +1,9 @@
 /**
  * Locked Logistics / Transportation page copy — /logistics
  *
- * Hierarchy: service name is the section H2 (display). Tagline supports it.
- * Positioning vs typical India peers:
- * - Not warehouse-first 3PL (we are transportation execution)
- * - Owned fleet + labeled partner overflow (not silent brokerage)
- * - Industrial / plant-window language over generic “pan-India network”
- * - Contract = SLA + reserved capacity; Dedicated = assigned trucks on that program
+ * Page shape (locked): Hero → Services index → Capacity strip → five services (Design A) → Industries → Final CTA
+ * Service order (locked Option A): Container → 3PL → Industrial → Contract → Dedicated
+ * Service layout: image head + equal 50/50 content cards.
  * No invented metrics, logos, or corridor counts.
  */
 
@@ -22,19 +19,25 @@ export const logisticsHubCopy = {
     eyebrow: "Five ways we move freight",
     h2: "Transportation services built for plant reality.",
     lead:
-      "Scroll any service below — or jump straight to the lane type your desk needs this week.",
+      "Pick the service your desk needs. Each section below covers the problem, who it is for, and how we run the lane.",
   },
-  howWeMove: {
-    eyebrow: "One operational desk",
-    h2: "We move freight. We run the desk.",
-    lead:
-      "Indian shippers usually choose between a broker, a pure fleet owner, or a warehouse-heavy 3PL. ZAFTYS sits in the middle that industrial plants actually need: trucks on the road, a desk that owns the trip, and software on the movements we run.",
-    flowLabel: "How capacity comes together on your lane",
+  capacityStrip: {
+    owned: { label: "Owned fleet", path: "/fleet" },
+    contract: { label: "Contract programs", path: "#contract" },
+    network: { label: "Labeled network", path: "/network" },
+    note: "Capacity is never blended silently — what we own, what we reserve, and what partners fill.",
   },
   threePl: {
     id: "three-pl",
-    index: "01",
+    index: "02",
     title: "3PL Transportation",
+    image: "/images/services/home/transportation.jpg",
+    imageAlt: "Heavy truck moving industrial freight on an Indian corridor",
+    visual: {
+      kind: "timeline" as const,
+      label: "Trip ownership",
+      steps: ["Indent", "Allot", "Gate", "POD"],
+    },
     tagline: "Full-truckload execution — not a booking that vanishes after allotment.",
     lead:
       "3PL for ZAFTYS means we execute the trip. Full truckload from origin to destination, vehicle class matched to cargo, GST-compliant billing on contracted moves, and a desk that stays on the lane until delivery documentation closes.",
@@ -64,8 +67,19 @@ export const logisticsHubCopy = {
   },
   contract: {
     id: "contract",
-    index: "02",
+    index: "04",
     title: "Contract Logistics",
+    image: "/images/blog/planning-industrial-shipments.jpg",
+    imageAlt: "Industrial plant freight planning and recurring lane dispatch",
+    visual: {
+      kind: "sla" as const,
+      label: "What the SLA covers",
+      items: [
+        { title: "Reserved capacity", detail: "Trucks held for your weekly corridors" },
+        { title: "Plant windows", detail: "Dispatch timed to gate and bay reality" },
+        { title: "Escalation desk", detail: "One team when the plant slips" },
+      ],
+    },
     tagline: "Recurring lanes need reserved capacity — not a fresh hunt every Monday.",
     lead:
       "Contract logistics at ZAFTYS is a long-term transportation program: reserved trucks on the corridors you run every week, SLA tracking, plant-window awareness, and an account desk that already knows your sites.",
@@ -96,8 +110,19 @@ export const logisticsHubCopy = {
   },
   dedicated: {
     id: "dedicated",
-    index: "03",
+    index: "05",
     title: "Dedicated Fleet",
+    image: "/images/blog/spot-market-vs-dedicated-fleet-india.jpg",
+    imageAlt: "Dedicated fleet trucks assigned to a recurring freight program",
+    visual: {
+      kind: "layers" as const,
+      label: "How dedicated capacity is labeled",
+      items: [
+        { title: "Assigned to you", detail: "Trucks and drivers on your program" },
+        { title: "Body type fixed", detail: "Class follows the lane, not the day rate" },
+        { title: "Surge labeled", detail: "Tranzfort overflow never sold as your fleet" },
+      ],
+    },
     tagline: "Your trucks. Your corridors. Your season or year.",
     lead:
       "Dedicated fleet is how a ZAFTYS contract looks when vehicles and drivers are assigned to you. Body type follows the lane — LCV, heavy load, container, tanker, or bulker — with plant-window dispatch and TMS on every contracted trip.",
@@ -128,8 +153,20 @@ export const logisticsHubCopy = {
   },
   industrial: {
     id: "industrial",
-    index: "04",
+    index: "03",
     title: "Industrial Freight",
+    image: "/images/blog/steel-coil-transport-basics.jpg",
+    imageAlt: "Steel coil and industrial freight loaded for plant movement",
+    visual: {
+      kind: "matrix" as const,
+      label: "Cargo × truck class",
+      rows: [
+        { cargo: "Steel coils / plates", truck: "Flatbed · multi-axle" },
+        { cargo: "Cement / bulk solids", truck: "Tipper · bulker" },
+        { cargo: "Mining / aggregates", truck: "Tipper · multi-axle" },
+        { cargo: "Project / ODC", truck: "Trailer · specialized" },
+      ],
+    },
     tagline: "Steel, cement, mining, and project cargo — built for plant windows and axle reality.",
     lead:
       "Industrial freight is where generic FTL breaks. Coils need the right flatbed and securing. Cement and bulk need tippers and bulkers that survive the plant queue. Mining lanes need weighbridge discipline. ZAFTYS runs these movements as an operator that already lives in that world.",
@@ -160,8 +197,15 @@ export const logisticsHubCopy = {
   },
   container: {
     id: "container",
-    index: "05",
+    index: "01",
     title: "Container Transportation",
+    image: "/images/blog/container-trucking-logistics-india.jpg",
+    imageAlt: "Container trailer moving sealed freight on a port corridor",
+    visual: {
+      kind: "corridor" as const,
+      label: "Road corridor we own",
+      steps: ["Port / CFS", "Factory bay", "Inland market"],
+    },
     tagline: "Port to factory, factory to port, port to market — sealed freight on corridors we run.",
     lead:
       "Container transportation for ZAFTYS is road execution between ports, warehouses, factories, and inland markets. We move containers and sealed freight on trailers suited to the corridor, with trip visibility on contracted moves and partner overflow when the yard needs more wheels than we own that day.",
@@ -192,15 +236,8 @@ export const logisticsHubCopy = {
   },
   industries: {
     eyebrow: "Who we serve",
-    h2: "Heavy industrial verticals. Same desk.",
-    lead:
-      "Cement, steel, coal and mining, manufacturing — different cargo and truck class, same operating model: owned capacity, contract programs, and labeled network overflow.",
-  },
-  capacityClarity: {
-    eyebrow: "Capacity",
-    h2: "Our fleet. Our network. Your freight.",
-    lead:
-      "Indian freight marketing often hides whether the truck is owned or brokered. ZAFTYS separates them on purpose: company fleet you can inspect, and verified partners through Tranzfort when the lane needs more. Never blended silently.",
+    h2: "Built for heavy industrial freight.",
+    lead: "Cement, steel, coal and mining, manufacturing — same desk.",
   },
   finalCta: {
     h2: "Ready to move your freight?",
@@ -210,11 +247,11 @@ export const logisticsHubCopy = {
 } as const;
 
 export const logisticsServiceIndex = [
+  { id: logisticsHubCopy.container.id, index: logisticsHubCopy.container.index, title: logisticsHubCopy.container.title, blurb: "Port–factory–market road legs" },
   { id: logisticsHubCopy.threePl.id, index: logisticsHubCopy.threePl.index, title: logisticsHubCopy.threePl.title, blurb: "FTL execution with trip ownership" },
+  { id: logisticsHubCopy.industrial.id, index: logisticsHubCopy.industrial.index, title: logisticsHubCopy.industrial.title, blurb: "Plant windows and axle reality" },
   { id: logisticsHubCopy.contract.id, index: logisticsHubCopy.contract.index, title: logisticsHubCopy.contract.title, blurb: "Reserved capacity under SLA" },
   { id: logisticsHubCopy.dedicated.id, index: logisticsHubCopy.dedicated.index, title: logisticsHubCopy.dedicated.title, blurb: "Assigned trucks on your program" },
-  { id: logisticsHubCopy.industrial.id, index: logisticsHubCopy.industrial.index, title: logisticsHubCopy.industrial.title, blurb: "Plant windows and axle reality" },
-  { id: logisticsHubCopy.container.id, index: logisticsHubCopy.container.index, title: logisticsHubCopy.container.title, blurb: "Port–factory–market road legs" },
 ] as const;
 
 export const logisticsHubQuote = {

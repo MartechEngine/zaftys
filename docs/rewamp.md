@@ -217,8 +217,17 @@ zaftys.com
 
 ### 4.2 Logistics hub (`/logistics`)
 
-**Hero:** Reliable transportation capacity for demanding freight.  
-**Sections:** Service cards (3PL, contract, dedicated, industrial, container), fleet link, problem/solution pairs, CTA.  
+**Layout locked (20 Aug 2026):** Design A — full-width image head + equal 50/50 content cards per service.
+
+**Page shape:**
+1. Hero  
+2. Services index (jump to 01–05)  
+3. Compact capacity strip (Owned · Contract · Network)  
+4. Five service sections (locked) — order: Container → 3PL → Industrial → Contract → Dedicated  
+5. Short industries strip  
+6. Final CTA  
+
+**Removed:** full “How we move” pillars · full “Capacity clarity” section · layout-lab prototype.  
 **CTA:** Request Transportation
 
 ---
@@ -471,3 +480,4 @@ Internal team must verify and sign off:
 | 20 Aug 2026 | `rewamp-20-8-26` | Plan doc, branch, nav IA, 4 hubs, 16 leaf pages, Home rewrite, redirects, sitemap |
 | 20 Aug 2026 | `rewamp-20-8-26` | **Header nav locked** — Logistics / Platform / Intelligence (flat) / Industries (flat) / Company / Resources |
 | 20 Aug 2026 | `rewamp-20-8-26` | **Logistics IA** — submenu Transportation + Our Fleet; `/logistics` thick Transportation page with service sections |
+| 20 Aug 2026 | `rewamp-20-8-26` | **Logistics layout locked** — Design A service sections; slim page to Hero → Index → Capacity strip → Services → Industries → CTA |
