@@ -170,7 +170,7 @@ Hi ZAFTYS, I'd like a quote for heavy load transport. From:  To:  Load type:
 
 **Cards (6 on Home):** Cement & Construction · Coal & Mining · Steel & Metals · Chemicals · Manufacturing · Industrial Logistics
 
-- **Footnote:** Also serving FMCG and retail distribution. View all industries → `/industries`
+- **Footnote:** Also serving FMCG factory-to-DC lanes. View all industries → `/industries`
 
 ### Section 8  -  Heritage
 
@@ -223,7 +223,7 @@ Hi ZAFTYS, I'd like a quote for heavy load transport. From:  To:  Load type:
 | Construction | Cement, clinker, sand, and ready-mix inputs for plants, projects, and dealer networks. |
 | Metals & Steel | Coils, plates, billets, and structural sections with weighbridge and axle discipline. |
 | Energy & Chemicals | Petroleum products, industrial chemicals, and lubricants with haz-route awareness. |
-| FMCG & Retail | Regional distribution with OTIF focus and lane-level cost control. |
+| FMCG | Regional factory-to-DC distribution with OTIF focus and lane-level cost control. |
 | Agriculture | Seasonal grain and agri bulk with scalable capacity during harvest windows. |
 
 ### Curated service programs (`#transportation`)
@@ -432,7 +432,7 @@ Bullets: Dispatch dashboard · Driver & vehicle management · Trip lifecycle & b
 ## Industries (`/industries`)
 
 **SEO title:** Industries We Serve - Cement, Steel, Mining & Bulk Freight  
-**SEO description:** Heavy-haul logistics for cement, steel, coal, chemicals, manufacturing, FMCG, retail, and industrial supply chains across India.
+**SEO description:** Heavy-haul logistics for cement, steel, coal, chemicals, manufacturing, FMCG, containers, and industrial supply chains across India.
 
 ### Hero
 
@@ -453,7 +453,7 @@ Bullets: Dispatch dashboard · Driver & vehicle management · Trip lifecycle & b
 | Chemicals | Compliance-focused transport for industrial chemicals and bulk liquids with documentation discipline. | Tanker programs; Haz-route awareness; Structured LR & POD | Compliance & reliability |
 | Manufacturing | Multi-plant inbound and outbound flows with tight production windows and gate coordination. | Plant-to-plant lanes; SLA-driven dispatch; Overflow via TranZfort | Production window discipline |
 | FMCG | Regional distribution with OTIF focus and lane-level cost control on repeat corridors. | Regional FTL; Fast turnaround; Live visibility | OTIF & cost per lane |
-| Retail Distribution | DC-to-store and hub distribution with traceability and schedule discipline. | Multi-drop routing; Schedule adherence; ePOD confirmation | OTIF to DC and store |
+| Port & Container Road | Port↔city and city↔port container road legs with plant and port windows. | 32/40 ft trailers; Port & plant windows; ICD/CFS legs | Port ↔ city · sealed road legs |
 | Industrial Logistics | Complex multi-plant freight for industrial shippers managing nationwide supply chains. | Contract + spot mix; Multi-stop routing; Enterprise account management | Multi-plant complexity |
 
 ### Trust band
@@ -482,7 +482,7 @@ Bullets: Dispatch dashboard · Driver & vehicle management · Trip lifecycle & b
 | `chemicals` | Chemicals |
 | `manufacturing` | Manufacturing |
 | `fmcg` | FMCG |
-| `retail-distribution` | Retail Distribution |
+| `container-transport` | Port & Container Road |
 | `industrial-logistics` | Industrial Logistics |
 
 Alias: `/industries/mining` → `/industries/coal-mining`

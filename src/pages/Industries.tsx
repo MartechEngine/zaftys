@@ -1,7 +1,6 @@
-import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { CheckCircle, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
+import { ArrowRight, CheckCircle2 } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import SEO from "@/components/SEO";
 import { PageHero } from "@/components/PageHero";
 import heroIndustries from "@/assets/hero-industries.jpg";
@@ -10,34 +9,39 @@ import { heroMailBodies, heroMailSubjects } from "@/lib/hero-ctas";
 import { HeroEmailButton } from "@/components/HeroEmailButton";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { CTAGroup } from "@/components/CTAGroup";
-import ResponsiveImage from "@/components/ResponsiveImage";
 import { pageSeo } from "@/lib/page-seo";
-import { pageHeroCopy } from "@/lib/page-hero-copy";
-import { industryHubCards } from "@/lib/industries-data";
+import { industryHubCardsOrdered } from "@/lib/industries-data";
+import { industriesHubCopy, industriesHubFeaturedSlugs, industriesHubIndexOrder } from "@/lib/industries-hub-copy";
 import { breadcrumbSchema, organizationSchema } from "@/lib/schema";
+import { paths } from "@/lib/site-paths";
+import { cn } from "@/lib/utils";
 
 const Industries = () => {
-  const industries = industryHubCards();
+  const all = industryHubCardsOrdered(industriesHubIndexOrder);
+  const featured = industriesHubFeaturedSlugs
+    .map((slug) => all.find((i) => i.slug === slug))
+    .filter((i): i is NonNullable<typeof i> => Boolean(i));
+  const copy = industriesHubCopy;
 
   return (
     <div className="min-h-screen bg-background font-sans">
       <SEO
         title={pageSeo.industries.title}
         description={pageSeo.industries.description}
-        canonical="/industries"
+        canonical={paths.industries}
         schema={[
           organizationSchema,
           breadcrumbSchema([
             { name: "Home", path: "/" },
-            { name: "Industries", path: "/industries" },
+            { name: "Industries", path: paths.industries },
           ]),
         ]}
       />
 
       <PageHero
-        badge={pageHeroCopy.industries.badge}
-        title={pageHeroCopy.industries.h1}
-        description={pageHeroCopy.industries.lead}
+        badge={copy.hero.badge}
+        title={copy.hero.h1}
+        description={copy.hero.lead}
         imageSrc={heroIndustries}
         imageAlt={pageHeroAlts.industries}
       >
@@ -47,89 +51,119 @@ const Industries = () => {
             subject={heroMailSubjects.industryHub}
             body={heroMailBodies.industryHub}
           />
-          <Link to="/services">
-            <Button size="lg" variant="on-dark-outline">Explore Services</Button>
+          <Link to={paths.logistics.hub}>
+            <Button size="lg" variant="on-dark-outline">
+              Transportation
+            </Button>
           </Link>
         </CTAGroup>
       </PageHero>
 
-      <section className="section-padding bg-muted/30">
-        <div className="container mx-auto container-padding">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-heading font-bold mb-4 text-navy">Work we already know</h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Same three products on every vertical. Own fleet, ZAFTYS TMS, and TranZfort. The truck class and the gate rules change.
-            </p>
-          </div>
+      {featured.map((industry, i) => {
+        const flip = i % 2 === 1;
+        return (
+          <section key={industry.slug} className="border-t border-border bg-[#f3f5f8]">
+            <div
+              className={cn(
+                "mx-auto grid max-w-7xl items-stretch lg:grid-cols-2",
+                flip && "lg:[&>*:first-child]:order-2",
+              )}
+            >
+              <div className="relative min-h-[220px] lg:min-h-[300px]">
+                <img
+                  src={industry.image}
+                  alt={`${industry.title} logistics by ZAFTYS`}
+                  className="absolute inset-0 h-full w-full object-cover"
+                  loading="lazy"
+                  decoding="async"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-navy/45 via-navy/10 to-transparent" />
+                <p className="absolute bottom-5 left-5 font-heading text-sm font-bold tracking-[0.2em] text-white drop-shadow-sm">
+                  {String(i + 1).padStart(2, "0")}
+                </p>
+              </div>
+              <div className="flex flex-col justify-center px-6 py-10 md:px-10">
+                <h2 className="mb-3 font-heading text-3xl font-bold text-navy">{industry.title}</h2>
+                <p className="mb-4 text-muted-foreground">{industry.description}</p>
+                <ul className="mb-5 space-y-2">
+                  {industry.features.map((f) => (
+                    <li key={f} className="flex gap-2 text-sm text-muted-foreground">
+                      <CheckCircle2 className="mt-0.5 shrink-0 text-primary" size={16} />
+                      {f}
+                    </li>
+                  ))}
+                </ul>
+                <Link
+                  to={`${paths.industries}/${industry.slug}`}
+                  className="inline-flex items-center text-sm font-semibold text-primary hover:underline"
+                >
+                  {industry.highlight} <ArrowRight className="ml-1.5" size={14} />
+                </Link>
+              </div>
+            </div>
+          </section>
+        );
+      })}
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-            {industries.map((industry) => (
-              <Link key={industry.slug} to={`/industries/${industry.slug}`}>
-                <Card className="border-none shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1 group bg-white overflow-hidden flex flex-col h-full">
-                  <ResponsiveImage
+      <section className="bg-white px-5 py-14 md:px-8 md:py-16">
+        <div className="mx-auto max-w-7xl">
+          <h2 className="mb-2 font-heading text-3xl font-bold text-navy">{copy.all.h2}</h2>
+          <p className="mb-8 max-w-2xl text-muted-foreground">{copy.all.lead}</p>
+          <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
+            {all.map((industry) => (
+              <Link
+                key={industry.slug}
+                to={`${paths.industries}/${industry.slug}`}
+                className="group overflow-hidden rounded-xl border border-border bg-[#f3f5f8] transition-colors hover:border-primary/40 hover:bg-white"
+              >
+                <div className="relative h-24 overflow-hidden sm:h-28">
+                  <img
                     src={industry.image}
-                    alt={`${industry.title} logistics by ZAFTYS Logistics`}
-                    aspectRatio="2/1"
-                    objectFit="cover"
-                    imgClassName="object-center"
+                    alt=""
+                    className="h-full w-full object-cover transition duration-300 group-hover:scale-[1.03]"
+                    loading="lazy"
+                    decoding="async"
                   />
-                  <CardContent className="p-6 flex flex-col h-full">
-                    <h3 className="text-lg font-heading font-bold mb-2 text-navy group-hover:text-primary transition-colors">
-                      {industry.title}
-                    </h3>
-                    <p className="text-muted-foreground text-sm mb-4 leading-relaxed flex-grow">{industry.description}</p>
-                    <div className="space-y-2 mb-4 pt-4 border-t border-border/50">
-                      {industry.features.map((feature) => (
-                        <div key={feature} className="flex items-start gap-2">
-                          <CheckCircle className="text-accent mt-0.5 shrink-0" size={14} />
-                          <span className="text-xs text-foreground font-medium">{feature}</span>
-                        </div>
-                      ))}
-                    </div>
-                    <div className="bg-secondary/50 rounded-lg p-2 text-center flex items-center justify-center gap-1">
-                      <span className="font-bold text-primary text-xs">{industry.highlight}</span>
-                      <ArrowRight className="text-primary opacity-0 group-hover:opacity-100 transition-opacity" size={12} />
-                    </div>
-                  </CardContent>
-                </Card>
+                  <div className="absolute inset-0 bg-gradient-to-t from-navy/50 to-transparent" />
+                </div>
+                <div className="p-3 md:p-4">
+                  <p className="font-heading text-sm font-bold text-navy md:text-base">{industry.title}</p>
+                  <p className="mt-1 text-xs text-muted-foreground">{industry.highlight}</p>
+                </div>
               </Link>
             ))}
           </div>
-        </div>
-      </section>
-
-      <section className="section-padding bg-white">
-        <div className="container mx-auto container-padding">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-            {[
-              { title: "The right class", desc: "LCV, heavy, container, tanker, or bulker, matched to the cargo, not a one-truck story." },
-              { title: "Marketplace cover", desc: "TranZfort when you need a truck we do not have that day. Listing and search are free. Broker fee on trucker bookings." },
-              { title: "Same TMS", desc: "Contracted trips can sit in ZAFTYS TMS so the plant is not chasing WhatsApp." },
-            ].map((item) => (
-              <div key={item.title} className="text-center p-6 rounded-lg border border-border bg-muted/10">
-                <h3 className="text-lg font-bold text-navy mb-2">{item.title}</h3>
-                <p className="text-sm text-muted-foreground">{item.desc}</p>
-              </div>
-            ))}
+          <div className="mt-10 flex flex-wrap gap-4">
+            <Link
+              to={paths.logistics.hub}
+              className="inline-flex items-center text-sm font-semibold text-primary hover:underline"
+            >
+              Transportation services <ArrowRight className="ml-1.5" size={14} />
+            </Link>
+            <Link to={paths.fleet} className="inline-flex items-center text-sm font-semibold text-primary hover:underline">
+              Own + Network Fleet <ArrowRight className="ml-1.5" size={14} />
+            </Link>
           </div>
         </div>
       </section>
 
-      <section className="py-20 bg-primary text-white text-center">
+      <section className="bg-primary py-16 text-center text-white md:py-20">
         <div className="container mx-auto container-padding">
-          <h2 className="text-4xl font-heading font-bold mb-6">Get a Quote for Your Industry</h2>
-          <p className="text-gray-200 mb-8 max-w-xl mx-auto">Tell us your corridor, load type, and volume on WhatsApp.</p>
+          <h2 className="mb-4 font-heading text-3xl font-bold md:text-4xl">{copy.finalCta.h2}</h2>
+          <p className="mx-auto mb-8 max-w-xl text-lg text-gray-200">{copy.finalCta.lead}</p>
           <CTAGroup>
-            <WhatsAppButton label="Chat on WhatsApp" />
+            <HeroEmailButton
+              label="Discuss Your Industry Needs"
+              subject={heroMailSubjects.industryHub}
+              body={heroMailBodies.industryHub}
+            />
+            <WhatsAppButton label="Chat on WhatsApp" placement="industries-hub-cta" />
+            <Link to={paths.logistics.hub}>
+              <Button size="lg" variant="on-dark-outline">
+                Transportation
+              </Button>
+            </Link>
           </CTAGroup>
-          <p className="mt-8 text-sm text-gray-300">
-            Also see{" "}
-            <Link to="/services" className="underline hover:text-white">services</Link>
-            {", "}
-            <Link to="/zaftys-tms" className="underline hover:text-white">ZAFTYS TMS</Link>
-            {", and "}
-            <Link to="/tranzfort-network" className="underline hover:text-white">TranZfort marketplace</Link>.
-          </p>
         </div>
       </section>
     </div>

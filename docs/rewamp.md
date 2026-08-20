@@ -304,7 +304,7 @@ Leaf pages remain for SEO. Footer Intelligence column lists all four modules.
 
 **Hub page:** industry tiles for all verticals. No industry slugs in header nav.
 
-**Existing slugs:** `cement`, `steel-metals`, `coal-mining`, `manufacturing`, `chemicals`, `fmcg`, `retail-distribution`, `industrial-logistics`
+**Existing slugs:** `cement`, `container-transport`, `steel-metals`, `coal-mining`, `manufacturing`, `chemicals`, `fmcg`, `industrial-logistics` (retail distribution removed — not in scope; old URLs redirect to FMCG)
 
 Update hub copy: remove “same three products” language.
 

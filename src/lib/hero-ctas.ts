@@ -45,7 +45,7 @@ export const heroCtaGuide = {
   services: { primary: "Get a Freight Quote → email", secondary: "Match Truck & Material → anchor" },
   fleet: { primary: "Check Fleet Availability → email", secondary: "Explore Services → /services" },
   network: { primary: "Request Additional Capacity → email", secondary: "Become a Partner → /partner" },
-  industries: { primary: "Discuss Your Industry Needs → email", secondary: "Explore Services → /services" },
+  industries: { primary: "Discuss Your Industry Needs → email", secondary: "Transportation → /logistics" },
   industryDetail: { primary: "Get a Quote → email", secondary: "Talk to Our Team → /contact" },
   about: { primary: "Work With ZAFTYS → email", secondary: "Explore Services → /services" },
   contact: { primary: "Email Our Team → email", secondary: "Send a Message → form" },

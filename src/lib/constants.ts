@@ -165,15 +165,15 @@ export const vehicleClasses = [
   },
 ] as const;
 
-/** 8 industries  -  2 rows x 4 cols on desktop */
+/** Industries shown on homepage — keep in sync with industries-data */
 export const homeIndustries = [
   { name: "Cement & Construction", slug: "cement", image: "/images/marketing/industry-cement.jpg" },
-  { name: "Coal & Mining", slug: "coal-mining", image: "/images/services/materials/mining.jpg" },
+  { name: "Port & Container Road", slug: "container-transport", image: "/images/marketing/industry-container.jpg" },
+  { name: "Mining Products", slug: "coal-mining", image: "/images/marketing/industry-coal-mining.jpg" },
   { name: "Steel & Metals", slug: "steel-metals", image: "/images/marketing/industry-steel-metals.jpg" },
-  { name: "Chemicals", slug: "chemicals", image: "/images/marketing/industry-chemicals.jpg" },
   { name: "Manufacturing", slug: "manufacturing", image: "/images/marketing/industry-manufacturing.jpg" },
   { name: "FMCG", slug: "fmcg", image: "/images/marketing/industry-fmcg.jpg" },
-  { name: "Retail Distribution", slug: "retail-distribution", image: "/images/marketing/industry-retail.jpg" },
+  { name: "Chemicals", slug: "chemicals", image: "/images/marketing/industry-chemicals.jpg" },
   { name: "Industrial Logistics", slug: "industrial-logistics", image: "/images/marketing/industry-industrial-logistics.jpg" },
 ] as const;
 
@@ -256,7 +256,7 @@ export const materialTypes = [
   {
     id: "mining",
     title: "Mining & Bulk",
-    description: "Coal, iron ore, limestone, and aggregates on pit-to-plant corridors.",
+    description: "Coal, iron ore, limestone, bauxite, and quarry aggregates on tipper programs.",
   },
   {
     id: "construction",
@@ -275,7 +275,7 @@ export const materialTypes = [
   },
   {
     id: "fmcg",
-    title: "FMCG & Retail",
+    title: "FMCG",
     description: "Regional FTL and commercial LCV with OTIF focus on factory-to-DC and hub lanes.",
   },
   {

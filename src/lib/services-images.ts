@@ -25,7 +25,7 @@ export const materialImages = {
   construction: { src: "/images/services/materials/construction.jpg", alt: "Cement plant and construction materials supply chain" },
   metals: { src: "/images/services/materials/metals.jpg", alt: "Steel coils and metal stock for industrial transport" },
   energy: { src: "/images/services/materials/energy.jpg", alt: "Industrial energy and chemical logistics facility" },
-  fmcg: { src: "/images/services/materials/fmcg.jpg", alt: "Warehouse pallets for FMCG and retail distribution" },
+  fmcg: { src: "/images/services/materials/fmcg.jpg", alt: "Warehouse pallets for FMCG factory-to-DC freight" },
   agriculture: { src: "/images/services/materials/agriculture.jpg", alt: "Agricultural grain and harvest freight" },
 } as const;
 

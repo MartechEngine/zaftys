@@ -46,9 +46,9 @@ export const pageSeo = {
       "ZAFTYS TMS is live TMS software for dispatch, GPS tracking, e-POD, fleet records and shipper visibility. Request a demo or log in at app.zaftys.com.",
   },
   industries: {
-    title: "Industries We Serve | Commercial Freight",
+    title: "Industries We Serve | Cement Containers Mining Steel & More",
     description:
-      "Transport, TMS and TranZfort marketplace for cement, steel, mining, chemicals, manufacturing, FMCG and retail distribution in India.",
+      "Cement, port-to-city containers, mining products, steel coils, chemicals, manufacturing, and FMCG. Plant windows, body class, own fleet first with labeled network overflow.",
   },
   partner: {
     title: "Join TranZfort | Fleet Partner Program",

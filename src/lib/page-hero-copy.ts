@@ -46,9 +46,10 @@ export const pageHeroCopy = {
     lead: "Shippers use the portal for tracking and e-POD. Fleet operators use the same stack for vehicles, drivers, and trip close-out. Login at app.zaftys.com.",
   },
   industries: {
-    badge: "Industries",
-    h1: "From cement plants to retail DCs.",
-    lead: "Different cargo, different truck, same three products. Own fleet, ZAFTYS TMS, and TranZfort. Cement and steel still sit here. So do FMCG and retail.",
+    badge: "Built for industrial freight",
+    h1: "Plant windows. Axle reality. Industry desks.",
+    lead:
+      "We haul for verticals where the wrong body class or a missed gate costs more than the rate. Transportation first — not a three-product brochure per industry.",
   },
   partner: {
     badge: "Fleet owners",

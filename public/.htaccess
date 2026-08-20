@@ -43,7 +43,8 @@ DirectorySlash Off
 
   # Industry slug aliases
   RewriteRule ^industries/mining/?$ /industries/coal-mining [R=301,L,QSA]
-  RewriteRule ^industries/retail/?$ /industries/retail-distribution [R=301,L,QSA]
+  RewriteRule ^industries/retail/?$ /industries/fmcg [R=301,L,QSA]
+  RewriteRule ^industries/retail-distribution/?$ /industries/fmcg [R=301,L,QSA]
 
   # Reports catalog moved off /resources/reports
   RewriteRule ^resources/reports/global-logistics-market-2026-2033/read/?$ /reports/global-logistics-market-2027-2036/read [R=301,L,QSA]

@@ -104,7 +104,7 @@ const Services = () => {
           <div className="text-center mb-10 max-w-2xl mx-auto">
             <h2 className="text-3xl md:text-4xl font-heading font-bold mb-3 text-navy">Match the right asset to the cargo</h2>
             <p className="text-base md:text-lg text-muted-foreground">
-              Pick a body type or material. LCV pairs with FMCG and retail. Tippers and open body pair with bulk. Tankers pair with energy and chemicals.
+              Pick a body type or material. LCV pairs with FMCG factory-to-DC. Tippers and open body pair with bulk. Tankers pair with energy and chemicals.
             </p>
           </div>
           <TransportationExplorer />

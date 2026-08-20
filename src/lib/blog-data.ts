@@ -2338,7 +2338,7 @@ export const blogPosts: readonly BlogPost[] = [
       {
         heading: "Chassis configurations and axle norms",
         paragraphs: [
-          "Wrong chassis choice wastes cubic capacity or invites Motor Vehicles Act Section 194 overloading exposure. Dense engineering goods want 20ft ISO capacity. High-volume domestic retail often wants 32ft single-axle (SXL) or multi-axle (MXL) rigid bodies. EXIM ocean work lives on 40ft and 40ft high-cube (HQ) tractor-trailers. Reefers and over-dimensional cargo (ODC) need their own tare weight and permit math.",
+          "Wrong chassis choice wastes cubic capacity or invites Motor Vehicles Act Section 194 overloading exposure. Dense engineering goods want 20ft ISO capacity. High-volume domestic packaged FTL often wants 32ft single-axle (SXL) or multi-axle (MXL) rigid bodies. EXIM ocean work lives on 40ft and 40ft high-cube (HQ) tractor-trailers. Reefers and over-dimensional cargo (ODC) need their own tare weight and permit math.",
           "Ministry of Road Transport and Highways (MoRTH) gazette notifications define legal gross vehicle weight (GVW) by axle and tyre layout, in metric tonnes. A 32ft SXL on six tyres is not a 40ft HQ on eighteen tyres. Weighbridge lock before the highway is cheaper than roadside offloading.",
           "Use the payload bar chart as a planning aid, not a dispatch plate. Confirm OEM ratings and state Regional Transport Office (RTO) practice. When in doubt, treat the lower payload band as the working limit and keep a buffer for dunnage, twist locks, and fuel.",
         ],
