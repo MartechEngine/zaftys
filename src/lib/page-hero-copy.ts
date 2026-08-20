@@ -5,10 +5,10 @@
  */
 export const pageHeroCopy = {
   logistics: {
-    badge: "ZAFTYS Logistics",
+    badge: "Transportation & Logistics",
     h1: "Reliable transportation capacity for demanding freight.",
-    lead: "3PL transportation and contract logistics for industrial and commercial freight. Owned heavy-vehicle capacity, verified partner network, and the TMS we dispatch on.",
-  },
+    lead: "ZAFTYS executes 3PL and contract transportation for industrial and commercial freight. Owned heavy vehicles, contract programs, verified partner overflow, and the TMS we dispatch on — one desk.",
+  }, // Body sections: src/lib/logistics-hub-copy.ts
   networkHub: {
     badge: "Transportation Network",
     h1: "ZAFTYS operates. Tranzfort connects.",

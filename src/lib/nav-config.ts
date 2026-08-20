@@ -24,6 +24,10 @@ export type HeaderNavEntry = NavDropdown | NavFlatLink;
  * Primary header navigation.
  * Order: Logistics → Platform → Intelligence → Industries (flat) → Company → Resources
  * No "Overview" rows in any dropdown.
+ *
+ * Logistics (locked 20 Aug 2026): Transportation + Our Fleet only.
+ * Service SKUs (3PL, contract, industrial, container) are sections on `/logistics`.
+ * Leaf URLs remain for SEO / footer deep links.
  */
 export const headerNav: readonly HeaderNavEntry[] = [
   {
@@ -32,10 +36,7 @@ export const headerNav: readonly HeaderNavEntry[] = [
     label: "Logistics",
     hubPath: paths.logistics.hub,
     items: [
-      { name: "3PL Transportation", path: paths.logistics.threePl },
-      { name: "Contract Logistics", path: paths.logistics.contract },
-      { name: "Industrial Freight", path: paths.logistics.industrial },
-      { name: "Container Transportation", path: paths.logistics.container },
+      { name: "Transportation", path: paths.logistics.hub },
       { name: "Our Fleet", path: paths.fleet },
     ],
   },
@@ -94,11 +95,11 @@ export const footerColumns = [
   {
     title: "Logistics",
     links: [
-      { name: "3PL Transportation", path: paths.logistics.threePl },
-      { name: "Contract Logistics", path: paths.logistics.contract },
-      { name: "Dedicated Fleet", path: paths.logistics.dedicated },
-      { name: "Industrial Freight", path: paths.logistics.industrial },
+      { name: "Transportation", path: paths.logistics.hub },
       { name: "Our Fleet", path: paths.fleet },
+      { name: "Contract Logistics", path: paths.logistics.contract },
+      { name: "Industrial Freight", path: paths.logistics.industrial },
+      { name: "Container Transportation", path: paths.logistics.container },
     ],
   },
   {

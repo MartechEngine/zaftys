@@ -58,13 +58,13 @@ ZAFTYS
 [Logo]  Logistics ▾  Platform ▾  Intelligence  Industries  Company ▾  Resources ▾  [Login]  [Request Transportation]
 ```
 
-**Counts:** 6 top-level labels · 4 dropdowns · 2 flat links · 15 submenu items · 2 header actions
+**Counts:** 6 top-level labels · 4 dropdowns · 2 flat links · **12 submenu items** · 2 header actions
 
 #### Dropdown menus
 
 | Menu | Hub (parent label click) | Sub-items |
 |------|--------------------------|-----------|
-| **Logistics** | `/logistics` | 3PL Transportation · Contract Logistics · Industrial Freight · Container Transportation · Our Fleet |
+| **Logistics** | `/logistics` | **Transportation** · **Our Fleet** |
 | **Platform** | `/technology` | ZAFTYS TMS · Tranzfort · Tracking & Visibility · Fleet Management |
 | **Company** | `/about` | About · Contact · Careers · Become a Partner |
 | **Resources** | `/resources` | Blog · Market Reports |
@@ -84,7 +84,7 @@ ZAFTYS
 4. **No industry verticals** in header — Industries is one link.
 5. **Partner** only under Company, not Platform.
 6. **Platform** includes Tranzfort (`/network/tranzfort`) even though URL lives under `/network/`.
-7. **Dedicated Fleet** is not in header — page exists at `/logistics/dedicated-fleet`; linked from footer and contract logistics content.
+7. **Logistics submenu is Transportation + Our Fleet only** — 3PL, contract, dedicated, industrial, and container are **sections on `/logistics`**. Leaf URLs remain for SEO and footer.
 8. **Logistics APIs** is not in header — footer Platform column only.
 
 #### Why Intelligence stays top-level (not under Platform)
@@ -109,7 +109,7 @@ Footer is deeper than header. Source: `footerColumns` in `src/lib/nav-config.ts`
 
 | Column | Links |
 |--------|-------|
-| **Logistics** | 3PL · Contract · Dedicated Fleet · Industrial · Our Fleet |
+| **Logistics** | Transportation · Our Fleet · Contract · Industrial · Container |
 | **Platform** | TMS · Tranzfort · Tracking · Fleet Management · APIs · Login |
 | **Intelligence** | Analytics · Freight Rate Intelligence · Market Intelligence · Supply Chain AI |
 | **Company** | About · Industries · Contact · Careers · Become a Partner |
@@ -470,3 +470,4 @@ Internal team must verify and sign off:
 |------|--------|------|
 | 20 Aug 2026 | `rewamp-20-8-26` | Plan doc, branch, nav IA, 4 hubs, 16 leaf pages, Home rewrite, redirects, sitemap |
 | 20 Aug 2026 | `rewamp-20-8-26` | **Header nav locked** — Logistics / Platform / Intelligence (flat) / Industries (flat) / Company / Resources |
+| 20 Aug 2026 | `rewamp-20-8-26` | **Logistics IA** — submenu Transportation + Our Fleet; `/logistics` thick Transportation page with service sections |

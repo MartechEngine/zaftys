@@ -75,13 +75,14 @@ Each page entry uses the same fields:
 | **Nav** | Logistics ▾ · Platform ▾ · Intelligence (flat) · Industries (flat) · Company ▾ · Resources ▾ |
 | **Actions** | Login → `/login` · Request Transportation → email CTA |
 | **Parent labels** | Clicking Logistics → `/logistics`; Platform → `/technology`; Company → `/about`; Resources → `/resources` |
+| **Logistics submenu** | Transportation · Our Fleet only (service SKUs are sections on `/logistics`) |
 | **No rows** | “Overview”, “All Resources”, Intelligence submenu, industry slugs in header |
 
 ### Footer (5 columns)
 
 | Column | Links |
 |--------|-------|
-| Logistics | 3PL · Contract · Dedicated Fleet · Industrial · Our Fleet |
+| Logistics | Transportation · Our Fleet · Contract · Industrial · Container |
 | Platform | TMS · Tranzfort · Tracking · Fleet Management · APIs · Login |
 | Intelligence | Analytics · Freight Rates · Market Intelligence · Supply Chain AI |
 | Company | About · Industries · Contact · Careers · Become a Partner |
@@ -151,7 +152,7 @@ Used by: logistics leaves (except fleet), network leaves (except Tranzfort full 
 | Route | Page name | Status | Nav |
 |-------|-----------|--------|-----|
 | `/` | Home | Shipped | — |
-| `/logistics` | Logistics hub | Shipped | Header Logistics ▾ |
+| `/logistics` | Transportation (Logistics hub) | Shipped | Header Logistics ▾ |
 | `/logistics/3pl-transportation` | 3PL Transportation | Shipped | Header |
 | `/logistics/contract-logistics` | Contract Logistics | Shipped | Footer |
 | `/logistics/dedicated-fleet` | Dedicated Fleet | Shipped | Footer |
@@ -400,50 +401,60 @@ Home is a **scroll summary**, not a sitemap. Detail lives on hub pages.
 
 ---
 
-## 2. Logistics hub (`/logistics`)
+## 2. Logistics hub (`/logistics`) — Transportation page
 
 | | |
 |---|---|
-| **Status** | Shipped |
-| **Nav** | Header Logistics ▾ (parent click) |
+| **Status** | Shipped (thick Transportation page — revised 20 Aug 2026) |
+| **Nav** | Header Logistics ▾ → **Transportation** (parent click = same route) |
 | **Meta title** | Logistics Services \| 3PL and Contract Transportation |
 | **Meta description** | ZAFTYS logistics: 3PL transportation, contract logistics, dedicated fleet, industrial freight, and container movements. Owned fleet plus verified network. |
-| **Goal** | Hub for all transportation execution services; drive to leaf pages and fleet proof |
+| **Goal** | Primary shipper page for how ZAFTYS moves freight; sections replace old Logistics submenu SKUs |
+| **Copy source** | `src/lib/logistics-hub-copy.ts` · Page: `src/pages/logistics/LogisticsHub.tsx` |
 
-### Hero
+### Locked section sequence
+
+```text
+01  hero               WHAT + ACT     Promise + Request Transportation + Our Fleet
+02  how-we-move        HOW            Operator pillars (fleet / contract / network)
+03  three-pl           3PL            Full-truckload execution depth
+04  contract           CONTRACT       Contract + dedicated programs (merged)
+05  industrial         INDUSTRIAL     Heavy plant / mill freight
+06  container          CONTAINER      Port / market / city
+07  industries         WHO            4 vertical teasers → /industries
+08  capacity-clarity   PROOF          Owned vs partner labeled
+09  final-cta          ACT            Request Transportation + WhatsApp + Fleet
+```
+
+### Header IA note
+
+Logistics ▾ submenu is **Transportation** + **Our Fleet** only. Leaf routes (`/logistics/3pl-transportation`, contract, dedicated, industrial, container) remain for SEO and footer deep links; they are not header items.
+
+### Section 01 — Hero
 
 | Field | Content |
 |-------|---------|
-| **Badge** | ZAFTYS Logistics |
+| **Badge** | Transportation & Logistics |
 | **H1** | Reliable transportation capacity for demanding freight. |
-| **Lead** | 3PL transportation and contract logistics for industrial and commercial freight. Owned heavy-vehicle capacity, verified partner network, and the TMS we dispatch on. |
-| **Image** | `hero-services.jpg` — alt: “ZAFTYS logistics and transportation services” |
-| **CTA** | Request Transportation · Chat on WhatsApp · Our Fleet → `/fleet` |
+| **Lead** | 3PL and contract execution; owned capacity, contract programs, verified overflow, TMS on trips we run. |
+| **Image** | `hero-services.jpg` |
+| **CTA** | Request Transportation · WhatsApp · Our Fleet → `/fleet` |
+| **Jump links** | how-we-move · three-pl · contract · industrial · container · industries |
 
-### Section — Service cards
+### Sections 03–06 — Service depth
 
-| Field | Content |
-|-------|---------|
-| **H2** | Transportation built around your freight |
-| **Overview** | Same positioning as home logistics block |
-| **Cards (6)** | 3PL · Contract · Dedicated Fleet · Industrial · Container · Our Fleet |
-| **CTA** | Card links only |
+Each block: eyebrow · H2 · lead · 4 bullets · primary mailto CTA · secondary link. Surfaces alternate white / muted.
 
-### Section — Fleet vs network
+| ID | Primary CTA | Secondary |
+|----|-------------|-----------|
+| `three-pl` | Request Transportation | Our Fleet |
+| `contract` | Discuss Your Contract Requirement | Dedicated fleet leaf |
+| `industrial` | Request Transportation | Industries hub |
+| `container` | Request Container Capacity | Network hub |
 
-| Field | Content |
-|-------|---------|
-| **H2** | Our fleet. Our network. Your freight. |
-| **Overview** | Owned + partner capacity clearly labeled |
-| **Image** | `[PLACEHOLDER: logistics-hub-fleet-split.jpg]` |
-| **CTA** | See Our Fleet · Explore Network |
+### Section 07 — Industries · 08 Capacity · 09 Final CTA
 
-### Section — Final CTA
-
-| Field | Content |
-|-------|---------|
-| **H2** | Ready to move your freight? |
-| **CTA** | Request Transportation · WhatsApp |
+Industries: 4 featured tiles. Capacity: fleet vs network CTAs. Final CTA: quote + WhatsApp + Fleet.
 
 ---
 

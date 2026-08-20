@@ -8,7 +8,7 @@ export const pageSeo = {
   logistics: {
     title: "Logistics Services | 3PL and Contract Transportation",
     description:
-      "ZAFTYS logistics: 3PL transportation, contract logistics, dedicated fleet, industrial freight, and container movements. Owned fleet plus verified network.",
+      "FTL 3PL, contract and dedicated fleet, industrial freight, and container road legs. Owned trucks first, labeled partner overflow, plant-window desk, TMS on trips we run.",
   },
   networkHub: {
     title: "Transportation Network | Tranzfort and Partners",
