@@ -3,7 +3,7 @@
  *
  * Page shape (locked): Hero → Services index → Capacity strip → five services (Design A) → Industries → Final CTA
  * Service order (locked Option A): Container → 3PL → Industrial → Contract → Dedicated
- * Service layout: image head + equal 50/50 content cards.
+ * Service layout: image head + equal 50/50 content cards + suitable-fleet strip.
  * No invented metrics, logos, or corridor counts.
  */
 
@@ -33,11 +33,6 @@ export const logisticsHubCopy = {
     title: "3PL Transportation",
     image: "/images/services/home/transportation.jpg",
     imageAlt: "Heavy truck moving industrial freight on an Indian corridor",
-    visual: {
-      kind: "timeline" as const,
-      label: "Trip ownership",
-      steps: ["Indent", "Allot", "Gate", "POD"],
-    },
     tagline: "Full-truckload execution — not a booking that vanishes after allotment.",
     lead:
       "3PL for ZAFTYS means we execute the trip. Full truckload from origin to destination, vehicle class matched to cargo, GST-compliant billing on contracted moves, and a desk that stays on the lane until delivery documentation closes.",
@@ -64,6 +59,16 @@ export const logisticsHubCopy = {
     ],
     secondary: { label: "See Our Fleet", path: "/fleet" },
     leafPath: "/logistics/3pl-transportation",
+    fleetSuitable: {
+      lead: "FTL allotment matches the cargo: LCV for regional, sealed container for protected freight, open or trailer for industrial loads.",
+      types: [
+        { id: "lcv", label: "LCV", detail: "4W–6W · 0.75–7T · regional" },
+        { id: "open_truck", label: "Open / high-side", detail: "6W–18W · bags, steel, coal" },
+        { id: "container", label: "Container 32 ft", detail: "SXL / MXL · sealed FTL" },
+        { id: "trailer", label: "Trailer / flatbed", detail: "12W–22W · 20–48T line-haul" },
+        { id: "container", label: "Container 20–24 ft", detail: "Lighter sealed · ~7T" },
+      ],
+    },
   },
   contract: {
     id: "contract",
@@ -71,15 +76,6 @@ export const logisticsHubCopy = {
     title: "Contract Logistics",
     image: "/images/blog/planning-industrial-shipments.jpg",
     imageAlt: "Industrial plant freight planning and recurring lane dispatch",
-    visual: {
-      kind: "sla" as const,
-      label: "What the SLA covers",
-      items: [
-        { title: "Reserved capacity", detail: "Trucks held for your weekly corridors" },
-        { title: "Plant windows", detail: "Dispatch timed to gate and bay reality" },
-        { title: "Escalation desk", detail: "One team when the plant slips" },
-      ],
-    },
     tagline: "Recurring lanes need reserved capacity — not a fresh hunt every Monday.",
     lead:
       "Contract logistics at ZAFTYS is a long-term transportation program: reserved trucks on the corridors you run every week, SLA tracking, plant-window awareness, and an account desk that already knows your sites.",
@@ -107,6 +103,16 @@ export const logisticsHubCopy = {
     ],
     secondary: { label: "Dedicated Fleet", path: "#dedicated" },
     leafPath: "/logistics/contract-logistics",
+    fleetSuitable: {
+      lead: "A contract locks one body class to the corridor for the SLA window — usually these industrial and plant classes.",
+      types: [
+        { id: "open_truck", label: "Open / high-side", detail: "Plant–market bags & solids" },
+        { id: "trailer", label: "Trailer / flatbed", detail: "Steel, long product, bulk" },
+        { id: "container", label: "Container 32 ft", detail: "Sealed DC / OEM lanes" },
+        { id: "tipper", label: "Tipper", detail: "Aggregates, mining, sand" },
+        { id: "bulker", label: "Bulker", detail: "Cement, fly ash powder" },
+      ],
+    },
   },
   dedicated: {
     id: "dedicated",
@@ -114,15 +120,6 @@ export const logisticsHubCopy = {
     title: "Dedicated Fleet",
     image: "/images/blog/spot-market-vs-dedicated-fleet-india.jpg",
     imageAlt: "Dedicated fleet trucks assigned to a recurring freight program",
-    visual: {
-      kind: "layers" as const,
-      label: "How dedicated capacity is labeled",
-      items: [
-        { title: "Assigned to you", detail: "Trucks and drivers on your program" },
-        { title: "Body type fixed", detail: "Class follows the lane, not the day rate" },
-        { title: "Surge labeled", detail: "Tranzfort overflow never sold as your fleet" },
-      ],
-    },
     tagline: "Your trucks. Your corridors. Your season or year.",
     lead:
       "Dedicated fleet is how a ZAFTYS contract looks when vehicles and drivers are assigned to you. Body type follows the lane — LCV, heavy load, container, tanker, or bulker — with plant-window dispatch and TMS on every contracted trip.",
@@ -150,6 +147,16 @@ export const logisticsHubCopy = {
     ],
     secondary: { label: "See Our Fleet", path: "/fleet" },
     leafPath: "/logistics/dedicated-fleet",
+    fleetSuitable: {
+      lead: "Dedicated means the assigned body type stays fixed — including LCV feeder, sealed container, or tanker when the cargo demands it.",
+      types: [
+        { id: "lcv", label: "LCV", detail: "Assigned regional / feeder" },
+        { id: "container", label: "Container", detail: "Sealed plant–DC program" },
+        { id: "trailer", label: "Trailer / flatbed", detail: "Heavy industrial lanes" },
+        { id: "bulker", label: "Bulker", detail: "Powder cement / fly ash" },
+        { id: "tanker", label: "Tanker", detail: "Liquids · quoted per cargo" },
+      ],
+    },
   },
   industrial: {
     id: "industrial",
@@ -157,16 +164,6 @@ export const logisticsHubCopy = {
     title: "Industrial Freight",
     image: "/images/blog/steel-coil-transport-basics.jpg",
     imageAlt: "Steel coil and industrial freight loaded for plant movement",
-    visual: {
-      kind: "matrix" as const,
-      label: "Cargo × truck class",
-      rows: [
-        { cargo: "Steel coils / plates", truck: "Flatbed · multi-axle" },
-        { cargo: "Cement / bulk solids", truck: "Tipper · bulker" },
-        { cargo: "Mining / aggregates", truck: "Tipper · multi-axle" },
-        { cargo: "Project / ODC", truck: "Trailer · specialized" },
-      ],
-    },
     tagline: "Steel, cement, mining, and project cargo — built for plant windows and axle reality.",
     lead:
       "Industrial freight is where generic FTL breaks. Coils need the right flatbed and securing. Cement and bulk need tippers and bulkers that survive the plant queue. Mining lanes need weighbridge discipline. ZAFTYS runs these movements as an operator that already lives in that world.",
@@ -194,6 +191,16 @@ export const logisticsHubCopy = {
     ],
     secondary: { label: "Industries we serve", path: "/industries" },
     leafPath: "/logistics/industrial-freight",
+    fleetSuitable: {
+      lead: "Match body class to cargo: steel on flatbed, bagged solids on open/high-side, loose bulk on tipper, powder on bulker, oversize on low bed.",
+      types: [
+        { id: "trailer", label: "Flatbed trailer", detail: "Coils, plates, long steel" },
+        { id: "open_truck", label: "Open / high-side", detail: "Bagged cement, TMT, coal" },
+        { id: "tipper", label: "Tipper", detail: "Ore, sand, aggregates" },
+        { id: "bulker", label: "Bulker", detail: "Cement / fly ash powder" },
+        { id: "odc", label: "ODC / low bed", detail: "Machinery · permits" },
+      ],
+    },
   },
   container: {
     id: "container",
@@ -201,11 +208,6 @@ export const logisticsHubCopy = {
     title: "Container Transportation",
     image: "/images/blog/container-trucking-logistics-india.jpg",
     imageAlt: "Container trailer moving sealed freight on a port corridor",
-    visual: {
-      kind: "corridor" as const,
-      label: "Road corridor we own",
-      steps: ["Port / CFS", "Factory bay", "Inland market"],
-    },
     tagline: "Port to factory, factory to port, port to market — sealed freight on corridors we run.",
     lead:
       "Container transportation for ZAFTYS is road execution between ports, warehouses, factories, and inland markets. We move containers and sealed freight on trailers suited to the corridor, with trip visibility on contracted moves and partner overflow when the yard needs more wheels than we own that day.",
@@ -233,6 +235,16 @@ export const logisticsHubCopy = {
     ],
     secondary: { label: "Explore Network", path: "/network" },
     leafPath: "/logistics/container-transportation",
+    fleetSuitable: {
+      lead: "India container road legs run on sealed body sizes and chassis trailers — 32 ft is the domestic FTL workhorse; 40 ft for EXIM ISO.",
+      types: [
+        { id: "container", label: "20–24 ft", detail: "Local / regional sealed · ~7T" },
+        { id: "container", label: "32 ft SXL / MXL", detail: "Domestic FTL backbone" },
+        { id: "container", label: "40 / 40 HC", detail: "EXIM ISO · port–plant" },
+        { id: "trailer", label: "Skeletal / trailer", detail: "ISO chassis · CFS–factory" },
+        { id: "lcv", label: "LCV closed", detail: "Short sealed feeder" },
+      ],
+    },
   },
   industries: {
     eyebrow: "Who we serve",

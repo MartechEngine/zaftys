@@ -1,6 +1,7 @@
+import { useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { MapPin, Gauge, Shield, Wrench, Leaf, Radio, ArrowRight } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import SEO from "@/components/SEO";
 import { PageHero } from "@/components/PageHero";
 import heroFleet from "@/assets/hero-fleet.jpg";
@@ -17,6 +18,16 @@ import { pageHeroCopy } from "@/lib/page-hero-copy";
 import { truckImageForId } from "@/lib/services-images";
 
 const Fleet = () => {
+  const { hash } = useLocation();
+
+  useEffect(() => {
+    if (!hash) return;
+    const id = hash.replace(/^#/, "");
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.scrollIntoView({ behavior: "smooth", block: "start" });
+  }, [hash]);
+
   const features = [
     { icon: MapPin, title: "Operational visibility", desc: "Shipment progress connected through ZAFTYS TMS on active lanes." },
     { icon: Gauge, title: "Fleet readiness", desc: "Structured inspections and dispatch planning before every journey." },
@@ -93,8 +104,9 @@ const Fleet = () => {
             const img = truckImageForId(item.imageId);
             return (
               <article
+                id={item.id}
                 key={item.id}
-                className="grid grid-cols-1 sm:grid-cols-[11rem_1fr] overflow-hidden rounded-xl border border-border bg-white shadow-md"
+                className="scroll-mt-28 grid grid-cols-1 sm:grid-cols-[11rem_1fr] overflow-hidden rounded-xl border border-border bg-white shadow-md"
               >
                 <div className="bg-black">
                   <ResponsiveImage

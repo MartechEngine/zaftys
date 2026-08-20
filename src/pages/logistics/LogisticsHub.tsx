@@ -2,9 +2,15 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import {
   ArrowRight,
+  ArrowUpFromLine,
   CheckCircle2,
   Container,
+  Cylinder,
   Factory,
+  Layers,
+  Maximize2,
+  Package,
+  Droplets,
   Route,
   Shield,
   Truck,
@@ -40,12 +46,16 @@ const serviceIcons: Record<string, LucideIcon> = {
   container: Container,
 };
 
-type ServiceVisual =
-  | (typeof logisticsHubCopy.threePl)["visual"]
-  | (typeof logisticsHubCopy.contract)["visual"]
-  | (typeof logisticsHubCopy.dedicated)["visual"]
-  | (typeof logisticsHubCopy.industrial)["visual"]
-  | (typeof logisticsHubCopy.container)["visual"];
+const fleetTypeIcons: Record<string, LucideIcon> = {
+  lcv: Package,
+  open_truck: Truck,
+  trailer: Layers,
+  container: Container,
+  bulker: Cylinder,
+  tipper: ArrowUpFromLine,
+  odc: Maximize2,
+  tanker: Droplets,
+};
 
 type ServiceBlock = {
   id: string;
@@ -60,10 +70,13 @@ type ServiceBlock = {
   outcomes: readonly string[];
   image: string;
   imageAlt: string;
-  visual: ServiceVisual;
   cta: "quote" | "contract" | "container";
   secondary: { label: string; path: string };
   leafPath: string;
+  fleetSuitable: {
+    lead: string;
+    types: readonly { id: string; label: string; detail: string }[];
+  };
 };
 
 const serviceBlocks: ServiceBlock[] = [
@@ -132,6 +145,87 @@ function ServiceCtas({ block }: { block: ServiceBlock }) {
           {block.secondary.label} <ArrowRight className="ml-1.5" size={14} />
         </Link>
       )}
+    </div>
+  );
+}
+
+type FleetSuitableType = ServiceBlock["fleetSuitable"]["types"][number];
+
+function FleetTypeTile({ type, interactive = true }: { type: FleetSuitableType; interactive?: boolean }) {
+  const Icon = fleetTypeIcons[type.id] ?? Truck;
+  return (
+    <Link
+      to={`${paths.fleet}#${type.id}`}
+      tabIndex={interactive ? undefined : -1}
+      className="group flex w-[7.75rem] flex-col items-center rounded-xl border border-border bg-[#f3f5f8] px-3 py-4 text-center transition-colors hover:border-primary/40 hover:bg-white md:w-[8.5rem] md:px-3.5 md:py-5"
+    >
+      <span className="mb-3 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-navy text-white transition-colors group-hover:bg-primary md:h-14 md:w-14">
+        <Icon size={24} strokeWidth={1.75} aria-hidden />
+      </span>
+      <span className="font-heading text-sm font-bold leading-snug text-navy">{type.label}</span>
+      <span className="mt-1.5 text-[11px] leading-snug text-muted-foreground md:text-xs">{type.detail}</span>
+    </Link>
+  );
+}
+
+/** One equal-width half of the marquee — types repeated so the strip always fills wide screens. */
+function FleetMarqueeSegment({
+  types,
+  interactive,
+  labelled,
+}: {
+  types: readonly FleetSuitableType[];
+  interactive: boolean;
+  labelled?: boolean;
+}) {
+  // Two passes keep each half wider than typical viewports so -50% never shows a gap.
+  const items = [...types, ...types];
+  return (
+    <ul
+      className="flex shrink-0 gap-3 pr-3 md:gap-4 md:pr-4"
+      aria-hidden={labelled ? undefined : true}
+      aria-label={labelled ? "Suitable fleet types" : undefined}
+    >
+      {items.map((type, i) => (
+        <li key={`${interactive ? "a" : "b"}-${type.id}-${type.label}-${i}`} className="shrink-0">
+          <FleetTypeTile type={type} interactive={interactive && i < types.length} />
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+function FleetSuitableScroller({ types }: { types: readonly FleetSuitableType[] }) {
+  if (types.length === 0) return null;
+
+  const canLoop = types.length > 1;
+  // Steady ~one tile / ~3.5s feel regardless of how many body classes we list.
+  const durationSec = Math.max(28, types.length * 7);
+
+  return (
+    <div className="relative overflow-hidden">
+      <div
+        className="pointer-events-none absolute inset-y-0 left-0 z-10 w-8 bg-gradient-to-r from-white via-white/80 to-transparent md:w-14"
+        aria-hidden
+      />
+      <div
+        className="pointer-events-none absolute inset-y-0 right-0 z-10 w-8 bg-gradient-to-l from-white via-white/80 to-transparent md:w-14"
+        aria-hidden
+      />
+
+      <div className="py-5 md:py-6">
+        <div
+          className={cn(
+            "flex w-max will-change-transform",
+            canLoop &&
+              "animate-scroll-rtl hover:[animation-play-state:paused] focus-within:[animation-play-state:paused] motion-reduce:animate-none",
+          )}
+          style={canLoop ? { animationDuration: `${durationSec}s` } : undefined}
+        >
+          <FleetMarqueeSegment types={types} interactive labelled />
+          {canLoop ? <FleetMarqueeSegment types={types} interactive={false} /> : null}
+        </div>
+      </div>
     </div>
   );
 }
@@ -237,6 +331,24 @@ function ServiceSection({ block }: { block: ServiceBlock }) {
             </article>
           </div>
         </div>
+
+        <article className="mt-5 overflow-hidden rounded-2xl border border-border bg-white shadow-sm md:mt-6 lg:mt-8">
+          <div className="flex flex-col gap-4 border-b border-border/70 px-6 py-5 md:flex-row md:items-end md:justify-between md:gap-8 md:px-8 md:py-6">
+            <div className="max-w-2xl">
+              <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-primary">Suitable fleet</p>
+              <h3 className="mb-2 font-heading text-xl font-bold text-navy md:text-2xl">Body classes for this service</h3>
+              <p className="text-sm leading-relaxed text-muted-foreground md:text-base">{block.fleetSuitable.lead}</p>
+            </div>
+            <Link
+              to={paths.fleet}
+              className="inline-flex shrink-0 items-center text-sm font-semibold text-primary hover:underline"
+            >
+              See full fleet catalog <ArrowRight className="ml-1.5" size={14} />
+            </Link>
+          </div>
+
+          <FleetSuitableScroller types={block.fleetSuitable.types} />
+        </article>
       </div>
     </section>
   );
@@ -340,7 +452,7 @@ const LogisticsHub = () => {
         </div>
       </section>
 
-      {/* Compact capacity strip — replaces How we move + Capacity clarity */}
+      {/* Capacity model */}
       <section id="capacity" aria-label="Capacity model" className="border-b border-border bg-white">
         <div className="container mx-auto container-padding py-8 md:py-10">
           <div className="flex flex-col items-start justify-between gap-6 md:flex-row md:items-center">
@@ -370,7 +482,6 @@ const LogisticsHub = () => {
         <ServiceSection key={block.id} block={block} />
       ))}
 
-      {/* Industries — short strip */}
       <section id="industries" aria-labelledby="logistics-industries-heading" className="scroll-mt-28 bg-white py-12 md:py-16">
         <div className="container mx-auto container-padding">
           <div className="mb-8 flex flex-col items-start justify-between gap-4 md:mb-10 md:flex-row md:items-end">
