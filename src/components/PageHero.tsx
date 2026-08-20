@@ -5,8 +5,11 @@ export type PageHeroProps = {
   badge?: string;
   title: ReactNode;
   description: string;
-  imageSrc: string;
-  imageAlt: string;
+  /** When omitted, render `backdrop` or solid navy */
+  imageSrc?: string;
+  imageAlt?: string;
+  /** Designed visual instead of a photo (used when imageSrc is absent) */
+  backdrop?: ReactNode;
   children?: ReactNode;
   /** Technology page uses left-aligned copy */
   align?: "left" | "center";
@@ -20,7 +23,8 @@ export function PageHero({
   title,
   description,
   imageSrc,
-  imageAlt,
+  imageAlt = "",
+  backdrop,
   children,
   align = "left",
   className,
@@ -36,15 +40,21 @@ export function PageHero({
       )}
     >
       <div className="absolute inset-0">
-        <img
-          src={imageSrc}
-          alt={imageAlt}
-          className="w-full h-full object-cover"
-          loading="eager"
-          fetchPriority="high"
-          decoding="async"
-        />
-        <div className="absolute inset-0 bg-gradient-to-r from-navy via-navy/90 to-navy/60" />
+        {imageSrc ? (
+          <>
+            <img
+              src={imageSrc}
+              alt={imageAlt}
+              className="w-full h-full object-cover"
+              loading="eager"
+              fetchPriority="high"
+              decoding="async"
+            />
+            <div className="absolute inset-0 bg-gradient-to-r from-navy via-navy/90 to-navy/60" />
+          </>
+        ) : (
+          backdrop ?? <div className="absolute inset-0 bg-navy" />
+        )}
       </div>
 
       <div className="container mx-auto container-padding relative z-10">

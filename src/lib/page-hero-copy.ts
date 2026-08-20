@@ -57,9 +57,10 @@ export const pageHeroCopy = {
     lead: "Find loads on corridors you already run. Search is free. We charge a broker fee on booked loads. Verification is not optional: papers, insurance, and a real operating pattern.",
   },
   about: {
-    badge: "Our story",
-    h1: "Trucks first. Then TMS. Then the marketplace.",
-    lead: "Three generations on Indian corridors, based in Amravati. GST-compliant billing. We still move cement and steel. We also move distribution freight, tanker cargo, and container loads, and we sell the system we use.",
+    badge: "About ZAFTYS",
+    h1: "One desk for industrial freight across India.",
+    lead:
+      "Family corridor experience, a formal company since 2024. Own trucks when we have the right vehicle, ZAFTYS TMS on every trip we run, and TranZfort when you need more capacity — always labeled, never blended.",
   },
   contact: {
     badge: "Contact",

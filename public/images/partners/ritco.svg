@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 70" fill="none" role="img" aria-label="RITCO">
+  <path d="M14 54C14 22 30 10 50 10c-10 10-12 20-8 32-12-2-22 4-28 12Z" fill="#1E3A8A"/>
+  <path d="M50 10c14 2 24 14 22 28-4-8-12-14-22-16Z" fill="#DC2626"/>
+  <path d="M42 42c18 2 32-4 38-18 4 12-2 26-20 30-8 0-14-4-18-12Z" fill="#DC2626"/>
+  <text x="92" y="40" font-family="system-ui,Segoe UI,Arial Black,Arial,sans-serif" font-size="32" font-weight="900" font-style="italic" fill="#DC2626">RITCO</text>
+  <text x="96" y="56" font-family="Georgia,Times New Roman,serif" font-size="11" font-style="italic" fill="#1E3A8A">Consider it Done</text>
+</svg>

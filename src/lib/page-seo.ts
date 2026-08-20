@@ -56,9 +56,9 @@ export const pageSeo = {
       "Register your trucks on TranZfort. Search is free. We charge a broker fee on booked loads. Get paid through ZAFTYS on contracted trips.",
   },
   about: {
-    title: "About ZAFTYS | Transport, TMS and Marketplace",
+    title: "About ZAFTYS | Industrial freight desk, fleet & TMS",
     description:
-      "ZAFTYS Logistics, Amravati: own commercial fleet, ZAFTYS TMS, and TranZfort. Post and search are free. Broker fee on trucker bookings. AI-powered matching. GST-compliant operations.",
+      "ZAFTYS: one Amravati desk for industrial freight. Own trucks, ZAFTYS TMS, and labeled TranZfort overflow. Company profile on request.",
   },
   contact: {
     title: "Contact ZAFTYS | Quote, TMS Demo, TranZfort",
