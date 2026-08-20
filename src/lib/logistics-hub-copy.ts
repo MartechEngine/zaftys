@@ -22,9 +22,9 @@ export const logisticsHubCopy = {
       "Pick the service your desk needs. Each section below covers the problem, who it is for, and how we run the lane.",
   },
   capacityStrip: {
-    owned: { label: "Owned fleet", path: "/fleet" },
+    owned: { label: "Own fleet", path: "/fleet#own-fleet" },
     contract: { label: "Contract programs", path: "#contract" },
-    network: { label: "Labeled network", path: "/network" },
+    network: { label: "Network fleet", path: "/fleet#network-fleet" },
     note: "Capacity is never blended silently — what we own, what we reserve, and what partners fill.",
   },
   threePl: {

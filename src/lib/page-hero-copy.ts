@@ -30,9 +30,10 @@ export const pageHeroCopy = {
     lead: "Pick the vehicle class that matches the cargo. We run company trucks on those lanes and use TranZfort when you need more capacity. Contracted trips can sit in ZAFTYS TMS.",
   },
   fleet: {
-    badge: "Company fleet",
-    h1: "We operate the trucks. You hire the class.",
-    lead: "Maintenance, drivers, and dispatch sit with us. The catalog matches TranZfort: LCV through tanker, trailer, tipper, reefer, parcel, and ODC. TranZfort adds verified partners when a lane needs more vehicles than we have that day.",
+    badge: "Fleet capacity",
+    h1: "Own fleet. Network fleet. Same desk.",
+    lead:
+      "Hire a body class for the corridor. We tell you whether the truck is company-operated or verified network capacity — never silently mixed.",
   },
   network: {
     badge: "Marketplace · live",

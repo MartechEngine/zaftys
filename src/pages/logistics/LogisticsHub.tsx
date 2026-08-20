@@ -157,13 +157,17 @@ function FleetTypeTile({ type, interactive = true }: { type: FleetSuitableType; 
     <Link
       to={`${paths.fleet}#${type.id}`}
       tabIndex={interactive ? undefined : -1}
-      className="group flex w-[7.75rem] flex-col items-center rounded-xl border border-border bg-[#f3f5f8] px-3 py-4 text-center transition-colors hover:border-primary/40 hover:bg-white md:w-[8.5rem] md:px-3.5 md:py-5"
+      className="group flex h-[11rem] w-[8rem] flex-col items-center rounded-xl border border-border bg-[#f3f5f8] px-3 py-4 text-center transition-colors hover:border-primary/40 hover:bg-white md:h-[12rem] md:w-[8.75rem] md:px-3.5 md:py-5"
     >
-      <span className="mb-3 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-navy text-white transition-colors group-hover:bg-primary md:h-14 md:w-14">
+      <span className="mb-3 inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-navy text-white transition-colors group-hover:bg-primary md:h-14 md:w-14">
         <Icon size={24} strokeWidth={1.75} aria-hidden />
       </span>
-      <span className="font-heading text-sm font-bold leading-snug text-navy">{type.label}</span>
-      <span className="mt-1.5 text-[11px] leading-snug text-muted-foreground md:text-xs">{type.detail}</span>
+      <span className="line-clamp-2 min-h-[2.5rem] w-full font-heading text-sm font-bold leading-snug text-navy">
+        {type.label}
+      </span>
+      <span className="mt-1.5 line-clamp-2 min-h-[2rem] w-full text-[11px] leading-snug text-muted-foreground md:text-xs">
+        {type.detail}
+      </span>
     </Link>
   );
 }

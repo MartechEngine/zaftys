@@ -13,6 +13,10 @@ export const truckImages = {
   tanker: { src: "/images/services/trucks/tanker.jpg", alt: "Tanker truck for water, chemical, acid, petroleum, and edible oil" },
   container: { src: "/images/services/trucks/container.jpg", alt: "Container and box-body truck for sealed, palletized freight" },
   contract: { src: "/images/services/trucks/contract.jpg", alt: "Dedicated contract fleet trucks in coordinated dispatch" },
+  "side-wall-trailer": {
+    src: "/images/services/trucks/side-wall-trailer.png",
+    alt: "ZAFTYS side wall trailer — company-operated own fleet",
+  },
 } as const;
 
 export const materialImages = {

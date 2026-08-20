@@ -31,9 +31,9 @@ export const pageSeo = {
       "FTL and contract transport across LCV, heavy load, container, tanker and bulker trucks. Own fleet, TranZfort marketplace, and ZAFTYS TMS. Get a quote.",
   },
   fleet: {
-    title: "Company Fleet and Commercial Truck Types",
+    title: "Own Fleet and Network Fleet | Commercial Truck Types",
     description:
-      "ZAFTYS fleet matches the TranZfort picker: LCV, open truck, trailer, container, bulker, tanker, tipper, reefer, parcel, and ODC, with body styles and typical size bands.",
+      "ZAFTYS own fleet: side wall trailer, 32 ft SXL/MXL, 40 ft flat bed, 30T/35T open body (14W/16W). Network fleet via Tranzfort covers LCV through ODC — labeled, never blended.",
   },
   network: {
     title: "TranZfort | AI-Powered Freight Marketplace",
