@@ -12,7 +12,7 @@ export function HomeInsightsSection() {
   return (
     <section id="insights" aria-labelledby="insights-heading" className="section-band bg-surface">
       <div className="section-band-inner">
-        <div className="mb-10 max-w-2xl">
+        <div className="mx-auto mb-10 max-w-2xl text-center">
           <MarketingEyebrow>{insights.eyebrow}</MarketingEyebrow>
           <h2 id="insights-heading" className="font-heading text-3xl font-bold text-navy md:text-4xl">
             {insights.h2}
@@ -20,7 +20,7 @@ export function HomeInsightsSection() {
           <p className="mt-3 text-muted-foreground">{insights.lead}</p>
         </div>
 
-        <div className="mb-12 grid max-w-2xl grid-cols-1 gap-4 sm:grid-cols-2">
+        <div className="mx-auto mb-12 grid max-w-2xl grid-cols-1 gap-4 sm:grid-cols-2">
           <Link to={paths.intelligence.hub} className="group block">
             <MarketingTile className="h-full transition-colors group-hover:border-primary/40">
               <div className="flex gap-4">

@@ -3,11 +3,12 @@
 export const paths = {
   logistics: {
     hub: "/logistics",
-    threePl: "/logistics/3pl-transportation",
-    contract: "/logistics/contract-logistics",
-    dedicated: "/logistics/dedicated-fleet",
-    industrial: "/logistics/industrial-freight",
-    container: "/logistics/container-transportation",
+    /** Service SKUs live as hub sections - hash paths for deep links */
+    threePl: "/logistics#three-pl",
+    contract: "/logistics#contract",
+    dedicated: "/logistics#dedicated",
+    industrial: "/logistics#industrial",
+    container: "/logistics#container",
   },
   network: {
     hub: "/network",
@@ -39,6 +40,15 @@ export const paths = {
   blog: "/blog",
   resources: "/resources",
   login: "/login",
+} as const;
+
+/** Retired thin logistics leaves - SPA + Apache redirects only */
+export const legacyLogisticsLeafPaths = {
+  threePl: "/logistics/3pl-transportation",
+  contract: "/logistics/contract-logistics",
+  dedicated: "/logistics/dedicated-fleet",
+  industrial: "/logistics/industrial-freight",
+  container: "/logistics/container-transportation",
 } as const;
 
 /** @deprecated Use paths.network.tranzfort */

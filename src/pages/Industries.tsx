@@ -107,8 +107,10 @@ const Industries = () => {
 
       <section className="bg-white px-5 py-14 md:px-8 md:py-16">
         <div className="mx-auto max-w-7xl">
-          <h2 className="mb-2 font-heading text-3xl font-bold text-navy">{copy.all.h2}</h2>
-          <p className="mb-8 max-w-2xl text-muted-foreground">{copy.all.lead}</p>
+          <div className="mx-auto mb-8 max-w-2xl text-center">
+            <h2 className="mb-2 font-heading text-3xl font-bold text-navy">{copy.all.h2}</h2>
+            <p className="text-muted-foreground">{copy.all.lead}</p>
+          </div>
           <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
             {all.map((industry) => (
               <Link

@@ -104,9 +104,6 @@ export const footerColumns = [
     links: [
       { name: "Transportation", path: paths.logistics.hub },
       { name: "Our Fleet", path: paths.fleet },
-      { name: "Contract Logistics", path: paths.logistics.contract },
-      { name: "Industrial Freight", path: paths.logistics.industrial },
-      { name: "Container Transportation", path: paths.logistics.container },
     ],
   },
   {

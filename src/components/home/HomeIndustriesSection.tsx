@@ -13,7 +13,7 @@ export function HomeIndustriesSection() {
   return (
     <section id="industries" aria-labelledby="industries-heading" className="section-band bg-white">
       <div className="section-band-inner">
-        <div className="mb-10 max-w-2xl">
+        <div className="mx-auto mb-10 max-w-2xl text-center">
           <MarketingEyebrow>{industries.eyebrow}</MarketingEyebrow>
           <h2 id="industries-heading" className="font-heading text-3xl font-bold text-navy md:text-4xl">
             {industries.h2}
@@ -47,11 +47,13 @@ export function HomeIndustriesSection() {
           ))}
         </div>
 
-        <Link to={paths.industries}>
-          <Button variant="outline-brand">
-            All industries <ArrowRight className="ml-2" size={16} />
-          </Button>
-        </Link>
+        <div className="text-center">
+          <Link to={paths.industries}>
+            <Button variant="outline-brand">
+              All industries <ArrowRight className="ml-2" size={16} />
+            </Button>
+          </Link>
+        </div>
       </div>
     </section>
   );

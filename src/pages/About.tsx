@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { ArrowRight, Eye, FileText, Target } from "lucide-react";
+import { ArrowRight, Eye, FileText, MapPin, Target } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import SEO from "@/components/SEO";
 import { PageHero } from "@/components/PageHero";
@@ -16,7 +16,6 @@ import {
   companyAddress,
 } from "@/lib/constants";
 import { aboutPageCopy, aboutProfileMail } from "@/lib/about-page-copy";
-import { AboutIndiaCorridorMap } from "@/components/about/AboutIndiaCorridorMap";
 import { organizationSchema, localBusinessSchema, breadcrumbSchema } from "@/lib/schema";
 import { paths } from "@/lib/site-paths";
 
@@ -59,16 +58,14 @@ const About = () => {
       {/* Who we are */}
       <section className="border-t border-border bg-white">
         <div className="mx-auto w-full max-w-[90rem] px-5 py-12 md:px-10 md:py-16 lg:px-14">
-          <div className="mb-10 grid gap-6 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)] lg:items-end">
-            <div>
-              <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-primary">
-                {c.story.eyebrow}
-              </p>
-              <h2 className="font-heading text-3xl font-bold text-navy md:text-4xl md:leading-tight">
-                {c.story.h2}
-              </h2>
-            </div>
-            <p className="text-base leading-relaxed text-muted-foreground md:text-lg lg:pb-1">
+          <div className="mx-auto mb-10 max-w-3xl text-center">
+            <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-primary">
+              {c.story.eyebrow}
+            </p>
+            <h2 className="font-heading text-3xl font-bold text-navy md:text-4xl md:leading-tight">
+              {c.story.h2}
+            </h2>
+            <p className="mt-4 text-base leading-relaxed text-muted-foreground md:text-lg">
               {c.story.lead}
             </p>
           </div>
@@ -94,11 +91,13 @@ const About = () => {
       {/* Journey */}
       <section className="border-t border-border bg-surface px-5 py-12 md:px-8 md:py-14">
         <div className="mx-auto max-w-7xl">
-          <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-primary">
-            {c.heritage.eyebrow}
-          </p>
-          <h2 className="mb-2 font-heading text-2xl font-bold text-navy md:text-3xl">{c.heritage.h2}</h2>
-          <p className="mb-10 max-w-2xl text-muted-foreground">{c.heritage.lead}</p>
+          <div className="mx-auto mb-10 max-w-2xl text-center">
+            <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-primary">
+              {c.heritage.eyebrow}
+            </p>
+            <h2 className="mb-2 font-heading text-2xl font-bold text-navy md:text-3xl">{c.heritage.h2}</h2>
+            <p className="text-muted-foreground">{c.heritage.lead}</p>
+          </div>
 
           <div className="relative">
             <div className="pointer-events-none absolute left-0 right-0 top-[1.15rem] hidden h-px bg-gradient-to-r from-primary/30 via-accent/50 to-primary/20 lg:block" />
@@ -125,11 +124,13 @@ const About = () => {
       {/* Ecosystem */}
       <section className="border-t border-border bg-navy px-5 py-12 text-white md:px-8 md:py-14">
         <div className="mx-auto max-w-7xl">
-          <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-accent">
-            {c.operate.eyebrow}
-          </p>
-          <h2 className="mb-2 max-w-2xl font-heading text-3xl font-bold">{c.operate.h2}</h2>
-          <p className="mb-8 max-w-2xl text-gray-300">{c.operate.lead}</p>
+          <div className="mx-auto mb-8 max-w-2xl text-center">
+            <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-accent">
+              {c.operate.eyebrow}
+            </p>
+            <h2 className="mb-2 font-heading text-3xl font-bold">{c.operate.h2}</h2>
+            <p className="text-gray-300">{c.operate.lead}</p>
+          </div>
           <div className="grid gap-4 md:grid-cols-3">
             {c.operate.pillars.map((p, i) => (
               <div
@@ -156,12 +157,14 @@ const About = () => {
       {/* What we solve - problem + how */}
       <section className="border-t border-border bg-white px-5 py-12 md:px-8 md:py-14">
         <div className="mx-auto max-w-7xl">
-          <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-primary">
-            {c.challenges.eyebrow}
-          </p>
-          <h2 className="mb-8 font-heading text-2xl font-bold text-navy md:text-3xl">
-            {c.challenges.h2}
-          </h2>
+          <div className="mx-auto mb-8 max-w-2xl text-center">
+            <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-primary">
+              {c.challenges.eyebrow}
+            </p>
+            <h2 className="font-heading text-2xl font-bold text-navy md:text-3xl">
+              {c.challenges.h2}
+            </h2>
+          </div>
           <ul className="grid gap-4 sm:grid-cols-2">
             {c.challenges.items.map((item, i) => (
               <li key={item.problem} className="border border-border bg-surface p-5 md:p-6">
@@ -176,54 +179,64 @@ const About = () => {
         </div>
       </section>
 
-      {/* Coverage */}
+      {/* Desk */}
       <section className="border-t border-border bg-surface px-5 py-12 md:px-8 md:py-14">
         <div className="mx-auto max-w-7xl">
-          <div className="mb-8 max-w-2xl">
+          <div className="mx-auto mb-10 max-w-2xl text-center">
             <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-primary">
-              {c.coverage.eyebrow}
+              {c.desk.eyebrow}
             </p>
-            <h2 className="font-heading text-2xl font-bold text-navy md:text-3xl">{c.coverage.h2}</h2>
+            <h2 className="font-heading text-2xl font-bold text-navy md:text-3xl">{c.desk.h2}</h2>
+            <p className="mt-3 text-muted-foreground">{c.desk.lead}</p>
           </div>
 
-          <div className="grid items-start gap-8 lg:grid-cols-[1.05fr_0.95fr]">
-            <AboutIndiaCorridorMap />
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {c.desk.points.map((point, i) => (
+              <article
+                key={point.title}
+                className="flex flex-col border border-border bg-white p-6"
+              >
+                <p className="mb-3 font-heading text-xs font-bold tracking-[0.18em] text-accent">
+                  {String(i + 1).padStart(2, "0")}
+                </p>
+                <h3 className="font-heading text-lg font-bold text-navy">{point.title}</h3>
+                <p className="mt-2 flex-1 text-sm leading-relaxed text-muted-foreground">
+                  {point.body}
+                </p>
+              </article>
+            ))}
+          </div>
 
-            <div className="space-y-8 lg:pt-2">
-              <div>
-                <h3 className="mb-3 font-heading text-sm font-bold uppercase tracking-wider text-navy">
-                  Loading hubs
-                </h3>
-                <ul className="space-y-3">
-                  {c.coverage.hubs.map((h) => (
-                    <li key={h.region} className="border-l-2 border-primary/25 pl-3 text-sm">
-                      <span className="font-semibold text-navy">{h.region}: </span>
-                      <span className="text-muted-foreground">{h.places}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              <div>
-                <h3 className="mb-3 font-heading text-sm font-bold uppercase tracking-wider text-navy">
-                  High-frequency corridors
-                </h3>
-                <ul className="space-y-2">
-                  {c.coverage.corridors.map((line) => (
-                    <li key={line} className="flex gap-2 text-sm text-muted-foreground">
-                      <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-accent" />
-                      {line}
-                    </li>
-                  ))}
-                </ul>
-                <Link
-                  to={paths.industries}
-                  className="mt-5 inline-flex items-center text-sm font-semibold text-primary hover:underline"
-                >
-                  Industries we haul for <ArrowRight className="ml-1" size={14} />
-                </Link>
-              </div>
+          <div className="mx-auto mt-10 max-w-3xl border border-border bg-white px-6 py-5 text-center md:px-8">
+            <div className="mb-3 inline-flex h-10 w-10 items-center justify-center border border-border bg-surface text-primary">
+              <MapPin size={18} aria-hidden />
             </div>
+            <p className="font-heading text-sm font-bold text-navy">
+              {companyAddress.line1}, {companyAddress.line2}
+            </p>
+            <p className="mt-1 text-sm text-muted-foreground">{companyAddress.line3}</p>
+            <p className="mt-3 text-sm text-muted-foreground">
+              <a className="font-semibold text-primary hover:underline" href={`tel:${COMPANY_PHONE_TEL}`}>
+                {COMPANY_PHONE_DISPLAY}
+              </a>
+              {" · "}
+              <a className="font-semibold text-primary hover:underline" href={`mailto:${COMPANY_EMAIL}`}>
+                {COMPANY_EMAIL}
+              </a>
+            </p>
           </div>
+
+          <CTAGroup className="mt-8 justify-center">
+            <WhatsAppButton label={c.desk.ctaPrimary} placement="about-desk" />
+            <Link to={paths.fleet}>
+              <Button variant="outline-brand">{c.desk.ctaSecondary}</Button>
+            </Link>
+            <Link to={paths.logistics.hub}>
+              <Button variant="outline-brand">
+                {c.desk.ctaTertiary} <ArrowRight className="ml-2" size={16} />
+              </Button>
+            </Link>
+          </CTAGroup>
         </div>
       </section>
 
@@ -322,8 +335,10 @@ const About = () => {
       {/* Values */}
       <section className="border-t border-border bg-navy px-5 py-12 text-white md:px-8 md:py-16">
         <div className="mx-auto max-w-7xl">
-          <h2 className="mb-2 font-heading text-3xl font-bold md:text-4xl">{c.values.h2}</h2>
-          <p className="mb-8 max-w-2xl text-gray-300">{c.values.lead}</p>
+          <div className="mx-auto mb-8 max-w-2xl text-center">
+            <h2 className="mb-2 font-heading text-3xl font-bold md:text-4xl">{c.values.h2}</h2>
+            <p className="text-gray-300">{c.values.lead}</p>
+          </div>
           <div className="grid gap-px overflow-hidden border border-white/10 bg-white/10 sm:grid-cols-2 lg:grid-cols-4">
             {c.values.items.map((v) => (
               <div key={v.title} className="bg-navy p-5 md:p-6">

@@ -105,21 +105,32 @@ export const aboutPageCopy = {
       },
     ],
   },
-  coverage: {
-    eyebrow: "Corridors & hubs",
-    h2: "Industrial belt presence - West to East, North to South",
-    hubs: [
-      { region: "West / Gujarat", places: "Hazira, Vapi, Dahej, Surat, Ahmedabad, Kandla, Mundra" },
-      { region: "Maharashtra", places: "Mumbai, Pune, Nagpur, Chandrapur, Nashik, Aurangabad" },
-      { region: "Central & East", places: "Indore, Raipur, Bhilai, Haldia, Kolkata, Jamshedpur, Rourkela" },
-      { region: "South", places: "Hyderabad, Bengaluru, Chennai, Hosur, Krishnapatnam" },
+  desk: {
+    eyebrow: "The Amravati desk",
+    h2: "One operational desk - not a booking that vanishes",
+    lead:
+      "Quote, allotment, exceptions, and close-out sit with the same Amravati team. Own capacity and network capacity stay labeled. GST billing on trips contracted through ZAFTYS.",
+    points: [
+      {
+        title: "Named accountability",
+        body: "Indent through POD stays with one desk. You are not bounced between a broker phone and a silent chat thread after allotment.",
+      },
+      {
+        title: "Own vs Network, never blended",
+        body: "Company trucks when we have the right body. Verified TranZfort partners when the lane needs more. Labels stay honest on every trip.",
+      },
+      {
+        title: "TMS on contracted trips",
+        body: "Dispatch, status, and ePOD live on ZAFTYS TMS for trips we run - so plant and finance are not hunting screenshots.",
+      },
+      {
+        title: "HQ you can reach",
+        body: "Old Town, Badnera, Amravati. Phone and WhatsApp hit the same operations desk that runs the lane.",
+      },
     ],
-    corridors: [
-      "Hazira → Pune / Nagpur / Hyderabad",
-      "Mumbai → Bengaluru · Pune → Chennai",
-      "Chandrapur → Mumbai · Gujarat → South India",
-      "Haldia → Bihar / Jharkhand · Maharashtra → Karnataka",
-    ],
+    ctaPrimary: "Talk to the desk",
+    ctaSecondary: "Our Fleet",
+    ctaTertiary: "Transportation",
   },
   clients: {
     eyebrow: "Enterprise logistics",
@@ -153,7 +164,7 @@ export const aboutPageCopy = {
     eyebrow: "Company profile",
     h2: "Want the full company profile?",
     lead:
-      "Ask for the PDF - how we run own fleet, TMS, TranZfort, and corridors with enterprise partners. We’ll send it from the desk.",
+      "Ask for the PDF - how we run own fleet, TMS, TranZfort, and programs with enterprise partners. We will send it from the desk.",
     buttonLabel: "Request company profile",
     note: "Opens a short email to our team.",
   },

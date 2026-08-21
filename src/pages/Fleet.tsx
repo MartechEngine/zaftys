@@ -190,9 +190,11 @@ const Fleet = () => {
       <section id="own-fleet" className="scroll-mt-36 bg-surface">
         <div className="border-b border-border bg-white px-5 py-12 md:px-8 md:py-14">
           <div className="mx-auto max-w-7xl">
-            <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-primary">{copy.own.eyebrow}</p>
-            <h2 className="mb-3 font-heading text-3xl font-bold text-navy md:text-4xl">{copy.own.h2}</h2>
-            <p className="max-w-2xl text-lg text-muted-foreground">{copy.own.lead}</p>
+            <div className="mx-auto max-w-2xl text-center">
+              <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-primary">{copy.own.eyebrow}</p>
+              <h2 className="mb-3 font-heading text-3xl font-bold text-navy md:text-4xl">{copy.own.h2}</h2>
+              <p className="text-lg text-muted-foreground">{copy.own.lead}</p>
+            </div>
           </div>
         </div>
 
@@ -306,9 +308,11 @@ const Fleet = () => {
       <section id="network-fleet" className="scroll-mt-36 bg-navy text-white">
         <div className="px-5 py-12 md:px-8 md:py-14">
           <div className="mx-auto max-w-7xl">
-            <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-accent">{copy.network.eyebrow}</p>
-            <h2 className="mb-3 font-heading text-3xl font-bold md:text-4xl">{copy.network.h2}</h2>
-            <p className="mb-8 max-w-2xl text-lg text-gray-300">{copy.network.lead}</p>
+            <div className="mx-auto mb-8 max-w-2xl text-center">
+              <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-accent">{copy.network.eyebrow}</p>
+              <h2 className="mb-3 font-heading text-3xl font-bold md:text-4xl">{copy.network.h2}</h2>
+              <p className="text-lg text-gray-300">{copy.network.lead}</p>
+            </div>
             <div className="grid gap-4 md:grid-cols-3">
               {copy.network.points.map((card) => (
                 <article key={card.title} className="border border-white/15 bg-white/5 p-5">
@@ -322,8 +326,10 @@ const Fleet = () => {
 
         <div className="border-t border-white/10 bg-surface px-5 py-10 text-navy md:px-8 md:py-12">
           <div className="mx-auto max-w-7xl">
-            <h3 className="mb-2 font-heading text-2xl font-bold">Network catalog - all types</h3>
-            <p className="mb-5 max-w-2xl text-muted-foreground">{copy.network.catalogLead}</p>
+            <div className="mx-auto mb-5 max-w-2xl text-center">
+              <h3 className="mb-2 font-heading text-2xl font-bold">Network catalog - all types</h3>
+              <p className="text-muted-foreground">{copy.network.catalogLead}</p>
+            </div>
 
             <ul className="mb-6 flex flex-wrap gap-2">
               {marketplaceVehicleCatalog.map((t) => (

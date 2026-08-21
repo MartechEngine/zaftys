@@ -25,22 +25,20 @@ export function HomeOperatingModelSection() {
       className="section-band-wide bg-surface"
     >
       <div className="section-band-inner-wide">
-        <div className="mb-10 grid gap-6 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:items-end">
-          <div>
-            <MarketingEyebrow>{operatingModel.eyebrow}</MarketingEyebrow>
-            <h2
-              id="operating-model-heading"
-              className="font-heading text-3xl font-bold text-navy md:text-4xl md:leading-tight"
-            >
-              {operatingModel.h2}
-            </h2>
-          </div>
-          <p className="text-base leading-relaxed text-muted-foreground md:text-lg lg:pb-1">
+        <div className="mx-auto mb-10 max-w-3xl text-center">
+          <MarketingEyebrow>{operatingModel.eyebrow}</MarketingEyebrow>
+          <h2
+            id="operating-model-heading"
+            className="font-heading text-3xl font-bold text-navy md:text-4xl md:leading-tight"
+          >
+            {operatingModel.h2}
+          </h2>
+          <p className="mt-4 text-base leading-relaxed text-muted-foreground md:text-lg">
             {operatingModel.lead}
           </p>
         </div>
 
-        <p className="mb-8 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+        <p className="mb-8 text-center text-xs font-semibold uppercase tracking-wider text-muted-foreground">
           {operatingModel.flowLabel}
         </p>
 

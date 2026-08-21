@@ -154,7 +154,7 @@ export const softwareApplicationSchema = {
   ],
 };
 
-/** Per-leaf LogisticsService for /logistics/* solution pages */
+/** Per-leaf LogisticsService helper (kept for future product pages) */
 export function logisticsServiceLeafSchema(opts: {
   name: string;
   description: string;

@@ -58,7 +58,6 @@ export const logisticsHubCopy = {
       "Visibility and paperwork that survive weighbridge and plant audit questions",
     ],
     secondary: { label: "See Our Fleet", path: "/fleet" },
-    leafPath: "/logistics/3pl-transportation",
     fleetSuitable: {
       lead: "FTL allotment matches the cargo: LCV for regional, sealed container for protected freight, open or trailer for industrial loads.",
       types: [
@@ -102,7 +101,6 @@ export const logisticsHubCopy = {
       "Contract clarity on what is reserved, what is dedicated, and what is network overflow",
     ],
     secondary: { label: "Dedicated Fleet", path: "#dedicated" },
-    leafPath: "/logistics/contract-logistics",
     fleetSuitable: {
       lead: "A contract locks one body class to the corridor for the SLA window - usually these industrial and plant classes.",
       types: [
@@ -146,7 +144,6 @@ export const logisticsHubCopy = {
       "Clear line between dedicated assets and surge network capacity",
     ],
     secondary: { label: "See Our Fleet", path: "/fleet" },
-    leafPath: "/logistics/dedicated-fleet",
     fleetSuitable: {
       lead: "Dedicated means the assigned body type stays fixed - including LCV feeder, sealed container, or tanker when the cargo demands it.",
       types: [
@@ -190,7 +187,6 @@ export const logisticsHubCopy = {
       "Same operating model across cement, steel, coal, and manufacturing verticals",
     ],
     secondary: { label: "Industries we serve", path: "/industries" },
-    leafPath: "/logistics/industrial-freight",
     fleetSuitable: {
       lead: "Match body class to cargo: steel on flatbed, bagged solids on open/high-side, loose bulk on tipper, powder on bulker, oversize on low bed.",
       types: [
@@ -233,8 +229,7 @@ export const logisticsHubCopy = {
       "Vehicle and timing planned around plant and port windows, not only distance",
       "Visibility on contracted container moves through the same desk and TMS stack",
     ],
-    secondary: { label: "Explore Network", path: "/network" },
-    leafPath: "/logistics/container-transportation",
+    secondary: { label: "Port & Container Road", path: "/industries/container-transport" },
     fleetSuitable: {
       lead: "India container road legs run on sealed body sizes and chassis trailers - 32 ft is the domestic FTL workhorse; 40 ft for EXIM ISO.",
       types: [

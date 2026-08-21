@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import {
   ArrowRight,
   ArrowUpFromLine,
@@ -72,7 +72,6 @@ type ServiceBlock = {
   imageAlt: string;
   cta: "quote" | "contract" | "container";
   secondary: { label: string; path: string };
-  leafPath: string;
   fleetSuitable: {
     lead: string;
     types: readonly { id: string; label: string; detail: string }[];
@@ -271,10 +270,7 @@ function ServiceSection({ block }: { block: ServiceBlock }) {
               <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-primary">Overview</p>
               <p className="mb-4 font-heading text-xl font-bold leading-snug text-navy md:text-2xl">{block.tagline}</p>
               <p className="mb-3 leading-relaxed text-muted-foreground">{block.lead}</p>
-              <p className="mb-5 leading-relaxed text-muted-foreground">{block.body}</p>
-              <Link to={block.leafPath} className="inline-flex items-center text-sm font-semibold text-primary hover:underline">
-                Full service page <ArrowRight className="ml-1.5" size={14} />
-              </Link>
+              <p className="leading-relaxed text-muted-foreground">{block.body}</p>
             </article>
 
             <article className="border border-primary/20 bg-navy p-6 text-white shadow-sm md:p-8">
@@ -359,9 +355,18 @@ function ServiceSection({ block }: { block: ServiceBlock }) {
 }
 
 const LogisticsHub = () => {
+  const { hash } = useLocation();
   const copy = logisticsHubCopy;
   const activeService = useActiveService(serviceIds);
   const strip = copy.capacityStrip;
+
+  useEffect(() => {
+    if (!hash) return;
+    const id = hash.replace(/^#/, "");
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.scrollIntoView({ behavior: "smooth", block: "start" });
+  }, [hash]);
 
   return (
     <div className="min-h-screen bg-background font-sans">
@@ -406,7 +411,7 @@ const LogisticsHub = () => {
         className="relative scroll-mt-28 border-b border-border bg-surface"
       >
         <div className="container relative mx-auto container-padding py-14 md:py-16">
-          <div className="mb-10 max-w-3xl">
+          <div className="mx-auto mb-10 max-w-3xl text-center">
             <p className="mb-3 text-sm font-semibold uppercase tracking-widest text-primary">
               {copy.servicesIndex.eyebrow}
             </p>
@@ -488,15 +493,15 @@ const LogisticsHub = () => {
 
       <section id="industries" aria-labelledby="logistics-industries-heading" className="scroll-mt-28 bg-white py-12 md:py-16">
         <div className="container mx-auto container-padding">
-          <div className="mb-8 flex flex-col items-start justify-between gap-4 md:mb-10 md:flex-row md:items-end">
-            <div className="max-w-xl">
+          <div className="mb-8 text-center md:mb-10">
+            <div className="mx-auto max-w-2xl">
               <p className="mb-2 text-sm font-semibold uppercase tracking-widest text-primary">{copy.industries.eyebrow}</p>
               <h2 id="logistics-industries-heading" className="font-heading text-2xl font-bold text-navy md:text-3xl">
                 {copy.industries.h2}
               </h2>
               <p className="mt-2 text-muted-foreground">{copy.industries.lead}</p>
             </div>
-            <Link to={paths.industries} className="inline-flex items-center text-sm font-semibold text-primary hover:underline">
+            <Link to={paths.industries} className="mt-4 inline-flex items-center text-sm font-semibold text-primary hover:underline">
               View all industries <ArrowRight className="ml-1.5" size={14} />
             </Link>
           </div>

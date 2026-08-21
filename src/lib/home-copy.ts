@@ -6,7 +6,7 @@ export const homeCopy = {
     badge: "Technology-enabled Transportation & Logistics",
     h1: ["Heavy Freight.", "Reliable Capacity.", "Managed by Technology."],
     lead:
-      "ZAFTYS provides 3PL transportation and contract logistics for industrial and commercial freight in India. Owned heavy-vehicle capacity first. Verified network overflow when the lane needs more. ZAFTYS TMS on trips we run.",
+      "ZAFTYS provides 3PL transportation and contract logistics for industrial and commercial freight in India.",
     tagline: "Real Trucks. Real Logistics. Real Technology.",
     heroImageAlt: "ZAFTYS commercial trucks for heavy freight transport across India",
   },
@@ -14,10 +14,10 @@ export const homeCopy = {
     eyebrow: "One operational desk",
     h2: "We move freight. We run the desk.",
     lead:
-      "ZAFTYS is a transportation operator: owned fleet, contract logistics programs, and labeled network capacity. One commercial relationship. Own vs Network never blended.",
+      "One commercial relationship. Owned capacity and network capacity stay labeled. Own vs Network never blended.",
     supporting:
       "Not a broker that vanishes after booking. Not software without trucks.",
-    tagline: "Real trucks on the road. Real logistics at the desk. Real technology on contracted trips.",
+    tagline: "A named desk on the trip - from allotment through POD.",
     flowLabel: "How capacity comes together on your lane",
   },
   industries: {

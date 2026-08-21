@@ -61,16 +61,14 @@ const IntelligenceHub = () => (
     {/* What it is */}
     <section className="border-t border-border bg-white">
       <div className="mx-auto w-full max-w-[90rem] px-5 py-12 md:px-10 md:py-16 lg:px-14">
-        <div className="mb-10 grid gap-6 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:items-end">
-          <div>
-            <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-primary">
-              {c.intro.eyebrow}
-            </p>
-            <h2 className="font-heading text-3xl font-bold text-navy md:text-4xl md:leading-tight">
-              {c.intro.h2}
-            </h2>
-          </div>
-          <p className="text-base leading-relaxed text-muted-foreground md:text-lg lg:pb-1">
+        <div className="mx-auto mb-10 max-w-3xl text-center">
+          <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-primary">
+            {c.intro.eyebrow}
+          </p>
+          <h2 className="font-heading text-3xl font-bold text-navy md:text-4xl md:leading-tight">
+            {c.intro.h2}
+          </h2>
+          <p className="mt-4 text-base leading-relaxed text-muted-foreground md:text-lg">
             {c.intro.lead}
           </p>
         </div>
@@ -99,12 +97,14 @@ const IntelligenceHub = () => (
     {/* Who */}
     <section className="border-t border-border bg-surface px-5 py-12 md:px-8 md:py-14">
       <div className="mx-auto max-w-7xl">
-        <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-primary">
-          {c.buyers.eyebrow}
-        </p>
-        <h2 className="mb-8 max-w-2xl font-heading text-2xl font-bold text-navy md:text-3xl">
-          {c.buyers.h2}
-        </h2>
+        <div className="mx-auto mb-8 max-w-2xl text-center">
+          <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-primary">
+            {c.buyers.eyebrow}
+          </p>
+          <h2 className="font-heading text-2xl font-bold text-navy md:text-3xl">
+            {c.buyers.h2}
+          </h2>
+        </div>
         <div className="grid gap-4 md:grid-cols-3">
           {c.buyers.items.map((item, i) => (
             <article key={item.title} className="border border-border bg-white p-6">
@@ -122,7 +122,7 @@ const IntelligenceHub = () => (
     {/* Product modules */}
     <section className="border-t border-border bg-white">
       <div className="mx-auto w-full max-w-[90rem] px-5 py-12 md:px-10 md:py-16 lg:px-14">
-        <div className="mb-14 max-w-2xl">
+        <div className="mx-auto mb-14 max-w-2xl text-center">
           <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-primary">
             Product modules
           </p>
@@ -245,12 +245,14 @@ const IntelligenceHub = () => (
     {/* Honesty */}
     <section className="border-t border-border bg-surface px-5 py-12 md:px-8 md:py-14">
       <div className="mx-auto max-w-7xl">
-        <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-primary">
-          {c.honesty.eyebrow}
-        </p>
-        <h2 className="mb-8 max-w-2xl font-heading text-2xl font-bold text-navy md:text-3xl">
-          {c.honesty.h2}
-        </h2>
+        <div className="mx-auto mb-8 max-w-2xl text-center">
+          <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-primary">
+            {c.honesty.eyebrow}
+          </p>
+          <h2 className="font-heading text-2xl font-bold text-navy md:text-3xl">
+            {c.honesty.h2}
+          </h2>
+        </div>
         <div className="grid gap-4 md:grid-cols-3">
           {c.honesty.items.map((item) => (
             <article key={item.status} className="border border-border bg-white p-6">

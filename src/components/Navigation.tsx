@@ -28,12 +28,7 @@ function dropdownIsActive(pathname: string, group: NavDropdown): boolean {
   if (pathMatches(pathname, group.hubPath)) return true;
 
   if (group.id === "logistics") {
-    return (
-      pathname.startsWith("/logistics") ||
-      pathname === paths.fleet ||
-      pathname === paths.logistics.dedicated ||
-      pathname === paths.logistics.container
-    );
+    return pathname.startsWith("/logistics") || pathname === paths.fleet;
   }
 
   if (group.id === "platform") {

@@ -64,19 +64,17 @@ export function IntelligenceLeafLayout({ copy }: Props) {
 
       <section className="border-t border-border bg-white">
         <div className="mx-auto w-full max-w-[90rem] px-5 py-12 md:px-10 md:py-16 lg:px-14">
-          <div className="mb-10 grid gap-6 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:items-end">
-            <div>
-              <div className="mb-3 flex flex-wrap items-center gap-3">
-                <IntelligenceStatusLabel status={c.status} />
-                <p className="text-xs font-semibold uppercase tracking-wider text-primary">
-                  {c.problem.eyebrow}
-                </p>
-              </div>
-              <h2 className="font-heading text-3xl font-bold text-navy md:text-4xl md:leading-tight">
-                {c.problem.h2}
-              </h2>
+          <div className="mx-auto mb-10 max-w-3xl text-center">
+            <div className="mb-3 flex flex-wrap items-center justify-center gap-3">
+              <IntelligenceStatusLabel status={c.status} />
+              <p className="text-xs font-semibold uppercase tracking-wider text-primary">
+                {c.problem.eyebrow}
+              </p>
             </div>
-            <p className="text-base leading-relaxed text-muted-foreground md:text-lg lg:pb-1">
+            <h2 className="font-heading text-3xl font-bold text-navy md:text-4xl md:leading-tight">
+              {c.problem.h2}
+            </h2>
+            <p className="mt-4 text-base leading-relaxed text-muted-foreground md:text-lg">
               {c.problem.lead}
             </p>
           </div>
@@ -96,13 +94,15 @@ export function IntelligenceLeafLayout({ copy }: Props) {
 
       <section className="border-t border-border bg-surface px-5 py-12 md:px-8 md:py-14">
         <div className="mx-auto max-w-7xl">
-          <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-primary">
-            {c.capabilities.eyebrow}
-          </p>
-          <h2 className="max-w-2xl font-heading text-2xl font-bold text-navy md:text-3xl">
-            {c.capabilities.h2}
-          </h2>
-          <p className="mt-3 max-w-2xl text-base text-muted-foreground">{c.capabilities.lead}</p>
+          <div className="mx-auto max-w-2xl text-center">
+            <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-primary">
+              {c.capabilities.eyebrow}
+            </p>
+            <h2 className="font-heading text-2xl font-bold text-navy md:text-3xl">
+              {c.capabilities.h2}
+            </h2>
+            <p className="mt-3 text-base text-muted-foreground">{c.capabilities.lead}</p>
+          </div>
           <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {c.capabilities.items.map((item, i) => (
               <article key={item.title} className="flex flex-col border border-border bg-white p-6">
@@ -121,15 +121,17 @@ export function IntelligenceLeafLayout({ copy }: Props) {
 
       <section className="border-t border-border bg-white px-5 py-12 md:px-8 md:py-14">
         <div className="mx-auto max-w-7xl">
-          <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-primary">
-            {c.visual.eyebrow}
-          </p>
-          <h2 className="max-w-2xl font-heading text-2xl font-bold text-navy md:text-3xl">
-            {c.visual.h2}
-          </h2>
-          <p className="mt-3 max-w-2xl text-base text-muted-foreground">{c.visual.lead}</p>
+          <div className="mx-auto max-w-2xl text-center">
+            <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-primary">
+              {c.visual.eyebrow}
+            </p>
+            <h2 className="font-heading text-2xl font-bold text-navy md:text-3xl">
+              {c.visual.h2}
+            </h2>
+            <p className="mt-3 text-base text-muted-foreground">{c.visual.lead}</p>
+          </div>
           <div
-            className={`mt-10 grid gap-6 ${c.visual.secondary ? "lg:grid-cols-2" : "max-w-4xl"}`}
+            className={`mt-10 grid gap-6 ${c.visual.secondary ? "lg:grid-cols-2" : "mx-auto max-w-4xl"}`}
           >
             <IntelligenceProductShot
               src={c.visual.primary.src}
@@ -149,12 +151,14 @@ export function IntelligenceLeafLayout({ copy }: Props) {
 
       <section className="border-t border-border bg-surface px-5 py-12 md:px-8 md:py-14">
         <div className="mx-auto max-w-7xl">
-          <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-primary">
-            {c.whoFor.eyebrow}
-          </p>
-          <h2 className="mb-8 max-w-2xl font-heading text-2xl font-bold text-navy md:text-3xl">
-            {c.whoFor.h2}
-          </h2>
+          <div className="mx-auto mb-8 max-w-2xl text-center">
+            <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-primary">
+              {c.whoFor.eyebrow}
+            </p>
+            <h2 className="font-heading text-2xl font-bold text-navy md:text-3xl">
+              {c.whoFor.h2}
+            </h2>
+          </div>
           <div className="grid gap-4 md:grid-cols-3">
             {c.whoFor.items.map((item, i) => (
               <article key={item.title} className="border border-border bg-white p-6">
@@ -171,50 +175,56 @@ export function IntelligenceLeafLayout({ copy }: Props) {
 
       <section className="border-t border-border bg-navy px-5 py-12 text-white md:px-8 md:py-14">
         <div className="mx-auto max-w-7xl">
-          <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-accent">
-            {c.dataNotes.eyebrow}
-          </p>
-          <h2 className="max-w-2xl font-heading text-3xl font-bold">{c.dataNotes.h2}</h2>
-          <p className="mt-4 max-w-2xl text-base leading-relaxed text-gray-300">{c.dataNotes.lead}</p>
-          <ul className="mt-6 max-w-2xl space-y-3">
-            {c.dataNotes.points.map((point) => (
-              <li key={point} className="flex items-start gap-3 text-sm text-gray-300">
-                <CheckCircle2 className="mt-0.5 shrink-0 text-accent" size={18} />
-                <span>{point}</span>
-              </li>
-            ))}
-          </ul>
-          <div className="mt-8">
-            <Link to={c.dataNotes.cta.path}>
-              <Button variant="accent">{c.dataNotes.cta.label}</Button>
-            </Link>
+          <div className="mx-auto max-w-2xl text-center">
+            <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-accent">
+              {c.dataNotes.eyebrow}
+            </p>
+            <h2 className="font-heading text-3xl font-bold">{c.dataNotes.h2}</h2>
+            <p className="mt-4 text-base leading-relaxed text-gray-300">{c.dataNotes.lead}</p>
+            <ul className="mt-6 space-y-3 text-left">
+              {c.dataNotes.points.map((point) => (
+                <li key={point} className="flex items-start gap-3 text-sm text-gray-300">
+                  <CheckCircle2 className="mt-0.5 shrink-0 text-accent" size={18} />
+                  <span>{point}</span>
+                </li>
+              ))}
+            </ul>
+            <div className="mt-8">
+              <Link to={c.dataNotes.cta.path}>
+                <Button variant="accent">{c.dataNotes.cta.label}</Button>
+              </Link>
+            </div>
           </div>
         </div>
       </section>
 
       <section className="border-t border-border bg-white px-5 py-12 md:px-8 md:py-14">
         <div className="mx-auto max-w-7xl">
-          <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-primary">
-            {c.honesty.eyebrow}
-          </p>
-          <div className="flex flex-wrap items-center gap-3">
-            <IntelligenceStatusLabel status={c.status} />
-            <h2 className="font-heading text-2xl font-bold text-navy md:text-3xl">{c.honesty.h2}</h2>
+          <div className="mx-auto max-w-3xl text-center">
+            <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-primary">
+              {c.honesty.eyebrow}
+            </p>
+            <div className="flex flex-wrap items-center justify-center gap-3">
+              <IntelligenceStatusLabel status={c.status} />
+              <h2 className="font-heading text-2xl font-bold text-navy md:text-3xl">{c.honesty.h2}</h2>
+            </div>
+            <p className="mt-4 text-base leading-relaxed text-muted-foreground">
+              {c.honesty.body}
+            </p>
           </div>
-          <p className="mt-4 max-w-3xl text-base leading-relaxed text-muted-foreground">
-            {c.honesty.body}
-          </p>
         </div>
       </section>
 
       <section className="border-t border-border bg-surface px-5 py-12 md:px-8 md:py-14">
         <div className="mx-auto max-w-7xl">
-          <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-primary">
-            {c.related.eyebrow}
-          </p>
-          <h2 className="mb-8 font-heading text-2xl font-bold text-navy md:text-3xl">
-            {c.related.h2}
-          </h2>
+          <div className="mx-auto mb-8 max-w-2xl text-center">
+            <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-primary">
+              {c.related.eyebrow}
+            </p>
+            <h2 className="font-heading text-2xl font-bold text-navy md:text-3xl">
+              {c.related.h2}
+            </h2>
+          </div>
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {c.related.links.map((link) => (
               <Link

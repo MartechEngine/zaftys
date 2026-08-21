@@ -891,7 +891,7 @@ export const blogPosts: readonly BlogPost[] = [
         ],
       },
     ],
-    cta: { label: "Industrial freight", to: "/logistics/industrial-freight" },
+    cta: { label: "Industrial freight", to: "/logistics#industrial" },
   },
   {
     slug: "reduce-empty-return-trips",
@@ -1267,7 +1267,7 @@ export const blogPosts: readonly BlogPost[] = [
         eyebrow: "Need legal trailers on the lane",
         title: "Request a freight quote with the right axle class",
         body: "Share cargo density, origin plant, destination, and preferred body type. We place MoRTH-safe capacity as your transport partner before a software rollout.",
-        cta: { label: "Industrial freight", to: "/logistics/industrial-freight" },
+        cta: { label: "Industrial freight", to: "/logistics#industrial" },
       },
     ],
     relatedSlugs: [
@@ -1420,7 +1420,7 @@ export const blogPosts: readonly BlogPost[] = [
         ],
       },
     ],
-    cta: { label: "Industrial freight", to: "/logistics/industrial-freight" },
+    cta: { label: "Industrial freight", to: "/logistics#industrial" },
   },
   {
     slug: "spot-market-vs-dedicated-fleet-india",
@@ -1447,7 +1447,7 @@ export const blogPosts: readonly BlogPost[] = [
         eyebrow: "Hybrid capacity, one transport desk",
         title: "Request a quote for dedicated plus overflow lanes",
         body: "Share stable corridor volume and peak surplus. We run contract capacity and place verified overflow when indents miss the SLA window, without forcing a marketplace login first.",
-        cta: { label: "Dedicated fleet", to: "/logistics/dedicated-fleet" },
+        cta: { label: "Dedicated fleet", to: "/logistics#dedicated" },
       },
     ],
     relatedSlugs: [
@@ -1658,7 +1658,7 @@ export const blogPosts: readonly BlogPost[] = [
         ],
       },
     ],
-    cta: { label: "Dedicated fleet", to: "/logistics/dedicated-fleet" },
+    cta: { label: "Dedicated fleet", to: "/logistics#dedicated" },
   },
   {
     slug: "plant-detention-tat-yard-gate-india",

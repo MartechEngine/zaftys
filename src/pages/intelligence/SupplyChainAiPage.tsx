@@ -106,13 +106,15 @@ export default function SupplyChainAiPage() {
       {/* vs Analytics */}
       <section className="border-t border-border bg-surface px-5 py-12 md:px-8 md:py-14">
         <div className="mx-auto max-w-7xl">
-          <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-primary">
-            {c.vsAnalytics.eyebrow}
-          </p>
-          <h2 className="max-w-2xl font-heading text-2xl font-bold text-navy md:text-3xl">
-            {c.vsAnalytics.h2}
-          </h2>
-          <p className="mt-3 max-w-2xl text-base text-muted-foreground">{c.vsAnalytics.lead}</p>
+          <div className="mx-auto max-w-2xl text-center">
+            <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-primary">
+              {c.vsAnalytics.eyebrow}
+            </p>
+            <h2 className="font-heading text-2xl font-bold text-navy md:text-3xl">
+              {c.vsAnalytics.h2}
+            </h2>
+            <p className="mt-3 text-base text-muted-foreground">{c.vsAnalytics.lead}</p>
+          </div>
           <div className="mt-8 grid gap-4 md:grid-cols-2">
             {c.vsAnalytics.items.map((item) => (
               <article key={item.title} className="border border-border bg-white p-6">
@@ -139,13 +141,15 @@ export default function SupplyChainAiPage() {
       {/* Scenario */}
       <section className="border-t border-border bg-white px-5 py-12 md:px-8 md:py-14">
         <div className="mx-auto max-w-7xl">
-          <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-primary">
-            {c.scenario.eyebrow}
-          </p>
-          <h2 className="max-w-2xl font-heading text-2xl font-bold text-navy md:text-3xl">
-            {c.scenario.h2}
-          </h2>
-          <p className="mt-3 max-w-2xl text-base text-muted-foreground">{c.scenario.lead}</p>
+          <div className="mx-auto max-w-2xl text-center">
+            <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-primary">
+              {c.scenario.eyebrow}
+            </p>
+            <h2 className="font-heading text-2xl font-bold text-navy md:text-3xl">
+              {c.scenario.h2}
+            </h2>
+            <p className="mt-3 text-base text-muted-foreground">{c.scenario.lead}</p>
+          </div>
           <ol className="mt-8 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
             {c.scenario.steps.map((step, i) => (
               <li key={step.label} className="border border-border bg-surface p-5">
@@ -163,12 +167,14 @@ export default function SupplyChainAiPage() {
       {/* Who for */}
       <section className="border-t border-border bg-surface px-5 py-12 md:px-8 md:py-14">
         <div className="mx-auto max-w-7xl">
-          <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-primary">
-            {c.whoFor.eyebrow}
-          </p>
-          <h2 className="mb-8 max-w-2xl font-heading text-2xl font-bold text-navy md:text-3xl">
-            {c.whoFor.h2}
-          </h2>
+          <div className="mx-auto mb-8 max-w-2xl text-center">
+            <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-primary">
+              {c.whoFor.eyebrow}
+            </p>
+            <h2 className="font-heading text-2xl font-bold text-navy md:text-3xl">
+              {c.whoFor.h2}
+            </h2>
+          </div>
           <div className="grid gap-4 md:grid-cols-3">
             {c.whoFor.items.map((item, i) => (
               <article key={item.title} className="border border-border bg-white p-6">
@@ -234,10 +240,12 @@ export default function SupplyChainAiPage() {
       {/* Live today */}
       <section className="border-t border-border bg-navy px-5 py-12 text-white md:px-8 md:py-14">
         <div className="mx-auto max-w-7xl">
-          <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-accent">
-            {c.liveToday.eyebrow}
-          </p>
-          <h2 className="max-w-2xl font-heading text-3xl font-bold">{c.liveToday.h2}</h2>
+          <div className="mx-auto max-w-2xl text-center">
+            <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-accent">
+              {c.liveToday.eyebrow}
+            </p>
+            <h2 className="font-heading text-3xl font-bold">{c.liveToday.h2}</h2>
+          </div>
           <div className="mt-8 grid gap-4 md:grid-cols-3">
             {c.liveToday.items.map((item, i) => (
               <article
@@ -252,7 +260,7 @@ export default function SupplyChainAiPage() {
               </article>
             ))}
           </div>
-          <div className="mt-8 flex flex-wrap gap-3">
+          <div className="mt-8 flex flex-wrap justify-center gap-3">
             <Link to={paths.technology.tms}>
               <Button variant="accent">Open ZAFTYS TMS</Button>
             </Link>
@@ -266,12 +274,14 @@ export default function SupplyChainAiPage() {
       {/* Related */}
       <section className="border-t border-border bg-surface px-5 py-12 md:px-8 md:py-14">
         <div className="mx-auto max-w-7xl">
-          <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-primary">
-            {c.related.eyebrow}
-          </p>
-          <h2 className="mb-8 font-heading text-2xl font-bold text-navy md:text-3xl">
-            {c.related.h2}
-          </h2>
+          <div className="mx-auto mb-8 max-w-2xl text-center">
+            <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-primary">
+              {c.related.eyebrow}
+            </p>
+            <h2 className="font-heading text-2xl font-bold text-navy md:text-3xl">
+              {c.related.h2}
+            </h2>
+          </div>
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {c.related.links.map((link) => (
               <Link

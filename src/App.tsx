@@ -11,7 +11,7 @@ import { WhatsAppFab } from "./components/WhatsAppButton";
 import { initAnalytics, trackPageview } from "./lib/analytics";
 import { captureUtmFromLocation } from "./lib/utm";
 import { logVisit } from "./lib/visit-log";
-import { paths, legacyNetworkPath, reportPath, reportReadPath } from "./lib/site-paths";
+import { paths, legacyNetworkPath, legacyLogisticsLeafPaths, reportPath, reportReadPath } from "./lib/site-paths";
 import Home from "./pages/Home";
 
 const About = lazy(() => import("./pages/About"));
@@ -37,21 +37,6 @@ const LegalNotice = lazy(() => import("./pages/LegalNotice"));
 const Login = lazy(() => import("./pages/Login"));
 
 const LogisticsHub = lazy(() => import("./pages/logistics/LogisticsHub"));
-const ThreePlTransportation = lazy(() =>
-  import("./pages/logistics/LogisticsSolutions").then((m) => ({ default: m.ThreePlTransportation })),
-);
-const ContractLogistics = lazy(() =>
-  import("./pages/logistics/LogisticsSolutions").then((m) => ({ default: m.ContractLogistics })),
-);
-const DedicatedFleetPage = lazy(() =>
-  import("./pages/logistics/LogisticsSolutions").then((m) => ({ default: m.DedicatedFleet })),
-);
-const IndustrialFreight = lazy(() =>
-  import("./pages/logistics/LogisticsSolutions").then((m) => ({ default: m.IndustrialFreight })),
-);
-const ContainerTransportation = lazy(() =>
-  import("./pages/logistics/LogisticsSolutions").then((m) => ({ default: m.ContainerTransportation })),
-);
 
 const NetworkHub = lazy(() => import("./pages/network/NetworkHub"));
 const TransporterNetwork = lazy(() => import("./pages/network/TransporterNetworkPage"));
@@ -97,11 +82,12 @@ function LegacyReportRedirect({ read = false }: { read?: boolean }) {
 }
 
 const ScrollToTop = () => {
-  const { pathname, search } = useLocation();
+  const { pathname, search, hash } = useLocation();
 
   useEffect(() => {
+    if (hash) return;
     window.scrollTo({ top: 0, left: 0, behavior: "instant" as ScrollBehavior });
-  }, [pathname]);
+  }, [pathname, hash]);
 
   useEffect(() => {
     captureUtmFromLocation();
@@ -127,11 +113,11 @@ const AppShell = () => {
 
         {/* Logistics */}
         <Route path={paths.logistics.hub} element={<LazyPage><LogisticsHub /></LazyPage>} />
-        <Route path={paths.logistics.threePl} element={<LazyPage><ThreePlTransportation /></LazyPage>} />
-        <Route path={paths.logistics.contract} element={<LazyPage><ContractLogistics /></LazyPage>} />
-        <Route path={paths.logistics.dedicated} element={<LazyPage><DedicatedFleetPage /></LazyPage>} />
-        <Route path={paths.logistics.industrial} element={<LazyPage><IndustrialFreight /></LazyPage>} />
-        <Route path={paths.logistics.container} element={<LazyPage><ContainerTransportation /></LazyPage>} />
+        <Route path={legacyLogisticsLeafPaths.threePl} element={<Navigate to={paths.logistics.threePl} replace />} />
+        <Route path={legacyLogisticsLeafPaths.contract} element={<Navigate to={paths.logistics.contract} replace />} />
+        <Route path={legacyLogisticsLeafPaths.dedicated} element={<Navigate to={paths.logistics.dedicated} replace />} />
+        <Route path={legacyLogisticsLeafPaths.industrial} element={<Navigate to={paths.logistics.industrial} replace />} />
+        <Route path={legacyLogisticsLeafPaths.container} element={<Navigate to={paths.logistics.container} replace />} />
 
         {/* Network */}
         <Route path={paths.network.hub} element={<LazyPage><NetworkHub /></LazyPage>} />
