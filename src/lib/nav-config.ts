@@ -44,7 +44,7 @@ export const headerNav: readonly HeaderNavEntry[] = [
     type: "dropdown",
     id: "platform",
     label: "Platform",
-    hubPath: paths.technology.hub,
+    hubPath: paths.technology.tms,
     items: [
       { name: "ZAFTYS TMS", path: paths.technology.tms },
       { name: "Tranzfort", path: paths.network.tranzfort },

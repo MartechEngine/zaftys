@@ -16,11 +16,11 @@ export const paths = {
     truckCapacity: "/network/truck-capacity",
   },
   technology: {
-    hub: "/technology",
-    tms: "/technology/zaftys-tms",
-    fleetManagement: "/technology/fleet-management",
-    tracking: "/technology/tracking",
-    apis: "/technology/apis",
+    /** Platform / ZAFTYS TMS. Leaves nest under /zaftys-tms. */
+    tms: "/zaftys-tms",
+    fleetManagement: "/zaftys-tms/fleet-management",
+    tracking: "/zaftys-tms/tracking",
+    apis: "/zaftys-tms/apis",
   },
   intelligence: {
     hub: "/intelligence",
@@ -40,9 +40,6 @@ export const paths = {
   resources: "/resources",
   login: "/login",
 } as const;
-
-/** @deprecated Use paths.technology.tms */
-export const legacyTmsPath = "/zaftys-tms";
 
 /** @deprecated Use paths.network.tranzfort */
 export const legacyNetworkPath = "/tranzfort-network";

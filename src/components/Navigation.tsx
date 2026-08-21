@@ -37,6 +37,8 @@ function dropdownIsActive(pathname: string, group: NavDropdown): boolean {
 
   if (group.id === "platform") {
     return (
+      pathname === paths.technology.tms ||
+      pathname.startsWith(`${paths.technology.tms}/`) ||
       pathname.startsWith("/technology") ||
       pathname === paths.network.tranzfort ||
       pathname.startsWith("/network/tranzfort")

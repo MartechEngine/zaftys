@@ -11,7 +11,7 @@ import { WhatsAppFab } from "./components/WhatsAppButton";
 import { initAnalytics, trackPageview } from "./lib/analytics";
 import { captureUtmFromLocation } from "./lib/utm";
 import { logVisit } from "./lib/visit-log";
-import { paths, legacyNetworkPath, legacyTmsPath, reportPath, reportReadPath } from "./lib/site-paths";
+import { paths, legacyNetworkPath, reportPath, reportReadPath } from "./lib/site-paths";
 import Home from "./pages/Home";
 
 const About = lazy(() => import("./pages/About"));
@@ -61,16 +61,10 @@ const TruckCapacity = lazy(() =>
   import("./pages/network/NetworkSolutions").then((m) => ({ default: m.TruckCapacity })),
 );
 
-const TechnologyHub = lazy(() => import("./pages/technology/TechnologyHub"));
-const FleetManagement = lazy(() =>
-  import("./pages/technology/TechnologySolutions").then((m) => ({ default: m.FleetManagement })),
-);
-const TrackingVisibility = lazy(() =>
-  import("./pages/technology/TechnologySolutions").then((m) => ({ default: m.TrackingVisibility })),
-);
-const LogisticsApis = lazy(() =>
-  import("./pages/technology/TechnologySolutions").then((m) => ({ default: m.LogisticsApis })),
-);
+const FleetManagement = lazy(() => import("./pages/technology/FleetManagementPage"));
+const TrackingVisibility = lazy(() => import("./pages/technology/TrackingVisibilityPage"));
+const LogisticsApis = lazy(() => import("./pages/technology/LogisticsApisPage"));
+
 
 const IntelligenceHub = lazy(() => import("./pages/intelligence/IntelligenceHub"));
 const ZaftysAnalytics = lazy(() => import("./pages/intelligence/AnalyticsPage"));
@@ -148,8 +142,7 @@ const AppShell = () => {
         <Route path={paths.network.transporterNetwork} element={<LazyPage><TransporterNetwork /></LazyPage>} />
         <Route path={paths.network.truckCapacity} element={<LazyPage><TruckCapacity /></LazyPage>} />
 
-        {/* Technology */}
-        <Route path={paths.technology.hub} element={<LazyPage><TechnologyHub /></LazyPage>} />
+        {/* Platform / ZAFTYS TMS */}
         <Route path={paths.technology.tms} element={<LazyPage><Technology /></LazyPage>} />
         <Route path={paths.technology.fleetManagement} element={<LazyPage><FleetManagement /></LazyPage>} />
         <Route path={paths.technology.tracking} element={<LazyPage><TrackingVisibility /></LazyPage>} />
@@ -165,9 +158,12 @@ const AppShell = () => {
         {/* Legacy redirects */}
         <Route path="/services" element={<Navigate to={paths.logistics.hub} replace />} />
         <Route path={legacyNetworkPath} element={<Navigate to={paths.network.tranzfort} replace />} />
-        <Route path={legacyTmsPath} element={<Navigate to={paths.technology.tms} replace />} />
         <Route path="/platform" element={<Navigate to={paths.technology.tms} replace />} />
-        <Route path="/technology" element={<Navigate to={paths.technology.hub} replace />} />
+        <Route path="/technology" element={<Navigate to={paths.technology.tms} replace />} />
+        <Route path="/technology/zaftys-tms" element={<Navigate to={paths.technology.tms} replace />} />
+        <Route path="/technology/fleet-management" element={<Navigate to={paths.technology.fleetManagement} replace />} />
+        <Route path="/technology/tracking" element={<Navigate to={paths.technology.tracking} replace />} />
+        <Route path="/technology/apis" element={<Navigate to={paths.technology.apis} replace />} />
 
         {/* Existing pages */}
         <Route path={paths.about} element={<LazyPage><About /></LazyPage>} />

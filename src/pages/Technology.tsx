@@ -1,285 +1,333 @@
-import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import {
-  MapPin,
-  BarChart3,
-  Clock,
-  Shield,
-  FileText,
-  Smartphone,
-  Truck,
-  Users,
-  ArrowRight,
-  CheckCircle2,
-} from "lucide-react";
-import { CTAGroup } from "@/components/CTAGroup";
 import { Link } from "react-router-dom";
+import { ArrowRight, CheckCircle2 } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import SEO from "@/components/SEO";
 import { PageHero } from "@/components/PageHero";
-import heroTechnology from "@/assets/hero-technology.jpg";
-import { pageHeroAlts } from "@/lib/page-heroes";
-import { heroMailBodies, heroMailSubjects } from "@/lib/hero-ctas";
+import { CTAGroup } from "@/components/CTAGroup";
 import { HeroEmailButton } from "@/components/HeroEmailButton";
+import {
+  IntelligenceProductShot,
+  IntelligenceStatusLabel,
+} from "@/components/intelligence/IntelligenceVisuals";
+import { paths } from "@/lib/site-paths";
 import { pageSeo } from "@/lib/page-seo";
 import { pageHeroCopy } from "@/lib/page-hero-copy";
-import { LazyTmsScreensCarousel } from "@/components/LazyTmsScreensCarousel";
-import { paths } from "@/lib/site-paths";
+import { pageHeroAlts } from "@/lib/page-heroes";
 import {
-  softwareApplicationSchema,
-  organizationSchema,
-  websiteSchema,
-  faqPageSchema,
+  technologyDemoMail,
+  technologyHubCopy,
+} from "@/lib/technology-hub-copy";
+import {
   breadcrumbSchema,
+  faqPageSchema,
+  organizationSchema,
+  softwareApplicationSchema,
+  websiteSchema,
 } from "@/lib/schema";
+import heroTechnology from "@/assets/hero-technology.jpg";
 
-const liveToday = [
-  "Dispatch and trip lifecycle in production at app.zaftys.com",
-  "Client portal for shipment visibility and e-POD",
-  "Fleet, driver, and document records on one system",
-  "Built next to real gates: plant windows, weighbridge, multi-axle, LCV drops",
-] as const;
+const c = technologyHubCopy;
 
-const technologyFaqs = [
-  {
-    question: "Is ZAFTYS TMS a live product?",
-    answer:
-      "Yes. ZAFTYS TMS powers ZAFTYS dispatch operations daily and is available to shippers and fleet operators via app.zaftys.com. Request a demo if you want a guided walkthrough.",
-  },
-  {
-    question: "Who should use ZAFTYS TMS?",
-    answer:
-      "Shippers who need shipment visibility, and fleet operators who want dispatch, fleet records, documentation, and trip reporting in one platform. It is not limited to heavy-haul work.",
-  },
-  {
-    question: "How is this different from generic TMS tools?",
-    answer:
-      "ZAFTYS TMS is shaped by our own transport desk: plant loading windows, weighbridge loops, LCV drops, multi-axle work, and TranZfort when a trip needs a partner truck.",
-  },
-] as const;
+const Technology = () => (
+  <div className="min-h-screen bg-background font-sans">
+    <SEO
+      title={pageSeo.technology.title}
+      description={pageSeo.technology.description}
+      canonical={paths.technology.tms}
+      schema={[
+        organizationSchema,
+        websiteSchema,
+        softwareApplicationSchema,
+        faqPageSchema([...c.faqs]),
+        breadcrumbSchema([
+          { name: "Home", path: "/" },
+          { name: "ZAFTYS TMS", path: paths.technology.tms },
+        ]),
+      ]}
+    />
 
-const Technology = () => {
-  const features = [
-    {
-      icon: MapPin,
-      title: "Live GPS tracking",
-      description: "Live location updates, dynamic ETAs, and route deviation alerts on the dispatch map.",
-    },
-    {
-      icon: Clock,
-      title: "Dispatch and trip management",
-      description: "Create, assign, and monitor trips with automated status updates across your operation.",
-    },
-    {
-      icon: Smartphone,
-      title: "Driver mobile app",
-      description: "Drivers receive routes, load details, and upload digital proof of delivery (ePOD) instantly.",
-    },
-    {
-      icon: Truck,
-      title: "Fleet management",
-      description: "Vehicle registry, driver records, document expiry alerts, and maintenance scheduling.",
-    },
-    {
-      icon: BarChart3,
-      title: "Performance analytics",
-      description: "Lane costs, utilization, delay analysis, and operational reporting for smarter decisions.",
-    },
-    {
-      icon: FileText,
-      title: "Digital documentation",
-      description: "Secure storage for compliance docs, invoices, LR copies, and bills of lading.",
-    },
-  ];
-
-  const buyerPaths = [
-    {
-      icon: Users,
-      title: "For shippers",
-      description: "See the load without calling the control room. Track shipments and pull e-POD from the client portal.",
-      bullets: ["Live shipment tracking", "e-POD and document access", "Lane performance reports"],
-    },
-    {
-      icon: Truck,
-      title: "For fleet operators",
-      description: "Run dispatch, fleet, and billing on the same stack ZAFTYS uses internally.",
-      bullets: ["Dispatch dashboard", "Driver and vehicle management", "Trip lifecycle and billing"],
-    },
-  ];
-
-  return (
-    <div className="min-h-screen bg-background font-sans">
-      <SEO
-        title={pageSeo.technology.title}
-        description={pageSeo.technology.description}
-        canonical={paths.technology.tms}
-        schema={[
-          organizationSchema,
-          websiteSchema,
-          softwareApplicationSchema,
-          faqPageSchema(technologyFaqs),
-          breadcrumbSchema([
-            { name: "Home", path: "/" },
-            { name: "Technology", path: paths.technology.hub },
-            { name: "ZAFTYS TMS", path: paths.technology.tms },
-          ]),
-        ]}
-      />
-
-      <PageHero
-        badge={pageHeroCopy.technology.badge}
-        title={pageHeroCopy.technology.h1}
-        description={pageHeroCopy.technology.lead}
-        imageSrc={heroTechnology}
-        imageAlt={pageHeroAlts.technology}
-      >
-        <CTAGroup className="justify-start sm:justify-start">
-          <Button asChild size="lg" variant="accent">
-            <Link to="/login">
-              Login to portal <ArrowRight className="ml-2" size={18} />
-            </Link>
+    <PageHero
+      badge={pageHeroCopy.technology.badge}
+      title={pageHeroCopy.technology.h1}
+      description={pageHeroCopy.technology.lead}
+      imageSrc={heroTechnology}
+      imageAlt={pageHeroAlts.technology}
+    >
+      <CTAGroup className="justify-start sm:justify-start">
+        <Link to={paths.login}>
+          <Button size="lg" variant="accent">
+            Login to portal <ArrowRight className="ml-2" size={18} />
           </Button>
-          <HeroEmailButton
-            label="Request a demo"
-            variant="on-dark-outline"
-            subject={heroMailSubjects.demo}
-            body={heroMailBodies.demo}
-          />
-        </CTAGroup>
-      </PageHero>
+        </Link>
+        <HeroEmailButton
+          label={c.finalCta.primaryLabel}
+          subject={technologyDemoMail.subject}
+          body={technologyDemoMail.body}
+          variant="on-dark-outline"
+        />
+      </CTAGroup>
+    </PageHero>
 
-      <section className="section-padding bg-white">
-        <div className="container mx-auto container-padding">
-          <div className="flex flex-col lg:flex-row items-center gap-16">
-            <div className="lg:w-1/2">
-              <h2 className="text-4xl font-heading font-bold mb-6 text-navy">In production today</h2>
-              <p className="text-lg text-muted-foreground mb-6 leading-relaxed">
-                ZAFTYS TMS is not a slide deck. It connects planning, dispatch, fleet records, driver activity, documentation, and customer visibility throughout the shipment lifecycle.
-              </p>
-              <ul className="space-y-3 mb-8">
-                {liveToday.map((item) => (
-                  <li key={item} className="flex items-start gap-3 text-sm text-muted-foreground leading-relaxed">
-                    <CheckCircle2 className="text-accent mt-0.5 shrink-0" size={18} />
-                    {item}
-                  </li>
-                ))}
-              </ul>
-              <div className="grid grid-cols-2 gap-4">
-                {[
-                  { icon: Shield, label: "Full visibility" },
-                  { icon: Clock, label: "24/7 dispatch" },
-                  { icon: FileText, label: "Digital ePOD" },
-                  { icon: BarChart3, label: "Lane analytics" },
-                ].map((item) => (
-                  <div key={item.label} className="p-4 bg-muted/30 rounded-lg border border-border flex items-center gap-3">
-                    <item.icon className="text-primary shrink-0" size={22} />
-                    <span className="font-semibold text-navy text-sm">{item.label}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <div className="lg:w-1/2 w-full">
-              <LazyTmsScreensCarousel />
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section className="section-padding bg-muted/30">
-        <div className="container mx-auto container-padding">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-heading font-bold mb-4 text-navy">What the TMS does</h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Dispatch, GPS, e-POD, fleet records, and shipper visibility. Written as the work, not a feature list.
+    <section className="border-t border-border bg-white">
+      <div className="mx-auto w-full max-w-[90rem] px-5 py-12 md:px-10 md:py-16 lg:px-14">
+        <div className="mb-10 grid gap-6 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:items-end">
+          <div>
+            <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-primary">
+              {c.intro.eyebrow}
             </p>
+            <h2 className="font-heading text-3xl font-bold text-navy md:text-4xl md:leading-tight">
+              {c.intro.h2}
+            </h2>
           </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {features.map((feature) => (
-              <Card key={feature.title} className="border-none shadow-sm hover:shadow-lg transition-all group bg-white">
-                <CardContent className="p-8">
-                  <div className="w-14 h-14 rounded-lg bg-primary/5 flex items-center justify-center mb-6 group-hover:bg-primary group-hover:text-white transition-colors text-primary">
-                    <feature.icon size={28} />
-                  </div>
-                  <h3 className="text-xl font-heading font-bold mb-3 text-navy">{feature.title}</h3>
-                  <p className="text-muted-foreground leading-relaxed text-sm">{feature.description}</p>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
+          <p className="text-base leading-relaxed text-muted-foreground md:text-lg lg:pb-1">
+            {c.intro.lead}
+          </p>
         </div>
-      </section>
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {c.intro.pillars.map((pillar, i) => (
+            <article
+              key={pillar.title}
+              className="flex flex-col border border-border bg-[#f3f5f8] p-6 md:min-h-[200px]"
+            >
+              <p className="mb-4 font-heading text-xs font-bold tracking-[0.2em] text-accent">
+                {String(i + 1).padStart(2, "0")}
+              </p>
+              <h3 className="font-heading text-lg font-bold text-navy">{pillar.title}</h3>
+              <p className="mt-3 flex-1 text-[15px] leading-relaxed text-muted-foreground">
+                {pillar.body}
+              </p>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
 
-      <section className="section-padding bg-white">
-        <div className="container mx-auto container-padding">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-heading font-bold text-navy mb-4">Who it is for</h2>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-            {buyerPaths.map((path) => (
-              <Card key={path.title} className="border-none shadow-lg">
-                <CardContent className="p-10">
-                  <path.icon className="text-primary mb-4" size={36} />
-                  <h3 className="text-2xl font-heading font-bold text-navy mb-3">{path.title}</h3>
-                  <p className="text-muted-foreground mb-6 leading-relaxed">{path.description}</p>
-                  <ul className="space-y-2">
-                    {path.bullets.map((bullet) => (
-                      <li key={bullet} className="text-sm text-foreground flex items-center gap-2">
-                        <ArrowRight className="text-accent shrink-0" size={14} />
-                        {bullet}
+    <section className="border-t border-border bg-[#f3f5f8] px-5 py-12 md:px-8 md:py-14">
+      <div className="mx-auto max-w-7xl">
+        <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-primary">
+          {c.workflow.eyebrow}
+        </p>
+        <h2 className="max-w-2xl font-heading text-2xl font-bold text-navy md:text-3xl">
+          {c.workflow.h2}
+        </h2>
+        <p className="mt-3 max-w-2xl text-base text-muted-foreground">{c.workflow.lead}</p>
+        <ol className="mt-10 grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
+          {c.workflow.steps.map((step, i) => (
+            <li
+              key={step}
+              className="flex items-start gap-3 border border-border bg-white p-4"
+            >
+              <span className="font-heading text-xs font-bold tracking-[0.16em] text-accent">
+                {String(i + 1).padStart(2, "0")}
+              </span>
+              <span className="text-sm font-semibold text-navy">{step}</span>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </section>
+
+    <section className="border-t border-border bg-white">
+      <div className="mx-auto w-full max-w-[90rem] px-5 py-12 md:px-10 md:py-16 lg:px-14">
+        <div className="mb-14 max-w-2xl">
+          <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-primary">
+            What ZAFTYS TMS includes
+          </p>
+          <h2 className="font-heading text-3xl font-bold text-navy md:text-4xl">
+            Dispatch, visibility, fleet, and APIs on one spine
+          </h2>
+          <p className="mt-3 text-base leading-relaxed text-muted-foreground">
+            Real screens from app.zaftys.com. Tracking, fleet, and APIs deepen the same platform.
+          </p>
+        </div>
+
+        <div className="space-y-20 md:space-y-28">
+          {c.modules.map((module, index) => {
+            const reversed = index % 2 === 1;
+            return (
+              <article
+                key={module.id}
+                id={module.id}
+                className="grid scroll-mt-28 items-center gap-10 lg:grid-cols-2 lg:gap-14"
+              >
+                <div className={reversed ? "lg:order-2" : undefined}>
+                  <div className="mb-4 flex flex-wrap items-center gap-3">
+                    <IntelligenceStatusLabel status={module.status} />
+                    <span className="font-heading text-xs font-bold tracking-[0.2em] text-muted-foreground">
+                      {String(index + 1).padStart(2, "0")}
+                    </span>
+                  </div>
+                  <h3 className="font-heading text-2xl font-bold text-navy md:text-3xl">
+                    {module.title}
+                  </h3>
+                  <p className="mt-4 text-base leading-relaxed text-muted-foreground md:text-lg">
+                    {module.lead}
+                  </p>
+                  <ul className="mt-6 space-y-3">
+                    {module.points.map((point) => (
+                      <li
+                        key={point}
+                        className="flex items-start gap-3 text-sm text-muted-foreground md:text-[15px]"
+                      >
+                        <CheckCircle2 className="mt-0.5 shrink-0 text-accent" size={18} />
+                        <span>{point}</span>
                       </li>
                     ))}
                   </ul>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
+                  <div className="mt-8 flex flex-wrap gap-3">
+                    <Link to={module.cta.path}>
+                      <Button
+                        variant="outline"
+                        className="border-primary text-primary hover:bg-primary hover:text-white"
+                      >
+                        {module.cta.label} <ArrowRight className="ml-2" size={16} />
+                      </Button>
+                    </Link>
+                    {"secondaryCta" in module && module.secondaryCta ? (
+                      <Link to={module.secondaryCta.path}>
+                        <Button variant="ghost" className="text-navy">
+                          {module.secondaryCta.label}
+                        </Button>
+                      </Link>
+                    ) : null}
+                  </div>
+                </div>
+                <div className={reversed ? "lg:order-1" : undefined}>
+                  <IntelligenceProductShot
+                    src={module.image}
+                    alt={module.imageAlt}
+                    caption={module.caption}
+                  />
+                </div>
+              </article>
+            );
+          })}
         </div>
-      </section>
+      </div>
+    </section>
 
-      <section className="section-padding bg-muted/30">
-        <div className="container mx-auto container-padding max-w-3xl">
-          <h2 className="text-3xl font-heading font-bold text-navy mb-8 text-center">TMS FAQs</h2>
-          <div className="space-y-6">
-            {technologyFaqs.map((faq) => (
-              <div key={faq.question} className="p-6 rounded-xl bg-white border border-border">
-                <h3 className="font-heading font-bold text-navy mb-2">{faq.question}</h3>
-                <p className="text-sm text-muted-foreground leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
+    <section className="border-t border-border bg-[#f3f5f8] px-5 py-12 md:px-8 md:py-14">
+      <div className="mx-auto max-w-7xl">
+        <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-primary">
+          {c.buyers.eyebrow}
+        </p>
+        <h2 className="mb-8 max-w-2xl font-heading text-2xl font-bold text-navy md:text-3xl">
+          {c.buyers.h2}
+        </h2>
+        <div className="grid gap-4 md:grid-cols-3">
+          {c.buyers.items.map((item, i) => (
+            <article key={item.title} className="border border-border bg-white p-6">
+              <p className="mb-3 font-heading text-xs font-bold tracking-[0.18em] text-accent">
+                {String(i + 1).padStart(2, "0")}
+              </p>
+              <h3 className="font-heading text-lg font-bold text-navy">{item.title}</h3>
+              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{item.body}</p>
+            </article>
+          ))}
         </div>
-      </section>
+      </div>
+    </section>
 
-      <section className="section-padding bg-navy text-white relative overflow-hidden">
-        <div className="absolute inset-0 opacity-10 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMiIgY3k9IjIiIHI9IjIiIGZpbGw9InJnYmEoMjU1LDI1NSwyNTUsMC4wNSkiLz48L3N2Zz4=')]" />
-        <div className="container mx-auto container-padding relative z-10 text-center">
-          <h2 className="text-4xl font-heading font-bold mb-6">Start with the live portal</h2>
-          <p className="text-xl text-gray-300 mb-10 max-w-2xl mx-auto">
-            Log in at app.zaftys.com, or request a guided demo for your operations team.
-          </p>
-          <CTAGroup>
-            <Button asChild size="lg" variant="accent">
-              <Link to="/login">Login to portal</Link>
-            </Button>
-            <Link to="/contact">
-              <Button size="lg" variant="on-dark-outline">Book a demo</Button>
+    <section className="border-t border-border bg-navy px-5 py-12 text-white md:px-8 md:py-14">
+      <div className="mx-auto max-w-7xl">
+        <div className="grid gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
+          <div>
+            <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-accent">
+              {c.live.eyebrow}
+            </p>
+            <h2 className="max-w-xl font-heading text-3xl font-bold">{c.live.h2}</h2>
+            <p className="mt-4 max-w-xl text-base leading-relaxed text-gray-300">{c.live.lead}</p>
+            <ul className="mt-6 space-y-3">
+              {c.live.points.map((point) => (
+                <li key={point} className="flex items-start gap-3 text-sm text-gray-300">
+                  <CheckCircle2 className="mt-0.5 shrink-0 text-accent" size={18} />
+                  <span>{point}</span>
+                </li>
+              ))}
+            </ul>
+            <div className="mt-8 flex flex-wrap gap-3">
+              <Link to={c.live.primary.path}>
+                <Button variant="accent">{c.live.primary.label}</Button>
+              </Link>
+              <Link to={c.live.secondary.path}>
+                <Button variant="on-dark-outline">{c.live.secondary.label}</Button>
+              </Link>
+            </div>
+          </div>
+          <IntelligenceProductShot
+            src="/images/tms/shipments.webp?v=2"
+            alt="ZAFTYS TMS Shipments screen with live load status"
+            caption="Shipments · trip lifecycle in production"
+            className="border-white/15"
+          />
+        </div>
+      </div>
+    </section>
+
+    <section className="border-t border-border bg-white px-5 py-12 md:px-8 md:py-14">
+      <div className="mx-auto max-w-3xl">
+        <h2 className="mb-8 text-center font-heading text-2xl font-bold text-navy md:text-3xl">
+          TMS FAQs
+        </h2>
+        <div className="space-y-4">
+          {c.faqs.map((faq) => (
+            <div key={faq.question} className="border border-border bg-[#f3f5f8] p-6">
+              <h3 className="font-heading font-bold text-navy">{faq.question}</h3>
+              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{faq.answer}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section className="border-t border-border bg-[#f3f5f8] px-5 py-12 md:px-8 md:py-14">
+      <div className="mx-auto max-w-7xl">
+        <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-primary">
+          {c.related.eyebrow}
+        </p>
+        <h2 className="mb-8 font-heading text-2xl font-bold text-navy md:text-3xl">
+          {c.related.h2}
+        </h2>
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {c.related.links.map((link) => (
+            <Link
+              key={link.path}
+              to={link.path}
+              className="group border border-border bg-white p-5 transition hover:border-primary/40"
+            >
+              <h3 className="font-heading text-base font-bold text-navy group-hover:text-primary">
+                {link.name}
+              </h3>
+              <p className="mt-2 text-sm text-muted-foreground">{link.blurb}</p>
+              <span className="mt-4 inline-flex items-center text-sm font-semibold text-primary">
+                Open <ArrowRight className="ml-1" size={14} />
+              </span>
             </Link>
-          </CTAGroup>
-          <p className="mt-8 text-sm text-gray-300">
-            Related:{" "}
-            <Link to="/services" className="underline hover:text-white">services</Link>
-            {" · "}
-            <Link to="/tranzfort-network" className="underline hover:text-white">TranZfort</Link>
-            {" · "}
-            <Link to="/fleet" className="underline hover:text-white">company fleet</Link>
-            {" · "}
-            <Link to="/industries" className="underline hover:text-white">industries</Link>
-          </p>
+          ))}
         </div>
-      </section>
-    </div>
-  );
-};
+      </div>
+    </section>
+
+    <section className="border-t border-border bg-navy py-16 text-white md:py-20">
+      <div className="container mx-auto container-padding text-center">
+        <h2 className="mx-auto max-w-2xl font-heading text-3xl font-bold md:text-4xl">
+          {c.finalCta.h2}
+        </h2>
+        <p className="mx-auto mt-4 max-w-xl text-base text-gray-300">{c.finalCta.lead}</p>
+        <CTAGroup className="mt-8">
+          <Link to={paths.login}>
+            <Button variant="accent">{c.finalCta.secondaryLabel}</Button>
+          </Link>
+          <HeroEmailButton
+            label={c.finalCta.primaryLabel}
+            subject={technologyDemoMail.subject}
+            body={technologyDemoMail.body}
+            variant="on-dark-outline"
+          />
+        </CTAGroup>
+      </div>
+    </section>
+  </div>
+);
 
 export default Technology;

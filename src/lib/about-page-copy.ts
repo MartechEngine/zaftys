@@ -72,7 +72,7 @@ export const aboutPageCopy = {
       {
         title: "ZAFTYS TMS",
         desc: "Cloud TMS for dispatch, live visibility, digital docs, and ePOD. Built for plant windows and the trips we run — available to shippers and fleet operators.",
-        path: "/technology/zaftys-tms",
+        path: "/zaftys-tms",
         linkLabel: "ZAFTYS TMS",
       },
       {

@@ -15,9 +15,9 @@ export const pageHeroCopy = {
     lead: "Owned fleet when we have the truck. Verified partner capacity when the lane needs more. Tranzfort extends the network digitally.",
   },
   technologyHub: {
-    badge: "Transportation Technology",
-    h1: "Run your transportation operation from one platform.",
-    lead: "ZAFTYS TMS brings planning, dispatch, tracking, delivery documentation, and analytics into one system we use on our own trips every day.",
+    badge: "ZAFTYS TMS · live",
+    h1: "The TMS we dispatch on every day.",
+    lead: "Plan, dispatch, track, and close out transportation in one system. Shippers use the portal for tracking and ePOD. Fleet operators use the same stack for vehicles, drivers, and trip close-out. Login at app.zaftys.com.",
   },
   intelligenceHub: {
     badge: "Logistics Intelligence",
@@ -41,9 +41,9 @@ export const pageHeroCopy = {
     lead: "Shippers post loads. Truckers book them. Matching is AI-powered on corridor, vehicle type, and timing. Listing and search are free. We charge a broker fee to truckers on booked loads. If the trip is contracted through ZAFTYS, billing stays GST-compliant on our side.",
   },
   technology: {
-    badge: "TMS · live",
+    badge: "ZAFTYS TMS · live",
     h1: "The TMS we dispatch on every day.",
-    lead: "Shippers use the portal for tracking and e-POD. Fleet operators use the same stack for vehicles, drivers, and trip close-out. Login at app.zaftys.com.",
+    lead: "Plan, dispatch, track, and close out transportation in one system. Shippers use the portal for tracking and ePOD. Fleet operators use the same stack for vehicles, drivers, and trip close-out. Login at app.zaftys.com.",
   },
   industries: {
     badge: "Built for industrial freight",

@@ -16,9 +16,9 @@ export const pageSeo = {
       "ZAFTYS transportation network: Tranzfort digital freight network, verified transporter partners, and truck capacity sourcing.",
   },
   technologyHub: {
-    title: "Transportation Technology | ZAFTYS TMS",
+    title: "ZAFTYS TMS | Transport Management System",
     description:
-      "ZAFTYS technology for transportation operations: TMS, fleet management, tracking, visibility, and logistics APIs.",
+      "ZAFTYS TMS is live TMS software for dispatch, GPS tracking, e-POD, fleet records and shipper visibility. Request a demo or log in at app.zaftys.com.",
   },
   intelligenceHub: {
     title: "Logistics Intelligence | Analytics, Rates, Reports, AI",
