@@ -116,7 +116,7 @@ export const vehicleClasses = [
     kind: "class" as const,
     description:
       "Open and closed LCV: Ace, Dost, and 14ft to 24ft, including 6W container. Not house shifting. Not two-wheeler last mile.",
-    link: "/services#lcv",
+    link: "/fleet#lcv",
   },
   {
     id: "heavy",
@@ -125,7 +125,7 @@ export const vehicleClasses = [
     kind: "class" as const,
     description:
       "Open truck, trailer, tipper, and ODC: coils, machinery, low bed, and oversize-aware work. Plant windows, weighbridge, and axle limits.",
-    link: "/services#heavy",
+    link: "/fleet#heavy",
   },
   {
     id: "container",
@@ -134,7 +134,7 @@ export const vehicleClasses = [
     kind: "class" as const,
     description:
       "Container trailers and closed body for palletised, weather-sensitive, and high-value cargo, including plant-to-warehouse moves.",
-    link: "/services#container",
+    link: "/fleet#container",
   },
   {
     id: "tanker",
@@ -143,7 +143,7 @@ export const vehicleClasses = [
     kind: "class" as const,
     description:
       "Tankers quoted per cargo: water, chemical, acid, petroleum, and edible oil.",
-    link: "/services#tanker",
+    link: "/fleet#tanker",
   },
   {
     id: "bulker",
@@ -152,7 +152,7 @@ export const vehicleClasses = [
     kind: "class" as const,
     description:
       "Cement, fly ash, lime, and powder bulkers on plant-to-project lanes.",
-    link: "/services#bulker",
+    link: "/fleet#bulker",
   },
   {
     id: "contract",
@@ -161,7 +161,7 @@ export const vehicleClasses = [
     kind: "program" as const,
     description:
       "Assigned trucks and drivers on a plant, mill, or DC program. Any class, on a longer ticket.",
-    link: "/services#contract",
+    link: "/fleet#contract",
   },
 ] as const;
 

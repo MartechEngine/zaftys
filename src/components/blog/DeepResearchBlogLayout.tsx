@@ -541,7 +541,7 @@ export function DeepResearchBlogLayout({ post }: DeepResearchBlogLayoutProps) {
                   Explore ZAFTYS TMS
                 </Button>
               </Link>
-              <Link to="/tranzfort-network">
+              <Link to="/network/tranzfort">
                 <Button size="lg" variant="on-dark-outline">
                   Explore TranZfort
                 </Button>

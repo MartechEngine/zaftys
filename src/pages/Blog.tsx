@@ -278,11 +278,11 @@ const Blog = () => {
             Explore{" "}
             <Link to="/reports" className="text-primary hover:underline">market reports</Link>
             {", "}
-            <Link to="/services" className="text-primary hover:underline">services</Link>
+            <Link to="/logistics" className="text-primary hover:underline">logistics</Link>
             {", "}
             <Link to="/zaftys-tms" className="text-primary hover:underline">ZAFTYS TMS</Link>
             {", "}
-            <Link to="/tranzfort-network" className="text-primary hover:underline">TranZfort</Link>
+            <Link to="/network/tranzfort" className="text-primary hover:underline">TranZfort</Link>
             {", "}
             <Link to="/industries" className="text-primary hover:underline">industries</Link>
             {", or "}

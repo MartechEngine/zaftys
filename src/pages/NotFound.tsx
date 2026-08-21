@@ -25,8 +25,8 @@ const NotFound = () => {
               <ArrowLeft className="mr-2" size={20} /> Return Home
             </Button>
           </Link>
-          <Link to="/services">
-            <Button size="lg" variant="on-dark-outline">Services</Button>
+          <Link to="/logistics">
+            <Button size="lg" variant="on-dark-outline">Logistics Services</Button>
           </Link>
           <Link to="/contact">
             <Button size="lg" variant="on-dark-outline">Contact</Button>
@@ -35,7 +35,7 @@ const NotFound = () => {
         <p className="mt-6 text-sm text-gray-400">
           <Link to="/zaftys-tms" className="underline hover:text-white">ZAFTYS TMS</Link>
           {" · "}
-          <Link to="/tranzfort-network" className="underline hover:text-white">TranZfort</Link>
+          <Link to="/network/tranzfort" className="underline hover:text-white">TranZfort</Link>
         </p>
       </div>
     </div>

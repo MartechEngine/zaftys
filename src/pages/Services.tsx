@@ -249,7 +249,7 @@ const Services = () => {
                     Download TranZfort
                   </a>
                 </Button>
-                <Link to="/tranzfort-network">
+                <Link to="/network/tranzfort">
                   <Button size="lg" variant="on-dark-outline">How matching works</Button>
                 </Link>
               </CTAGroup>
@@ -267,7 +267,7 @@ const Services = () => {
           <p className="text-xl mb-10 text-gray-200 max-w-2xl mx-auto">WhatsApp the origin, destination, and vehicle class. We quote company fleet first.</p>
           <CTAGroup>
             <WhatsAppButton label="Get a Quote on WhatsApp" />
-            <Link to="/tranzfort-network">
+            <Link to="/network/tranzfort">
               <Button size="lg" variant="on-dark-outline">Open TranZfort</Button>
             </Link>
           </CTAGroup>

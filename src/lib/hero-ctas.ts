@@ -43,7 +43,7 @@ export const heroMailBodies = {
 export const heroCtaGuide = {
   technology: { primary: "Request a Demo → email", secondary: "Login to Portal → app" },
   services: { primary: "Get a Freight Quote → email", secondary: "Match Truck & Material → anchor" },
-  fleet: { primary: "Check Fleet Availability → email", secondary: "Explore Services → /services" },
+  fleet: { primary: "Check Fleet Availability → email", secondary: "Explore Logistics → /logistics" },
   network: { primary: "Request Additional Capacity → email", secondary: "Become a Partner → /partner" },
   industries: { primary: "Discuss Your Industry Needs → email", secondary: "Transportation → /logistics" },
   industryDetail: { primary: "Get a Quote → email", secondary: "Talk to Our Team → /contact" },

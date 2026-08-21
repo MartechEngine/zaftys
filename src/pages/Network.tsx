@@ -374,7 +374,7 @@ const NetworkPage = () => {
           </CTAGroup>
           <p className="mt-8 text-sm text-gray-300">
             Also explore{" "}
-            <Link to="/services" className="underline hover:text-white">logistics services</Link>
+            <Link to="/logistics" className="underline hover:text-white">logistics services</Link>
             {", "}
             <Link to="/zaftys-tms" className="underline hover:text-white">ZAFTYS TMS</Link>
             {", and "}

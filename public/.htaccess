@@ -39,7 +39,8 @@ DirectorySlash Off
   # Product pages  -  menu-aligned slugs (server 301 for crawlers)
   RewriteRule ^technology/?$ /zaftys-tms [R=301,L,QSA]
   RewriteRule ^platform/?$ /zaftys-tms [R=301,L,QSA]
-  RewriteRule ^network/?$ /tranzfort-network [R=301,L,QSA]
+  RewriteRule ^services/?$ /logistics [R=301,L,QSA]
+  RewriteRule ^tranzfort-network/?$ /network/tranzfort [R=301,L,QSA]
 
   # Industry slug aliases
   RewriteRule ^industries/mining/?$ /industries/coal-mining [R=301,L,QSA]
@@ -73,8 +74,12 @@ DirectorySlash Off
   RewriteRule ^reports/([^/.]+)/?$ index.html [END]
 
   # Known SPA routes only. Unknown paths fall through to a real 404.
-  # Keep in sync with src/App.tsx.
-  RewriteRule ^(about|zaftys-tms|services|fleet|tranzfort-network|careers|partner|contact|privacy|terms|cookies|legal-notice|login)/?$ index.html [END]
+  # Keep in sync with src/App.tsx. Legacy /services and /tranzfort-network 301 above.
+  RewriteRule ^(about|fleet|careers|partner|contact|privacy|terms|cookies|legal-notice|login)/?$ index.html [END]
+  RewriteRule ^logistics(?:/[A-Za-z0-9-]+)?/?$ index.html [END]
+  RewriteRule ^network(?:/[A-Za-z0-9-]+)?/?$ index.html [END]
+  RewriteRule ^intelligence(?:/[A-Za-z0-9-]+)?/?$ index.html [END]
+  RewriteRule ^zaftys-tms(?:/[A-Za-z0-9-]+)?/?$ index.html [END]
   RewriteRule ^blog(?:/[A-Za-z0-9-]+)?/?$ index.html [END]
   RewriteRule ^industries(?:/[A-Za-z0-9-]+)?/?$ index.html [END]
   RewriteRule ^resources(?:/[A-Za-z0-9-]+)?/?$ index.html [END]

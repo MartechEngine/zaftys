@@ -279,6 +279,96 @@ export function MarketReportLayout({ report }: MarketReportLayoutProps) {
 
       <article className="section-padding bg-white">
         <div className="container mx-auto container-padding max-w-4xl">
+          {(report.executiveSummary?.length ||
+            report.keyFindings?.length ||
+            report.methodologyNarrative?.length ||
+            report.faq?.length) ? (
+            <div className="space-y-12 mb-14">
+              {report.executiveSummary && report.executiveSummary.length > 0 ? (
+                <section aria-labelledby="report-executive-summary">
+                  <h2
+                    id="report-executive-summary"
+                    className="text-2xl font-heading font-bold text-navy mb-4"
+                  >
+                    Executive summary
+                  </h2>
+                  <div className="space-y-4">
+                    {report.executiveSummary.map((paragraph) => (
+                      <p
+                        key={paragraph.slice(0, 48)}
+                        className="text-muted-foreground leading-relaxed text-base"
+                      >
+                        {paragraph}
+                      </p>
+                    ))}
+                  </div>
+                </section>
+              ) : null}
+
+              {report.keyFindings && report.keyFindings.length > 0 ? (
+                <section aria-labelledby="report-key-findings">
+                  <h2
+                    id="report-key-findings"
+                    className="text-2xl font-heading font-bold text-navy mb-4"
+                  >
+                    Key findings
+                  </h2>
+                  <ul className="space-y-4">
+                    {report.keyFindings.map((finding) => (
+                      <li
+                        key={finding.slice(0, 48)}
+                        className="text-muted-foreground leading-relaxed text-base pl-4 border-l-2 border-accent/40"
+                      >
+                        {finding}
+                      </li>
+                    ))}
+                  </ul>
+                </section>
+              ) : null}
+
+              {report.methodologyNarrative && report.methodologyNarrative.length > 0 ? (
+                <section aria-labelledby="report-methodology-narrative">
+                  <h2
+                    id="report-methodology-narrative"
+                    className="text-2xl font-heading font-bold text-navy mb-4"
+                  >
+                    Methodology
+                  </h2>
+                  <div className="space-y-4">
+                    {report.methodologyNarrative.map((paragraph) => (
+                      <p
+                        key={paragraph.slice(0, 48)}
+                        className="text-muted-foreground leading-relaxed text-base"
+                      >
+                        {paragraph}
+                      </p>
+                    ))}
+                  </div>
+                </section>
+              ) : null}
+
+              {report.faq && report.faq.length > 0 ? (
+                <section aria-labelledby="report-faq">
+                  <h2 id="report-faq" className="text-2xl font-heading font-bold text-navy mb-4">
+                    Frequently asked questions
+                  </h2>
+                  <dl className="space-y-6">
+                    {report.faq.map((item) => (
+                      <div key={item.question}>
+                        <dt className="font-heading font-bold text-navy text-base mb-2">
+                          {item.question}
+                        </dt>
+                        <dd className="text-muted-foreground leading-relaxed text-base">
+                          {item.answer}
+                        </dd>
+                      </div>
+                    ))}
+                  </dl>
+                </section>
+              ) : null}
+            </div>
+          ) : null}
+
           <Tabs defaultValue="overview" className="w-full">
             <TabsList className="w-full h-auto flex flex-wrap justify-start gap-1 bg-muted/60 p-1 mb-8">
               <TabsTrigger value="overview" className="flex-1 min-w-[7rem]">
@@ -288,11 +378,15 @@ export function MarketReportLayout({ report }: MarketReportLayoutProps) {
                 Table of contents
               </TabsTrigger>
               <TabsTrigger value="methodology" className="flex-1 min-w-[7rem]">
-                Methodology
+                Methodology notes
               </TabsTrigger>
             </TabsList>
 
-            <TabsContent value="overview" className="space-y-10 mt-0">
+            <TabsContent
+              value="overview"
+              forceMount
+              className="space-y-10 mt-0 data-[state=inactive]:hidden"
+            >
               <section>
                 <h2 className="text-2xl font-heading font-bold text-navy mb-4">Description</h2>
                 <div className="space-y-4">
@@ -346,7 +440,7 @@ export function MarketReportLayout({ report }: MarketReportLayoutProps) {
               </section>
             </TabsContent>
 
-            <TabsContent value="toc" className="mt-0">
+            <TabsContent value="toc" forceMount className="mt-0 data-[state=inactive]:hidden">
               <h2 className="text-2xl font-heading font-bold text-navy mb-6">Table of contents</h2>
               <ol className="space-y-5">
                 {toc.map((chapter, index) => (
@@ -369,9 +463,13 @@ export function MarketReportLayout({ report }: MarketReportLayoutProps) {
               </ol>
             </TabsContent>
 
-            <TabsContent value="methodology" className="mt-0 space-y-8">
+            <TabsContent
+              value="methodology"
+              forceMount
+              className="mt-0 space-y-8 data-[state=inactive]:hidden"
+            >
               <section>
-                <h2 className="text-2xl font-heading font-bold text-navy mb-4">Methodology</h2>
+                <h2 className="text-2xl font-heading font-bold text-navy mb-4">Methodology notes</h2>
                 <ul className="space-y-3">
                   {report.methodology.map((item) => (
                     <li

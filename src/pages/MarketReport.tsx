@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import SEO from "@/components/SEO";
 import { MarketReportLayout } from "@/components/market-reports/MarketReportLayout";
 import { getReportBySlug, reportModifiedAt, reportShareImage } from "@/lib/market-reports-data";
-import { breadcrumbSchema, marketReportSchema } from "@/lib/schema";
+import { breadcrumbSchema, faqPageSchema, marketReportSchema } from "@/lib/schema";
 import NotFound from "@/pages/NotFound";
 import { trackEvent } from "@/lib/analytics";
 
@@ -21,6 +21,17 @@ const MarketReport = () => {
     return <NotFound />;
   }
 
+  const schema = [
+    breadcrumbSchema([
+      { name: "Home", path: "/" },
+      { name: "Resources", path: "/resources" },
+      { name: "Reports", path: "/reports" },
+      { name: report.title, path: `/reports/${report.slug}` },
+    ]),
+    marketReportSchema(report),
+    ...(report.faq && report.faq.length > 0 ? [faqPageSchema(report.faq)] : []),
+  ];
+
   return (
     <div className="min-h-screen bg-background font-sans">
       <SEO
@@ -31,15 +42,7 @@ const MarketReport = () => {
         type="article"
         publishedTime={report.publishedAt}
         modifiedTime={reportModifiedAt(report)}
-        schema={[
-          breadcrumbSchema([
-            { name: "Home", path: "/" },
-            { name: "Resources", path: "/resources" },
-            { name: "Reports", path: "/reports" },
-            { name: report.title, path: `/reports/${report.slug}` },
-          ]),
-          marketReportSchema(report),
-        ]}
+        schema={schema}
       />
       <MarketReportLayout report={report} />
     </div>

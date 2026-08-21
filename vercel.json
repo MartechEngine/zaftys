@@ -1,3 +1,9 @@
 {
+  "redirects": [
+    { "source": "/services", "destination": "/logistics", "permanent": true },
+    { "source": "/tranzfort-network", "destination": "/network/tranzfort", "permanent": true },
+    { "source": "/technology", "destination": "/zaftys-tms", "permanent": true },
+    { "source": "/platform", "destination": "/zaftys-tms", "permanent": true }
+  ],
   "rewrites": [{ "source": "/((?!api/).*)", "destination": "/index.html" }]
 }

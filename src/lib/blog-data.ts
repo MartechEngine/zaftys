@@ -244,7 +244,7 @@ export const blogPosts: readonly BlogPost[] = [
         heading: "Plant windows and multi-axle reality",
         paragraphs: [
           "Generic last-mile tools often assume simple pickups and urban stops. Commercial freight needs room for:",
-          "ZAFTYS TMS was shaped by those conditions. We run it on our own fleet daily. Extra trucks can be posted or found on [TranZfort](https://www.tranzfort.com), with the trip still visible in TMS when we run it (also summarised on [TranZfort marketplace](/tranzfort-network)).",
+          "ZAFTYS TMS was shaped by those conditions. We run it on our own fleet daily. Extra trucks can be posted or found on [TranZfort](https://www.tranzfort.com), with the trip still visible in TMS when we run it (also summarised on [TranZfort marketplace](/network/tranzfort)).",
         ],
         bullets: [
           "Plant queues and slot discipline ([cement loading windows](/blog/cement-plant-loading-windows))",
@@ -315,7 +315,7 @@ export const blogPosts: readonly BlogPost[] = [
         heading: "What ZAFTYS offers",
         paragraphs: [
           "[ZAFTYS TMS](/zaftys-tms) is live for dispatch, fleet, documentation, and customer visibility. We run it every day and offer the same operational discipline to shippers and operators at [app.zaftys.com](https://app.zaftys.com).",
-          "Shippers using ZAFTYS logistics get portal visibility. Fleet operators can adopt the platform for their own ops. When you need a truck we do not have that day, post on [TranZfort](https://www.tranzfort.com). See also [services](/services).",
+          "Shippers using ZAFTYS logistics get portal visibility. Fleet operators can adopt the platform for their own ops. When you need a truck we do not have that day, post on [TranZfort](https://www.tranzfort.com). See also [services](/logistics).",
         ],
       },
       {
@@ -466,7 +466,7 @@ export const blogPosts: readonly BlogPost[] = [
       {
         heading: "When demand exceeds owned fleet",
         paragraphs: [
-          "Peak mill programs may need more trucks. Post those loads on [TranZfort](https://www.tranzfort.com). Listing is free. Trips contracted through ZAFTYS stay on GST billing (also described on [TranZfort marketplace](/tranzfort-network)). Random capacity without securement standards is a quality risk. Marketplace cover still has to meet coil discipline.",
+          "Peak mill programs may need more trucks. Post those loads on [TranZfort](https://www.tranzfort.com). Listing is free. Trips contracted through ZAFTYS stay on GST billing (also described on [TranZfort marketplace](/network/tranzfort)). Random capacity without securement standards is a quality risk. Marketplace cover still has to meet coil discipline.",
         ],
       },
       {
@@ -664,7 +664,7 @@ export const blogPosts: readonly BlogPost[] = [
         heading: "Seasonal surge without losing the plot",
         paragraphs: [
           "Cement demand spikes around infrastructure pushes, construction cycles, and plant maintenance catch-up. Surge weeks are when many shippers add the most transporters and lose the most control.",
-          "Calmer pattern: lock core lanes with a primary partner, pre-agree how extra loads get posted, keep one escalation channel. [TranZfort](https://www.tranzfort.com) is a free marketplace under ZAFTYS coordination (see also [TranZfort marketplace](/tranzfort-network)), not anonymous last-minute chaos.",
+          "Calmer pattern: lock core lanes with a primary partner, pre-agree how extra loads get posted, keep one escalation channel. [TranZfort](https://www.tranzfort.com) is a free marketplace under ZAFTYS coordination (see also [TranZfort marketplace](/network/tranzfort)), not anonymous last-minute chaos.",
         ],
       },
       {
@@ -696,7 +696,7 @@ export const blogPosts: readonly BlogPost[] = [
       {
         heading: "What to do next",
         paragraphs: [
-          "If cement detention is eating your corridor plan, share plant locations, material type, and weekly volume. We will recommend a tipper or bulk approach matched to your windows. Also see [services](/services).",
+          "If cement detention is eating your corridor plan, share plant locations, material type, and weekly volume. We will recommend a tipper or bulk approach matched to your windows. Also see [services](/logistics).",
         ],
       },
       {
@@ -824,7 +824,7 @@ export const blogPosts: readonly BlogPost[] = [
         paragraphs: [
           "When volume spikes (seasonal cement, mill catch-up, multi-plant surges), adding random transporters often raises coordination cost more than it adds reliable capacity.",
           "A cleaner pattern:",
-          "ZAFTYS runs own fleet. Extra loads go on [TranZfort](https://www.tranzfort.com). Trips we contract stay on GST billing. More on that on our [marketplace](/tranzfort-network) and [services](/services) pages.",
+          "ZAFTYS runs own fleet. Extra loads go on [TranZfort](https://www.tranzfort.com). Trips we contract stay on GST billing. More on that on our [marketplace](/network/tranzfort) and [services](/logistics) pages.",
         ],
         bullets: [
           "Cover core lanes with company-operated fleet where you can.",
@@ -877,7 +877,7 @@ export const blogPosts: readonly BlogPost[] = [
       {
         heading: "What to do next",
         paragraphs: [
-          "Share your corridor, load type, and volume with our team. We will recommend a transport approach across own fleet and TranZfort, without turning peak weeks into a multi-vendor scramble. Start from [services](/services) if you want the service map first.",
+          "Share your corridor, load type, and volume with our team. We will recommend a transport approach across own fleet and TranZfort, without turning peak weeks into a multi-vendor scramble. Start from [services](/logistics) if you want the service map first.",
         ],
       },
       {
@@ -887,11 +887,11 @@ export const blogPosts: readonly BlogPost[] = [
         ],
         bullets: [
           "[Cement logistics challenges in India (Fretron)](https://www.fretron.com/blog/logistics-challenges-in-cement-industry/)",
-          "[TranZfort](https://www.tranzfort.com) · [ZAFTYS services](/services) · [ZAFTYS TMS](/zaftys-tms) · [Fleet](/fleet)",
+          "[TranZfort](https://www.tranzfort.com) · [ZAFTYS services](/logistics) · [ZAFTYS TMS](/zaftys-tms) · [Fleet](/fleet)",
         ],
       },
     ],
-    cta: { label: "Explore transport services", to: "/services" },
+    cta: { label: "Explore transport services", to: "/logistics" },
   },
   {
     slug: "reduce-empty-return-trips",
@@ -1007,7 +1007,7 @@ export const blogPosts: readonly BlogPost[] = [
         heading: "Use TranZfort carefully",
         paragraphs: [
           "Extra trucks can cover outbound gaps. They can also create more empty repositioning if partners are random. When owned fleet cannot cover both directions, post or find on TranZfort instead of adding unmanaged vendors.",
-          "Through ZAFTYS, extra trucks can move via [TranZfort](https://www.tranzfort.com) (and our [marketplace page](/tranzfort-network)) while billing stays with ZAFTYS on contracted trips. That does not invent reverse freight out of thin air. It cuts the chaos of adding unmanaged vendors when you need more trucks on planned corridors.",
+          "Through ZAFTYS, extra trucks can move via [TranZfort](https://www.tranzfort.com) (and our [marketplace page](/network/tranzfort)) while billing stays with ZAFTYS on contracted trips. That does not invent reverse freight out of thin air. It cuts the chaos of adding unmanaged vendors when you need more trucks on planned corridors.",
         ],
       },
       {
@@ -1020,13 +1020,13 @@ export const blogPosts: readonly BlogPost[] = [
           "Ask your logistics partner for empty km % and detention hours on those corridors for the last 60 to 90 days.",
           "Align plant/site windows with a realistic return opportunity, or price empty repositioning openly.",
           "Stop adding random transporters for peak weeks without a corridor plan (see [planning industrial shipments](/blog/planning-industrial-shipments)).",
-          "Prefer partners who can run own fleet plus TranZfort under one GST desk ([services](/services)).",
+          "Prefer partners who can run own fleet plus TranZfort under one GST desk ([services](/logistics)).",
         ],
       },
       {
         heading: "What to do next",
         paragraphs: [
-          "If you want a corridor-level view of empty returns on your lanes, share origin, destination, load type, and weekly volume on WhatsApp. We will suggest a practical approach. We will not promise zero empty kilometres. You can also skim [services](/services) and [TranZfort](/tranzfort-network) for how own fleet and the marketplace sit next to each other.",
+          "If you want a corridor-level view of empty returns on your lanes, share origin, destination, load type, and weekly volume on WhatsApp. We will suggest a practical approach. We will not promise zero empty kilometres. You can also skim [services](/logistics) and [TranZfort](/network/tranzfort) for how own fleet and the marketplace sit next to each other.",
         ],
       },
       {
@@ -1038,7 +1038,7 @@ export const blogPosts: readonly BlogPost[] = [
           "[Backhaul Optimisation in Indian Trucking (PTC)](https://www.ptccorp.in/backhaul-optimisation-indian-trucking-empty-miles-reduction-ftl-india/)",
           "[Backhaul Logistics Strategy for Pan-India FTL (PTC)](https://www.ptccorp.in/backhaul-logistics-strategy-pan-india-ftl/)",
           "[How technology addresses empty return trips in India transport (TapTap)](https://taptap.in/blog/technology-eliminate-empty-return-trips-transport-services-india/)",
-          "[TranZfort](https://www.tranzfort.com) · [TranZfort marketplace](/tranzfort-network) · [ZAFTYS TMS](/zaftys-tms)",
+          "[TranZfort](https://www.tranzfort.com) · [TranZfort marketplace](/network/tranzfort) · [ZAFTYS TMS](/zaftys-tms)",
         ],
       },
     ],
@@ -1085,7 +1085,7 @@ export const blogPosts: readonly BlogPost[] = [
       {
         question: "Can a TMS track spot vehicles hired from market brokers during demand spikes?",
         answer:
-          "It should. Dedicated and long-term contract trucks can carry hardwired GPS. Overflow often cannot. Ask every vendor how they cover toll-plaza events and consent-based mobile location for broker trucks, with no extra hardware on the vehicle. When a broker assigns a driver, the dispatcher should be able to enter the mobile number and registration and start tracking after SMS or WhatsApp consent. See [ZAFTYS TMS](/zaftys-tms) for how we treat dispatch and trip visibility, and use [TranZfort](/tranzfort-network) when you need extra trucks.",
+          "It should. Dedicated and long-term contract trucks can carry hardwired GPS. Overflow often cannot. Ask every vendor how they cover toll-plaza events and consent-based mobile location for broker trucks, with no extra hardware on the vehicle. When a broker assigns a driver, the dispatcher should be able to enter the mobile number and registration and start tracking after SMS or WhatsApp consent. See [ZAFTYS TMS](/zaftys-tms) for how we treat dispatch and trip visibility, and use [TranZfort](/network/tranzfort) when you need extra trucks.",
       },
       {
         question: "How does a TMS handle poor mobile internet on highways or in remote mining areas?",
@@ -1179,7 +1179,7 @@ export const blogPosts: readonly BlogPost[] = [
         paragraphs: [
           "Manufacturing supply chains almost never run on one sourcing model. You have dedicated fleet (company-owned or long-term leased) on high-volume fixed corridors. You have empaneled contract transporters on monthly lane quotas and agreed rates. You have spot market vehicles through brokers in seasonal spikes. The TMS has to allocate across all three. A product that only knows 'our trucks' will dump overflow back onto WhatsApp. For the procurement framing behind that mix, see [spot market vs dedicated contract fleets in India](/blog/spot-market-vs-dedicated-fleet-india).",
           "Automated indents should follow pre-configured contract percentages. Example: transporter A gets 50 percent of volume, B gets 30, C gets 20, without a dispatch clerk composing a group message. When contracted transporters decline, unallocated loads should go to a private network of verified brokers for competitive spot bids, not to an anonymous public board.",
-          "Backhaul is where empty kilometres become a rate problem. Connect natively with a freight marketplace such as [TranZfort](/tranzfort-network) so incoming delivery trucks can pick up a return leg. Reducing deadhead for the operator is how you earn a better round-trip rate. Listing and search on TranZfort are free. A broker fee applies on booked loads. The planning logic is the same as [how to cut empty return trips](/blog/reduce-empty-return-trips): corridors first, then the tool.",
+          "Backhaul is where empty kilometres become a rate problem. Connect natively with a freight marketplace such as [TranZfort](/network/tranzfort) so incoming delivery trucks can pick up a return leg. Reducing deadhead for the operator is how you earn a better round-trip rate. Listing and search on TranZfort are free. A broker fee applies on booked loads. The planning logic is the same as [how to cut empty return trips](/blog/reduce-empty-return-trips): corridors first, then the tool.",
         ],
         exhibits: tmsEvalExhibits["Pillar 4: Hybrid fleet and backhaul"],
       },
@@ -1221,7 +1221,7 @@ export const blogPosts: readonly BlogPost[] = [
         heading: "How we would use this at ZAFTYS",
         paragraphs: [
           "Selecting a TMS is not about buying a logo. It is about operational discipline across a manufacturing network: highways, weighbridges, and industrial FTL. We dispatch on [ZAFTYS TMS](/zaftys-tms) and we still run trucks. The product has to survive plant windows, e-POD, and mixed fleet, not only a map pin. Login for operators is at [app.zaftys.com](https://app.zaftys.com).",
-          "[TranZfort](/tranzfort-network) is the overflow and backhaul rail when company trucks are not enough. Post or find a load. Matching is AI-powered. Listing and search are free. We charge a broker fee to truckers on booked loads. GST billing stays with ZAFTYS when the trip is contracted through us.",
+          "[TranZfort](/network/tranzfort) is the overflow and backhaul rail when company trucks are not enough. Post or find a load. Matching is AI-powered. Listing and search are free. We charge a broker fee to truckers on booked loads. GST billing stays with ZAFTYS when the trip is contracted through us.",
           "Bring this checklist to a demo. Ask us to walk gate, weigh, LR, and a spot truck, not a slide of a moving pin. If you want that conversation for a live plant, start from [ZAFTYS TMS](/zaftys-tms) or WhatsApp origin, destination, and vehicle class. Pair it with [planning commercial shipments](/blog/planning-industrial-shipments), [spot vs dedicated fleets](/blog/spot-market-vs-dedicated-fleet-india), and [manufacturing logistics](/industries/manufacturing) so the software is not asked to fix a load that was never specified.",
         ],
       },
@@ -1400,7 +1400,7 @@ export const blogPosts: readonly BlogPost[] = [
         heading: "How we would use this at ZAFTYS",
         paragraphs: [
           "We run heavy industrial freight and we dispatch on [ZAFTYS TMS](/zaftys-tms). Axle and GVW discipline has to survive the weighbridge and the bay, not only a slide. Login for operators is at [app.zaftys.com](https://app.zaftys.com).",
-          "For dedicated flatbed, multi-axle, and heavy-haul programs, start from [steel and metals logistics](/industries/steel-metals) or [services](/services). When company trucks are not enough, [TranZfort](/tranzfort-network) is the overflow rail. Listing and search are free. A broker fee applies on booked loads.",
+          "For dedicated flatbed, multi-axle, and heavy-haul programs, start from [steel and metals logistics](/industries/steel-metals) or [services](/logistics). When company trucks are not enough, [TranZfort](/network/tranzfort) is the overflow rail. Listing and search are free. A broker fee applies on booked loads.",
           "Bring the checklist to a plant walk. Ask to see tare, gross, a refused overload, and an e-Way Bill tolerance check. Pair it with [steel coil transport basics](/blog/steel-coil-transport-basics), [cement plant loading windows](/blog/cement-plant-loading-windows), and [planning commercial shipments](/blog/planning-industrial-shipments) so the software is not asked to fix a load that was never specified.",
         ],
       },
@@ -1457,7 +1457,7 @@ export const blogPosts: readonly BlogPost[] = [
       {
         question: "Spot market vs dedicated fleet: which is better for Indian manufacturers?",
         answer:
-          "Neither alone. Dedicated contract fleets fit stable full truckload (FTL) lanes and tight SLAs. Spot freight fits surplus, soft months, and trial corridors. Most industrial plants run a hybrid freight strategy sized from indent data. See this guide and [TranZfort](/tranzfort-network) for verified overflow.",
+          "Neither alone. Dedicated contract fleets fit stable full truckload (FTL) lanes and tight SLAs. Spot freight fits surplus, soft months, and trial corridors. Most industrial plants run a hybrid freight strategy sized from indent data. See this guide and [TranZfort](/network/tranzfort) for verified overflow.",
       },
       {
         question: "What is a hybrid freight sourcing strategy for industrial FTL?",
@@ -1472,7 +1472,7 @@ export const blogPosts: readonly BlogPost[] = [
       {
         question: "How does a digital freight marketplace verify drivers and vehicles?",
         answer:
-          "Verified networks ask for RC, fitness, permit, insurance, and licence checks before a load is accepted. Some flows use official register lookups where the product and consent allow it. Treat that as a process you audit at the gate, not a magic 100 percent shield. See [TranZfort](/tranzfort-network).",
+          "Verified networks ask for RC, fitness, permit, insurance, and licence checks before a load is accepted. Some flows use official register lookups where the product and consent allow it. Treat that as a process you audit at the gate, not a magic 100 percent shield. See [TranZfort](/network/tranzfort).",
       },
       {
         question: "Will contract transporters object to a 30% spot reserve?",
@@ -1545,7 +1545,7 @@ export const blogPosts: readonly BlogPost[] = [
         paragraphs: [
           "Spot freight in India still runs heavily through local broker networks at hubs such as Sanjay Gandhi Transport Nagar in Delhi, Kalamboli in Navi Mumbai, or Dankuni in Kolkata. That network is real capacity. It is also opaque pricing, paper KYC, and tracking by phone call.",
           "The spot market can win in soft months when truck supply exceeds freight. It can also fail in peaks when the phone tree has no verified capacity left. The question is not whether spot exists. The question is whether overflow is verified, bid, and visible on the same trip record as your contract trucks.",
-          "A verified digital freight marketplace changes the process: broadcast, ranked or bid matching, KYC before the bay, and a clearer GST path when the trip is booked that way. Listing and search on [TranZfort](/tranzfort-network) are free. A broker fee applies on booked loads.",
+          "A verified digital freight marketplace changes the process: broadcast, ranked or bid matching, KYC before the bay, and a clearer GST path when the trip is booked that way. Listing and search on [TranZfort](/network/tranzfort) are free. A broker fee applies on booked loads.",
           "Use verified spot for true surplus, trial lanes, soft-month rate capture, and return-leg cover. Do not use raw spot for every daily indent, hazmat without permits, or coil and ODC loads without securement standards. The gate still owns the final KYC refusal.",
         ],
         exhibits: spotDedicatedExhibits["Spot freight and the Indian spot market"],
@@ -1637,7 +1637,7 @@ export const blogPosts: readonly BlogPost[] = [
         heading: "How we would use this at ZAFTYS",
         paragraphs: [
           "We run industrial FTL and we dispatch on [ZAFTYS TMS](/zaftys-tms). Dedicated contract and spot freight have to share one indent and settlement trail, not three WhatsApp groups. Login for operators is at [app.zaftys.com](https://app.zaftys.com).",
-          "For dedicated trailers and heavy-haul programs, start from [services](/services) or [manufacturing logistics](/industries/manufacturing). When company trucks are not enough, [TranZfort](/tranzfort-network) is the overflow rail. Listing and search are free. A broker fee applies on booked loads.",
+          "For dedicated trailers and heavy-haul programs, start from [services](/logistics) or [manufacturing logistics](/industries/manufacturing). When company trucks are not enough, [TranZfort](/network/tranzfort) is the overflow rail. Listing and search are free. A broker fee applies on booked loads.",
           "Bring the checklist to a sourcing workshop. Ask to see a contract quota, an overflow bid, a refused KYC fail, and an e-POD match. Pair it with [planning commercial shipments](/blog/planning-industrial-shipments), [empty return trips](/blog/reduce-empty-return-trips), and the [TMS evaluation guide](/blog/tms-evaluation-guide-indian-manufacturers) so software is not asked to fix a split that was never designed.",
         ],
       },
@@ -1651,7 +1651,7 @@ export const blogPosts: readonly BlogPost[] = [
           "Corridor rate volatility and FTL contract vs spot rate debates are widely covered in industry freight reports (IFTRD, CRISIL, and similar). Confirm the edition you cite.",
           "MoRTH Vahan and Sarathi registers: use as verification rails where product integrations and consent allow, not as a blanket claim.",
           "ZAFTYS operations: fleet and marketplace logs on industrial lanes, 2024 to 2026. Directional and corridor-specific.",
-          "[ZAFTYS TMS](/zaftys-tms) · [TranZfort](/tranzfort-network) · [reduce empty return trips](/blog/reduce-empty-return-trips)",
+          "[ZAFTYS TMS](/zaftys-tms) · [TranZfort](/network/tranzfort) · [reduce empty return trips](/blog/reduce-empty-return-trips)",
         ],
       },
     ],
@@ -1867,7 +1867,7 @@ export const blogPosts: readonly BlogPost[] = [
         heading: "How we would use this at ZAFTYS",
         paragraphs: [
           "We run industrial FTL and we dispatch on [ZAFTYS TMS](/zaftys-tms). Yard and gate stages have to survive a busy morning, not only a slide. Login for operators is at [app.zaftys.com](https://app.zaftys.com).",
-          "For plant programs and dedicated capacity, start from [services](/services) or [manufacturing logistics](/industries/manufacturing). When company trucks are not enough, [TranZfort](/tranzfort-network) is the overflow rail. Listing and search are free. A broker fee applies on booked loads.",
+          "For plant programs and dedicated capacity, start from [services](/logistics) or [manufacturing logistics](/industries/manufacturing). When company trucks are not enough, [TranZfort](/network/tranzfort) is the overflow rail. Listing and search are free. A broker fee applies on booked loads.",
           "Bring the checklist to a plant walk. Ask to see a refused early arrival, a typed-weight block, a bay mismatch catch, and a digital exit. Pair it with [cement plant loading windows](/blog/cement-plant-loading-windows), [planning commercial shipments](/blog/planning-industrial-shipments), [spot vs dedicated fleets](/blog/spot-market-vs-dedicated-fleet-india), and the [TMS evaluation guide](/blog/tms-evaluation-guide-indian-manufacturers).",
         ],
       },
@@ -2114,7 +2114,7 @@ export const blogPosts: readonly BlogPost[] = [
         heading: "How we would use this at ZAFTYS",
         paragraphs: [
           "We run industrial FTL and we settle trips on [ZAFTYS TMS](/zaftys-tms). ePOD, e-Way Bill discipline, and invoice match have to survive a busy month-end, not only a slide. Login for operators is at [app.zaftys.com](https://app.zaftys.com).",
-          "For dedicated capacity and overflow, start from [services](/services) or [TranZfort](/tranzfort-network). Listing and search on TranZfort are free. A broker fee applies on booked loads. GST billing stays with ZAFTYS when the trip is contracted through us.",
+          "For dedicated capacity and overflow, start from [services](/logistics) or [TranZfort](/network/tranzfort). Listing and search on TranZfort are free. A broker fee applies on booked loads. GST billing stays with ZAFTYS when the trip is contracted through us.",
           "Bring the checklist to a finance workshop. Ask to see a same-day ePOD, an e-Way Bill alert, a blocked dirty invoice, a coded exception, and an ERP-ready clean bill. Pair it with [plant detention and TAT](/blog/plant-detention-tat-yard-gate-india), [planning commercial shipments](/blog/planning-industrial-shipments), and the [TMS evaluation guide](/blog/tms-evaluation-guide-indian-manufacturers).",
         ],
       },
@@ -2175,7 +2175,7 @@ export const blogPosts: readonly BlogPost[] = [
         eyebrow: "Return loads on a wider network",
         title: "Match import delivery to a nearby export pickup",
         body: "When you want marketplace overflow for return legs, listing and search on TranZfort are free. A broker fee applies on booked loads. Prefer a managed transport quote instead? Use contact.",
-        cta: { label: "Explore TranZfort", to: "/tranzfort-network" },
+        cta: { label: "Explore TranZfort", to: "/network/tranzfort" },
       },
       {
         afterHeading: "Container control maturity",
@@ -2330,7 +2330,7 @@ export const blogPosts: readonly BlogPost[] = [
         heading: "Western gateway trailer surge at JNPT and Mundra",
         paragraphs: [
           "Public 2026 market patterns around India's western gateways made a blunt point: yards can stack while berths still look productive. Import evacuation and empty reposition need container trailers and drivers. When placement thins after vessel bunching, rake discharge, CFS backlog clearance, or empty high-cube reposition orders, detention clocks start even if the ocean box exists.",
-          "Treat this as trailer scarcity, not a generic 'container shortage.' Hybrid programmes keep a stable base of empaneled trailers for repeating weekly EXIM work, then buy same-week overflow for surge days. [TranZfort](/tranzfort-network) listing and search are free; a broker fee applies on booked loads. Size the year-round fleet to the base, not to the worst week.",
+          "Treat this as trailer scarcity, not a generic 'container shortage.' Hybrid programmes keep a stable base of empaneled trailers for repeating weekly EXIM work, then buy same-week overflow for surge days. [TranZfort](/network/tranzfort) listing and search are free; a broker fee applies on booked loads. Size the year-round fleet to the base, not to the worst week.",
           "The exhibits below show base versus surge, four common triggers, the evacuation cycle, a teaching split of planned versus overflow trips, and the productivity levers operators reach for when pools tighten. Figures are teaching aids. Confirm live terminal and CFS conditions before budgeting.",
         ],
         exhibits: containerIndiaExhibits["Western gateway trailer surge at JNPT and Mundra"],
@@ -2365,7 +2365,7 @@ export const blogPosts: readonly BlogPost[] = [
           {
             heading: "Shipper rate math and EXIM match loops",
             paragraphs: [
-              "Illustrative corridor math in Indian rupees: a single-leg rate near ₹2,400 per tonne of cargo with a matched backhaul versus about ₹3,900 per tonne when the trailer returns empty. These are INR road examples, not USD ocean rates and not prices per container. When both legs clear, shippers can unlock single-leg pricing; truckers protect trip contribution. Matching import delivery to a nearby export plant is how networks like [TranZfort](/tranzfort-network) earn their keep. Listing and search are free; a broker fee applies on booked loads.",
+              "Illustrative corridor math in Indian rupees: a single-leg rate near ₹2,400 per tonne of cargo with a matched backhaul versus about ₹3,900 per tonne when the trailer returns empty. These are INR road examples, not USD ocean rates and not prices per container. When both legs clear, shippers can unlock single-leg pricing; truckers protect trip contribution. Matching import delivery to a nearby export plant is how networks like [TranZfort](/network/tranzfort) earn their keep. Listing and search are free; a broker fee applies on booked loads.",
               "Keep two EXIM empties separate. Trailer deadhead is a paying-cargo problem on the chassis. Empty ocean-box reposition is a shipping-line equipment problem: the importer returns a box to a nominated depot while an exporter elsewhere pays another truck to fetch an empty high cube. Street-turn or triangulation platforms exist in the market when lines approve reuse. That is adjacent industry practice, not the same product as a trailer load board.",
               "Match constraints still kill good intentions: wrong chassis, expired free time, export plant outside radius, or dirty papers. Sometimes a planned empty reposition is cleaner. For corridor KPIs and triangular routing detail, use the Basics guide on [empty return trips](/blog/reduce-empty-return-trips). Start on one corridor where both import and export volume exist within a practical empty reposition radius.",
             ],

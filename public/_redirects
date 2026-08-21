@@ -1,2 +1,8 @@
 # SPA fallback for static hosts (Netlify / Cloudflare Pages-compatible)
+# Legacy → canonical (301). Keep in sync with public/.htaccess and src/App.tsx.
+/services               /logistics              301
+/tranzfort-network      /network/tranzfort      301
+/technology             /zaftys-tms             301
+/platform               /zaftys-tms             301
+
 /*    /index.html   200

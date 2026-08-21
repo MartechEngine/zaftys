@@ -17,14 +17,15 @@ interface SEOProps {
 }
 
 const BASE_URL = "https://zaftys.com";
-const SITE_TITLE = "ZAFTYS Logistics";
+/** Bare-brand suffix for SERP entity strength (see docs/SEO-improvement-22-8-26.md §5.1). */
+const BRAND_SUFFIX = "ZAFTYS";
 const DEFAULT_OG_IMAGE = "/og-image.png";
 
 function brandedTitle(title: string): string {
-  if (title === SITE_TITLE || title.includes(SITE_TITLE) || /\bZAFTYS\b/.test(title)) {
+  if (title === BRAND_SUFFIX || /\|\s*ZAFTYS\s*$/.test(title)) {
     return title;
   }
-  return `${title} | ${SITE_TITLE}`;
+  return `${title} | ${BRAND_SUFFIX}`;
 }
 
 function absoluteUrl(path?: string): string {
@@ -58,7 +59,7 @@ const SEO = ({
       {showCanonical ? <link rel="canonical" href={pageUrl} /> : null}
 
       <meta property="og:type" content={type} />
-      <meta property="og:site_name" content={SITE_TITLE} />
+      <meta property="og:site_name" content="ZAFTYS" />
       <meta property="og:locale" content="en_IN" />
       <meta property="og:title" content={fullTitle} />
       <meta property="og:description" content={description} />

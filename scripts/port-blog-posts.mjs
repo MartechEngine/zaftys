@@ -36,7 +36,7 @@ const META = {
       "tms-for-heavy-haul",
     ],
     heroImage: "/images/blog/planning-industrial-shipments.jpg",
-    cta: { label: "Explore industrial services", to: "/services" },
+    cta: { label: "Explore industrial services", to: "/logistics" },
   },
   "cement-plant-loading-windows": {
     publishedAt: "2026-08-04",

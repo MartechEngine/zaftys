@@ -6,7 +6,7 @@ export const homeCopy = {
     badge: "Technology-enabled Transportation & Logistics",
     h1: ["Heavy Freight.", "Reliable Capacity.", "Managed by Technology."],
     lead:
-      "ZAFTYS provides 3PL transportation and contract logistics for industrial and commercial freight. Owned heavy-vehicle capacity first. Verified network overflow when the lane needs more. ZAFTYS TMS on trips we run.",
+      "ZAFTYS provides 3PL transportation and contract logistics for industrial and commercial freight in India. Owned heavy-vehicle capacity first. Verified network overflow when the lane needs more. ZAFTYS TMS on trips we run.",
     tagline: "Real Trucks. Real Logistics. Real Technology.",
     heroImageAlt: "ZAFTYS commercial trucks for heavy freight transport across India",
   },
