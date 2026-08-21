@@ -47,8 +47,8 @@ function blogPostUrls() {
   return [...bySlug.values()];
 }
 
-function reportUrls() {
-  const src = fs.readFileSync(path.join(root, "src", "lib", "market-reports-data.ts"), "utf8");
+function reportUrlsFromFile(filePath) {
+  const src = fs.readFileSync(filePath, "utf8");
   const reports = [];
   for (const block of src.split(/report\(\{/).slice(1)) {
     const slug = block.match(/slug:\s*"([^"]+)"/);
@@ -59,6 +59,21 @@ function reportUrls() {
     }
   }
   return reports;
+}
+
+function reportUrls() {
+  const lib = path.join(root, "src", "lib");
+  const files = [
+    path.join(lib, "market-reports-data.ts"),
+    path.join(lib, "market-reports-india-wave1.ts"),
+  ].filter((f) => fs.existsSync(f));
+  const bySlug = new Map();
+  for (const file of files) {
+    for (const report of reportUrlsFromFile(file)) {
+      bySlug.set(report.slug, report);
+    }
+  }
+  return [...bySlug.values()];
 }
 
 function industrySlugsFromData() {

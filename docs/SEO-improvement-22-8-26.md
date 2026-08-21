@@ -251,7 +251,7 @@ To rank #1, generate Google Sitelinks, and claim a Knowledge Panel for the bare 
 ### P2 — Authority Cadence (Next 3 Months) _(Waves 1–3 blogs shipped 2026-08-22; tags `seo-p2-rollback-2026-08-22`, `seo-wave2-rollback-2026-08-22`, `seo-wave3-rollback-2026-08-22`)_
 
 11. ~~Publish **15–20 blogs** from §12~~ — **20 posts** across Waves 1–3 (`blog-wave1/2/3-data.ts`).
-12. Publish **10+ reports** from §13 (crawlable HTML + gated PDF) — not started beyond live HTML expansion in P0.
+12. Publish **10+ reports** from §13 — ~~#1 India FTL~~ ~~#2 Cement~~ live (HTML + stub PDF); #3–#10 remain.
 13. Run **entity & off-page** workstream below in parallel with content (GBP / NAP / PR — ops, not code).
 
 ---
@@ -331,10 +331,12 @@ To rank #1, generate Google Sitelinks, and claim a Knowledge Panel for the bare 
 - **Wave 2:** Mining tipper programs; FMCG factory-to-DC OTIF; Contract vs spot for plants; Labeled network capacity; TranZfort matching; ePOD that closes billing; Reading a live map
 - **Wave 3:** Inter-plant WIP; Shutdown/turnaround freight; Amravati desk without fake fleet counts; GST invoice hygiene; Partner onboarding; Analytics vs WhatsApp lane truth
 
-**Reports live today (Expand HTML to 1,000+ words each per §13)**
+**Reports live today**
 
 - Global Logistics Market Size, Share & Forecast 2027–2036 (`/reports/global-logistics-market-2027-2036`)
 - Digital Freight Matching Market Size & Forecast 2027–2036 (`/reports/digital-freight-matching-market-2027-2036`)
+- **India Road Freight & FTL Outlook 2027–2036** (`/reports/india-road-freight-ftl-outlook-2027-2036`) — no invented TAM
+- **India Cement Logistics & Bulk Movement Outlook** (`/reports/india-cement-logistics-bulk-movement-outlook`) — no invented TAM
 
 ---
 
@@ -383,20 +385,35 @@ Publish for a **new-domain sandbox**: Wave 1 = hyper-specific long-tail (equipme
 
 ### HTML Landing Page Content Structure (Mandatory for ALL Reports)
 
-Every report landing page (`/reports/{slug}`) in `src/lib/market-reports-data.ts` MUST include the following 1,000–1,500 word open HTML structure:
+Every report landing page (`/reports/{slug}`) in `src/lib/market-reports-data.ts` (and wave modules) MUST include the following 1,000–1,500 word open HTML structure:
 
-1. **Executive Summary (300–400 words)**: Market definition, macro growth drivers, scope parameters, and total addressable market figures.
-2. **Key Analytical Takeaways (300–400 words)**: 4–5 bulleted research findings with concrete statistics, growth CAGRs, regional shifts, and mode breakdowns.
+1. **Executive Summary (300–400 words)**: Market definition, macro growth drivers, scope parameters, and total addressable market figures **or explicit refusal to invent TAM**.
+2. **Key Analytical Takeaways (300–400 words)**: 4–5 bulleted research findings with concrete statistics **or defensible operational findings**, growth CAGRs where banked, regional shifts, and mode breakdowns.
 3. **Research Methodology & Data Boundaries (200–300 words)**: Explanation of primary data sources, bottom-up modeling, corridor sampling, and explicit data limits.
 4. **Frequently Asked Questions (200–300 words)**: 3–4 Q&As covering report coverage, update frequency, and licensing (Candidate for `FAQPage` schema).
 5. **PDF Gate Constraint**: **ONLY the downloadable PDF file is gated behind the lead form.** The full HTML landing text must remain 100% crawlable by Googlebot.
 
-### Live Reports to Remodel Immediately
+### Live reports (HTML remodeled / India slate started)
 
-1. **Digital Freight Matching Market Size & Forecast 2027–2036** (`/reports/digital-freight-matching-market-2027-2036`)
-   - Expand `summary` and add `executiveSummary`, `keyFindings`, `methodology`, and `faq` fields to `market-reports-data.ts`.
-2. **Global Logistics Market Size, Share & Forecast 2027–2036** (`/reports/global-logistics-market-2027-2036`)
-   - Expand `summary` and add `executiveSummary`, `keyFindings`, `methodology`, and `faq` fields to `market-reports-data.ts`.
+1. ~~Digital Freight Matching Market Size & Forecast 2027–2036~~ — HTML expanded (P0)
+2. ~~Global Logistics Market Size, Share & Forecast 2027–2036~~ — HTML expanded (P0)
+3. ~~India Road Freight & FTL Outlook 2027–2036~~ — shipped (`india-road-freight-ftl-outlook-2027-2036`)
+4. ~~India Cement Logistics & Bulk Movement Outlook~~ — shipped (`india-cement-logistics-bulk-movement-outlook`)
+
+### Core slate remaining (#3–#10)
+
+| # | Working title | Cluster | Status |
+|---|---------------|---------|--------|
+| 3 | India Steel & Coil Road Transport Outlook | Steel | Pending |
+| 4 | India Port–Inland Container Road Haulage Outlook | Container | Pending |
+| 5 | India Mining & Bulk Tipper Logistics Outlook | Mining | Pending |
+| 6 | Transport Management Systems in India: Adoption & Buyer Criteria | TMS | Pending |
+| 7 | Digital Freight Matching in India: Corridor Reality Check | TranZfort / DFM | Pending |
+| 8 | Contract vs Spot Capacity in Indian Industrial Freight | Contract / Dedicated | Pending |
+| 9 | Plant Detention, Yard TAT & Cost-to-Serve in Indian FTL | Cross-ops | Pending |
+| 10 | ePOD, e-Way Bill & Digitized Trip Close-Out in India | TMS / Compliance | Pending |
+
+**India report rule:** do not invent national TAM figures; disclose limits; stub PDF OK until chapter PDF ships; HTML brief is the crawlable authority.
 
 ---
 

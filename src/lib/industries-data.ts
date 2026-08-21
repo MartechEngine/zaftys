@@ -102,7 +102,7 @@ export const industries: readonly IndustryRecord[] = [
       { label: "Plant loading windows", path: "/blog/cement-plant-loading-windows" },
       { label: "Pneumatic bulker for bulk cement", path: "/blog/pneumatic-bulker-bulk-cement-fly-ash" },
       { label: "Open body vs tipper", path: "/blog/open-body-vs-tipper-bagged-cement-aggregates" },
-      { label: "Plant detention and TAT", path: "/blog/plant-detention-tat-yard-gate-india" },
+      { label: "Cement logistics outlook", path: "/reports/india-cement-logistics-bulk-movement-outlook" },
     ],
     serviceLinks: [
       { label: "Industrial Freight", path: "/logistics/industrial-freight" },
