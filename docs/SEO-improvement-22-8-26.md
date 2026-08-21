@@ -464,7 +464,7 @@ Execute these explicit code edits across the repository:
 - [ ] **Digital PR distribution** for 2 live reports (ops — pitch in §15.4)
 - [x] **Internal link sweep completed** for `/services` & `/tranzfort-network`
 - [ ] **Organization `sameAs` array** — add ZaubaCorp / Crunchbase / GBP when URLs are final (ops)
-- [ ] **GA4 production ID** — user confirms keys in git secrets / deploy env (`VITE_GA_MEASUREMENT_ID`); then verify events
+- [ ] **GA4 production ID** — ID confirmed `G-C60VD30CK4` (matches live + stream). Hits still missing until redeploy with early HTML gtag snippet (`vite.config.ts` inject). Verify Realtime after next `main` deploy.
 
 ### 15.4 Ops runbook — GBP, NAP, bare brand, PR (execute outside code)
 

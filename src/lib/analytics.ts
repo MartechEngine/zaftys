@@ -21,6 +21,8 @@ declare global {
     dataLayer?: unknown[];
     gtag?: (...args: unknown[]) => void;
     clarity?: (...args: unknown[]) => void;
+    /** Set by Vite HTML inject when VITE_GA_MEASUREMENT_ID is present at build. */
+    __ZAFTS_GA_ID__?: string;
   }
 }
 
@@ -29,7 +31,11 @@ function clarityId(): string {
 }
 
 function gaMeasurementId(): string {
-  return import.meta.env.VITE_GA_MEASUREMENT_ID?.trim() ?? "";
+  return (
+    (typeof window !== "undefined" ? window.__ZAFTS_GA_ID__?.trim() : "") ||
+    import.meta.env.VITE_GA_MEASUREMENT_ID?.trim() ||
+    ""
+  );
 }
 
 export function isAnalyticsEnabled(): boolean {
@@ -38,7 +44,7 @@ export function isAnalyticsEnabled(): boolean {
 
 let bootstrapped = false;
 let loadScheduled = false;
-let pendingPageview: { path: string; title?: string } | null = null;
+let firstSpaPageviewSkipped = false;
 
 function ensureGtag(): void {
   window.dataLayer = window.dataLayer || [];
@@ -67,26 +73,24 @@ function loadClarity(id: string): void {
   document.head.appendChild(script);
 }
 
-function loadGa4(id: string, onReady?: () => void): void {
+/**
+ * Fallback if HTML inject missed (e.g. local `npm run dev` without rebuild of index).
+ * Prefer the early </head> snippet from vite.config.ts in production builds.
+ */
+function ensureGaLoaded(id: string): void {
+  ensureGtag();
   if (document.querySelector(`script[src*="googletagmanager.com/gtag/js?id=${id}"]`)) {
-    onReady?.();
     return;
   }
-  ensureGtag();
   const script = document.createElement("script");
   script.async = true;
   script.src = `https://www.googletagmanager.com/gtag/js?id=${id}`;
-  // Stub queues these until gtag.js loads; flush SPA pageview after the script is ready.
+  document.head.appendChild(script);
   window.gtag?.("js", new Date());
   window.gtag?.("config", id, {
-    send_page_view: false,
+    send_page_view: true,
     anonymize_ip: true,
   });
-  script.onload = () => onReady?.();
-  script.onerror = () => {
-    console.warn("[analytics] Failed to load gtag.js — check VITE_GA_MEASUREMENT_ID");
-  };
-  document.head.appendChild(script);
 }
 
 function loadVendors(): void {
@@ -95,21 +99,17 @@ function loadVendors(): void {
   const clarity = clarityId();
   const ga = gaMeasurementId();
   if (clarity) loadClarity(clarity);
-  if (ga) {
-    loadGa4(ga, () => {
-      const queued = pendingPageview;
-      pendingPageview = null;
-      if (queued) sendPageview(queued.path, queued.title);
-    });
-  }
+  if (ga) ensureGaLoaded(ga);
 }
 
-/** Load tags on idle, first interaction, or after 2s — not 15s (Realtime looked empty). */
+/** Load Clarity (and GA fallback) on idle / first interaction / 2s. */
 export function initAnalytics(): void {
   if (typeof window === "undefined" || loadScheduled) return;
   if (!isAnalyticsEnabled()) return;
   loadScheduled = true;
 
+  // GA is preferably already configured via index.html inject (send_page_view: true).
+  // Still ensure fallback + Clarity without waiting for a click.
   const events: Array<keyof WindowEventMap> = ["pointerdown", "keydown", "touchstart"];
   let fallbackTimer = 0;
   let idleId = 0;
@@ -129,6 +129,12 @@ export function initAnalytics(): void {
     loadVendors();
   };
 
+  // If GA was injected in <head>, mark bootstrapped path ready for SPA updates immediately.
+  if (gaMeasurementId() && window.__ZAFTS_GA_ID__) {
+    ensureGtag();
+    bootstrapped = true;
+  }
+
   for (const event of events) {
     window.addEventListener(event, onReady, { once: true, passive: true });
   }
@@ -142,7 +148,8 @@ function sendPageview(path: string, title?: string): void {
   const ga = gaMeasurementId();
   if (!ga) return;
   ensureGtag();
-  window.gtag?.("event", "page_view", {
+  // SPA navigations: re-config with page_path (Google-recommended for client routers).
+  window.gtag?.("config", ga, {
     page_path: path,
     page_title: title || document.title,
     page_location: `${window.location.origin}${path}`,
@@ -152,9 +159,15 @@ function sendPageview(path: string, title?: string): void {
 export function trackPageview(path: string, title?: string): void {
   captureUtmFromLocation();
   if (!gaMeasurementId()) return;
+
+  // First paint already sent via HTML `send_page_view: true` — skip duplicate.
+  if (!firstSpaPageviewSkipped) {
+    firstSpaPageviewSkipped = true;
+    if (typeof window !== "undefined" && window.__ZAFTS_GA_ID__) return;
+  }
+
   if (!bootstrapped) {
-    pendingPageview = { path, title };
-    return;
+    loadVendors();
   }
   sendPageview(path, title);
 }
@@ -165,9 +178,10 @@ export function trackEvent(event: AnalyticsEvent, props?: Record<string, string>
   if (props?.page) params.page = props.page;
   if (props?.intent) params.intent = props.intent;
 
-  if (gaMeasurementId()) {
+  const ga = gaMeasurementId();
+  if (ga) {
     ensureGtag();
-    window.gtag?.("event", event, params);
+    window.gtag?.("event", event, { ...params, send_to: ga });
   }
   if (typeof window.clarity === "function") {
     window.clarity("event", event);
