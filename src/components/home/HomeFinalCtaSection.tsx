@@ -2,12 +2,12 @@ import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { CTAGroup } from "@/components/CTAGroup";
 import { HeroEmailButton } from "@/components/HeroEmailButton";
+import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { MarketingFinalCta } from "@/components/marketing/MarketingChrome";
 import { homeCopy, homeQuoteEmail } from "@/lib/home-copy";
-import { whatsappUrl } from "@/lib/constants";
-import { trackEvent } from "@/lib/analytics";
 import { paths } from "@/lib/site-paths";
 
+/** Navy final CTA: accent → WhatsApp → on-dark-outline @see cta-recipe */
 export function HomeFinalCtaSection() {
   const { finalCta } = homeCopy;
 
@@ -23,16 +23,7 @@ export function HomeFinalCtaSection() {
           subject={homeQuoteEmail.subject}
           body={homeQuoteEmail.bodyShort}
         />
-        <a
-          href={whatsappUrl()}
-          target="_blank"
-          rel="noopener noreferrer"
-          onClick={() => trackEvent("cta_whatsapp", { placement: "footer-cta", intent: "quote" })}
-        >
-          <Button size="lg" variant="on-dark-outline">
-            Chat on WhatsApp
-          </Button>
-        </a>
+        <WhatsAppButton label="Chat on WhatsApp" placement="footer-cta" intent="quote" />
         <Link to={paths.network.hub}>
           <Button size="lg" variant="on-dark-outline">
             Explore Network

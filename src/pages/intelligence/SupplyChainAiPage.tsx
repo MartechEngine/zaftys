@@ -303,7 +303,6 @@ export default function SupplyChainAiPage() {
               label={c.finalCta.primaryLabel}
               subject={c.mail.subject}
               body={c.mail.body}
-              variant="on-dark"
             />
             <Link to={c.finalCta.secondaryPath}>
               <Button variant="on-dark-outline">{c.finalCta.secondaryLabel}</Button>

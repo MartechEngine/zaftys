@@ -186,7 +186,7 @@ const Navigation = () => {
 
           <div className="hidden xl:flex items-center space-x-2 shrink-0">
             <Link to={paths.login}>
-              <Button variant="ghost" size="sm" className="text-navy hover:text-accent hover:bg-navy/5 gap-1.5 font-semibold">
+              <Button variant="ghost" size="sm" className="gap-1.5 font-semibold">
                 <UserCircle size={18} />
                 Login
               </Button>
@@ -282,7 +282,7 @@ const Navigation = () => {
               })}
               <div className="pt-4 space-y-3 px-4 border-t border-gray-100 mt-2">
                 <Link to={paths.login} className="block">
-                  <Button variant="outline" className="w-full border-navy/20 text-navy hover:bg-navy/5 justify-start gap-2">
+                  <Button variant="outline" className="w-full justify-start gap-2">
                     <UserCircle size={18} />
                     Login
                   </Button>

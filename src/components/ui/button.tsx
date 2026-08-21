@@ -4,27 +4,46 @@ import { cva, type VariantProps } from "class-variance-authority";
 
 import { cn } from "@/lib/utils";
 
+/**
+ * Button fills — see `src/lib/cta-recipe.ts` for when to use each variant.
+ *
+ * Primary brand CTA = accent (orange).
+ * Secondary on light = outline-brand (white → navy).
+ * Secondary on navy = on-dark-outline.
+ * WhatsApp = whatsapp (green).
+ */
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 rounded-md text-sm font-semibold ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 text-center max-w-full",
+  "inline-flex items-center justify-center gap-2 rounded-md text-sm font-semibold ring-offset-background transition-[color,background-color,border-color,box-shadow,transform] duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 active:translate-y-px [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 text-center max-w-full",
   {
     variants: {
       variant: {
-        default: "bg-primary text-primary-foreground hover:bg-primary/90",
-        destructive: "bg-destructive text-destructive-foreground hover:bg-destructive/90",
-        outline: "border border-input bg-background text-foreground hover:bg-muted hover:text-foreground",
-        /** Brand outline on light surfaces — fills primary on hover */
+        /** Navy solid — rare; prefer accent for primary CTAs */
+        default:
+          "border border-transparent bg-primary text-primary-foreground shadow-sm hover:bg-primary-light hover:shadow-md",
+        destructive:
+          "border border-transparent bg-destructive text-destructive-foreground shadow-sm hover:bg-destructive/90",
+        /** Neutral UI chrome only — not marketing CTAs */
+        outline:
+          "border border-input bg-white text-foreground shadow-sm hover:border-primary/40 hover:bg-surface hover:text-foreground",
+        /** Secondary CTA on light surfaces: white fill → navy fill on hover */
         "outline-brand":
-          "border border-primary bg-transparent text-primary hover:bg-primary hover:text-white",
-        secondary: "bg-secondary text-secondary-foreground hover:bg-secondary/80",
-        ghost: "hover:bg-accent/10 hover:text-accent-foreground",
-        link: "text-primary underline-offset-4 hover:underline",
-        /** Orange primary action */
-        accent: "bg-accent text-white hover:bg-accent-light border border-transparent shadow-md shadow-accent/20",
-        /** Solid button on navy/dark bands */
-        "on-dark": "bg-white text-navy hover:bg-gray-100 border border-transparent",
-        /** Outline button on navy/dark bands  -  no white fill */
+          "border border-primary bg-white text-primary shadow-sm hover:bg-primary hover:text-primary-foreground hover:shadow-md",
+        secondary:
+          "border border-transparent bg-secondary text-secondary-foreground shadow-sm hover:bg-secondary/80",
+        ghost: "border border-transparent bg-transparent text-navy hover:bg-navy/5 hover:text-navy",
+        link: "border border-transparent bg-transparent text-primary underline-offset-4 hover:underline",
+        /** PRIMARY CTA — orange fill (light or navy surfaces) */
+        accent:
+          "border border-transparent bg-accent text-accent-foreground shadow-md shadow-accent/25 hover:bg-accent-light hover:text-accent-foreground hover:shadow-lg hover:shadow-accent/30",
+        /** Solid white on navy — tertiary / rare (e.g. Get Directions) */
+        "on-dark":
+          "border border-transparent bg-white text-navy shadow-sm hover:bg-gray-100 hover:text-navy hover:shadow-md",
+        /** Secondary CTA on navy/dark — transparent fill, white stroke */
         "on-dark-outline":
-          "border-2 border-white/70 bg-transparent text-white hover:bg-white/10 hover:text-white hover:border-white",
+          "border-2 border-white/75 bg-transparent text-white shadow-none hover:border-white hover:bg-white/10 hover:text-white",
+        /** WhatsApp — always green solid */
+        whatsapp:
+          "border border-whatsapp-border bg-whatsapp text-white shadow-md hover:bg-whatsapp-hover hover:shadow-lg",
       },
       size: {
         default: "h-10 px-4 py-2",

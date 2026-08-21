@@ -82,7 +82,7 @@ function DownloadButtons({
           <Button
             type="button"
             size="lg"
-            variant={accent ? "accent" : onDark ? "on-dark-outline" : "secondary"}
+            variant={accent ? "accent" : onDark ? "on-dark-outline" : "accent"}
             onClick={requestDownload}
           >
             <Download className="mr-2" size={18} /> Download PDF
@@ -90,14 +90,7 @@ function DownloadButtons({
           <Button
             type="button"
             size="lg"
-            variant="outline"
-            className={
-              onDark
-                ? "border-white/40 bg-transparent text-white hover:bg-white/10 hover:text-white"
-                : accent
-                  ? "border-primary text-primary hover:bg-primary hover:text-white"
-                  : undefined
-            }
+            variant={onDark ? "on-dark-outline" : "outline-brand"}
             onClick={requestRead}
           >
             <BookOpen className="mr-2" size={18} /> Read online
@@ -239,8 +232,8 @@ export function MarketReportLayout({ report }: MarketReportLayoutProps) {
                         <Button
                           type="button"
                           size="lg"
-                          variant="outline"
-                          className="w-full border-primary text-primary"
+                          variant="outline-brand"
+                          className="w-full"
                           onClick={requestRead}
                         >
                           <BookOpen className="mr-2" size={18} /> Read online
@@ -254,7 +247,7 @@ export function MarketReportLayout({ report }: MarketReportLayoutProps) {
                     </div>
                   ) : (
                     <Link to={report.cta.to} className="block">
-                      <Button size="lg" variant="secondary" className="w-full">
+                      <Button size="lg" variant="outline-brand" className="w-full">
                         {report.cta.label}
                       </Button>
                     </Link>

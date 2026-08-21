@@ -111,7 +111,7 @@ const Blog = () => {
               Browse posts
             </Button>
           </a>
-          <WhatsAppButton label="Ask on WhatsApp" tone="on-dark-outline" />
+            <WhatsAppButton label="Ask on WhatsApp" />
         </CTAGroup>
       </PageHero>
 

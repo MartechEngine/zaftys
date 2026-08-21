@@ -251,7 +251,6 @@ export function IntelligenceLeafLayout({ copy }: Props) {
                 label={c.finalCta.primaryLabel}
                 subject={c.mail.subject}
                 body={c.mail.body}
-                variant="on-dark"
               />
             )}
             <Link to={c.finalCta.secondary.path}>

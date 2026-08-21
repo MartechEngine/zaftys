@@ -26,7 +26,7 @@ export function HomeIndustriesSection() {
             <Link
               key={industry.slug}
               to={`/industries/${industry.slug}`}
-              className="group flex flex-col overflow-hidden border border-border bg-white transition-colors hover:border-primary/40"
+              className="group flex flex-col overflow-hidden border border-border bg-white shadow-sm transition-[box-shadow,border-color] duration-200 hover:border-primary/35 hover:shadow-md"
             >
               <div className="overflow-hidden bg-surface">
                 <ResponsiveImage

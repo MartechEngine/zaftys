@@ -39,10 +39,15 @@ All colors MUST be HSL.
     --silver: 220 10% 70%;
     --silver-dark: 220 10% 50%;
 
-    /* Vibrant orange for CTAs */
+    /* Vibrant orange for primary CTAs */
     --accent: 25 100% 55%;
     --accent-foreground: 0 0% 100%;
     --accent-light: 25 100% 65%;
+
+    /* WhatsApp CTA fills */
+    --whatsapp: 142 70% 49%;
+    --whatsapp-hover: 142 70% 42%;
+    --whatsapp-border: 142 70% 40%;
     
     /* Energetic yellow accent */
     --yellow: 45 100% 55%;
@@ -111,6 +116,10 @@ All colors MUST be HSL.
     --accent: 25 100% 60%;
     --accent-foreground: 0 0% 100%;
     --accent-light: 25 100% 70%;
+
+    --whatsapp: 142 70% 49%;
+    --whatsapp-hover: 142 70% 42%;
+    --whatsapp-border: 142 70% 40%;
     
     --secondary: 220 40% 18%;
     --secondary-foreground: 0 0% 98%;
@@ -188,10 +197,6 @@ All colors MUST be HSL.
   }
   
   /* Hover effects */
-  .hover-lift {
-    @apply transition-all duration-300 hover:-translate-y-1 hover:shadow-lg;
-  }
-  
   .hover-glow {
     @apply transition-all duration-300;
   }
@@ -227,11 +232,19 @@ All colors MUST be HSL.
   }
 
   .marketing-tile {
-    @apply border border-border bg-white p-6;
+    @apply border border-border bg-white p-6 shadow-sm transition-[box-shadow,border-color] duration-200;
+  }
+
+  .marketing-tile:hover {
+    @apply border-primary/35 shadow-md;
   }
 
   .marketing-tile-muted {
-    @apply border border-border bg-surface p-6;
+    @apply border border-border bg-surface p-6 shadow-sm transition-[box-shadow,border-color] duration-200;
+  }
+
+  .marketing-tile-muted:hover {
+    @apply border-primary/30 shadow-md;
   }
 
   .marketing-eyebrow {
@@ -240,6 +253,11 @@ All colors MUST be HSL.
 
   .final-cta-band {
     @apply border-t border-border bg-navy py-16 text-white md:py-20;
+  }
+
+  /* Product / widget frames that need clearer depth than flat tiles */
+  .marketing-widget {
+    @apply border border-border bg-white shadow-md;
   }
 
   /* Deep-researched Blog Template  -  research dossier surface */

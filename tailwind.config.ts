@@ -73,6 +73,12 @@ export default {
         accent: {
           DEFAULT: "hsl(var(--accent))",
           foreground: "hsl(var(--accent-foreground))",
+          light: "hsl(var(--accent-light))",
+        },
+        whatsapp: {
+          DEFAULT: "hsl(var(--whatsapp))",
+          hover: "hsl(var(--whatsapp-hover))",
+          border: "hsl(var(--whatsapp-border))",
         },
         popover: {
           DEFAULT: "hsl(var(--popover))",

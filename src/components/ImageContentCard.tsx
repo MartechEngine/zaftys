@@ -26,7 +26,7 @@ const ImageContentCard = ({
   return (
     <article
       className={cn(
-        "group flex h-full flex-col overflow-hidden border border-border bg-white transition-colors hover:border-primary/40",
+        "group flex h-full flex-col overflow-hidden border border-border bg-white shadow-sm transition-[box-shadow,border-color] duration-200 hover:border-primary/35 hover:shadow-md",
         className,
       )}
     >

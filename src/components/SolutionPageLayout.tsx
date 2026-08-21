@@ -124,7 +124,7 @@ export function SolutionPageLayout({
         <div className="section-band-inner">
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
             {features.map((feature, i) => (
-              <MarketingTile key={feature.title} muted>
+              <MarketingTile key={feature.title}>
                 <p className="mb-3 font-heading text-xs font-bold tracking-[0.18em] text-accent">
                   {String(i + 1).padStart(2, "0")}
                 </p>
@@ -175,7 +175,7 @@ export function SolutionPageLayout({
       <MarketingFinalCta>
         <h2 className="mb-6 font-heading text-3xl font-bold">Ready to move your freight?</h2>
         <CTAGroup>
-          <HeroEmailButton label={cta.label} subject={cta.subject} body={cta.body} variant="on-dark" />
+          <HeroEmailButton label={cta.label} subject={cta.subject} body={cta.body} />
           {cta.whatsapp ? <WhatsAppButton label="Chat on WhatsApp" /> : null}
         </CTAGroup>
       </MarketingFinalCta>

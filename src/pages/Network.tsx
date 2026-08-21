@@ -93,9 +93,9 @@ function HighlightCard({
   const link = highlightLinks[index];
   const isRoute = link?.startsWith("/");
   const card = (
-    <Card className="border border-border transition-all bg-white h-full">
+    <Card className="h-full border border-border bg-white shadow-sm transition-[box-shadow,border-color] duration-200 hover:border-primary/35 hover:shadow-md">
       <CardContent className="p-6">
-        <div className="mb-4 flex h-11 w-11 items-center justify-center border border-border bg-surface text-primary">
+        <div className="mb-4 flex h-11 w-11 items-center justify-center border border-border bg-surface text-primary shadow-sm">
           <Icon size={22} />
         </div>
         <h3 className="text-base font-heading font-bold text-navy mb-2">{item.title}</h3>
@@ -166,7 +166,6 @@ const NetworkPage = () => {
           </Button>
           <WhatsAppButton
             label="Post a load"
-            tone="on-dark-outline"
             message={WHATSAPP_POST_LOAD_MESSAGE}
             placement="hero"
             intent="post_load"
@@ -174,18 +173,18 @@ const NetworkPage = () => {
         </CTAGroup>
       </PageHero>
 
-      {/* Trust pulse  -  aligned to container */}
-      <section className="relative z-20 -mt-8 pb-4">
-        <div className="container mx-auto container-padding">
-          <div className="mx-auto max-w-5xl border border-border bg-white px-6 py-8 md:px-10">
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
-              {pulseItems.map((item) => (
-                <div key={item.label} className="text-center">
-                  <div className="text-base md:text-lg font-heading font-bold text-primary mb-1">{item.label}</div>
-                  <div className="text-[10px] md:text-xs text-muted-foreground uppercase tracking-wider">{item.sublabel}</div>
+      {/* Trust pulse */}
+      <section className="section-band bg-white">
+        <div className="section-band-inner max-w-5xl">
+          <div className="grid grid-cols-2 gap-6 border border-border bg-surface px-6 py-8 shadow-sm md:grid-cols-4 md:gap-8 md:px-10">
+            {pulseItems.map((item) => (
+              <div key={item.label} className="text-center">
+                <div className="mb-1 font-heading text-base font-bold text-navy md:text-lg">{item.label}</div>
+                <div className="text-[10px] uppercase tracking-wider text-muted-foreground md:text-xs">
+                  {item.sublabel}
                 </div>
-              ))}
-            </div>
+              </div>
+            ))}
           </div>
         </div>
       </section>
@@ -368,7 +367,6 @@ const NetworkPage = () => {
             </Button>
             <WhatsAppButton
               label="Post a load"
-              tone="on-dark-outline"
               message={WHATSAPP_POST_LOAD_MESSAGE}
               placement="cta"
               intent="post_load"

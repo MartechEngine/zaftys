@@ -311,23 +311,29 @@ const IndustryDetail = () => {
         </div>
       </div>
 
-      {/* Slim footer CTA */}
-      <section className="border-t border-border bg-white px-5 py-8 md:px-8">
-        <div className="mx-auto flex max-w-7xl flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
-          <div>
-            <p className="font-heading text-lg font-bold text-navy">
-              Quote {industry.title}
-            </p>
-            <p className="text-sm text-muted-foreground">
-              Corridor + product + volume. We reply with class and capacity.
-            </p>
+      <section className="final-cta-band">
+        <div className="container mx-auto container-padding">
+          <div className="mx-auto flex max-w-7xl flex-col items-start justify-between gap-6 sm:flex-row sm:items-center">
+            <div>
+              <p className="font-heading text-2xl font-bold text-white md:text-3xl">
+                Quote {industry.title}
+              </p>
+              <p className="mt-2 text-sm text-gray-300">
+                Corridor + product + volume. We reply with class and capacity.
+              </p>
+            </div>
+            <CTAGroup className="justify-start sm:justify-end">
+              <HeroEmailButton
+                label="Request Transportation"
+                subject={`Freight quote: ${industry.title}`}
+                body={`Hi ZAFTYS,\n\nI'd like a quote for ${industry.title}.\n\nCorridor:\nProduct:\nVolume:\n\n`}
+              />
+              <WhatsAppButton label="Chat on WhatsApp" message={industry.whatsappPrefill} />
+              <Link to={paths.fleet}>
+                <Button variant="on-dark-outline">Fleet</Button>
+              </Link>
+            </CTAGroup>
           </div>
-          <CTAGroup>
-            <WhatsAppButton label="Chat on WhatsApp" message={industry.whatsappPrefill} />
-            <Link to={paths.fleet}>
-              <Button variant="outline">Fleet</Button>
-            </Link>
-          </CTAGroup>
         </div>
       </section>
     </div>

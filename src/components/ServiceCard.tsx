@@ -9,11 +9,11 @@ interface ServiceCardProps {
   delay?: number;
 }
 
-/** Dense-hub tile card (no radius, no lift shadow). */
+/** Dense marketing tile with light depth. */
 const ServiceCard = ({ icon: Icon, title, description, link }: ServiceCardProps) => {
   const inner = (
     <>
-      <div className="mb-5 flex h-12 w-12 items-center justify-center border border-border bg-surface text-primary">
+      <div className="mb-5 flex h-12 w-12 items-center justify-center border border-border bg-surface text-primary shadow-sm">
         <Icon size={24} />
       </div>
       <h3 className="mb-3 font-heading text-lg font-bold text-navy group-hover:text-primary">{title}</h3>
@@ -27,7 +27,7 @@ const ServiceCard = ({ icon: Icon, title, description, link }: ServiceCardProps)
   );
 
   const className =
-    "group flex h-full flex-col border border-border bg-white p-6 transition-colors hover:border-primary/40";
+    "group flex h-full flex-col border border-border bg-white p-6 shadow-sm transition-[box-shadow,border-color] duration-200 hover:border-primary/35 hover:shadow-md";
 
   if (link) {
     return (

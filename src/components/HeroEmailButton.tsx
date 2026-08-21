@@ -6,7 +6,13 @@ import { mailtoEventFromSubject, trackEvent } from "@/lib/analytics";
 type HeroEmailButtonProps = {
   /** Visible button label  -  never the raw email address */
   label: string;
-  variant?: "on-dark" | "on-dark-outline";
+  /**
+   * accent = primary CTA (default; orange solid)
+   * on-dark-outline = secondary on navy
+   * on-dark = solid white on navy (rare)
+   * @see src/lib/cta-recipe.ts
+   */
+  variant?: "accent" | "on-dark" | "on-dark-outline";
   className?: string;
   subject?: string;
   body?: string;
@@ -14,7 +20,7 @@ type HeroEmailButtonProps = {
 
 export function HeroEmailButton({
   label,
-  variant = "on-dark",
+  variant = "accent",
   className,
   subject,
   body,

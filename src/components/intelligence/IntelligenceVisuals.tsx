@@ -13,7 +13,7 @@ export function IntelligenceProductShot({
   className?: string;
 }) {
   return (
-    <figure className={cn("overflow-hidden border border-border bg-[#0c1220] shadow-lg", className)}>
+    <figure className={cn("marketing-widget overflow-hidden bg-[#0c1220] shadow-lg", className)}>
       <div className="flex items-center gap-1.5 border-b border-white/10 bg-[#121a2b] px-3 py-2">
         <span className="h-2 w-2 rounded-full bg-white/20" aria-hidden />
         <span className="h-2 w-2 rounded-full bg-white/20" aria-hidden />

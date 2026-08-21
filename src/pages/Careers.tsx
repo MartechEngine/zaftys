@@ -124,7 +124,7 @@ const Careers = () => {
         imageAlt={pageHeroAlts.careers}
       >
         <CTAGroup className="justify-start sm:justify-start">
-          <Button asChild size="lg" variant="on-dark">
+          <Button asChild size="lg" variant="accent">
             <a href="#open-positions">View Open Positions</a>
           </Button>
           <HeroEmailButton
@@ -153,12 +153,15 @@ const Careers = () => {
               { icon: Trophy, title: "Rewards", desc: "Performance and safety recognition where applicable, structured through HR policy." },
               { icon: Users, title: "Culture", desc: "A supportive environment rooted in operational discipline and family values." },
             ].map((item, index) => (
-              <Card key={index} className="text-center transition-transform duration-300 border border-border bg-surface">
+              <Card
+                key={index}
+                className="border border-border bg-white text-center shadow-sm transition-[box-shadow,border-color] duration-200 hover:border-primary/35 hover:shadow-md"
+              >
                 <CardContent className="p-8">
-                  <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center border border-border bg-white text-primary">
+                  <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center border border-border bg-surface text-primary shadow-sm">
                     <item.icon size={22} />
                   </div>
-                  <h3 className="font-bold text-navy mb-2">{item.title}</h3>
+                  <h3 className="mb-2 font-bold text-navy">{item.title}</h3>
                   <p className="text-sm text-muted-foreground">{item.desc}</p>
                 </CardContent>
               </Card>
@@ -176,7 +179,10 @@ const Careers = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
             {positions.map((job, index) => (
-              <Card key={index} className="flex flex-col h-full border border-border transition-all duration-300">
+              <Card
+                key={index}
+                className="flex h-full flex-col border border-border bg-white shadow-sm transition-[box-shadow,border-color] duration-200 hover:border-primary/35 hover:shadow-md"
+              >
                 <CardContent className="p-8 flex flex-col h-full">
                   <div className="mb-4">
                     <span className="text-xs font-bold uppercase tracking-wider text-accent bg-accent/10 px-2 py-1 rounded">
@@ -202,7 +208,7 @@ const Careers = () => {
                     </div>
                   </div>
 
-                  <Button className="w-full bg-primary hover:bg-primary-light mt-auto">
+                  <Button variant="accent" className="mt-auto w-full">
                     Apply Now
                   </Button>
                 </CardContent>
@@ -213,7 +219,7 @@ const Careers = () => {
       </section>
 
       {/* Application Form */}
-      <section id="careers-form" className="py-20 bg-navy text-white scroll-mt-28">
+      <section id="careers-form" className="section-padding scroll-mt-28 bg-navy text-white">
         <div className="container mx-auto container-padding">
           <div className="max-w-2xl mx-auto">
             <div className="text-center mb-10">

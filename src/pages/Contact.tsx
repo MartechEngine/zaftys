@@ -13,11 +13,12 @@ import { pageHeroAlts } from "@/lib/page-heroes";
 import { useToast } from "@/hooks/use-toast";
 import { trackEvent } from "@/lib/analytics";
 import { CTAGroup } from "@/components/CTAGroup";
-import { whatsappUrl, companyAddress } from "@/lib/constants";
+import { companyAddress } from "@/lib/constants";
 import { pageSeo } from "@/lib/page-seo";
 import { pageHeroCopy } from "@/lib/page-hero-copy";
 import { organizationSchema, localBusinessSchema, breadcrumbSchema } from "@/lib/schema";
 import { paths } from "@/lib/site-paths";
+import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { Link } from "react-router-dom";
 
 const Contact = () => {
@@ -131,16 +132,7 @@ const Contact = () => {
         imageAlt={pageHeroAlts.contact}
       >
         <CTAGroup className="justify-start sm:justify-start">
-          <Button asChild size="lg" variant="accent">
-            <a
-              href={whatsappUrl()}
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={() => trackEvent("cta_whatsapp", { placement: "hero", intent: "quote" })}
-            >
-              Get a freight quote
-            </a>
-          </Button>
+          <WhatsAppButton label="Get a freight quote" placement="hero" intent="quote" />
           <Button asChild size="lg" variant="on-dark-outline">
             <a href="#contact-form">Send a message</a>
           </Button>
@@ -187,16 +179,16 @@ const Contact = () => {
                   allowFullScreen
                 />
               </div>
-              <div className="flex flex-col sm:flex-row items-center justify-between gap-4 px-6 py-4 bg-white/5 border-t border-white/10">
-                <div className="flex items-start gap-3 text-sm text-gray-200">
-                  <MapPin className="text-accent shrink-0 mt-0.5" size={18} />
+              <div className="flex flex-col items-center justify-between gap-4 border-t border-border bg-surface px-6 py-4 sm:flex-row">
+                <div className="flex items-start gap-3 text-sm text-navy">
+                  <MapPin className="mt-0.5 shrink-0 text-accent" size={18} />
                   <span>
                     {companyAddress.line1}
                     <br />
                     {companyAddress.line2}, {companyAddress.line3}
                   </span>
                 </div>
-                <Button asChild variant="on-dark" className="shrink-0">
+                <Button asChild variant="outline-brand" className="shrink-0">
                   <a
                     href={companyAddress.mapsDirectionsUrl}
                     target="_blank"
@@ -379,16 +371,7 @@ const Contact = () => {
                 <p className="text-gray-300 mb-6">
                   Existing clients can reach our priority dispatch desk directly.
                 </p>
-                <Button asChild variant="on-dark-outline" className="w-full">
-                  <a
-                    href={whatsappUrl()}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    onClick={() => trackEvent("cta_whatsapp", { placement: "contact-priority" })}
-                  >
-                    WhatsApp Priority Line
-                  </a>
-                </Button>
+                <WhatsAppButton label="WhatsApp Priority Line" className="w-full" placement="contact-priority" />
               </div>
 
               <div className="border border-border bg-surface p-6">

@@ -386,7 +386,7 @@ const Fleet = () => {
               <Button size="lg" variant="accent" asChild>
                 <Link to={paths.network.tranzfort}>About Tranzfort</Link>
               </Button>
-              <Button size="lg" variant="outline" asChild>
+              <Button size="lg" variant="outline-brand" asChild>
                 <Link to={paths.network.hub}>
                   Network hub <ArrowRight className="ml-2" size={16} />
                 </Link>

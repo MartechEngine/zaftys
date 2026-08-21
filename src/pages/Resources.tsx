@@ -56,9 +56,9 @@ const Resources = () => {
       <section className="section-padding bg-white">
         <div className="container mx-auto container-padding">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
-            <Card className="border border-border transition-shadow">
-              <CardContent className="p-8 md:p-10 flex flex-col h-full">
-                <div className="w-12 h-12 rounded-lg bg-primary/10 text-primary flex items-center justify-center mb-5">
+            <Card className="border border-border bg-white shadow-sm transition-[box-shadow,border-color] duration-200 hover:border-primary/35 hover:shadow-md">
+              <CardContent className="flex h-full flex-col p-8 md:p-10">
+                <div className="mb-5 flex h-12 w-12 items-center justify-center border border-border bg-surface text-primary shadow-sm">
                   <FileText size={24} />
                 </div>
                 <h2 className="text-2xl font-heading font-bold text-navy mb-3">Market Reports</h2>
@@ -73,9 +73,9 @@ const Resources = () => {
               </CardContent>
             </Card>
 
-            <Card className="border border-border transition-shadow">
-              <CardContent className="p-8 md:p-10 flex flex-col h-full">
-                <div className="w-12 h-12 rounded-lg bg-primary/10 text-primary flex items-center justify-center mb-5">
+            <Card className="border border-border bg-white shadow-sm transition-[box-shadow,border-color] duration-200 hover:border-primary/35 hover:shadow-md">
+              <CardContent className="flex h-full flex-col p-8 md:p-10">
+                <div className="mb-5 flex h-12 w-12 items-center justify-center border border-border bg-surface text-primary shadow-sm">
                   <BookOpen size={24} />
                 </div>
                 <h2 className="text-2xl font-heading font-bold text-navy mb-3">Blog</h2>

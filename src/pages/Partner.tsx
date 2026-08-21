@@ -112,7 +112,7 @@ const Partner = () => {
         imageAlt={pageHeroAlts.partner}
       >
         <CTAGroup className="justify-start sm:justify-start">
-          <Button asChild size="lg" variant="on-dark">
+          <Button asChild size="lg" variant="accent">
             <a href="#partner-form">Register Your Fleet</a>
           </Button>
           <HeroEmailButton
@@ -134,9 +134,9 @@ const Partner = () => {
               { icon: Shield, title: "Payments via ZAFTYS", desc: "GST-compliant billing through ZAFTYS on trips we contract." },
               { icon: Zap, title: "TMS on ZAFTYS trips", desc: "Contracted work can sit in ZAFTYS TMS for status and close-out." },
             ].map((item, index) => (
-              <Card key={index} className="text-center border border-border transition-transform duration-300">
+              <Card key={index} className="border border-border bg-white text-center shadow-sm transition-[box-shadow,border-color] duration-200 hover:border-primary/35 hover:shadow-md">
                 <CardContent className="p-8">
-                  <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center border border-border bg-surface text-primary">
+                  <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center border border-border bg-surface text-primary shadow-sm">
                     <item.icon size={28} />
                   </div>
                   <h3 className="text-lg font-bold text-navy mb-2">{item.title}</h3>
@@ -157,20 +157,19 @@ const Partner = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
             {steps.map((item, index) => (
-              <div key={index} className="relative group">
-                <Card className="h-full border border-border bg-white">
+              <div key={item.step} className="group relative">
+                <Card className="h-full border border-border bg-white text-center shadow-sm transition-[box-shadow,border-color] duration-200 hover:border-primary/35 hover:shadow-md">
                   <CardContent className="p-6 text-center">
-                    <div className="text-4xl font-heading font-bold text-accent/20 mb-4 group-hover:text-accent transition-colors">
+                    <div className="mb-4 font-heading text-4xl font-bold text-accent/25 transition-colors group-hover:text-accent">
                       {item.step}
                     </div>
-                    <h3 className="font-bold text-navy mb-2">{item.title}</h3>
+                    <h3 className="mb-2 font-bold text-navy">{item.title}</h3>
                     <p className="text-sm text-muted-foreground">{item.desc}</p>
                   </CardContent>
                 </Card>
-                {/* Connector Line (Desktop) */}
-                {index < 3 && (
-                  <div className="hidden md:block absolute top-1/2 right-[-12px] w-6 h-[2px] bg-border z-10"></div>
-                )}
+                {index < 3 ? (
+                  <div className="absolute top-1/2 right-[-12px] z-10 hidden h-[2px] w-6 bg-border md:block" aria-hidden />
+                ) : null}
               </div>
             ))}
           </div>
@@ -178,7 +177,7 @@ const Partner = () => {
       </section>
 
       {/* Registration Form */}
-      <section id="partner-form" className="py-20 bg-navy text-white scroll-mt-28">
+      <section id="partner-form" className="section-padding scroll-mt-28 bg-navy text-white">
         <div className="container mx-auto container-padding">
           <div className="max-w-3xl mx-auto">
             <div className="text-center mb-10">

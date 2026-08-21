@@ -192,7 +192,9 @@ const Services = () => {
                   </ul>
                   <span className="inline-block px-4 py-2 bg-muted rounded text-sm font-semibold text-primary">{service.highlight}</span>
                 </div>
-                <Card className={`border border-border bg-surface ${index % 2 === 1 ? "lg:col-start-1" : ""}`}>
+                <Card
+                  className={`border border-border bg-white shadow-sm ${index % 2 === 1 ? "lg:col-start-1" : ""}`}
+                >
                   <CardContent className="p-8">
                     <p className="text-sm font-semibold text-muted-foreground uppercase tracking-wider mb-4">Every program includes</p>
                     {["Registered ZAFTYS contracts", "Own fleet plus TranZfort marketplace", "TMS tracking on active lanes"].map((line, i) => (

@@ -274,7 +274,6 @@ const IntelligenceHub = () => (
             label={c.finalCta.primaryLabel}
             subject={intelligenceInquiryMail.subject}
             body={intelligenceInquiryMail.body}
-            variant="on-dark"
           />
           <Link to={paths.reports}>
             <Button variant="on-dark-outline">{c.finalCta.secondaryLabel}</Button>

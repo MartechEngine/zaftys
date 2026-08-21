@@ -312,15 +312,14 @@ const Technology = () => (
         </h2>
         <p className="mx-auto mt-4 max-w-xl text-base text-gray-300">{c.finalCta.lead}</p>
         <CTAGroup className="mt-8">
-          <Link to={paths.login}>
-            <Button variant="accent">{c.finalCta.secondaryLabel}</Button>
-          </Link>
           <HeroEmailButton
             label={c.finalCta.primaryLabel}
             subject={technologyDemoMail.subject}
             body={technologyDemoMail.body}
-            variant="on-dark-outline"
           />
+          <Link to={paths.login}>
+            <Button variant="on-dark-outline">{c.finalCta.secondaryLabel}</Button>
+          </Link>
         </CTAGroup>
       </div>
     </section>
