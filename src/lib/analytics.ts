@@ -67,15 +67,26 @@ function loadClarity(id: string): void {
   document.head.appendChild(script);
 }
 
-function loadGa4(id: string): void {
-  if (document.querySelector(`script[src*="googletagmanager.com/gtag/js?id=${id}"]`)) return;
+function loadGa4(id: string, onReady?: () => void): void {
+  if (document.querySelector(`script[src*="googletagmanager.com/gtag/js?id=${id}"]`)) {
+    onReady?.();
+    return;
+  }
   ensureGtag();
   const script = document.createElement("script");
   script.async = true;
   script.src = `https://www.googletagmanager.com/gtag/js?id=${id}`;
-  document.head.appendChild(script);
+  // Stub queues these until gtag.js loads; flush SPA pageview after the script is ready.
   window.gtag?.("js", new Date());
-  window.gtag?.("config", id, { send_page_view: false, anonymize_ip: true });
+  window.gtag?.("config", id, {
+    send_page_view: false,
+    anonymize_ip: true,
+  });
+  script.onload = () => onReady?.();
+  script.onerror = () => {
+    console.warn("[analytics] Failed to load gtag.js — check VITE_GA_MEASUREMENT_ID");
+  };
+  document.head.appendChild(script);
 }
 
 function loadVendors(): void {
@@ -85,10 +96,11 @@ function loadVendors(): void {
   const ga = gaMeasurementId();
   if (clarity) loadClarity(clarity);
   if (ga) {
-    loadGa4(ga);
-    const queued = pendingPageview;
-    pendingPageview = null;
-    if (queued) sendPageview(queued.path, queued.title);
+    loadGa4(ga, () => {
+      const queued = pendingPageview;
+      pendingPageview = null;
+      if (queued) sendPageview(queued.path, queued.title);
+    });
   }
 }
 
