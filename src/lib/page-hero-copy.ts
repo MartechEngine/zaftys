@@ -21,8 +21,8 @@ export const pageHeroCopy = {
   },
   intelligenceHub: {
     badge: "Logistics Intelligence",
-    h1: "Turn transportation data into decisions.",
-    lead: "Analytics, freight intelligence, market research, and AI built around real logistics operations. Capabilities labeled by availability.",
+    h1: "Decisions from the trips you actually run.",
+    lead: "Operations analytics, exception views, lane rate context, market reports, and desk AI research on top of ZAFTYS TMS. Capabilities labeled Available, Beta, or Research.",
   },
   services: {
     badge: "Commercial transport",

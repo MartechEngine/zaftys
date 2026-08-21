@@ -14,4 +14,5 @@ export const pageHeroAlts = {
   reports: "ZAFTYS Analytics market reports on logistics and digital freight matching",
   services: "Commercial truck transport from LCV to bulker across India",
   technology: "ZAFTYS TMS dispatch and tracking for shippers and fleet operators",
+  intelligence: "ZAFTYS logistics intelligence on TMS operational data",
 } as const;

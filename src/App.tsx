@@ -73,18 +73,10 @@ const LogisticsApis = lazy(() =>
 );
 
 const IntelligenceHub = lazy(() => import("./pages/intelligence/IntelligenceHub"));
-const ZaftysAnalytics = lazy(() =>
-  import("./pages/intelligence/IntelligenceSolutions").then((m) => ({ default: m.ZaftysAnalytics })),
-);
-const FreightRateIntelligence = lazy(() =>
-  import("./pages/intelligence/IntelligenceSolutions").then((m) => ({ default: m.FreightRateIntelligence })),
-);
-const MarketIntelligence = lazy(() =>
-  import("./pages/intelligence/IntelligenceSolutions").then((m) => ({ default: m.MarketIntelligence })),
-);
-const SupplyChainAi = lazy(() =>
-  import("./pages/intelligence/IntelligenceSolutions").then((m) => ({ default: m.SupplyChainAi })),
-);
+const ZaftysAnalytics = lazy(() => import("./pages/intelligence/AnalyticsPage"));
+const FreightRateIntelligence = lazy(() => import("./pages/intelligence/FreightRatesPage"));
+const MarketIntelligence = lazy(() => import("./pages/intelligence/MarketIntelligencePage"));
+const SupplyChainAi = lazy(() => import("./pages/intelligence/SupplyChainAiPage"));
 
 const PageFallback = () => (
   <div className="min-h-[40vh] flex items-center justify-center" role="status" aria-label="Loading page">

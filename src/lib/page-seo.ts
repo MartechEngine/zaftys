@@ -21,9 +21,9 @@ export const pageSeo = {
       "ZAFTYS technology for transportation operations: TMS, fleet management, tracking, visibility, and logistics APIs.",
   },
   intelligenceHub: {
-    title: "Logistics Intelligence | Analytics and AI",
+    title: "Logistics Intelligence | Analytics, Rates, Reports, AI",
     description:
-      "ZAFTYS intelligence: analytics, freight rate intelligence, market reports, and supply chain AI built on real logistics operations.",
+      "ZAFTYS Logistics Intelligence: operations analytics, exception views, freight rate context, market reports, and supply chain AI research on trips we actually run. Labeled Available, Beta, or Research.",
   },
   services: {
     title: "LCV, Heavy Load, Container, Tanker and Bulker Transport",

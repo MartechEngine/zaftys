@@ -1,131 +1,26 @@
 import { Link } from "react-router-dom";
-import { ArrowRight, BarChart3, TrendingUp, FileText, Brain, CheckCircle2 } from "lucide-react";
+import { ArrowRight, CheckCircle2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import SEO from "@/components/SEO";
 import { PageHero } from "@/components/PageHero";
 import { CTAGroup } from "@/components/CTAGroup";
 import { HeroEmailButton } from "@/components/HeroEmailButton";
+import {
+  IntelligenceProductShot,
+  IntelligenceStatusLabel,
+  OpsAnalyticsPreview,
+} from "@/components/intelligence/IntelligenceVisuals";
 import { paths } from "@/lib/site-paths";
 import { pageSeo } from "@/lib/page-seo";
 import { pageHeroCopy } from "@/lib/page-hero-copy";
+import {
+  intelligenceHubCopy,
+  intelligenceInquiryMail,
+} from "@/lib/intelligence-hub-copy";
 import { breadcrumbSchema, organizationSchema } from "@/lib/schema";
-import heroResources from "@/assets/hero-resources.jpg";
-import type { LucideIcon } from "lucide-react";
+import heroTechnology from "@/assets/hero-technology.jpg";
 
-type IntelligenceModule = {
-  id: string;
-  icon: LucideIcon;
-  title: string;
-  status: string;
-  statusVariant: "default" | "secondary" | "outline";
-  lead: string;
-  points: readonly string[];
-  cta: { label: string; path: string };
-};
-
-const modules: readonly IntelligenceModule[] = [
-  {
-    id: "analytics",
-    icon: BarChart3,
-    title: "ZAFTYS Analytics",
-    status: "Available",
-    statusVariant: "default",
-    lead: "Transportation, freight, carrier, and market data in one analytics layer built on operations ZAFTYS runs.",
-    points: [
-      "Lane and corridor performance",
-      "Carrier and fleet performance against SLAs",
-      "Cost analysis connected to trip records",
-      "Operational data from ZAFTYS TMS where deployed",
-    ],
-    cta: { label: "Explore analytics", path: paths.intelligence.analytics },
-  },
-  {
-    id: "freight-rates",
-    icon: TrendingUp,
-    title: "Freight Rate Intelligence",
-    status: "Beta",
-    statusVariant: "secondary",
-    lead: "Lane-level freight rate context for corridors you actually run, not generic market averages.",
-    points: [
-      "Corridor rate movement over time",
-      "Context for contract and spot decisions",
-      "Linked to operational and market data",
-      "Rolling out in phases with early access",
-    ],
-    cta: { label: "Learn about rate intelligence", path: paths.intelligence.freightRates },
-  },
-  {
-    id: "market",
-    icon: FileText,
-    title: "Market Intelligence",
-    status: "Available",
-    statusVariant: "default",
-    lead: "Institutional research on logistics markets, freight trends, and digital transportation from ZAFTYS Analytics.",
-    points: [
-      "Global logistics market reports",
-      "Digital freight matching research",
-      "Gated PDF downloads with company email",
-      "Operations-informed research, not generic summaries",
-    ],
-    cta: { label: "Browse market reports", path: paths.reports },
-  },
-  {
-    id: "ai",
-    icon: Brain,
-    title: "Supply Chain AI",
-    status: "Research",
-    statusVariant: "outline",
-    lead: "AI capabilities designed for transportation and supply-chain workflows: exception analysis, operational queries, and decision support.",
-    points: [
-      "AI logistics assistant for desk workflows",
-      "Exception and delay analysis",
-      "Forecasting and capacity intelligence in development",
-      "Each capability labeled by release status before launch",
-    ],
-    cta: { label: "Supply chain AI roadmap", path: paths.intelligence.ai },
-  },
-];
-
-function ModuleSection({ module, reversed }: { module: IntelligenceModule; reversed?: boolean }) {
-  const Icon = module.icon;
-  return (
-    <div
-      className={`grid grid-cols-1 lg:grid-cols-2 gap-12 items-center ${reversed ? "lg:[direction:rtl]" : ""}`}
-    >
-      <div className={reversed ? "lg:[direction:ltr]" : ""}>
-        <div className="flex items-center gap-3 mb-4">
-          <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
-            <Icon size={24} />
-          </div>
-          <Badge variant={module.statusVariant}>{module.status}</Badge>
-        </div>
-        <h2 className="text-3xl font-heading font-bold text-navy mb-4">{module.title}</h2>
-        <p className="text-lg text-muted-foreground leading-relaxed mb-6">{module.lead}</p>
-        <ul className="space-y-3 mb-8">
-          {module.points.map((point) => (
-            <li key={point} className="flex items-start gap-3">
-              <CheckCircle2 className="text-accent shrink-0 mt-0.5" size={18} />
-              <span className="text-muted-foreground">{point}</span>
-            </li>
-          ))}
-        </ul>
-        <Link to={module.cta.path}>
-          <Button variant="outline" className="border-primary text-primary hover:bg-primary hover:text-white">
-            {module.cta.label} <ArrowRight className="ml-2" size={16} />
-          </Button>
-        </Link>
-      </div>
-      <div
-        className={`rounded-xl border border-border bg-muted/30 p-10 min-h-[240px] flex flex-col justify-center ${reversed ? "lg:[direction:ltr]" : ""}`}
-      >
-        <p className="text-sm font-semibold uppercase tracking-widest text-accent mb-2">{module.status}</p>
-        <p className="text-2xl font-heading font-bold text-navy mb-3">{module.title}</p>
-        <p className="text-muted-foreground leading-relaxed">{module.lead}</p>
-      </div>
-    </div>
-  );
-}
+const c = intelligenceHubCopy;
 
 const IntelligenceHub = () => (
   <div className="min-h-screen bg-background font-sans">
@@ -141,74 +36,251 @@ const IntelligenceHub = () => (
         ]),
       ]}
     />
+
     <PageHero
       badge={pageHeroCopy.intelligenceHub.badge}
       title={pageHeroCopy.intelligenceHub.h1}
       description={pageHeroCopy.intelligenceHub.lead}
-      imageSrc={heroResources}
-      imageAlt="ZAFTYS logistics intelligence"
+      imageSrc={heroTechnology}
+      imageAlt="ZAFTYS logistics intelligence on TMS operational data"
     >
       <CTAGroup className="justify-start sm:justify-start">
         <HeroEmailButton
-          label="Explore Logistics Intelligence"
-          subject="Logistics intelligence inquiry"
-          body="Hi ZAFTYS,\n\nI'd like to explore logistics intelligence.\n\nCompany:\nUse case:\n\n"
+          label={c.finalCta.primaryLabel}
+          subject={intelligenceInquiryMail.subject}
+          body={intelligenceInquiryMail.body}
         />
         <Link to={paths.reports}>
-          <Button size="lg" variant="on-dark-outline">View Market Reports</Button>
+          <Button size="lg" variant="on-dark-outline">
+            {c.finalCta.secondaryLabel}
+          </Button>
         </Link>
       </CTAGroup>
     </PageHero>
 
-    <section className="section-padding bg-white">
-      <div className="container mx-auto container-padding">
-        <div className="text-center mb-20 max-w-3xl mx-auto">
-          <h2 className="text-4xl font-heading font-bold mb-4 text-primary">Intelligence built on operations</h2>
-          <p className="text-lg text-muted-foreground">
-            Analytics, freight intelligence, market research, and AI layered on transportation ZAFTYS actually runs.
-            Capabilities are labeled by availability.
+    {/* What it is */}
+    <section className="border-t border-border bg-white">
+      <div className="mx-auto w-full max-w-[90rem] px-5 py-12 md:px-10 md:py-16 lg:px-14">
+        <div className="mb-10 grid gap-6 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:items-end">
+          <div>
+            <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-primary">
+              {c.intro.eyebrow}
+            </p>
+            <h2 className="font-heading text-3xl font-bold text-navy md:text-4xl md:leading-tight">
+              {c.intro.h2}
+            </h2>
+          </div>
+          <p className="text-base leading-relaxed text-muted-foreground md:text-lg lg:pb-1">
+            {c.intro.lead}
           </p>
         </div>
-        <div className="space-y-24">
-          {modules.map((module, index) => (
-            <ModuleSection key={module.id} module={module} reversed={index % 2 === 1} />
+
+        <div className="mb-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {c.intro.pillars.map((pillar, i) => (
+            <article
+              key={pillar.title}
+              className="flex flex-col border border-border bg-[#f3f5f8] p-6 md:min-h-[200px]"
+            >
+              <p className="mb-4 font-heading text-xs font-bold tracking-[0.2em] text-accent">
+                {String(i + 1).padStart(2, "0")}
+              </p>
+              <h3 className="font-heading text-lg font-bold text-navy">{pillar.title}</h3>
+              <p className="mt-3 flex-1 text-[15px] leading-relaxed text-muted-foreground">
+                {pillar.body}
+              </p>
+            </article>
+          ))}
+        </div>
+
+        <OpsAnalyticsPreview />
+      </div>
+    </section>
+
+    {/* Who */}
+    <section className="border-t border-border bg-[#f3f5f8] px-5 py-12 md:px-8 md:py-14">
+      <div className="mx-auto max-w-7xl">
+        <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-primary">
+          {c.buyers.eyebrow}
+        </p>
+        <h2 className="mb-8 max-w-2xl font-heading text-2xl font-bold text-navy md:text-3xl">
+          {c.buyers.h2}
+        </h2>
+        <div className="grid gap-4 md:grid-cols-3">
+          {c.buyers.items.map((item, i) => (
+            <article key={item.title} className="border border-border bg-white p-6">
+              <p className="mb-3 font-heading text-xs font-bold tracking-[0.18em] text-accent">
+                {String(i + 1).padStart(2, "0")}
+              </p>
+              <h3 className="font-heading text-lg font-bold text-navy">{item.title}</h3>
+              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{item.body}</p>
+            </article>
           ))}
         </div>
       </div>
     </section>
 
-    <section className="section-padding bg-muted/30">
-      <div className="container mx-auto container-padding max-w-3xl text-center">
-        <h2 className="text-3xl font-heading font-bold text-navy mb-4">Connected to ZAFTYS TMS</h2>
-        <p className="text-lg text-muted-foreground mb-8 leading-relaxed">
-          Intelligence works best when operational data flows from dispatch, fleet, and delivery close-out.
-          ZAFTYS TMS is the system we run on our own trips every day.
-        </p>
-        <CTAGroup>
-          <Link to={paths.technology.tms}>
-            <Button variant="accent">See ZAFTYS TMS</Button>
-          </Link>
-          <Link to={paths.logistics.hub}>
-            <Button variant="outline" className="border-primary text-primary hover:bg-primary hover:text-white">
-              Logistics services
-            </Button>
-          </Link>
-        </CTAGroup>
+    {/* Product modules */}
+    <section className="border-t border-border bg-white">
+      <div className="mx-auto w-full max-w-[90rem] px-5 py-12 md:px-10 md:py-16 lg:px-14">
+        <div className="mb-14 max-w-2xl">
+          <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-primary">
+            Product modules
+          </p>
+          <h2 className="font-heading text-3xl font-bold text-navy md:text-4xl">
+            What Logistics Intelligence includes
+          </h2>
+          <p className="mt-3 text-base leading-relaxed text-muted-foreground">
+            Five modules. Real product and TMS screens where the product already runs.
+            Status labeled on every block.
+          </p>
+        </div>
+
+        <div className="space-y-20 md:space-y-28">
+          {c.modules.map((module, index) => {
+            const reversed = index % 2 === 1;
+            return (
+              <article
+                key={module.id}
+                id={module.id}
+                className="grid scroll-mt-28 items-center gap-10 lg:grid-cols-2 lg:gap-14"
+              >
+                <div className={reversed ? "lg:order-2" : undefined}>
+                  <div className="mb-4 flex flex-wrap items-center gap-3">
+                    <IntelligenceStatusLabel status={module.status} />
+                    <span className="font-heading text-xs font-bold tracking-[0.2em] text-muted-foreground">
+                      {String(index + 1).padStart(2, "0")}
+                    </span>
+                  </div>
+                  <h3 className="font-heading text-2xl font-bold text-navy md:text-3xl">
+                    {module.title}
+                  </h3>
+                  <p className="mt-4 text-base leading-relaxed text-muted-foreground md:text-lg">
+                    {module.lead}
+                  </p>
+                  <ul className="mt-6 space-y-3">
+                    {module.points.map((point) => (
+                      <li key={point} className="flex items-start gap-3 text-sm text-muted-foreground md:text-[15px]">
+                        <CheckCircle2 className="mt-0.5 shrink-0 text-accent" size={18} />
+                        <span>{point}</span>
+                      </li>
+                    ))}
+                  </ul>
+                  <div className="mt-8 flex flex-wrap gap-3">
+                    <Link to={module.cta.path}>
+                      <Button
+                        variant="outline"
+                        className="border-primary text-primary hover:bg-primary hover:text-white"
+                      >
+                        {module.cta.label} <ArrowRight className="ml-2" size={16} />
+                      </Button>
+                    </Link>
+                    {"secondaryCta" in module && module.secondaryCta ? (
+                      <Link to={module.secondaryCta.path}>
+                        <Button variant="ghost" className="text-navy">
+                          {module.secondaryCta.label}
+                        </Button>
+                      </Link>
+                    ) : null}
+                  </div>
+                </div>
+
+                <div className={reversed ? "lg:order-1" : undefined}>
+                  <IntelligenceProductShot
+                    src={module.image}
+                    alt={module.imageAlt}
+                    caption={
+                      module.id === "freight-rates"
+                        ? "Freight Rate Intelligence · Beta dashboard"
+                        : module.id === "market"
+                          ? "Market report cover · unlock full PDF with company email"
+                          : module.id === "ai"
+                            ? "Supply Chain AI · research architecture"
+                            : "Live ZAFTYS TMS · operational source for intelligence"
+                    }
+                  />
+                </div>
+              </article>
+            );
+          })}
+        </div>
       </div>
     </section>
 
-    <section className="py-20 bg-navy text-white">
+    {/* Data foundation */}
+    <section className="border-t border-border bg-navy px-5 py-12 text-white md:px-8 md:py-14">
+      <div className="mx-auto max-w-7xl">
+        <div className="grid gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
+          <div>
+            <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-accent">
+              {c.dataFoundation.eyebrow}
+            </p>
+            <h2 className="max-w-xl font-heading text-3xl font-bold">{c.dataFoundation.h2}</h2>
+            <p className="mt-4 max-w-xl text-base leading-relaxed text-gray-300">
+              {c.dataFoundation.lead}
+            </p>
+            <ul className="mt-6 space-y-3">
+              {c.dataFoundation.points.map((point) => (
+                <li key={point} className="flex items-start gap-3 text-sm text-gray-300">
+                  <CheckCircle2 className="mt-0.5 shrink-0 text-accent" size={18} />
+                  <span>{point}</span>
+                </li>
+              ))}
+            </ul>
+            <div className="mt-8 flex flex-wrap gap-3">
+              <Link to={c.dataFoundation.ctaTms.path}>
+                <Button variant="accent">{c.dataFoundation.ctaTms.label}</Button>
+              </Link>
+              <Link to={c.dataFoundation.ctaLogistics.path}>
+                <Button variant="on-dark-outline">{c.dataFoundation.ctaLogistics.label}</Button>
+              </Link>
+            </div>
+          </div>
+          <IntelligenceProductShot
+            src="/images/tms/map.webp?v=2"
+            alt="ZAFTYS TMS live map for active contracted moves"
+            caption="Live map · contracted trips in ZAFTYS TMS"
+            className="border-white/15"
+          />
+        </div>
+      </div>
+    </section>
+
+    {/* Honesty */}
+    <section className="border-t border-border bg-[#f3f5f8] px-5 py-12 md:px-8 md:py-14">
+      <div className="mx-auto max-w-7xl">
+        <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-primary">
+          {c.honesty.eyebrow}
+        </p>
+        <h2 className="mb-8 max-w-2xl font-heading text-2xl font-bold text-navy md:text-3xl">
+          {c.honesty.h2}
+        </h2>
+        <div className="grid gap-4 md:grid-cols-3">
+          {c.honesty.items.map((item) => (
+            <article key={item.status} className="border border-border bg-white p-6">
+              <IntelligenceStatusLabel status={item.status} />
+              <p className="mt-4 text-sm leading-relaxed text-muted-foreground">{item.body}</p>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    {/* Final CTA */}
+    <section className="border-t border-border bg-navy py-16 text-white md:py-20">
       <div className="container mx-auto container-padding text-center">
-        <h2 className="text-3xl font-heading font-bold mb-6">Turn transportation data into decisions</h2>
-        <CTAGroup>
+        <h2 className="mx-auto max-w-2xl font-heading text-3xl font-bold md:text-4xl">
+          {c.finalCta.h2}
+        </h2>
+        <p className="mx-auto mt-4 max-w-xl text-base text-gray-300">{c.finalCta.lead}</p>
+        <CTAGroup className="mt-8">
           <HeroEmailButton
-            label="Explore Logistics Intelligence"
-            subject="Logistics intelligence inquiry"
-            body="Hi ZAFTYS,\n\nI'd like to explore logistics intelligence.\n\n"
+            label={c.finalCta.primaryLabel}
+            subject={intelligenceInquiryMail.subject}
+            body={intelligenceInquiryMail.body}
             variant="on-dark"
           />
           <Link to={paths.reports}>
-            <Button variant="on-dark-outline">Browse Market Reports</Button>
+            <Button variant="on-dark-outline">{c.finalCta.secondaryLabel}</Button>
           </Link>
         </CTAGroup>
       </div>
