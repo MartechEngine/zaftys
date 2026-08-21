@@ -1,11 +1,8 @@
 /**
  * Homepage section sequence — locked to positioning narrative.
  *
- * Story arc (logistics first, technology earned):
- *   WHAT → PROOF → HOW → TOOLS → WHO → KNOW → ACT
- *
- * Industries follow Platform so tools are proven before vertical tiles —
- * "here's how we run freight" then "here's who we run it for".
+ * Story arc (logistics first; Network and Platform as layers):
+ *   WHAT → HOW → PLATFORM → NETWORK → WHO → KNOW → ACT
  */
 export const homeSectionSequence = [
   {
@@ -25,27 +22,34 @@ export const homeSectionSequence = [
   {
     id: "platform",
     order: 3,
-    narrative: "TOOLS",
-    job: "TMS + Tranzfort immediately after operating model — prove the desk runs on real software",
+    narrative: "PLATFORM",
+    job: "ZAFTYS TMS — prove the desk runs on real software",
     pillar: "Platform",
   },
   {
-    id: "industries",
+    id: "network",
     order: 4,
+    narrative: "NETWORK",
+    job: "TranZfort and labeled capacity overflow — separate from TMS",
+    pillar: "Network",
+  },
+  {
+    id: "industries",
+    order: 5,
     narrative: "WHO",
-    job: "Industrial verticals where that model and platform are applied",
-    pillar: "Logistics / Industries",
+    job: "Industrial verticals where that model is applied",
+    pillar: "Industries",
   },
   {
     id: "insights",
-    order: 5,
+    order: 6,
     narrative: "KNOW",
     job: "Intelligence + research teaser; tertiary pillar",
     pillar: "Intelligence",
   },
   {
     id: "final-cta",
-    order: 6,
+    order: 7,
     narrative: "ACT",
     job: "Convert — Request Transportation",
     pillar: "Logistics",

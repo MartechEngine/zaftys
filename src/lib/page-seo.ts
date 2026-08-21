@@ -51,9 +51,9 @@ export const pageSeo = {
       "Cement, port-to-city containers, mining products, steel coils, chemicals, manufacturing, and FMCG. Plant windows, body class, own fleet first with labeled network overflow.",
   },
   partner: {
-    title: "Join TranZfort | Fleet Partner Program",
+    title: "Become a Partner | ZAFTYS Network and TranZfort",
     description:
-      "Register your trucks on TranZfort. Search is free. We charge a broker fee on booked loads. Get paid through ZAFTYS on contracted trips.",
+      "Register your trucks as verified ZAFTYS network capacity. Find loads on TranZfort. Search is free. Broker fee on booked loads. Paid through ZAFTYS on contracted trips.",
   },
   about: {
     title: "About ZAFTYS | Industrial freight desk, fleet & TMS",
@@ -61,9 +61,9 @@ export const pageSeo = {
       "ZAFTYS: one Amravati desk for industrial freight. Own trucks, ZAFTYS TMS, and labeled TranZfort overflow. Company profile on request.",
   },
   contact: {
-    title: "Contact ZAFTYS | Quote, TMS Demo, TranZfort",
+    title: "Contact ZAFTYS | Quote, TMS Demo, Network Partner",
     description:
-      "WhatsApp ZAFTYS for a freight quote, a TMS demo, or TranZfort onboarding. Amravati, Maharashtra. +91-927-092-3581.",
+      "WhatsApp ZAFTYS for a freight quote, TMS demo, or Network partner onboarding. Amravati, Maharashtra. +91-927-092-3581.",
   },
   careers: {
     title: "Careers at ZAFTYS | Fleet, Dispatch, TMS",

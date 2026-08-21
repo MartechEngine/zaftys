@@ -52,9 +52,9 @@ export const pageHeroCopy = {
       "We haul for verticals where the wrong body class or a missed gate costs more than the rate. Transportation first — not a three-product brochure per industry.",
   },
   partner: {
-    badge: "Fleet owners",
-    h1: "Put your trucks on TranZfort.",
-    lead: "Find loads on corridors you already run. Search is free. We charge a broker fee on booked loads. Verification is not optional: papers, insurance, and a real operating pattern.",
+    badge: "Fleet partners",
+    h1: "Put your trucks on the ZAFTYS Network.",
+    lead: "Join as labeled network capacity. Find loads on corridors you already run via TranZfort. Search is free. Broker fee on booked loads. Verification is not optional: papers, insurance, and a real operating pattern.",
   },
   about: {
     badge: "About ZAFTYS",
@@ -64,8 +64,8 @@ export const pageHeroCopy = {
   },
   contact: {
     badge: "Contact",
-    h1: "Quote, demo, or marketplace. Same team.",
-    lead: "Freight quotes on WhatsApp. TMS walkthrough by email or form. Fleet owners: partner form or TranZfort download. Amravati, Maharashtra.",
+    h1: "Freight quote, TMS demo, or Network partner.",
+    lead: "Shippers: WhatsApp or the form for capacity. TMS walkthrough by email or form. Fleet owners: partner registration or TranZfort. Desk in Amravati, Maharashtra.",
   },
   careers: {
     badge: "Join the team",

@@ -33,6 +33,11 @@ export function HomeFinalCtaSection() {
               Chat on WhatsApp
             </Button>
           </a>
+          <Link to={paths.network.hub}>
+            <Button size="lg" variant="on-dark-outline">
+              Explore Network
+            </Button>
+          </Link>
           <Link to={paths.technology.tms}>
             <Button size="lg" variant="on-dark-outline">
               Explore ZAFTYS TMS

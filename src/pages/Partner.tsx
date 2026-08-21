@@ -20,6 +20,7 @@ import { externalLinks } from "@/lib/constants";
 import { pageSeo } from "@/lib/page-seo";
 import { breadcrumbSchema } from "@/lib/schema";
 import { pageHeroCopy } from "@/lib/page-hero-copy";
+import { paths } from "@/lib/site-paths";
 import { Link } from "react-router-dom";
 
 const Partner = () => {
@@ -60,8 +61,8 @@ const Partner = () => {
       if (result.success) {
         trackEvent("form_partner_success", { placement: "partner-form" });
         toast({
-          title: "Application Received!",
-          description: "Our fleet manager will contact you within 24 hours for verification.",
+          title: "Application received",
+          description: "Our fleet team will contact you for verification and next steps.",
         });
         setFormData({
           company: "",
@@ -128,10 +129,10 @@ const Partner = () => {
         <div className="container mx-auto container-padding">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {[
-              { icon: Network, title: "Loads on your corridors", desc: "Commercial freight matched to lanes you already run. Search is free. We charge a broker fee on booked loads." },
+              { icon: Network, title: "Loads on your corridors", desc: "Commercial freight matched to lanes you already run. Search is free. Broker fee on booked loads." },
               { icon: TrendingUp, title: "Fewer empty returns", desc: "Find a load for the way back instead of deadheading the corridor." },
               { icon: Shield, title: "Payments via ZAFTYS", desc: "GST-compliant billing through ZAFTYS on trips we contract." },
-              { icon: Zap, title: "TMS when you grow", desc: "Dispatch tools as your volume with ZAFTYS justifies it." },
+              { icon: Zap, title: "TMS on ZAFTYS trips", desc: "Contracted work can sit in ZAFTYS TMS for status and close-out." },
             ].map((item, index) => (
               <Card key={index} className="text-center border-none shadow-lg hover:-translate-y-1 transition-transform duration-300">
                 <CardContent className="p-8">
@@ -272,8 +273,10 @@ const Partner = () => {
       {/* CTAs */}
       <section className="py-16 bg-primary text-white text-center">
         <div className="container mx-auto container-padding">
-          <h2 className="text-3xl font-heading font-bold mb-4">Prefer to Talk First?</h2>
-          <p className="text-gray-200 mb-8 max-w-xl mx-auto">Reach our fleet team on WhatsApp or download the TranZfort app.</p>
+          <h2 className="text-3xl font-heading font-bold mb-4">Prefer to talk first?</h2>
+          <p className="text-gray-200 mb-8 max-w-xl mx-auto">
+            Reach our fleet team on WhatsApp, open TranZfort, or read how Network capacity works.
+          </p>
           <CTAGroup>
             <WhatsAppButton label="WhatsApp Our Fleet Team" />
             <Button asChild size="lg" variant="on-dark-outline">
@@ -283,17 +286,19 @@ const Partner = () => {
                 rel="noopener noreferrer"
                 onClick={() => trackEvent("cta_tranzfort", { placement: "partner" })}
               >
-                Download TranZfort App
+                Open TranZfort
               </a>
             </Button>
           </CTAGroup>
           <p className="mt-8 text-sm text-gray-300">
             Learn about{" "}
-            <Link to="/tranzfort-network" className="underline hover:text-white">TranZfort network</Link>
+            <Link to={paths.network.hub} className="underline hover:text-white">Network</Link>
             {", "}
-            <Link to="/zaftys-tms" className="underline hover:text-white">ZAFTYS TMS</Link>
+            <Link to={paths.network.tranzfort} className="underline hover:text-white">TranZfort</Link>
+            {", "}
+            <Link to={paths.technology.tms} className="underline hover:text-white">ZAFTYS TMS</Link>
             {", or "}
-            <Link to="/contact" className="underline hover:text-white">contact ZAFTYS Logistics</Link>.
+            <Link to={paths.contact} className="underline hover:text-white">contact the desk</Link>.
           </p>
         </div>
       </section>

@@ -17,6 +17,7 @@ import { whatsappUrl, companyAddress } from "@/lib/constants";
 import { pageSeo } from "@/lib/page-seo";
 import { pageHeroCopy } from "@/lib/page-hero-copy";
 import { organizationSchema, localBusinessSchema, breadcrumbSchema } from "@/lib/schema";
+import { paths } from "@/lib/site-paths";
 import { Link } from "react-router-dom";
 
 const Contact = () => {
@@ -218,7 +219,7 @@ const Contact = () => {
               <CardContent className="p-8 md:p-10">
                 <div className="mb-8">
                   <h2 className="text-3xl font-heading font-bold mb-2 text-navy">Send a Message</h2>
-                  <p className="text-muted-foreground">Fill out the form below and we'll get back to you within 24 hours.</p>
+                  <p className="text-muted-foreground">Tell us what you need. The desk will follow up.</p>
                 </div>
 
                 <form className="space-y-6" onSubmit={handleSubmit}>
@@ -307,6 +308,7 @@ const Contact = () => {
                       <SelectContent>
                         <SelectItem value="quote">Freight quote (any truck class)</SelectItem>
                         <SelectItem value="demo">ZAFTYS TMS demo</SelectItem>
+                        <SelectItem value="network-partner">Network partner / fleet registration</SelectItem>
                         <SelectItem value="tranzfort-post">TranZfort (post loads)</SelectItem>
                         <SelectItem value="tranzfort-find">TranZfort (find loads)</SelectItem>
                         <SelectItem value="careers">Careers</SelectItem>
@@ -361,7 +363,7 @@ const Contact = () => {
                       <MessageSquare size={18} className="text-accent" /> How quickly can I get a quote?
                     </h4>
                     <p className="text-muted-foreground">
-                      For standard FTL routes, we typically respond promptly during business hours. For specialized or project cargo, please allow up to 24 hours for a detailed assessment.
+                      For standard FTL corridors, we typically respond during business hours. Specialized or project cargo may need more time for a proper assessment.
                     </p>
                   </div>
                 </div>
@@ -388,13 +390,14 @@ const Contact = () => {
               </div>
 
               <div className="rounded-xl border border-border bg-muted/20 p-6">
-                <h3 className="text-lg font-heading font-bold text-navy mb-3">Explore ZAFTYS Logistics</h3>
+                <h3 className="text-lg font-heading font-bold text-navy mb-3">Explore ZAFTYS</h3>
                 <ul className="space-y-2 text-sm">
-                  <li><Link to="/services" className="text-primary hover:underline">FTL &amp; contract logistics services</Link></li>
-                  <li><Link to="/zaftys-tms" className="text-primary hover:underline">ZAFTYS TMS visibility</Link></li>
-                  <li><Link to="/tranzfort-network" className="text-primary hover:underline">TranZfort verified capacity</Link></li>
-                  <li><Link to="/industries" className="text-primary hover:underline">Industries we serve</Link></li>
-                  <li><Link to="/about" className="text-primary hover:underline">About ZAFTYS Logistics</Link></li>
+                  <li><Link to={paths.logistics.hub} className="text-primary hover:underline">Logistics and transportation</Link></li>
+                  <li><Link to={paths.network.hub} className="text-primary hover:underline">Network and TranZfort</Link></li>
+                  <li><Link to={paths.technology.tms} className="text-primary hover:underline">ZAFTYS TMS</Link></li>
+                  <li><Link to={paths.partner} className="text-primary hover:underline">Become a partner</Link></li>
+                  <li><Link to={paths.industries} className="text-primary hover:underline">Industries we serve</Link></li>
+                  <li><Link to={paths.about} className="text-primary hover:underline">About ZAFTYS</Link></li>
                 </ul>
               </div>
             </div>

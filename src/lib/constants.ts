@@ -197,8 +197,8 @@ export const homeOperatingModel = [
     id: "network",
     step: "03",
     title: "Network capacity",
-    description: "Verified Tranzfort partners when surge exceeds owned fleet. Always labeled clearly.",
-    link: "/network/tranzfort",
+    description: "Verified partners and TranZfort when surge exceeds owned fleet. Always labeled clearly.",
+    link: "/network",
   },
 ] as const;
 
@@ -296,8 +296,8 @@ export const networkHighlights = [
 
 /** Qualitative trust strip — verified labels only */
 export const homeTrustStrip = [
-  { label: "Own Fleet", sublabel: "Heavy vehicle capacity" },
-  { label: "Partner Network", sublabel: "Verified carriers" },
+  { label: "Own Fleet", sublabel: "Company-operated trucks" },
+  { label: "Network", sublabel: "Labeled partner capacity" },
   { label: "Contract Logistics", sublabel: "Recurring freight" },
   { label: "ZAFTYS TMS", sublabel: "Live dispatch system" },
   { label: "Pan-India", sublabel: "Freight corridors" },

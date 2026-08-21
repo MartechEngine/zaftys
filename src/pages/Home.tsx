@@ -4,6 +4,7 @@ import {
   HomeHeroSection,
   HomeIndustriesSection,
   HomeInsightsSection,
+  HomeNetworkSection,
   HomeOperatingModelSection,
   HomePlatformSection,
 } from "@/components/home";
@@ -15,10 +16,11 @@ import { logisticsServiceSchema, organizationSchema, websiteSchema, localBusines
  *
  * 1. hero            WHAT + PROOF   Heavy freight promise
  * 2. operating-model HOW            Operator identity (fleet + contract + network)
- * 3. platform        TOOLS          TMS + Tranzfort — prove the desk runs on real software
- * 4. industries      WHO            Verticals where that model is applied
- * 5. insights        KNOW           Intelligence tertiary
- * 6. final-cta       ACT            Request Transportation
+ * 3. platform        PLATFORM       ZAFTYS TMS
+ * 4. network         NETWORK        TranZfort + labeled capacity
+ * 5. industries      WHO            Verticals
+ * 6. insights        KNOW           Intelligence tertiary
+ * 7. final-cta       ACT            Request Transportation
  */
 const Home = () => {
   const schema = [organizationSchema, websiteSchema, localBusinessSchema, logisticsServiceSchema];
@@ -35,6 +37,7 @@ const Home = () => {
       <HomeHeroSection />
       <HomeOperatingModelSection />
       <HomePlatformSection />
+      <HomeNetworkSection />
       <HomeIndustriesSection />
       <HomeInsightsSection />
       <HomeFinalCtaSection />
