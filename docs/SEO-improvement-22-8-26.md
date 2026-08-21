@@ -1,10 +1,10 @@
-# ZAFTYS SEO Improvement Plan — 22 Aug 2026
+# ZAFTYS SEO & Marketing Copy Improvement Plan — 22 Aug 2026
 
 | Field | Value |
 |-------|-------|
-| **Scope** | URL intent, metadata, internal links, primary-keyword alignment, content clusters, schema, new-domain acceleration |
+| **Scope** | URL intent, metadata, internal links, primary-keyword alignment, content clusters, schema, marketing copy sweep, report expansion, brand entity ownership ("ZAFTYS"), new-domain acceleration |
 | **Domain status** | Brand-new / low-authority domain (`zaftys.com`) — full overhaul on `rewamp-20-8-26` |
-| **Inputs** | `docs/content.md`, `page-seo.ts`, leaf/industry SEO, `site-paths.ts`, sitemap, `src/lib/schema.ts`, live blog/report catalog |
+| **Inputs** | `docs/content.md` (content audit inventory), `page-seo.ts`, leaf/industry SEO, `site-paths.ts`, sitemap, `src/lib/schema.ts`, live blog/report catalog |
 | **Related** | `docs/content.md`, `docs/marketing/SEO&Blog.md` (technical crawl checklist) |
 | **Cadence** | 10–20 new blogs + 10+ reports over the next 3 months (backlog in §12–13) |
 
@@ -13,22 +13,22 @@
 ## Principles (non-negotiable)
 
 1. **Brand voice stays natural.** Visible H1s, leads, and section copy keep ZAFTYS desk language. Do not rewrite heroes into keyword strings.
-2. **SEO work lives mostly in metadata, URLs, and linking** — not in stuffing body copy.
+2. **SEO work lives mostly in metadata, URLs, linking, and structural data** — not in stuffing body copy.
 3. **Industry pages are commercial SEO pillars.** They own vertical purchase intent and convert to quote/WhatsApp.
 4. **Blog posts are supporting topical-authority pages.** They teach, rank long-tail, and pass trust/links into industry + logistics + TMS pages. They are not a second set of sales pages.
 5. **Reports build institutional authority.** Gated research, citations, and brand search — not local FTL doorways.
 6. **No thin location pages.** Do not create city/corridor microsites for SEO. Mention real corridors only inside About, industry, or service pages where operations already live.
 7. **No unsupported coverage or scale claims.** No invented fleet counts, pan-India guarantees, blended Own+Network tallies, or fake SLAs — in meta or body.
 
-**Clarification on Principle 5 (reports):** “Gated research” means the **downloadable PDF** is gated. The `/reports/{slug}` HTML landing page must remain fully crawlable (see §2.A Report Crawlability). Do not hide the page body behind a form.
+**Clarification on Principle 5 (reports):** “Gated research” means the **downloadable PDF** is gated. The `/reports/{slug}` HTML landing page must remain fully crawlable (see §2.A & §13 Report Crawlability). Do not hide the page body behind a form.
 
-Technical crawl items (sitemap, prerender, OG, GA4) remain in `docs/marketing/SEO&Blog.md`. Schema directives for this rewamp live in **§15** and the §8 file map.
+Technical crawl items (sitemap, prerender, OG, GA4) remain in `docs/marketing/SEO&Blog.md`. Schema directives, brand keyword strategy, and marketing copy sweep targets live in **§5.1, §15** and the §8 file map.
 
 ---
 
 ## 1. Executive verdict
 
-**Context:** `zaftys.com` is a **new / low-authority domain** exiting a full IA and content overhaul. Early wins come from crawlable depth, clean URL signals, long-tail technical content, entity consistency (NAP + GBP), and structured data — not from broad head terms or thin geo pages.
+**Context:** `zaftys.com` is a **new / low-authority domain** exiting a full IA and content overhaul. Early wins come from crawlable depth, clean URL signals, long-tail technical content, entity consistency (NAP + GBP + brand name schema), schema, and eliminating legacy link noise.
 
 **What already works**
 
@@ -36,32 +36,24 @@ Technical crawl items (sitemap, prerender, OG, GA4) remain in `docs/marketing/SE
 - **Industry pillars** already carry strong `seoTitle` / `seoH1` / FAQ depth (FAQPage schema candidates).
 - Logistics service leaves include India in titles without sounding robotic.
 - Blog deep-research set already supports axle/GVW, plant TAT, ePOD, container trucking, TMS evaluation.
-- Baseline JSON-LD helpers exist in `src/lib/schema.ts` (`Organization`, `LocalBusiness`, `LogisticsService`, `SoftwareApplication`, etc.) — expand per §15.
+- Baseline JSON-LD helpers exist in `src/lib/schema.ts` (`Organization`, `LocalBusiness`, `LogisticsService`, `SoftwareApplication`, etc.).
 - Own vs Network honesty is a trust signal. Keep it.
 
 **What to fix first (in this order)**
 
-1. **URL intent consolidation** — stop `/services`, `/logistics`, and `/fleet` fighting each other; lock legacy `/tranzfort-network`.
-2. **Report HTML crawlability** — landing pages must expose 1,000–1,500 words of indexable text; gate PDF only (§2.A / §13).
-3. **Schema & structured data map** — ship consistent types on pillars, logistics leaves, TMS, blogs, reports (§15).
-4. **Metadata** — clarify SERP titles/descriptions for hubs; leave visible copy alone unless a lead truly omits a needed geo fact (e.g. Home can say “in India” once, in natural prose).
-5. **Internal-link cleanup** — every link points at the canonical path for that intent.
-6. **Primary-keyword alignment** — one primary intent per URL; industry owns verticals; blog never duplicates industry H1s.
-7. **Content-cluster linking** — every blog/report points to its pillar; every pillar points to 2–3 supporting articles.
-8. **Entity & off-page foundations** — GBP, NAP, digital PR from reports, partner backlink path (§5 / §15).
-
-**What “rank faster” means on a new domain**
-
-- Index **specific long-tail** technical articles first (equipment, compliance, plant clocks) — they compete less and teach Google topical relevance.
-- Consolidate commercial signals on industry pillars + logistics leaves.
-- Make report landings **earn** rankings and citations with crawlable HTML, then use PDFs + PR for links.
-- Do **not** chase head terms with thin pages or unsupported scale claims.
+1. **URL intent consolidation & link sweep** — 301 `/services` → `/logistics`; 301 `/tranzfort-network` → `/network/tranzfort`; purge `/services` links from footer, 404 page, and blog CTAs (§2.A / §2.C).
+2. **Brand Entity & "ZAFTYS" Keyword Ownership** — configure schema `Organization` (`name: "ZAFTYS"`, `legalName: "ZAFTYS Logistics"`), enforce `| ZAFTYS` title suffix rule, and establish bare-brand backlinks (§5.1 / §15.1).
+3. **Report HTML copy expansion** — expand live report landing pages (`/reports/digital-freight-matching-market-2027-2036` & `/reports/global-logistics-market-2027-2036`) from ~100 words to 1,000–1,500 words of indexable text; gate PDF only (§2.A / §13).
+4. **Metadata upgrades in `page-seo.ts`** — inject geographical intent ("India") and primary commercial phrases into `<title>` and `<meta name="description">` across hubs while keeping visible heroes clean (§2.B).
+5. **Schema & structured data map** — ship consistent JSON-LD types on pillars, logistics leaves, TMS, blogs, reports, and Organization `sameAs` (§15.1).
+6. **Primary-keyword & cluster alignment** — one primary intent per URL; every blog points to one commercial pillar (§2.D / §2.E).
+7. **Entity & off-page foundations** — GBP, NAP consistency, digital PR from reports, partner backlink path (§5 / §15.2).
 
 ---
 
 ## 2. Priority workstreams
 
-### A. URL intent consolidation
+### A. URL intent consolidation & report crawlability
 
 **Winners (keep and reinforce)**
 
@@ -80,17 +72,11 @@ Technical crawl items (sitemap, prerender, OG, GA4) remain in `docs/marketing/SE
 
 | Conflict | Decision |
 |----------|----------|
-| `/services` vs `/logistics` / `/fleet` | Prefer `/logistics` for service intent and `/fleet` for body-class intent. **301 `/services` → `/logistics`** after internal links are updated (hash links to truck classes → `/fleet#…` if needed). Remove `/services` from sitemap. |
+| `/services` vs `/logistics` / `/fleet` | Prefer `/logistics` for service intent and `/fleet` for body-class intent. **301 `/services` → `/logistics`**. Remove `/services` from sitemap, footer, 404, and blog CTAs. |
 | `/tranzfort-network` | **301 → `/network/tranzfort`**. Replace all internal hrefs. |
 | `/technology*` → `/zaftys-tms*` | Keep permanent redirects; confirm GSC shows equity on new paths. |
-| `/logistics/container-transportation` vs `/industries/container-transport` | Keep both. **Service** = how we run container FTL. **Industry** = port–city / EXIM desk for that vertical. Distinct titles already; add reciprocal links with clear labels (not duplicate H1s). |
+| `/logistics/container-transportation` vs `/industries/container-transport` | Keep both. **Service** = how we run container FTL. **Industry** = port–city / EXIM desk for that vertical. Distinct titles; reciprocal links with clear labels. |
 | `/network/truck-capacity` vs `/fleet` | Keep both. Capacity = sourcing story; Fleet = catalog. Meta should not use the same primary phrase. |
-| Mining slug `coal-mining` | Keep URL for equity. Title/H1 already say mining products — no new thin alias required. |
-
-**Do not create**
-
-- City, port, or corridor landing pages whose only job is SEO.
-- Extra “tipper program” / “coil program” URLs unless a real product page is planned with full copy depth.
 
 #### Report crawlability & indexing rules
 
@@ -101,62 +87,51 @@ Applies to every `/reports/{slug}` landing page (live + §13 backlog).
 | **Gate boundary** | **Only the downloadable PDF file is gated behind the lead form; the HTML page itself must be 100% crawlable by Googlebot.** |
 | **No soft-wall** | Do **not** hide Executive Summary, Key Findings, Methodology, Data Highlights, or FAQ behind login, email modal, or empty “sneak peek” stubs. |
 | **Indexable depth** | Each report landing page must include **1,000–1,500 words** of crawlable HTML covering at minimum: Executive Summary, Key Findings, Methodology, Data Highlights, and FAQ. |
-| **Robots** | Report landings stay `index,follow`. PDF unlock endpoints / thank-you states may be `noindex` if they add no unique content. |
-| **Sitemap** | Include `/reports` and `/reports/{slug}` HTML URLs. Exclude gated PDF asset URLs and `/reports/{slug}/read` (or equivalent reader) if thin/app-like. |
-| **Schema** | `Article` or `TechArticle` + `FAQPage` when FAQ exists (§15). |
-| **CTA** | Form unlocks PDF download / email delivery — not the right to read the HTML. |
+| **Robots & Sitemap** | Landings stay `index,follow`. Include HTML URLs in `sitemap.xml`; exclude gated PDF asset URLs. |
+| **Schema** | `Article` or `TechArticle` + `FAQPage` on all report landings (§15). |
 
-Audit live global logistics + DFM report pages against this bar before launch PR. Remodel if copy is currently form-gated or under ~1,000 words of HTML.
+---
 
-### B. Metadata (SERP only)
+### B. Metadata & SERP copy upgrades (implement in `page-seo.ts`)
 
-**Rules**
+Keep visible hero copy natural in brand voice; optimize SERP metadata for high CTR and explicit geo/service intent. **Enforce the suffix rule: every title ends strictly with `| ZAFTYS` to build entity strength for the bare keyword "ZAFTYS".**
 
-- Optimize `<title>` and meta description for clarity and CTR.
-- Visible H1/lead stay brand-voice; do **not** force the same string into the hero.
-- ~50–60 characters for the distinctive part of the title; ~140–155 for description.
-- Prefer natural Indian B2B English. India belongs in meta where it helps geography — not five times in one description.
-- `SEO.tsx` already skips double-branding when `ZAFTYS` is in the title. Don’t write `ZAFTYS | … | ZAFTYS Logistics`.
+| URL | Proposed SERP Title | Proposed Meta Description Direction |
+|-----|--------------------|------------------------------------|
+| `/` | `3PL & Contract Logistics India \| ZAFTYS` | Industrial and commercial FTL in India. Owned fleet first, labeled network overflow, TMS on trips we run. Request transportation. |
+| `/logistics` | `FTL Logistics Services India \| 3PL & Contract \| ZAFTYS` | 3PL, contract and dedicated fleet, industrial freight, container road legs in India. One desk. Get a freight quote. |
+| `/fleet` | `Own & Network Fleet \| Commercial Truck Types India \| ZAFTYS` | Company trucks we operate, plus labeled network classes via TranZfort. Side wall, 32ft container, 40ft flatbed, open body. |
+| `/network` | `Transportation Network India \| Own Fleet & Partners \| ZAFTYS` | Owned fleet first. Verified partner overflow. TranZfort for digital matching. Labels stay honest across Indian freight corridors. |
+| `/network/tranzfort` | `TranZfort \| Freight Marketplace India \| ZAFTYS` | Post or find a load in India for free. AI matching. Broker fee to truckers on booked loads. Download the app. |
+| `/zaftys-tms` | `ZAFTYS TMS \| Transport Management System India \| ZAFTYS` | Live dispatch, GPS, ePOD, fleet records, shipper portal. Demo or login at app.zaftys.com. |
+| `/intelligence` | `Logistics Intelligence \| Analytics & Market Reports \| ZAFTYS` | Operations analytics, rate context, and institutional reports on Indian freight we actually run. |
+| `/industries` | `Industries We Serve \| Cement, Steel, Mining & More \| ZAFTYS` | Vertical desks for plant windows, axle reality, and body classes in India. Quote by industry. |
+| `/partner` | `Become a Partner \| Register Fleet on ZAFTYS Network \| ZAFTYS` | Verified network capacity in India. TranZfort loads. Search free; broker fee on booked loads. |
+| `/contact` | `Contact ZAFTYS \| Freight Quote, TMS Demo, Partner \| ZAFTYS` | WhatsApp or form. Amravati desk, Maharashtra. Phone: +91-927-092-3581. |
+| `/about` | `About ZAFTYS \| Industrial Freight Desk, Fleet & TMS \| ZAFTYS` | Own trucks, TMS, labeled TranZfort overflow. Company profile on request. |
 
-**Proposed meta upgrades** (implement in `page-seo.ts` / leaf SEO — not in heroes)
+---
 
-| URL | Proposed title | Proposed description direction |
-|-----|----------------|--------------------------------|
-| `/` | `3PL & Contract Logistics India \| ZAFTYS` | Industrial and commercial FTL. Owned fleet first, labeled network when needed, TMS on trips we run. Request transportation. |
-| `/logistics` | `FTL Logistics Services India \| 3PL & Contract` | 3PL, contract and dedicated fleet, industrial freight, container road legs. One desk. Get a freight quote. |
-| `/fleet` | `Own & Network Fleet \| Commercial Truck Types India` | Company trucks we operate, plus labeled network classes via TranZfort. Same desk confirms which is which. |
-| `/network` | `Transportation Network India \| Own Fleet & Partners` | Owned fleet first. Verified partner overflow. TranZfort for digital matching. Labels stay honest. |
-| `/network/tranzfort` | `TranZfort \| Freight Marketplace India` | Post or find a load for free. AI matching. Broker fee to truckers on booked loads. Download the app. |
-| `/zaftys-tms` | `ZAFTYS TMS \| Transport Management System India` | Live dispatch, GPS, ePOD, fleet records, shipper portal. Demo or login at app.zaftys.com. |
-| `/intelligence` | `Logistics Intelligence \| Analytics & Market Reports` | Operations analytics, rate context, and institutional reports on freight we actually run. |
-| `/industries` | `Industries We Serve \| Cement, Steel, Mining & More` | Vertical desks for plant windows and the right body class. Quote by industry. |
-| `/partner` | `Become a Partner \| Register Fleet on ZAFTYS Network` | Verified network capacity. TranZfort loads. Search free; broker fee on booked loads. |
-| `/contact` | `Contact ZAFTYS \| Freight Quote, TMS Demo, Partner` | WhatsApp or form. Amravati desk. Phone in description. |
-| `/about` | `About ZAFTYS \| Industrial Freight Desk, Fleet & TMS` | Own trucks, TMS, labeled TranZfort overflow. Company profile on request. |
+### C. Internal link & legacy `/services` elimination sweep
 
-Logistics leaves and industry `seoTitle`s are already strong — **light polish only** (length, duplicate fluff). Do not “optimize” industry visible `seoH1`s into denser keyword strings.
+Execute this sweep across components and content files to purge dead internal link signals:
 
-### C. Internal-link cleanup
+1. **Footer Navigation (`nav-config.ts` / `Footer.tsx`)**:
+   - Change `Logistics -> Transportation -> /services` to `/logistics`.
+   - Ensure all secondary links point to canonical paths (`/fleet`, `/network/tranzfort`, `/zaftys-tms`).
+2. **Blog Post CTAs (`src/lib/blog-data.ts`)**:
+   - Post *"Planning Commercial Shipments"*: Update CTA link from `/services` to `/logistics`.
+3. **404 Page (`NotFound.tsx`)**:
+   - Replace `Services` CTA button with `Logistics Services` (`/logistics`).
+4. **Network & Legacy Links**:
+   - Sweep all instances of `/tranzfort-network` → `/network/tranzfort`.
+   - Sweep all instances of `/technology*` → `/zaftys-tms*`.
 
-**Sweep targets**
-
-- `/tranzfort-network` → `/network/tranzfort` (Blog layouts, NotFound, Services, Network, Blog listing, any CTA helpers).
-- `/services` → `/logistics` (or `/fleet` when the sentence is about body class).
-- Prefer `/zaftys-tms` over any leftover `/technology` copy in prose links.
-
-**Linking rules after cleanup**
-
-| From | Should link to |
-|------|----------------|
-| Industry pillar | Matching logistics service + 2–3 related blogs + Contact/quote |
-| Logistics service leaf | Matching industry pillar(s) + Fleet + TMS when trip visibility is mentioned |
-| Blog post | **One primary commercial pillar** (industry or logistics or TMS) in the main CTA — not only footer noise |
-| Report detail | Intelligence / Market Intelligence + one relevant industry or logistics hub; HTML summary sections stay public |
-| Home teasers | Hub URLs only (Logistics, Network, TMS, Industries) — not legacy paths |
+---
 
 ### D. Primary-keyword alignment
 
-**One primary intent per URL.** Siblings must not share the same primary.
+**One primary intent per URL.**
 
 #### Commercial pillars (industry first)
 
@@ -176,25 +151,20 @@ Logistics leaves and industry `seoTitle`s are already strong — **light polish 
 | URL | Primary intent | Notes |
 |-----|----------------|-------|
 | `/logistics` | FTL logistics services India | Hub |
-| `/logistics/3pl-transportation` | 3PL transportation India | |
-| `/logistics/contract-logistics` | Contract logistics India | |
-| `/logistics/dedicated-fleet` | Dedicated fleet India | |
+| `/logistics/3pl-transportation` | 3PL transportation India | Service leaf |
+| `/logistics/contract-logistics` | Contract logistics India | Service leaf |
+| `/logistics/dedicated-fleet` | Dedicated fleet India | Service leaf |
 | `/logistics/industrial-freight` | Industrial freight transportation India | Feeds multiple industries |
 | `/logistics/container-transportation` | Container transportation (service) | Distinct from industry pillar |
-| `/fleet` | Own vs network fleet / truck types | |
-| `/zaftys-tms` | Transport management system India | |
-| `/network/tranzfort` | Freight marketplace India | |
+| `/fleet` | Own vs network fleet / truck types | Catalog |
+| `/zaftys-tms` | Transport management system India | SaaS Product |
+| `/network/tranzfort` | Freight marketplace India | Marketplace |
 
-#### Blog / reports
-
-| Type | Intent | Rule |
-|------|--------|------|
-| Blog | Informational / how-to / research | Must **not** reuse industry primary as the article H1. Link up to the pillar. On a new domain, prefer **hyper-specific long-tail** first (§12 Wave 1). |
-| Report | Market size, forecast, segment research | Brand + backlink authority; crawlable HTML summary; soft CTA into Intelligence or a pillar. |
+---
 
 ### E. Content-cluster linking
 
-Treat each **industry pillar** as the center of a cluster. Blogs and reports are spokes.
+Treat each **industry pillar** as the center of a cluster:
 
 ```
                     [Industry pillar]
@@ -205,24 +175,11 @@ Treat each **industry pillar** as the center of a cluster. Blogs and reports are
                  [Report / Intelligence] → CTA → Quote
 ```
 
-**Minimum cluster links (when content exists)**
+**Minimum cluster links**
 
-1. Pillar → related logistics leaf  
-2. Pillar → 2 supporting blogs (related reading)  
-3. Each new blog → pillar + one adjacent blog  
-4. Each new report → `/intelligence/market-intelligence` or `/reports` hub + one relevant pillar  
-
-**Existing cluster seeds (already live)**
-
-| Pillar | Supporting blogs already on site |
-|--------|----------------------------------|
-| Cement | Plant loading windows & detention |
-| Steel | Steel coil transport basics; axle/GVW |
-| Container | Container trucking India |
-| Manufacturing / TMS | TMS evaluation; TMS beyond GPS; ePOD & e-Way Bill |
-| Cross-vertical ops | Spot vs dedicated; empty returns; plant TAT; shipment planning |
-
-Fill gaps with the §12 backlog — Month 1 prioritizes long-tail technical spokes (equipment, compliance, plant clocks) before broader commercial explainers.
+1. Industry Pillar → related logistics service leaf + 2 supporting blogs.
+2. Each Blog → **One primary commercial pillar** in the main CTA block.
+3. Each Report → `/intelligence/market-intelligence` or `/reports` + one matching industry pillar.
 
 ---
 
@@ -231,23 +188,19 @@ Fill gaps with the §12 backlog — Month 1 prioritizes long-tail technical spok
 **Protect**
 
 - Brand H1s and dense logistics/industry body copy.
-- FAQ blocks on industry pages (and report landings).
-- Available / Beta / Research labels on Intelligence.
+- FAQ blocks on industry pages and report landings.
 
 **Allowed, light body edits**
 
-- Home lead may include “in India” once if missing — same sentence rhythm as today.
-- Reciprocal “Also see” lines between container **service** and container **industry** (plain language).
-- Blog CTA block: one clear link to the pillar.
-- Report landings: expand public HTML to the 1,000–1,500 word crawlability bar (§2.A).
+- Home lead may include “in India” once if missing.
+- Reciprocal “Also see” lines between container **service** (`/logistics/container-transportation`) and container **industry** (`/industries/container-transport`).
+- Report landings: expand public HTML to 1,000–1,500 words (§13).
 
 **Not allowed**
 
 - Rewriting H1s into “Best Cement Logistics Company India 2026”.
-- Sprinkling the same keyword into every H2.
-- Thin “Mundra logistics” / “Nagpur freight” pages.
-- Inflating coverage language for rankings.
-- Gating report HTML behind email capture.
+- Thin location/city doorway pages (“Mundra logistics”).
+- Gating report HTML behind lead forms.
 
 ---
 
@@ -255,137 +208,112 @@ Fill gaps with the §12 backlog — Month 1 prioritizes long-tail technical spok
 
 | Pair | Resolution |
 |------|------------|
-| `/logistics` vs `/services` | Consolidate on `/logistics`; redirect `/services` |
-| `/fleet` vs `/services` body classes | Fleet owns types |
-| Container service vs container industry | Both stay; cluster-link; different primaries |
+| `/logistics` vs `/services` | Consolidate on `/logistics`; 301 redirect `/services` |
+| `/fleet` vs `/services` body classes | Fleet owns body-class catalog |
+| Container service vs container industry | Both stay; cluster-link; distinct titles |
 | Industry steel vs blog steel coil | Industry sells; blog teaches; cross-link |
 | TMS page vs TMS evaluation blog | Product vs buyer guide |
-| `/network` vs TranZfort | Hub vs app |
-| Truck capacity vs Fleet | Sourcing vs catalog |
+| `/network` vs TranZfort | Network hub vs TranZfort app |
 | Report HTML vs PDF | HTML ranks/cites; PDF is the gated asset |
 
 ---
 
-## 5. Action plan
+## 5. Action plan & brand entity strategy
 
-### P0 — Hygiene (do first)
+### 5.1 Brand Keyword Ownership Strategy (Owning "ZAFTYS")
 
-1. Internal link sweep (`/tranzfort-network`, `/services`, leftover `/technology`).
-2. Decide and implement `/services` → `/logistics` (301 + sitemap; **exclude** legacy paths from XML).
-3. Meta pass for hubs in §2B (`page-seo.ts` and any matching leaf SEO).
-4. **Report crawlability audit** — expand live `/reports/{slug}` HTML to §2.A bar; gate PDF only.
-5. Confirm TranZfort + TMS redirects in production; GSC inspect money URLs after deploy (§15 checklist).
+To rank #1, generate Google Sitelinks, and claim a Knowledge Panel for the bare keyword **"ZAFTYS"** (without needing to append "Logistics"), execute these 5 directives:
 
-### P1 — Alignment, schema & clusters
+1. **Schema Name Declaration**: Set `"name": "ZAFTYS"` as the primary token in `Organization` schema (`src/lib/schema.ts`), with `"legalName": "ZAFTYS Logistics"` and `"alternateName": ["ZAFTYS Logistics", "ZAFTYS TMS", "TranZfort"]`.
+2. **Title Suffix Standardization**: Ensure every `<title>` tag ends with `| ZAFTYS` (e.g., `3PL & Contract Logistics India | ZAFTYS`).
+3. **Exact-Match Bare Brand Anchor Text**: Ensure external links, PR mentions, directory profiles, and partner links use the exact anchor text **`ZAFTYS`** pointing to `https://zaftys.com`.
+4. **Google Business Profile Alignment**: Set GBP primary name to **ZAFTYS** (or **ZAFTYS - Industrial Logistics & Fleet**), pointing directly to `https://zaftys.com`.
+5. **Navigational Demand Generation**: Include *"Search 'ZAFTYS' on Google"* in email footers, press releases, and WhatsApp templates to build user-search association.
 
-6. Industry ↔ service reciprocal links on the eight pillars.
-7. Blog CTA map: each live post → one primary pillar.
-8. Implement / extend schema per §15; validate with Google Rich Results Test.
-9. Expand thin logistics leaves only with **unique** FAQ / desk detail — not keyword blocks. Optional.
+---
+
+### P0 — Hygiene, Brand & Legacy Cleanup (Do First)
+
+1. **Internal link sweep** — eliminate all `/services` and `/tranzfort-network` links across components, footers, 404, and blogs.
+2. **301 Redirects & Sitemap** — redirect `/services` → `/logistics` and `/tranzfort-network` → `/network/tranzfort`. Purge 301 paths from `sitemap.xml`.
+3. **Meta Pass & Title Suffixes in `page-seo.ts`** — update hub titles and descriptions per §2.B, enforcing `| ZAFTYS`.
+4. **Schema Update for Brand Ownership** — update `src/lib/schema.ts` with `name: "ZAFTYS"` and `alternateName` array (§15.1).
+5. **Report Landing HTML Expansion** — update `src/lib/market-reports-data.ts` to expand live report landing HTML to 1,000+ words (§13).
+6. **GSC URL Inspection** — submit money URLs after deployment.
+
+### P1 — Alignment, Schema & Clusters
+
+7. Industry ↔ service reciprocal links on all 8 pillars.
+8. Blog CTA map: each live post → one primary pillar.
+9. Implement/extend schema per §15; validate with Google Rich Results Test.
 10. Wire GA4 + keep Search Console monitoring (see `SEO&Blog.md`).
 
-### P2 — Authority cadence (next 3 months)
+### P2 — Authority Cadence (Next 3 Months)
 
-11. Publish **10–20 blogs** from §12 — **Wave 1 = long-tail technical first** (new-domain sandbox).
-12. Publish **10+ reports** from §13 (crawlable HTML + gated PDF; methodology honesty; no invented India “official” stats).
-13. After each publish: sitemap `lastmod`, internal links to pillar, GSC URL Inspection (and Indexing API where available) for flagship pieces.
-14. Run **entity & off-page** workstream below in parallel with content.
+11. Publish **15–20 blogs** from §12 — **Wave 1 = long-tail technical first** (new-domain sandbox).
+12. Publish **10+ reports** from §13 (crawlable HTML + gated PDF).
+13. Run **entity & off-page** workstream below in parallel with content.
 
-### Entity & off-page authority foundations (new domain)
+---
 
-These support indexing confidence and brand entity clarity. They do **not** replace on-page principles and must not invent scale.
+### Entity & Off-Page Authority Foundations (New Domain)
 
 | Workstream | Guidance |
 |------------|----------|
-| **Google Business Profile (GBP)** | Claim/verify GBP for **Amravati HQ** (Old Town, Badnera). Categories: Logistics service / Transportation. Website → `https://zaftys.com`, phone and address matching site NAP. Optional: separate profiles only for **real operational desks** with distinct public addresses — never fake “city offices.” |
-| **NAP consistency** | Exact same **Name, Address, Phone** as Contact / schema / footer across Indian B2B directories (Justdial, IndiaMART, Sulekha, etc. — only listings you will maintain). Legal name: ZAFTYS Logistics. |
-| **Digital PR** | Use §13 research reports (public HTML summary + gated PDF) for press kits and outreach to Indian supply-chain / logistics / manufacturing trade media. Pitch findings and methodology — not “we are the largest.” |
-| **Verified Partner Badging** | `/partner` onboarding for verified fleet owners: after verification, offer a simple badge/link back to `zaftys.com/partner` or Network (voluntary, accurate wording). Track as a **referral + backlink** path, not a paid link scheme. |
-| **sameAs entity graph** | Keep Organization `sameAs` in sync with real profiles: LinkedIn, ZaubaCorp, Crunchbase, GBP URL, `tranzfort.com`, `app.zaftys.com` (§15). Add profiles only when they exist. |
-
-### Explicitly out of scope
-
-- Thin location / corridor doorway pages.
-- Hindi microsite (unless a real product decision later).
-- Comparison pages that claim superiority without evidence.
-- Changing Own vs Network rules for SEO theatrics.
-- Hiding report body copy behind lead forms.
+| **Google Business Profile (GBP)** | Claim/verify GBP for **Amravati HQ** (Old Town, Badnera). Primary Name: **ZAFTYS**. Categories: Logistics service / Transportation. Website → `https://zaftys.com`. |
+| **NAP consistency** | Exact same **Name, Address, Phone** as Contact / schema / footer across Indian B2B directories (Justdial, IndiaMART, Tofler, ZaubaCorp). Legal name: ZAFTYS Logistics. |
+| **Digital PR** | Use §13 research reports (public HTML summary + gated PDF) for press kits and outreach to Indian supply-chain / logistics trade media. Anchor text: **ZAFTYS**. |
+| **Verified Partner Badging** | Offer verified fleet owners a "Verified ZAFTYS Partner" badge linking back to `zaftys.com/partner`. |
+| **`sameAs` Entity Graph** | Keep Organization `sameAs` array in `schema.ts` synced with LinkedIn (`/company/zaftys`), ZaubaCorp, Crunchbase, GBP, `tranzfort.com`, `app.zaftys.com`. |
 
 ---
 
 ## 6. Primary-intent checklist
 
-Mark when **meta title** carries the intent and **internal links** reinforce it. Visible H1 need not match the meta string.
-
-| Intent | URL | Meta | Links |
-|--------|-----|------|-------|
-| Cement logistics | `/industries/cement` | Strong | Reinforce cluster |
-| Steel coil / metals | `/industries/steel-metals` | Strong | Reinforce cluster |
-| Mining products | `/industries/coal-mining` | Strong | Add mining blogs |
-| Port–city container | `/industries/container-transport` | Strong | Link service leaf |
-| 3PL / FTL services | `/logistics` + leaves | Mostly strong | Fix `/services` |
-| Fleet types | `/fleet` | Improve meta | Own body-class links |
-| TMS India | `/zaftys-tms` | Add India in meta | Blog → TMS CTAs |
-| Freight marketplace | `/network/tranzfort` | Add India in meta | Fix legacy path |
-| Home commercial | `/` | Improve meta | Keep brand H1 |
-| Report topics | `/reports/{slug}` | Unique title/desc | Crawlable HTML + PDF gate only |
+| Intent | URL | Meta Title | Target Link Target |
+|--------|-----|------------|-------------------|
+| Cement logistics | `/industries/cement` | Cement Logistics India \| Bulker & Tipper \| ZAFTYS | Reinforce cluster |
+| Steel coil / metals | `/industries/steel-metals` | Steel Coil Transport India \| Flatbed \| ZAFTYS | Reinforce cluster |
+| Mining products | `/industries/coal-mining` | Mining Product Transport India \| Tipper \| ZAFTYS | Add mining blogs |
+| Port–city container | `/industries/container-transport` | Container Transport India \| Port to City \| ZAFTYS | Link service leaf |
+| 3PL / FTL services | `/logistics` + leaves | FTL Logistics Services India \| 3PL & Contract \| ZAFTYS | Purge `/services` |
+| Fleet types | `/fleet` | Own & Network Fleet \| Commercial Truck Types India \| ZAFTYS | Catalog links |
+| TMS India | `/zaftys-tms` | ZAFTYS TMS \| Transport Management System India \| ZAFTYS | Blog → TMS CTAs |
+| Freight marketplace | `/network/tranzfort` | TranZfort \| Freight Marketplace India \| ZAFTYS | Fix legacy path |
+| Home commercial | `/` | 3PL & Contract Logistics India \| ZAFTYS | Keep brand H1 |
+| Report topics | `/reports/{slug}` | Unique report title \| ZAFTYS | Crawlable HTML + PDF gate only |
 
 ---
 
 ## 7. Measurement
 
-| Signal | Tool | Success look |
-|--------|------|----------------|
-| Impressions / CTR on pillars & hubs | GSC | CTR lift after meta; fewer duplicate-intent collisions |
+| Signal | Tool | Success Look |
+|--------|------|-------------|
+| **Bare Brand Ranking** | GSC / Google | `zaftys.com` ranks #1 for query `"ZAFTYS"` with sitelinks within 2-4 weeks post-launch |
+| Impressions / CTR on pillars & hubs | GSC | CTR lift after meta pass; fewer duplicate-intent collisions |
 | Long-tail blog indexing | GSC | Wave 1 technical posts indexed within days–weeks of publish |
 | Report landings | GSC | `/reports/{slug}` indexed; queries on findings/methodology phrases |
-| Query mix | GSC | Vertical + service queries landing on pillars/services, not random blog-only |
 | Index hygiene | GSC | Legacy URLs 301; `/services` & `/tranzfort-network` absent from sitemap |
 | Engagement | GA4 | Quote / WhatsApp / report unlock events by landing page |
-| Authority | GSC + referrals | Report unlocks; PR/partner referral links; brand queries for ZAFTYS / TranZfort / TMS |
-| Rich results | Rich Results Test | Valid FAQ / Article / SoftwareApplication where implemented |
-
-Baseline GSC export for `/industries*`, `/logistics*`, `/zaftys-tms`, `/network/tranzfort`, `/blog*`, `/reports*` before the meta + redirect ship.
+| Rich results | Rich Results Test | Valid FAQ / Article / SoftwareApplication / LogisticsService schema |
 
 ---
 
 ## 8. Implementation file map
 
-| Work | Files / location |
+| Work | Files / Location |
 |------|------------------|
-| Hub meta | `src/lib/page-seo.ts` |
+| Hub meta & Title Suffixes | `src/lib/page-seo.ts` |
 | Logistics leaf meta | `src/lib/solution-pages.ts` |
 | Network / TMS / Intelligence meta | `*-leaf-copy.ts` |
-| Industry meta (only if needed) | `src/lib/industries-data.ts` |
-| Link sweep | Blog layouts, `NotFound.tsx`, `Services.tsx`, `Network.tsx`, `Blog.tsx`, constants/CTAs |
-| `/services` + legacy redirects | Hosting redirects + `scripts/generate-sitemap.mjs` (**exclude** 301 sources from XML) |
+| Link sweep (eliminate `/services`) | `nav-config.ts`, `Footer.tsx`, `NotFound.tsx`, `src/lib/blog-data.ts`, `constants.ts`, `hero-ctas.ts` |
+| Redirects & Sitemap | Hosting redirects + `scripts/generate-sitemap.mjs` (**exclude** `/services` and 301s) |
 | New blogs | `src/lib/blog-data.ts` (+ layouts as needed) |
-| New reports + crawlable HTML | `src/lib/market-reports-data.ts`, report page components, PDF pipeline |
-| **Schema helpers (source of truth)** | `src/lib/schema.ts` — extend builders here |
-| **Schema injection** | `src/components/SEO.tsx` (`schema` prop) and/or `src/components/seo/Schema.tsx` if extracted; page-level calls from hubs/leaves |
-| Organization / LocalBusiness `sameAs` | `src/lib/schema.ts` + constants for profile URLs |
-| LogisticsService per leaf | Emit from `/logistics/*` pages using leaf title/description |
-| SoftwareApplication | `/zaftys-tms` (+ module leaves if feature-specific) |
-| FAQPage | `/industries/*`, report landings with FAQ, TMS FAQ where present |
-| Article / TechArticle | `/blog/*`, `/reports/*` |
-| Copy inventory | Refresh Meta lines in `docs/content.md` after SEO ship |
+| Live & new reports + HTML expansion | `src/lib/market-reports-data.ts`, report page components |
+| **Schema builders & Brand Entity** | `src/lib/schema.ts` — extend Organization (`name: "ZAFTYS"`), LocalBusiness, LogisticsService, SoftwareApplication, FAQPage, Article/TechArticle |
+| **Schema injection** | `src/components/SEO.tsx` (`schema` prop) / `src/components/seo/Schema.tsx` |
+| WhatsApp Prefill Standardization | `src/lib/constants.ts` / `hero-ctas.ts` |
 | Launch checklist | §15 |
-
----
-
-## 9. Stakeholder summary
-
-**We will**
-
-1. Consolidate URL intent (`/services` out; TranZfort path clean).  
-2. Improve **metadata** and **schema** while keeping natural on-page voice.  
-3. Keep report **HTML crawlable** (PDF gated only) and build industry-centered clusters.  
-4. Use **long-tail blogs first**, then broader posts + **10+ reports**, plus GBP/NAP/PR/partner links for a new domain.  
-5. Measure in Search Console and iterate from real queries.
-
-**We will not**
-
-keyword-stuff visible copy, publish thin location pages, invent coverage/scale claims, or hide report bodies behind forms.
 
 ---
 
@@ -393,27 +321,25 @@ keyword-stuff visible copy, publish thin location pages, invent coverage/scale c
 
 **Blogs live today**
 
-- TMS Beyond GPS; TMS Evaluation Guide (manufacturers 2026)  
-- Steel coil transport basics; Cement plant loading windows  
-- Planning industrial shipments; Reduce empty return trips  
-- India axle load & GVW; Spot vs dedicated fleet  
-- Plant detention & TAT; ePOD / FASTag / e-Way Bill  
+- TMS Beyond GPS; TMS Evaluation Guide (manufacturers 2026)
+- Steel coil transport basics; Cement plant loading windows
+- Planning industrial shipments; Reduce empty return trips
+- India axle load & GVW; Spot vs dedicated fleet
+- Plant detention & TAT; ePOD / FASTag / e-Way Bill
 - Container trucking India (ports, chassis, backhaul)
 
-**Reports live today**
+**Reports live today (Expand HTML to 1,000+ words each per §13)**
 
-- Global Logistics Market Size, Share & Forecast 2027–2036  
-- Digital Freight Matching Market Size & Forecast 2027–2036  
-
-*(Both must pass §2.A crawlability before heavy PR push.)*
+- Global Logistics Market Size, Share & Forecast 2027–2036 (`/reports/global-logistics-market-2027-2036`)
+- Digital Freight Matching Market Size & Forecast 2027–2036 (`/reports/digital-freight-matching-market-2027-2036`)
 
 ---
 
 ## 12. Future blog topics (next 3 months) — target 15–20
 
-Publish for a **new-domain sandbox**: Wave 1 = hyper-specific long-tail (equipment, compliance, plant clocks) so pages can index and rank with low authority. Broader commercial explainers move to Waves 2–3. Each row names the **pillar** it supports. Titles are working titles — keep ZAFTYS desk voice in the final draft; put sharper phrases in `seoTitle` only.
+Publish for a **new-domain sandbox**: Wave 1 = hyper-specific long-tail (equipment, compliance, plant clocks) so pages index quickly with low domain authority.
 
-### Wave 1 — Long-tail technical (Month 1, ~7) — new domain priority
+### Wave 1 — Long-tail technical (Month 1, ~7) — New Domain Priority
 
 | # | Working title | Pillar / cluster | Why first |
 |---|---------------|------------------|-----------|
@@ -429,8 +355,8 @@ Publish for a **new-domain sandbox**: Wave 1 = hyper-specific long-tail (equipme
 
 | # | Working title | Pillar / cluster | Intent |
 |---|---------------|------------------|--------|
-| 8 | Tipper programs for coal, ore, and limestone — one desk, many minerals | Mining | Multi-mineral spoke (broader than Wave 1 specs) |
-| 9 | Factory-to-DC OTIF: what FMCG shippers should ask a transporter | FMCG | Commercial spoke for FMCG pillar |
+| 8 | Tipper programs for coal, ore, and limestone — one desk, many minerals | Mining | Multi-mineral spoke |
+| 9 | Factory-to-DC OTIF: what FMCG shippers should ask a transporter | FMCG | Commercial spoke for FMCG |
 | 10 | Contract logistics vs spot FTL: how plant teams should decide | Contract / Dedicated + Manufacturing | Mid-intent bridge |
 | 11 | What “labeled network capacity” means on a live trip | Network / Fleet | Trust + Own vs Network education |
 | 12 | How TranZfort matching works — free to post, fee on booking | TranZfort | Marketplace literacy → `/network/tranzfort` |
@@ -448,110 +374,86 @@ Publish for a **new-domain sandbox**: Wave 1 = hyper-specific long-tail (equipme
 | 19 | Partner onboarding: RC, insurance, and corridor fit before the first load | Partner / Network | Supply-side SEO + badge narrative |
 | 20 | When analytics help — and when WhatsApp still lies about the lane | Intelligence / Analytics | Honest product education |
 
-**Editorial rules for all new blogs**
-
-- One primary commercial link (industry or logistics or TMS).  
-- No duplicate of an industry `seoH1`.  
-- No city doorway framing (“Best transporter in Surat”). Corridors may appear as **examples inside** the article when they are real.  
-- Prefer operations truth over listicle filler.  
-- Ship `Article` / `TechArticle` schema on publish (§15).
-
 ---
 
-## 13. Future report topics (next 3 months) — target 10+
+## 13. Future & live report topics — open HTML copy expansion specifications
 
-Institutional tone. **PDF unlock with company email; HTML landing fully public.** Each report must satisfy §2.A (1,000–1,500 words crawlable: Executive Summary, Key Findings, Methodology, Data Highlights, FAQ). Soft-CTA into Market Intelligence + one operational pillar. **Do not** invent India market sizes; use stated methodology, ranges, and sources.
+### HTML Landing Page Content Structure (Mandatory for ALL Reports)
 
-> **Only the downloadable PDF file is gated behind the lead form; the HTML page itself must be 100% crawlable by Googlebot.**
+Every report landing page (`/reports/{slug}`) in `src/lib/market-reports-data.ts` MUST include the following 1,000–1,500 word open HTML structure:
 
-### Core slate (10)
+1. **Executive Summary (300–400 words)**: Market definition, macro growth drivers, scope parameters, and total addressable market figures.
+2. **Key Analytical Takeaways (300–400 words)**: 4–5 bulleted research findings with concrete statistics, growth CAGRs, regional shifts, and mode breakdowns.
+3. **Research Methodology & Data Boundaries (200–300 words)**: Explanation of primary data sources, bottom-up modeling, corridor sampling, and explicit data limits.
+4. **Frequently Asked Questions (200–300 words)**: 3–4 Q&As covering report coverage, update frequency, and licensing (Candidate for `FAQPage` schema).
+5. **PDF Gate Constraint**: **ONLY the downloadable PDF file is gated behind the lead form.** The full HTML landing text must remain 100% crawlable by Googlebot.
 
-| # | Working title | Cluster support | Notes |
-|---|---------------|-----------------|-------|
-| 1 | India Road Freight & FTL Outlook 2027–2036 | Logistics hub, Manufacturing | India-first companion to global logistics report |
-| 2 | India Cement Logistics & Bulk Movement Outlook | Cement pillar | Bulker/tipper, plant TAT themes |
-| 3 | India Steel & Coil Road Transport Outlook | Steel pillar | Flatbed/side-wall, mill windows |
-| 4 | India Port–Inland Container Road Haulage Outlook | Container pillar | Port–city / ICD road legs — not ocean freight redo |
-| 5 | India Mining & Bulk Tipper Logistics Outlook | Mining pillar | Multi-mineral tipper programs |
-| 6 | Transport Management Systems in India: Adoption & Buyer Criteria | TMS | Complements evaluation blog; vendor-neutral framing where possible |
-| 7 | Digital Freight Matching in India: Corridor Reality Check | TranZfort / DFM | India cut of DFM; honest limits |
-| 8 | Contract vs Spot Capacity in Indian Industrial Freight | Contract / Dedicated | Procurement decision support |
-| 9 | Plant Detention, Yard TAT & Cost-to-Serve in Indian FTL | Cross-industry ops | Ties blogs on detention/TAT into a research PDF |
-| 10 | ePOD, e-Way Bill & Digitized Trip Close-Out in India | TMS / Compliance | Regulatory + ops research |
+### Live Reports to Remodel Immediately
 
-### Stretch (+2–4 if capacity allows)
-
-| # | Working title | Cluster support |
-|---|---------------|-----------------|
-| 11 | India Chemical Road Logistics: Tanker Class & Compliance | Chemicals |
-| 12 | FMCG Factory-to-DC Freight Networks in India | FMCG |
-| 13 | Empty Kilometres & Backhaul Economics on Indian Highways | Network / empty-returns blog |
-| 14 | Industrial Corridor Freight: West–East / North–South Road Patterns | Industrial logistics (patterns you already name — not thin city pages) |
-
-**Report rules**
-
-- Same quality bar as the two live global reports (ToC, methodology, unlock flow) **plus** §2.A HTML depth.  
-- India reports must state data limits clearly.  
-- KPI strips on the HTML page only with defensible figures (same figures may appear in PDF).  
-- Cluster link to the matching industry or product pillar — reports do not replace pillars.  
-- Emit `Article`/`TechArticle` + `FAQPage` on the landing (§15).  
-- First two PR-ready reports must pass crawlability + Rich Results checks before media outreach.
+1. **Digital Freight Matching Market Size & Forecast 2027–2036** (`/reports/digital-freight-matching-market-2027-2036`)
+   - Expand `summary` and add `executiveSummary`, `keyFindings`, `methodology`, and `faq` fields to `market-reports-data.ts`.
+2. **Global Logistics Market Size, Share & Forecast 2027–2036** (`/reports/global-logistics-market-2027-2036`)
+   - Expand `summary` and add `executiveSummary`, `keyFindings`, `methodology`, and `faq` fields to `market-reports-data.ts`.
 
 ---
 
 ## 14. 3-month content calendar sketch
 
-| Month | Blogs | Reports | SEO hygiene |
-|-------|-------|---------|-------------|
-| Month 1 | **Wave 1 long-tail technical** (mill papers, tanker MSDS, 32/40 ft, bulker, doc expiry, port vs plant free time, open vs tipper) | Remodel live report HTML to §2.A; start #1 India FTL + #2 Cement or #3 Steel | P0 redirects + meta + schema pass + GBP/NAP |
-| Month 2 | Wave 2 (mining, FMCG, contract/spot, network, TranZfort, TMS visibility) | #4 Container, #5 Mining, #6 TMS adoption — crawlable HTML each | Cluster links; partner badge pilot; PR on first remodelled reports |
-| Month 3 | Wave 3 (manufacturing WIP, industrial shutdown, trust, GST, partner, analytics) | #7–#10 (+ stretch if ready) | GSC query review → adjust next quarter topics |
-
-Rough throughput: **~5–7 blogs/month** and **~3–4 reports/month** hits the 15–20 / 10+ targets without thin filler. New-domain bias: **specificity before breadth**.
+| Month | Blogs | Reports | SEO & Marketing Hygiene |
+|-------|-------|---------|-------------------------|
+| Month 1 | **Wave 1 long-tail technical** (mill papers, tanker MSDS, 32/40 ft, bulker, doc expiry, port vs plant free time, open vs tipper) | Expand HTML on 2 live reports to 1,000+ words; start #1 India FTL + #2 Cement Outlook | Purge `/services` internal links; update hub meta in `page-seo.ts`; deploy brand schema (`name: "ZAFTYS"`); verify GBP/NAP |
+| Month 2 | Wave 2 (mining, FMCG, contract/spot, network, TranZfort, TMS visibility) | Publish #4 Container, #5 Mining, #6 TMS adoption (crawlable HTML each) | Cluster links; partner badge pilot; Digital PR push on expanded reports using anchor text **`ZAFTYS`** |
+| Month 3 | Wave 3 (manufacturing WIP, industrial shutdown, trust, GST, partner, analytics) | Publish #7–#10 | GSC query review → monitor brand query `"ZAFTYS"` ranking position |
 
 ---
 
-## 15. Schema map, entity foundations & new-domain launch checklist
+## 15. Schema map, entity foundations, marketing copy sweep & new-domain launch checklist
 
 ### 15.1 Schema & structured data map
 
-Implement via builders in `src/lib/schema.ts` and inject through `SEO` / optional `src/components/seo/Schema.tsx`. Validate with **Google Rich Results Test** before launch communications.
+Implement via builders in `src/lib/schema.ts` and inject through `SEO.tsx` or `src/components/seo/Schema.tsx`. Validate with **Google Rich Results Test**.
 
 | Schema type | Where | Spec notes |
 |-------------|-------|------------|
-| **Organization** | Site-wide (Home minimum; prefer shared layout) | `@id` stable (`https://zaftys.com/#organization`). `sameAs`: LinkedIn, ZaubaCorp, Crunchbase, Google Business Profile URL, `https://tranzfort.com`, `https://app.zaftys.com` — **only URLs that exist**. |
-| **LocalBusiness** | Home + **Contact** | Amravati NAP must match footer/GBP. `@id` `https://zaftys.com/#localbusiness`. `parentOrganization` → Organization `@id`. |
-| **WebSite** | Home | `inLanguage`: `en-IN`. Publisher → Organization. |
-| **LogisticsService** | Each `/logistics/*` **leaf** (and hub if useful) | Unique `name`, `description`, `url`, `serviceType` per leaf; `provider` → Organization; `areaServed` India. No fake aggregate ratings. |
-| **SoftwareApplication** | `/zaftys-tms` | `applicationCategory`: `BusinessApplication` (or `https://schema.org/BusinessApplication`). `operatingSystem`: e.g. `Web, Android, iOS` as honestly supported. Feature list from live modules (dispatch, GPS, ePOD, fleet records, portal). `offers` = contact/demo — **no** fake `price: 0` as “free TMS.” `url` + `installUrl` → app.zaftys.com. |
-| **FAQPage** | All `/industries/*` pillars with FAQ; report landings with FAQ; TMS FAQ if present | Questions/answers must match visible HTML. |
-| **Article** or **TechArticle** | All `/blog/*` and `/reports/*` | `headline`, `datePublished`, `dateModified`, `author`/`publisher` → Organization, `mainEntityOfPage` / `url`, `description`. Prefer **TechArticle** for deep-research / methodology-heavy pieces. |
-| **BreadcrumbList** | Pillars, leaves, blogs, reports | Already partially shipped — keep consistent. |
+| **Organization** | Site-wide (shared layout) | `@id`: `https://zaftys.com/#organization`. **`name`: `"ZAFTYS"`**. **`legalName`: `"ZAFTYS Logistics"`**. **`alternateName`: `["ZAFTYS Logistics", "ZAFTYS TMS", "TranZfort"]`**. `sameAs`: LinkedIn (`/company/zaftys`), ZaubaCorp, Crunchbase, GBP URL, `https://tranzfort.com`, `https://app.zaftys.com`. |
+| **LocalBusiness** | Home + **Contact** | `@id`: `https://zaftys.com/#localbusiness`. Amravati NAP exact string match with footer/GBP. `parentOrganization` → Organization `@id`. |
+| **LogisticsService** | All `/logistics/*` leaves | Unique `name`, `description`, `url`, `serviceType` per leaf; `provider` → Organization; `areaServed`: India. |
+| **SoftwareApplication** | `/zaftys-tms` | `applicationCategory`: `BusinessApplication`. `operatingSystem`: `Web, Android, iOS`. Feature list from live modules (dispatch, GPS, ePOD, fleet records, portal). `url`: `https://app.zaftys.com`. |
+| **FAQPage** | All `/industries/*` pillars; report landings; TMS page | Inject valid FAQ arrays matching visible page text. |
+| **Article** or **TechArticle** | All `/blog/*` and `/reports/*` | `headline`, `datePublished`, `dateModified`, `author`/`publisher` → Organization, `description`. Prefer **TechArticle** for research pieces. |
 
-**Do not**
+### 15.2 Marketing copy & code modification directives
 
-- Add `AggregateRating` without real reviews.
-- Mark Available/Beta/Research modules as separate products with invented offers.
-- Duplicate conflicting Organization nodes on one page.
+Execute these explicit code edits across the repository:
 
-### 15.2 Entity & off-page (quick reference)
-
-See §5 “Entity & off-page authority foundations.” Launch-critical items are checked below.
+- [ ] **Configure Schema for Bare-Brand Ownership**:
+  - Update `src/lib/schema.ts`: Set `name: "ZAFTYS"`, `legalName: "ZAFTYS Logistics"`, and `alternateName: ["ZAFTYS Logistics", "ZAFTYS TMS", "TranZfort"]`.
+- [ ] **Standardize SERP Title Suffixes**:
+  - `src/lib/page-seo.ts`: Ensure every `<title>` ends with `| ZAFTYS` across all hubs and leaves per §2.B.
+- [ ] **Purge `/services` Internal Links**:
+  - `nav-config.ts` & `Footer.tsx`: Change `Transportation -> /services` to `/logistics`.
+  - `src/lib/blog-data.ts`: Update post *"Planning Commercial Shipments"* CTA link from `/services` to `/logistics`.
+  - `NotFound.tsx`: Change `Services` button href to `/logistics`.
+- [ ] **Expand Live Report Landing HTML Copy**:
+  - `src/lib/market-reports-data.ts`: Inject 1,000–1,500 words of indexable HTML content (Executive Summary, Key Findings, Methodology, FAQ) into both live reports.
+- [ ] **Standardize WhatsApp Prefill Strings**:
+  - `src/lib/constants.ts` / `hero-ctas.ts`: Ensure vertical prefill strings pass clean vertical names and parameters.
+- [ ] **Verify NAP String Uniformity**:
+  - Confirm address (`Old Town, Badnera, Amravati, 444701, Maharashtra, India`) and phone (`+91-927-092-3581`) match 1:1 across `Footer.tsx`, `Contact.tsx`, `About.tsx`, and `schema.ts`.
 
 ### 15.3 New domain acceleration & launch checklist
 
-Dev + marketing joint list for rewamp go-live and first authority push:
-
-- [ ] **Gated report HTML crawlability verified** — each `/reports/{slug}` exposes 1,000–1,500 words (Summary, Findings, Methodology, Highlights, FAQ); **only PDF** behind the lead form; Googlebot can fetch full HTML without submitting the form.
-- [ ] **Schema markup validated** via Google Rich Results Test (Organization, LocalBusiness, LogisticsService on a sample leaf, SoftwareApplication on TMS, FAQPage on an industry pillar, Article/TechArticle on a blog + a report).
-- [ ] **Google Business Profile & NAP citations aligned** — Amravati HQ GBP live/verified; Name / Address / Phone match Contact, footer, and schema; directory citations use the same NAP.
-- [ ] **Clean XML sitemap generated** — includes canonical hubs, pillars, blogs, report **HTML** URLs; **strictly excludes** 301 sources (`/services`, `/tranzfort-network`, legacy `/technology*` if redirected) and `noindex` routes (`/login`, thin readers).
-- [ ] **Manual GSC URL Inspection & Indexing API requests** on launch day for core pillars: `/`, `/logistics`, key `/logistics/*`, `/industries` + priority verticals, `/zaftys-tms`, `/network/tranzfort`, top blogs, remodeled report landings.
-- [ ] **Digital PR distribution ready** for the first **2** research reports (crawlability + schema passed; press one-pager; target Indian supply-chain / logistics media list).
-- [ ] Internal links swept (no `/services` or `/tranzfort-network` left in UI).
-- [ ] Partner badge / referral link path documented for verified fleet owners (`/partner`).
-- [ ] Organization `sameAs` updated only with real profile URLs (LinkedIn, ZaubaCorp, Crunchbase, GBP).
+- [ ] **Brand entity schema configured** — `Organization` schema explicitly defines `name: "ZAFTYS"` and `alternateName: ["ZAFTYS Logistics"]`.
+- [ ] **Title suffix rule enforced** — all `<title>` tags end with `| ZAFTYS`.
+- [ ] **Gated report HTML crawlability verified** — each `/reports/{slug}` exposes 1,000–1,500 words; **only PDF** behind the lead form; Googlebot can fetch full HTML without submitting form.
+- [ ] **Schema markup validated** via Google Rich Results Test (Organization, LocalBusiness, LogisticsService, SoftwareApplication, FAQPage, Article/TechArticle).
+- [ ] **Google Business Profile & NAP citations aligned** — Amravati HQ GBP live/verified with Primary Name **ZAFTYS**; Name / Address / Phone match Contact, footer, and schema.
+- [ ] **Clean XML sitemap generated** — includes canonical hubs, pillars, blogs, report **HTML** URLs; **strictly excludes** 301 sources (`/services`, `/tranzfort-network`) and `noindex` routes.
+- [ ] **Manual GSC URL Inspection & Indexing API requests** triggered on launch day for core pillars: `/`, `/logistics`, key `/logistics/*`, `/industries` + priority verticals, `/zaftys-tms`, `/network/tranzfort`, top blogs, remodeled report landings.
+- [ ] **Digital PR distribution ready** for first 2 research reports once expanded HTML + schema are live (Anchor text: **ZAFTYS**).
+- [ ] **Internal link sweep completed** — zero legacy `/services` or `/tranzfort-network` links remaining in navigation, blog CTAs, or page footers.
+- [ ] **Organization `sameAs` array updated** in `src/lib/schema.ts` with real profile URLs (LinkedIn, ZaubaCorp, Crunchbase, GBP).
 
 ---
 
-*Updated 22 Aug 2026 — brand-safe SEO priorities, report crawlability, schema map, new-domain acceleration, and 3-month blog/report backlog (Wave 1 long-tail first). Revise §12–13 when topics ship or GSC queries suggest a better cluster order.*
+*Updated 22 Aug 2026 — complete SEO, brand ownership ("ZAFTYS"), and marketing copy improvement plan.*
