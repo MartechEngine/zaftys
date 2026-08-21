@@ -83,6 +83,10 @@ export default {
           foreground: "hsl(var(--card-foreground))",
         },
         navy: "hsl(var(--navy))",
+        surface: {
+          DEFAULT: "hsl(var(--surface))",
+          foreground: "hsl(var(--surface-foreground))",
+        },
         cyan: {
           DEFAULT: "hsl(var(--cyan))",
           light: "hsl(var(--cyan-light))",

@@ -33,7 +33,7 @@ export function WhatsAppButton({
       variant="ghost"
       className={cn(
         tone === "solid" &&
-          "bg-[#25D366] hover:bg-[#20BD5A] text-white border border-[#1fb855] shadow-lg hover:shadow-xl font-semibold",
+          "bg-[#25D366] hover:bg-[#20BD5A] text-white border border-[#1fb855] shadow-lg font-semibold",
         tone === "on-dark-outline" &&
           "border-2 border-white/70 bg-transparent text-white hover:bg-white/10 hover:text-white hover:border-white font-semibold",
         className

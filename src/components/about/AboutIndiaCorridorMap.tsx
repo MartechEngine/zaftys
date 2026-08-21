@@ -214,7 +214,7 @@ export function AboutIndiaCorridorMap({ className }: { className?: string }) {
   return (
     <div
       className={cn(
-        "icn relative overflow-hidden rounded-2xl border border-white/10 bg-[#020914]",
+        "icn relative overflow-hidden border border-white/10 bg-[#020914]",
         className,
       )}
       data-map="zaftys-india-corridor"

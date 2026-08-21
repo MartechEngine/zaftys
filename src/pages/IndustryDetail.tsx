@@ -75,11 +75,11 @@ const IndustryDetail = () => {
       </PageHero>
 
       {/* Compact body: main + sticky aside */}
-      <div className="border-t border-border bg-[#f3f5f8]">
+      <div className="border-t border-border bg-surface">
         <div className="mx-auto grid max-w-7xl gap-8 px-5 py-8 md:px-8 md:py-10 lg:grid-cols-[minmax(0,1fr)_280px] lg:gap-10 lg:py-12">
           <div className="min-w-0 space-y-6">
             {/* Products — dense chip/list hybrid */}
-            <section className="rounded-xl border border-border bg-white p-5 md:p-6">
+            <section className="border border-border bg-white p-5 md:p-6">
               <div className="mb-4 flex items-baseline justify-between gap-3">
                 <h2 className="font-heading text-lg font-bold text-navy md:text-xl">
                   Products we haul
@@ -92,7 +92,7 @@ const IndustryDetail = () => {
                 {industry.products.map((product) => (
                   <div
                     key={product.name}
-                    className="flex gap-3 rounded-lg bg-[#f3f5f8] px-3 py-2.5"
+                    className="flex gap-3 rounded-lg bg-surface px-3 py-2.5"
                   >
                     <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-primary" />
                     <div className="min-w-0">
@@ -108,7 +108,7 @@ const IndustryDetail = () => {
 
             {/* Realities + method — two tight columns */}
             <section className="grid gap-4 md:grid-cols-2">
-              <div className="rounded-xl border border-border bg-white p-5 md:p-6">
+              <div className="border border-border bg-white p-5 md:p-6">
                 <h2 className="mb-3 font-heading text-lg font-bold text-navy">
                   What goes wrong
                 </h2>
@@ -124,7 +124,7 @@ const IndustryDetail = () => {
                   ))}
                 </ul>
               </div>
-              <div className="rounded-xl border border-border bg-white p-5 md:p-6">
+              <div className="border border-border bg-white p-5 md:p-6">
                 <h2 className="mb-3 font-heading text-lg font-bold text-navy">
                   How we run it
                 </h2>
@@ -145,7 +145,7 @@ const IndustryDetail = () => {
             </section>
 
             {/* Corridors + equipment — compact split with image strip */}
-            <section className="overflow-hidden rounded-xl border border-border bg-white">
+            <section className="overflow-hidden border border-border bg-white">
               <div className="grid md:grid-cols-[200px_1fr]">
                 <div className="relative min-h-[120px] md:min-h-full">
                   <img
@@ -211,7 +211,7 @@ const IndustryDetail = () => {
             </section>
 
             {/* FAQ compact */}
-            <section className="rounded-xl border border-border bg-white p-5 md:p-6">
+            <section className="border border-border bg-white p-5 md:p-6">
               <h2 className="mb-3 font-heading text-lg font-bold text-navy">FAQ</h2>
               <div className="divide-y divide-border">
                 {industry.faqs.map((faq) => (
@@ -247,7 +247,7 @@ const IndustryDetail = () => {
 
           {/* Aside — sticky quote + features */}
           <aside className="space-y-4 lg:sticky lg:top-24 lg:self-start">
-            <div className="rounded-xl border border-border bg-navy p-5 text-white">
+            <div className="border border-border bg-navy p-5 text-white">
               <p className="mb-1 text-[11px] font-semibold uppercase tracking-wider text-accent">
                 {industry.highlight}
               </p>
@@ -264,7 +264,7 @@ const IndustryDetail = () => {
               </div>
             </div>
 
-            <div className="rounded-xl border border-border bg-white p-4">
+            <div className="border border-border bg-white p-4">
               <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
                 At a glance
               </p>
@@ -278,7 +278,7 @@ const IndustryDetail = () => {
               </ul>
             </div>
 
-            <div className="rounded-xl border border-border bg-white p-4">
+            <div className="border border-border bg-white p-4">
               <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
                 Also see
               </p>

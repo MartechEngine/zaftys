@@ -42,9 +42,9 @@ export default function HomeReportsTeasers({ embedded = false }: HomeReportsTeas
             <Link
               key={`${report.slug}-${index}`}
               to={`/reports/${report.slug}`}
-              className="group w-64 shrink-0 rounded-xl border border-border bg-white shadow-sm hover:shadow-md transition-shadow overflow-hidden focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+              className="group w-64 shrink-0 border border-border bg-white shadow-sm hover:shadow-md transition-shadow overflow-hidden focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
             >
-              <div className="bg-[#061a33] h-36 flex items-center justify-center">
+              <div className="flex h-36 items-center justify-center bg-navy">
                 {report.coverImage ? (
                   <img
                     src={report.coverImage}
@@ -81,7 +81,7 @@ export default function HomeReportsTeasers({ embedded = false }: HomeReportsTeas
   }
 
   return (
-    <section className="py-12 bg-muted/30" aria-labelledby="home-reports-heading">
+    <section className="py-12 bg-surface" aria-labelledby="home-reports-heading">
       <div className="container mx-auto container-padding">
         <div className="flex items-baseline justify-between gap-4 mb-6">
           <h2 id="home-reports-heading" className="text-3xl font-heading font-bold text-navy">

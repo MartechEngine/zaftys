@@ -48,7 +48,7 @@ const MarketReports = () => {
         </Badge>
       </PageHero>
 
-      <section className="section-padding bg-muted/30">
+      <section className="section-padding bg-surface">
         <div className="container mx-auto container-padding">
           <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-10">
             <div>
@@ -64,7 +64,7 @@ const MarketReports = () => {
             {reports.map((report) => (
               <Card
                 key={report.slug}
-                className="border-none shadow-md hover:shadow-xl transition-all hover:-translate-y-0.5 bg-white overflow-hidden flex flex-col w-full"
+                className="border border-border transition-all bg-white overflow-hidden flex flex-col w-full"
               >
                 {report.coverImage ? (
                   <Link

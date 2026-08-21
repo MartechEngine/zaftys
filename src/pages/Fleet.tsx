@@ -102,7 +102,7 @@ const Fleet = () => {
       </PageHero>
 
       <section
-        className="sticky top-16 z-20 border-b border-border bg-[#eef1f5]/95 shadow-sm backdrop-blur"
+        className="sticky top-16 z-20 border-b border-border bg-surface/95 shadow-sm backdrop-blur"
         aria-label="Fleet categories"
       >
         <div className="mx-auto grid max-w-7xl grid-cols-1 gap-2.5 px-4 py-2 sm:grid-cols-2 sm:gap-3 sm:px-6 md:px-8 md:py-2.5">
@@ -110,7 +110,7 @@ const Fleet = () => {
             href="#own-fleet"
             aria-current={activeCategory === "own-fleet" ? "true" : undefined}
             className={cn(
-              "group relative flex items-center gap-3 overflow-hidden rounded-xl border-2 px-3 py-2.5 transition-all md:gap-3.5 md:px-4 md:py-3",
+              "group relative flex items-center gap-3 overflow-hidden border-2 px-3 py-2.5 transition-all md:gap-3.5 md:px-4 md:py-3",
               activeCategory === "own-fleet"
                 ? "border-navy bg-navy text-white shadow-md shadow-navy/20"
                 : "border-transparent bg-white text-navy hover:border-navy/30 hover:shadow-sm",
@@ -149,16 +149,16 @@ const Fleet = () => {
             href="#network-fleet"
             aria-current={activeCategory === "network-fleet" ? "true" : undefined}
             className={cn(
-              "group relative flex items-center gap-3 overflow-hidden rounded-xl border-2 px-3 py-2.5 transition-all md:gap-3.5 md:px-4 md:py-3",
+              "group relative flex items-center gap-3 overflow-hidden border-2 px-3 py-2.5 transition-all md:gap-3.5 md:px-4 md:py-3",
               activeCategory === "network-fleet"
-                ? "border-accent bg-[#0b1f3a] text-white shadow-md shadow-accent/20"
+                ? "border-accent bg-navy text-white shadow-md shadow-accent/20"
                 : "border-transparent bg-white text-navy hover:border-accent/40 hover:shadow-sm",
             )}
           >
             <span
               className={cn(
                 "inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-lg md:h-10 md:w-10",
-                activeCategory === "network-fleet" ? "bg-accent text-white" : "bg-[#0b1f3a] text-accent",
+                activeCategory === "network-fleet" ? "bg-accent text-white" : "bg-navy text-accent",
               )}
             >
               <Network size={18} strokeWidth={1.75} aria-hidden />
@@ -187,7 +187,7 @@ const Fleet = () => {
       </section>
 
       {/* Own Fleet */}
-      <section id="own-fleet" className="scroll-mt-36 bg-[#f3f5f8]">
+      <section id="own-fleet" className="scroll-mt-36 bg-surface">
         <div className="border-b border-border bg-white px-5 py-12 md:px-8 md:py-14">
           <div className="mx-auto max-w-7xl">
             <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-primary">{copy.own.eyebrow}</p>
@@ -218,7 +218,7 @@ const Fleet = () => {
                   <article
                     id={item.id}
                     key={item.id}
-                    className="scroll-mt-40 overflow-hidden rounded-2xl border border-border bg-white shadow-sm"
+                    className="scroll-mt-40 overflow-hidden border border-border bg-white shadow-sm"
                   >
                     <div className="flex items-center justify-between border-b border-border bg-navy px-4 py-2.5 text-white">
                       <span className="text-xs font-semibold uppercase tracking-widest text-accent">Own Fleet</span>
@@ -240,7 +240,7 @@ const Fleet = () => {
                           {item.specs.map((style) => (
                             <li
                               key={style}
-                              className="rounded bg-[#f3f5f8] px-2 py-0.5 text-[11px] font-semibold uppercase text-navy"
+                              className="rounded bg-surface px-2 py-0.5 text-[11px] font-semibold uppercase text-navy"
                             >
                               {style}
                             </li>
@@ -253,7 +253,7 @@ const Fleet = () => {
               })}
             </div>
 
-            <div className="mt-10 overflow-hidden rounded-2xl border border-border bg-white">
+            <div className="mt-10 overflow-hidden border border-border bg-white">
               <div className="border-b border-border px-5 py-4">
                 <h3 className="font-heading text-lg font-bold text-navy">Cargo → own-fleet asset</h3>
               </div>
@@ -262,7 +262,7 @@ const Fleet = () => {
                   key={row.cargo}
                   className={cn(
                     "grid grid-cols-1 gap-1 border-b border-border px-5 py-3.5 last:border-0 sm:grid-cols-2",
-                    i % 2 === 0 ? "bg-white" : "bg-[#f3f5f8]",
+                    i % 2 === 0 ? "bg-white" : "bg-surface",
                   )}
                 >
                   <p className="font-heading font-bold text-navy">{row.cargo}</p>
@@ -289,7 +289,7 @@ const Fleet = () => {
                 {fleetOpsPoints.map((p, i) => {
                   const Icon = opsIcons[i] ?? Gauge;
                   return (
-                    <div key={p.title} className="rounded-xl border border-border bg-white p-4">
+                    <div key={p.title} className="border border-border bg-white p-4">
                       <Icon className="mb-2.5 text-primary" size={20} />
                       <h4 className="mb-1 font-heading text-sm font-bold text-navy">{p.title}</h4>
                       <p className="text-xs leading-relaxed text-muted-foreground md:text-sm">{p.desc}</p>
@@ -311,7 +311,7 @@ const Fleet = () => {
             <p className="mb-8 max-w-2xl text-lg text-gray-300">{copy.network.lead}</p>
             <div className="grid gap-4 md:grid-cols-3">
               {copy.network.points.map((card) => (
-                <article key={card.title} className="rounded-2xl border border-white/15 bg-white/5 p-5">
+                <article key={card.title} className="border border-white/15 bg-white/5 p-5">
                   <h3 className="mb-2 font-heading text-lg font-bold">{card.title}</h3>
                   <p className="text-sm text-gray-400">{card.detail}</p>
                 </article>
@@ -320,7 +320,7 @@ const Fleet = () => {
           </div>
         </div>
 
-        <div className="border-t border-white/10 bg-[#f3f5f8] px-5 py-10 text-navy md:px-8 md:py-12">
+        <div className="border-t border-white/10 bg-surface px-5 py-10 text-navy md:px-8 md:py-12">
           <div className="mx-auto max-w-7xl">
             <h3 className="mb-2 font-heading text-2xl font-bold">Network catalog — all types</h3>
             <p className="mb-5 max-w-2xl text-muted-foreground">{copy.network.catalogLead}</p>
@@ -345,9 +345,9 @@ const Fleet = () => {
                   <article
                     id={item.id}
                     key={item.id}
-                    className="scroll-mt-40 overflow-hidden rounded-xl border border-border bg-white shadow-sm"
+                    className="scroll-mt-40 overflow-hidden border border-border bg-white shadow-sm"
                   >
-                    <div className="flex items-center justify-between gap-2 border-b border-border bg-[#0b1f3a] px-3 py-2 text-white">
+                    <div className="flex items-center justify-between gap-2 border-b border-border bg-navy px-3 py-2 text-white">
                       <span className="text-[10px] font-semibold uppercase tracking-widest text-accent">Network</span>
                       <span className="truncate font-heading text-sm font-bold">{item.title}</span>
                     </div>
@@ -366,13 +366,13 @@ const Fleet = () => {
                         {item.bodyStyles.slice(0, 3).map((style) => (
                           <li
                             key={style}
-                            className="rounded bg-[#f3f5f8] px-1.5 py-0.5 text-[10px] font-semibold uppercase text-navy"
+                            className="rounded bg-surface px-1.5 py-0.5 text-[10px] font-semibold uppercase text-navy"
                           >
                             {style}
                           </li>
                         ))}
                         {item.bodyStyles.length > 3 ? (
-                          <li className="rounded bg-[#f3f5f8] px-1.5 py-0.5 text-[10px] font-semibold text-muted-foreground">
+                          <li className="rounded bg-surface px-1.5 py-0.5 text-[10px] font-semibold text-muted-foreground">
                             +{item.bodyStyles.length - 3}
                           </li>
                         ) : null}
@@ -396,7 +396,7 @@ const Fleet = () => {
         </div>
       </section>
 
-      <section className="bg-primary py-16 text-center text-white md:py-20">
+      <section className="final-cta-band text-center">
         <div className="container mx-auto container-padding">
           <h2 className="mb-4 font-heading text-3xl font-bold md:text-4xl">{copy.finalCta.h2}</h2>
           <p className="mx-auto mb-8 max-w-xl text-lg text-gray-200">{copy.finalCta.lead}</p>

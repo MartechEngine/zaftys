@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { LazyTranZfortScreensCarousel } from "@/components/LazyTranZfortScreensCarousel";
 import { CTAGroup } from "@/components/CTAGroup";
+import { MarketingEyebrow } from "@/components/marketing/MarketingChrome";
 import { homeCopy } from "@/lib/home-copy";
 import { externalLinks } from "@/lib/constants";
 import { trackEvent } from "@/lib/analytics";
@@ -12,35 +13,33 @@ export function HomeNetworkSection() {
 
   return (
     <section id="network" aria-labelledby="network-heading">
-      <div className="section-padding bg-white pb-8">
-        <div className="container mx-auto container-padding">
-          <div className="text-center max-w-3xl mx-auto">
-            <p className="text-sm font-semibold uppercase tracking-widest text-primary mb-3">
-              {network.eyebrow}
-            </p>
-            <h2 id="network-heading" className="text-4xl font-heading font-bold mb-4 text-navy">
-              {network.h2}
-            </h2>
-            <p className="text-lg text-muted-foreground">{network.lead}</p>
-          </div>
+      <div className="section-band bg-white">
+        <div className="section-band-inner max-w-3xl text-center">
+          <MarketingEyebrow>{network.eyebrow}</MarketingEyebrow>
+          <h2 id="network-heading" className="font-heading text-3xl font-bold text-navy md:text-4xl">
+            {network.h2}
+          </h2>
+          <p className="mt-3 text-base leading-relaxed text-muted-foreground md:text-lg">{network.lead}</p>
         </div>
       </div>
 
-      <div className="section-padding bg-navy text-white" aria-labelledby="network-tranzfort-heading">
-        <div className="container mx-auto container-padding">
-          <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-16">
+      <div className="section-band-wide bg-navy text-white" aria-labelledby="network-tranzfort-heading">
+        <div className="section-band-inner-wide">
+          <div className="flex flex-col items-center gap-12 lg:flex-row lg:gap-16">
             <div className="lg:w-1/2">
-              <div className="inline-block px-3 py-1 rounded-full bg-accent/20 border border-accent/30 text-accent text-sm font-semibold mb-4 uppercase tracking-widest">
+              <div className="mb-4 inline-block border border-accent/30 bg-accent/20 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-accent">
                 {network.tranzfort.badge}
               </div>
               <h3
                 id="network-tranzfort-heading"
-                className="text-3xl md:text-4xl font-heading font-bold mb-4 leading-tight"
+                className="font-heading text-2xl font-bold leading-tight md:text-3xl"
               >
                 {network.tranzfort.h3}
               </h3>
-              <p className="text-lg text-gray-300 mb-6 leading-relaxed">{network.tranzfort.lead}</p>
-              <CTAGroup className="justify-start">
+              <p className="mt-4 text-base leading-relaxed text-gray-300 md:text-lg">
+                {network.tranzfort.lead}
+              </p>
+              <CTAGroup className="mt-6 justify-start">
                 <Button asChild variant="accent">
                   <a
                     href={externalLinks.tranzfort}
@@ -56,7 +55,7 @@ export function HomeNetworkSection() {
                 </Link>
               </CTAGroup>
             </div>
-            <div className="lg:w-1/2 w-full">
+            <div className="w-full lg:w-1/2">
               <LazyTranZfortScreensCarousel surface="navy" />
             </div>
           </div>

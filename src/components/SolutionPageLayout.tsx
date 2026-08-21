@@ -2,12 +2,12 @@ import type { ReactNode } from "react";
 import { Link } from "react-router-dom";
 import { ArrowRight, CheckCircle2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
 import SEO from "@/components/SEO";
 import { PageHero } from "@/components/PageHero";
 import { CTAGroup } from "@/components/CTAGroup";
 import { HeroEmailButton } from "@/components/HeroEmailButton";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
+import { MarketingEyebrow, MarketingFinalCta, MarketingTile } from "@/components/marketing/MarketingChrome";
 import { breadcrumbSchema, organizationSchema } from "@/lib/schema";
 import heroServices from "@/assets/hero-services.jpg";
 
@@ -97,10 +97,7 @@ export function SolutionPageLayout({
         title={seo.title}
         description={seo.description}
         canonical={canonical}
-        schema={[
-          organizationSchema,
-          breadcrumbSchema(breadcrumbs),
-        ]}
+        schema={[organizationSchema, breadcrumbSchema(breadcrumbs)]}
       />
 
       <PageHero
@@ -123,29 +120,31 @@ export function SolutionPageLayout({
         </CTAGroup>
       </PageHero>
 
-      <section className="section-padding bg-white">
-        <div className="container mx-auto container-padding">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {features.map((feature) => (
-              <Card key={feature.title} className="border-none shadow-md h-full">
-                <CardContent className="p-8">
-                  <h3 className="text-xl font-heading font-bold text-navy mb-3">{feature.title}</h3>
-                  <p className="text-muted-foreground leading-relaxed">{feature.description}</p>
-                </CardContent>
-              </Card>
+      <section className="section-band bg-white">
+        <div className="section-band-inner">
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+            {features.map((feature, i) => (
+              <MarketingTile key={feature.title} muted>
+                <p className="mb-3 font-heading text-xs font-bold tracking-[0.18em] text-accent">
+                  {String(i + 1).padStart(2, "0")}
+                </p>
+                <h3 className="font-heading text-lg font-bold text-navy">{feature.title}</h3>
+                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{feature.description}</p>
+              </MarketingTile>
             ))}
           </div>
         </div>
       </section>
 
       {highlights && highlights.length > 0 ? (
-        <section className="section-padding bg-muted/30">
-          <div className="container mx-auto container-padding max-w-3xl">
-            <h2 className="text-3xl font-heading font-bold text-navy mb-8">What you get</h2>
-            <ul className="space-y-4">
+        <section className="section-band bg-surface">
+          <div className="section-band-inner max-w-3xl">
+            <MarketingEyebrow>What you get</MarketingEyebrow>
+            <h2 className="font-heading text-2xl font-bold text-navy md:text-3xl">Included on this program</h2>
+            <ul className="mt-8 space-y-4">
               {highlights.map((item) => (
                 <li key={item} className="flex items-start gap-3">
-                  <CheckCircle2 className="text-accent shrink-0 mt-0.5" size={20} />
+                  <CheckCircle2 className="mt-0.5 shrink-0 text-accent" size={20} />
                   <span className="text-muted-foreground">{item}</span>
                 </li>
               ))}
@@ -157,13 +156,13 @@ export function SolutionPageLayout({
       {children}
 
       {relatedLinks && relatedLinks.length > 0 ? (
-        <section className="section-padding bg-white border-t border-border">
-          <div className="container mx-auto container-padding">
-            <h2 className="text-2xl font-heading font-bold text-navy mb-6">Related</h2>
-            <div className="flex flex-wrap gap-4">
+        <section className="section-band bg-white">
+          <div className="section-band-inner">
+            <h2 className="mb-6 font-heading text-2xl font-bold text-navy">Related</h2>
+            <div className="flex flex-wrap gap-3">
               {relatedLinks.map((link) => (
                 <Link key={link.path} to={link.path}>
-                  <Button variant="outline" className="border-primary text-primary hover:bg-primary hover:text-white">
+                  <Button variant="outline-brand">
                     {link.name} <ArrowRight className="ml-2" size={16} />
                   </Button>
                 </Link>
@@ -173,15 +172,13 @@ export function SolutionPageLayout({
         </section>
       ) : null}
 
-      <section className="py-20 bg-primary text-white">
-        <div className="container mx-auto container-padding text-center">
-          <h2 className="text-3xl font-heading font-bold mb-6">Ready to move your freight?</h2>
-          <CTAGroup>
-            <HeroEmailButton label={cta.label} subject={cta.subject} body={cta.body} variant="on-dark" />
-            {cta.whatsapp ? <WhatsAppButton label="Chat on WhatsApp" /> : null}
-          </CTAGroup>
-        </div>
-      </section>
+      <MarketingFinalCta>
+        <h2 className="mb-6 font-heading text-3xl font-bold">Ready to move your freight?</h2>
+        <CTAGroup>
+          <HeroEmailButton label={cta.label} subject={cta.subject} body={cta.body} variant="on-dark" />
+          {cta.whatsapp ? <WhatsAppButton label="Chat on WhatsApp" /> : null}
+        </CTAGroup>
+      </MarketingFinalCta>
     </div>
   );
 }

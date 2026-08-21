@@ -52,8 +52,12 @@ All colors MUST be HSL.
     --success: 145 80% 40%;
     --success-light: 145 80% 60%;
 
-    --muted: 210 20% 96%;
+    --muted: 216 26% 96%;
     --muted-foreground: 215 15% 40%;
+
+    /* Cool gray used by dense hubs (was hardcoded #f3f5f8) */
+    --surface: 216 26% 96%;
+    --surface-foreground: 215 25% 15%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
@@ -118,6 +122,9 @@ All colors MUST be HSL.
 
     --muted: 215 35% 25%;
     --muted-foreground: 215 20% 65%;
+
+    --surface: 220 30% 16%;
+    --surface-foreground: 215 20% 90%;
 
     --destructive: 0 63% 31%;
     --destructive-foreground: 0 0% 98%;
@@ -193,13 +200,46 @@ All colors MUST be HSL.
     box-shadow: var(--shadow-glow);
   }
   
-  /* Section spacing */
+  /* Section spacing — dense hub rhythm */
   .section-padding {
-    @apply py-16 md:py-24;
+    @apply py-12 md:py-16;
   }
   
   .container-padding {
     @apply px-5 sm:px-8 lg:px-12 xl:px-16;
+  }
+
+  /* Marketing layout shells (align to Intelligence / Network / TMS hubs) */
+  .section-band {
+    @apply border-t border-border px-5 py-12 md:px-8 md:py-14;
+  }
+
+  .section-band-wide {
+    @apply border-t border-border px-5 py-12 md:px-10 md:py-16 lg:px-14;
+  }
+
+  .section-band-inner {
+    @apply mx-auto w-full max-w-7xl;
+  }
+
+  .section-band-inner-wide {
+    @apply mx-auto w-full max-w-[90rem];
+  }
+
+  .marketing-tile {
+    @apply border border-border bg-white p-6;
+  }
+
+  .marketing-tile-muted {
+    @apply border border-border bg-surface p-6;
+  }
+
+  .marketing-eyebrow {
+    @apply mb-2 text-xs font-semibold uppercase tracking-wider text-primary;
+  }
+
+  .final-cta-band {
+    @apply border-t border-border bg-navy py-16 text-white md:py-20;
   }
 
   /* Deep-researched Blog Template  -  research dossier surface */

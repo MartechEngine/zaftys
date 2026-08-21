@@ -1,4 +1,3 @@
-import { Card, CardContent } from "@/components/ui/card";
 import ResponsiveImage from "@/components/ResponsiveImage";
 import { cn } from "@/lib/utils";
 
@@ -25,7 +24,12 @@ const ImageContentCard = ({
   darkImageBg = false,
 }: ImageContentCardProps) => {
   return (
-    <Card className={cn("border-none shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden group bg-white h-full flex flex-col", className)}>
+    <article
+      className={cn(
+        "group flex h-full flex-col overflow-hidden border border-border bg-white transition-colors hover:border-primary/40",
+        className,
+      )}
+    >
       <ResponsiveImage
         src={imageSrc}
         alt={imageAlt}
@@ -33,17 +37,15 @@ const ImageContentCard = ({
         objectFit="contain"
         className={darkImageBg ? "bg-black" : undefined}
       />
-      <CardContent className="p-6 flex flex-col flex-grow">
-        {tagline && (
-          <p className="text-xs uppercase tracking-wider text-accent font-semibold mb-2">{tagline}</p>
-        )}
-        <h3 className="text-xl font-heading font-bold text-navy mb-2 group-hover:text-primary transition-colors">
-          {title}
-        </h3>
-        <p className="text-sm text-muted-foreground leading-relaxed flex-grow">{description}</p>
-        {footer && <div className="mt-4 pt-4 border-t border-border/50">{footer}</div>}
-      </CardContent>
-    </Card>
+      <div className="flex flex-grow flex-col p-6">
+        {tagline ? (
+          <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-accent">{tagline}</p>
+        ) : null}
+        <h3 className="mb-2 font-heading text-xl font-bold text-navy group-hover:text-primary">{title}</h3>
+        <p className="flex-grow text-sm leading-relaxed text-muted-foreground">{description}</p>
+        {footer ? <div className="mt-4 border-t border-border pt-4">{footer}</div> : null}
+      </div>
+    </article>
   );
 };
 

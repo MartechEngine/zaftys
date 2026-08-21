@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { CTAGroup } from "@/components/CTAGroup";
 import { HeroEmailButton } from "@/components/HeroEmailButton";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
+import { MarketingEyebrow } from "@/components/marketing/MarketingChrome";
 import { homeCopy, homeQuoteEmail } from "@/lib/home-copy";
 import { homeTrustStrip } from "@/lib/constants";
 
@@ -14,7 +15,7 @@ export function HomeHeroSection() {
       <section
         id="hero"
         aria-label="Hero"
-        className="relative pt-32 pb-24 overflow-hidden min-h-[700px] flex items-center"
+        className="relative flex min-h-[700px] items-center overflow-hidden pb-24 pt-32"
       >
         <div className="absolute inset-0">
           <picture>
@@ -26,7 +27,7 @@ export function HomeHeroSection() {
             <img
               src="/images/lcp/hero-home-960.jpg"
               alt={hero.heroImageAlt}
-              className="w-full h-full object-cover"
+              className="h-full w-full object-cover"
               width={1280}
               height={720}
               loading="eager"
@@ -36,12 +37,12 @@ export function HomeHeroSection() {
           </picture>
           <div className="absolute inset-0 bg-gradient-to-r from-navy/95 via-navy/80 to-navy/40" />
         </div>
-        <div className="container mx-auto container-padding relative z-10">
+        <div className="container relative z-10 mx-auto container-padding">
           <div className="max-w-4xl text-white">
-            <p className="text-sm font-semibold uppercase tracking-widest text-accent mb-4 animate-fade-in-up">
+            <p className="mb-4 text-xs font-semibold uppercase tracking-wider text-accent animate-fade-in-up">
               {hero.badge}
             </p>
-            <h1 className="text-5xl md:text-6xl lg:text-7xl font-heading font-bold mb-6 animate-fade-in-up leading-tight">
+            <h1 className="mb-6 animate-fade-in-up font-heading text-5xl font-bold leading-tight md:text-6xl lg:text-7xl">
               {hero.h1.map((line) => (
                 <span key={line} className="block">
                   {line}
@@ -49,13 +50,13 @@ export function HomeHeroSection() {
               ))}
             </h1>
             <p
-              className="text-xl md:text-2xl mb-4 text-gray-200 font-light animate-fade-in-up max-w-2xl"
+              className="mb-4 max-w-2xl animate-fade-in-up text-xl font-light text-gray-200 md:text-2xl"
               style={{ animationDelay: "0.2s" }}
             >
               {hero.lead}
             </p>
             <p
-              className="text-sm uppercase tracking-widest text-accent/90 mb-10 animate-fade-in-up"
+              className="mb-10 animate-fade-in-up text-xs uppercase tracking-wider text-accent/90"
               style={{ animationDelay: "0.3s" }}
             >
               {hero.tagline}
@@ -79,12 +80,12 @@ export function HomeHeroSection() {
         </div>
       </section>
 
-      <section aria-label="Proof points" className="py-12 bg-white border-b border-border relative -mt-10 mx-5 sm:mx-8 lg:mx-12 xl:mx-16 rounded-xl shadow-xl z-20">
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8 container-padding">
+      <section aria-label="Proof points" className="border-t border-border bg-white">
+        <div className="mx-auto grid max-w-7xl grid-cols-2 gap-8 px-5 py-10 sm:grid-cols-3 md:px-8 lg:grid-cols-6 lg:px-10">
           {homeTrustStrip.map((item) => (
             <div key={item.label} className="text-center">
-              <div className="text-lg font-heading font-bold text-primary mb-1">{item.label}</div>
-              <div className="text-xs text-muted-foreground uppercase tracking-wider">{item.sublabel}</div>
+              <div className="mb-1 font-heading text-base font-bold text-navy">{item.label}</div>
+              <div className="text-xs uppercase tracking-wider text-muted-foreground">{item.sublabel}</div>
             </div>
           ))}
         </div>

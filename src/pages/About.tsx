@@ -71,7 +71,7 @@ const About = () => {
             {c.story.cards.map((card, i) => (
               <article
                 key={card.title}
-                className="flex flex-col border border-border bg-[#f3f5f8] p-6 md:min-h-[200px] md:p-8"
+                className="flex flex-col border border-border bg-surface p-6 md:min-h-[200px] md:p-8"
               >
                 <p className="mb-4 font-heading text-xs font-bold tracking-[0.2em] text-accent">
                   {String(i + 1).padStart(2, "0")}
@@ -87,7 +87,7 @@ const About = () => {
       </section>
 
       {/* Journey */}
-      <section className="border-t border-border bg-[#f3f5f8] px-5 py-12 md:px-8 md:py-14">
+      <section className="border-t border-border bg-surface px-5 py-12 md:px-8 md:py-14">
         <div className="mx-auto max-w-7xl">
           <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-primary">
             {c.heritage.eyebrow}
@@ -129,7 +129,7 @@ const About = () => {
             {c.operate.pillars.map((p, i) => (
               <div
                 key={p.title}
-                className="group relative overflow-hidden rounded-2xl border border-white/12 bg-gradient-to-b from-white/[0.08] to-white/[0.02] p-6 transition hover:border-accent/40"
+                className="group relative overflow-hidden border border-white/12 bg-gradient-to-b from-white/[0.08] to-white/[0.02] p-6 transition hover:border-accent/40"
               >
                 <p className="mb-3 font-heading text-xs font-bold tracking-wider text-accent">
                   {String(i + 1).padStart(2, "0")}
@@ -159,7 +159,7 @@ const About = () => {
           </h2>
           <ul className="grid gap-4 sm:grid-cols-2">
             {c.challenges.items.map((item, i) => (
-              <li key={item.problem} className="border border-border bg-[#f3f5f8] p-5 md:p-6">
+              <li key={item.problem} className="border border-border bg-surface p-5 md:p-6">
                 <p className="font-heading text-xs font-bold tracking-[0.18em] text-accent">
                   {String(i + 1).padStart(2, "0")}
                 </p>
@@ -172,7 +172,7 @@ const About = () => {
       </section>
 
       {/* Coverage */}
-      <section className="border-t border-border bg-[#f3f5f8] px-5 py-12 md:px-8 md:py-14">
+      <section className="border-t border-border bg-surface px-5 py-12 md:px-8 md:py-14">
         <div className="mx-auto max-w-7xl">
           <div className="mb-8 max-w-2xl">
             <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-primary">
@@ -260,7 +260,7 @@ const About = () => {
       </section>
 
       {/* Company profile CTA — after trust is built */}
-      <section className="border-t border-border bg-[#f3f5f8] px-5 py-10 md:px-8 md:py-12">
+      <section className="border-t border-border bg-surface px-5 py-10 md:px-8 md:py-12">
         <div className="mx-auto max-w-7xl">
           <div className="relative overflow-hidden rounded-2xl bg-navy px-6 py-8 text-white md:flex md:items-center md:justify-between md:gap-8 md:px-10 md:py-10">
             <div
@@ -271,7 +271,7 @@ const About = () => {
               }}
             />
             <div className="relative flex gap-4">
-              <span className="inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border border-white/15 bg-white/5 text-accent">
+              <span className="inline-flex h-12 w-12 shrink-0 items-center justify-center border border-white/15 bg-white/5 text-accent">
                 <FileText size={22} />
               </span>
               <div>
@@ -297,14 +297,14 @@ const About = () => {
       {/* Mission / Vision */}
       <section className="border-t border-border bg-white px-5 py-12 md:px-8 md:py-14">
         <div className="mx-auto grid max-w-7xl gap-5 md:grid-cols-2">
-          <div className="border-t-4 border-primary bg-[#f3f5f8] px-6 py-7 md:px-8">
+          <div className="border-t-4 border-primary bg-surface px-6 py-7 md:px-8">
             <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-md bg-primary/10 text-primary">
               <Target size={20} />
             </div>
             <h3 className="mb-3 font-heading text-xl font-bold text-navy">{c.mission.title}</h3>
             <p className="leading-relaxed text-muted-foreground">{c.mission.body}</p>
           </div>
-          <div className="border-t-4 border-accent bg-[#f3f5f8] px-6 py-7 md:px-8">
+          <div className="border-t-4 border-accent bg-surface px-6 py-7 md:px-8">
             <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-md bg-accent/10 text-accent">
               <Eye size={20} />
             </div>
@@ -319,7 +319,7 @@ const About = () => {
         <div className="mx-auto max-w-7xl">
           <h2 className="mb-2 font-heading text-3xl font-bold md:text-4xl">{c.values.h2}</h2>
           <p className="mb-8 max-w-2xl text-gray-300">{c.values.lead}</p>
-          <div className="grid gap-px overflow-hidden rounded-2xl border border-white/10 bg-white/10 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="grid gap-px overflow-hidden border border-white/10 bg-white/10 sm:grid-cols-2 lg:grid-cols-4">
             {c.values.items.map((v) => (
               <div key={v.title} className="bg-navy p-5 md:p-6">
                 <h3 className="font-heading text-lg font-bold">{v.title}</h3>
@@ -330,7 +330,7 @@ const About = () => {
         </div>
       </section>
 
-      <section className="bg-primary py-14 text-center text-white md:py-16">
+      <section className="final-cta-band text-center">
         <div className="container mx-auto max-w-3xl container-padding">
           <h2 className="mb-3 font-heading text-3xl font-bold md:text-4xl">{c.finalCta.h2}</h2>
           <p className="mb-8 text-lg text-gray-200">{c.finalCta.lead}</p>

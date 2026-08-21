@@ -62,7 +62,7 @@ const Industries = () => {
       {featured.map((industry, i) => {
         const flip = i % 2 === 1;
         return (
-          <section key={industry.slug} className="border-t border-border bg-[#f3f5f8]">
+          <section key={industry.slug} className="border-t border-border bg-surface">
             <div
               className={cn(
                 "mx-auto grid max-w-7xl items-stretch lg:grid-cols-2",
@@ -114,7 +114,7 @@ const Industries = () => {
               <Link
                 key={industry.slug}
                 to={`${paths.industries}/${industry.slug}`}
-                className="group overflow-hidden rounded-xl border border-border bg-[#f3f5f8] transition-colors hover:border-primary/40 hover:bg-white"
+                className="group overflow-hidden border border-border bg-surface transition-colors hover:border-primary/40 hover:bg-white"
               >
                 <div className="relative h-24 overflow-hidden sm:h-28">
                   <img
@@ -147,7 +147,7 @@ const Industries = () => {
         </div>
       </section>
 
-      <section className="bg-primary py-16 text-center text-white md:py-20">
+      <section className="final-cta-band text-center">
         <div className="container mx-auto container-padding">
           <h2 className="mb-4 font-heading text-3xl font-bold md:text-4xl">{copy.finalCta.h2}</h2>
           <p className="mx-auto mb-8 max-w-xl text-lg text-gray-200">{copy.finalCta.lead}</p>

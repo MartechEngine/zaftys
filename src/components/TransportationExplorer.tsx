@@ -33,9 +33,9 @@ export function TransportationExplorer() {
 
   return (
     <div className="max-w-5xl mx-auto">
-      <div className="rounded-2xl border border-border bg-white shadow-lg overflow-hidden">
+      <div className="border border-border bg-white shadow-lg overflow-hidden">
         {/* Mode switcher */}
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 px-4 sm:px-6 py-4 border-b border-border bg-muted/30">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 px-4 sm:px-6 py-4 border-b border-border bg-surface">
           <p className="text-sm font-semibold text-navy">Match a body type to the cargo</p>
           <div
             className="inline-flex rounded-full border border-border bg-white p-1 self-start sm:self-auto"
@@ -62,7 +62,7 @@ export function TransportationExplorer() {
 
         <div className="grid grid-cols-1 lg:grid-cols-5 lg:min-h-[480px]">
           {/* Picker  -  single column with thumbnails */}
-          <div className="lg:col-span-2 border-b lg:border-b-0 lg:border-r border-border bg-muted/10">
+          <div className="lg:col-span-2 border-b lg:border-b-0 lg:border-r border-border bg-surface">
             <p className="px-4 pt-4 pb-2 text-[11px] font-bold uppercase tracking-wider text-muted-foreground">
               {isTruckMode ? "Body types" : "Materials"}
             </p>
@@ -128,7 +128,7 @@ export function TransportationExplorer() {
                 alt={heroImage.alt}
                 aspectRatio="2/1"
                 objectFit="contain"
-                className={cn("rounded-xl border border-border mb-5", isTruckMode ? "bg-navy" : "bg-muted/30")}
+                className={cn("border border-border mb-5", isTruckMode ? "bg-navy" : "bg-surface")}
               />
 
               <h3 className="font-heading font-bold text-xl text-navy mb-2">
@@ -167,7 +167,7 @@ export function TransportationExplorer() {
               </div>
             </div>
 
-            <p className="text-[11px] text-muted-foreground px-4 sm:px-6 py-3 border-t border-border bg-muted/20 leading-relaxed">
+            <p className="text-[11px] text-muted-foreground px-4 sm:px-6 py-3 border-t border-border bg-surface leading-relaxed">
               Typical pairings from ZAFTYS dispatch. Final assignment depends on load weight, route, and papers.
             </p>
           </div>

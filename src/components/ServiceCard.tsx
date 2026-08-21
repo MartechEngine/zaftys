@@ -1,6 +1,4 @@
 import { LucideIcon, ArrowRight } from "lucide-react";
-import { Card, CardContent, CardFooter } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 
 interface ServiceCardProps {
@@ -11,34 +9,35 @@ interface ServiceCardProps {
   delay?: number;
 }
 
-const ServiceCard = ({ icon: Icon, title, description, link, delay = 0 }: ServiceCardProps) => {
-  return (
-    <Card 
-      className="group hover-lift border-border bg-card hover:border-primary/30 transition-all duration-300 h-full flex flex-col animate-fade-in-up"
-      style={{ animationDelay: `${delay}s` }}
-    >
-      <CardContent className="p-6 flex-grow">
-        <div className="w-14 h-14 rounded-lg bg-primary/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
-          <Icon className="text-primary" size={28} />
-        </div>
-        <h3 className="text-xl font-bold mb-3 text-foreground group-hover:text-primary transition-colors">
-          {title}
-        </h3>
-        <p className="text-muted-foreground leading-relaxed">
-          {description}
-        </p>
-      </CardContent>
-      {link && (
-        <CardFooter className="p-6 pt-0">
-          <Link to={link} className="w-full">
-            <Button variant="ghost" className="w-full justify-between group-hover:text-primary px-0 hover:bg-transparent">
-              Learn More <ArrowRight size={18} className="ml-2 group-hover:translate-x-1 transition-transform" />
-            </Button>
-          </Link>
-        </CardFooter>
-      )}
-    </Card>
+/** Dense-hub tile card (no radius, no lift shadow). */
+const ServiceCard = ({ icon: Icon, title, description, link }: ServiceCardProps) => {
+  const inner = (
+    <>
+      <div className="mb-5 flex h-12 w-12 items-center justify-center border border-border bg-surface text-primary">
+        <Icon size={24} />
+      </div>
+      <h3 className="mb-3 font-heading text-lg font-bold text-navy group-hover:text-primary">{title}</h3>
+      <p className="flex-1 text-sm leading-relaxed text-muted-foreground">{description}</p>
+      {link ? (
+        <span className="mt-5 inline-flex items-center text-sm font-semibold text-primary">
+          Learn more <ArrowRight className="ml-1.5" size={16} />
+        </span>
+      ) : null}
+    </>
   );
+
+  const className =
+    "group flex h-full flex-col border border-border bg-white p-6 transition-colors hover:border-primary/40";
+
+  if (link) {
+    return (
+      <Link to={link} className={className}>
+        {inner}
+      </Link>
+    );
+  }
+
+  return <article className={className}>{inner}</article>;
 };
 
 export default ServiceCard;

@@ -157,7 +157,7 @@ function FleetTypeTile({ type, interactive = true }: { type: FleetSuitableType; 
     <Link
       to={`${paths.fleet}#${type.id}`}
       tabIndex={interactive ? undefined : -1}
-      className="group flex h-[11rem] w-[8rem] flex-col items-center rounded-xl border border-border bg-[#f3f5f8] px-3 py-4 text-center transition-colors hover:border-primary/40 hover:bg-white md:h-[12rem] md:w-[8.75rem] md:px-3.5 md:py-5"
+      className="group flex h-[11rem] w-[8rem] flex-col items-center border border-border bg-surface px-3 py-4 text-center transition-colors hover:border-primary/40 hover:bg-white md:h-[12rem] md:w-[8.75rem] md:px-3.5 md:py-5"
     >
       <span className="mb-3 inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-navy text-white transition-colors group-hover:bg-primary md:h-14 md:w-14">
         <Icon size={24} strokeWidth={1.75} aria-hidden />
@@ -240,7 +240,7 @@ function ServiceSection({ block }: { block: ServiceBlock }) {
     <section
       id={block.id}
       aria-labelledby={`${block.id}-heading`}
-      className="relative scroll-mt-28 bg-[#f3f5f8]"
+      className="relative scroll-mt-28 bg-surface"
     >
       <div className="relative h-[280px] w-full overflow-hidden md:h-[360px] lg:h-[400px]">
         <img
@@ -267,7 +267,7 @@ function ServiceSection({ block }: { block: ServiceBlock }) {
       <div className="mx-auto max-w-7xl px-5 py-10 md:px-8 md:py-14 lg:px-10 lg:py-16">
         <div className="grid grid-cols-1 gap-5 md:grid-cols-2 md:gap-6 lg:gap-8">
           <div className="flex flex-col gap-5 md:gap-6">
-            <article className="rounded-2xl border border-border bg-white p-6 shadow-sm md:p-8">
+            <article className="border border-border bg-white p-6 shadow-sm md:p-8">
               <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-primary">Overview</p>
               <p className="mb-4 font-heading text-xl font-bold leading-snug text-navy md:text-2xl">{block.tagline}</p>
               <p className="mb-3 leading-relaxed text-muted-foreground">{block.lead}</p>
@@ -277,12 +277,12 @@ function ServiceSection({ block }: { block: ServiceBlock }) {
               </Link>
             </article>
 
-            <article className="rounded-2xl border border-primary/20 bg-navy p-6 text-white shadow-sm md:p-8">
+            <article className="border border-primary/20 bg-navy p-6 text-white shadow-sm md:p-8">
               <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-accent">The problem we solve</p>
               <p className="text-lg leading-relaxed text-gray-100 md:text-xl">{block.problem}</p>
             </article>
 
-            <article className="flex-1 rounded-2xl border border-border bg-white p-6 shadow-sm md:p-7">
+            <article className="flex-1 border border-border bg-white p-6 shadow-sm md:p-7">
               <div className="mb-4 flex items-center gap-2">
                 <span className="h-2 w-2 rounded-full bg-primary" aria-hidden />
                 <h3 className="font-heading text-lg font-bold text-navy">Who this is for</h3>
@@ -299,7 +299,7 @@ function ServiceSection({ block }: { block: ServiceBlock }) {
           </div>
 
           <div className="flex flex-col gap-5 md:gap-6">
-            <article className="rounded-2xl border border-border bg-white p-6 shadow-sm md:p-7">
+            <article className="border border-border bg-white p-6 shadow-sm md:p-7">
               <div className="mb-4 flex items-center gap-2">
                 <span className="h-2 w-2 rounded-full bg-accent" aria-hidden />
                 <h3 className="font-heading text-lg font-bold text-navy">What you get</h3>
@@ -314,7 +314,7 @@ function ServiceSection({ block }: { block: ServiceBlock }) {
               </ul>
             </article>
 
-            <article className="flex-1 rounded-2xl border border-border bg-white p-6 shadow-sm md:p-8">
+            <article className="flex-1 border border-border bg-white p-6 shadow-sm md:p-8">
               <h3 className="mb-5 font-heading text-lg font-bold text-navy">How we run it</h3>
               <ol className="m-0 space-y-4 p-0">
                 {block.points.map((point, i) => (
@@ -328,7 +328,7 @@ function ServiceSection({ block }: { block: ServiceBlock }) {
               </ol>
             </article>
 
-            <article className="rounded-2xl border border-border bg-white p-6 shadow-sm md:p-7">
+            <article className="border border-border bg-white p-6 shadow-sm md:p-7">
               <p className="mb-1 font-heading font-bold text-navy">Ready to move this lane?</p>
               <p className="mb-5 text-sm text-muted-foreground">Request capacity or discuss a contract with the desk.</p>
               <ServiceCtas block={block} />
@@ -336,7 +336,7 @@ function ServiceSection({ block }: { block: ServiceBlock }) {
           </div>
         </div>
 
-        <article className="mt-5 overflow-hidden rounded-2xl border border-border bg-white shadow-sm md:mt-6 lg:mt-8">
+        <article className="mt-5 overflow-hidden border border-border bg-white shadow-sm md:mt-6 lg:mt-8">
           <div className="flex flex-col gap-4 border-b border-border/70 px-6 py-5 md:flex-row md:items-end md:justify-between md:gap-8 md:px-8 md:py-6">
             <div className="max-w-2xl">
               <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-primary">Suitable fleet</p>
@@ -403,7 +403,7 @@ const LogisticsHub = () => {
       <section
         id="services"
         aria-labelledby="services-index-heading"
-        className="relative scroll-mt-28 border-b border-border bg-[#f3f5f8]"
+        className="relative scroll-mt-28 border-b border-border bg-surface"
       >
         <div className="container relative mx-auto container-padding py-14 md:py-16">
           <div className="mb-10 max-w-3xl">
@@ -524,7 +524,7 @@ const LogisticsHub = () => {
         </div>
       </section>
 
-      <section id="final-cta" aria-labelledby="logistics-final-cta-heading" className="bg-primary py-16 text-white md:py-20">
+      <section id="final-cta" aria-labelledby="logistics-final-cta-heading" className="final-cta-band">
         <div className="container mx-auto container-padding text-center">
           <h2 id="logistics-final-cta-heading" className="mb-4 text-3xl font-heading font-bold md:text-4xl">
             {copy.finalCta.h2}

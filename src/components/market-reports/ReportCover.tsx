@@ -9,7 +9,7 @@ type ReportCoverProps = {
 /** Full report cover — width-fluid, intrinsic aspect, never cropped. */
 export function ReportCover({ src, alt, className = "", decorative = false }: ReportCoverProps) {
   return (
-    <div className={`relative w-full overflow-hidden bg-[#061a33] ${className}`}>
+    <div className={`relative w-full overflow-hidden bg-navy ${className}`}>
       <img
         src={src}
         alt={decorative ? "" : alt}

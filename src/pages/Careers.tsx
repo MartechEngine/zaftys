@@ -153,10 +153,10 @@ const Careers = () => {
               { icon: Trophy, title: "Rewards", desc: "Performance and safety recognition where applicable, structured through HR policy." },
               { icon: Users, title: "Culture", desc: "A supportive environment rooted in operational discipline and family values." },
             ].map((item, index) => (
-              <Card key={index} className="text-center hover:-translate-y-1 transition-transform duration-300 border-none shadow-lg bg-muted/10">
+              <Card key={index} className="text-center transition-transform duration-300 border border-border bg-surface">
                 <CardContent className="p-8">
-                  <div className="w-12 h-12 rounded-full bg-white flex items-center justify-center mx-auto mb-4 shadow-sm text-primary">
-                    <item.icon size={24} />
+                  <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center border border-border bg-white text-primary">
+                    <item.icon size={22} />
                   </div>
                   <h3 className="font-bold text-navy mb-2">{item.title}</h3>
                   <p className="text-sm text-muted-foreground">{item.desc}</p>
@@ -168,7 +168,7 @@ const Careers = () => {
       </section>
 
       {/* Open Positions */}
-      <section id="open-positions" className="section-padding bg-muted/30 scroll-mt-28">
+      <section id="open-positions" className="section-padding bg-surface scroll-mt-28">
         <div className="container mx-auto container-padding">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-heading font-bold mb-4 text-navy">Current openings</h2>
@@ -176,7 +176,7 @@ const Careers = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
             {positions.map((job, index) => (
-              <Card key={index} className="flex flex-col h-full border-none shadow-md hover:shadow-xl transition-all duration-300">
+              <Card key={index} className="flex flex-col h-full border border-border transition-all duration-300">
                 <CardContent className="p-8 flex flex-col h-full">
                   <div className="mb-4">
                     <span className="text-xs font-bold uppercase tracking-wider text-accent bg-accent/10 px-2 py-1 rounded">

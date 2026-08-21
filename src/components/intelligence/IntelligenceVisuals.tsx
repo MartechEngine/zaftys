@@ -132,7 +132,7 @@ export function OpsAnalyticsPreview({ className }: { className?: string }) {
       aria-label="Operations analytics KPI categories from ZAFTYS TMS"
     >
       {kpis.map((k) => (
-        <div key={k.label} className="bg-[#f3f5f8] px-4 py-5">
+        <div key={k.label} className="bg-surface px-4 py-5">
           <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-primary">{k.label}</p>
           <p className="mt-2 font-heading text-lg font-bold text-navy">{k.value}</p>
           <p className="mt-1 text-xs text-muted-foreground">{k.hint}</p>

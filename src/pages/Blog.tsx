@@ -143,7 +143,7 @@ const Blog = () => {
             <Link
               to={`/blog/${featured.slug}`}
               className={cn(
-                "block mb-12 group rounded-xl border overflow-hidden transition-colors",
+                "block mb-12 group border overflow-hidden transition-colors",
                 isDeepResearch(featured)
                   ? "border-cyan/40 hover:border-cyan/70 bg-[#F4F9FB]"
                   : "border-border hover:border-primary/40",
@@ -250,7 +250,7 @@ const Blog = () => {
         </div>
       </section>
 
-      <section className="section-padding bg-muted/30">
+      <section className="section-padding bg-surface">
         <div className="container mx-auto container-padding max-w-2xl text-center">
           <h2 className="text-3xl font-heading font-bold text-navy mb-3">Stay updated</h2>
           <p className="text-muted-foreground mb-6">

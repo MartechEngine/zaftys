@@ -87,7 +87,7 @@ const Technology = () => (
           {c.intro.pillars.map((pillar, i) => (
             <article
               key={pillar.title}
-              className="flex flex-col border border-border bg-[#f3f5f8] p-6 md:min-h-[200px]"
+              className="flex flex-col border border-border bg-surface p-6 md:min-h-[200px]"
             >
               <p className="mb-4 font-heading text-xs font-bold tracking-[0.2em] text-accent">
                 {String(i + 1).padStart(2, "0")}
@@ -102,7 +102,7 @@ const Technology = () => (
       </div>
     </section>
 
-    <section className="border-t border-border bg-[#f3f5f8] px-5 py-12 md:px-8 md:py-14">
+    <section className="border-t border-border bg-surface px-5 py-12 md:px-8 md:py-14">
       <div className="mx-auto max-w-7xl">
         <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-primary">
           {c.workflow.eyebrow}
@@ -176,10 +176,7 @@ const Technology = () => (
                   </ul>
                   <div className="mt-8 flex flex-wrap gap-3">
                     <Link to={module.cta.path}>
-                      <Button
-                        variant="outline"
-                        className="border-primary text-primary hover:bg-primary hover:text-white"
-                      >
+                      <Button variant="outline-brand">
                         {module.cta.label} <ArrowRight className="ml-2" size={16} />
                       </Button>
                     </Link>
@@ -206,7 +203,7 @@ const Technology = () => (
       </div>
     </section>
 
-    <section className="border-t border-border bg-[#f3f5f8] px-5 py-12 md:px-8 md:py-14">
+    <section className="border-t border-border bg-surface px-5 py-12 md:px-8 md:py-14">
       <div className="mx-auto max-w-7xl">
         <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-primary">
           {c.buyers.eyebrow}
@@ -271,7 +268,7 @@ const Technology = () => (
         </h2>
         <div className="space-y-4">
           {c.faqs.map((faq) => (
-            <div key={faq.question} className="border border-border bg-[#f3f5f8] p-6">
+            <div key={faq.question} className="border border-border bg-surface p-6">
               <h3 className="font-heading font-bold text-navy">{faq.question}</h3>
               <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{faq.answer}</p>
             </div>
@@ -280,7 +277,7 @@ const Technology = () => (
       </div>
     </section>
 
-    <section className="border-t border-border bg-[#f3f5f8] px-5 py-12 md:px-8 md:py-14">
+    <section className="border-t border-border bg-surface px-5 py-12 md:px-8 md:py-14">
       <div className="mx-auto max-w-7xl">
         <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-primary">
           {c.related.eyebrow}

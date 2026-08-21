@@ -134,10 +134,10 @@ const Partner = () => {
               { icon: Shield, title: "Payments via ZAFTYS", desc: "GST-compliant billing through ZAFTYS on trips we contract." },
               { icon: Zap, title: "TMS on ZAFTYS trips", desc: "Contracted work can sit in ZAFTYS TMS for status and close-out." },
             ].map((item, index) => (
-              <Card key={index} className="text-center border-none shadow-lg hover:-translate-y-1 transition-transform duration-300">
+              <Card key={index} className="text-center border border-border transition-transform duration-300">
                 <CardContent className="p-8">
-                  <div className="w-14 h-14 rounded-lg bg-primary/5 flex items-center justify-center mx-auto mb-4 text-primary">
-                    <item.icon size={32} />
+                  <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center border border-border bg-surface text-primary">
+                    <item.icon size={28} />
                   </div>
                   <h3 className="text-lg font-bold text-navy mb-2">{item.title}</h3>
                   <p className="text-sm text-muted-foreground">{item.desc}</p>
@@ -149,7 +149,7 @@ const Partner = () => {
       </section>
 
       {/* How It Works */}
-      <section className="section-padding bg-muted/30">
+      <section className="section-padding bg-surface">
         <div className="container mx-auto container-padding">
           <div className="text-center mb-16">
             <h2 className="text-3xl font-heading font-bold mb-4 text-navy">Simple onboarding. Clear standards.</h2>
@@ -158,7 +158,7 @@ const Partner = () => {
           <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
             {steps.map((item, index) => (
               <div key={index} className="relative group">
-                <Card className="h-full border-none shadow-sm bg-white">
+                <Card className="h-full border border-border bg-white">
                   <CardContent className="p-6 text-center">
                     <div className="text-4xl font-heading font-bold text-accent/20 mb-4 group-hover:text-accent transition-colors">
                       {item.step}
@@ -271,7 +271,7 @@ const Partner = () => {
       </section>
 
       {/* CTAs */}
-      <section className="py-16 bg-primary text-white text-center">
+      <section className="final-cta-band text-center">
         <div className="container mx-auto container-padding">
           <h2 className="text-3xl font-heading font-bold mb-4">Prefer to talk first?</h2>
           <p className="text-gray-200 mb-8 max-w-xl mx-auto">

@@ -148,7 +148,7 @@ export function ReportDownloadGate({
             aria-modal="true"
             aria-labelledby={titleId}
             className={cn(
-              "relative w-full max-w-md rounded-xl border border-border bg-white p-6 shadow-2xl",
+              "relative w-full max-w-md border border-border bg-white p-6 shadow-2xl",
               "max-h-[90vh] overflow-y-auto",
             )}
             onClick={(event) => event.stopPropagation()}

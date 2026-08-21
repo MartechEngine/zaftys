@@ -204,7 +204,7 @@ export function MarketReportLayout({ report }: MarketReportLayoutProps) {
             </div>
 
             <aside className="lg:col-span-5 lg:sticky lg:top-24 space-y-4 w-full max-w-xl mx-auto lg:max-w-none">
-              <div className="rounded-xl border border-white/15 bg-white text-foreground shadow-xl overflow-hidden">
+              <div className="border border-white/15 bg-white text-foreground shadow-xl overflow-hidden">
                 {report.coverImage ? (
                   <ReportCover
                     src={report.coverImage}
@@ -315,7 +315,7 @@ export function MarketReportLayout({ report }: MarketReportLayoutProps) {
                 <h2 className="text-2xl font-heading font-bold text-navy mb-4">Market snapshot</h2>
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                   {report.snapshot.map((item) => (
-                    <div key={item.label} className="rounded-xl border border-border bg-muted/20 p-4">
+                    <div key={item.label} className="border border-border bg-surface p-4">
                       <p className="text-[10px] uppercase tracking-wider text-muted-foreground mb-1">{item.label}</p>
                       <p className="font-heading font-bold text-navy text-lg leading-snug">{item.value}</p>
                       {item.note ? <p className="text-xs text-muted-foreground mt-1">{item.note}</p> : null}
@@ -330,7 +330,7 @@ export function MarketReportLayout({ report }: MarketReportLayoutProps) {
                   {report.coverage.map((item) => (
                     <li
                       key={item}
-                      className="rounded-full border border-border bg-muted/30 px-3 py-1.5 text-sm text-foreground"
+                      className="rounded-full border border-border bg-surface px-3 py-1.5 text-sm text-foreground"
                     >
                       {item}
                     </li>
@@ -344,7 +344,7 @@ export function MarketReportLayout({ report }: MarketReportLayoutProps) {
                   {report.takeaways.map((item) => (
                     <li
                       key={item}
-                      className="rounded-lg bg-muted/30 border border-border p-4 text-foreground leading-relaxed"
+                      className="rounded-lg bg-surface border border-border p-4 text-foreground leading-relaxed"
                     >
                       {item}
                     </li>
@@ -436,7 +436,7 @@ export function MarketReportLayout({ report }: MarketReportLayoutProps) {
       </section>
 
       {(related.length > 0 || relatedBlog.length > 0) && (
-        <section className="section-padding bg-muted/30">
+        <section className="section-padding bg-surface">
           <div className="container mx-auto container-padding max-w-4xl">
             {related.length > 0 ? (
               <div className="mb-10">

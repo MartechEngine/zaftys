@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { LazyTmsScreensCarousel } from "@/components/LazyTmsScreensCarousel";
 import { CTAGroup } from "@/components/CTAGroup";
+import { MarketingEyebrow } from "@/components/marketing/MarketingChrome";
 import { homeCopy } from "@/lib/home-copy";
 import { paths } from "@/lib/site-paths";
 
@@ -10,48 +11,41 @@ export function HomePlatformSection() {
 
   return (
     <section id="platform" aria-labelledby="platform-heading">
-      <div className="section-padding bg-white pb-8">
-        <div className="container mx-auto container-padding">
-          <div className="text-center max-w-3xl mx-auto">
-            <p className="text-sm font-semibold uppercase tracking-widest text-primary mb-3">
-              {platform.eyebrow}
-            </p>
-            <h2 id="platform-heading" className="text-4xl font-heading font-bold mb-4 text-navy">
-              {platform.h2}
-            </h2>
-            <p className="text-lg text-muted-foreground">{platform.lead}</p>
-          </div>
+      <div className="section-band bg-white">
+        <div className="section-band-inner max-w-3xl text-center">
+          <MarketingEyebrow>{platform.eyebrow}</MarketingEyebrow>
+          <h2 id="platform-heading" className="font-heading text-3xl font-bold text-navy md:text-4xl">
+            {platform.h2}
+          </h2>
+          <p className="mt-3 text-base leading-relaxed text-muted-foreground md:text-lg">{platform.lead}</p>
         </div>
       </div>
 
-      <div className="section-padding bg-muted/30 pt-4" aria-labelledby="platform-tms-heading">
-        <div className="container mx-auto container-padding">
-          <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-16">
-            <div className="lg:w-1/2 w-full order-2 lg:order-1">
+      <div className="section-band-wide bg-surface" aria-labelledby="platform-tms-heading">
+        <div className="section-band-inner-wide">
+          <div className="flex flex-col items-center gap-12 lg:flex-row lg:gap-16">
+            <div className="w-full order-2 lg:order-1 lg:w-1/2">
               <LazyTmsScreensCarousel surface="muted" />
             </div>
-            <div className="lg:w-1/2 order-1 lg:order-2">
-              <div className="inline-block px-3 py-1 rounded-full bg-primary/10 text-primary text-sm font-semibold mb-4 border border-primary/20">
+            <div className="order-1 lg:order-2 lg:w-1/2">
+              <div className="mb-4 inline-block border border-primary/20 bg-primary/10 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-primary">
                 {platform.tms.badge}
               </div>
               <h3
                 id="platform-tms-heading"
-                className="text-3xl md:text-4xl font-heading font-bold mb-4 text-navy leading-tight"
+                className="font-heading text-2xl font-bold leading-tight text-navy md:text-3xl"
               >
                 {platform.tms.h3}
               </h3>
-              <p className="text-lg text-muted-foreground mb-6 leading-relaxed">{platform.tms.lead}</p>
-              <CTAGroup className="justify-start">
+              <p className="mt-4 text-base leading-relaxed text-muted-foreground md:text-lg">
+                {platform.tms.lead}
+              </p>
+              <CTAGroup className="mt-6 justify-start">
                 <Link to={paths.technology.tms}>
                   <Button variant="accent">See ZAFTYS TMS</Button>
                 </Link>
                 <Link to={paths.contact}>
-                  <Button
-                    variant="outline"
-                    className="border-primary text-primary hover:bg-primary hover:text-white"
-                  >
-                    Book a Demo
-                  </Button>
+                  <Button variant="outline-brand">Book a Demo</Button>
                 </Link>
               </CTAGroup>
             </div>

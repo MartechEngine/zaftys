@@ -148,19 +148,21 @@ const Contact = () => {
       </PageHero>
 
       {/* Contact Info Grid */}
-      <section className="py-16 bg-white border-b border-border relative -mt-10 mx-5 sm:mx-8 lg:mx-12 xl:mx-16 rounded-xl shadow-lg z-20">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 container-padding">
+      <section className="section-band bg-white">
+        <div className="section-band-inner">
+          <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
           {contactInfo.map((info, index) => (
-            <div key={index} className="text-center group">
-              <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4 text-primary group-hover:scale-110 transition-transform">
-                <info.icon size={24} />
+            <div key={index} className="border border-border bg-surface p-6 text-center">
+              <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center border border-border bg-white text-primary">
+                <info.icon size={22} />
               </div>
-              <h3 className="text-lg font-heading font-bold text-navy mb-2">{info.title}</h3>
+              <h3 className="mb-2 font-heading text-lg font-bold text-navy">{info.title}</h3>
               {info.details.map((detail, dIndex) => (
                 <p key={dIndex} className="text-muted-foreground">{detail}</p>
               ))}
             </div>
           ))}
+          </div>
         </div>
       </section>
 
@@ -168,14 +170,14 @@ const Contact = () => {
       <section className="section-padding bg-navy text-white">
         <div className="container mx-auto container-padding">
           <div className="max-w-6xl mx-auto">
-            <div className="text-center mb-8 animate-fade-in-up">
-              <h2 className="text-4xl font-bold mb-3">Find Us</h2>
+            <div className="text-center mb-8">
+              <h2 className="mb-3 font-heading text-3xl font-bold md:text-4xl">Find Us</h2>
               <p className="text-gray-300">
                 {companyAddress.line1}, {companyAddress.line2}, {companyAddress.line3}
               </p>
             </div>
-            <Card className="overflow-hidden animate-scale-in border-none shadow-2xl">
-              <div className="relative w-full h-96 bg-muted">
+            <Card className="overflow-hidden border border-border bg-white">
+              <div className="relative h-96 w-full bg-surface">
                 <iframe
                   title="ZAFTYS Logistics Amravati office location"
                   src={companyAddress.mapsEmbedUrl}
@@ -210,12 +212,12 @@ const Contact = () => {
       </section>
 
       {/* Main Form Section */}
-      <section id="contact-form" className="section-padding bg-muted/30 scroll-mt-28">
+      <section id="contact-form" className="section-padding bg-surface scroll-mt-28">
         <div className="container mx-auto container-padding">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
             
             {/* Form */}
-            <Card className="border-none shadow-lg bg-white animate-fade-in-up">
+            <Card className="border border-border bg-white">
               <CardContent className="p-8 md:p-10">
                 <div className="mb-8">
                   <h2 className="text-3xl font-heading font-bold mb-2 text-navy">Send a Message</h2>
@@ -329,7 +331,7 @@ const Contact = () => {
                     />
                   </div>
 
-                  <Button type="submit" size="lg" variant="default" className="w-full h-14 text-lg" disabled={isSubmitting}>
+                  <Button type="submit" size="lg" variant="accent" className="w-full h-14 text-lg" disabled={isSubmitting}>
                     {isSubmitting ? (
                       <>
                         Sending...
@@ -346,11 +348,11 @@ const Contact = () => {
             </Card>
 
             {/* FAQ / Additional Info */}
-            <div className="space-y-10 animate-fade-in-up" style={{ animationDelay: "0.2s" }}>
+            <div className="space-y-10">
               <div>
                 <h3 className="text-2xl font-heading font-bold mb-6 text-navy">Frequently Asked Questions</h3>
                 <div className="space-y-6">
-                  <div className="bg-white p-6 rounded-lg shadow-sm border border-border">
+                  <div className="border border-border bg-white p-6">
                     <h4 className="font-bold text-navy mb-2 flex items-center gap-2">
                       <Clock size={18} className="text-accent" /> What are your operating hours?
                     </h4>
@@ -358,7 +360,7 @@ const Contact = () => {
                       Our office is open Mon-Sat, 9 AM to 6 PM. However, our operations and dispatch teams work 24/7 to ensure your shipments keep moving.
                     </p>
                   </div>
-                  <div className="bg-white p-6 rounded-lg shadow-sm border border-border">
+                  <div className="border border-border bg-white p-6">
                     <h4 className="font-bold text-navy mb-2 flex items-center gap-2">
                       <MessageSquare size={18} className="text-accent" /> How quickly can I get a quote?
                     </h4>
@@ -369,7 +371,7 @@ const Contact = () => {
                 </div>
               </div>
 
-              <div className="bg-navy text-white p-8 rounded-xl relative overflow-hidden">
+              <div className="relative overflow-hidden border border-border bg-navy p-8 text-white">
                 <div className="absolute top-0 right-0 p-4 opacity-10">
                   <MessageSquare size={100} />
                 </div>
@@ -389,7 +391,7 @@ const Contact = () => {
                 </Button>
               </div>
 
-              <div className="rounded-xl border border-border bg-muted/20 p-6">
+              <div className="border border-border bg-surface p-6">
                 <h3 className="text-lg font-heading font-bold text-navy mb-3">Explore ZAFTYS</h3>
                 <ul className="space-y-2 text-sm">
                   <li><Link to={paths.logistics.hub} className="text-primary hover:underline">Logistics and transportation</Link></li>

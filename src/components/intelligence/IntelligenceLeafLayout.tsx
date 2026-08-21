@@ -82,7 +82,7 @@ export function IntelligenceLeafLayout({ copy }: Props) {
           </div>
           <div className="grid gap-4 md:grid-cols-3">
             {c.problem.items.map((item, i) => (
-              <article key={item.title} className="border border-border bg-[#f3f5f8] p-6">
+              <article key={item.title} className="border border-border bg-surface p-6">
                 <p className="mb-3 font-heading text-xs font-bold tracking-[0.18em] text-accent">
                   {String(i + 1).padStart(2, "0")}
                 </p>
@@ -94,7 +94,7 @@ export function IntelligenceLeafLayout({ copy }: Props) {
         </div>
       </section>
 
-      <section className="border-t border-border bg-[#f3f5f8] px-5 py-12 md:px-8 md:py-14">
+      <section className="border-t border-border bg-surface px-5 py-12 md:px-8 md:py-14">
         <div className="mx-auto max-w-7xl">
           <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-primary">
             {c.capabilities.eyebrow}
@@ -147,7 +147,7 @@ export function IntelligenceLeafLayout({ copy }: Props) {
         </div>
       </section>
 
-      <section className="border-t border-border bg-[#f3f5f8] px-5 py-12 md:px-8 md:py-14">
+      <section className="border-t border-border bg-surface px-5 py-12 md:px-8 md:py-14">
         <div className="mx-auto max-w-7xl">
           <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-primary">
             {c.whoFor.eyebrow}
@@ -207,7 +207,7 @@ export function IntelligenceLeafLayout({ copy }: Props) {
         </div>
       </section>
 
-      <section className="border-t border-border bg-[#f3f5f8] px-5 py-12 md:px-8 md:py-14">
+      <section className="border-t border-border bg-surface px-5 py-12 md:px-8 md:py-14">
         <div className="mx-auto max-w-7xl">
           <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-primary">
             {c.related.eyebrow}

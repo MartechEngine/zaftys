@@ -99,7 +99,7 @@ const Services = () => {
       </PageHero>
 
       {/* Transportation explorer  -  truck × material matrix */}
-      <section id="transportation-explorer" className="section-padding bg-muted/30 scroll-mt-28">
+      <section id="transportation-explorer" className="section-padding bg-surface scroll-mt-28">
         <div className="container mx-auto container-padding">
           <div className="text-center mb-10 max-w-2xl mx-auto">
             <h2 className="text-3xl md:text-4xl font-heading font-bold mb-3 text-navy">Match the right asset to the cargo</h2>
@@ -141,7 +141,7 @@ const Services = () => {
       </section>
 
       {/* Materials  -  6 cards, 3×2 */}
-      <section id="materials" className="section-padding bg-muted/30 scroll-mt-28">
+      <section id="materials" className="section-padding bg-surface scroll-mt-28">
         <div className="container mx-auto container-padding">
           <div className="text-center mb-16 max-w-3xl mx-auto">
             <h2 className="text-4xl font-heading font-bold mb-4 text-navy">Materials we move</h2>
@@ -192,7 +192,7 @@ const Services = () => {
                   </ul>
                   <span className="inline-block px-4 py-2 bg-muted rounded text-sm font-semibold text-primary">{service.highlight}</span>
                 </div>
-                <Card className={`border-none shadow-lg bg-muted/20 ${index % 2 === 1 ? "lg:col-start-1" : ""}`}>
+                <Card className={`border border-border bg-surface ${index % 2 === 1 ? "lg:col-start-1" : ""}`}>
                   <CardContent className="p-8">
                     <p className="text-sm font-semibold text-muted-foreground uppercase tracking-wider mb-4">Every program includes</p>
                     {["Registered ZAFTYS contracts", "Own fleet plus TranZfort marketplace", "TMS tracking on active lanes"].map((line, i) => (
@@ -209,7 +209,7 @@ const Services = () => {
         </div>
       </section>
 
-      <section id="operations" className="section-padding bg-muted/30 scroll-mt-28">
+      <section id="operations" className="section-padding bg-surface scroll-mt-28">
         <div className="container mx-auto container-padding">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div>
@@ -259,7 +259,7 @@ const Services = () => {
         </div>
       </section>
 
-      <section className="py-24 bg-primary text-white text-center">
+      <section className="final-cta-band text-center">
         <div className="container mx-auto container-padding">
           <h2 className="text-4xl font-heading font-bold mb-6">Need a truck for this corridor?</h2>
           <p className="text-xl mb-10 text-gray-200 max-w-2xl mx-auto">WhatsApp the origin, destination, and vehicle class. We quote company fleet first.</p>

@@ -65,7 +65,7 @@ export default function SupplyChainAiPage() {
                 {c.intro.lead}
               </p>
             </div>
-            <ul className="space-y-3 border border-border bg-[#f3f5f8] p-6">
+            <ul className="space-y-3 border border-border bg-surface p-6">
               {c.intro.points.map((point) => (
                 <li key={point} className="flex items-start gap-3 text-sm text-muted-foreground">
                   <CheckCircle2 className="mt-0.5 shrink-0 text-accent" size={18} />
@@ -77,7 +77,7 @@ export default function SupplyChainAiPage() {
 
           <nav
             aria-label="Article sections"
-            className="mt-12 border border-border bg-[#f3f5f8] p-5 md:p-6"
+            className="mt-12 border border-border bg-surface p-5 md:p-6"
           >
             <p className="mb-4 text-xs font-semibold uppercase tracking-wider text-primary">
               In this article
@@ -104,7 +104,7 @@ export default function SupplyChainAiPage() {
       </section>
 
       {/* vs Analytics */}
-      <section className="border-t border-border bg-[#f3f5f8] px-5 py-12 md:px-8 md:py-14">
+      <section className="border-t border-border bg-surface px-5 py-12 md:px-8 md:py-14">
         <div className="mx-auto max-w-7xl">
           <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-primary">
             {c.vsAnalytics.eyebrow}
@@ -148,7 +148,7 @@ export default function SupplyChainAiPage() {
           <p className="mt-3 max-w-2xl text-base text-muted-foreground">{c.scenario.lead}</p>
           <ol className="mt-8 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
             {c.scenario.steps.map((step, i) => (
-              <li key={step.label} className="border border-border bg-[#f3f5f8] p-5">
+              <li key={step.label} className="border border-border bg-surface p-5">
                 <p className="font-heading text-xs font-bold tracking-[0.18em] text-accent">
                   {String(i + 1).padStart(2, "0")}
                 </p>
@@ -161,7 +161,7 @@ export default function SupplyChainAiPage() {
       </section>
 
       {/* Who for */}
-      <section className="border-t border-border bg-[#f3f5f8] px-5 py-12 md:px-8 md:py-14">
+      <section className="border-t border-border bg-surface px-5 py-12 md:px-8 md:py-14">
         <div className="mx-auto max-w-7xl">
           <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-primary">
             {c.whoFor.eyebrow}
@@ -191,7 +191,7 @@ export default function SupplyChainAiPage() {
             key={stage.id}
             id={stage.id}
             className={`scroll-mt-28 border-t border-border ${
-              index % 2 === 0 ? "bg-white" : "bg-[#f3f5f8]"
+              index % 2 === 0 ? "bg-white" : "bg-surface"
             }`}
           >
             <div className="mx-auto w-full max-w-[90rem] px-5 py-12 md:px-10 md:py-16 lg:px-14">
@@ -264,7 +264,7 @@ export default function SupplyChainAiPage() {
       </section>
 
       {/* Related */}
-      <section className="border-t border-border bg-[#f3f5f8] px-5 py-12 md:px-8 md:py-14">
+      <section className="border-t border-border bg-surface px-5 py-12 md:px-8 md:py-14">
         <div className="mx-auto max-w-7xl">
           <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-primary">
             {c.related.eyebrow}

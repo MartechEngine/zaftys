@@ -37,7 +37,7 @@ export default function HomeBlogTeasers({ embedded = false }: HomeBlogTeasersPro
             <Link
               key={`${post.slug}-${index}`}
               to={`/blog/${post.slug}`}
-              className="group w-64 shrink-0 rounded-xl border border-border bg-white shadow-sm hover:shadow-md transition-shadow overflow-hidden focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+              className="group w-64 shrink-0 border border-border bg-white shadow-sm hover:shadow-md transition-shadow overflow-hidden focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
             >
               <div className="bg-muted h-36 overflow-hidden">
                 {post.heroImage ? (

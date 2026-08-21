@@ -43,7 +43,7 @@ const ResponsiveImage = ({
   return (
     <div
       className={cn(
-        "relative overflow-hidden bg-muted/20",
+        "relative overflow-hidden bg-surface",
         fill ? "absolute inset-0 h-full w-full" : cn("w-full", aspectClasses[aspectRatio]),
         !fill && objectFit === "contain" && "flex items-center justify-center",
         className

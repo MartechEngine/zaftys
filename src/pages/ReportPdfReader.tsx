@@ -70,8 +70,8 @@ const ReportPdfReader = () => {
           />
         </div>
       ) : (
-        <div className="flex-1 flex items-center justify-center p-6 bg-muted/30">
-          <div className="w-full max-w-md rounded-xl border border-border bg-white p-6 shadow-sm">
+        <div className="flex-1 flex items-center justify-center p-6 bg-surface">
+          <div className="w-full max-w-md border border-border bg-white p-6 shadow-sm">
             <div className="mb-4 flex items-start gap-3">
               <span className="rounded-md bg-navy/5 p-2 text-navy">
                 <Lock size={18} />

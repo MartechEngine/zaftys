@@ -93,9 +93,9 @@ function HighlightCard({
   const link = highlightLinks[index];
   const isRoute = link?.startsWith("/");
   const card = (
-    <Card className="border-none shadow-sm hover:shadow-lg transition-all bg-white h-full">
+    <Card className="border border-border transition-all bg-white h-full">
       <CardContent className="p-6">
-        <div className="w-11 h-11 rounded-lg bg-primary/10 flex items-center justify-center mb-4 text-primary">
+        <div className="mb-4 flex h-11 w-11 items-center justify-center border border-border bg-surface text-primary">
           <Icon size={22} />
         </div>
         <h3 className="text-base font-heading font-bold text-navy mb-2">{item.title}</h3>
@@ -112,7 +112,7 @@ function HighlightCard({
   }
 
   const className =
-    "block rounded-xl h-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2";
+    "block h-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2";
 
   if (isRoute) {
     return (
@@ -177,7 +177,7 @@ const NetworkPage = () => {
       {/* Trust pulse  -  aligned to container */}
       <section className="relative z-20 -mt-8 pb-4">
         <div className="container mx-auto container-padding">
-          <div className="max-w-5xl mx-auto rounded-xl bg-white border border-border shadow-lg px-6 py-8 md:px-10">
+          <div className="mx-auto max-w-5xl border border-border bg-white px-6 py-8 md:px-10">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
               {pulseItems.map((item) => (
                 <div key={item.label} className="text-center">
@@ -202,7 +202,7 @@ const NetworkPage = () => {
         </div>
       </section>
 
-      <section id="how-it-works" className="section-padding bg-muted/30 scroll-mt-28">
+      <section id="how-it-works" className="section-padding bg-surface scroll-mt-28">
         <div className="container mx-auto container-padding">
           <div className="text-center max-w-2xl mx-auto mb-10">
             <h2 className="text-3xl md:text-4xl font-heading font-bold mb-3 text-navy">How TranZfort works</h2>
@@ -211,7 +211,7 @@ const NetworkPage = () => {
             </p>
           </div>
 
-          <div className="max-w-3xl mx-auto rounded-2xl border border-border bg-white shadow-lg overflow-hidden">
+          <div className="mx-auto max-w-3xl overflow-hidden border border-border bg-white">
             <div className="p-6 md:p-8">
               <ol className="relative space-y-0">
                 {flowSteps.map((step, index) => (
@@ -248,7 +248,7 @@ const NetworkPage = () => {
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 max-w-5xl mx-auto">
             {networkBenefits.map((item) => (
-              <Card key={item.title} className="border border-border/60 shadow-sm bg-muted/10 h-full">
+              <Card key={item.title} className="border border-border/60 shadow-sm bg-surface h-full">
                 <CardContent className="p-5">
                   <h3 className="font-heading font-bold text-navy mb-2 text-sm">{item.title}</h3>
                   <p className="text-sm text-muted-foreground leading-relaxed">{item.desc}</p>
@@ -260,7 +260,7 @@ const NetworkPage = () => {
       </section>
 
       {/* Audience  -  shipper + trucker only */}
-      <section className="section-padding bg-muted/30">
+      <section className="section-padding bg-surface">
         <div className="container mx-auto container-padding">
           <div className="text-center max-w-2xl mx-auto mb-10">
             <h2 className="text-3xl md:text-4xl font-heading font-bold mb-3 text-navy">Built for both sides of the load</h2>
@@ -275,7 +275,7 @@ const NetworkPage = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
             {audienceCards.map((card) => (
-              <Card key={card.title} className="border-none shadow-md h-full bg-white">
+              <Card key={card.title} className="border border-border h-full bg-white">
                 <CardContent className="p-6 flex flex-col h-full">
                   <h3 className="text-lg font-heading font-bold text-navy mb-4">{card.title}</h3>
                   <ul className="space-y-3 flex-1">
@@ -320,7 +320,7 @@ const NetworkPage = () => {
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="p-6 md:p-8 rounded-xl bg-white/5 border border-white/10 h-full">
+            <div className="h-full border border-white/10 bg-white/5 p-6 md:p-8">
               <h3 className="font-heading font-bold text-lg mb-5 flex items-center gap-2">
                 <X className="text-red-400 shrink-0" size={20} /> Calling five brokers
               </h3>
@@ -345,7 +345,7 @@ const NetworkPage = () => {
       </section>
 
       {/* CTA */}
-      <section className="py-20 md:py-24 bg-primary text-white text-center">
+      <section className="final-cta-band text-center">
         <div className="container mx-auto container-padding max-w-2xl">
           <h2 className="text-3xl md:text-4xl font-heading font-bold mb-4">Post a load or find a truck</h2>
           <p className="text-lg text-gray-200 mb-8">

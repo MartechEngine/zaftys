@@ -56,7 +56,7 @@ const Resources = () => {
       <section className="section-padding bg-white">
         <div className="container mx-auto container-padding">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
-            <Card className="border-none shadow-lg hover:shadow-xl transition-shadow">
+            <Card className="border border-border transition-shadow">
               <CardContent className="p-8 md:p-10 flex flex-col h-full">
                 <div className="w-12 h-12 rounded-lg bg-primary/10 text-primary flex items-center justify-center mb-5">
                   <FileText size={24} />
@@ -73,7 +73,7 @@ const Resources = () => {
               </CardContent>
             </Card>
 
-            <Card className="border-none shadow-lg hover:shadow-xl transition-shadow">
+            <Card className="border border-border transition-shadow">
               <CardContent className="p-8 md:p-10 flex flex-col h-full">
                 <div className="w-12 h-12 rounded-lg bg-primary/10 text-primary flex items-center justify-center mb-5">
                   <BookOpen size={24} />
@@ -84,7 +84,7 @@ const Resources = () => {
                   {postCount} articles published.
                 </p>
                 <Link to="/blog">
-                  <Button variant="outline" className="w-full sm:w-auto border-primary text-primary hover:bg-primary hover:text-white">
+                  <Button variant="outline-brand" className="w-full sm:w-auto">
                     Open blog <ArrowRight className="ml-2" size={16} />
                   </Button>
                 </Link>
