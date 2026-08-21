@@ -11,9 +11,6 @@ import {
   containerIndiaTakeaways,
   containerIndiaReferences,
 } from "@/lib/blog-exhibits-container-india";
-import { wave1BlogPosts } from "@/lib/blog-wave1-data";
-import { wave2BlogPosts } from "@/lib/blog-wave2-data";
-import { wave3BlogPosts } from "@/lib/blog-wave3-data";
 
 export type BlogCategory = "operations" | "industries" | "technology";
 
@@ -2439,9 +2436,6 @@ export const blogPosts: readonly BlogPost[] = [
     ],
     cta: { label: "Port and container road", to: "/industries/container-transport" },
   },
-  ...wave1BlogPosts,
-  ...wave2BlogPosts,
-  ...wave3BlogPosts,
 ];
 
 export function listPosts(): BlogPost[] {

@@ -1,7 +1,5 @@
 /** ZAFTYS Market Reports — institutional logistics & digital freight intelligence */
 
-import { indiaWave1Reports } from "@/lib/market-reports-india-wave1";
-
 export type ReportCta =
   | { label: string; to: string }
   | { label: string; whatsapp: true };
@@ -232,11 +230,7 @@ export const marketReports: readonly MarketReport[] = [
       { label: "ZAFTYS Analytics Data Bank (report ID ZAF-LOGISTICS-2027-2036)" },
       { label: "Bank logistics-institutional model · published 2026-08-13" },
     ],
-    relatedReportSlugs: [
-      "digital-freight-matching-market-2027-2036",
-      "india-road-freight-ftl-outlook-2027-2036",
-      "india-cement-logistics-bulk-movement-outlook",
-    ],
+    relatedReportSlugs: ["digital-freight-matching-market-2027-2036"],
     relatedBlogSlugs: ["planning-industrial-shipments", "tms-for-heavy-haul"],
     cta: { label: "Discuss logistics planning on WhatsApp", whatsapp: true },
   }),
@@ -402,14 +396,10 @@ export const marketReports: readonly MarketReport[] = [
       { label: "ZAFTYS DFM market databank 2027-2036 (bank dfm-institutional-220)" },
       { label: "Published 2026-08-14 · updated on site 2026-08-16 · www.zaftys.com" },
     ],
-    relatedReportSlugs: [
-      "global-logistics-market-2027-2036",
-      "india-road-freight-ftl-outlook-2027-2036",
-    ],
-    relatedBlogSlugs: ["tms-for-heavy-haul", "reduce-empty-return-trips", "tranzfort-matching-free-to-post"],
+    relatedReportSlugs: ["global-logistics-market-2027-2036"],
+    relatedBlogSlugs: ["tms-for-heavy-haul", "reduce-empty-return-trips"],
     cta: { label: "Discuss freight matching on WhatsApp", whatsapp: true },
   }),
-  ...indiaWave1Reports,
 ];
 
 export function listReports(): MarketReport[] {

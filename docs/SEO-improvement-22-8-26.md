@@ -248,11 +248,13 @@ To rank #1, generate Google Sitelinks, and claim a Knowledge Panel for the bare 
 9. ~~Implement/extend schema per §15~~ (`logisticsServiceLeafSchema`, TechArticle on reports/deep-research, SoftwareApplication `featureList`). Validate with Google Rich Results Test after deploy.
 10. Wire GA4 + keep Search Console monitoring (see `SEO&Blog.md`) — analytics helpers already present; confirm measurement ID in env.
 
-### P2 — Authority Cadence (Next 3 Months) _(Waves 1–3 blogs shipped 2026-08-22; tags `seo-p2-rollback-2026-08-22`, `seo-wave2-rollback-2026-08-22`, `seo-wave3-rollback-2026-08-22`)_
+### P2 — Authority Cadence _(new blogs & new reports DEFERRED — author one-at-a-time later)_
 
-11. ~~Publish **15–20 blogs** from §12~~ — **20 posts** across Waves 1–3 (`blog-wave1/2/3-data.ts`).
-12. Publish **10+ reports** from §13 — ~~#1 India FTL~~ ~~#2 Cement~~ live (HTML + stub PDF); #3–#10 remain.
-13. Run **entity & off-page** workstream below in parallel with content (GBP / NAP / PR — ops, not code).
+11. **Deferred:** §12 Waves 1–3 blogs — backlog kept below; not live until each is authored individually.
+12. **Deferred:** §13 India report slate — backlog kept; only the **2 existing** global/DFM reports remain live.
+13. Entity & off-page (GBP / NAP / PR) — ops, not code; still open.
+
+**Focus now:** improve existing live blogs (11), existing reports (2), and commercial pillars/leaves (P0/P1 already shipped).
 
 ---
 
@@ -319,7 +321,7 @@ To rank #1, generate Google Sitelinks, and claim a Knowledge Panel for the bare 
 
 ## 10. Already published (do not duplicate)
 
-**Blogs live today**
+**Blogs live today** (existing only — Wave backlog deferred)
 
 - TMS Beyond GPS; TMS Evaluation Guide (manufacturers 2026)
 - Steel coil transport basics; Cement plant loading windows
@@ -327,16 +329,11 @@ To rank #1, generate Google Sitelinks, and claim a Knowledge Panel for the bare 
 - India axle load & GVW; Spot vs dedicated fleet
 - Plant detention & TAT; ePOD / FASTag / e-Way Bill
 - Container trucking India (ports, chassis, backhaul)
-- **Wave 1:** Mill gate papers (coil); Chemical tanker wash/MSDS; 32 vs 40 ft sealed; Pneumatic bulker; Document expiry & weighbridge; Port vs plant free time; Open body vs tipper
-- **Wave 2:** Mining tipper programs; FMCG factory-to-DC OTIF; Contract vs spot for plants; Labeled network capacity; TranZfort matching; ePOD that closes billing; Reading a live map
-- **Wave 3:** Inter-plant WIP; Shutdown/turnaround freight; Amravati desk without fake fleet counts; GST invoice hygiene; Partner onboarding; Analytics vs WhatsApp lane truth
 
-**Reports live today**
+**Reports live today** (existing only — India slate deferred)
 
 - Global Logistics Market Size, Share & Forecast 2027–2036 (`/reports/global-logistics-market-2027-2036`)
 - Digital Freight Matching Market Size & Forecast 2027–2036 (`/reports/digital-freight-matching-market-2027-2036`)
-- **India Road Freight & FTL Outlook 2027–2036** (`/reports/india-road-freight-ftl-outlook-2027-2036`) — no invented TAM
-- **India Cement Logistics & Bulk Movement Outlook** (`/reports/india-cement-logistics-bulk-movement-outlook`) — no invented TAM
 
 ---
 
@@ -344,7 +341,7 @@ To rank #1, generate Google Sitelinks, and claim a Knowledge Panel for the bare 
 
 Publish for a **new-domain sandbox**: Wave 1 = hyper-specific long-tail (equipment, compliance, plant clocks) so pages index quickly with low domain authority.
 
-### Wave 1 — Long-tail technical (Month 1, ~7) — New Domain Priority _(shipped)_
+### Wave 1 — Long-tail technical (Month 1, ~7) — New Domain Priority _(deferred)_
 
 | # | Working title | Slug | Pillar / cluster |
 |---|---------------|------|------------------|
@@ -356,7 +353,7 @@ Publish for a **new-domain sandbox**: Wave 1 = hyper-specific long-tail (equipme
 | 6 | Port free time vs plant free time | `port-free-time-vs-plant-free-time-containers` | Container |
 | 7 | Open body vs tipper bagged cement | `open-body-vs-tipper-bagged-cement-aggregates` | Cement |
 
-### Wave 2 — Cluster expansion & product literacy (Month 2, ~6–7) _(shipped)_
+### Wave 2 — Cluster expansion & product literacy (Month 2, ~6–7) _(deferred)_
 
 | # | Working title | Slug | Pillar |
 |---|---------------|------|--------|
@@ -368,7 +365,7 @@ Publish for a **new-domain sandbox**: Wave 1 = hyper-specific long-tail (equipme
 | 13 | ePOD that closes billing | `epod-that-closes-billing` | TMS |
 | 14 | Reading a live map | `reading-live-map-without-calling-control-room` | TMS / Tracking |
 
-### Wave 3 — Depth, trust & differentiation (Month 3, ~5–6) _(shipped)_
+### Wave 3 — Depth, trust & differentiation (Month 3, ~5–6) _(deferred)_
 
 | # | Working title | Slug | Pillar |
 |---|---------------|------|--------|
@@ -393,27 +390,27 @@ Every report landing page (`/reports/{slug}`) in `src/lib/market-reports-data.ts
 4. **Frequently Asked Questions (200–300 words)**: 3–4 Q&As covering report coverage, update frequency, and licensing (Candidate for `FAQPage` schema).
 5. **PDF Gate Constraint**: **ONLY the downloadable PDF file is gated behind the lead form.** The full HTML landing text must remain 100% crawlable by Googlebot.
 
-### Live reports (HTML remodeled / India slate started)
+### Live reports (existing)
 
 1. ~~Digital Freight Matching Market Size & Forecast 2027–2036~~ — HTML expanded (P0)
 2. ~~Global Logistics Market Size, Share & Forecast 2027–2036~~ — HTML expanded (P0)
-3. ~~India Road Freight & FTL Outlook 2027–2036~~ — shipped (`india-road-freight-ftl-outlook-2027-2036`)
-4. ~~India Cement Logistics & Bulk Movement Outlook~~ — shipped (`india-cement-logistics-bulk-movement-outlook`)
 
-### Core slate remaining (#3–#10)
+### Core India slate (#1–#10) — all deferred (author individually later)
 
 | # | Working title | Cluster | Status |
 |---|---------------|---------|--------|
-| 3 | India Steel & Coil Road Transport Outlook | Steel | Pending |
-| 4 | India Port–Inland Container Road Haulage Outlook | Container | Pending |
-| 5 | India Mining & Bulk Tipper Logistics Outlook | Mining | Pending |
-| 6 | Transport Management Systems in India: Adoption & Buyer Criteria | TMS | Pending |
-| 7 | Digital Freight Matching in India: Corridor Reality Check | TranZfort / DFM | Pending |
-| 8 | Contract vs Spot Capacity in Indian Industrial Freight | Contract / Dedicated | Pending |
-| 9 | Plant Detention, Yard TAT & Cost-to-Serve in Indian FTL | Cross-ops | Pending |
-| 10 | ePOD, e-Way Bill & Digitized Trip Close-Out in India | TMS / Compliance | Pending |
+| 1 | India Road Freight & FTL Outlook 2027–2036 | Logistics / Manufacturing | Deferred |
+| 2 | India Cement Logistics & Bulk Movement Outlook | Cement | Deferred |
+| 3 | India Steel & Coil Road Transport Outlook | Steel | Deferred |
+| 4 | India Port–Inland Container Road Haulage Outlook | Container | Deferred |
+| 5 | India Mining & Bulk Tipper Logistics Outlook | Mining | Deferred |
+| 6 | Transport Management Systems in India: Adoption & Buyer Criteria | TMS | Deferred |
+| 7 | Digital Freight Matching in India: Corridor Reality Check | TranZfort / DFM | Deferred |
+| 8 | Contract vs Spot Capacity in Indian Industrial Freight | Contract / Dedicated | Deferred |
+| 9 | Plant Detention, Yard TAT & Cost-to-Serve in Indian FTL | Cross-ops | Deferred |
+| 10 | ePOD, e-Way Bill & Digitized Trip Close-Out in India | TMS / Compliance | Deferred |
 
-**India report rule:** do not invent national TAM figures; disclose limits; stub PDF OK until chapter PDF ships; HTML brief is the crawlable authority.
+**India report rule:** do not invent national TAM figures; disclose limits; HTML brief is the crawlable authority when each ships.
 
 ---
 

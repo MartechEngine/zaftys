@@ -32,12 +32,7 @@ function blogPostUrlsFromFile(filePath) {
 
 function blogPostUrls() {
   const lib = path.join(root, "src", "lib");
-  const files = [
-    path.join(lib, "blog-data.ts"),
-    path.join(lib, "blog-wave1-data.ts"),
-    path.join(lib, "blog-wave2-data.ts"),
-    path.join(lib, "blog-wave3-data.ts"),
-  ].filter((f) => fs.existsSync(f));
+  const files = [path.join(lib, "blog-data.ts")].filter((f) => fs.existsSync(f));
   const bySlug = new Map();
   for (const file of files) {
     for (const post of blogPostUrlsFromFile(file)) {
@@ -63,10 +58,7 @@ function reportUrlsFromFile(filePath) {
 
 function reportUrls() {
   const lib = path.join(root, "src", "lib");
-  const files = [
-    path.join(lib, "market-reports-data.ts"),
-    path.join(lib, "market-reports-india-wave1.ts"),
-  ].filter((f) => fs.existsSync(f));
+  const files = [path.join(lib, "market-reports-data.ts")].filter((f) => fs.existsSync(f));
   const bySlug = new Map();
   for (const file of files) {
     for (const report of reportUrlsFromFile(file)) {
