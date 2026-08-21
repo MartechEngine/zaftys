@@ -18,7 +18,7 @@ import {
   intelligenceInquiryMail,
 } from "@/lib/intelligence-hub-copy";
 import { breadcrumbSchema, organizationSchema } from "@/lib/schema";
-import heroTechnology from "@/assets/hero-technology.jpg";
+import heroTechnology from "@/assets/hero-technology.webp";
 
 const c = intelligenceHubCopy;
 

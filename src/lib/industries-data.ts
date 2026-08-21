@@ -37,7 +37,7 @@ export const industries: readonly IndustryRecord[] = [
       "Bagged cement, bulk cement on pneumatic bulkers, clinker, fly ash, and aggregates — planned around plant loading windows and silo / project TAT, not a spot rate alone.",
     features: ["Bulker for loose cement & fly ash", "Tipper / open body for bagged & aggregates", "Plant-window & detention language"],
     highlight: "Plant windows · bulker & tipper",
-    image: "/images/marketing/industry-cement.jpg",
+    image: "/images/marketing/industry-cement.webp",
     products: [
       { name: "Bagged cement", note: "Open body / tipper timed to plant free-time" },
       { name: "Bulk cement", note: "Pneumatic bulker to RMC and dealer silos" },
@@ -117,7 +117,7 @@ export const industries: readonly IndustryRecord[] = [
       "Tipper and open-body programs for mining products — coal, iron ore, limestone, bauxite, manganese, chrome, concentrates, overburden, and quarry aggregates — from pit and stockyard to plant, mill, or siding.",
     features: ["Multi-mineral tipper haul", "Pit-to-plant & quarry cycles", "Weighbridge & site papers"],
     highlight: "All mining products · tipper programs",
-    image: "/images/marketing/industry-coal-mining.jpg",
+    image: "/images/marketing/industry-coal-mining.webp",
     products: [
       { name: "Coal", note: "Pit / siding to power, cement, and industrial boilers" },
       { name: "Iron ore", note: "Mine or stockyard to crusher, beneficiation, steel mill" },
@@ -199,7 +199,7 @@ export const industries: readonly IndustryRecord[] = [
       "Steel coil transportation on flatbed and side-wall trailers with proper securing, plus plates, TMT, billets, and structurals — mill windows, weighbridge, and axle reality.",
     features: ["Steel coil on flatbed / side wall", "Plates, TMT & structurals", "Mill window & weighbridge"],
     highlight: "Coil-ready trailers · mill timing",
-    image: "/images/marketing/industry-steel-metals.jpg",
+    image: "/images/marketing/industry-steel-metals.webp",
     products: [
       { name: "Steel coils", note: "Flatbed / side wall with cradles and chain securing" },
       { name: "Plates & sheets", note: "Mill-to-fabricator and stockyard legs" },
@@ -279,7 +279,7 @@ export const industries: readonly IndustryRecord[] = [
       "Container movement by road — port to city, city to port, port to factory, and ICD / CFS legs — sealed trailers timed to plant and port windows, not demurrage roulette.",
     features: ["Port ↔ city / factory road legs", "32 ft & 40 ft container trailers", "Plant & port window dispatch"],
     highlight: "Port ↔ city · sealed road legs",
-    image: "/images/marketing/industry-container.jpg",
+    image: "/images/marketing/industry-container.webp",
     products: [
       { name: "Port to factory / warehouse", note: "Inbound containers off the berth to the bay" },
       { name: "Factory / city to port", note: "Export boxes timed to cut-off and plant load" },
@@ -359,7 +359,7 @@ export const industries: readonly IndustryRecord[] = [
       "Industrial chemicals and bulk liquids with the right tanker or closed body, wash and document discipline, and an accountable desk — not informal spot tankers at the gate.",
     features: ["Tanker & packaged programs", "Wash / docs before allotment", "Structured LR & ePOD"],
     highlight: "Tanker discipline · papers first",
-    image: "/images/marketing/industry-chemicals.jpg",
+    image: "/images/marketing/industry-chemicals.webp",
     products: [
       { name: "Bulk liquids", note: "Tanker class matched to product and wash rules" },
       { name: "Packaged chemicals", note: "Closed / covered body with sealed handover" },
@@ -438,7 +438,7 @@ export const industries: readonly IndustryRecord[] = [
       "Production-linked inbound and outbound FTL — raw materials in, finished goods out, inter-plant WIP — timed to shift gates and line schedules, not a generic truck hunt.",
     features: ["Production-window dispatch", "Inbound + outbound + WIP", "TMS on contracted trips"],
     highlight: "Shift gates · line-linked FTL",
-    image: "/images/marketing/industry-manufacturing.jpg",
+    image: "/images/marketing/industry-manufacturing.webp",
     products: [
       { name: "Inbound raw materials", note: "Supplier-to-plant timed to shift and bay" },
       { name: "Finished goods outbound", note: "Plant-to-warehouse and plant-to-customer" },
@@ -518,7 +518,7 @@ export const industries: readonly IndustryRecord[] = [
       "Factory-to-DC and hub replenishment with OTIF discipline, fast turnaround, and lane-level trip records — commercial FTL and LCV, not two-wheeler last mile.",
     features: ["Factory-to-DC FTL", "OTIF & ePOD", "Seasonal surge cover"],
     highlight: "OTIF · factory-to-DC lanes",
-    image: "/images/marketing/industry-fmcg.jpg",
+    image: "/images/marketing/industry-fmcg.webp",
     products: [
       { name: "Factory-to-DC FTL", note: "Closed or open body by SKU and weather risk" },
       { name: "Hub replenishment", note: "Scheduled hub-to-hub on fixed windows" },
@@ -597,7 +597,7 @@ export const industries: readonly IndustryRecord[] = [
       "One account across plants for mixed industrial freight — contract lanes on our fleet, spot overflow on Tranzfort, shutdown and project windows, TMS on the trips we run.",
     features: ["Multi-plant account desk", "Contract + spot mix", "Shutdown & project windows"],
     highlight: "One desk · mixed plant freight",
-    image: "/images/marketing/industry-industrial-logistics.jpg",
+    image: "/images/marketing/industry-industrial-logistics.webp",
     products: [
       { name: "Multi-plant contract lanes", note: "Standing FTL across industrial belts" },
       { name: "Spot & surge overflow", note: "Labeled Tranzfort when plants need extra wheels" },

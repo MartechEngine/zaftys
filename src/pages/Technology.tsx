@@ -24,7 +24,7 @@ import {
   softwareApplicationSchema,
   websiteSchema,
 } from "@/lib/schema";
-import heroTechnology from "@/assets/hero-technology.jpg";
+import heroTechnology from "@/assets/hero-technology.webp";
 
 const c = technologyHubCopy;
 

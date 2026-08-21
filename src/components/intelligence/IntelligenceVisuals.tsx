@@ -22,7 +22,15 @@ export function IntelligenceProductShot({
           app.zaftys.com
         </span>
       </div>
-      <img src={src} alt={alt} className="block w-full object-cover object-top" loading="lazy" />
+      <img
+        src={src}
+        alt={alt}
+        width={1280}
+        height={853}
+        className="block aspect-[3/2] w-full object-cover object-top"
+        loading="lazy"
+        decoding="async"
+      />
       {caption ? (
         <figcaption className="border-t border-white/10 bg-[#121a2b] px-3 py-2 text-[11px] text-white/55">
           {caption}

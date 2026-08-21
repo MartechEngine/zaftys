@@ -50,6 +50,7 @@ const SEO = ({
   const pageUrl = canonical != null ? absoluteUrl(canonical) : BASE_URL;
   const imageUrl = image.startsWith("http") ? image : `${BASE_URL}${image}`;
   const showCanonical = canonical != null || !robotsContent;
+  const isDefaultOg = image === DEFAULT_OG_IMAGE || imageUrl.endsWith(DEFAULT_OG_IMAGE);
 
   return (
     <Helmet>
@@ -65,8 +66,12 @@ const SEO = ({
       <meta property="og:description" content={description} />
       <meta property="og:url" content={showCanonical ? pageUrl : BASE_URL} />
       <meta property="og:image" content={imageUrl} />
-      <meta property="og:image:width" content="1200" />
-      <meta property="og:image:height" content="630" />
+      {isDefaultOg ? (
+        <>
+          <meta property="og:image:width" content="1200" />
+          <meta property="og:image:height" content="630" />
+        </>
+      ) : null}
       {publishedTime ? <meta property="article:published_time" content={publishedTime} /> : null}
       {modifiedTime ? <meta property="article:modified_time" content={modifiedTime} /> : null}
 

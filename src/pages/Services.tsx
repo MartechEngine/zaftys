@@ -16,7 +16,7 @@ import { TransportationExplorer } from "@/components/TransportationExplorer";
 import { heroMailBodies, heroMailSubjects } from "@/lib/hero-ctas";
 import { PageHero } from "@/components/PageHero";
 import { pageHeroCopy } from "@/lib/page-hero-copy";
-import heroServices from "@/assets/hero-services.jpg";
+import heroServices from "@/assets/hero-services.webp";
 import { pageHeroAlts } from "@/lib/page-heroes";
 import { truckingServiceSchema, organizationSchema, breadcrumbSchema } from "@/lib/schema";
 import { truckImageForId, materialImageForId } from "@/lib/services-images";

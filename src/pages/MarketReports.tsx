@@ -6,7 +6,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import SEO from "@/components/SEO";
 import { PageHero } from "@/components/PageHero";
 import { ReportCover } from "@/components/market-reports/ReportCover";
-import heroResources from "@/assets/hero-resources.jpg";
+import heroResources from "@/assets/hero-resources.webp";
 import { pageHeroAlts } from "@/lib/page-heroes";
 import { pageSeo } from "@/lib/page-seo";
 import { pageHeroCopy } from "@/lib/page-hero-copy";

@@ -309,7 +309,7 @@ export const freightRatesLeafCopy: IntelligenceLeafCopy = {
     h2: "Freight Rate Intelligence dashboard",
     lead: "The Beta product surface for lane trends, vehicle and commodity cuts, and desk alerts. Coverage is confirmed during onboarding.",
     primary: {
-      src: "/images/intelligence/freight-rate-intelligence.png",
+      src: "/images/intelligence/freight-rate-intelligence.webp",
       alt: "ZAFTYS Freight Rate Intelligence dashboard with lane rates, trends, and alerts",
       caption: "Freight Rate Intelligence · Beta product view",
     },

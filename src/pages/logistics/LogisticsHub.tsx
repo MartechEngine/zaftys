@@ -35,7 +35,7 @@ import {
 import { homeFeaturedIndustries, mailtoCompany } from "@/lib/constants";
 import { trackEvent } from "@/lib/analytics";
 import { breadcrumbSchema, organizationSchema } from "@/lib/schema";
-import heroServices from "@/assets/hero-services.jpg";
+import heroServices from "@/assets/hero-services.webp";
 import { cn } from "@/lib/utils";
 
 const serviceIcons: Record<string, LucideIcon> = {
@@ -256,7 +256,7 @@ function ServiceSection({ block }: { block: ServiceBlock }) {
             <p className="mb-3 font-heading text-sm font-bold tracking-[0.22em] text-accent">{block.index}</p>
             <h2
               id={`${block.id}-heading`}
-              className="font-heading text-4xl font-bold leading-[1.05] text-white md:text-5xl lg:text-6xl"
+              className="font-heading text-2xl font-bold leading-[1.05] text-white sm:text-3xl md:text-5xl lg:text-6xl"
             >
               {block.title}
             </h2>

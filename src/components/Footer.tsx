@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { Mail, Phone, MapPin, Linkedin, ArrowRight, MessageCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import logoFooter from "@/assets/logo-footer.png";
+import logoFooter from "@/assets/logo-footer.webp";
 import { useToast } from "@/hooks/use-toast";
 import { footerColumns } from "@/lib/nav-config";
 import {
@@ -69,7 +69,14 @@ const Footer = () => {
       <div className="container mx-auto container-padding pt-16 pb-12">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-end mb-16 border-b border-white/10 pb-12">
           <div>
-            <img src={logoFooter} alt="ZAFTYS Logistics" className="h-14 w-auto mb-6" loading="lazy" />
+            <img
+              src={logoFooter}
+              alt="ZAFTYS Logistics"
+              width={280}
+              height={86}
+              className="mb-6 h-14 w-auto"
+              decoding="async"
+            />
             <p className="text-gray-400 max-w-md text-lg leading-relaxed">
               Technology-enabled transportation and logistics. Owned fleet, contract logistics, verified partner network, and ZAFTYS TMS from Amravati, Maharashtra.
             </p>

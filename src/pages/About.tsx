@@ -3,7 +3,7 @@ import { ArrowRight, Eye, FileText, Target } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import SEO from "@/components/SEO";
 import { PageHero } from "@/components/PageHero";
-import heroAbout from "@/assets/hero-about.jpg";
+import heroAbout from "@/assets/hero-about.webp";
 import { pageHeroAlts } from "@/lib/page-heroes";
 import { HeroEmailButton } from "@/components/HeroEmailButton";
 import { WhatsAppButton } from "@/components/WhatsAppButton";

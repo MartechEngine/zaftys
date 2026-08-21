@@ -230,14 +230,14 @@ export const vehicleClasses = [
 
 /** Industries shown on homepage — keep in sync with industries-data */
 export const homeIndustries = [
-  { name: "Cement & Construction", slug: "cement", image: "/images/marketing/industry-cement.jpg" },
-  { name: "Port & Container Road", slug: "container-transport", image: "/images/marketing/industry-container.jpg" },
-  { name: "Mining Products", slug: "coal-mining", image: "/images/marketing/industry-coal-mining.jpg" },
-  { name: "Steel & Metals", slug: "steel-metals", image: "/images/marketing/industry-steel-metals.jpg" },
-  { name: "Manufacturing", slug: "manufacturing", image: "/images/marketing/industry-manufacturing.jpg" },
-  { name: "FMCG", slug: "fmcg", image: "/images/marketing/industry-fmcg.jpg" },
-  { name: "Chemicals", slug: "chemicals", image: "/images/marketing/industry-chemicals.jpg" },
-  { name: "Industrial Logistics", slug: "industrial-logistics", image: "/images/marketing/industry-industrial-logistics.jpg" },
+  { name: "Cement & Construction", slug: "cement", image: "/images/marketing/industry-cement.webp" },
+  { name: "Port & Container Road", slug: "container-transport", image: "/images/marketing/industry-container.webp" },
+  { name: "Mining Products", slug: "coal-mining", image: "/images/marketing/industry-coal-mining.webp" },
+  { name: "Steel & Metals", slug: "steel-metals", image: "/images/marketing/industry-steel-metals.webp" },
+  { name: "Manufacturing", slug: "manufacturing", image: "/images/marketing/industry-manufacturing.webp" },
+  { name: "FMCG", slug: "fmcg", image: "/images/marketing/industry-fmcg.webp" },
+  { name: "Chemicals", slug: "chemicals", image: "/images/marketing/industry-chemicals.webp" },
+  { name: "Industrial Logistics", slug: "industrial-logistics", image: "/images/marketing/industry-industrial-logistics.webp" },
 ] as const;
 
 /** 3 operating-model pillars for homepage section 2 (not a service catalog) */

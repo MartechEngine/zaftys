@@ -5,7 +5,7 @@ import type { LucideIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import SEO from "@/components/SEO";
 import { PageHero } from "@/components/PageHero";
-import heroFleet from "@/assets/hero-fleet.jpg";
+import heroFleet from "@/assets/hero-fleet.webp";
 import { pageHeroAlts } from "@/lib/page-heroes";
 import { heroMailBodies, heroMailSubjects } from "@/lib/hero-ctas";
 import { HeroEmailButton } from "@/components/HeroEmailButton";
@@ -105,7 +105,7 @@ const Fleet = () => {
         className="sticky top-16 z-20 border-b border-border bg-surface/95 shadow-sm backdrop-blur"
         aria-label="Fleet categories"
       >
-        <div className="mx-auto grid max-w-7xl grid-cols-1 gap-2.5 px-4 py-2 sm:grid-cols-2 sm:gap-3 sm:px-6 md:px-8 md:py-2.5">
+        <div className="mx-auto grid max-w-7xl grid-cols-2 gap-2 px-3 py-2 sm:gap-3 sm:px-6 md:px-8 md:py-2.5">
           <a
             href="#own-fleet"
             aria-current={activeCategory === "own-fleet" ? "true" : undefined}

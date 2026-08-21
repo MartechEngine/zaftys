@@ -1,12 +1,12 @@
 /**
  * ZAFTYS India Corridor Network — premium logistics intelligence visualization.
- * Map: /images/marketing/india-map-kashmir.png (full Kashmir as India).
+ * Map: /images/marketing/india-map-kashmir.webp (full Kashmir as India).
  * Geo (India3): N 37.5°, S 5.0°, W 67.0°E, E 99.0°E.
  */
 import { useId } from "react";
 import { cn } from "@/lib/utils";
 
-const MAP_SRC = "/images/marketing/india-map-kashmir.png";
+const MAP_SRC = "/images/marketing/india-map-kashmir.webp";
 const VB = { w: 960, h: 1034 } as const;
 
 const GEO = {

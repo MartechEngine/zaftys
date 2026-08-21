@@ -104,7 +104,7 @@ export const supplyChainAiArticle = {
       step: "01",
       title: "Data input",
       subtitle: "Trip truth into one intake layer.",
-      image: "/images/intelligence/ai-01-data-input.png",
+      image: "/images/intelligence/ai-01-data-input.webp",
       imageAlt: "ZAFTYS Supply Chain AI stage 1: data sources from TMS, history, desk prompts, ERP, and TranZfort",
       lead: "Accurate desk answers start with the same sources operations already trust. Intake is designed around trip records, not anonymous public averages.",
       body: [
@@ -121,7 +121,7 @@ export const supplyChainAiArticle = {
       step: "02",
       title: "AI processing",
       subtitle: "From trip events to desk answers.",
-      image: "/images/intelligence/ai-02-processing.png",
+      image: "/images/intelligence/ai-02-processing.webp",
       imageAlt: "ZAFTYS Supply Chain AI stage 2: processing exception narrative, lane questions, vehicle fit, and risk signals",
       lead: "The engine turns trip events into answers: what blocked the move, what the corridor history says, what truck fits next, and what risk to flag before the plant call.",
       body: [
@@ -138,7 +138,7 @@ export const supplyChainAiArticle = {
       step: "03",
       title: "Guardrails",
       subtitle: "Safe answers on commercial trip data.",
-      image: "/images/intelligence/ai-03-guardrails.png",
+      image: "/images/intelligence/ai-03-guardrails.webp",
       imageAlt: "ZAFTYS Supply Chain AI stage 3: guardrail layers that ground answers in the trip record",
       lead: "AI that touches commercial freight data must fail closed when the trip record cannot support the answer. Guardrails are product design, not decoration.",
       body: [
@@ -155,7 +155,7 @@ export const supplyChainAiArticle = {
       step: "04",
       title: "Orchestration",
       subtitle: "Connect. Assign. Act.",
-      image: "/images/intelligence/ai-04-orchestration.png",
+      image: "/images/intelligence/ai-04-orchestration.webp",
       imageAlt: "ZAFTYS Supply Chain AI stage 4: orchestration engine connected to TMS, TranZfort, portal, APIs, and billing",
       lead: "Intelligence only helps if suggestions become desk work inside tools you already run.",
       body: [
@@ -172,7 +172,7 @@ export const supplyChainAiArticle = {
       step: "05",
       title: "Desk outcomes",
       subtitle: "What good looks like when Research becomes product.",
-      image: "/images/intelligence/ai-05-outcomes.png",
+      image: "/images/intelligence/ai-05-outcomes.webp",
       imageAlt: "ZAFTYS Supply Chain AI stage 5: desk outcomes such as clearer corridor answers and fewer status chases",
       lead: "Success is measured in how the desk works a lane, not in invented global scale counters.",
       body: [

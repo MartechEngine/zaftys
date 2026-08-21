@@ -15,7 +15,7 @@ export function HomeHeroSection() {
       <section
         id="hero"
         aria-label="Hero"
-        className="relative flex min-h-[700px] items-center overflow-hidden pb-24 pt-32"
+        className="relative flex min-h-[min(560px,100svh)] items-center overflow-hidden pb-20 pt-28 sm:min-h-[640px] sm:pb-24 sm:pt-32 md:min-h-[700px]"
       >
         <div className="absolute inset-0">
           <picture>
@@ -42,7 +42,7 @@ export function HomeHeroSection() {
             <p className="mb-4 text-xs font-semibold uppercase tracking-wider text-accent animate-fade-in-up">
               {hero.badge}
             </p>
-            <h1 className="mb-6 animate-fade-in-up font-heading text-5xl font-bold leading-tight md:text-6xl lg:text-7xl">
+            <h1 className="mb-4 animate-fade-in-up break-words font-heading text-3xl font-bold leading-tight sm:mb-6 sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl">
               {hero.h1.map((line) => (
                 <span key={line} className="block">
                   {line}
@@ -50,7 +50,7 @@ export function HomeHeroSection() {
               ))}
             </h1>
             <p
-              className="mb-4 max-w-2xl animate-fade-in-up text-xl font-light text-gray-200 md:text-2xl"
+              className="mb-4 max-w-2xl animate-fade-in-up text-base font-light text-gray-200 sm:text-lg md:text-xl lg:text-2xl"
               style={{ animationDelay: "0.2s" }}
             >
               {hero.lead}

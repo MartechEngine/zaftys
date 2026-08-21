@@ -18,7 +18,7 @@ import { CTAGroup } from "@/components/CTAGroup";
 import { externalLinks, networkHighlights, WHATSAPP_POST_LOAD_MESSAGE } from "@/lib/constants";
 import { trackEvent } from "@/lib/analytics";
 import { pageSeo } from "@/lib/page-seo";
-import heroNetwork from "@/assets/hero-network.jpg";
+import heroNetwork from "@/assets/hero-network.webp";
 import { pageHeroAlts } from "@/lib/page-heroes";
 import { PageHero } from "@/components/PageHero";
 import { pageHeroCopy } from "@/lib/page-hero-copy";

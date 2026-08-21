@@ -8,7 +8,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Network, TrendingUp, Shield, Zap, Loader2 } from "lucide-react";
 import SEO from "@/components/SEO";
 import { PageHero } from "@/components/PageHero";
-import heroPartner from "@/assets/hero-partner.jpg";
+import heroPartner from "@/assets/hero-partner.webp";
 import { pageHeroAlts } from "@/lib/page-heroes";
 import { heroMailBodies, heroMailSubjects } from "@/lib/hero-ctas";
 import { HeroEmailButton } from "@/components/HeroEmailButton";

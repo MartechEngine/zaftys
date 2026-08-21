@@ -11,7 +11,7 @@ import {
 } from "@/components/intelligence/IntelligenceVisuals";
 import type { IntelligenceLeafCopy } from "@/lib/intelligence-leaf-copy";
 import { breadcrumbSchema, organizationSchema } from "@/lib/schema";
-import heroTechnology from "@/assets/hero-technology.jpg";
+import heroTechnology from "@/assets/hero-technology.webp";
 
 type Props = {
   copy: IntelligenceLeafCopy;

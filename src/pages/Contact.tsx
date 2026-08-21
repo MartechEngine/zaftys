@@ -8,7 +8,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { MapPin, Phone, Mail, Clock, Send, MessageSquare, Loader2 } from "lucide-react";
 import SEO from "@/components/SEO";
 import { PageHero } from "@/components/PageHero";
-import heroContact from "@/assets/hero-contact.jpg";
+import heroContact from "@/assets/hero-contact.webp";
 import { pageHeroAlts } from "@/lib/page-heroes";
 import { useToast } from "@/hooks/use-toast";
 import { trackEvent } from "@/lib/analytics";

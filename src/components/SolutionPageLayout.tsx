@@ -9,7 +9,7 @@ import { HeroEmailButton } from "@/components/HeroEmailButton";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { MarketingEyebrow, MarketingFinalCta, MarketingTile } from "@/components/marketing/MarketingChrome";
 import { breadcrumbSchema, logisticsServiceLeafSchema, organizationSchema } from "@/lib/schema";
-import heroServices from "@/assets/hero-services.jpg";
+import heroServices from "@/assets/hero-services.webp";
 
 export type SolutionPageProps = {
   seo: { title: string; description: string };

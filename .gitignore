@@ -35,3 +35,6 @@ _quarantine-app-tsm-do-not-edit/
 *.njsproj
 *.sln
 *.sw?
+
+lighthouse-*.json
+

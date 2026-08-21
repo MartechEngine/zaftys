@@ -13,7 +13,7 @@ import { pageSeo } from "@/lib/page-seo";
 import { pageHeroCopy } from "@/lib/page-hero-copy";
 import { networkHubCopy } from "@/lib/network-hub-copy";
 import { breadcrumbSchema, organizationSchema } from "@/lib/schema";
-import heroNetwork from "@/assets/hero-network.jpg";
+import heroNetwork from "@/assets/hero-network.webp";
 
 const c = networkHubCopy;
 

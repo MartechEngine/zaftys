@@ -12,7 +12,7 @@ import {
 import { supplyChainAiArticle } from "@/lib/supply-chain-ai-article";
 import { paths } from "@/lib/site-paths";
 import { breadcrumbSchema, organizationSchema } from "@/lib/schema";
-import heroTechnology from "@/assets/hero-technology.jpg";
+import heroTechnology from "@/assets/hero-technology.webp";
 
 const c = supplyChainAiArticle;
 

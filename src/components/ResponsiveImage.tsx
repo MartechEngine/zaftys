@@ -23,6 +23,8 @@ type ResponsiveImageProps = {
   imgClassName?: string;
   priority?: boolean;
   objectFit?: "cover" | "contain";
+  width?: number;
+  height?: number;
 };
 
 const ResponsiveImage = ({
@@ -34,6 +36,8 @@ const ResponsiveImage = ({
   imgClassName,
   priority = false,
   objectFit = "contain",
+  width,
+  height,
 }: ResponsiveImageProps) => {
   const [loaded, setLoaded] = useState(false);
   const [error, setError] = useState(false);
@@ -62,6 +66,8 @@ const ResponsiveImage = ({
         <img
           src={src}
           alt={alt}
+          width={width}
+          height={height}
           loading={priority ? "eager" : "lazy"}
           decoding="async"
           {...(priority ? { fetchPriority: "high" as const } : {})}

@@ -3,7 +3,7 @@ import { ArrowRight, CheckCircle2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import SEO from "@/components/SEO";
 import { PageHero } from "@/components/PageHero";
-import heroIndustries from "@/assets/hero-industries.jpg";
+import heroIndustries from "@/assets/hero-industries.webp";
 import { pageHeroAlts } from "@/lib/page-heroes";
 import { heroMailBodies, heroMailSubjects } from "@/lib/hero-ctas";
 import { HeroEmailButton } from "@/components/HeroEmailButton";

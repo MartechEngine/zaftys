@@ -10,7 +10,7 @@ import { PageHero } from "@/components/PageHero";
 import { CTAGroup } from "@/components/CTAGroup";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
 import ResponsiveImage from "@/components/ResponsiveImage";
-import heroResources from "@/assets/hero-resources.jpg";
+import heroResources from "@/assets/hero-resources.webp";
 import { pageHeroAlts } from "@/lib/page-heroes";
 import { pageSeo } from "@/lib/page-seo";
 import { pageHeroCopy } from "@/lib/page-hero-copy";

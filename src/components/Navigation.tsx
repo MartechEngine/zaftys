@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Menu, X, UserCircle, ChevronDown } from "lucide-react";
-import logoHeader from "@/assets/logo-zaftys.png";
+import logoHeader from "@/assets/logo-zaftys.webp";
 import { mailtoCompany } from "@/lib/constants";
 import { heroMailBodies, heroMailSubjects } from "@/lib/hero-ctas";
 import { trackEvent } from "@/lib/analytics";
@@ -76,6 +76,13 @@ const Navigation = () => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  useEffect(() => {
+    document.body.style.overflow = isMobileMenuOpen ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isMobileMenuOpen]);
 
   useEffect(() => {
     setIsMobileMenuOpen(false);

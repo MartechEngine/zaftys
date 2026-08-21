@@ -18,6 +18,10 @@ export type PageHeroProps = {
   prepend?: ReactNode;
 };
 
+/** Typical marketing hero JPEG aspect (Vite-bundled assets ~1600×1050–1920×1080). */
+const HERO_WIDTH = 1920;
+const HERO_HEIGHT = 1080;
+
 export function PageHero({
   badge,
   title,
@@ -35,7 +39,7 @@ export function PageHero({
   return (
     <section
       className={cn(
-        "relative pt-32 pb-20 overflow-hidden min-h-[500px] flex items-center bg-navy text-white",
+        "relative flex min-h-[min(500px,100svh)] items-center overflow-hidden bg-navy pb-16 pt-28 text-white sm:min-h-[500px] sm:pb-20 sm:pt-32",
         className,
       )}
     >
@@ -45,7 +49,9 @@ export function PageHero({
             <img
               src={imageSrc}
               alt={imageAlt}
-              className="w-full h-full object-cover"
+              width={HERO_WIDTH}
+              height={HERO_HEIGHT}
+              className="h-full w-full object-cover"
               loading="eager"
               fetchPriority="high"
               decoding="async"
@@ -57,28 +63,28 @@ export function PageHero({
         )}
       </div>
 
-      <div className="container mx-auto container-padding relative z-10">
+      <div className="container relative z-10 mx-auto container-padding">
         {prepend}
         <div className={cn("max-w-4xl", centered && "mx-auto text-center")}>
           {badge && (
-            <div className="inline-block px-3 py-1 rounded-full bg-accent/10 border border-accent/20 text-accent text-sm font-semibold mb-6 uppercase tracking-widest">
+            <div className="mb-5 inline-block rounded-full border border-accent/20 bg-accent/10 px-3 py-1 text-xs font-semibold uppercase tracking-widest text-accent sm:mb-6 sm:text-sm">
               {badge}
             </div>
           )}
-          <h1 className="text-5xl md:text-6xl font-heading font-bold mb-6 animate-fade-in-up leading-tight">
+          <h1 className="mb-4 animate-fade-in-up break-words font-heading text-3xl font-bold leading-tight sm:mb-6 sm:text-4xl md:text-5xl lg:text-6xl">
             {title}
           </h1>
           <p
             className={cn(
-              "text-xl text-gray-300 animate-fade-in-up font-light leading-relaxed",
-              centered ? "max-w-2xl mx-auto" : "max-w-2xl",
+              "animate-fade-in-up text-base font-light leading-relaxed text-gray-300 sm:text-lg md:text-xl",
+              centered ? "mx-auto max-w-2xl" : "max-w-2xl",
             )}
             style={{ animationDelay: "0.2s" }}
           >
             {description}
           </p>
           {children && (
-            <div className="mt-10 animate-fade-in-up" style={{ animationDelay: "0.4s" }}>
+            <div className="mt-8 animate-fade-in-up sm:mt-10" style={{ animationDelay: "0.4s" }}>
               {children}
             </div>
           )}
