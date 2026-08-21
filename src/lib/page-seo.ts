@@ -1,4 +1,4 @@
-/** Page titles & meta descriptions — titles end with `| ZAFTYS` for bare-brand entity strength. */
+/** Page titles & meta descriptions - titles end with `| ZAFTYS` for bare-brand entity strength. */
 import { COMPANY_PHONE_DISPLAY } from "@/lib/constants";
 
 export const pageSeo = {

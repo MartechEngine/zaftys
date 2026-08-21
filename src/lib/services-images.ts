@@ -15,7 +15,7 @@ export const truckImages = {
   contract: { src: "/images/services/trucks/contract.jpg", alt: "Dedicated contract fleet trucks in coordinated dispatch" },
   "side-wall-trailer": {
     src: "/images/services/trucks/side-wall-trailer.png",
-    alt: "ZAFTYS side wall trailer — company-operated own fleet",
+    alt: "ZAFTYS side wall trailer - company-operated own fleet",
   },
 } as const;
 

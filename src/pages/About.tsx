@@ -153,7 +153,7 @@ const About = () => {
         </div>
       </section>
 
-      {/* What we solve — problem + how */}
+      {/* What we solve - problem + how */}
       <section className="border-t border-border bg-white px-5 py-12 md:px-8 md:py-14">
         <div className="mx-auto max-w-7xl">
           <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-primary">
@@ -227,7 +227,7 @@ const About = () => {
         </div>
       </section>
 
-      {/* Partners — softened */}
+      {/* Partners - softened */}
       <section className="border-t border-border bg-white px-5 py-12 md:px-8 md:py-14">
         <div className="mx-auto max-w-7xl">
           <div className="mx-auto max-w-2xl text-center">
@@ -264,7 +264,7 @@ const About = () => {
         </div>
       </section>
 
-      {/* Company profile CTA — after trust is built */}
+      {/* Company profile CTA - after trust is built */}
       <section className="border-t border-border bg-surface px-5 py-10 md:px-8 md:py-12">
         <div className="mx-auto max-w-7xl">
           <div className="relative overflow-hidden rounded-2xl bg-navy px-6 py-8 text-white md:flex md:items-center md:justify-between md:gap-8 md:px-10 md:py-10">

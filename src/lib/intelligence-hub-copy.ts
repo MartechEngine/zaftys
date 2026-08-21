@@ -1,5 +1,5 @@
 /**
- * /intelligence hub — product-complete logistics intelligence.
+ * /intelligence hub - product-complete logistics intelligence.
  * Ops-first; capabilities labeled Available / Beta / Research.
  * No invented market rates or fake KPI counts.
  * No em dash, en dash, or spaced hyphen used as a dash.

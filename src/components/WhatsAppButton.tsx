@@ -15,7 +15,7 @@ type WhatsAppButtonProps = {
 };
 
 /**
- * WhatsApp CTA — always solid green (`whatsapp` variant).
+ * WhatsApp CTA - always solid green (`whatsapp` variant).
  * See `src/lib/cta-recipe.ts`.
  */
 export function WhatsAppButton({

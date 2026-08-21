@@ -10,7 +10,7 @@ export const noticeSections: LegalSection[] = [
     blocks: [
       {
         type: "p",
-        text: "Website content should not be interpreted as a binding quotation, guaranteed vehicle availability, guaranteed freight rate, guaranteed delivery time, legal opinion, insurance commitment or Trip Confirmation — unless expressly identified as such in writing.",
+        text: "Website content should not be interpreted as a binding quotation, guaranteed vehicle availability, guaranteed freight rate, guaranteed delivery time, legal opinion, insurance commitment or Trip Confirmation - unless expressly identified as such in writing.",
       },
     ],
   },

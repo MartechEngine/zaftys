@@ -271,7 +271,7 @@ const Fleet = () => {
               ))}
             </div>
 
-            {/* Ops under Own — ownership = how the lane is run */}
+            {/* Ops under Own - ownership = how the lane is run */}
             <div className="mt-10">
               <div className="mb-6 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
                 <div>
@@ -322,7 +322,7 @@ const Fleet = () => {
 
         <div className="border-t border-white/10 bg-surface px-5 py-10 text-navy md:px-8 md:py-12">
           <div className="mx-auto max-w-7xl">
-            <h3 className="mb-2 font-heading text-2xl font-bold">Network catalog — all types</h3>
+            <h3 className="mb-2 font-heading text-2xl font-bold">Network catalog - all types</h3>
             <p className="mb-5 max-w-2xl text-muted-foreground">{copy.network.catalogLead}</p>
 
             <ul className="mb-6 flex flex-wrap gap-2">

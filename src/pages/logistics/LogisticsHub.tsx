@@ -172,7 +172,7 @@ function FleetTypeTile({ type, interactive = true }: { type: FleetSuitableType; 
   );
 }
 
-/** One equal-width half of the marquee — types repeated so the strip always fills wide screens. */
+/** One equal-width half of the marquee - types repeated so the strip always fills wide screens. */
 function FleetMarqueeSegment({
   types,
   interactive,
@@ -234,7 +234,7 @@ function FleetSuitableScroller({ types }: { types: readonly FleetSuitableType[] 
   );
 }
 
-/** Locked Design A — image head + equal 50/50 content grid */
+/** Locked Design A - image head + equal 50/50 content grid */
 function ServiceSection({ block }: { block: ServiceBlock }) {
   return (
     <section

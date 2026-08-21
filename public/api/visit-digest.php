@@ -117,7 +117,7 @@ foreach ($rows as $row) {
 $day = gmdate('Y-m-d');
 $filename = 'zaftys-visits-' . $day . '.csv';
 $to = (string) zaftys_secret('mail_visits', 'info@zaftys.com');
-$subject = 'ZAFTYS website visitors (last 24 hours) — ' . $day;
+$subject = 'ZAFTYS website visitors (last 24 hours) - ' . $day;
 $body = "Last 24 hours of zaftys.com page views (one row per page).\n\n";
 $body .= 'Page views: ' . count($rows) . "\n";
 $body .= 'Unique IPs: ' . count($uniqueIps) . "\n";

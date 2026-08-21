@@ -2,11 +2,11 @@ type ReportCoverProps = {
   src: string;
   alt: string;
   className?: string;
-  /** Decorative listing thumb — empty alt when title is adjacent */
+  /** Decorative listing thumb - empty alt when title is adjacent */
   decorative?: boolean;
 };
 
-/** Full report cover — width-fluid, intrinsic aspect, never cropped. */
+/** Full report cover - width-fluid, intrinsic aspect, never cropped. */
 export function ReportCover({ src, alt, className = "", decorative = false }: ReportCoverProps) {
   return (
     <div className={`relative w-full overflow-hidden bg-navy ${className}`}>

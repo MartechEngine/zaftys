@@ -19,7 +19,7 @@ export const termsSections: LegalSection[] = [
   },
   {
     id: "about",
-    title: "2. About ZAFTYS — capacity facilitation",
+    title: "2. About ZAFTYS - capacity facilitation",
     blocks: [
       {
         type: "p",
@@ -27,11 +27,11 @@ export const termsSections: LegalSection[] = [
       },
       {
         type: "p",
-        text: "Mode A — Owned or directly operated capacity: ZAFTYS may itself be (or supply) the Performing Carrier under applicable Trip Documentation.",
+        text: "Mode A - Owned or directly operated capacity: ZAFTYS may itself be (or supply) the Performing Carrier under applicable Trip Documentation.",
       },
       {
         type: "p",
-        text: "Mode B — Marketplace / capacity facilitation: ZAFTYS identifies and proposes independent Fleet Partner capacity, shares available Vehicle and Document information with the Transporter, coordinates placement after Vehicle Approval, and may charge a Facilitation Fee. In Mode B, unless Trip Documentation expressly states that ZAFTYS is the Performing Carrier (including where ZAFTYS issues an LR / takes custody of goods in writing), ZAFTYS acts as capacity facilitator / arranger and is not the default Performing Carrier.",
+        text: "Mode B - Marketplace / capacity facilitation: ZAFTYS identifies and proposes independent Fleet Partner capacity, shares available Vehicle and Document information with the Transporter, coordinates placement after Vehicle Approval, and may charge a Facilitation Fee. In Mode B, unless Trip Documentation expressly states that ZAFTYS is the Performing Carrier (including where ZAFTYS issues an LR / takes custody of goods in writing), ZAFTYS acts as capacity facilitator / arranger and is not the default Performing Carrier.",
       },
       {
         type: "p",
@@ -46,14 +46,14 @@ export const termsSections: LegalSection[] = [
       {
         type: "ul",
         items: [
-          "Transporter — customer or transport company requesting or purchasing capacity or logistics services from ZAFTYS (including large transporters such as CJ Darcl and similar).",
-          "Fleet Partner — independent truck owner, fleet owner, operator or carrier whose Vehicle is proposed or arranged for a Trip.",
-          "Performing Carrier — person or entity legally responsible for physically performing carriage for a Trip, as determined by law and Trip Documentation.",
-          "Vehicle Approval — Transporter acceptance of the proposed Vehicle, driver and/or Fleet Partner via email, WhatsApp, portal, phone or other agreed method.",
-          "Documents — RC, fitness, permit, insurance, PUC, driving licence, driver/owner identity and related papers shared for a proposed Vehicle.",
-          "Facilitation Fee — broker/commission/placement fee payable to ZAFTYS for Mode B arrangement, distinct from freight unless Trip Documentation combines them.",
-          "Free Time — waiting period during which no detention/halting is payable under Section 18.",
-          "Trip Documentation — quotations, POs, placement memos, trip confirmations, invoices, emails and related records for a Trip.",
+          "Transporter - customer or transport company requesting or purchasing capacity or logistics services from ZAFTYS (including large transporters such as CJ Darcl and similar).",
+          "Fleet Partner - independent truck owner, fleet owner, operator or carrier whose Vehicle is proposed or arranged for a Trip.",
+          "Performing Carrier - person or entity legally responsible for physically performing carriage for a Trip, as determined by law and Trip Documentation.",
+          "Vehicle Approval - Transporter acceptance of the proposed Vehicle, driver and/or Fleet Partner via email, WhatsApp, portal, phone or other agreed method.",
+          "Documents - RC, fitness, permit, insurance, PUC, driving licence, driver/owner identity and related papers shared for a proposed Vehicle.",
+          "Facilitation Fee - broker/commission/placement fee payable to ZAFTYS for Mode B arrangement, distinct from freight unless Trip Documentation combines them.",
+          "Free Time - waiting period during which no detention/halting is payable under Section 18.",
+          "Trip Documentation - quotations, POs, placement memos, trip confirmations, invoices, emails and related records for a Trip.",
         ],
       },
     ],
@@ -97,7 +97,7 @@ export const termsSections: LegalSection[] = [
       },
       {
         type: "p",
-        text: "Sequence may vary by Trip, payment terms, cargo and applicable law. Receipt of funds by ZAFTYS does not by itself determine whether ZAFTYS is owner, carrier, agent, intermediary or arranger — that status follows contractual arrangement, conduct and law.",
+        text: "Sequence may vary by Trip, payment terms, cargo and applicable law. Receipt of funds by ZAFTYS does not by itself determine whether ZAFTYS is owner, carrier, agent, intermediary or arranger - that status follows contractual arrangement, conduct and law.",
       },
     ],
   },
@@ -127,7 +127,7 @@ export const termsSections: LegalSection[] = [
   },
   {
     id: "verification",
-    title: "9. Documents — mandatory Transporter verification",
+    title: "9. Documents - mandatory Transporter verification",
     blocks: [
       {
         type: "p",
@@ -165,7 +165,7 @@ export const termsSections: LegalSection[] = [
   },
   {
     id: "cargo",
-    title: "12–14. Cargo declaration, prohibited and hazardous goods",
+    title: "12-14. Cargo declaration, prohibited and hazardous goods",
     blocks: [
       {
         type: "p",
@@ -179,7 +179,7 @@ export const termsSections: LegalSection[] = [
   },
   {
     id: "fees",
-    title: "15–17. Freight, fees, payment and cancellation",
+    title: "15-17. Freight, fees, payment and cancellation",
     blocks: [
       {
         type: "p",
@@ -233,7 +233,7 @@ export const termsSections: LegalSection[] = [
   },
   {
     id: "cargo-liability",
-    title: "20. Cargo loss, theft, delay — Mode A / Mode B",
+    title: "20. Cargo loss, theft, delay - Mode A / Mode B",
     blocks: [
       {
         type: "p",
@@ -245,7 +245,7 @@ export const termsSections: LegalSection[] = [
       },
       {
         type: "p",
-        text: "Mode B: where a Fleet Partner is the Performing Carrier, physical carriage claims (including theft, late delivery and illegal acts attributable to the trucker) ordinarily lie with the Performing Carrier and custody-chain parties. ZAFTYS as capacity facilitator is not the cargo insurer and is not liable as Performing Carrier solely because it proposed the Vehicle, shared Documents, coordinated dispatch or administered settlement. Transporter–Fleet Partner disputes should be resolved between those parties; ZAFTYS may relay communications.",
+        text: "Mode B: where a Fleet Partner is the Performing Carrier, physical carriage claims (including theft, late delivery and illegal acts attributable to the trucker) ordinarily lie with the Performing Carrier and custody-chain parties. ZAFTYS as capacity facilitator is not the cargo insurer and is not liable as Performing Carrier solely because it proposed the Vehicle, shared Documents, coordinated dispatch or administered settlement. Transporter - Fleet Partner disputes should be resolved between those parties; ZAFTYS may relay communications.",
       },
       {
         type: "p",
@@ -255,7 +255,7 @@ export const termsSections: LegalSection[] = [
   },
   {
     id: "insurance-claims",
-    title: "21–23. Insurance, claims and evidence",
+    title: "21-23. Insurance, claims and evidence",
     blocks: [
       {
         type: "p",
@@ -273,7 +273,7 @@ export const termsSections: LegalSection[] = [
   },
   {
     id: "tech-comms",
-    title: "24–27. Electronic records, recording, GPS and providers",
+    title: "24-27. Electronic records, recording, GPS and providers",
     blocks: [
       {
         type: "p",
@@ -287,7 +287,7 @@ export const termsSections: LegalSection[] = [
   },
   {
     id: "ip-conduct",
-    title: "28–32. Website content, IP, fraud, suspension",
+    title: "28-32. Website content, IP, fraud, suspension",
     blocks: [
       {
         type: "p",
@@ -297,11 +297,11 @@ export const termsSections: LegalSection[] = [
   },
   {
     id: "indemnity-liability",
-    title: "33–35. Indemnity, limitation of liability, force majeure",
+    title: "33-35. Indemnity, limitation of liability, force majeure",
     blocks: [
       {
         type: "p",
-        text: "To the maximum extent permitted by law, Transporters, Fleet Partners and other commercial users shall indemnify ZAFTYS from third-party claims arising from their breach, inaccurate information, unlawful cargo, forged Documents, violation of law, misuse of services, or vehicle/driver non-compliance within their responsibility — except to the extent finally determined to result from ZAFTYS liability that cannot lawfully be shifted.",
+        text: "To the maximum extent permitted by law, Transporters, Fleet Partners and other commercial users shall indemnify ZAFTYS from third-party claims arising from their breach, inaccurate information, unlawful cargo, forged Documents, violation of law, misuse of services, or vehicle/driver non-compliance within their responsibility - except to the extent finally determined to result from ZAFTYS liability that cannot lawfully be shifted.",
       },
       {
         type: "p",
@@ -315,7 +315,7 @@ export const termsSections: LegalSection[] = [
   },
   {
     id: "confidentiality-noncirc",
-    title: "36–37. Confidentiality and non-circumvention",
+    title: "36-37. Confidentiality and non-circumvention",
     blocks: [
       {
         type: "p",
@@ -329,7 +329,7 @@ export const termsSections: LegalSection[] = [
   },
   {
     id: "privacy-changes",
-    title: "38–40. Third-party links, privacy, changes",
+    title: "38-40. Third-party links, privacy, changes",
     blocks: [
       {
         type: "p",
@@ -339,7 +339,7 @@ export const termsSections: LegalSection[] = [
   },
   {
     id: "law-disputes",
-    title: "41–45. Governing law, disputes, severability",
+    title: "41-45. Governing law, disputes, severability",
     blocks: [
       {
         type: "p",

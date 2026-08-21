@@ -1,5 +1,5 @@
 /**
- * Homepage section sequence — locked to positioning narrative.
+ * Homepage section sequence - locked to positioning narrative.
  *
  * Story arc (logistics first; Network and Platform as layers):
  *   WHAT → HOW → PLATFORM → NETWORK → WHO → KNOW → ACT
@@ -23,14 +23,14 @@ export const homeSectionSequence = [
     id: "platform",
     order: 3,
     narrative: "PLATFORM",
-    job: "ZAFTYS TMS — prove the desk runs on real software",
+    job: "ZAFTYS TMS - prove the desk runs on real software",
     pillar: "Platform",
   },
   {
     id: "network",
     order: 4,
     narrative: "NETWORK",
-    job: "TranZfort and labeled capacity overflow — separate from TMS",
+    job: "TranZfort and labeled capacity overflow - separate from TMS",
     pillar: "Network",
   },
   {
@@ -51,7 +51,7 @@ export const homeSectionSequence = [
     id: "final-cta",
     order: 7,
     narrative: "ACT",
-    job: "Convert — Request Transportation",
+    job: "Convert - Request Transportation",
     pillar: "Logistics",
   },
 ] as const;

@@ -1,5 +1,5 @@
 /**
- * /fleet page copy — Own Fleet (company assets) + Network Fleet (full catalog).
+ * /fleet page copy - Own Fleet (company assets) + Network Fleet (full catalog).
  * No invented fleet counts or corridor metrics.
  */
 
@@ -29,7 +29,7 @@ export const ownedFleetAssets = [
     id: "open-body-30-35",
     title: "30T / 35T open body",
     imageId: "open-body",
-    detail: "14-wheeler and 16-wheeler open body trucks — 30T and 35T class",
+    detail: "14-wheeler and 16-wheeler open body trucks - 30T and 35T class",
     specs: ["14W", "16W", "30T", "35T", "Open body"],
   },
 ] as const;
@@ -52,23 +52,23 @@ export const fleetPageCopy = {
     badge: "Fleet capacity",
     h1: "Own fleet. Network fleet. Same desk.",
     lead:
-      "Hire a body class for the corridor. We tell you whether the truck is company-operated or verified network capacity — never silently mixed.",
+      "Hire a body class for the corridor. We tell you whether the truck is company-operated or verified network capacity - never silently mixed.",
   },
   own: {
     eyebrow: "Own Fleet",
     h2: "Company trucks we operate",
     lead:
-      "Side wall trailer, 32 ft SXL / MXL, 40 ft flat bed, and 30T / 35T open body (14W / 16W) — drivers, readiness, and dispatch sit with ZAFTYS. Contracted trips can report through ZAFTYS TMS.",
+      "Side wall trailer, 32 ft SXL / MXL, 40 ft flat bed, and 30T / 35T open body (14W / 16W) - drivers, readiness, and dispatch sit with ZAFTYS. Contracted trips can report through ZAFTYS TMS.",
   },
   ops: {
     h2: "How we run own fleet",
-    lead: "Ownership means more than a body type — readiness, papers, and close-out sit with us.",
+    lead: "Ownership means more than a body type - readiness, papers, and close-out sit with us.",
   },
   network: {
     eyebrow: "Network Fleet",
     h2: "All commercial types via verified partners",
     lead:
-      "When own capacity is short, Tranzfort supplies the body class you need — LCV through ODC. Network trucks are labeled on the trip, never sold as company fleet.",
+      "When own capacity is short, Tranzfort supplies the body class you need - LCV through ODC. Network trucks are labeled on the trip, never sold as company fleet.",
     points: [
       { title: "Full type coverage", detail: "Every TranZfort catalog class available as overflow" },
       { title: "Labeled on the trip", detail: "Shipper sees network capacity, not fake owned count" },
@@ -79,6 +79,6 @@ export const fleetPageCopy = {
   },
   finalCta: {
     h2: "Need capacity on a lane?",
-    lead: "Tell us corridor, cargo, and class — we’ll confirm own fleet or labeled network.",
+    lead: "Tell us corridor, cargo, and class - we’ll confirm own fleet or labeled network.",
   },
 } as const;

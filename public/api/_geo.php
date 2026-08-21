@@ -3,7 +3,7 @@
 /**
  * Approximate country / region / city / ISP from a public IP.
  * Uses ipwho.is (HTTPS, no key). Cached per IP on zaftys_page_visits.
- * City-level only — not GPS. Mobile ISPs are often the carrier hub city.
+ * City-level only - not GPS. Mobile ISPs are often the carrier hub city.
  *
  * @return array{country: ?string, region: ?string, city: ?string, isp: ?string}
  */

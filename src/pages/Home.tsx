@@ -12,7 +12,7 @@ import { pageSeo } from "@/lib/page-seo";
 import { logisticsServiceSchema, organizationSchema, websiteSchema, localBusinessSchema } from "@/lib/schema";
 
 /**
- * Homepage section order — locked to positioning (see src/lib/home-sections.ts).
+ * Homepage section order - locked to positioning (see src/lib/home-sections.ts).
  *
  * 1. hero            WHAT + PROOF   Heavy freight promise
  * 2. operating-model HOW            Operator identity (fleet + contract + network)

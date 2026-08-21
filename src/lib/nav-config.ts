@@ -6,7 +6,7 @@ export type NavDropdown = {
   type: "dropdown";
   id: string;
   label: string;
-  /** Hub route — parent label links here; used for active-state prefix matching */
+  /** Hub route - parent label links here; used for active-state prefix matching */
   hubPath: string;
   items: readonly NavLink[];
 };

@@ -34,7 +34,7 @@ export const industries: readonly IndustryRecord[] = [
     slug: "cement",
     title: "Cement & Construction",
     description:
-      "Bagged cement, bulk cement on pneumatic bulkers, clinker, fly ash, and aggregates — planned around plant loading windows and silo / project TAT, not a spot rate alone.",
+      "Bagged cement, bulk cement on pneumatic bulkers, clinker, fly ash, and aggregates - planned around plant loading windows and silo / project TAT, not a spot rate alone.",
     features: ["Bulker for loose cement & fly ash", "Tipper / open body for bagged & aggregates", "Plant-window & detention language"],
     highlight: "Plant windows · bulker & tipper",
     image: "/images/marketing/industry-cement.webp",
@@ -46,16 +46,16 @@ export const industries: readonly IndustryRecord[] = [
       { name: "Aggregates", note: "Quarry and crusher to project sites" },
     ],
     challenges: [
-      "Bulk cement and fly ash need pneumatic bulkers — not a generic open truck — and silo-ready unloading at RMC or dealer sites.",
+      "Bulk cement and fly ash need pneumatic bulkers - not a generic open truck - and silo-ready unloading at RMC or dealer sites.",
       "Plant free-time is short. Queues, weighbridge slips, and full silos turn into detention that eats the freight margin.",
       "Bagged cement, clinker, and aggregates need tipper or open-body capacity timed to the same desk that runs bulk lanes.",
       "Multi-site projects fail when every indent is a new broker hunt instead of reserved corridor capacity.",
     ],
     howZaftysHelps: [
       "Own open-body and tipper capacity for bagged cement and aggregates; bulker / sealed classes via labeled network when the cargo demands it.",
-      "Dispatch planned around plant and project windows — gate-in language, loading bay timing, and trip close-out on one desk.",
+      "Dispatch planned around plant and project windows - gate-in language, loading bay timing, and trip close-out on one desk.",
       "Contract or dedicated programs on repeat plant-to-dealer and plant-to-project corridors so Monday’s indent is not a spot scramble.",
-      "When a window needs more wheels than we own, Tranzfort overflow is labeled clearly — never sold as company fleet.",
+      "When a window needs more wheels than we own, Tranzfort overflow is labeled clearly - never sold as company fleet.",
       "Contracted trips can report through ZAFTYS TMS so the plant is not chasing WhatsApp for POD.",
     ],
     corridors: [
@@ -80,12 +80,12 @@ export const industries: readonly IndustryRecord[] = [
       {
         question: "Do you move bulk cement as well as bagged?",
         answer:
-          "Yes. Bagged cement and aggregates typically run on open body or tipper. Loose cement and dry fly ash need pneumatic bulker — we match the body class to the cargo and confirm own fleet or labeled network before allotment.",
+          "Yes. Bagged cement and aggregates typically run on open body or tipper. Loose cement and dry fly ash need pneumatic bulker - we match the body class to the cargo and confirm own fleet or labeled network before allotment.",
       },
       {
         question: "How do you handle plant detention and loading windows?",
         answer:
-          "We plan allotment around the plant’s free-time and bay reality, not only origin–destination kilometres. Detention risk sits in the desk conversation before the truck is sent.",
+          "We plan allotment around the plant’s free-time and bay reality, not only origin - destination kilometres. Detention risk sits in the desk conversation before the truck is sent.",
       },
       {
         question: "Can you cover plant-to-RMC and multi-site project lanes?",
@@ -95,7 +95,7 @@ export const industries: readonly IndustryRecord[] = [
       {
         question: "What if one plant window needs more trucks than you own?",
         answer:
-          "Verified Tranzfort partners fill the gap. Overflow is labeled on the trip — never presented as owned fleet — and contracted trips can still close through ZAFTYS.",
+          "Verified Tranzfort partners fill the gap. Overflow is labeled on the trip - never presented as owned fleet - and contracted trips can still close through ZAFTYS.",
       },
     ],
     blogLinks: [
@@ -114,7 +114,7 @@ export const industries: readonly IndustryRecord[] = [
     slug: "coal-mining",
     title: "Mining Products",
     description:
-      "Tipper and open-body programs for mining products — coal, iron ore, limestone, bauxite, manganese, chrome, concentrates, overburden, and quarry aggregates — from pit and stockyard to plant, mill, or siding.",
+      "Tipper and open-body programs for mining products - coal, iron ore, limestone, bauxite, manganese, chrome, concentrates, overburden, and quarry aggregates - from pit and stockyard to plant, mill, or siding.",
     features: ["Multi-mineral tipper haul", "Pit-to-plant & quarry cycles", "Weighbridge & site papers"],
     highlight: "All mining products · tipper programs",
     image: "/images/marketing/industry-coal-mining.webp",
@@ -129,15 +129,15 @@ export const industries: readonly IndustryRecord[] = [
       { name: "Aggregates & crushed stone", note: "Crusher to plant, project, and rail staging" },
     ],
     challenges: [
-      "Mining products are abrasive and dense — tipper class, body wear, and payload must match the mineral, not a city FTL truck.",
+      "Mining products are abrasive and dense - tipper class, body wear, and payload must match the mineral, not a city FTL truck.",
       "Coal, iron ore, limestone, and ore concentrates share pit roads and plant gates, but each has different weighbridge, moisture, and paper rules.",
       "Power plants, cement works, steel mills, and alumina units depend on continuous feed; a missing tipper cascade stops production.",
-      "Ad-hoc mining brokers often lose accountability after allotment — no clear POD, no weighbridge trail, no escalation desk across product types.",
+      "Ad-hoc mining brokers often lose accountability after allotment - no clear POD, no weighbridge trail, no escalation desk across product types.",
     ],
     howZaftysHelps: [
-      "One mining desk for the product mix — coal, ore, limestone, bauxite, overburden, and aggregates — not a separate story for each mineral.",
+      "One mining desk for the product mix - coal, ore, limestone, bauxite, overburden, and aggregates - not a separate story for each mineral.",
       "Own 30T / 35T open-body and tipper capacity where we run the lane; labeled network tippers when the site needs more wheels that shift.",
-      "Weighbridge, gate pass, and shift-handover language on the same Amravati desk — structured LR and trip close-out per product.",
+      "Weighbridge, gate pass, and shift-handover language on the same Amravati desk - structured LR and trip close-out per product.",
       "Contract capacity for recurring mine-to-plant, quarry-to-works, or stockyard-to-mill lanes so peak weeks are planned, not scrambled.",
       "TMS visibility on contracted trips so the plant or mill sees status without chasing drivers.",
     ],
@@ -155,7 +155,7 @@ export const industries: readonly IndustryRecord[] = [
     ],
     whatsappPrefill:
       "Hi ZAFTYS, I need a quote for mining product transport.\n\nOrigin (mine / quarry / stockyard):\nDestination (plant / mill / siding):\nProduct (coal / iron ore / limestone / bauxite / other):\nTrips per day / week:\n",
-    seoH1: "Mining product transportation — tippers for every mineral lane.",
+    seoH1: "Mining product transportation - tippers for every mineral lane.",
     seoTitle: "Mining Product Transport India | Tipper",
     seoDescription:
       "Mining product transport for coal, iron ore, limestone, bauxite, manganese, chrome, overburden, and aggregates. Pit-to-plant tippers, weighbridge discipline, own capacity first.",
@@ -163,17 +163,17 @@ export const industries: readonly IndustryRecord[] = [
       {
         question: "Is this only coal, or all mining products?",
         answer:
-          "All mining products we can run on tipper or open body — coal, iron ore, limestone, dolomite, bauxite, manganese, chrome, concentrates where class fits, overburden, and quarry aggregates. Body class follows the mineral and site rules.",
+          "All mining products we can run on tipper or open body - coal, iron ore, limestone, dolomite, bauxite, manganese, chrome, concentrates where class fits, overburden, and quarry aggregates. Body class follows the mineral and site rules.",
       },
       {
         question: "How do you keep continuous mine-to-plant feed moving?",
         answer:
-          "Recurring programs reserve tipper capacity for the corridor. Surge beyond what we own that shift is filled through verified partners and labeled clearly — not silently mixed into “owned” counts.",
+          "Recurring programs reserve tipper capacity for the corridor. Surge beyond what we own that shift is filled through verified partners and labeled clearly - not silently mixed into “owned” counts.",
       },
       {
         question: "What about weighbridge and site documentation?",
         answer:
-          "Gate passes, weighbridge trails, and trip close-out sit with the ZAFTYS desk on contracted moves so the plant or mill has one accountable party per trip — across product types.",
+          "Gate passes, weighbridge trails, and trip close-out sit with the ZAFTYS desk on contracted moves so the plant or mill has one accountable party per trip - across product types.",
       },
       {
         question: "Do you cover quarry limestone as well as pit coal?",
@@ -196,7 +196,7 @@ export const industries: readonly IndustryRecord[] = [
     slug: "steel-metals",
     title: "Steel & Metals",
     description:
-      "Steel coil transportation on flatbed and side-wall trailers with proper securing, plus plates, TMT, billets, and structurals — mill windows, weighbridge, and axle reality.",
+      "Steel coil transportation on flatbed and side-wall trailers with proper securing, plus plates, TMT, billets, and structurals - mill windows, weighbridge, and axle reality.",
     features: ["Steel coil on flatbed / side wall", "Plates, TMT & structurals", "Mill window & weighbridge"],
     highlight: "Coil-ready trailers · mill timing",
     image: "/images/marketing/industry-steel-metals.webp",
@@ -208,14 +208,14 @@ export const industries: readonly IndustryRecord[] = [
       { name: "Structurals & sections", note: "Project and dealer destinations" },
     ],
     challenges: [
-      "Steel coils need the right flatbed or side-wall trailer, coil chocks / cradles, and securing — a wrong bed damages cargo and fails the weighbridge.",
+      "Steel coils need the right flatbed or side-wall trailer, coil chocks / cradles, and securing - a wrong bed damages cargo and fails the weighbridge.",
       "Mill and stockyard dispatch windows leave little room for late vehicles or incomplete papers at the gate.",
       "Axle limits and GVW surprises turn a cheap spot truck into a refused load or a fine on the corridor.",
-      "Plates, TMT, billets, and long structurals need different loading patterns than coils — one “steel truck” story does not fit all.",
+      "Plates, TMT, billets, and long structurals need different loading patterns than coils - one “steel truck” story does not fit all.",
     ],
     howZaftysHelps: [
       "Own side-wall and 40 ft flatbed trailers for coil and long-product programs; open body where lengths and site rules fit.",
-      "Coil moves planned with securing and weighbridge language before the truck is allotted — not after it arrives at the mill.",
+      "Coil moves planned with securing and weighbridge language before the truck is allotted - not after it arrives at the mill.",
       "Repeat mill-to-fabricator, mill-to-warehouse, and stockyard lanes under contract or dedicated capacity so the class stays locked.",
       "Labeled network trailers when a mill program needs more coil capacity than we own that day.",
       "TMS on contracted trips for status and e-POD so procurement is not chasing WhatsApp after dispatch.",
@@ -242,12 +242,12 @@ export const industries: readonly IndustryRecord[] = [
       {
         question: "Do you specialize in steel coil transportation?",
         answer:
-          "Yes. Coils are a primary steel load type for us — flatbed or side-wall trailer, proper securing, and weighbridge / axle checks before the truck leaves the mill or stockyard.",
+          "Yes. Coils are a primary steel load type for us - flatbed or side-wall trailer, proper securing, and weighbridge / axle checks before the truck leaves the mill or stockyard.",
       },
       {
         question: "What other steel products do you move?",
         answer:
-          "Plates, TMT, billets, sections, and project structurals. Body class follows the cargo — coil bed vs open lengths — not a one-size steel truck.",
+          "Plates, TMT, billets, sections, and project structurals. Body class follows the cargo - coil bed vs open lengths - not a one-size steel truck.",
       },
       {
         question: "How do you handle mill dispatch windows?",
@@ -276,7 +276,7 @@ export const industries: readonly IndustryRecord[] = [
     slug: "container-transport",
     title: "Port & Container Road",
     description:
-      "Container movement by road — port to city, city to port, port to factory, and ICD / CFS legs — sealed trailers timed to plant and port windows, not demurrage roulette.",
+      "Container movement by road - port to city, city to port, port to factory, and ICD / CFS legs - sealed trailers timed to plant and port windows, not demurrage roulette.",
     features: ["Port ↔ city / factory road legs", "32 ft & 40 ft container trailers", "Plant & port window dispatch"],
     highlight: "Port ↔ city · sealed road legs",
     image: "/images/marketing/industry-container.webp",
@@ -288,7 +288,7 @@ export const industries: readonly IndustryRecord[] = [
       { name: "Empty / loaded trailer moves", note: "Where the corridor and chassis program fit" },
     ],
     challenges: [
-      "Port–city and city–port road legs fail when CHA, transporter, and plant each own a slice of the trip while demurrage clocks run.",
+      "Port - city and city - port road legs fail when CHA, transporter, and plant each own a slice of the trip while demurrage clocks run.",
       "Wrong trailer class (32 ft domestic vs 40 ft EXIM) or late gate-in burns free time at port and plant.",
       "Factory loading windows and port cut-offs do not wait for a broker who is still hunting a chassis.",
       "Empty trailer wait and unclear POD leave importers and exporters without one accountable road desk.",
@@ -296,8 +296,8 @@ export const industries: readonly IndustryRecord[] = [
     howZaftysHelps: [
       "Road execution between port, CFS/ICD, factory, warehouse, and city markets on one Amravati desk.",
       "Own 32 ft container SXL / MXL where we run the lane; 40 ft and surge chassis via labeled network when needed.",
-      "Dispatch planned around plant slots and port / CFS windows — gate-in language before the trailer is sent.",
-      "Contract or dedicated container programs on repeat port–plant corridors so Monday is not a spot scramble.",
+      "Dispatch planned around plant slots and port / CFS windows - gate-in language before the trailer is sent.",
+      "Contract or dedicated container programs on repeat port - plant corridors so Monday is not a spot scramble.",
       "TMS on contracted container moves so status is not a WhatsApp chase between port and factory.",
     ],
     corridors: [
@@ -307,14 +307,14 @@ export const industries: readonly IndustryRecord[] = [
       "ICD and CFS road transfers on programs we scope.",
     ],
     equipment: [
-      "32 ft container SXL / MXL — domestic FTL workhorse",
-      "20–24 ft sealed for lighter regional legs",
+      "32 ft container SXL / MXL - domestic FTL workhorse",
+      "20-24 ft sealed for lighter regional legs",
       "40 ft / 40 HC chassis for EXIM ISO where available",
       "Labeled network trailer overflow for yard surge days",
     ],
     whatsappPrefill:
       "Hi ZAFTYS, I need a quote for container road transport.\n\nPort / ICD / origin:\nFactory / city / destination:\nDirection (port→city / city→port):\nContainer size (20 / 32 / 40):\nTrips per week:\n",
-    seoH1: "Port to city and city to port — container road transport.",
+    seoH1: "Port to city and city to port - container road transport.",
     seoTitle: "Container Transport India | Port to City",
     seoDescription:
       "Container transportation by road: port to city, city to port, port to factory, and ICD/CFS legs. 32 ft and 40 ft trailers, plant and port windows, own fleet first.",
@@ -322,12 +322,12 @@ export const industries: readonly IndustryRecord[] = [
       {
         question: "Do you move containers port to city and city to port?",
         answer:
-          "Yes. That is the core of this desk — inbound port-to-factory / warehouse / city and outbound factory / city-to-port road legs, plus ICD and CFS transfers where scoped.",
+          "Yes. That is the core of this desk - inbound port-to-factory / warehouse / city and outbound factory / city-to-port road legs, plus ICD and CFS transfers where scoped.",
       },
       {
         question: "Which container sizes do you run?",
         answer:
-          "32 ft SXL / MXL is our domestic FTL backbone. 20–24 ft for lighter regional sealed legs. 40 ft / 40 HC for EXIM ISO where we have the chassis — own fleet first, labeled network when the yard needs more.",
+          "32 ft SXL / MXL is our domestic FTL backbone. 20-24 ft for lighter regional sealed legs. 40 ft / 40 HC for EXIM ISO where we have the chassis - own fleet first, labeled network when the yard needs more.",
       },
       {
         question: "How do you handle port free time and plant windows?",
@@ -337,7 +337,7 @@ export const industries: readonly IndustryRecord[] = [
       {
         question: "Is this the same as your Container Transportation service?",
         answer:
-          "Same road execution. This industry page is the port–city / EXIM vertical desk; the full service detail lives under Transportation → Container Transportation.",
+          "Same road execution. This industry page is the port - city / EXIM vertical desk; the full service detail lives under Transportation → Container Transportation.",
       },
     ],
     blogLinks: [
@@ -356,7 +356,7 @@ export const industries: readonly IndustryRecord[] = [
     slug: "chemicals",
     title: "Chemicals",
     description:
-      "Industrial chemicals and bulk liquids with the right tanker or closed body, wash and document discipline, and an accountable desk — not informal spot tankers at the gate.",
+      "Industrial chemicals and bulk liquids with the right tanker or closed body, wash and document discipline, and an accountable desk - not informal spot tankers at the gate.",
     features: ["Tanker & packaged programs", "Wash / docs before allotment", "Structured LR & ePOD"],
     highlight: "Tanker discipline · papers first",
     image: "/images/marketing/industry-chemicals.webp",
@@ -369,14 +369,14 @@ export const industries: readonly IndustryRecord[] = [
     ],
     challenges: [
       "Wrong tanker or dirty tank turns a cheap rate into a rejected load, a wash claim, or a compliance incident.",
-      "MSDS, permits, and gate papers vary by cargo class — informal brokers often arrive without them.",
+      "MSDS, permits, and gate papers vary by cargo class - informal brokers often arrive without them.",
       "Plant free-time on chemical bays is short; late or undocumented tankers create detention and line stoppage.",
-      "Consignors need one accountable party for LR, POD, and escalation — not a rotating WhatsApp chain.",
+      "Consignors need one accountable party for LR, POD, and escalation - not a rotating WhatsApp chain.",
     ],
     howZaftysHelps: [
-      "Tanker and packaged programs scoped honestly during consultation — we confirm class, wash, and corridor before allotment.",
+      "Tanker and packaged programs scoped honestly during consultation - we confirm class, wash, and corridor before allotment.",
       "Own fleet where the body fits; labeled network tankers when the program needs more capacity that week.",
-      "Structured LR, proof of delivery, and desk communication through ZAFTYS operations — not informal spot-only coordination.",
+      "Structured LR, proof of delivery, and desk communication through ZAFTYS operations - not informal spot-only coordination.",
       "Contract lanes on repeat plant-to-plant chemical belts so the vehicle class stays locked.",
       "TMS visibility on contracted trips so plant teams are not chasing drivers for status.",
     ],
@@ -402,7 +402,7 @@ export const industries: readonly IndustryRecord[] = [
       {
         question: "What chemical freight can ZAFTYS support?",
         answer:
-          "Industrial chemicals and bulk liquids where tanker or packaged handling fits the program. We scope product, wash, and corridor honestly before allotment — we do not claim every haz class by default.",
+          "Industrial chemicals and bulk liquids where tanker or packaged handling fits the program. We scope product, wash, and corridor honestly before allotment - we do not claim every haz class by default.",
       },
       {
         question: "How is compliance and documentation handled?",
@@ -412,7 +412,7 @@ export const industries: readonly IndustryRecord[] = [
       {
         question: "Do you own chemical tankers?",
         answer:
-          "Where we have the class, we run company assets. Specialized or surge tanker demand uses verified partners and is labeled as network capacity — never silently sold as owned fleet.",
+          "Where we have the class, we run company assets. Specialized or surge tanker demand uses verified partners and is labeled as network capacity - never silently sold as owned fleet.",
       },
       {
         question: "Can we see shipment status without calling dispatch?",
@@ -435,7 +435,7 @@ export const industries: readonly IndustryRecord[] = [
     slug: "manufacturing",
     title: "Manufacturing",
     description:
-      "Production-linked inbound and outbound FTL — raw materials in, finished goods out, inter-plant WIP — timed to shift gates and line schedules, not a generic truck hunt.",
+      "Production-linked inbound and outbound FTL - raw materials in, finished goods out, inter-plant WIP - timed to shift gates and line schedules, not a generic truck hunt.",
     features: ["Production-window dispatch", "Inbound + outbound + WIP", "TMS on contracted trips"],
     highlight: "Shift gates · line-linked FTL",
     image: "/images/marketing/industry-manufacturing.webp",
@@ -447,7 +447,7 @@ export const industries: readonly IndustryRecord[] = [
       { name: "Peak / model-change surge", note: "Labeled network when own fleet is short" },
     ],
     challenges: [
-      "Inbound misses a shift gate and the line waits — freight cost is secondary to lost production hours.",
+      "Inbound misses a shift gate and the line waits - freight cost is secondary to lost production hours.",
       "Outbound finished goods and dealer pushes pile up when vehicles are shopped the morning of indent.",
       "Multi-plant networks create different gate rules, body preferences, and SLA clocks on every site.",
       "Peak weeks and model changes blow past internal fleet; ad-hoc carriers lose ePOD and escalation discipline.",
@@ -457,7 +457,7 @@ export const industries: readonly IndustryRecord[] = [
       "Own open and closed body where the SKU fits; labeled Tranzfort overflow for peak and model-change weeks.",
       "One Amravati desk across plants so indents are not a new broker hunt per site.",
       "TMS trip status, documentation, and ePOD so production and logistics share one record.",
-      "Honest split: manufacturing pages sell production windows — heavy tipper / coil / bulker verticals stay on their own desks.",
+      "Honest split: manufacturing pages sell production windows - heavy tipper / coil / bulker verticals stay on their own desks.",
     ],
     corridors: [
       "Supplier-to-plant inbound on industrial corridors.",
@@ -515,7 +515,7 @@ export const industries: readonly IndustryRecord[] = [
     slug: "fmcg",
     title: "FMCG",
     description:
-      "Factory-to-DC and hub replenishment with OTIF discipline, fast turnaround, and lane-level trip records — commercial FTL and LCV, not two-wheeler last mile.",
+      "Factory-to-DC and hub replenishment with OTIF discipline, fast turnaround, and lane-level trip records - commercial FTL and LCV, not two-wheeler last mile.",
     features: ["Factory-to-DC FTL", "OTIF & ePOD", "Seasonal surge cover"],
     highlight: "OTIF · factory-to-DC lanes",
     image: "/images/marketing/industry-fmcg.webp",
@@ -524,19 +524,19 @@ export const industries: readonly IndustryRecord[] = [
       { name: "Hub replenishment", note: "Scheduled hub-to-hub on fixed windows" },
       { name: "Dealer / stockist push", note: "Regional FTL and commercial LCV" },
       { name: "Festive / seasonal surge", note: "Labeled network when own fleet is short" },
-      { name: "Return / reverse where scoped", note: "Planned reverse legs — not empty promises" },
+      { name: "Return / reverse where scoped", note: "Planned reverse legs - not empty promises" },
     ],
     challenges: [
-      "Trade and dealer channels penalize late or undocumented deliveries — OTIF is the product, not the truck.",
+      "Trade and dealer channels penalize late or undocumented deliveries - OTIF is the product, not the truck.",
       "Festive and promo peaks blow past standing capacity; last-minute brokers break ePOD and SLA trails.",
       "Lane cost is invisible without centralized trip, detention, and utilization records.",
       "Wrong body class (open vs closed) damages weather-sensitive SKUs and creates claim noise.",
     ],
     howZaftysHelps: [
       "Regional FTL and commercial LCV on repeat factory-to-DC corridors with schedule-aligned dispatch.",
-      "ePOD and trip records through ZAFTYS TMS for OTIF confirmation — not WhatsApp photo chains.",
+      "ePOD and trip records through ZAFTYS TMS for OTIF confirmation - not WhatsApp photo chains.",
       "Core lanes on own or dedicated capacity; seasonal peaks on labeled Tranzfort overflow.",
-      "Honest scope: commercial distribution lanes — not two-wheeler last mile or household shifting.",
+      "Honest scope: commercial distribution lanes - not two-wheeler last mile or household shifting.",
       "One desk for indent, allotment, and exception so trade teams are not chasing multiple transporters.",
     ],
     corridors: [
@@ -594,7 +594,7 @@ export const industries: readonly IndustryRecord[] = [
     slug: "industrial-logistics",
     title: "Industrial Logistics",
     description:
-      "One account across plants for mixed industrial freight — contract lanes on our fleet, spot overflow on Tranzfort, shutdown and project windows, TMS on the trips we run.",
+      "One account across plants for mixed industrial freight - contract lanes on our fleet, spot overflow on Tranzfort, shutdown and project windows, TMS on the trips we run.",
     features: ["Multi-plant account desk", "Contract + spot mix", "Shutdown & project windows"],
     highlight: "One desk · mixed plant freight",
     image: "/images/marketing/industry-industrial-logistics.webp",
@@ -608,12 +608,12 @@ export const industries: readonly IndustryRecord[] = [
     challenges: [
       "Nationwide industrial shippers juggle contract lanes, spot demand, and multiple plants with different gate rules.",
       "Fragmented transporters multiply admin, GST noise, and blind spots when something fails on the road.",
-      "Shutdown and project windows need reserved capacity — not a broker scramble the week of outage.",
+      "Shutdown and project windows need reserved capacity - not a broker scramble the week of outage.",
       "Manufacturing SKU pages and heavy vertical pages do not replace an account layer that mixes body classes across sites.",
     ],
     howZaftysHelps: [
       "Enterprise-style account coordination: one commercial relationship, many plants, mixed body classes.",
-      "Contracted core lanes on company trucks; spot and extra capacity on Tranzfort — labeled, never blended into owned counts.",
+      "Contracted core lanes on company trucks; spot and extra capacity on Tranzfort - labeled, never blended into owned counts.",
       "Shutdown, turnaround, and project windows planned with the desk before the outage week.",
       "TMS as the operational layer for dispatch, documentation, and client visibility across plants.",
       "Clear split from Manufacturing: this page is the multi-plant mixed-freight account; manufacturing is production-window SKU FTL.",
@@ -632,7 +632,7 @@ export const industries: readonly IndustryRecord[] = [
     ],
     whatsappPrefill:
       "Hi ZAFTYS, I need a quote for industrial logistics.\n\nPlants involved:\nCorridor / lanes:\nCargo mix / body classes:\nContract vs spot split:\n",
-    seoH1: "Industrial logistics — one desk across plants.",
+    seoH1: "Industrial logistics - one desk across plants.",
     seoTitle: "Industrial Logistics India | Multi-Plant Freight Programs",
     seoDescription:
       "Multi-plant industrial freight with contract lanes, labeled spot overflow, shutdown windows, and ZAFTYS TMS. Own fleet first across mixed body classes.",
@@ -672,7 +672,7 @@ export const industries: readonly IndustryRecord[] = [
   },
 ] as const;
 
-/** Legacy industry slug redirects (retail vertical removed — not in scope) */
+/** Legacy industry slug redirects (retail vertical removed - not in scope) */
 export const INDUSTRY_SLUG_ALIASES: Record<string, string> = {
   mining: "coal-mining",
   retail: "fmcg",

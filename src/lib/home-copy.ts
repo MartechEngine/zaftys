@@ -1,4 +1,4 @@
-/** Locked homepage copy — sections map to src/components/home/* */
+/** Locked homepage copy - sections map to src/components/home/* */
 /** No em dash, en dash, or spaced hyphen used as a dash. */
 
 export const homeCopy = {

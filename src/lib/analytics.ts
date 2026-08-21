@@ -49,7 +49,7 @@ let firstSpaPageviewSkipped = false;
 function ensureGtag(): void {
   window.dataLayer = window.dataLayer || [];
   if (!window.gtag) {
-    // Must push `arguments`, not a rest array — gtag.js ignores queued Array hits.
+    // Must push `arguments`, not a rest array - gtag.js ignores queued Array hits.
     window.gtag = function gtag() {
       // eslint-disable-next-line prefer-rest-params
       window.dataLayer?.push(arguments);
@@ -160,7 +160,7 @@ export function trackPageview(path: string, title?: string): void {
   captureUtmFromLocation();
   if (!gaMeasurementId()) return;
 
-  // First paint already sent via HTML `send_page_view: true` — skip duplicate.
+  // First paint already sent via HTML `send_page_view: true` - skip duplicate.
   if (!firstSpaPageviewSkipped) {
     firstSpaPageviewSkipped = true;
     if (typeof window !== "undefined" && window.__ZAFTS_GA_ID__) return;

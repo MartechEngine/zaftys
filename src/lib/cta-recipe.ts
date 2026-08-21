@@ -18,7 +18,7 @@
  * - Navy hero / final CTA: Primary accent → WhatsApp (if needed) → on-dark-outline
  * - Light section: Primary accent → outline-brand
  * - Never use plain `outline` for marketing CTAs (neutral UI only).
- * - Never wrap WhatsApp URLs in accent/on-dark Buttons — use WhatsAppButton.
+ * - Never wrap WhatsApp URLs in accent/on-dark Buttons - use WhatsAppButton.
  */
 
 export const ctaVariant = {

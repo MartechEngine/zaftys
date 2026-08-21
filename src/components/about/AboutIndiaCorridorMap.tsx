@@ -1,5 +1,5 @@
 /**
- * ZAFTYS India Corridor Network — premium logistics intelligence visualization.
+ * ZAFTYS India Corridor Network - premium logistics intelligence visualization.
  * Map: /images/marketing/india-map-kashmir.webp (full Kashmir as India).
  * Geo (India3): N 37.5°, S 5.0°, W 67.0°E, E 99.0°E.
  */
@@ -67,7 +67,7 @@ type RouteEdge = {
   callout?: string;
 };
 
-/** Inter-hub geometry — hierarchy applied via `kind` */
+/** Inter-hub geometry - hierarchy applied via `kind` */
 const EDGES: RouteEdge[] = [
   // Dense mesh (quiet)
   { id: "mundra-hazira", from: "mundra", to: "hazira", kind: "mesh" },
@@ -93,7 +93,7 @@ const EDGES: RouteEdge[] = [
   { id: "delhi-hyd", from: "delhi", to: "hyd", kind: "major" },
   { id: "mundra-delhi", from: "mundra", to: "delhi", kind: "major" },
   { id: "kolkata-chennai", from: "kolkata", to: "chennai", kind: "major" },
-  // Active freight (sparse — orange accent reserved here)
+  // Active freight (sparse - orange accent reserved here)
   {
     id: "active-mumbai-hyd",
     from: "mumbai",
@@ -117,7 +117,7 @@ const EDGES: RouteEdge[] = [
   },
 ];
 
-/** HQ spokes — major to tier-1, mesh to tier-2 (active overridden above) */
+/** HQ spokes - major to tier-1, mesh to tier-2 (active overridden above) */
 const SPOKE_TARGETS = HUBS.map((h) => h.id);
 
 type Pt = { x: number; y: number };
@@ -331,7 +331,7 @@ export function AboutIndiaCorridorMap({ className }: { className?: string }) {
           {/* 1. Relief / political terrain */}
           <img
             src={MAP_SRC}
-            alt="Map of India including the entire Kashmir region — ZAFTYS corridor network"
+            alt="Map of India including the entire Kashmir region - ZAFTYS corridor network"
             className="absolute inset-0 h-full w-full object-cover"
             style={{
               filter:
@@ -387,7 +387,7 @@ export function AboutIndiaCorridorMap({ className }: { className?: string }) {
             />
           </div>
 
-          {/* Network SVG layers 5–11 */}
+          {/* Network SVG layers 5-11 */}
           <svg
             viewBox={`0 0 ${VB.w} ${VB.h}`}
             className="absolute inset-0 h-full w-full"
@@ -434,7 +434,7 @@ export function AboutIndiaCorridorMap({ className }: { className?: string }) {
               />
             ))}
 
-            {/* 6–7. Major corridors */}
+            {/* 6-7. Major corridors */}
             {major.map((r) => (
               <g key={r.id}>
                 <path
@@ -509,7 +509,7 @@ export function AboutIndiaCorridorMap({ className }: { className?: string }) {
               </g>
             ))}
 
-            {/* 10–11. Hubs */}
+            {/* 10-11. Hubs */}
             {hubs.map((hub, i) => {
               const tier1 = hub.tier === 1;
               const coreR = tier1 ? 5.5 : 3.5;
@@ -589,7 +589,7 @@ export function AboutIndiaCorridorMap({ className }: { className?: string }) {
               );
             })}
 
-            {/* HQ — Amravati */}
+            {/* HQ - Amravati */}
             <circle className="icn-hq-pulse" cx={hq.x} cy={hq.y} fill="hsl(25 100% 55% / 0.4)" />
             <circle
               cx={hq.x}
@@ -674,7 +674,7 @@ export function AboutIndiaCorridorMap({ className }: { className?: string }) {
             )}
           </svg>
 
-          {/* 14–15. Vignette */}
+          {/* 14-15. Vignette */}
           <div
             className="pointer-events-none absolute inset-0"
             style={{
@@ -700,7 +700,7 @@ export function AboutIndiaCorridorMap({ className }: { className?: string }) {
         ))}
       </div>
       <p className="px-5 pb-3 text-[9px] text-white/25 md:px-6">
-        Network view for illustration — hub and corridor counts reflect this map overlay, not live fleet tallies.
+        Network view for illustration - hub and corridor counts reflect this map overlay, not live fleet tallies.
       </p>
     </div>
   );

@@ -18,7 +18,7 @@ export type PageHeroProps = {
   prepend?: ReactNode;
 };
 
-/** Typical marketing hero JPEG aspect (Vite-bundled assets ~1600×1050–1920×1080). */
+/** Typical marketing hero JPEG aspect (Vite-bundled assets ~1600×1050-1920×1080). */
 const HERO_WIDTH = 1920;
 const HERO_HEIGHT = 1080;
 

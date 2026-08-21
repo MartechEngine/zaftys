@@ -15,7 +15,7 @@ export type ReportLeadPayload = {
   jobTitle: string;
   email: string;
   reportSlug: string;
-  /** Honeypot — must stay empty for humans. */
+  /** Honeypot - must stay empty for humans. */
   website?: string;
 };
 

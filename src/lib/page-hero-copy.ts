@@ -7,7 +7,7 @@ export const pageHeroCopy = {
   logistics: {
     badge: "Transportation & Logistics",
     h1: "Reliable transportation capacity for demanding freight.",
-    lead: "ZAFTYS executes 3PL and contract transportation for industrial and commercial freight. Owned heavy vehicles, contract programs, verified partner overflow, and the TMS we dispatch on — one desk.",
+    lead: "ZAFTYS executes 3PL and contract transportation for industrial and commercial freight. Owned heavy vehicles, contract programs, verified partner overflow, and the TMS we dispatch on - one desk.",
   }, // Body sections: src/lib/logistics-hub-copy.ts
   networkHub: {
     badge: "Transportation Network",
@@ -33,7 +33,7 @@ export const pageHeroCopy = {
     badge: "Fleet capacity",
     h1: "Own fleet. Network fleet. Same desk.",
     lead:
-      "Hire a body class for the corridor. We tell you whether the truck is company-operated or verified network capacity — never silently mixed.",
+      "Hire a body class for the corridor. We tell you whether the truck is company-operated or verified network capacity - never silently mixed.",
   },
   network: {
     badge: "Marketplace · live",
@@ -49,7 +49,7 @@ export const pageHeroCopy = {
     badge: "Built for industrial freight",
     h1: "Plant windows. Axle reality. Industry desks.",
     lead:
-      "We haul for verticals where the wrong body class or a missed gate costs more than the rate. Transportation first — not a three-product brochure per industry.",
+      "We haul for verticals where the wrong body class or a missed gate costs more than the rate. Transportation first - not a three-product brochure per industry.",
   },
   partner: {
     badge: "Fleet partners",
@@ -60,7 +60,7 @@ export const pageHeroCopy = {
     badge: "About ZAFTYS",
     h1: "One desk for industrial freight across India.",
     lead:
-      "Family corridor experience, a formal company since 2024. Own trucks when we have the right vehicle, ZAFTYS TMS on every trip we run, and TranZfort when you need more capacity — always labeled, never blended.",
+      "Family corridor experience, a formal company since 2024. Own trucks when we have the right vehicle, ZAFTYS TMS on every trip we run, and TranZfort when you need more capacity - always labeled, never blended.",
   },
   contact: {
     badge: "Contact",

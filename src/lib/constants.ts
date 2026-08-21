@@ -1,6 +1,6 @@
 export const WHATSAPP_PHONE = "919270923581";
 
-/** Primary public phone — display + tel must stay 1:1 with schema / Contact / Footer (NAP). */
+/** Primary public phone - display + tel must stay 1:1 with schema / Contact / Footer (NAP). */
 export const COMPANY_PHONE_DISPLAY = "+91-927-092-3581";
 export const COMPANY_PHONE_TEL = "+919270923581";
 /** Secondary desk line shown on Contact only (not primary NAP / schema). */
@@ -37,7 +37,7 @@ export const companyAddress = {
   mapsDirectionsUrl: `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(MAPS_QUERY)}`,
 } as const;
 
-/** Canonical NAP + bare-brand demand copy — keep GBP / directories / signatures aligned. */
+/** Canonical NAP + bare-brand demand copy - keep GBP / directories / signatures aligned. */
 export const brandEntity = {
   brandName: "ZAFTYS",
   legalName: legalEntity.name,
@@ -57,7 +57,7 @@ export const brandEntity = {
 /** Paste into email signatures, LinkedIn, and outbound WhatsApp (team → contacts). */
 export const brandDemandCopy = {
   emailSignature: [
-    "—",
+    " - ",
     brandEntity.brandName,
     brandEntity.legalName,
     brandEntity.napLine,
@@ -67,8 +67,8 @@ export const brandDemandCopy = {
     brandEntity.googleSearchCue,
   ].join("\n"),
   linkedInPost:
-    "We are ZAFTYS — industrial freight, owned fleet, TMS, and TranZfort.\n\nFind us as ZAFTYS on Google → https://zaftys.com\n\n#ZAFTYS #LogisticsIndia #FTL",
-  whatsappOutboundClose: `\n\n— ${brandEntity.brandName}\n${brandEntity.website}\n${brandEntity.googleSearchCue}`,
+    "We are ZAFTYS - industrial freight, owned fleet, TMS, and TranZfort.\n\nFind us as ZAFTYS on Google → https://zaftys.com\n\n#ZAFTYS #LogisticsIndia #FTL",
+  whatsappOutboundClose: `\n\n - ${brandEntity.brandName}\n${brandEntity.website}\n${brandEntity.googleSearchCue}`,
   partnerLinkAnchor: "ZAFTYS",
   pressBoilerplate: `${brandEntity.brandName} (${brandEntity.legalName}) is an India freight desk with owned fleet first, labeled network capacity, ZAFTYS TMS, and TranZfort marketplace matching. Headquarters: ${brandEntity.napLine}. Web: ${brandEntity.website}.`,
 } as const;
@@ -93,7 +93,7 @@ export const WHATSAPP_TMS_DEMO_MESSAGE =
 export const WHATSAPP_PARTNER_MESSAGE =
   "Hi ZAFTYS, I want to register as a transport partner.\n\nCompany:\nFleet size / body classes:\nCorridors:\n";
 
-/** Vertical quote prefills — keep in sync with industry desk language. */
+/** Vertical quote prefills - keep in sync with industry desk language. */
 export const whatsappIndustryPrefill = {
   cement:
     "Hi ZAFTYS, I need a quote for cement / construction freight.\n\nPlant / origin:\nDestination:\nCargo (bagged / bulk / clinker / fly ash / aggregates):\nVolume / trips per week:\n",
@@ -228,7 +228,7 @@ export const vehicleClasses = [
   },
 ] as const;
 
-/** Industries shown on homepage — keep in sync with industries-data */
+/** Industries shown on homepage - keep in sync with industries-data */
 export const homeIndustries = [
   { name: "Cement & Construction", slug: "cement", image: "/images/marketing/industry-cement.webp" },
   { name: "Port & Container Road", slug: "container-transport", image: "/images/marketing/industry-container.webp" },
@@ -265,12 +265,12 @@ export const homeOperatingModel = [
   },
 ] as const;
 
-/** 4 primary services on homepage — full list lives on /logistics */
+/** 4 primary services on homepage - full list lives on /logistics */
 export const homeFeaturedLogisticsServices = homeLogisticsServices.filter((s) =>
   (["3pl", "contract", "industrial", "container"] as const).includes(s.id as "3pl" | "contract" | "industrial" | "container"),
 );
 
-/** 4 primary industries on homepage — full grid on /industries */
+/** 4 primary industries on homepage - full grid on /industries */
 export const homeFeaturedIndustries = homeIndustries.filter((i) =>
   (["cement", "steel-metals", "coal-mining", "manufacturing"] as const).includes(i.slug as "cement" | "steel-metals" | "coal-mining" | "manufacturing"),
 );
@@ -357,7 +357,7 @@ export const networkHighlights = [
   { title: "GST on ZAFTYS trips", desc: "Trips contracted through ZAFTYS stay on GST billing." },
 ] as const;
 
-/** Qualitative trust strip — verified labels only */
+/** Qualitative trust strip - verified labels only */
 export const homeTrustStrip = [
   { label: "Own Fleet", sublabel: "Company-operated trucks" },
   { label: "Network", sublabel: "Labeled partner capacity" },

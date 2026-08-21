@@ -207,7 +207,7 @@ All colors MUST be HSL.
     box-shadow: var(--shadow-glow);
   }
   
-  /* Section spacing — dense hub rhythm */
+  /* Section spacing - dense hub rhythm */
   .section-padding {
     @apply py-12 md:py-16;
   }

@@ -14,7 +14,7 @@ export const logisticsSolutions: Record<string, SolutionContent> = {
     },
     canonical: paths.logistics.threePl,
     badge: "3PL Transportation",
-    h1: "Full-truckload execution — not a booking that vanishes after allotment.",
+    h1: "Full-truckload execution - not a booking that vanishes after allotment.",
     lead:
       "3PL for ZAFTYS means we execute the trip. Full truckload from origin to destination, vehicle class matched to cargo, GST-compliant billing on contracted moves, and a desk that stays on the lane until delivery documentation closes.",
     breadcrumbs: [homeCrumb, { name: "Logistics", path: paths.logistics.hub }, { name: "3PL Transportation", path: paths.logistics.threePl }],
@@ -22,22 +22,22 @@ export const logisticsSolutions: Record<string, SolutionContent> = {
       {
         title: "Full truckload ownership",
         description:
-          "One operator accountable from indent to POD — not a broker who stops answering after the truck is allotted.",
+          "One operator accountable from indent to POD - not a broker who stops answering after the truck is allotted.",
       },
       {
         title: "Right body for the gate",
         description:
-          "LCV through multi-axle, flatbed, tipper, trailer, and ODC matched to cargo and plant rules — not whatever truck is cheapest that hour.",
+          "LCV through multi-axle, flatbed, tipper, trailer, and ODC matched to cargo and plant rules - not whatever truck is cheapest that hour.",
       },
       {
         title: "Owned + labeled overflow",
         description:
-          "Company fleet first on corridors we run every week; verified Tranzfort partners when volume spikes — always labeled, never silent brokerage.",
+          "Company fleet first on corridors we run every week; verified Tranzfort partners when volume spikes - always labeled, never silent brokerage.",
       },
     ],
     highlights: [
       "Dispatch and close-out on ZAFTYS TMS for contracted movements",
-      "GST-compliant invoicing — not informal cash settlement",
+      "GST-compliant invoicing - not informal cash settlement",
       "One Amravati desk for indent, allotment follow-through, and documentation",
       "Built for manufacturers and traders moving FTL between plants, mills, and sites",
     ],
@@ -58,7 +58,7 @@ export const logisticsSolutions: Record<string, SolutionContent> = {
     },
     canonical: paths.logistics.contract,
     badge: "Contract Logistics",
-    h1: "Recurring lanes need assigned capacity — not a fresh hunt every Monday.",
+    h1: "Recurring lanes need assigned capacity - not a fresh hunt every Monday.",
     lead:
       "Contract logistics at ZAFTYS is a long-term transportation program: dedicated or reserved trucks on the corridors you run every week, SLA tracking, plant-window awareness, and an account desk that already knows your sites.",
     breadcrumbs: [homeCrumb, { name: "Logistics", path: paths.logistics.hub }, { name: "Contract Logistics", path: paths.logistics.contract }],
@@ -71,18 +71,18 @@ export const logisticsSolutions: Record<string, SolutionContent> = {
       {
         title: "SLA on the window",
         description:
-          "Performance tracked against agreed loading and transit windows — not only a one-off transit promise.",
+          "Performance tracked against agreed loading and transit windows - not only a one-off transit promise.",
       },
       {
         title: "Managed dispatch desk",
         description:
-          "Allotment, gate timing, and escalation when the plant slips — from one Amravati desk that knows your sites.",
+          "Allotment, gate timing, and escalation when the plant slips - from one Amravati desk that knows your sites.",
       },
     ],
     highlights: [
       "Assigned trucks and drivers for seasonal or annual programs",
       "Shipper visibility on contracted trips through ZAFTYS TMS",
-      "Overflow through verified partners — never silently presented as owned fleet",
+      "Overflow through verified partners - never silently presented as owned fleet",
       "Built for procurement and logistics heads who need capacity assurance under an SLA",
     ],
     relatedLinks: [
@@ -104,18 +104,18 @@ export const logisticsSolutions: Record<string, SolutionContent> = {
     badge: "Dedicated Fleet",
     h1: "Your trucks. Your corridors. Your season or year.",
     lead:
-      "Dedicated fleet is how a ZAFTYS contract looks when vehicles and drivers are assigned to you. Body type follows the lane — LCV, heavy load, container, tanker, or bulker — with plant-window dispatch and TMS on every contracted trip.",
+      "Dedicated fleet is how a ZAFTYS contract looks when vehicles and drivers are assigned to you. Body type follows the lane - LCV, heavy load, container, tanker, or bulker - with plant-window dispatch and TMS on every contracted trip.",
     breadcrumbs: [homeCrumb, { name: "Logistics", path: paths.logistics.hub }, { name: "Dedicated Fleet", path: paths.logistics.dedicated }],
     features: [
       {
         title: "Assigned vehicles and drivers",
         description:
-          "Trucks and crews dedicated to your program for a season or a year — they learn your gate, bay, and loading rules.",
+          "Trucks and crews dedicated to your program for a season or a year - they learn your gate, bay, and loading rules.",
       },
       {
         title: "Vehicle class follows the lane",
         description:
-          "LCV, multi-axle, flatbed, tipper, container, tanker, or bulker on the same contract framework — chosen for cargo, not convenience.",
+          "LCV, multi-axle, flatbed, tipper, container, tanker, or bulker on the same contract framework - chosen for cargo, not convenience.",
       },
       {
         title: "Performance on the corridor",
@@ -126,7 +126,7 @@ export const logisticsSolutions: Record<string, SolutionContent> = {
     highlights: [
       "Plant and DC window awareness built into dispatch",
       "TMS visibility for shippers on contracted trips",
-      "Tranzfort overflow when surge exceeds dedicated count — labeled clearly",
+      "Tranzfort overflow when surge exceeds dedicated count - labeled clearly",
       "GST-compliant billing through ZAFTYS",
     ],
     relatedLinks: [
@@ -144,7 +144,7 @@ export const logisticsSolutions: Record<string, SolutionContent> = {
     },
     canonical: paths.logistics.industrial,
     badge: "Industrial Freight",
-    h1: "Steel, cement, mining, and project cargo — built for plant windows and axle reality.",
+    h1: "Steel, cement, mining, and project cargo - built for plant windows and axle reality.",
     lead:
       "Industrial freight is where generic FTL breaks. Coils need the right flatbed and securing. Cement and bulk need tippers and bulkers that survive the plant queue. Mining lanes need weighbridge discipline. ZAFTYS runs these movements as an operator that already lives in that world.",
     breadcrumbs: [homeCrumb, { name: "Logistics", path: paths.logistics.hub }, { name: "Industrial Freight", path: paths.logistics.industrial }],
@@ -167,7 +167,7 @@ export const logisticsSolutions: Record<string, SolutionContent> = {
     ],
     highlights: [
       "Vehicle class chosen for cargo, axle limits, and gate rules",
-      "Detention and plant-window language at the desk — where industrial cost sits",
+      "Detention and plant-window language at the desk - where industrial cost sits",
       "Same operating model across cement, steel, coal, and manufacturing",
       "Fewer refusals at the gate because the truck matches the load and the site",
     ],
@@ -187,7 +187,7 @@ export const logisticsSolutions: Record<string, SolutionContent> = {
     },
     canonical: paths.logistics.container,
     badge: "Container Transportation",
-    h1: "Port to factory, factory to port, port to market — sealed freight on corridors we run.",
+    h1: "Port to factory, factory to port, port to market - sealed freight on corridors we run.",
     lead:
       "Container transportation for ZAFTYS is road execution between ports, warehouses, factories, and inland markets. We move containers and sealed freight on trailers suited to the corridor, with trip visibility on contracted moves and partner overflow when the yard needs more wheels than we own that day.",
     breadcrumbs: [homeCrumb, { name: "Logistics", path: paths.logistics.hub }, { name: "Container Transportation", path: paths.logistics.container }],
@@ -195,7 +195,7 @@ export const logisticsSolutions: Record<string, SolutionContent> = {
       {
         title: "Port to warehouse / factory",
         description:
-          "Inbound containers delivered to distribution or production with factory-slot awareness — not only a port pickup quote.",
+          "Inbound containers delivered to distribution or production with factory-slot awareness - not only a port pickup quote.",
       },
       {
         title: "Factory to port",
@@ -212,7 +212,7 @@ export const logisticsSolutions: Record<string, SolutionContent> = {
       "Container trailers and sealed configurations matched to the corridor",
       "Coordination for gate-in, factory slot, and trip close-out",
       "Visibility on contracted container moves through the same desk and TMS",
-      "Owned capacity where we run the lane; Tranzfort partners when overflow is required — labeled",
+      "Owned capacity where we run the lane; Tranzfort partners when overflow is required - labeled",
     ],
     relatedLinks: [
       { name: "Port & Container Road", path: "/industries/container-transport" },

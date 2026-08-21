@@ -1,5 +1,5 @@
 /**
- * /about — tightened marketing copy: logistics-first, honest Own vs Network, no public KPIs.
+ * /about - tightened marketing copy: logistics-first, honest Own vs Network, no public KPIs.
  */
 
 export const aboutPageCopy = {
@@ -7,13 +7,13 @@ export const aboutPageCopy = {
     badge: "About ZAFTYS",
     h1: "One desk for industrial freight across India.",
     lead:
-      "Family corridor experience, a formal company since 2024. Own trucks when we have the right vehicle, ZAFTYS TMS on every trip we run, and TranZfort when you need more capacity — always labeled, never blended.",
+      "Family corridor experience, a formal company since 2024. Own trucks when we have the right vehicle, ZAFTYS TMS on every trip we run, and TranZfort when you need more capacity - always labeled, never blended.",
   },
   story: {
     eyebrow: "Who we are",
     h2: "A transportation company that built the tools it runs on",
     lead:
-      "We move industrial freight. The software exists because the yard needed it — not the other way around.",
+      "We move industrial freight. The software exists because the yard needed it - not the other way around.",
     cards: [
       {
         title: "Corridor know-how, digital dispatch",
@@ -21,7 +21,7 @@ export const aboutPageCopy = {
       },
       {
         title: "Accountable at the plant window",
-        body: "Showing up at the gate still matters. Trips contracted through us come with GST-compliant billing and structured documents — not a chat thread as the system of record.",
+        body: "Showing up at the gate still matters. Trips contracted through us come with GST-compliant billing and structured documents - not a chat thread as the system of record.",
       },
       {
         title: "Own fleet and network, clearly labeled",
@@ -31,15 +31,15 @@ export const aboutPageCopy = {
   },
   heritage: {
     eyebrow: "Our journey",
-    h2: "Three generations on the corridor — formal company, modern stack",
+    h2: "Three generations on the corridor - formal company, modern stack",
     lead:
       "Trucking experience came first. ZAFTYS Logistics was incorporated in 2024; owned heavy assets, TranZfort, and TMS scaled from there.",
   },
   milestones: [
     {
-      year: "1960s–2010s",
+      year: "1960s - 2010s",
       title: "Corridor roots",
-      desc: "Three generations moving industrial freight on heartland and national corridors — cement, steel, bulk, and plant lanes.",
+      desc: "Three generations moving industrial freight on heartland and national corridors - cement, steel, bulk, and plant lanes.",
     },
     {
       year: "2024",
@@ -61,17 +61,17 @@ export const aboutPageCopy = {
     eyebrow: "How we operate",
     h2: "Trucks first. Software we actually use. Overflow when you need it.",
     lead:
-      "Not three equal brochure products — one transportation desk with tools built around real trips.",
+      "Not three equal brochure products - one transportation desk with tools built around real trips.",
     pillars: [
       {
         title: "Physical fleet",
-        desc: "Owned heavy commercial vehicles for critical industrial cargo — capacity you can count on, and a real yard that shapes how the software works.",
+        desc: "Owned heavy commercial vehicles for critical industrial cargo - capacity you can count on, and a real yard that shapes how the software works.",
         path: "/fleet",
         linkLabel: "Our Fleet",
       },
       {
         title: "ZAFTYS TMS",
-        desc: "Cloud TMS for dispatch, live visibility, digital docs, and ePOD. Built for plant windows and the trips we run — available to shippers and fleet operators.",
+        desc: "Cloud TMS for dispatch, live visibility, digital docs, and ePOD. Built for plant windows and the trips we run - available to shippers and fleet operators.",
         path: "/zaftys-tms",
         linkLabel: "ZAFTYS TMS",
       },
@@ -89,7 +89,7 @@ export const aboutPageCopy = {
     items: [
       {
         problem: "Empty returns and deadhead on familiar lanes",
-        how: "We plan corridors we run often and use TranZfort for return or peak legs — without pretending every truck is ours.",
+        how: "We plan corridors we run often and use TranZfort for return or peak legs - without pretending every truck is ours.",
       },
       {
         problem: "Slow matching when plant or port windows are tight",
@@ -101,13 +101,13 @@ export const aboutPageCopy = {
       },
       {
         problem: "Too many transporters, no single accountable desk",
-        how: "One Amravati team for quote, trip, and exception — own capacity or labeled network.",
+        how: "One Amravati team for quote, trip, and exception - own capacity or labeled network.",
       },
     ],
   },
   coverage: {
     eyebrow: "Corridors & hubs",
-    h2: "Industrial belt presence — West to East, North to South",
+    h2: "Industrial belt presence - West to East, North to South",
     hubs: [
       { region: "West / Gujarat", places: "Hazira, Vapi, Dahej, Surat, Ahmedabad, Kandla, Mundra" },
       { region: "Maharashtra", places: "Mumbai, Pune, Nagpur, Chandrapur, Nashik, Aurangabad" },
@@ -125,7 +125,7 @@ export const aboutPageCopy = {
     eyebrow: "Enterprise logistics",
     h2: "Capacity programs with operators we work alongside",
     lead:
-      "We run industrial corridor programs with enterprise logistics companies. Names below are partners we’ve worked with on capacity — not a claim of exclusive endorsement.",
+      "We run industrial corridor programs with enterprise logistics companies. Names below are partners we’ve worked with on capacity - not a claim of exclusive endorsement.",
     partners: [
       {
         name: "CJ Darcl Logistics",
@@ -153,7 +153,7 @@ export const aboutPageCopy = {
     eyebrow: "Company profile",
     h2: "Want the full company profile?",
     lead:
-      "Ask for the PDF — how we run own fleet, TMS, TranZfort, and corridors with enterprise partners. We’ll send it from the desk.",
+      "Ask for the PDF - how we run own fleet, TMS, TranZfort, and corridors with enterprise partners. We’ll send it from the desk.",
     buttonLabel: "Request company profile",
     note: "Opens a short email to our team.",
   },
@@ -163,7 +163,7 @@ export const aboutPageCopy = {
   },
   vision: {
     title: "Vision",
-    body: "Be the desk a shipper can hire for the truck, the software, or the overflow load — without three disconnected vendors.",
+    body: "Be the desk a shipper can hire for the truck, the software, or the overflow load - without three disconnected vendors.",
   },
   values: {
     h2: "What we hold to",
@@ -183,7 +183,7 @@ export const aboutPageCopy = {
       },
       {
         title: "Fuel-sensible routing",
-        description: "Fewer empty kilometres on lanes we run often — better for cost and for fuel.",
+        description: "Fewer empty kilometres on lanes we run often - better for cost and for fuel.",
       },
     ],
   },

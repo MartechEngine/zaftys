@@ -1,5 +1,5 @@
 /**
- * /intelligence/ai — Supply Chain AI research article.
+ * /intelligence/ai - Supply Chain AI research article.
  * Five logistics-first stages. No invented public scale KPIs.
  * No em dash, en dash, or spaced hyphen used as a dash.
  */

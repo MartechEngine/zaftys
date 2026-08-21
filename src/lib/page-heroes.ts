@@ -7,7 +7,7 @@ export const pageHeroAlts = {
   careers: "ZAFTYS logistics and TMS careers in Amravati",
   contact: "Contact ZAFTYS for a freight quote, TMS demo, or TranZfort",
   fleet: "ZAFTYS company-operated commercial trucks on an Indian corridor",
-  industries: "Industrial freight desks — cement, port–city containers, mining, steel, and plant distribution",
+  industries: "Industrial freight desks - cement, port - city containers, mining, steel, and plant distribution",
   network: "TranZfort freight marketplace: post a load or find a truck",
   partner: "Fleet owners joining TranZfort to find loads",
   resources: "ZAFTYS blog guides and market reports",

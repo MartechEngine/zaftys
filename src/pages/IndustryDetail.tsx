@@ -78,7 +78,7 @@ const IndustryDetail = () => {
       <div className="border-t border-border bg-surface">
         <div className="mx-auto grid max-w-7xl gap-8 px-5 py-8 md:px-8 md:py-10 lg:grid-cols-[minmax(0,1fr)_280px] lg:gap-10 lg:py-12">
           <div className="min-w-0 space-y-6">
-            {/* Products — dense chip/list hybrid */}
+            {/* Products - dense chip/list hybrid */}
             <section className="border border-border bg-white p-5 md:p-6">
               <div className="mb-4 flex items-baseline justify-between gap-3">
                 <h2 className="font-heading text-lg font-bold text-navy md:text-xl">
@@ -106,7 +106,7 @@ const IndustryDetail = () => {
               </div>
             </section>
 
-            {/* Realities + method — two tight columns */}
+            {/* Realities + method - two tight columns */}
             <section className="grid gap-4 md:grid-cols-2">
               <div className="border border-border bg-white p-5 md:p-6">
                 <h2 className="mb-3 font-heading text-lg font-bold text-navy">
@@ -144,7 +144,7 @@ const IndustryDetail = () => {
               </div>
             </section>
 
-            {/* Corridors + equipment — compact split with image strip */}
+            {/* Corridors + equipment - compact split with image strip */}
             <section className="overflow-hidden border border-border bg-white">
               <div className="grid md:grid-cols-[200px_1fr]">
                 <div className="relative min-h-[120px] md:min-h-full">
@@ -245,14 +245,14 @@ const IndustryDetail = () => {
             </section>
           </div>
 
-          {/* Aside — sticky quote + features */}
+          {/* Aside - sticky quote + features */}
           <aside className="space-y-4 lg:sticky lg:top-24 lg:self-start">
             <div className="border border-border bg-navy p-5 text-white">
               <p className="mb-1 text-[11px] font-semibold uppercase tracking-wider text-accent">
                 {industry.highlight}
               </p>
               <p className="mb-4 text-sm leading-snug text-gray-200">
-                Product, origin, destination, trips/week — same desk as Transportation.
+                Product, origin, destination, trips/week - same desk as Transportation.
               </p>
               <div className="flex flex-col gap-2">
                 <WhatsAppButton label="WhatsApp quote" message={industry.whatsappPrefill} />

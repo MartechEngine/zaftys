@@ -1,6 +1,6 @@
 import { cn } from "@/lib/utils";
 
-/** Wraps CTA buttons — full width on mobile, including nested Link > Button */
+/** Wraps CTA buttons - full width on mobile, including nested Link > Button */
 export function CTAGroup({ children, className }: { children: React.ReactNode; className?: string }) {
   return (
     <div

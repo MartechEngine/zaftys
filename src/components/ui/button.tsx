@@ -5,7 +5,7 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 /**
- * Button fills — see `src/lib/cta-recipe.ts` for when to use each variant.
+ * Button fills - see `src/lib/cta-recipe.ts` for when to use each variant.
  *
  * Primary brand CTA = accent (orange).
  * Secondary on light = outline-brand (white → navy).
@@ -17,12 +17,12 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        /** Navy solid — rare; prefer accent for primary CTAs */
+        /** Navy solid - rare; prefer accent for primary CTAs */
         default:
           "border border-transparent bg-primary text-primary-foreground shadow-sm hover:bg-primary-light hover:shadow-md",
         destructive:
           "border border-transparent bg-destructive text-destructive-foreground shadow-sm hover:bg-destructive/90",
-        /** Neutral UI chrome only — not marketing CTAs */
+        /** Neutral UI chrome only - not marketing CTAs */
         outline:
           "border border-input bg-white text-foreground shadow-sm hover:border-primary/40 hover:bg-surface hover:text-foreground",
         /** Secondary CTA on light surfaces: white fill → navy fill on hover */
@@ -32,16 +32,16 @@ const buttonVariants = cva(
           "border border-transparent bg-secondary text-secondary-foreground shadow-sm hover:bg-secondary/80",
         ghost: "border border-transparent bg-transparent text-navy hover:bg-navy/5 hover:text-navy",
         link: "border border-transparent bg-transparent text-primary underline-offset-4 hover:underline",
-        /** PRIMARY CTA — orange fill (light or navy surfaces) */
+        /** PRIMARY CTA - orange fill (light or navy surfaces) */
         accent:
           "border border-transparent bg-accent text-accent-foreground shadow-md shadow-accent/25 hover:bg-accent-light hover:text-accent-foreground hover:shadow-lg hover:shadow-accent/30",
-        /** Solid white on navy — tertiary / rare (e.g. Get Directions) */
+        /** Solid white on navy - tertiary / rare (e.g. Get Directions) */
         "on-dark":
           "border border-transparent bg-white text-navy shadow-sm hover:bg-gray-100 hover:text-navy hover:shadow-md",
-        /** Secondary CTA on navy/dark — transparent fill, white stroke */
+        /** Secondary CTA on navy/dark - transparent fill, white stroke */
         "on-dark-outline":
           "border-2 border-white/75 bg-transparent text-white shadow-none hover:border-white hover:bg-white/10 hover:text-white",
-        /** WhatsApp — always green solid */
+        /** WhatsApp - always green solid */
         whatsapp:
           "border border-whatsapp-border bg-whatsapp text-white shadow-md hover:bg-whatsapp-hover hover:shadow-lg",
       },

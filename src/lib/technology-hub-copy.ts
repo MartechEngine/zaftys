@@ -1,5 +1,5 @@
 /**
- * /zaftys-tms — Platform landing for ZAFTYS TMS.
+ * /zaftys-tms - Platform landing for ZAFTYS TMS.
  * Ops-first. The stack we dispatch on. No invented public metrics.
  * No em dash, en dash, or spaced hyphen used as a dash.
  */

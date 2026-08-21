@@ -1,4 +1,4 @@
-/** ZAFTYS Market Reports — institutional logistics & digital freight intelligence */
+/** ZAFTYS Market Reports - institutional logistics & digital freight intelligence */
 
 export type ReportCta =
   | { label: string; to: string }
@@ -78,12 +78,12 @@ export const marketReports: readonly MarketReport[] = [
     title: "Global Logistics Market Size, Share & Forecast 2027-2036",
     seoTitle: "Global Logistics Market Size and Forecast 2027-2036 | ZAFTYS",
     seoDescription:
-      "Global logistics market research report: US$ 4,334.3 BN (2026) to US$ 11,344.7 BN (2036), 10.1% CAGR. Road freight, ocean, air, warehousing, TMS, regions & vendors — unlock PDF with company email.",
+      "Global logistics market research report: US$ 4,334.3 BN (2026) to US$ 11,344.7 BN (2036), 10.1% CAGR. Road freight, ocean, air, warehousing, TMS, regions & vendors - unlock PDF with company email.",
     publishedAt: "2026-08-13",
     updatedAt: "2026-08-22",
     reportId: "ZAF-LOGISTICS-2027-2036",
     subtitle:
-      "Institutional market intelligence on transportation, warehousing, and related logistics services — by mode, application, technology, end user, and geography. Historical 2017-2026; forecast 2027-2036.",
+      "Institutional market intelligence on transportation, warehousing, and related logistics services - by mode, application, technology, end user, and geography. Historical 2017-2026; forecast 2027-2036.",
     coverImage: "/images/reports/global-logistics-market-2027-2036-preview.png?v=2",
     pdfPath: "/files/market-reports/global-logistics-market-2027-2036.pdf",
     pageCount: 238,
@@ -95,21 +95,21 @@ export const marketReports: readonly MarketReport[] = [
       { label: "CAGR 2026-2036", value: "10.1%" },
     ],
     executiveSummary: [
-      "ZAFTYS Analytics models the global logistics market at US$ 4,334.3 BN in 2026, expanding to US$ 11,344.7 BN by 2036. That path implies a 10.1% compound annual growth rate across the forecast window. The series spans historical years 2017 through 2026 and a forward outlook for 2027-2036, so planners can connect a decade of backcast context to the next planning cycle. Figures are drawn from the pinned Data Bank spine for report ID ZAF-LOGISTICS-2027-2036 and are intended as institutional decision support — not audited financial statements or a substitute for company-level diligence.",
-      "Structurally, Asia Pacific is modeled as the largest regional pool at about 35.0% of base-year value, with North America near 25.0% and Europe near 22.0%. By offering, road freight — full truckload, less-than-truckload, and express — leads share. Road freight fleet also dominates the technology cut, while retail and e-commerce lead applications. Those concentration points matter more for capacity and investment planning than a single global headline: a shipper or 3PL allocating capital across modes and theaters needs the segment cuts, not only the top-line CAGR.",
+      "ZAFTYS Analytics models the global logistics market at US$ 4,334.3 BN in 2026, expanding to US$ 11,344.7 BN by 2036. That path implies a 10.1% compound annual growth rate across the forecast window. The series spans historical years 2017 through 2026 and a forward outlook for 2027-2036, so planners can connect a decade of backcast context to the next planning cycle. Figures are drawn from the pinned Data Bank spine for report ID ZAF-LOGISTICS-2027-2036 and are intended as institutional decision support - not audited financial statements or a substitute for company-level diligence.",
+      "Structurally, Asia Pacific is modeled as the largest regional pool at about 35.0% of base-year value, with North America near 25.0% and Europe near 22.0%. By offering, road freight - full truckload, less-than-truckload, and express - leads share. Road freight fleet also dominates the technology cut, while retail and e-commerce lead applications. Those concentration points matter more for capacity and investment planning than a single global headline: a shipper or 3PL allocating capital across modes and theaters needs the segment cuts, not only the top-line CAGR.",
       "Coverage follows the logistics value chain from origin through road, port, warehouse, and last-mile delivery. The 238-page institutional PDF includes customs and multimodal orchestration, reverse logistics, cold storage and ASRS, and WMS/TMS software alongside carrier, broker, and 3PL/4PL end-user views. Vendor profiles and regional deep-dives sit on the same bank-grounded spine so readers can move from market size to competitive and geographic context without mixing incompatible metrics. Gaps in evidence are disclosed rather than filled with invented residuals; where triangulation is weaker, the report prefers conservative framing over false precision.",
-      "Readers should use this page’s open summary, findings, and methodology narrative as the crawlable institutional brief, then unlock the full PDF for chapter-level exhibits, competitive profiles, and appendix references. ZAFTYS Analytics positions the work for logistics planners, operators, and investors who need transparent modeled figures — honest about limits — rather than a black-box market size claim.",
+      "Readers should use this page’s open summary, findings, and methodology narrative as the crawlable institutional brief, then unlock the full PDF for chapter-level exhibits, competitive profiles, and appendix references. ZAFTYS Analytics positions the work for logistics planners, operators, and investors who need transparent modeled figures - honest about limits - rather than a black-box market size claim.",
     ],
     keyFindings: [
       "Global logistics spend is modeled from US$ 4,334.3 BN in 2026 to US$ 11,344.7 BN in 2036 at a 10.1% CAGR. The growth bridge is useful for long-range network and warehousing plans, but ZAFTYS Analytics treats the path as a base-case institutional model. Scenario bands and disclosed gaps should sit beside any board or budget use of the headline numbers, especially when comparing corridors with different mode and regulatory mixes.",
       "Asia Pacific holds the largest regional share at roughly 35% of 2026 value, ahead of North America (~25%) and Europe (~22%). Regional mix shifts the practical addressable pool for asset and digital investment: APAC scale, North American density of contract logistics and parcel-adjacent flows, and European regulatory and multimodal complexity each pull different capability stacks and partner strategies.",
       "Road freight (FTL, LTL, and express) leads the offering mix, and road freight fleet leads the technology cut. Ocean, air, rail, and intermodal remain material for long-haul and trade-lane planning, but land-side capacity and fleet modernization dominate modeled value. Cold chain, ASRS, and warehouse automation appear as high-relevance adjacencies rather than the core size spine, which keeps physical logistics services as the primary market definition.",
-      "By application, retail and e-commerce lead modeled demand, with manufacturing, healthcare, food, and oil & chemicals as important vertical overlays. End-user cuts across shippers, 3PL/4PL providers, carriers, and brokers show that the same tonnage can sit in very different commercial models — so share of wallet and service design matter as much as aggregate market size when sizing opportunity by customer type.",
+      "By application, retail and e-commerce lead modeled demand, with manufacturing, healthcare, food, and oil & chemicals as important vertical overlays. End-user cuts across shippers, 3PL/4PL providers, carriers, and brokers show that the same tonnage can sit in very different commercial models - so share of wallet and service design matter as much as aggregate market size when sizing opportunity by customer type.",
       "WMS/TMS, digital fleet tools, EV and autonomy themes, and multimodal orchestration are treated as technology and process layers on top of physical transport and warehousing. They influence productivity and the economics of software-enabled services, but the primary market spine remains logistics services value. Readers should not conflate software TAM with total logistics spend when sizing investment or partnership cases.",
     ],
     methodologyNarrative: [
       "Estimation uses hybrid top-down and bottom-up triangulation, preferring top-down where the evidence mix is stronger and checking bottom-up cuts against segment and regional priors. The pinned Data Bank spine fixes 2026 at US$ 4,334.3 BN and 2036 at US$ 11,344.7 BN at approximately 10.1% CAGR, so chapter-level exhibits reconcile to a single institutional backbone rather than drifting by section. Historical coverage from 2017 through 2026 anchors the growth bridge before the 2027-2036 forecast window.",
-      "Primary interview insight informs how evidence is weighted and where methodology emphasis should fall; numeric claims prefer bank-verified sources over anecdote. When coverage is thin, the report discloses gaps instead of inventing residual plugs. Modeled series are planning support for shippers, operators, and investors — not audited financial statements, regulatory filings, or a guarantee of future market outcomes. Trust signals on the product page (bank-grounded claims, hybrid estimation, and the 238-page PDF scope) mirror that stance.",
+      "Primary interview insight informs how evidence is weighted and where methodology emphasis should fall; numeric claims prefer bank-verified sources over anecdote. When coverage is thin, the report discloses gaps instead of inventing residual plugs. Modeled series are planning support for shippers, operators, and investors - not audited financial statements, regulatory filings, or a guarantee of future market outcomes. Trust signals on the product page (bank-grounded claims, hybrid estimation, and the 238-page PDF scope) mirror that stance.",
       "Segment architecture follows product and services (road, ocean, air, rail, warehousing), applications, technology and fleet, end users, and geography. That taxonomy keeps regional and mode cuts comparable across chapters and prevents residual “other” buckets from absorbing unexplained value. Readers comparing this series to third-party logistics studies should confirm metric definitions before stacking numbers.",
     ],
     faq: [
@@ -126,7 +126,7 @@ export const marketReports: readonly MarketReport[] = [
       {
         question: "How should planners use these logistics market figures?",
         answer:
-          "Use segment, regional, and end-user cuts alongside the headline CAGR when planning capacity, network design, or vendor strategy. Treat exhibits as institutional decision support with disclosed gaps — not as audited statements or a single number for capital allocation without scenario bands.",
+          "Use segment, regional, and end-user cuts alongside the headline CAGR when planning capacity, network design, or vendor strategy. Treat exhibits as institutional decision support with disclosed gaps - not as audited statements or a single number for capital allocation without scenario bands.",
       },
       {
         question: "What does the full PDF cover beyond the market size spine?",
@@ -137,7 +137,7 @@ export const marketReports: readonly MarketReport[] = [
     overview: [
       "The global logistics market is modeled at US$ 4,334.3 BN in 2026 and is projected to reach US$ 11,344.7 BN by 2036, implying a 10.1% CAGR over the forecast window. Historical coverage runs from 2017 through 2026; the forward outlook covers 2027-2036.",
       "Asia Pacific holds the largest regional share at about 35.0% of base-year value, followed by North America (~25.0%) and Europe (~22.0%). By offering, road freight (FTL, LTL, express) leads share; by technology, road freight fleet dominates; by application, retail & e-commerce leads.",
-      "Coverage follows the logistics value chain from origin through road, port, warehouse, and delivery — including customs, multimodal orchestration, reverse logistics, cold storage, ASRS, and WMS/TMS software. Modeled series are decision support, not audited financial statements.",
+      "Coverage follows the logistics value chain from origin through road, port, warehouse, and delivery - including customs, multimodal orchestration, reverse logistics, cold storage, ASRS, and WMS/TMS software. Modeled series are decision support, not audited financial statements.",
     ],
     snapshot: [
       { label: "Market size 2026", value: "US$ 4,334.3 BN" },
@@ -219,7 +219,7 @@ export const marketReports: readonly MarketReport[] = [
       "Global logistics spend is modeled from US$ 4,334.3 BN in 2026 to US$ 11,344.7 BN in 2036 at a 10.1% CAGR.",
       "Asia Pacific is the largest regional pool (~35% base-year share); road freight leads the offering mix.",
       "Service, technology, vertical, and regional cuts matter more than a single headline number for planning.",
-      "Use scenario bands and disclosed gaps — treat exhibits as decision support, not audited financials.",
+      "Use scenario bands and disclosed gaps - treat exhibits as decision support, not audited financials.",
     ],
     trustSignals: [
       { label: "Bank-grounded claims", detail: "Pinned Data Bank version; gaps disclosed" },
@@ -244,12 +244,12 @@ export const marketReports: readonly MarketReport[] = [
     title: "Digital Freight Matching Market Size & Forecast 2027-2036",
     seoTitle: "Digital Freight Matching Market Size and Forecast 2027-2036 | ZAFTYS",
     seoDescription:
-      "Digital freight matching (DFM) market report: US$ 81.2 BN (2026) to US$ 1,314.0 BN (2036), 32.1% CAGR. Platform revenue, spot/contract matching, TMS APIs, 22 countries — unlock PDF with company email.",
+      "Digital freight matching (DFM) market report: US$ 81.2 BN (2026) to US$ 1,314.0 BN (2036), 32.1% CAGR. Platform revenue, spot/contract matching, TMS APIs, 22 countries - unlock PDF with company email.",
     publishedAt: "2026-08-14",
     updatedAt: "2026-08-22",
     reportId: "ZAF-DFM-2027-2036",
     subtitle:
-      "Institutional research on digital freight matching platforms and marketplaces — platform / matching-service revenue (not matched freight GMV). Historical 2021-2026; forecast 2027-2036. Bank dfm-institutional-220.",
+      "Institutional research on digital freight matching platforms and marketplaces - platform / matching-service revenue (not matched freight GMV). Historical 2021-2026; forecast 2027-2036. Bank dfm-institutional-220.",
     coverImage: "/images/reports/digital-freight-matching-market-2027-2036-preview.jpg?v=3",
     pdfPath: "/files/market-reports/digital-freight-matching-market-2027-2036.pdf",
     pageCount: 214,
@@ -261,13 +261,13 @@ export const marketReports: readonly MarketReport[] = [
       { label: "CAGR 2027-2036", value: "32.1%" },
     ],
     executiveSummary: [
-      "ZAFTYS Analytics models digital freight matching (DFM) platform and matching-service revenue at US$ 81.2 BN in 2026, expanding to US$ 1,314.0 BN by 2036 at a base-case 32.1% CAGR. History is backfilled from 2021; the forward outlook covers 2027-2036 on bank dfm-institutional-220 (report ID ZAF-DFM-2027-2036). The institutional spine measures take-rate, board subscriptions, and matching value-added services — not the invoice value of hauled freight. Conflating platform revenue with matched freight GMV would overstate addressable software and marketplace economics by an order of magnitude for many planning uses.",
+      "ZAFTYS Analytics models digital freight matching (DFM) platform and matching-service revenue at US$ 81.2 BN in 2026, expanding to US$ 1,314.0 BN by 2036 at a base-case 32.1% CAGR. History is backfilled from 2021; the forward outlook covers 2027-2036 on bank dfm-institutional-220 (report ID ZAF-DFM-2027-2036). The institutional spine measures take-rate, board subscriptions, and matching value-added services - not the invoice value of hauled freight. Conflating platform revenue with matched freight GMV would overstate addressable software and marketplace economics by an order of magnitude for many planning uses.",
       "North America is the largest regional pool at 38.0% of modeled 2026 value (about US$ 30.9 BN). Asia-Pacific holds 28.0% of the base and shows the strongest growth tilt, with a regional CAGR near 35.0% in the model. Spot load-capacity matching leads L2 services at roughly US$ 32.9 BN in 2026, ahead of contract and recurring lane matching and multimodal orchestration. At L1, freight matching services are about 78% of value and value-added matching about 22%. Scope covers matching marketplaces and matching rails embedded in TMS/ERP stacks; digital brokerage is treated as an adjacent sibling market and is not mixed into the primary TAM.",
-      "Competitive context includes Uber Freight, Transfix, Loadsmart, Freightos, DAT, BlackBuck, Sennder, Truckstop, and peers across fifteen operator profiles, with twenty-two country deep-dives across five theaters. A roughly 19% CAGR path is retained as the bear envelope if take-rate compression reprices the base case after 2030. As with other ZAFTYS Analytics series, exhibits are decision support for product, corridor, and partnership planning — not audited financials or a guarantee of platform outcomes.",
+      "Competitive context includes Uber Freight, Transfix, Loadsmart, Freightos, DAT, BlackBuck, Sennder, Truckstop, and peers across fifteen operator profiles, with twenty-two country deep-dives across five theaters. A roughly 19% CAGR path is retained as the bear envelope if take-rate compression reprices the base case after 2030. As with other ZAFTYS Analytics series, exhibits are decision support for product, corridor, and partnership planning - not audited financials or a guarantee of platform outcomes.",
       "This page publishes an always-visible executive brief, key findings, methodology narrative, and FAQ so search engines and human readers can index the institutional story without unlocking the PDF. The 214-page report remains gated for full exhibits; the open HTML is intentionally substantial and aligned to the same bank KPIs already used in the snapshot and overview.",
     ],
     keyFindings: [
-      "DFM platform revenue is modeled from US$ 81.2 BN in 2026 to US$ 1,314.0 BN in 2036 at a 32.1% CAGR (2027-2036 base case). That growth rate reflects digital matching penetration and take-rate / subscription / VAS economics on the platform spine — not growth in physical freight volumes alone. Planners should keep GMV context labeled separately when comparing to logistics spend reports such as the companion global logistics market series.",
+      "DFM platform revenue is modeled from US$ 81.2 BN in 2026 to US$ 1,314.0 BN in 2036 at a 32.1% CAGR (2027-2036 base case). That growth rate reflects digital matching penetration and take-rate / subscription / VAS economics on the platform spine - not growth in physical freight volumes alone. Planners should keep GMV context labeled separately when comparing to logistics spend reports such as the companion global logistics market series.",
       "North America leads 2026 value at 38.0% (about US$ 30.9 BN). Asia-Pacific is 28.0% of the base and the fastest-tilt theater near a 35% regional CAGR. Europe, MEA, and LATAM complete the five-theater geography used for the twenty-two country snapshots. Regional mix drives where product localization, carrier density, and regulatory friction matter most for roadmap and go-to-market sequencing.",
       "Spot load-capacity matching leads the L2 service mix at about US$ 32.9 BN in 2026, followed by contract/recurring lanes and multimodal orchestration. Dynamic pricing and rate assist, eBOL and digital documentation, and payments, factoring, and settlement sit in the value-added layer (~22% of L1), while core freight matching services are ~78%. That split clarifies where pure matching monetization ends and adjacent VAS begins.",
       "Access cuts favor mobile as the largest channel in the model, with web and API / embedded TMS matching as critical enterprise paths. By mode, road freight dominates digital matching value; ocean, air, and rail matching are material for multimodal orchestration but smaller on the platform-revenue spine. End users span shippers, carriers, and digital brokers / 3PLs under different contract models, which changes who pays and how retention works.",
@@ -275,12 +275,12 @@ export const marketReports: readonly MarketReport[] = [
     ],
     methodologyNarrative: [
       "Estimation uses hybrid top-down and bottom-up triangulation on platform and matching-service revenue. The pinned DFM databank (dfm-institutional-220) fixes 2026 at US$ 81.2 BN and 2036 at US$ 1,314.0 BN at approximately 32.1% CAGR. Regional and L2/L3 cuts are held to evidenced share priors rather than undifferentiated residuals so chapter exhibits reconcile to the spine. History backfill from 2021 supports the growth bridge into the 2027-2036 forecast.",
-      "Matched freight GMV is treated as labeled context only and is not the primary size metric. Dual-track definitions separate matching marketplaces and embedded matching rails from adjacent digital brokerage. Primary interview synthesis informs weighting across shipper, carrier, and platform voices; gaps are disclosed rather than invented. Modeled series support planning — they are not audited financial statements — and the product-page trust signals (platform-revenue spine, hybrid estimation, 214-page PDF with 22 countries and 15 operator profiles) reflect that discipline.",
+      "Matched freight GMV is treated as labeled context only and is not the primary size metric. Dual-track definitions separate matching marketplaces and embedded matching rails from adjacent digital brokerage. Primary interview synthesis informs weighting across shipper, carrier, and platform voices; gaps are disclosed rather than invented. Modeled series support planning - they are not audited financial statements - and the product-page trust signals (platform-revenue spine, hybrid estimation, 214-page PDF with 22 countries and 15 operator profiles) reflect that discipline.",
       "Service, vertical, access, mode, and end-user taxonomies are applied consistently so North America’s 38.0% base share (~US$ 30.9 BN), Asia-Pacific’s growth tilt (~35% regional CAGR), and the spot-matching lead (~US$ 32.9 BN in 2026) remain comparable across chapters. The ~19% CAGR bear envelope is retained explicitly for take-rate compression scenarios after 2030.",
     ],
     faq: [
       {
-        question: "What does ZAFTYS measure in the digital freight matching market — platform revenue or freight GMV?",
+        question: "What does ZAFTYS measure in the digital freight matching market - platform revenue or freight GMV?",
         answer:
           "The primary spine is platform / matching-service revenue: take-rate, board subscriptions, and matching VAS. Matched freight GMV may appear as labeled context but is not the TAM used for the US$ 81.2 BN (2026) to US$ 1,314.0 BN (2036) path at 32.1% CAGR on bank dfm-institutional-220.",
       },
@@ -301,7 +301,7 @@ export const marketReports: readonly MarketReport[] = [
       },
     ],
     overview: [
-      "The digital freight matching (DFM) market is modeled at US$ 81.2 BN in 2026 platform / matching-service revenue, expanding to US$ 1,314.0 BN by 2036 at a base-case 32.1% CAGR (history backfill from 2021). The institutional spine measures take-rate, board subscriptions, and matching VAS — not the invoice value of hauled freight.",
+      "The digital freight matching (DFM) market is modeled at US$ 81.2 BN in 2026 platform / matching-service revenue, expanding to US$ 1,314.0 BN by 2036 at a base-case 32.1% CAGR (history backfill from 2021). The institutional spine measures take-rate, board subscriptions, and matching VAS - not the invoice value of hauled freight.",
       "North America is the largest regional pool at 38.0% of modeled 2026 value (about US$ 30.9 BN); Asia-Pacific is 28.0% of the base and the fastest-tilt theater (~35.0% regional CAGR). Spot load-capacity matching leads L2 services (~US$ 32.9 BN in 2026), then contract/recurring lanes and multimodal orchestration. Freight matching services are ~78% of L1; value-added matching is ~22%.",
       "Scope covers matching marketplaces and matching rails embedded in TMS/ERP stacks. Digital brokerage is treated as an adjacent sibling market, not mixed into TAM. Competitive profiles include Uber Freight, Transfix, Loadsmart, Freightos, DAT, BlackBuck, Sennder, Truckstop, and peers. A ~19% CAGR path is retained as the bear envelope if take-rate compression reprices the base case after 2030.",
     ],
@@ -384,11 +384,11 @@ export const marketReports: readonly MarketReport[] = [
       "Hybrid top-down + bottom-up triangulation on platform / matching-service revenue",
       "Pinned DFM databank dfm-institutional-220: 2026 = US$ 81.2 BN; 2036 = US$ 1,314.0 BN at ~32.1% CAGR",
       "Regional and L2/L3 cuts held to evidenced share priors rather than undifferentiated residuals",
-      "Matched freight GMV treated as labeled context only — not the primary size spine",
+      "Matched freight GMV treated as labeled context only - not the primary size spine",
     ],
     takeaways: [
       "DFM platform revenue is modeled from US$ 81.2 BN in 2026 to US$ 1,314.0 BN in 2036 at a 32.1% CAGR.",
-      "Institutional scope is platform / matching-service revenue (take-rate, subscription, VAS) — not freight GMV.",
+      "Institutional scope is platform / matching-service revenue (take-rate, subscription, VAS) - not freight GMV.",
       "North America leads 2026 value (38.0%, ~US$ 30.9 BN); Asia-Pacific shows the strongest growth tilt (~35% CAGR).",
       "Spot matching leads service mix; mobile is the largest access cut; road freight dominates mode. A ~19% CAGR bear path is retained for take-rate compression.",
     ],

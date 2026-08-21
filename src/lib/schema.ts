@@ -240,7 +240,7 @@ export function marketReportSchema(report: {
       "@id": `${BASE}/reports/${report.slug}`,
     },
     isAccessibleForFree: true,
-    // PDF is gated behind company-email unlock — do not advertise a public contentUrl.
+    // PDF is gated behind company-email unlock - do not advertise a public contentUrl.
     encoding: {
       "@type": "MediaObject",
       encodingFormat: "application/pdf",
