@@ -23,6 +23,8 @@ export type IndustryRecord = {
   seoDescription: string;
   faqs: readonly { question: string; answer: string }[];
   blogLinks?: readonly { label: string; path: string }[];
+  /** Matching logistics service leaves for cluster linking */
+  serviceLinks: readonly { label: string; path: string }[];
   /** Curated adjacent verticals (slugs) */
   relatedSlugs: readonly string[];
 };
@@ -98,9 +100,13 @@ export const industries: readonly IndustryRecord[] = [
     ],
     blogLinks: [
       { label: "Plant loading windows", path: "/blog/cement-plant-loading-windows" },
-      { label: "Axle load and GVW limits", path: "/blog/india-axle-load-gvw-limits-heavy-freight" },
+      { label: "Pneumatic bulker for bulk cement", path: "/blog/pneumatic-bulker-bulk-cement-fly-ash" },
+      { label: "Open body vs tipper", path: "/blog/open-body-vs-tipper-bagged-cement-aggregates" },
       { label: "Plant detention and TAT", path: "/blog/plant-detention-tat-yard-gate-india" },
-      { label: "ePOD and e-Way Bill billing", path: "/blog/epod-fastag-eway-bill-billing-india" },
+    ],
+    serviceLinks: [
+      { label: "Industrial Freight", path: "/logistics/industrial-freight" },
+      { label: "Contract Logistics", path: "/logistics/contract-logistics" },
     ],
     relatedSlugs: ["coal-mining", "steel-metals", "industrial-logistics", "manufacturing"],
   },
@@ -176,9 +182,14 @@ export const industries: readonly IndustryRecord[] = [
       },
     ],
     blogLinks: [
+      { label: "Tipper programs for coal and ore", path: "/blog/tipper-programs-coal-ore-limestone" },
       { label: "Planning industrial shipments", path: "/blog/planning-industrial-shipments" },
       { label: "Plant detention and TAT", path: "/blog/plant-detention-tat-yard-gate-india" },
       { label: "Axle load and GVW limits", path: "/blog/india-axle-load-gvw-limits-heavy-freight" },
+    ],
+    serviceLinks: [
+      { label: "Industrial Freight", path: "/logistics/industrial-freight" },
+      { label: "Dedicated Fleet", path: "/logistics/dedicated-fleet" },
     ],
     relatedSlugs: ["cement", "steel-metals", "industrial-logistics", "chemicals"],
   },
@@ -252,9 +263,13 @@ export const industries: readonly IndustryRecord[] = [
     ],
     blogLinks: [
       { label: "Coil transport basics", path: "/blog/steel-coil-transport-basics" },
+      { label: "Mill gate papers for coil", path: "/blog/mill-gate-papers-coil-dispatch" },
       { label: "Axle load and GVW limits", path: "/blog/india-axle-load-gvw-limits-heavy-freight" },
-      { label: "Spot vs dedicated fleets", path: "/blog/spot-market-vs-dedicated-fleet-india" },
       { label: "Plant detention and TAT", path: "/blog/plant-detention-tat-yard-gate-india" },
+    ],
+    serviceLinks: [
+      { label: "Industrial Freight", path: "/logistics/industrial-freight" },
+      { label: "3PL Transportation", path: "/logistics/3pl-transportation" },
     ],
     relatedSlugs: ["coal-mining", "cement", "container-transport", "industrial-logistics"],
   },
@@ -328,9 +343,13 @@ export const industries: readonly IndustryRecord[] = [
     ],
     blogLinks: [
       { label: "Container trucking deep research", path: "/blog/container-trucking-logistics-india" },
-      { label: "Plant detention and TAT", path: "/blog/plant-detention-tat-yard-gate-india" },
-      { label: "Spot vs dedicated fleets", path: "/blog/spot-market-vs-dedicated-fleet-india" },
+      { label: "32 ft vs 40 ft sealed capacity", path: "/blog/32ft-vs-40ft-sealed-container-india" },
+      { label: "Port vs plant free time", path: "/blog/port-free-time-vs-plant-free-time-containers" },
       { label: "Empty return trips", path: "/blog/reduce-empty-return-trips" },
+    ],
+    serviceLinks: [
+      { label: "Container Transportation", path: "/logistics/container-transportation" },
+      { label: "3PL Transportation", path: "/logistics/3pl-transportation" },
     ],
     relatedSlugs: ["manufacturing", "fmcg", "industrial-logistics", "steel-metals"],
   },
@@ -403,9 +422,14 @@ export const industries: readonly IndustryRecord[] = [
       },
     ],
     blogLinks: [
+      { label: "Chemical tanker wash and MSDS", path: "/blog/chemical-tanker-freight-wash-msds" },
       { label: "Planning industrial shipments", path: "/blog/planning-industrial-shipments" },
       { label: "Plant detention and TAT", path: "/blog/plant-detention-tat-yard-gate-india" },
       { label: "ePOD and e-Way Bill billing", path: "/blog/epod-fastag-eway-bill-billing-india" },
+    ],
+    serviceLinks: [
+      { label: "Industrial Freight", path: "/logistics/industrial-freight" },
+      { label: "Contract Logistics", path: "/logistics/contract-logistics" },
     ],
     relatedSlugs: ["manufacturing", "industrial-logistics", "cement", "fmcg"],
   },
@@ -478,10 +502,14 @@ export const industries: readonly IndustryRecord[] = [
       },
     ],
     blogLinks: [
-      { label: "TMS evaluation for manufacturers", path: "/blog/tms-evaluation-guide-indian-manufacturers" },
-      { label: "Spot vs dedicated fleets", path: "/blog/spot-market-vs-dedicated-fleet-india" },
+      { label: "Inter-plant WIP and shift gates", path: "/blog/inter-plant-wip-moves-shift-gate" },
+      { label: "Contract vs spot for plant teams", path: "/blog/contract-logistics-vs-spot-ftl-plant-teams" },
       { label: "Plant detention and TAT", path: "/blog/plant-detention-tat-yard-gate-india" },
-      { label: "ePOD and e-Way Bill billing", path: "/blog/epod-fastag-eway-bill-billing-india" },
+      { label: "ePOD that closes billing", path: "/blog/epod-that-closes-billing" },
+    ],
+    serviceLinks: [
+      { label: "Contract Logistics", path: "/logistics/contract-logistics" },
+      { label: "Dedicated Fleet", path: "/logistics/dedicated-fleet" },
     ],
     relatedSlugs: ["industrial-logistics", "fmcg", "container-transport", "steel-metals"],
   },
@@ -554,9 +582,14 @@ export const industries: readonly IndustryRecord[] = [
       },
     ],
     blogLinks: [
+      { label: "Factory-to-DC OTIF checklist", path: "/blog/factory-to-dc-otif-fmcg-shippers" },
       { label: "Empty return trips on FTL", path: "/blog/reduce-empty-return-trips" },
       { label: "Spot vs dedicated fleets", path: "/blog/spot-market-vs-dedicated-fleet-india" },
-      { label: "ePOD and e-Way Bill billing", path: "/blog/epod-fastag-eway-bill-billing-india" },
+      { label: "ePOD that closes billing", path: "/blog/epod-that-closes-billing" },
+    ],
+    serviceLinks: [
+      { label: "3PL Transportation", path: "/logistics/3pl-transportation" },
+      { label: "Dedicated Fleet", path: "/logistics/dedicated-fleet" },
     ],
     relatedSlugs: ["manufacturing", "container-transport", "industrial-logistics", "chemicals"],
   },
@@ -629,10 +662,14 @@ export const industries: readonly IndustryRecord[] = [
       },
     ],
     blogLinks: [
+      { label: "Shutdown and turnaround freight", path: "/blog/shutdown-turnaround-freight-capacity" },
+      { label: "Contract vs spot for plant teams", path: "/blog/contract-logistics-vs-spot-ftl-plant-teams" },
       { label: "Planning industrial shipments", path: "/blog/planning-industrial-shipments" },
-      { label: "Spot vs dedicated fleets", path: "/blog/spot-market-vs-dedicated-fleet-india" },
-      { label: "TMS evaluation guide", path: "/blog/tms-evaluation-guide-indian-manufacturers" },
-      { label: "Container trucking research", path: "/blog/container-trucking-logistics-india" },
+      { label: "Labeled network capacity", path: "/blog/labeled-network-capacity-live-trip" },
+    ],
+    serviceLinks: [
+      { label: "Contract Logistics", path: "/logistics/contract-logistics" },
+      { label: "Industrial Freight", path: "/logistics/industrial-freight" },
     ],
     relatedSlugs: ["manufacturing", "cement", "steel-metals", "container-transport"],
   },

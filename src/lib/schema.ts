@@ -1,6 +1,6 @@
 /** JSON-LD structured data  -  site-wide helpers */
 
-import { companyAddress, legalEntity } from "@/lib/constants";
+import { companyAddress } from "@/lib/constants";
 
 const BASE = "https://zaftys.com";
 const ORG_ID = `${BASE}/#organization`;
@@ -101,10 +101,18 @@ export const softwareApplicationSchema = {
   name: "ZAFTYS TMS",
   applicationCategory: "BusinessApplication",
   operatingSystem: "Web, Android, iOS",
+  featureList: [
+    "Dispatch and Command Center",
+    "Live GPS tracking",
+    "Digital ePOD",
+    "Fleet and driver records",
+    "Shipper portal visibility",
+    "Own vs Network labeling",
+  ],
   offers: {
     "@type": "Offer",
     priceCurrency: "INR",
-    description: "Contact ZAFTYS Logistics for platform licensing and demos",
+    description: "Contact ZAFTYS for platform licensing and demos",
   },
   description:
     "Transport and fleet management platform for dispatch, GPS tracking, ePOD, fleet records, and client visibility.",
@@ -141,6 +149,26 @@ export const softwareApplicationSchema = {
     },
   ],
 };
+
+/** Per-leaf LogisticsService for /logistics/* solution pages */
+export function logisticsServiceLeafSchema(opts: {
+  name: string;
+  description: string;
+  url: string;
+  serviceType: string;
+}): Record<string, unknown> {
+  const path = opts.url.startsWith("http") ? opts.url : `${BASE}${opts.url}`;
+  return {
+    "@context": "https://schema.org",
+    "@type": "LogisticsService",
+    name: opts.name,
+    description: opts.description,
+    url: path,
+    serviceType: opts.serviceType,
+    provider: organizationRef,
+    areaServed: { "@type": "Country", name: "India" },
+  };
+}
 
 export const blogPageSchema = {
   "@context": "https://schema.org",
@@ -189,19 +217,25 @@ export function marketReportSchema(report: {
 
   return {
     "@context": "https://schema.org",
-    "@type": "Report",
+    "@type": "TechArticle",
+    headline: report.title,
     name: report.title,
     description: report.seoDescription,
     datePublished: report.publishedAt,
     dateModified: report.updatedAt ?? report.publishedAt,
     author: {
       "@type": "Organization",
-      name: legalEntity.name,
+      name: "ZAFTYS",
       url: BASE,
     },
     publisher: organizationRef,
     image,
     url: `${BASE}/reports/${report.slug}`,
+    mainEntityOfPage: {
+      "@type": "WebPage",
+      "@id": `${BASE}/reports/${report.slug}`,
+    },
+    isAccessibleForFree: true,
     // PDF is gated behind company-email unlock — do not advertise a public contentUrl.
     encoding: {
       "@type": "MediaObject",
@@ -221,6 +255,7 @@ export function blogPostingSchema(post: {
   updatedAt?: string;
   author: string;
   heroImage?: string;
+  template?: string;
 }): Record<string, unknown> {
   const image = post.heroImage
     ? post.heroImage.startsWith("http")
@@ -237,9 +272,11 @@ export function blogPostingSchema(post: {
           ? "Technology"
           : undefined;
 
+  const articleType = post.template === "deep-research" ? "TechArticle" : "BlogPosting";
+
   return {
     "@context": "https://schema.org",
-    "@type": "BlogPosting",
+    "@type": articleType,
     headline: post.seoTitle || post.title,
     alternativeHeadline: post.title,
     description: post.seoDescription,
@@ -248,7 +285,7 @@ export function blogPostingSchema(post: {
     dateModified: post.updatedAt ?? post.publishedAt,
     author: {
       "@type": "Organization",
-      name: legalEntity.name,
+      name: "ZAFTYS",
       url: BASE,
     },
     publisher: organizationRef,

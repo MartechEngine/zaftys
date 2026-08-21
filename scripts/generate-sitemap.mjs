@@ -14,8 +14,8 @@ const BASE = "https://zaftys.com";
 const today = new Date().toISOString().slice(0, 10);
 
 /** Parse publishedAt from blog-data.ts without importing TS */
-function blogPostUrls() {
-  const src = fs.readFileSync(path.join(root, "src", "lib", "blog-data.ts"), "utf8");
+function blogPostUrlsFromFile(filePath) {
+  const src = fs.readFileSync(filePath, "utf8");
   const posts = [];
   const starts = [...src.matchAll(/slug:\s*"([^"]+)",\s*\r?\n\s*title:/g)];
   for (let i = 0; i < starts.length; i++) {
@@ -28,6 +28,23 @@ function blogPostUrls() {
     if (published) posts.push({ slug, lastmod: updated?.[1] ?? published[1] });
   }
   return posts;
+}
+
+function blogPostUrls() {
+  const lib = path.join(root, "src", "lib");
+  const files = [
+    path.join(lib, "blog-data.ts"),
+    path.join(lib, "blog-wave1-data.ts"),
+    path.join(lib, "blog-wave2-data.ts"),
+    path.join(lib, "blog-wave3-data.ts"),
+  ].filter((f) => fs.existsSync(f));
+  const bySlug = new Map();
+  for (const file of files) {
+    for (const post of blogPostUrlsFromFile(file)) {
+      bySlug.set(post.slug, post);
+    }
+  }
+  return [...bySlug.values()];
 }
 
 function reportUrls() {

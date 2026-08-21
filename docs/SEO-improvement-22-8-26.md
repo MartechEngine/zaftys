@@ -241,18 +241,18 @@ To rank #1, generate Google Sitelinks, and claim a Knowledge Panel for the bare 
 5. **Report Landing HTML Expansion** — update `src/lib/market-reports-data.ts` to expand live report landing HTML to 1,000+ words (§13).
 6. **GSC URL Inspection** — submit money URLs after deployment.
 
-### P1 — Alignment, Schema & Clusters
+### P1 — Alignment, Schema & Clusters _(shipped 2026-08-22; rollback tag `seo-p1-rollback-2026-08-22`)_
 
-7. Industry ↔ service reciprocal links on all 8 pillars.
-8. Blog CTA map: each live post → one primary pillar.
-9. Implement/extend schema per §15; validate with Google Rich Results Test.
-10. Wire GA4 + keep Search Console monitoring (see `SEO&Blog.md`).
+7. ~~Industry ↔ service reciprocal links on all 8 pillars.~~ (`serviceLinks` + solution `relatedLinks`)
+8. ~~Blog CTA map: each live post → one primary pillar.~~
+9. ~~Implement/extend schema per §15~~ (`logisticsServiceLeafSchema`, TechArticle on reports/deep-research, SoftwareApplication `featureList`). Validate with Google Rich Results Test after deploy.
+10. Wire GA4 + keep Search Console monitoring (see `SEO&Blog.md`) — analytics helpers already present; confirm measurement ID in env.
 
-### P2 — Authority Cadence (Next 3 Months)
+### P2 — Authority Cadence (Next 3 Months) _(Waves 1–3 blogs shipped 2026-08-22; tags `seo-p2-rollback-2026-08-22`, `seo-wave2-rollback-2026-08-22`, `seo-wave3-rollback-2026-08-22`)_
 
-11. Publish **15–20 blogs** from §12 — **Wave 1 = long-tail technical first** (new-domain sandbox).
-12. Publish **10+ reports** from §13 (crawlable HTML + gated PDF).
-13. Run **entity & off-page** workstream below in parallel with content.
+11. ~~Publish **15–20 blogs** from §12~~ — **20 posts** across Waves 1–3 (`blog-wave1/2/3-data.ts`).
+12. Publish **10+ reports** from §13 (crawlable HTML + gated PDF) — not started beyond live HTML expansion in P0.
+13. Run **entity & off-page** workstream below in parallel with content (GBP / NAP / PR — ops, not code).
 
 ---
 
@@ -327,6 +327,9 @@ To rank #1, generate Google Sitelinks, and claim a Knowledge Panel for the bare 
 - India axle load & GVW; Spot vs dedicated fleet
 - Plant detention & TAT; ePOD / FASTag / e-Way Bill
 - Container trucking India (ports, chassis, backhaul)
+- **Wave 1:** Mill gate papers (coil); Chemical tanker wash/MSDS; 32 vs 40 ft sealed; Pneumatic bulker; Document expiry & weighbridge; Port vs plant free time; Open body vs tipper
+- **Wave 2:** Mining tipper programs; FMCG factory-to-DC OTIF; Contract vs spot for plants; Labeled network capacity; TranZfort matching; ePOD that closes billing; Reading a live map
+- **Wave 3:** Inter-plant WIP; Shutdown/turnaround freight; Amravati desk without fake fleet counts; GST invoice hygiene; Partner onboarding; Analytics vs WhatsApp lane truth
 
 **Reports live today (Expand HTML to 1,000+ words each per §13)**
 
@@ -339,40 +342,40 @@ To rank #1, generate Google Sitelinks, and claim a Knowledge Panel for the bare 
 
 Publish for a **new-domain sandbox**: Wave 1 = hyper-specific long-tail (equipment, compliance, plant clocks) so pages index quickly with low domain authority.
 
-### Wave 1 — Long-tail technical (Month 1, ~7) — New Domain Priority
+### Wave 1 — Long-tail technical (Month 1, ~7) — New Domain Priority _(shipped)_
 
-| # | Working title | Pillar / cluster | Why first |
-|---|---------------|------------------|-----------|
-| 1 | Mill gate papers for coil dispatch: what delays allotment | Steel | Niche mill-ops query; low competition |
-| 2 | Chemical tanker freight: wash, MSDS, and why class comes before rate | Chemicals | Compliance long-tail; opens chemicals cluster |
-| 3 | 32 ft vs 40 ft on Indian roads: choosing sealed container capacity | Container (industry + service) | Equipment-spec query |
-| 4 | Bulk cement and fly ash: when you need a pneumatic bulker | Cement | Body-class / equipment specificity |
-| 5 | Document expiry and the weighbridge: fleet records that matter | TMS / Fleet management | Compliance + product adjacency |
-| 6 | Port free time vs plant free time: two clocks on one container trip | Container | Niche dual-clock TAT query |
-| 7 | Open body vs tipper for bagged cement and aggregates | Cement | Equipment comparison long-tail |
+| # | Working title | Slug | Pillar / cluster |
+|---|---------------|------|------------------|
+| 1 | Mill gate papers for coil dispatch | `mill-gate-papers-coil-dispatch` | Steel |
+| 2 | Chemical tanker freight: wash, MSDS | `chemical-tanker-freight-wash-msds` | Chemicals |
+| 3 | 32 ft vs 40 ft sealed container capacity | `32ft-vs-40ft-sealed-container-india` | Container |
+| 4 | Bulk cement / fly ash pneumatic bulker | `pneumatic-bulker-bulk-cement-fly-ash` | Cement |
+| 5 | Document expiry and the weighbridge | `document-expiry-weighbridge-fleet-records` | TMS / Fleet |
+| 6 | Port free time vs plant free time | `port-free-time-vs-plant-free-time-containers` | Container |
+| 7 | Open body vs tipper bagged cement | `open-body-vs-tipper-bagged-cement-aggregates` | Cement |
 
-### Wave 2 — Cluster expansion & product literacy (Month 2, ~6–7)
+### Wave 2 — Cluster expansion & product literacy (Month 2, ~6–7) _(shipped)_
 
-| # | Working title | Pillar / cluster | Intent |
-|---|---------------|------------------|--------|
-| 8 | Tipper programs for coal, ore, and limestone — one desk, many minerals | Mining | Multi-mineral spoke |
-| 9 | Factory-to-DC OTIF: what FMCG shippers should ask a transporter | FMCG | Commercial spoke for FMCG |
-| 10 | Contract logistics vs spot FTL: how plant teams should decide | Contract / Dedicated + Manufacturing | Mid-intent bridge |
-| 11 | What “labeled network capacity” means on a live trip | Network / Fleet | Trust + Own vs Network education |
-| 12 | How TranZfort matching works — free to post, fee on booking | TranZfort | Marketplace literacy → `/network/tranzfort` |
-| 13 | ePOD that closes billing: from gate-out to settlement | TMS | Complements ePOD post → `/zaftys-tms` |
-| 14 | Reading a live map without calling the control room | TMS / Tracking | Visibility education |
+| # | Working title | Slug | Pillar |
+|---|---------------|------|--------|
+| 8 | Tipper programs coal / ore / limestone | `tipper-programs-coal-ore-limestone` | Mining |
+| 9 | Factory-to-DC OTIF for FMCG | `factory-to-dc-otif-fmcg-shippers` | FMCG |
+| 10 | Contract vs spot for plant teams | `contract-logistics-vs-spot-ftl-plant-teams` | Contract / Mfg |
+| 11 | Labeled network capacity on a live trip | `labeled-network-capacity-live-trip` | Network / Fleet |
+| 12 | TranZfort matching — free to post | `tranzfort-matching-free-to-post` | TranZfort |
+| 13 | ePOD that closes billing | `epod-that-closes-billing` | TMS |
+| 14 | Reading a live map | `reading-live-map-without-calling-control-room` | TMS / Tracking |
 
-### Wave 3 — Depth, trust & differentiation (Month 3, ~5–6)
+### Wave 3 — Depth, trust & differentiation (Month 3, ~5–6) _(shipped)_
 
-| # | Working title | Pillar / cluster | Intent |
-|---|---------------|------------------|--------|
-| 15 | Inter-plant WIP moves: FTL that follows the shift gate | Manufacturing | Deepens manufacturing pillar |
-| 16 | Shutdown and turnaround freight: reserving capacity before the outage week | Industrial logistics | Pillar spoke |
-| 17 | How Amravati desks run pan-corridor trips without fake “fleet size” claims | About / Trust | E-E-A-T; brand |
-| 18 | GST billing on contracted trips: what shippers should see on the invoice | Cross-vertical / TMS | Commercial trust |
-| 19 | Partner onboarding: RC, insurance, and corridor fit before the first load | Partner / Network | Supply-side SEO + badge narrative |
-| 20 | When analytics help — and when WhatsApp still lies about the lane | Intelligence / Analytics | Honest product education |
+| # | Working title | Slug | Pillar |
+|---|---------------|------|--------|
+| 15 | Inter-plant WIP / shift gate | `inter-plant-wip-moves-shift-gate` | Manufacturing |
+| 16 | Shutdown / turnaround freight | `shutdown-turnaround-freight-capacity` | Industrial |
+| 17 | Amravati desk without fake fleet counts | `amravati-desk-pan-corridor-without-fake-fleet-counts` | About / Trust |
+| 18 | GST billing on contracted trips | `gst-billing-contracted-trips-invoice` | TMS / Trust |
+| 19 | Partner onboarding RC / insurance | `partner-onboarding-rc-insurance-corridor` | Partner |
+| 20 | Analytics vs WhatsApp lane truth | `when-analytics-help-when-whatsapp-lies` | Intelligence |
 
 ---
 

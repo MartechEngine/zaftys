@@ -8,7 +8,7 @@ import { CTAGroup } from "@/components/CTAGroup";
 import { HeroEmailButton } from "@/components/HeroEmailButton";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { MarketingEyebrow, MarketingFinalCta, MarketingTile } from "@/components/marketing/MarketingChrome";
-import { breadcrumbSchema, organizationSchema } from "@/lib/schema";
+import { breadcrumbSchema, logisticsServiceLeafSchema, organizationSchema } from "@/lib/schema";
 import heroServices from "@/assets/hero-services.jpg";
 
 export type SolutionPageProps = {
@@ -91,13 +91,20 @@ export function SolutionPageLayout({
 }: SolutionPageProps) {
   const cta = ctaConfig[primaryCta];
 
+  const leafSchema = logisticsServiceLeafSchema({
+    name: `ZAFTYS ${badge}`,
+    description: seo.description,
+    url: canonical,
+    serviceType: badge,
+  });
+
   return (
     <div className="min-h-screen bg-background font-sans">
       <SEO
         title={seo.title}
         description={seo.description}
         canonical={canonical}
-        schema={[organizationSchema, breadcrumbSchema(breadcrumbs)]}
+        schema={[organizationSchema, leafSchema, breadcrumbSchema(breadcrumbs)]}
       />
 
       <PageHero

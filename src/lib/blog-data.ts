@@ -11,6 +11,9 @@ import {
   containerIndiaTakeaways,
   containerIndiaReferences,
 } from "@/lib/blog-exhibits-container-india";
+import { wave1BlogPosts } from "@/lib/blog-wave1-data";
+import { wave2BlogPosts } from "@/lib/blog-wave2-data";
+import { wave3BlogPosts } from "@/lib/blog-wave3-data";
 
 export type BlogCategory = "operations" | "industries" | "technology";
 
@@ -891,7 +894,7 @@ export const blogPosts: readonly BlogPost[] = [
         ],
       },
     ],
-    cta: { label: "Explore transport services", to: "/logistics" },
+    cta: { label: "Industrial freight", to: "/logistics/industrial-freight" },
   },
   {
     slug: "reduce-empty-return-trips",
@@ -1042,7 +1045,7 @@ export const blogPosts: readonly BlogPost[] = [
         ],
       },
     ],
-    cta: { label: "Get a freight quote", whatsapp: true },
+    cta: { label: "Open TranZfort", to: "/network/tranzfort" },
   },
   {
     slug: "tms-evaluation-guide-indian-manufacturers",
@@ -1240,7 +1243,7 @@ export const blogPosts: readonly BlogPost[] = [
         ],
       },
     ],
-    cta: { label: "Request a freight quote", to: "/contact" },
+    cta: { label: "Explore ZAFTYS TMS", to: "/zaftys-tms" },
   },
   {
     slug: "india-axle-load-gvw-limits-heavy-freight",
@@ -1266,7 +1269,7 @@ export const blogPosts: readonly BlogPost[] = [
         eyebrow: "Need legal trailers on the lane",
         title: "Request a freight quote with the right axle class",
         body: "Share cargo density, origin plant, destination, and preferred body type. We place MoRTH-safe capacity as your transport partner before a software rollout.",
-        cta: { label: "Request a freight quote", to: "/contact" },
+        cta: { label: "Industrial freight", to: "/logistics/industrial-freight" },
       },
     ],
     relatedSlugs: [
@@ -1418,7 +1421,7 @@ export const blogPosts: readonly BlogPost[] = [
         ],
       },
     ],
-    cta: { label: "Request a freight quote", to: "/contact" },
+    cta: { label: "Industrial freight", to: "/logistics/industrial-freight" },
   },
   {
     slug: "spot-market-vs-dedicated-fleet-india",
@@ -1445,7 +1448,7 @@ export const blogPosts: readonly BlogPost[] = [
         eyebrow: "Hybrid capacity, one transport desk",
         title: "Request a quote for dedicated plus overflow lanes",
         body: "Share stable corridor volume and peak surplus. We run contract capacity and place verified overflow when indents miss the SLA window, without forcing a marketplace login first.",
-        cta: { label: "Request a freight quote", to: "/contact" },
+        cta: { label: "Dedicated fleet", to: "/logistics/dedicated-fleet" },
       },
     ],
     relatedSlugs: [
@@ -1655,7 +1658,7 @@ export const blogPosts: readonly BlogPost[] = [
         ],
       },
     ],
-    cta: { label: "Request a freight quote", to: "/contact" },
+    cta: { label: "Dedicated fleet", to: "/logistics/dedicated-fleet" },
   },
   {
     slug: "plant-detention-tat-yard-gate-india",
@@ -1682,7 +1685,7 @@ export const blogPosts: readonly BlogPost[] = [
         eyebrow: "Cut detention with the right trucks and windows",
         title: "Request a freight quote sized to your plant TAT",
         body: "Share gate windows, body type, and weekly volume. We place capacity that can hit your free-time clocks, and we can layer yard control later if you need it.",
-        cta: { label: "Request a freight quote", to: "/contact" },
+        cta: { label: "Manufacturing logistics", to: "/industries/manufacturing" },
       },
     ],
     relatedSlugs: [
@@ -1885,7 +1888,7 @@ export const blogPosts: readonly BlogPost[] = [
         ],
       },
     ],
-    cta: { label: "Request a freight quote", to: "/contact" },
+    cta: { label: "Manufacturing logistics", to: "/industries/manufacturing" },
   },
   {
     slug: "epod-fastag-eway-bill-billing-india",
@@ -1912,7 +1915,7 @@ export const blogPosts: readonly BlogPost[] = [
         eyebrow: "Clean bills start with clean trips",
         title: "Request a freight quote with settlement-ready partners",
         body: "Share corridor, volume, and billing pain. We place transport capacity first. If you later need ePOD and e-Way Bill control in one TMS view, we can walk that path separately.",
-        cta: { label: "Request a freight quote", to: "/contact" },
+        cta: { label: "Explore ZAFTYS TMS", to: "/zaftys-tms" },
       },
     ],
     relatedSlugs: [
@@ -2132,7 +2135,7 @@ export const blogPosts: readonly BlogPost[] = [
         ],
       },
     ],
-    cta: { label: "Request a freight quote", to: "/contact" },
+    cta: { label: "Explore ZAFTYS TMS", to: "/zaftys-tms" },
   },
   {
     slug: "container-trucking-logistics-india",
@@ -2161,7 +2164,7 @@ export const blogPosts: readonly BlogPost[] = [
         eyebrow: "Need trailers, not another login",
         title: "Request a western-gateway container freight quote",
         body: "Share JNPT or Mundra, inland plant or CFS, body mix (20ft / 40ft HQ), and weekly volume. We place capacity as your transport partner: own fleet, empaneled trucks, and overflow when peaks hit.",
-        cta: { label: "Request a freight quote", to: "/contact" },
+        cta: { label: "Port and container road", to: "/industries/container-transport" },
       },
       {
         afterHeading: "Chassis configurations and axle norms",
@@ -2434,8 +2437,11 @@ export const blogPosts: readonly BlogPost[] = [
         exhibits: containerIndiaExhibits["What good programs tend to show"],
       },
     ],
-    cta: { label: "Request a freight quote", to: "/contact" },
+    cta: { label: "Port and container road", to: "/industries/container-transport" },
   },
+  ...wave1BlogPosts,
+  ...wave2BlogPosts,
+  ...wave3BlogPosts,
 ];
 
 export function listPosts(): BlogPost[] {

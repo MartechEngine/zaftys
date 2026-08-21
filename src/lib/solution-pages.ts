@@ -44,7 +44,8 @@ export const logisticsSolutions: Record<string, SolutionContent> = {
     relatedLinks: [
       { name: "Contract Logistics", path: paths.logistics.contract },
       { name: "Our Fleet", path: paths.fleet },
-      { name: "Tranzfort Network", path: paths.network.tranzfort },
+      { name: "Industries", path: paths.industries },
+      { name: "TranZfort", path: paths.network.tranzfort },
     ],
     primaryCta: "quote",
     secondaryLink: { label: "View all logistics", path: paths.logistics.hub },
@@ -87,6 +88,7 @@ export const logisticsSolutions: Record<string, SolutionContent> = {
     relatedLinks: [
       { name: "Dedicated Fleet", path: paths.logistics.dedicated },
       { name: "3PL Transportation", path: paths.logistics.threePl },
+      { name: "Manufacturing", path: "/industries/manufacturing" },
       { name: "ZAFTYS TMS", path: paths.technology.tms },
     ],
     primaryCta: "contract",
@@ -130,6 +132,7 @@ export const logisticsSolutions: Record<string, SolutionContent> = {
     relatedLinks: [
       { name: "Contract Logistics", path: paths.logistics.contract },
       { name: "Our Fleet", path: paths.fleet },
+      { name: "Manufacturing", path: "/industries/manufacturing" },
     ],
     primaryCta: "contract",
   },
@@ -171,6 +174,8 @@ export const logisticsSolutions: Record<string, SolutionContent> = {
     relatedLinks: [
       { name: "Industries", path: paths.industries },
       { name: "Container Transportation", path: paths.logistics.container },
+      { name: "Steel & Metals", path: "/industries/steel-metals" },
+      { name: "Cement & Construction", path: "/industries/cement" },
     ],
     primaryCta: "quote",
   },
@@ -210,6 +215,7 @@ export const logisticsSolutions: Record<string, SolutionContent> = {
       "Owned capacity where we run the lane; Tranzfort partners when overflow is required — labeled",
     ],
     relatedLinks: [
+      { name: "Port & Container Road", path: "/industries/container-transport" },
       { name: "3PL Transportation", path: paths.logistics.threePl },
       { name: "Industrial Freight", path: paths.logistics.industrial },
     ],

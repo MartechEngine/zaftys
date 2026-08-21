@@ -283,7 +283,21 @@ const IndustryDetail = () => {
                 Also see
               </p>
               <ul className="space-y-2">
-                {related.slice(0, 3).map((item) => (
+                {industry.serviceLinks.map((link) => (
+                  <li key={link.path}>
+                    <Link
+                      to={link.path}
+                      className="group flex items-center justify-between gap-2 text-sm font-medium text-navy hover:text-primary"
+                    >
+                      <span>{link.label}</span>
+                      <ArrowRight
+                        size={14}
+                        className="shrink-0 opacity-40 transition group-hover:opacity-100"
+                      />
+                    </Link>
+                  </li>
+                ))}
+                {related.slice(0, 2).map((item) => (
                   <li key={item.slug}>
                     <Link
                       to={industryPath(item.slug)}
