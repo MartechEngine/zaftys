@@ -13,7 +13,12 @@ import { pageHeroAlts } from "@/lib/page-heroes";
 import { useToast } from "@/hooks/use-toast";
 import { trackEvent } from "@/lib/analytics";
 import { CTAGroup } from "@/components/CTAGroup";
-import { companyAddress } from "@/lib/constants";
+import {
+  companyAddress,
+  COMPANY_PHONE_DISPLAY,
+  COMPANY_PHONE_ALT_DISPLAY,
+  CONTACT_FORM_EMAIL,
+} from "@/lib/constants";
 import { pageSeo } from "@/lib/page-seo";
 import { pageHeroCopy } from "@/lib/page-hero-copy";
 import { organizationSchema, localBusinessSchema, breadcrumbSchema } from "@/lib/schema";
@@ -100,12 +105,12 @@ const Contact = () => {
     {
       icon: Phone,
       title: "Phone Support",
-      details: ["+91-927-092-3581", "+91-989-092-3581"],
+      details: [COMPANY_PHONE_DISPLAY, COMPANY_PHONE_ALT_DISPLAY],
     },
     {
       icon: Mail,
       title: "Email Us",
-      details: ["contact@zaftys.com"],
+      details: [CONTACT_FORM_EMAIL],
     },
   ];
 

@@ -1,5 +1,12 @@
 export const WHATSAPP_PHONE = "919270923581";
 
+/** Primary public phone — display + tel must stay 1:1 with schema / Contact / Footer (NAP). */
+export const COMPANY_PHONE_DISPLAY = "+91-927-092-3581";
+export const COMPANY_PHONE_TEL = "+919270923581";
+/** Secondary desk line shown on Contact only (not primary NAP / schema). */
+export const COMPANY_PHONE_ALT_DISPLAY = "+91-989-092-3581";
+export const COMPANY_PHONE_ALT_TEL = "+919890923581";
+
 export const COMPANY_EMAIL = "info@zaftys.com";
 export const CONTACT_FORM_EMAIL = "contact@zaftys.com";
 export const SUBSCRIBERS_EMAIL = "subscribers@zaftys.com";

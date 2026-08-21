@@ -6,7 +6,16 @@ import { Input } from "@/components/ui/input";
 import logoFooter from "@/assets/logo-footer.png";
 import { useToast } from "@/hooks/use-toast";
 import { footerColumns } from "@/lib/nav-config";
-import { externalLinks, whatsappUrl, companyAddress, legalEntity, COMPANY_EMAIL, SUBSCRIBERS_EMAIL } from "@/lib/constants";
+import {
+  externalLinks,
+  whatsappUrl,
+  companyAddress,
+  legalEntity,
+  COMPANY_EMAIL,
+  COMPANY_PHONE_DISPLAY,
+  COMPANY_PHONE_TEL,
+  SUBSCRIBERS_EMAIL,
+} from "@/lib/constants";
 import { subscribeNewsletter } from "@/lib/newsletter";
 import { trackEvent } from "@/lib/analytics";
 
@@ -112,12 +121,12 @@ const Footer = () => {
               </li>
               <li>
                 <a
-                  href="tel:+919270923581"
+                  href={`tel:${COMPANY_PHONE_TEL}`}
                   className="flex items-center gap-3 text-gray-400 hover:text-accent transition-colors"
                   onClick={() => trackEvent("cta_call", { placement: "footer" })}
                 >
                   <Phone className="text-accent shrink-0" size={18} />
-                  <span>+91-927-092-3581</span>
+                  <span>{COMPANY_PHONE_DISPLAY}</span>
                 </a>
               </li>
               <li>

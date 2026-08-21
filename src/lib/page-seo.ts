@@ -1,4 +1,6 @@
 /** Page titles & meta descriptions — titles end with `| ZAFTYS` for bare-brand entity strength. */
+import { COMPANY_PHONE_DISPLAY } from "@/lib/constants";
+
 export const pageSeo = {
   home: {
     title: "3PL & Contract Logistics India | ZAFTYS",
@@ -63,7 +65,7 @@ export const pageSeo = {
   contact: {
     title: "Contact ZAFTYS | Freight Quote, TMS Demo, Partner | ZAFTYS",
     description:
-      "WhatsApp or form. Amravati desk, Maharashtra. Phone: +91-927-092-3581.",
+      `WhatsApp or form. Amravati desk, Maharashtra. Phone: ${COMPANY_PHONE_DISPLAY}.`,
   },
   careers: {
     title: "Careers at ZAFTYS | Fleet, Dispatch, TMS | ZAFTYS",

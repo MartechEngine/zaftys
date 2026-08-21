@@ -246,15 +246,15 @@ To rank #1, generate Google Sitelinks, and claim a Knowledge Panel for the bare 
 7. ~~Industry ↔ service reciprocal links on all 8 pillars.~~ (`serviceLinks` + solution `relatedLinks`)
 8. ~~Blog CTA map: each live post → one primary pillar.~~
 9. ~~Implement/extend schema per §15~~ (`logisticsServiceLeafSchema`, TechArticle on reports/deep-research, SoftwareApplication `featureList`). Validate with Google Rich Results Test after deploy.
-10. Wire GA4 + keep Search Console monitoring (see `SEO&Blog.md`) — analytics helpers already present; confirm measurement ID in env.
+10. Wire GA4 + keep Search Console monitoring (see `SEO&Blog.md`) — helpers in `src/lib/analytics.ts`; set `VITE_GA_MEASUREMENT_ID` in deploy env (documented in `.env.example`). Confirm live hits after deploy.
 
 ### P2 — Authority Cadence _(new blogs & new reports DEFERRED — author one-at-a-time later)_
 
 11. **Deferred:** §12 Waves 1–3 blogs — backlog kept below; not live until each is authored individually.
 12. **Deferred:** §13 India report slate — backlog kept; only the **2 existing** global/DFM reports remain live.
-13. Entity & off-page (GBP / NAP / PR) — ops, not code; still open.
+13. Entity & off-page (GBP / directory NAP / PR) — ops; on-site NAP unified in `constants.ts` (Footer / Contact / About / schema).
 
-**Focus now:** ~~improve existing live blogs (11), existing reports (2), and commercial pillars/leaves~~ — **shipped** (freshness, related links, leaf/industry meta, WhatsApp prefills). Remaining open work is off-page (GBP/NAP/PR) + deploy validation (GSC/GA4/Rich Results).
+**Focus now:** Remaining open work is **ops / post-deploy** — GBP claim, directory NAP match, GSC URL Inspection, Rich Results Test, GA4 measurement ID in production, Digital PR (anchor **ZAFTYS**), and final `sameAs` URLs when profiles exist.
 
 ---
 
@@ -448,6 +448,7 @@ Execute these explicit code edits across the repository:
 - [x] **Purge `/services` Internal Links** — done in P0 (page still redirects).
 - [x] **Expand Live Report Landing HTML Copy** — done in P0; related blogs refreshed 2026-08-22.
 - [x] **Standardize WhatsApp Prefill Strings** — `constants.ts` + `hero-ctas.ts` re-exports; industry desks keep vertical prefills.
+- [x] **On-site NAP single source** — `COMPANY_PHONE_*` + `companyAddress` drive Footer, Contact, About strip, Organization + LocalBusiness schema. Directory/GBP match still ops.
 - [ ] **Verify NAP String Uniformity** — confirm 1:1 with live GBP/directories (ops).
 
 ### 15.3 New domain acceleration & launch checklist

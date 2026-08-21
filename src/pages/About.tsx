@@ -5,11 +5,16 @@ import SEO from "@/components/SEO";
 import { PageHero } from "@/components/PageHero";
 import heroAbout from "@/assets/hero-about.jpg";
 import { pageHeroAlts } from "@/lib/page-heroes";
-import { heroMailBodies, heroMailSubjects } from "@/lib/hero-ctas";
 import { HeroEmailButton } from "@/components/HeroEmailButton";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { CTAGroup } from "@/components/CTAGroup";
 import { pageSeo } from "@/lib/page-seo";
+import {
+  COMPANY_EMAIL,
+  COMPANY_PHONE_DISPLAY,
+  COMPANY_PHONE_TEL,
+  companyAddress,
+} from "@/lib/constants";
 import { aboutPageCopy, aboutProfileMail } from "@/lib/about-page-copy";
 import { AboutIndiaCorridorMap } from "@/components/about/AboutIndiaCorridorMap";
 import { organizationSchema, localBusinessSchema, breadcrumbSchema } from "@/lib/schema";
@@ -333,7 +338,18 @@ const About = () => {
       <section className="final-cta-band text-center">
         <div className="container mx-auto max-w-3xl container-padding">
           <h2 className="mb-3 font-heading text-3xl font-bold md:text-4xl">{c.finalCta.h2}</h2>
-          <p className="mb-8 text-lg text-gray-200">{c.finalCta.lead}</p>
+          <p className="mb-4 text-lg text-gray-200">{c.finalCta.lead}</p>
+          <p className="mb-8 text-sm text-gray-400">
+            {companyAddress.line1}, {companyAddress.line2}, {companyAddress.line3}
+            {" · "}
+            <a className="text-accent hover:underline" href={`tel:${COMPANY_PHONE_TEL}`}>
+              {COMPANY_PHONE_DISPLAY}
+            </a>
+            {" · "}
+            <a className="text-accent hover:underline" href={`mailto:${COMPANY_EMAIL}`}>
+              {COMPANY_EMAIL}
+            </a>
+          </p>
           <CTAGroup>
             <WhatsAppButton label={c.finalCta.primaryLabel} />
             <HeroEmailButton

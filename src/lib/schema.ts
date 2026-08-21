@@ -1,6 +1,10 @@
 /** JSON-LD structured data  -  site-wide helpers */
 
-import { companyAddress } from "@/lib/constants";
+import {
+  COMPANY_EMAIL,
+  COMPANY_PHONE_DISPLAY,
+  companyAddress,
+} from "@/lib/constants";
 
 const BASE = "https://zaftys.com";
 const ORG_ID = `${BASE}/#organization`;
@@ -23,8 +27,8 @@ export const organizationSchema = {
   ],
   contactPoint: {
     "@type": "ContactPoint",
-    telephone: "+91-927-092-3581",
-    email: "info@zaftys.com",
+    telephone: COMPANY_PHONE_DISPLAY,
+    email: COMPANY_EMAIL,
     contactType: "customer service",
     areaServed: "IN",
     availableLanguage: ["English", "Hindi"],
@@ -58,8 +62,8 @@ export const localBusinessSchema = {
   alternateName: ["ZAFTYS Logistics", "Zaftys"],
   image: `${BASE}/logo-header.png`,
   url: BASE,
-  telephone: "+91-927-092-3581",
-  email: "info@zaftys.com",
+  telephone: COMPANY_PHONE_DISPLAY,
+  email: COMPANY_EMAIL,
   address: {
     "@type": "PostalAddress",
     streetAddress: companyAddress.streetAddress,
