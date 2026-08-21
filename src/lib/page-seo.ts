@@ -11,9 +11,9 @@ export const pageSeo = {
       "FTL 3PL, contract and dedicated fleet, industrial freight, and container road legs. Owned trucks first, labeled partner overflow, plant-window desk, TMS on trips we run.",
   },
   networkHub: {
-    title: "Transportation Network | Tranzfort and Partners",
+    title: "Transportation Network | Own Fleet, TranZfort, Partners",
     description:
-      "ZAFTYS transportation network: Tranzfort digital freight network, verified transporter partners, and truck capacity sourcing.",
+      "ZAFTYS transportation network: owned fleet first, labeled partner overflow, TranZfort marketplace, and truck capacity sourcing. Own vs Network never blended.",
   },
   technologyHub: {
     title: "ZAFTYS TMS | Transport Management System",

@@ -19,6 +19,7 @@ function pathMatches(pathname: string, path: string): boolean {
   if (path === paths.industries && pathname.startsWith("/industries/")) return true;
   if (path === paths.resources && pathname.startsWith("/resources/")) return true;
   if (path === paths.logistics.hub && pathname.startsWith("/logistics/")) return true;
+  if (path === paths.network.hub && pathname.startsWith("/network/")) return true;
   if (path === paths.intelligence.hub && pathname.startsWith("/intelligence/")) return true;
   return false;
 }
@@ -41,7 +42,7 @@ function dropdownIsActive(pathname: string, group: NavDropdown): boolean {
       pathname.startsWith(`${paths.technology.tms}/`) ||
       pathname.startsWith("/technology") ||
       pathname === paths.network.tranzfort ||
-      pathname.startsWith("/network/tranzfort")
+      pathname.startsWith(`${paths.network.tranzfort}/`)
     );
   }
 
@@ -107,7 +108,9 @@ const Navigation = () => {
                 const active =
                   entry.id === "intelligence"
                     ? location.pathname === paths.intelligence.hub || location.pathname.startsWith("/intelligence/")
-                    : pathMatches(location.pathname, entry.path);
+                    : entry.id === "network"
+                      ? location.pathname === paths.network.hub || location.pathname.startsWith("/network/")
+                      : pathMatches(location.pathname, entry.path);
                 return (
                   <Link
                     key={entry.id}
@@ -212,7 +215,9 @@ const Navigation = () => {
                   const active =
                     entry.id === "intelligence"
                       ? location.pathname === paths.intelligence.hub || location.pathname.startsWith("/intelligence/")
-                      : pathMatches(location.pathname, entry.path);
+                      : entry.id === "network"
+                        ? location.pathname === paths.network.hub || location.pathname.startsWith("/network/")
+                        : pathMatches(location.pathname, entry.path);
                   return (
                     <Link
                       key={entry.id}

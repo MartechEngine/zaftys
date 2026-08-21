@@ -54,12 +54,9 @@ const ContainerTransportation = lazy(() =>
 );
 
 const NetworkHub = lazy(() => import("./pages/network/NetworkHub"));
-const TransporterNetwork = lazy(() =>
-  import("./pages/network/NetworkSolutions").then((m) => ({ default: m.TransporterNetwork })),
-);
-const TruckCapacity = lazy(() =>
-  import("./pages/network/NetworkSolutions").then((m) => ({ default: m.TruckCapacity })),
-);
+const TransporterNetwork = lazy(() => import("./pages/network/TransporterNetworkPage"));
+const TruckCapacity = lazy(() => import("./pages/network/TruckCapacityPage"));
+
 
 const FleetManagement = lazy(() => import("./pages/technology/FleetManagementPage"));
 const TrackingVisibility = lazy(() => import("./pages/technology/TrackingVisibilityPage"));

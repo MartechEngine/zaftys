@@ -143,7 +143,7 @@ export function OpsAnalyticsPreview({ className }: { className?: string }) {
 }
 
 function statusTone(status: string) {
-  if (status === "Available") return "border-primary/30 bg-primary/10 text-primary";
+  if (status === "Available" || status === "Live") return "border-primary/30 bg-primary/10 text-primary";
   if (status === "Beta") return "border-accent/40 bg-accent/10 text-navy";
   return "border-border bg-muted text-muted-foreground";
 }

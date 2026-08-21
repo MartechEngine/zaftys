@@ -22,12 +22,13 @@ export type HeaderNavEntry = NavDropdown | NavFlatLink;
 
 /**
  * Primary header navigation.
- * Order: Logistics → Platform → Intelligence → Industries (flat) → Company → Resources
+ * Order: Logistics → Platform → Network (flat) → Intelligence → Industries → Company → Resources
  * No "Overview" rows in any dropdown.
  *
  * Logistics (locked 20 Aug 2026): Transportation + Our Fleet only.
  * Service SKUs (3PL, contract, industrial, container) are sections on `/logistics`.
- * Leaf URLs remain for SEO / footer deep links.
+ * Network: flat hub at `/network`. TranZfort + capacity leaves are hub / footer deep links.
+ * Platform: TMS modules + TranZfort (also reachable via Network hub).
  */
 export const headerNav: readonly HeaderNavEntry[] = [
   {
@@ -47,10 +48,16 @@ export const headerNav: readonly HeaderNavEntry[] = [
     hubPath: paths.technology.tms,
     items: [
       { name: "ZAFTYS TMS", path: paths.technology.tms },
-      { name: "Tranzfort", path: paths.network.tranzfort },
+      { name: "TranZfort", path: paths.network.tranzfort },
       { name: "Tracking & Visibility", path: paths.technology.tracking },
       { name: "Fleet Management", path: paths.technology.fleetManagement },
     ],
+  },
+  {
+    type: "link",
+    id: "network",
+    label: "Network",
+    path: paths.network.hub,
   },
   {
     type: "link",
@@ -106,11 +113,19 @@ export const footerColumns = [
     title: "Platform",
     links: [
       { name: "ZAFTYS TMS", path: paths.technology.tms },
-      { name: "Tranzfort", path: paths.network.tranzfort },
       { name: "Tracking & Visibility", path: paths.technology.tracking },
       { name: "Fleet Management", path: paths.technology.fleetManagement },
       { name: "Logistics APIs", path: paths.technology.apis },
       { name: "Login", path: paths.login },
+    ],
+  },
+  {
+    title: "Network",
+    links: [
+      { name: "Network", path: paths.network.hub },
+      { name: "TranZfort", path: paths.network.tranzfort },
+      { name: "Transporter Network", path: paths.network.transporterNetwork },
+      { name: "Truck Capacity", path: paths.network.truckCapacity },
     ],
   },
   {
