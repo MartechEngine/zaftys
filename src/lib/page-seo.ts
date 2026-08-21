@@ -26,9 +26,9 @@ export const pageSeo = {
       "Operations analytics, rate context, and institutional reports on Indian freight we actually run.",
   },
   services: {
-    title: "LCV, Heavy Load, Container, Tanker and Bulker Transport | ZAFTYS",
+    title: "FTL Logistics Services India | 3PL & Contract | ZAFTYS",
     description:
-      "FTL and contract transport across LCV, heavy load, container, tanker and bulker trucks. Own fleet, TranZfort marketplace, and ZAFTYS TMS. Get a quote.",
+      "Legacy /services URL redirects to /logistics. 3PL, contract and dedicated fleet, industrial freight, and container road legs in India.",
   },
   fleet: {
     title: "Own & Network Fleet | Commercial Truck Types India | ZAFTYS",
@@ -101,18 +101,18 @@ export const pageSeo = {
       "This page does not exist. Return to ZAFTYS Logistics, TranZfort, or Contact for freight quotes and logistics support.",
   },
   blog: {
-    title: "Blog | Container Trucking, TMS, FTL and Plant Ops | ZAFTYS",
+    title: "Blog | FTL, TMS, Plant Ops & Container Trucking India | ZAFTYS",
     description:
-      "ZAFTYS deep research and guides: container trucking India, TMS evaluation, axle and GVW, spot vs dedicated fleets, plant detention and TAT, ePOD and e-Way Bill, cement and steel freight.",
+      "Practical India FTL guides: TMS beyond GPS, steel coil and cement windows, axle/GVW, spot vs dedicated, plant detention, ePOD/e-Way Bill, and container trucking.",
   },
   resources: {
     title: "Resources | Blog and Market Reports | ZAFTYS",
     description:
-      "ZAFTYS resources: freight blog guides plus institutional market reports on global logistics and digital freight matching with gated PDF downloads.",
+      "ZAFTYS blog guides plus institutional market reports on global logistics and digital freight matching. Report HTML is open; PDFs unlock with company email.",
   },
   reports: {
     title: "Market Reports | Global Logistics and Digital Freight | ZAFTYS",
     description:
-      "ZAFTYS Analytics market reports: global logistics market size and forecast 2027-2036, plus digital freight matching platform revenue. Unlock PDFs with a company email.",
+      "ZAFTYS Analytics: global logistics market size and forecast 2027-2036, and digital freight matching platform revenue. Crawlable HTML briefs; PDF gated.",
   },
 } as const;

@@ -73,7 +73,7 @@ export const industries: readonly IndustryRecord[] = [
     whatsappPrefill:
       "Hi ZAFTYS, I need a quote for cement / construction freight.\n\nPlant / origin:\nDestination:\nCargo (bagged / bulk / clinker / fly ash / aggregates):\nVolume / trips per week:\n",
     seoH1: "Cement logistics: bulker, tipper, and plant windows.",
-    seoTitle: "Cement Logistics India | Bulker Tipper Plant Windows",
+    seoTitle: "Cement Logistics India | Bulker & Tipper",
     seoDescription:
       "Bagged and bulk cement, clinker, fly ash, and aggregates. Plant-window dispatch, tipper and bulker classes, own fleet first with labeled network overflow.",
     faqs: [
@@ -156,7 +156,7 @@ export const industries: readonly IndustryRecord[] = [
     whatsappPrefill:
       "Hi ZAFTYS, I need a quote for mining product transport.\n\nOrigin (mine / quarry / stockyard):\nDestination (plant / mill / siding):\nProduct (coal / iron ore / limestone / bauxite / other):\nTrips per day / week:\n",
     seoH1: "Mining product transportation — tippers for every mineral lane.",
-    seoTitle: "Mining Product Transport India | Coal Ore Limestone Tipper",
+    seoTitle: "Mining Product Transport India | Tipper",
     seoDescription:
       "Mining product transport for coal, iron ore, limestone, bauxite, manganese, chrome, overburden, and aggregates. Pit-to-plant tippers, weighbridge discipline, own capacity first.",
     faqs: [
@@ -235,7 +235,7 @@ export const industries: readonly IndustryRecord[] = [
     whatsappPrefill:
       "Hi ZAFTYS, I need a quote for steel / coil freight.\n\nOrigin (mill / stockyard / port):\nDestination:\nCargo (coils / plates / TMT / billets / structurals):\nWeight / pieces:\n",
     seoH1: "Steel coil transportation with flatbed discipline.",
-    seoTitle: "Steel Coil Transport India | Flatbed Trailer Logistics",
+    seoTitle: "Steel Coil Transport India | Flatbed",
     seoDescription:
       "Steel coil, plate, TMT, and structural transport on flatbed and side-wall trailers. Mill windows, weighbridge and axle discipline, own fleet first.",
     faqs: [
@@ -315,7 +315,7 @@ export const industries: readonly IndustryRecord[] = [
     whatsappPrefill:
       "Hi ZAFTYS, I need a quote for container road transport.\n\nPort / ICD / origin:\nFactory / city / destination:\nDirection (port→city / city→port):\nContainer size (20 / 32 / 40):\nTrips per week:\n",
     seoH1: "Port to city and city to port — container road transport.",
-    seoTitle: "Container Transport India | Port to City Road Haulage",
+    seoTitle: "Container Transport India | Port to City",
     seoDescription:
       "Container transportation by road: port to city, city to port, port to factory, and ICD/CFS legs. 32 ft and 40 ft trailers, plant and port windows, own fleet first.",
     faqs: [

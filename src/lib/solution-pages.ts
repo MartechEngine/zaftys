@@ -10,7 +10,7 @@ export const logisticsSolutions: Record<string, SolutionContent> = {
     seo: {
       title: "3PL Transportation Services India",
       description:
-        "FTL 3PL transportation from ZAFTYS — owned fleet first, labeled partner overflow, GST billing, and TMS on trips we run. Industrial and commercial corridors.",
+        "Full-truckload 3PL transportation across India from ZAFTYS: owned fleet first, labeled partner overflow, GST billing, and TMS on trips we run. Request a quote for your corridor.",
     },
     canonical: paths.logistics.threePl,
     badge: "3PL Transportation",
@@ -52,9 +52,9 @@ export const logisticsSolutions: Record<string, SolutionContent> = {
   },
   contract: {
     seo: {
-      title: "Contract Logistics and Dedicated Transportation",
+      title: "Contract Logistics India | Reserved FTL Capacity",
       description:
-        "Contract logistics with dedicated or reserved trucks, SLA tracking, plant-window dispatch, and TMS visibility. Capacity assurance — not only a rate.",
+        "Contract logistics in India with dedicated or reserved FTL capacity, SLA tracking, plant-window dispatch, and TMS visibility. Talk to us about a capacity program for your lanes.",
     },
     canonical: paths.logistics.contract,
     badge: "Contract Logistics",
@@ -98,7 +98,7 @@ export const logisticsSolutions: Record<string, SolutionContent> = {
     seo: {
       title: "Dedicated Fleet Services India",
       description:
-        "Dedicated fleet: trucks and drivers assigned to your plant or DC program. Body type follows the lane. SLA, TMS, and labeled surge overflow from ZAFTYS.",
+        "Dedicated fleet services in India: trucks and drivers assigned to your plant or DC program, with body type matched to the lane. SLA, TMS, and labeled surge overflow from ZAFTYS. Request a quote to scope your fleet.",
     },
     canonical: paths.logistics.dedicated,
     badge: "Dedicated Fleet",
@@ -138,9 +138,9 @@ export const logisticsSolutions: Record<string, SolutionContent> = {
   },
   industrial: {
     seo: {
-      title: "Industrial Freight Transportation India",
+      title: "Industrial Freight Transportation India | Steel Cement Mining",
       description:
-        "Industrial freight for steel, cement, mining, and project cargo. Flatbed, tipper, multi-axle, and ODC with plant-window and weighbridge discipline.",
+        "Industrial freight transportation in India for steel, cement, mining, and project cargo. Flatbed, tipper, multi-axle, and ODC with plant-window and weighbridge discipline. Get a quote for your lane.",
     },
     canonical: paths.logistics.industrial,
     badge: "Industrial Freight",
@@ -181,9 +181,9 @@ export const logisticsSolutions: Record<string, SolutionContent> = {
   },
   container: {
     seo: {
-      title: "Container Transportation Port to Market India",
+      title: "Container Transportation India | Port to Factory Road",
       description:
-        "Container road legs port–factory–market. Trailers for sealed freight, plant and port window coordination, TMS on contracted moves.",
+        "Container transportation in India for port-to-factory and factory-to-port road legs. Trailers for sealed freight, plant and port window coordination, TMS on contracted moves. Request a container quote.",
     },
     canonical: paths.logistics.container,
     badge: "Container Transportation",

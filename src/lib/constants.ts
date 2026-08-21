@@ -39,10 +39,30 @@ export function mailtoCompany(subject?: string, body?: string): string {
 }
 
 export const WHATSAPP_DEFAULT_MESSAGE =
-  "Hi ZAFTYS, I need a freight quote. From:  To:  Load type (LCV / heavy / container / tanker / bulker):  Weight: ";
+  "Hi ZAFTYS, I need a freight quote.\n\nFrom:\nTo:\nLoad type (LCV / open / tipper / container / bulker / tanker):\nWeight / trips:\n";
 
 export const WHATSAPP_POST_LOAD_MESSAGE =
-  "Hi ZAFTYS, I want to post a load on TranZfort. From:  To:  Truck type:";
+  "Hi ZAFTYS, I want to post a load on TranZfort.\n\nFrom:\nTo:\nTruck type:\nTimeline:\n";
+
+export const WHATSAPP_TMS_DEMO_MESSAGE =
+  "Hi ZAFTYS, I'd like a ZAFTYS TMS demo.\n\nCompany:\nRole:\nUse case (dispatch / ePOD / shipper portal):\n";
+
+export const WHATSAPP_PARTNER_MESSAGE =
+  "Hi ZAFTYS, I want to register as a transport partner.\n\nCompany:\nFleet size / body classes:\nCorridors:\n";
+
+/** Vertical quote prefills — keep in sync with industry desk language. */
+export const whatsappIndustryPrefill = {
+  cement:
+    "Hi ZAFTYS, I need a quote for cement / construction freight.\n\nPlant / origin:\nDestination:\nCargo (bagged / bulk / clinker / fly ash / aggregates):\nVolume / trips per week:\n",
+  steel:
+    "Hi ZAFTYS, I need a quote for steel / coil freight.\n\nMill / origin:\nDestination:\nProduct (coil / plate / TMT / billets):\nWeight / pieces:\n",
+  mining:
+    "Hi ZAFTYS, I need a quote for mining products freight.\n\nPit / quarry / origin:\nDestination:\nMineral:\nTrips per shift / week:\n",
+  container:
+    "Hi ZAFTYS, I need a quote for container road haulage.\n\nPort / CFS / origin:\nDestination:\nSize (32 ft / 40 ft):\nWindow:\n",
+  manufacturing:
+    "Hi ZAFTYS, I need a quote for manufacturing logistics.\n\nPlant / origin:\nDestination:\nFlow (inbound / outbound / inter-plant):\nFrequency / shift window:\n",
+} as const;
 
 export const externalLinks = {
   tranzfort: "https://tranzfort.com",

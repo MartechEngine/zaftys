@@ -13,9 +13,9 @@ export const fleetManagementLeafCopy: IntelligenceLeafCopy = {
   id: "fleet",
   status: "Available",
   seo: {
-    title: "Fleet Management in ZAFTYS TMS | Vehicles and Drivers",
+    title: "ZAFTYS TMS Fleet Management India | Vehicles and Drivers",
     description:
-      "Fleet management inside ZAFTYS TMS: vehicle registry, driver records, document expiry, and maintenance alerts tied to dispatch. Used on ZAFTYS own fleet daily.",
+      "Fleet management in ZAFTYS TMS for India operators: vehicle registry, driver records, document expiry, and maintenance alerts tied to dispatch. Used on ZAFTYS own fleet daily.",
   },
   canonical: paths.technology.fleetManagement,
   breadcrumbs: [
@@ -173,9 +173,9 @@ export const trackingLeafCopy: IntelligenceLeafCopy = {
   id: "tracking",
   status: "Available",
   seo: {
-    title: "Shipment Tracking and Visibility | ZAFTYS TMS",
+    title: "ZAFTYS TMS Shipment Tracking India | Live Visibility",
     description:
-      "Live GPS, shipper portal, and digital ePOD in ZAFTYS TMS. Track contracted trips after the truck leaves origin without chasing WhatsApp status.",
+      "Live GPS, shipper portal, and digital ePOD in ZAFTYS TMS for contracted India trips. Track freight after departure without chasing WhatsApp status.",
   },
   canonical: paths.technology.tracking,
   breadcrumbs: [
@@ -333,9 +333,9 @@ export const logisticsApisLeafCopy: IntelligenceLeafCopy = {
   id: "apis",
   status: "Available",
   seo: {
-    title: "Logistics API Integrations | ZAFTYS TMS",
+    title: "ZAFTYS TMS Logistics APIs India | ERP Integrations",
     description:
-      "Connect ZAFTYS TMS trip, fleet, and visibility data with ERP and commercial systems. Scope confirmed in enterprise onboarding. Only implemented endpoints are discussed.",
+      "Connect ZAFTYS TMS trip, fleet, and visibility data with ERP and commercial systems in India. Scope confirmed in enterprise onboarding; only implemented endpoints are discussed.",
   },
   canonical: paths.technology.apis,
   breadcrumbs: [

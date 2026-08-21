@@ -80,9 +80,9 @@ export const analyticsLeafCopy: IntelligenceLeafCopy = {
   id: "analytics",
   status: "Available",
   seo: {
-    title: "ZAFTYS Analytics | Operations Transportation Data",
+    title: "ZAFTYS Analytics India | Operations Transportation Data",
     description:
-      "Operations analytics from trips ZAFTYS runs: lane reliability, owned vs network performance, cost against trip records, and ePOD close-out. Built on ZAFTYS TMS.",
+      "Operations analytics for India corridors from trips ZAFTYS runs: lane reliability, owned vs network performance, cost against trip records, and ePOD close-out. Built on ZAFTYS TMS.",
   },
   canonical: paths.intelligence.analytics,
   breadcrumbs: [homeCrumb, intelCrumb, { name: "Analytics", path: paths.intelligence.analytics }],
@@ -238,7 +238,7 @@ export const freightRatesLeafCopy: IntelligenceLeafCopy = {
   seo: {
     title: "Freight Rate Intelligence India | Lane Context",
     description:
-      "Lane-level freight rate context from ZAFTYS for corridors you run. Beta product linked to trip and desk records. Not a published national spot index.",
+      "Lane-level freight rate context from ZAFTYS for India corridors you run. Beta product linked to trip and desk records. Not a published national spot index.",
   },
   canonical: paths.intelligence.freightRates,
   breadcrumbs: [homeCrumb, intelCrumb, { name: "Freight Rates", path: paths.intelligence.freightRates }],
@@ -387,9 +387,9 @@ export const marketIntelligenceLeafCopy: IntelligenceLeafCopy = {
   id: "market",
   status: "Available",
   seo: {
-    title: "Logistics Market Intelligence Reports | ZAFTYS",
+    title: "Logistics Market Intelligence Reports India | ZAFTYS",
     description:
-      "Institutional logistics market reports and digital freight matching research from ZAFTYS Analytics. Preview online, unlock PDFs with company email.",
+      "Institutional logistics market reports and digital freight matching research from ZAFTYS Analytics for India freight desks. Preview online, unlock PDFs with company email.",
   },
   canonical: paths.intelligence.marketIntelligence,
   breadcrumbs: [

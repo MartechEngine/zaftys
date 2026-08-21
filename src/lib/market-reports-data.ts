@@ -80,7 +80,7 @@ export const marketReports: readonly MarketReport[] = [
     seoDescription:
       "Global logistics market research report: US$ 4,334.3 BN (2026) to US$ 11,344.7 BN (2036), 10.1% CAGR. Road freight, ocean, air, warehousing, TMS, regions & vendors — unlock PDF with company email.",
     publishedAt: "2026-08-13",
-    updatedAt: "2026-08-13",
+    updatedAt: "2026-08-22",
     reportId: "ZAF-LOGISTICS-2027-2036",
     subtitle:
       "Institutional market intelligence on transportation, warehousing, and related logistics services — by mode, application, technology, end user, and geography. Historical 2017-2026; forecast 2027-2036.",
@@ -231,7 +231,12 @@ export const marketReports: readonly MarketReport[] = [
       { label: "Bank logistics-institutional model · published 2026-08-13" },
     ],
     relatedReportSlugs: ["digital-freight-matching-market-2027-2036"],
-    relatedBlogSlugs: ["planning-industrial-shipments", "tms-for-heavy-haul"],
+    relatedBlogSlugs: [
+      "planning-industrial-shipments",
+      "tms-for-heavy-haul",
+      "spot-market-vs-dedicated-fleet-india",
+      "container-trucking-logistics-india",
+    ],
     cta: { label: "Discuss logistics planning on WhatsApp", whatsapp: true },
   }),
   report({
@@ -241,7 +246,7 @@ export const marketReports: readonly MarketReport[] = [
     seoDescription:
       "Digital freight matching (DFM) market report: US$ 81.2 BN (2026) to US$ 1,314.0 BN (2036), 32.1% CAGR. Platform revenue, spot/contract matching, TMS APIs, 22 countries — unlock PDF with company email.",
     publishedAt: "2026-08-14",
-    updatedAt: "2026-08-16",
+    updatedAt: "2026-08-22",
     reportId: "ZAF-DFM-2027-2036",
     subtitle:
       "Institutional research on digital freight matching platforms and marketplaces — platform / matching-service revenue (not matched freight GMV). Historical 2021-2026; forecast 2027-2036. Bank dfm-institutional-220.",
@@ -397,7 +402,12 @@ export const marketReports: readonly MarketReport[] = [
       { label: "Published 2026-08-14 · updated on site 2026-08-16 · www.zaftys.com" },
     ],
     relatedReportSlugs: ["global-logistics-market-2027-2036"],
-    relatedBlogSlugs: ["tms-for-heavy-haul", "reduce-empty-return-trips"],
+    relatedBlogSlugs: [
+      "tms-for-heavy-haul",
+      "reduce-empty-return-trips",
+      "spot-market-vs-dedicated-fleet-india",
+      "tms-evaluation-guide-indian-manufacturers",
+    ],
     cta: { label: "Discuss freight matching on WhatsApp", whatsapp: true },
   }),
 ];

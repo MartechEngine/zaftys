@@ -14,9 +14,9 @@ export const transporterNetworkLeafCopy: IntelligenceLeafCopy = {
   id: "transporter-network",
   status: "Available",
   seo: {
-    title: "Transporter Network and Verified Carriers | ZAFTYS",
+    title: "Transporter Network India | Verified Carriers",
     description:
-      "ZAFTYS verified transporter network. Third-party truck capacity with RC, insurance, and onboarding checks. Labeled network overflow, never blended with owned fleet.",
+      "ZAFTYS verified transporter network across India. Third-party truck capacity with RC, insurance, and onboarding checks. Labeled network overflow, never blended with owned fleet.",
   },
   canonical: paths.network.transporterNetwork,
   breadcrumbs: [
@@ -176,9 +176,9 @@ export const truckCapacityLeafCopy: IntelligenceLeafCopy = {
   id: "truck-capacity",
   status: "Available",
   seo: {
-    title: "Truck Capacity Sourcing | Own Fleet and Network",
+    title: "Truck Capacity Sourcing India | Own Fleet and Network",
     description:
-      "Source owned or verified partner truck capacity through ZAFTYS. Own fleet first, labeled network overflow, one desk, GST on contracted trips.",
+      "Source owned or verified partner truck capacity in India through ZAFTYS. Own fleet first, labeled network overflow, one desk, GST on contracted trips.",
   },
   canonical: paths.network.truckCapacity,
   breadcrumbs: [

@@ -179,7 +179,7 @@ export const blogPosts: readonly BlogPost[] = [
       "TMS beyond GPS for Indian FTL: dispatch, e-POD, plant windows, documents, and trip visibility shippers and fleet operators should evaluate before buying.",
     category: "technology",
     publishedAt: "2026-08-06",
-    updatedAt: "2026-08-14",
+    updatedAt: "2026-08-22",
     author: "ZAFTYS Operations",
     summary: "GPS alone is not a transport management system. The platform must support dispatch, documentation, plant windows, and commercial LCV work, not only a map pin.",
     readMinutes: 7,
@@ -190,7 +190,7 @@ export const blogPosts: readonly BlogPost[] = [
       "Plant queues and empty miles stay physical. The system should make them measurable.",
     ],
     midCtaAfterHeading: "How to evaluate before you buy",
-    relatedSlugs: ["tms-evaluation-guide-indian-manufacturers","india-axle-load-gvw-limits-heavy-freight","planning-industrial-shipments"],
+    relatedSlugs: ["tms-evaluation-guide-indian-manufacturers", "epod-fastag-eway-bill-billing-india", "india-axle-load-gvw-limits-heavy-freight", "planning-industrial-shipments"],
     faqs: [
       {
         question: "Is GPS tracking the same as a TMS?",
@@ -358,7 +358,7 @@ export const blogPosts: readonly BlogPost[] = [
       "Steel coil and plate transport in India: bed type, securement, axle limits, mill windows, and weighbridge discipline for heavy FTL lanes.",
     category: "industries",
     publishedAt: "2026-08-05",
-    updatedAt: "2026-08-14",
+    updatedAt: "2026-08-22",
     author: "ZAFTYS Operations",
     summary: "Coils and plates fail quietly when bed type, strapping, or axle planning is wrong. This guide covers the basics shippers and mill teams should align before dispatch.",
     readMinutes: 7,
@@ -369,7 +369,7 @@ export const blogPosts: readonly BlogPost[] = [
       "Align shipper, mill, and transporter on the profile before the vehicle is called.",
     ],
     midCtaAfterHeading: "Axle discipline and the weighbridge",
-    relatedSlugs: ["india-axle-load-gvw-limits-heavy-freight","planning-industrial-shipments","cement-plant-loading-windows"],
+    relatedSlugs: ["india-axle-load-gvw-limits-heavy-freight", "plant-detention-tat-yard-gate-india", "planning-industrial-shipments", "spot-market-vs-dedicated-fleet-india"],
     faqs: [
       {
         question: "Which vehicles are used for steel coil transport?",
@@ -544,7 +544,7 @@ export const blogPosts: readonly BlogPost[] = [
       "Cement plant loading windows, tipper fit, weighbridge queues, and detention in India: what shippers should expect and how disciplined dispatch helps.",
     category: "industries",
     publishedAt: "2026-08-04",
-    updatedAt: "2026-08-14",
+    updatedAt: "2026-08-22",
     author: "ZAFTYS Operations",
     summary: "Detention and queue time can erase corridor planning. Align tipper capacity, plant windows, and documentation before the vehicle reaches the gate.",
     readMinutes: 7,
@@ -555,7 +555,7 @@ export const blogPosts: readonly BlogPost[] = [
       "Share volume, packaging, and slot rules before the vehicle reaches the plant.",
     ],
     midCtaAfterHeading: "Break TAT into stages",
-    relatedSlugs: ["plant-detention-tat-yard-gate-india","planning-industrial-shipments","reduce-empty-return-trips"],
+    relatedSlugs: ["plant-detention-tat-yard-gate-india", "planning-industrial-shipments", "reduce-empty-return-trips", "india-axle-load-gvw-limits-heavy-freight"],
     faqs: [
       {
         question: "What causes detention at cement plants?",
@@ -722,7 +722,7 @@ export const blogPosts: readonly BlogPost[] = [
       "Plan industrial FTL shipments in India: body type, payload, plant windows, documents, weighbridge steps, and when to add overflow capacity.",
     category: "operations",
     publishedAt: "2026-08-03",
-    updatedAt: "2026-08-14",
+    updatedAt: "2026-08-22",
     author: "ZAFTYS Operations",
     summary: "Most freight failures start before the vehicle moves. Align cargo, asset, plant timing, and paperwork in one plan. Include LCV when a trailer is the wrong tool.",
     readMinutes: 7,
@@ -733,7 +733,7 @@ export const blogPosts: readonly BlogPost[] = [
       "Scale with a corridor plan and TranZfort overflow, not a new vendor every peak week.",
     ],
     midCtaAfterHeading: "One-page checklist (use before every industrial booking)",
-    relatedSlugs: ["spot-market-vs-dedicated-fleet-india","reduce-empty-return-trips","tms-for-heavy-haul"],
+    relatedSlugs: ["spot-market-vs-dedicated-fleet-india", "reduce-empty-return-trips", "plant-detention-tat-yard-gate-india", "tms-for-heavy-haul"],
     faqs: [
       {
         question: "What should be confirmed before requesting a truck?",
@@ -901,7 +901,7 @@ export const blogPosts: readonly BlogPost[] = [
       "Cut empty return kilometres on Indian FTL corridors: corridor planning, backhaul matching, KPIs, and when to use a network for return loads.",
     category: "operations",
     publishedAt: "2026-08-02",
-    updatedAt: "2026-08-14",
+    updatedAt: "2026-08-22",
     author: "ZAFTYS Operations",
     summary: "Empty returns waste fuel, time, and margin. Programs improve when corridors, schedules, and marketplace cover are planned together.",
     readMinutes: 7,
@@ -912,7 +912,7 @@ export const blogPosts: readonly BlogPost[] = [
       "Pair lanes, match body type on the return, and use TranZfort when cover is missing.",
     ],
     midCtaAfterHeading: "What you can do this month",
-    relatedSlugs: ["spot-market-vs-dedicated-fleet-india","container-trucking-logistics-india","planning-industrial-shipments"],
+    relatedSlugs: ["spot-market-vs-dedicated-fleet-india", "container-trucking-logistics-india", "planning-industrial-shipments", "epod-fastag-eway-bill-billing-india"],
     faqs: [
       {
         question: "What causes empty return trips on industrial FTL?",
@@ -1052,7 +1052,7 @@ export const blogPosts: readonly BlogPost[] = [
       "How to choose a TMS for Indian manufacturers in 2026: FTL yards, weighbridges, e-Way Bill, e-POD, hybrid fleet, and a 25-point demo checklist.",
     category: "technology",
     publishedAt: "2026-08-14",
-    updatedAt: "2026-08-14",
+    updatedAt: "2026-08-22",
     author: "ZAFTYS Operations",
     summary:
       "Most global transportation management systems are built for Western parcel or LTL networks. Indian manufacturers run heavy FTL, multi-axle trailers, spot brokers, weighbridges, and gate queues. This TMS evaluation guide covers the landscape, five pillars, a 25-point demo scorecard, and a six-week rollout. Score vendors on those jobs, not on a map with moving dots.",
@@ -1072,6 +1072,7 @@ export const blogPosts: readonly BlogPost[] = [
       },
     ],
     relatedSlugs: [
+      "tms-for-heavy-haul",
       "epod-fastag-eway-bill-billing-india",
       "plant-detention-tat-yard-gate-india",
       "spot-market-vs-dedicated-fleet-india",
@@ -1250,7 +1251,7 @@ export const blogPosts: readonly BlogPost[] = [
       "India axle load norms and GVW limits for heavy freight: MoRTH bands, Section 194 overloading fines, plant weighbridge control, and a compliance checklist.",
     category: "operations",
     publishedAt: "2026-08-10",
-    updatedAt: "2026-08-10",
+    updatedAt: "2026-08-22",
     author: "ZAFTYS Operations",
     summary:
       "Heavy FTL in India fails when total gross vehicle weight (GVW) looks legal but one axle group is already over MoRTH axle load limits. This guide covers axle load norms, GVW bands, Section 194 overloading fines, industry traps, and a plant weighbridge loop you can audit before the truck hits the highway.",
@@ -1270,8 +1271,9 @@ export const blogPosts: readonly BlogPost[] = [
       },
     ],
     relatedSlugs: [
-      "container-trucking-logistics-india",
       "steel-coil-transport-basics",
+      "container-trucking-logistics-india",
+      "planning-industrial-shipments",
       "tms-evaluation-guide-indian-manufacturers",
     ],
     faqs: [
@@ -1429,7 +1431,7 @@ export const blogPosts: readonly BlogPost[] = [
       "Spot market vs dedicated contract fleets for industrial FTL in India: hybrid sourcing, backhaul, overflow rules, and a 25-point freight checklist.",
     category: "operations",
     publishedAt: "2026-08-13",
-    updatedAt: "2026-08-13",
+    updatedAt: "2026-08-22",
     author: "ZAFTYS Operations",
     summary:
       "Spot market vs dedicated contract fleets for industrial full truckload (FTL) in India: when contract capacity wins, when spot freight rates help, how to size a hybrid freight strategy, cut empty returns, and audit sourcing with a 25-point checklist.",
@@ -1450,6 +1452,7 @@ export const blogPosts: readonly BlogPost[] = [
     ],
     relatedSlugs: [
       "plant-detention-tat-yard-gate-india",
+      "reduce-empty-return-trips",
       "tms-evaluation-guide-indian-manufacturers",
       "planning-industrial-shipments",
     ],
@@ -1666,7 +1669,7 @@ export const blogPosts: readonly BlogPost[] = [
       "Reduce plant detention and truck turnaround time (TAT) at Indian yards: five-stage gate-to-exit, weighbridge, loading slots, and a 25-point audit.",
     category: "operations",
     publishedAt: "2026-08-12",
-    updatedAt: "2026-08-12",
+    updatedAt: "2026-08-22",
     author: "ZAFTYS Operations",
     summary:
       "Plant detention and long truck turnaround time (TAT) often cost more than highway transit on industrial full truckload (FTL). This in-plant logistics and yard management guide covers five-stage TAT, free-time clocks, loading slots, weighbridge lock, and a 25-point plant audit for Indian manufacturers.",
@@ -1686,6 +1689,7 @@ export const blogPosts: readonly BlogPost[] = [
       },
     ],
     relatedSlugs: [
+      "cement-plant-loading-windows",
       "epod-fastag-eway-bill-billing-india",
       "tms-evaluation-guide-indian-manufacturers",
       "india-axle-load-gvw-limits-heavy-freight",
@@ -1896,7 +1900,7 @@ export const blogPosts: readonly BlogPost[] = [
       "ePOD, FASTag, and GST e-Way Bill compliance for Indian freight billing: three-way invoice match, exception queues, and a 25-point finance checklist.",
     category: "operations",
     publishedAt: "2026-08-11",
-    updatedAt: "2026-08-11",
+    updatedAt: "2026-08-22",
     author: "ZAFTYS Operations",
     summary:
       "Automate electronic proof of delivery (ePOD), GST e-Way Bill compliance, and freight invoice matching in India. This guide covers paper LR delays, FASTag corridor proof where available, three-way billing match, exception queues, IRN hygiene, and a 25-point finance audit for manufacturers.",
@@ -1916,6 +1920,7 @@ export const blogPosts: readonly BlogPost[] = [
       },
     ],
     relatedSlugs: [
+      "tms-for-heavy-haul",
       "plant-detention-tat-yard-gate-india",
       "tms-evaluation-guide-indian-manufacturers",
       "planning-industrial-shipments",
@@ -2142,7 +2147,7 @@ export const blogPosts: readonly BlogPost[] = [
       "Container trucking India: JNPT and Mundra hinterlands, chassis and GVW, trailer surge, return loads, brokers vs marketplaces. Clear TEU, USD, and INR units.",
     category: "operations",
     publishedAt: "2026-08-17",
-    updatedAt: "2026-08-17",
+    updatedAt: "2026-08-22",
     author: "ZAFTYS Operations",
     template: "deep-research",
     subtitle:

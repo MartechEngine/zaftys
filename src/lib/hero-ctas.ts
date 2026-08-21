@@ -35,6 +35,15 @@ export const heroMailBodies = {
     "Hi ZAFTYS,\n\nI have a logistics question for your team.\n\n",
 } as const;
 
+/** Re-export WhatsApp prefills so CTAs share one source of truth with constants.ts */
+export {
+  WHATSAPP_DEFAULT_MESSAGE,
+  WHATSAPP_POST_LOAD_MESSAGE,
+  WHATSAPP_TMS_DEMO_MESSAGE,
+  WHATSAPP_PARTNER_MESSAGE,
+  whatsappIndustryPrefill,
+} from "@/lib/constants";
+
 /**
  * Hero CTA pattern per page:
  * - Primary = main conversion (inquire → mailto, or on-page action)

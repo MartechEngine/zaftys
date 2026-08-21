@@ -254,7 +254,7 @@ To rank #1, generate Google Sitelinks, and claim a Knowledge Panel for the bare 
 12. **Deferred:** §13 India report slate — backlog kept; only the **2 existing** global/DFM reports remain live.
 13. Entity & off-page (GBP / NAP / PR) — ops, not code; still open.
 
-**Focus now:** improve existing live blogs (11), existing reports (2), and commercial pillars/leaves (P0/P1 already shipped).
+**Focus now:** ~~improve existing live blogs (11), existing reports (2), and commercial pillars/leaves~~ — **shipped** (freshness, related links, leaf/industry meta, WhatsApp prefills). Remaining open work is off-page (GBP/NAP/PR) + deploy validation (GSC/GA4/Rich Results).
 
 ---
 
@@ -443,33 +443,25 @@ Implement via builders in `src/lib/schema.ts` and inject through `SEO.tsx` or `s
 
 Execute these explicit code edits across the repository:
 
-- [ ] **Configure Schema for Bare-Brand Ownership**:
-  - Update `src/lib/schema.ts`: Set `name: "ZAFTYS"`, `legalName: "ZAFTYS Logistics"`, and `alternateName: ["ZAFTYS Logistics", "ZAFTYS TMS", "TranZfort"]`.
-- [ ] **Standardize SERP Title Suffixes**:
-  - `src/lib/page-seo.ts`: Ensure every `<title>` ends with `| ZAFTYS` across all hubs and leaves per §2.B.
-- [ ] **Purge `/services` Internal Links**:
-  - `nav-config.ts` & `Footer.tsx`: Change `Transportation -> /services` to `/logistics`.
-  - `src/lib/blog-data.ts`: Update post *"Planning Commercial Shipments"* CTA link from `/services` to `/logistics`.
-  - `NotFound.tsx`: Change `Services` button href to `/logistics`.
-- [ ] **Expand Live Report Landing HTML Copy**:
-  - `src/lib/market-reports-data.ts`: Inject 1,000–1,500 words of indexable HTML content (Executive Summary, Key Findings, Methodology, FAQ) into both live reports.
-- [ ] **Standardize WhatsApp Prefill Strings**:
-  - `src/lib/constants.ts` / `hero-ctas.ts`: Ensure vertical prefill strings pass clean vertical names and parameters.
-- [ ] **Verify NAP String Uniformity**:
-  - Confirm address (`Old Town, Badnera, Amravati, 444701, Maharashtra, India`) and phone (`+91-927-092-3581`) match 1:1 across `Footer.tsx`, `Contact.tsx`, `About.tsx`, and `schema.ts`.
+- [x] **Configure Schema for Bare-Brand Ownership** — done in P0 (`schema.ts`).
+- [x] **Standardize SERP Title Suffixes** — `page-seo.ts` + `SEO.tsx` `brandedTitle`; leaf meta polished 2026-08-22.
+- [x] **Purge `/services` Internal Links** — done in P0 (page still redirects).
+- [x] **Expand Live Report Landing HTML Copy** — done in P0; related blogs refreshed 2026-08-22.
+- [x] **Standardize WhatsApp Prefill Strings** — `constants.ts` + `hero-ctas.ts` re-exports; industry desks keep vertical prefills.
+- [ ] **Verify NAP String Uniformity** — confirm 1:1 with live GBP/directories (ops).
 
 ### 15.3 New domain acceleration & launch checklist
 
-- [ ] **Brand entity schema configured** — `Organization` schema explicitly defines `name: "ZAFTYS"` and `alternateName: ["ZAFTYS Logistics"]`.
-- [ ] **Title suffix rule enforced** — all `<title>` tags end with `| ZAFTYS`.
-- [ ] **Gated report HTML crawlability verified** — each `/reports/{slug}` exposes 1,000–1,500 words; **only PDF** behind the lead form; Googlebot can fetch full HTML without submitting form.
-- [ ] **Schema markup validated** via Google Rich Results Test (Organization, LocalBusiness, LogisticsService, SoftwareApplication, FAQPage, Article/TechArticle).
-- [ ] **Google Business Profile & NAP citations aligned** — Amravati HQ GBP live/verified with Primary Name **ZAFTYS**; Name / Address / Phone match Contact, footer, and schema.
-- [ ] **Clean XML sitemap generated** — includes canonical hubs, pillars, blogs, report **HTML** URLs; **strictly excludes** 301 sources (`/services`, `/tranzfort-network`) and `noindex` routes.
-- [ ] **Manual GSC URL Inspection & Indexing API requests** triggered on launch day for core pillars: `/`, `/logistics`, key `/logistics/*`, `/industries` + priority verticals, `/zaftys-tms`, `/network/tranzfort`, top blogs, remodeled report landings.
-- [ ] **Digital PR distribution ready** for first 2 research reports once expanded HTML + schema are live (Anchor text: **ZAFTYS**).
-- [ ] **Internal link sweep completed** — zero legacy `/services` or `/tranzfort-network` links remaining in navigation, blog CTAs, or page footers.
-- [ ] **Organization `sameAs` array updated** in `src/lib/schema.ts` with real profile URLs (LinkedIn, ZaubaCorp, Crunchbase, GBP).
+- [x] **Brand entity schema configured**
+- [x] **Title suffix rule enforced**
+- [x] **Gated report HTML crawlability** — 2 live reports have open HTML + gated PDF
+- [ ] **Schema markup validated** via Google Rich Results Test (post-deploy)
+- [ ] **Google Business Profile & NAP citations aligned** (ops)
+- [x] **Clean XML sitemap generated** — existing hubs/pillars/blogs/reports only
+- [ ] **Manual GSC URL Inspection** (post-deploy)
+- [ ] **Digital PR distribution** for 2 live reports (ops)
+- [x] **Internal link sweep completed** for `/services` & `/tranzfort-network`
+- [ ] **Organization `sameAs` array** — add ZaubaCorp / Crunchbase / GBP when URLs are final (ops)
 
 ---
 
