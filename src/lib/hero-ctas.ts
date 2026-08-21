@@ -42,6 +42,8 @@ export {
   WHATSAPP_TMS_DEMO_MESSAGE,
   WHATSAPP_PARTNER_MESSAGE,
   whatsappIndustryPrefill,
+  brandEntity,
+  brandDemandCopy,
 } from "@/lib/constants";
 
 /**

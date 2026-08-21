@@ -37,6 +37,42 @@ export const companyAddress = {
   mapsDirectionsUrl: `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(MAPS_QUERY)}`,
 } as const;
 
+/** Canonical NAP + bare-brand demand copy — keep GBP / directories / signatures aligned. */
+export const brandEntity = {
+  brandName: "ZAFTYS",
+  legalName: legalEntity.name,
+  website: "https://zaftys.com",
+  googleSearchCue: "Search ZAFTYS on Google",
+  /** Single-line NAP for GBP, directories, and citations */
+  napLine: `${companyAddress.line1}, ${companyAddress.line2}, ${companyAddress.line3}`,
+  phonePrimary: COMPANY_PHONE_DISPLAY,
+  email: COMPANY_EMAIL,
+  categoriesGbp: ["Transportation service", "Logistics service"] as const,
+  gbpNamePreferred: "ZAFTYS",
+  gbpNameAlt: "ZAFTYS - Industrial Logistics & Fleet",
+  gbpDescription:
+    "ZAFTYS moves industrial and commercial freight in India with owned fleet first, labeled network overflow, ZAFTYS TMS, and TranZfort matching. Desk in Amravati, Maharashtra.",
+} as const;
+
+/** Paste into email signatures, LinkedIn, and outbound WhatsApp (team → contacts). */
+export const brandDemandCopy = {
+  emailSignature: [
+    "—",
+    brandEntity.brandName,
+    brandEntity.legalName,
+    brandEntity.napLine,
+    brandEntity.phonePrimary,
+    brandEntity.email,
+    brandEntity.website,
+    brandEntity.googleSearchCue,
+  ].join("\n"),
+  linkedInPost:
+    "We are ZAFTYS — industrial freight, owned fleet, TMS, and TranZfort.\n\nFind us as ZAFTYS on Google → https://zaftys.com\n\n#ZAFTYS #LogisticsIndia #FTL",
+  whatsappOutboundClose: `\n\n— ${brandEntity.brandName}\n${brandEntity.website}\n${brandEntity.googleSearchCue}`,
+  partnerLinkAnchor: "ZAFTYS",
+  pressBoilerplate: `${brandEntity.brandName} (${brandEntity.legalName}) is an India freight desk with owned fleet first, labeled network capacity, ZAFTYS TMS, and TranZfort marketplace matching. Headquarters: ${brandEntity.napLine}. Web: ${brandEntity.website}.`,
+} as const;
+
 export function mailtoCompany(subject?: string, body?: string): string {
   const params = new URLSearchParams();
   if (subject) params.set("subject", subject);

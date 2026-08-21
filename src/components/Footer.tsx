@@ -11,6 +11,7 @@ import {
   whatsappUrl,
   companyAddress,
   legalEntity,
+  brandEntity,
   COMPANY_EMAIL,
   COMPANY_PHONE_DISPLAY,
   COMPANY_PHONE_TEL,
@@ -200,6 +201,8 @@ const Footer = () => {
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <p className="text-sm text-gray-500">
               © {new Date().getFullYear()} {legalEntity.name}. {legalEntity.credentialsLong}. All rights reserved.
+              {" · "}
+              <span className="text-gray-400">{brandEntity.googleSearchCue}</span>
             </p>
             <div className="flex flex-wrap gap-6 text-sm text-gray-500">
               {legal.map((item) => (

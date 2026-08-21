@@ -254,7 +254,7 @@ To rank #1, generate Google Sitelinks, and claim a Knowledge Panel for the bare 
 12. **Deferred:** §13 India report slate — backlog kept; only the **2 existing** global/DFM reports remain live.
 13. Entity & off-page (GBP / directory NAP / PR) — ops; on-site NAP unified in `constants.ts` (Footer / Contact / About / schema).
 
-**Focus now:** Remaining open work is **ops / post-deploy** — GBP claim, directory NAP match, GSC URL Inspection, Rich Results Test, GA4 measurement ID in production, Digital PR (anchor **ZAFTYS**), and final `sameAs` URLs when profiles exist.
+**Focus now:** Ops queue (1) finish GBP phone approval + name/NAP, (2) paste bare-brand demand copy from `brandDemandCopy` in `constants.ts`, (3) directory NAP, (4) **user confirms GA keys in git secrets** then validate hits, (5) GSC / Rich Results, (6) PR + `sameAs` when URLs exist.
 
 ---
 
@@ -449,7 +449,8 @@ Execute these explicit code edits across the repository:
 - [x] **Expand Live Report Landing HTML Copy** — done in P0; related blogs refreshed 2026-08-22.
 - [x] **Standardize WhatsApp Prefill Strings** — `constants.ts` + `hero-ctas.ts` re-exports; industry desks keep vertical prefills.
 - [x] **On-site NAP single source** — `COMPANY_PHONE_*` + `companyAddress` drive Footer, Contact, About strip, Organization + LocalBusiness schema. Directory/GBP match still ops.
-- [ ] **Verify NAP String Uniformity** — confirm 1:1 with live GBP/directories (ops).
+- [x] **Bare-brand demand copy ready** — `brandEntity` + `brandDemandCopy` in `constants.ts`; footer cue “Search ZAFTYS on Google”; paste into email/LinkedIn/WhatsApp outbound.
+- [ ] **Verify NAP String Uniformity** — confirm 1:1 with live GBP/directories (ops; use `brandEntity.napLine`).
 
 ### 15.3 New domain acceleration & launch checklist
 
@@ -457,12 +458,84 @@ Execute these explicit code edits across the repository:
 - [x] **Title suffix rule enforced**
 - [x] **Gated report HTML crawlability** — 2 live reports have open HTML + gated PDF
 - [ ] **Schema markup validated** via Google Rich Results Test (post-deploy)
-- [ ] **Google Business Profile & NAP citations aligned** (ops)
+- [ ] **Google Business Profile & NAP citations aligned** (ops — see §15.4)
 - [x] **Clean XML sitemap generated** — existing hubs/pillars/blogs/reports only
 - [ ] **Manual GSC URL Inspection** (post-deploy)
-- [ ] **Digital PR distribution** for 2 live reports (ops)
+- [ ] **Digital PR distribution** for 2 live reports (ops — pitch in §15.4)
 - [x] **Internal link sweep completed** for `/services` & `/tranzfort-network`
 - [ ] **Organization `sameAs` array** — add ZaubaCorp / Crunchbase / GBP when URLs are final (ops)
+- [ ] **GA4 production ID** — user confirms keys in git secrets / deploy env (`VITE_GA_MEASUREMENT_ID`); then verify events
+
+### 15.4 Ops runbook — GBP, NAP, bare brand, PR (execute outside code)
+
+#### A. Google Business Profile (do after phone edit is approved)
+
+| Field | Set to |
+|-------|--------|
+| Business name (preferred) | `ZAFTYS` |
+| Alternate if Google rejects bare name | `ZAFTYS - Industrial Logistics & Fleet` |
+| Category primary | Transportation service |
+| Category secondary | Logistics service |
+| Website | `https://zaftys.com` |
+| Phone (primary NAP) | `+91-927-092-3581` |
+| Address | `Old Town, Badnera, Amravati, 444701, Maharashtra, India` |
+| Description | Use `brandEntity.gbpDescription` from `src/lib/constants.ts` |
+| Claim | Complete verify if SERP still shows “Own this business?” |
+| Photos / reviews | Add HQ + fleet photos; request first customer reviews |
+
+Do **not** re-submit conflicting phone edits while Google review is pending.
+
+#### B. Directory / citation NAP (copy-paste)
+
+Use the same strings everywhere (Justdial, IndiaMART, Tofler, ZaubaCorp, etc.):
+
+```
+Name (listing): ZAFTYS
+Legal / company: ZAFTYS Logistics
+Address: Old Town, Badnera, Amravati, 444701, Maharashtra, India
+Phone: +91-927-092-3581
+Email: info@zaftys.com
+Website: https://zaftys.com
+Anchor text for backlinks: ZAFTYS
+```
+
+Source of truth in code: `brandEntity` + `COMPANY_PHONE_DISPLAY` in `src/lib/constants.ts`.
+
+#### C. Bare-brand demand (paste from code)
+
+From `brandDemandCopy` in `src/lib/constants.ts`:
+
+- Email signature → `brandDemandCopy.emailSignature`
+- LinkedIn post → `brandDemandCopy.linkedInPost`
+- Outbound WhatsApp close → `brandDemandCopy.whatsappOutboundClose`
+- Press boilerplate → `brandDemandCopy.pressBoilerplate`
+
+Site footer already shows: “Search ZAFTYS on Google”.
+
+#### D. Digital PR — 2 live reports (pitch skeleton)
+
+**Subject:** India freight research from ZAFTYS — open HTML + PDF
+
+**Body (edit as needed):**
+
+> Hi [Editor],
+>
+> ZAFTYS published two open research landings on Indian freight operations (HTML on zaftys.com; PDF gated for operators who need the full pack):
+> 1. Global logistics market 2027–2036 — https://zaftys.com/reports/global-logistics-market-2027-2036
+> 2. Digital freight matching 2027–2036 — https://zaftys.com/reports/digital-freight-matching-market-2027-2036
+>
+> Happy to share a quote or corridor notes from the Amravati desk. Please credit the brand as **ZAFTYS** with a link to https://zaftys.com.
+>
+> Thanks,
+> [Name]
+
+Replace slugs with the two live report paths from `market-reports-data.ts`. Anchor in any published article: **ZAFTYS**.
+
+#### E. Waiting on you (GA)
+
+1. Confirm GA4 measurement ID in git secrets / host env as `VITE_GA_MEASUREMENT_ID`.
+2. After deploy, confirm pageviews + CTA events (`cta_whatsapp`, `cta_call`, `form_*`, `report_*`) in GA4.
+3. Then mark GA item in §15.3 complete.
 
 ---
 
