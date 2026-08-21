@@ -42,13 +42,6 @@ DirectorySlash Off
   RewriteRule ^services/?$ /logistics [R=301,L,QSA]
   RewriteRule ^tranzfort-network/?$ /network/tranzfort [R=301,L,QSA]
 
-  # Retired thin logistics leaves → hub section anchors (NE keeps # unescaped)
-  RewriteRule ^logistics/3pl-transportation/?$ /logistics#three-pl [R=301,L,NE,QSA]
-  RewriteRule ^logistics/contract-logistics/?$ /logistics#contract [R=301,L,NE,QSA]
-  RewriteRule ^logistics/dedicated-fleet/?$ /logistics#dedicated [R=301,L,NE,QSA]
-  RewriteRule ^logistics/industrial-freight/?$ /logistics#industrial [R=301,L,NE,QSA]
-  RewriteRule ^logistics/container-transportation/?$ /logistics#container [R=301,L,NE,QSA]
-
   # Industry slug aliases
   RewriteRule ^industries/mining/?$ /industries/coal-mining [R=301,L,QSA]
   RewriteRule ^industries/retail/?$ /industries/fmcg [R=301,L,QSA]

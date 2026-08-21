@@ -25,8 +25,8 @@ export type HeaderNavEntry = NavDropdown | NavFlatLink;
  * Order: Logistics → Platform → Network (flat) → Intelligence → Industries → Company → Resources
  * No "Overview" rows in any dropdown.
  *
- * Logistics (locked 20 Aug 2026): Transportation + Our Fleet only.
- * Service SKUs (3PL, contract, industrial, container) are sections on `/logistics`.
+ * Logistics (locked 20 Aug 2026): Transportation + Our Fleet only in header.
+ * Service SKUs are rich leaves under /logistics/* - also linked from hub + footer.
  * Network: flat hub at `/network`. TranZfort + capacity leaves are hub / footer deep links.
  * Platform: TMS modules + TranZfort (also reachable via Network hub).
  */
@@ -103,6 +103,11 @@ export const footerColumns = [
     title: "Logistics",
     links: [
       { name: "Transportation", path: paths.logistics.hub },
+      { name: "3PL Transportation", path: paths.logistics.threePl },
+      { name: "Contract Logistics", path: paths.logistics.contract },
+      { name: "Dedicated Fleet", path: paths.logistics.dedicated },
+      { name: "Industrial Freight", path: paths.logistics.industrial },
+      { name: "Container Transportation", path: paths.logistics.container },
       { name: "Our Fleet", path: paths.fleet },
     ],
   },

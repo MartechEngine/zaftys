@@ -79,6 +79,11 @@ const industrySlugs = industrySlugsFromData();
 const staticUrls = [
   { path: "/", priority: "1.0", changefreq: "weekly", lastmod: today },
   { path: "/logistics", priority: "0.9", changefreq: "weekly", lastmod: today },
+  { path: "/logistics/3pl-transportation", priority: "0.85", changefreq: "monthly", lastmod: today },
+  { path: "/logistics/contract-logistics", priority: "0.85", changefreq: "monthly", lastmod: today },
+  { path: "/logistics/dedicated-fleet", priority: "0.85", changefreq: "monthly", lastmod: today },
+  { path: "/logistics/industrial-freight", priority: "0.85", changefreq: "monthly", lastmod: today },
+  { path: "/logistics/container-transportation", priority: "0.85", changefreq: "monthly", lastmod: today },
   { path: "/network", priority: "0.9", changefreq: "weekly", lastmod: today },
   { path: "/network/tranzfort", priority: "0.9", changefreq: "weekly", lastmod: today },
   { path: "/network/transporter-network", priority: "0.8", changefreq: "monthly", lastmod: today },

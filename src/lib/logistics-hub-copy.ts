@@ -1,11 +1,13 @@
 /**
- * Locked Logistics / Transportation page copy - /logistics
+ * Locked Logistics / Transportation copy - hub catalog + rich service leaves.
  *
- * Page shape (locked): Hero → Services index → Capacity strip → five services (Design A) → Industries → Final CTA
+ * Hub (/logistics): Hero → Services index → Capacity strip → five teasers → Industries → Final CTA
+ * Leaves (/logistics/...): Full Design A body from the same service objects below.
  * Service order (locked Option A): Container → 3PL → Industrial → Contract → Dedicated
- * Service layout: image head + equal 50/50 content cards + suitable-fleet strip.
  * No invented metrics, logos, or corridor counts.
  */
+
+import { paths } from "@/lib/site-paths";
 
 export const logisticsHubCopy = {
   hero: {
@@ -19,11 +21,11 @@ export const logisticsHubCopy = {
     eyebrow: "Five ways we move freight",
     h2: "Transportation services built for plant reality.",
     lead:
-      "Pick the service your desk needs. Each section below covers the problem, who it is for, and how we run the lane.",
+      "Pick the service your desk needs. Open the full page for the problem, who it is for, how we run the lane, and suitable fleet.",
   },
   capacityStrip: {
     owned: { label: "Own fleet", path: "/fleet#own-fleet" },
-    contract: { label: "Contract programs", path: "#contract" },
+    contract: { label: "Contract programs", path: paths.logistics.contract },
     network: { label: "Network fleet", path: "/fleet#network-fleet" },
     note: "Capacity is never blended silently - what we own, what we reserve, and what partners fill.",
   },
@@ -57,7 +59,7 @@ export const logisticsHubCopy = {
       "Vehicle class decided for cargo and gate rules, not whatever truck is cheapest that hour",
       "Visibility and paperwork that survive weighbridge and plant audit questions",
     ],
-    secondary: { label: "See Our Fleet", path: "/fleet" },
+    secondary: { label: "See Our Fleet", path: paths.fleet },
     fleetSuitable: {
       lead: "FTL allotment matches the cargo: LCV for regional, sealed container for protected freight, open or trailer for industrial loads.",
       types: [
@@ -100,7 +102,7 @@ export const logisticsHubCopy = {
       "A desk that already knows your sites before Monday’s indent arrives",
       "Contract clarity on what is reserved, what is dedicated, and what is network overflow",
     ],
-    secondary: { label: "Dedicated Fleet", path: "#dedicated" },
+    secondary: { label: "Dedicated Fleet", path: paths.logistics.dedicated },
     fleetSuitable: {
       lead: "A contract locks one body class to the corridor for the SLA window - usually these industrial and plant classes.",
       types: [
@@ -143,7 +145,7 @@ export const logisticsHubCopy = {
       "Stable body type and crew familiarity across the program window",
       "Clear line between dedicated assets and surge network capacity",
     ],
-    secondary: { label: "See Our Fleet", path: "/fleet" },
+    secondary: { label: "See Our Fleet", path: paths.fleet },
     fleetSuitable: {
       lead: "Dedicated means the assigned body type stays fixed - including LCV feeder, sealed container, or tanker when the cargo demands it.",
       types: [
@@ -186,7 +188,7 @@ export const logisticsHubCopy = {
       "A desk that plans for weighbridge and plant TAT, not only origin - destination kilometres",
       "Same operating model across cement, steel, coal, and manufacturing verticals",
     ],
-    secondary: { label: "Industries we serve", path: "/industries" },
+    secondary: { label: "Industries we serve", path: paths.industries },
     fleetSuitable: {
       lead: "Match body class to cargo: steel on flatbed, bagged solids on open/high-side, loose bulk on tipper, powder on bulker, oversize on low bed.",
       types: [
@@ -229,7 +231,7 @@ export const logisticsHubCopy = {
       "Vehicle and timing planned around plant and port windows, not only distance",
       "Visibility on contracted container moves through the same desk and TMS stack",
     ],
-    secondary: { label: "Port & Container Road", path: "/industries/container-transport" },
+    secondary: { label: "Port & Container Road", path: `${paths.industries}/container-transport` },
     fleetSuitable: {
       lead: "India container road legs run on sealed body sizes and chassis trailers - 32 ft is the domestic FTL workhorse; 40 ft for EXIM ISO.",
       types: [
@@ -254,12 +256,45 @@ export const logisticsHubCopy = {
 } as const;
 
 export const logisticsServiceIndex = [
-  { id: logisticsHubCopy.container.id, index: logisticsHubCopy.container.index, title: logisticsHubCopy.container.title, blurb: "Port - factory - market road legs" },
-  { id: logisticsHubCopy.threePl.id, index: logisticsHubCopy.threePl.index, title: logisticsHubCopy.threePl.title, blurb: "FTL execution with trip ownership" },
-  { id: logisticsHubCopy.industrial.id, index: logisticsHubCopy.industrial.index, title: logisticsHubCopy.industrial.title, blurb: "Plant windows and axle reality" },
-  { id: logisticsHubCopy.contract.id, index: logisticsHubCopy.contract.index, title: logisticsHubCopy.contract.title, blurb: "Reserved capacity under SLA" },
-  { id: logisticsHubCopy.dedicated.id, index: logisticsHubCopy.dedicated.index, title: logisticsHubCopy.dedicated.title, blurb: "Assigned trucks on your program" },
+  {
+    id: logisticsHubCopy.container.id,
+    index: logisticsHubCopy.container.index,
+    title: logisticsHubCopy.container.title,
+    blurb: "Port - factory - market road legs",
+    path: paths.logistics.container,
+  },
+  {
+    id: logisticsHubCopy.threePl.id,
+    index: logisticsHubCopy.threePl.index,
+    title: logisticsHubCopy.threePl.title,
+    blurb: "FTL execution with trip ownership",
+    path: paths.logistics.threePl,
+  },
+  {
+    id: logisticsHubCopy.industrial.id,
+    index: logisticsHubCopy.industrial.index,
+    title: logisticsHubCopy.industrial.title,
+    blurb: "Plant windows and axle reality",
+    path: paths.logistics.industrial,
+  },
+  {
+    id: logisticsHubCopy.contract.id,
+    index: logisticsHubCopy.contract.index,
+    title: logisticsHubCopy.contract.title,
+    blurb: "Reserved capacity under SLA",
+    path: paths.logistics.contract,
+  },
+  {
+    id: logisticsHubCopy.dedicated.id,
+    index: logisticsHubCopy.dedicated.index,
+    title: logisticsHubCopy.dedicated.title,
+    blurb: "Assigned trucks on your program",
+    path: paths.logistics.dedicated,
+  },
 ] as const;
+
+/** Shared shape for hub teasers and leaf bodies */
+export type LogisticsServiceCopy = typeof logisticsHubCopy.threePl;
 
 export const logisticsHubQuote = {
   label: "Request Transportation",
