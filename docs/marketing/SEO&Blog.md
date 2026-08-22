@@ -1,3 +1,5 @@
+> **HARD LOCK (22 Aug 2026):** Do not retire or 301 `/logistics/3pl-transportation`, `contract-logistics`, `dedicated-fleet`, `industrial-freight`, or `container-transportation` unless the user explicitly asks. See `docs/SEO-improvement-22-8-26.md`.
+
 # SEO & Blog  -  ZAFTYS Marketing Site
 
 | Field | Value |

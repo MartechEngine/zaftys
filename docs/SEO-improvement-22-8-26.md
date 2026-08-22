@@ -10,6 +10,29 @@
 
 ---
 
+## HARD LOCK — Logistics service leaf URLs (22 Aug 2026)
+
+**Do not reverse without an explicit human ask in the same message.**
+
+Rich `/logistics/*` service leaves are **live SEO assets**. Agents must **not** 301 them to `/logistics#…`, strip them from the sitemap, or “retire thin leaves” again because an older section of this doc says so.
+
+| Keep (indexable) | Role |
+|------------------|------|
+| `/logistics/3pl-transportation` | 3PL / FTL service leaf |
+| `/logistics/contract-logistics` | Contract logistics leaf |
+| `/logistics/dedicated-fleet` | Dedicated fleet leaf |
+| `/logistics/industrial-freight` | Industrial freight leaf |
+| `/logistics/container-transportation` | Container transportation leaf |
+| `/logistics` | Hub / catalog (`#` anchors OK for in-page UX) |
+
+**Prefer:** thicken leaf copy and internal links. **Never:** delete leaf URLs “for cleanup” unless the user explicitly orders URL retirement.
+
+**When the user asks for SEO work:** upgrade published blogs (look-up H2s, FAQs, cluster links) — do not delete logistics leaf URLs.
+
+Older text below that says leaves were retired or must be hub-only is **superseded** by this lock.
+
+---
+
 ## Principles (non-negotiable)
 
 1. **Brand voice stays natural.** Visible H1s, leads, and section copy keep ZAFTYS desk language. Do not rewrite heroes into keyword strings.
@@ -18,7 +41,7 @@
 4. **Blog posts are supporting topical-authority pages.** They teach, rank long-tail, and pass trust/links into industry + logistics + TMS pages. They are not a second set of sales pages.
 5. **Reports build institutional authority.** Gated research, citations, and brand search — not local FTL doorways.
 6. **No thin location pages.** Do not create city/corridor microsites for SEO. Mention real corridors only inside About, industry, or service pages where operations already live.
-7. **No thin logistics service leaves.** Service SKUs (3PL, contract, dedicated, industrial, container) are sections on `/logistics` only — not separate indexable microsites.
+7. **Logistics service leaves stay.** Keep rich `/logistics/{sku}` pages indexable and thicken them. Do not collapse to hub hashes. (See HARD LOCK.)
 8. **No unsupported coverage or scale claims.** No invented fleet counts, pan-India guarantees, blended Own+Network tallies, or fake SLAs — in meta or body.
 
 **Clarification on Principle 5 (reports):** “Gated research” means the **downloadable PDF** is gated. The `/reports/{slug}` HTML landing page must remain fully crawlable (see §2.A & §13 Report Crawlability). Do not hide the page body behind a form.
@@ -35,7 +58,7 @@ Technical crawl items (sitemap, prerender, OG, GA4) remain in `docs/marketing/SE
 
 - Clean commercial IA: Logistics → Fleet → Network → TMS → Intelligence → Industries.
 - **Industry pillars** already carry strong `seoTitle` / `seoH1` / FAQ depth (FAQPage schema candidates).
-- **Logistics service SKUs** live as rich sections on `/logistics` (not separate thin leaves) — 3PL, contract, dedicated, industrial, container.
+- **Logistics service SKUs** have rich **leaf URLs** under `/logistics/…` plus hub sections — keep leaves indexable (HARD LOCK).
 - Blog deep-research set already supports axle/GVW, plant TAT, ePOD, container trucking, TMS evaluation.
 - Baseline JSON-LD helpers exist in `src/lib/schema.ts` (`Organization`, `LocalBusiness`, `LogisticsService`, `SoftwareApplication`, etc.).
 - Own vs Network honesty is a trust signal. Keep it.
@@ -76,7 +99,7 @@ Technical crawl items (sitemap, prerender, OG, GA4) remain in `docs/marketing/SE
 | `/services` vs `/logistics` / `/fleet` | Prefer `/logistics` for service intent and `/fleet` for body-class intent. **301 `/services` → `/logistics`**. Remove `/services` from sitemap, footer, 404, and blog CTAs. |
 | `/tranzfort-network` | **301 → `/network/tranzfort`**. Replace all internal hrefs. |
 | `/technology*` → `/zaftys-tms*` | Keep permanent redirects; confirm GSC shows equity on new paths. |
-| `/logistics/{sku}` thin leaves vs `/logistics` hub | **Retired (2026-08-22).** Five thin solution leaves 301 → hub hashes. Canonical service URL is `/logistics` only. |
+| `/logistics/{sku}` leaves vs `/logistics` hub | **KEEP leaves (SEO restored).** Hub + rich leaves both indexable. Do not 301 leaves to hashes. |
 | Container **service** vs `/industries/container-transport` | **Keep both roles, one indexable service URL.** Service narrative = `/logistics#container`. Industry = port–city / EXIM vertical desk. Distinct titles; reciprocal links with clear labels. |
 | `/network/truck-capacity` vs `/fleet` | Keep both. Capacity = sourcing story; Fleet = catalog. Meta should not use the same primary phrase. |
 
@@ -265,7 +288,7 @@ To rank #1, generate Google Sitelinks, and claim a Knowledge Panel for the bare 
 9. ~~Implement/extend schema per §15~~ (hub `LogisticsService` on home; TechArticle on reports/deep-research; SoftwareApplication `featureList`). Per-leaf `logisticsServiceLeafSchema` retired with thin leaves — helper kept unused. Validate with Google Rich Results Test after deploy.
 10. Wire GA4 + keep Search Console monitoring (see `SEO&Blog.md`) — helpers in `src/lib/analytics.ts`; set `VITE_GA_MEASUREMENT_ID` in deploy env (documented in `.env.example`). Confirm live hits after deploy.
 
-### P1.5 — Thin logistics leaf retirement _(shipped 2026-08-22)_
+### P1.5 — Thin logistics leaf retirement _(SUPERSEDED — leaves restored; see HARD LOCK)_
 
 - ~~Drop five thin `/logistics/*` solution pages~~ — redirect to `/logistics#…`; remove from sitemap; footer Logistics = Transportation + Our Fleet only.
 - ~~Dedupe Home hero vs operating-model inventory copy~~ — WHAT in hero, HOW in §2.

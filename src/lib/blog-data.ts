@@ -1285,6 +1285,7 @@ export const blogPosts: readonly BlogPost[] = [
       },
     ],
     relatedSlugs: [
+      "industrial-tms-control-stack-india",
       "steel-coil-transport-basics",
       "container-trucking-logistics-india",
       "planning-industrial-shipments",
@@ -1417,7 +1418,7 @@ export const blogPosts: readonly BlogPost[] = [
         paragraphs: [
           "We run heavy industrial freight and we dispatch on [ZAFTYS TMS](/zaftys-tms). Axle and GVW discipline has to survive the weighbridge and the bay, not only a slide. Login for operators is at [app.zaftys.com](https://app.zaftys.com).",
           "For dedicated flatbed, multi-axle, and heavy-haul programs, start from [steel and metals logistics](/industries/steel-metals) or [services](/logistics). When company trucks are not enough, [TranZfort](/network/tranzfort) is the overflow rail. Listing and search are free. A broker fee applies on booked loads.",
-          "Bring the checklist to a plant walk. Ask to see tare, gross, a refused overload, and an e-Way Bill tolerance check. Pair it with [steel coil transport basics](/blog/steel-coil-transport-basics), [cement plant loading windows](/blog/cement-plant-loading-windows), and [planning commercial shipments](/blog/planning-industrial-shipments) so the software is not asked to fix a load that was never specified.",
+          "Bring the checklist to a plant walk. After the weighbridge lock, the full plant stack is gate → weigh → documents → ePOD → pay - see the [industrial TMS control stack for India](/blog/industrial-tms-control-stack-india). Ask to see tare, gross, a refused overload, and an e-Way Bill tolerance check. Pair it with [steel coil transport basics](/blog/steel-coil-transport-basics), [cement plant loading windows](/blog/cement-plant-loading-windows), and [planning commercial shipments](/blog/planning-industrial-shipments) so the software is not asked to fix a load that was never specified.",
         ],
       },
       {
@@ -2460,12 +2461,12 @@ export const blogPosts: readonly BlogPost[] = [
   {
     slug: "industrial-tms-control-stack-india",
     title: "Industrial TMS for India: Gate, Weigh, Documents, Delivery Proof, Then Pay",
-    seoTitle: "Industrial TMS India | Gate Weighbridge ePOD",
+    seoTitle: "Industrial TMS India | Weighbridge Gate ePOD",
     seoDescription:
       "Industrial TMS for Indian plants: gate identity, locked weighbridge, e-Way Bill, ePOD, and four-way freight settlement - beyond GPS demos.",
     category: "technology",
     publishedAt: "2026-08-22",
-    updatedAt: "2026-08-22",
+    updatedAt: "2026-08-23",
     author: "ZAFTYS Operations",
     template: "deep-research",
     subtitle:
@@ -2585,6 +2586,26 @@ export const blogPosts: readonly BlogPost[] = [
         question: "Where do ULIP and Vahan fit?",
         answer:
           "ULIP can expose vehicle and licence data to onboarded applications. Useful at the gate when your agreements are live - not a free public lookup.",
+      },,
+      {
+        question: "What is a weighbridge lock in a TMS?",
+        answer:
+          "A weighbridge lock accepts weight from the indicator, blocks typed overrides, and fails closed at gate-out when the net breaks axle or GVW rules. Encode MoRTH ceilings by axle layout - see the [axle load and GVW guide](/blog/india-axle-load-gvw-limits-heavy-freight).",
+      },
+      {
+        question: "When should e-Way Bill Part B be updated?",
+        answer:
+          "Before the truck leaves the plant when an e-Way Bill is required. Part A is consignment detail; Part B is the vehicle. Starting the trip on Part A alone makes the distance clock meaningless and creates portal fights later.",
+      },
+      {
+        question: "What is four-way freight matching in industrial TMS?",
+        answer:
+          "Before you pay: rate card (including fuel clauses), certified scale net, approved ePOD minus shortage or damage, and the transporter bill. Mismatches become named exceptions - not silent short-pay fights in chat.",
+      },
+      {
+        question: "What is ANPR at a plant gate?",
+        answer:
+          "Automatic Number Plate Recognition reads the plate at crawl speed so the gate can match an open order. Pair it with FASTag failover and a logged QR or WhatsApp pass when cameras and tags both fail - never a silent paper exception.",
       },
     ],
     sections: [
@@ -2592,6 +2613,7 @@ export const blogPosts: readonly BlogPost[] = [
         heading: "Start here",
         paragraphs: [
           "If you run a busy Indian plant, you already know this: a glowing map pin does not run the yard. An industrial TMS has to own gate identity, locked weight, documents, delivery proof, and pay. Trucks wait at the gate. Weight gets typed. Papers get updated after the truck left. Delivery photos live in chat. Finance pays late because three files never agree.",
+          "Industrial TMS (India plant): gate identity → locked weighbridge → LR / e-Way Bill → ePOD → freight pay. Not GPS-only — one trip identity through all five stages.",
           "This guide is for plant, logistics, and finance leads who want one trip story from boom open to payment. Time inside the plant is in hours. Weight is in tonnes under MoRTH rules. Money examples are in rupees and teaching-only until your contract says otherwise.",
           "Look at the five-stage picture first. Then who owns each stage. Then the donut. On many industrial days, a lot of truck time still burns inside the boundary - not on the highway. Bay and loading often eat the largest idle slice. That wait is real - and it belongs with production readiness and yard slots. This guide owns the control seams around it: gate, weigh, documents, delivery proof, and pay. Pair bay work with our [plant detention and TAT](/blog/plant-detention-tat-yard-gate-india) post.",
         ],
@@ -2632,9 +2654,9 @@ export const blogPosts: readonly BlogPost[] = [
         exhibits: tmsControlStackExhibits["Gate: know the truck before the boom opens"],
         subsections: [
           {
-            heading: "Licence and permit checks",
+            heading: "ANPR and FASTag plant gate identity",
             paragraphs: [
-              "Where ULIP or similar authorised links are live, you can check driver and vehicle fitness signals against government masters. That needs onboarding - it is not a free public search.",
+              "Plate camera at crawl speed plus FASTag as failover, with a logged QR or WhatsApp pass when both fail - never a silent paper exception. Where ULIP or similar authorised links are live, you can check driver and vehicle fitness signals against government masters. That needs onboarding - it is not a free public search.",
               "Failed checks keep the boom down, alert the desk, and send the truck to staging. Managers can still override for real exceptions - with a log security and finance can replay later.",
             ],
           },
@@ -2657,9 +2679,9 @@ export const blogPosts: readonly BlogPost[] = [
         exhibits: tmsControlStackExhibits["Weighbridge: the plant cash register"],
         subsections: [
           {
-            heading: "Keep the scale honest",
+            heading: "Weighbridge lock in a TMS",
             paragraphs: [
-              "Keep Legal Metrology stamps and recalibration dates in the master data. A clever workflow on an unstamped deck still fails audit.",
+              "A weighbridge lock accepts the indicator feed, blocks typed weight, and fails closed at gate-out when the net is illegal - encode MoRTH axle and GVW ceilings here ([axle load and GVW guide](/blog/india-axle-load-gvw-limits-heavy-freight)). Keep Legal Metrology stamps and recalibration dates in the master data. A clever workflow on an unstamped deck still fails audit.",
               "Common tricks: wheels off the platform, helpers on the deck during tare, recycled light slips, bumper transfer between trucks. Beams, stability windows, camera snaps, and tare expiry beat slogans. Kilogram thresholds are your plant policy - not a national statute.",
             ],
           },
@@ -2682,7 +2704,7 @@ export const blogPosts: readonly BlogPost[] = [
         exhibits: tmsControlStackExhibits["Documents: LR and e-Way Bill"],
         subsections: [
           {
-            heading: "Clocks, extensions, multi-drop",
+            heading: "e-Way Bill Part B before gate-out",
             paragraphs: [
               "Do not start movement on Part A alone when an e-Way Bill is required. Put the real vehicle number before gate-out so the distance clock makes sense. If yard wait burns validity, alert early. Software may extend only inside the legal window (within about eight hours of expiry) and only for allowed reasons. Unlimited auto-extend is a compliance risk, not a feature.",
               "Multi-drop work needs child LRs and separate e-Way Bills per consignee while one registration moves the set. Child weights must still sum to the one certified net. If they do not, you invented a second inventory. Use the multi-drop flow below with dispatch before you automate splits.",
@@ -2716,9 +2738,9 @@ export const blogPosts: readonly BlogPost[] = [
         ],
       },
       {
-        heading: "Settlement: fuel, detention, four-way match",
+        heading: "Settlement: fuel, detention, four-way freight matching",
         paragraphs: [
-          "Settlement turns timestamps and weights into money. Almost every industrial rate card has diesel escalation and plant detention. The two pictures below show the shape - swap in your contract numbers.",
+          "Four-way freight matching means rate card + certified scale net + approved ePOD (minus claims) + transporter bill agree before you pay. Settlement turns timestamps and weights into money. Almost every industrial rate card has diesel escalation and plant detention. The two pictures below show the shape - swap in your contract numbers.",
           "Before you pay: rate card, scale net, approved delivery proof (minus claims), transporter bill. The match table shows what each document must prove and who owns a mismatch. Small variance under finance tolerance can clear with an audit note.",
           "On SAP landscapes, prefer S/4HANA Transportation Management for new builds over legacy LE-TRA habits. The short object map below is the shape finance and IT should agree on - order, trip with locked weight, goods or service confirm, then invoice match. Confirm transaction names with your SAP partner.",
         ],
