@@ -10,6 +10,15 @@ export function DeepResearchExhibitProvider({ children }: { children: ReactNode 
   return <DeepExhibitContext.Provider value={true}>{children}</DeepExhibitContext.Provider>;
 }
 
+function exhibitGridClass(count: number): string {
+  if (count <= 1) return "grid gap-3";
+  if (count === 2) return "grid gap-3 md:grid-cols-2";
+  if (count === 3) return "grid gap-3 md:grid-cols-3";
+  if (count === 4) return "grid gap-3 sm:grid-cols-2 lg:grid-cols-4";
+  if (count === 5) return "grid gap-3 sm:grid-cols-2 lg:grid-cols-5";
+  return "grid gap-3 sm:grid-cols-2 lg:grid-cols-3";
+}
+
 function FigureChrome({
   caption,
   source,
@@ -369,10 +378,12 @@ export function BlogExhibitBlock({ exhibit }: { exhibit: BlogExhibit }) {
   if (exhibit.kind === "tiles") {
     return (
       <FigureChrome caption={exhibit.caption} source={exhibit.source}>
-        <div className="grid gap-3 sm:grid-cols-2">
+        <div className={exhibitGridClass(exhibit.items.length)}>
           {exhibit.items.map((item, index) => (
             <div key={item.title} className="rounded-lg border border-navy/10 bg-white p-4">
-              <p className="text-[10px] font-heading font-bold tracking-widest text-[#0D9488]">0{index + 1}</p>
+              <p className="text-[10px] font-heading font-bold tracking-widest text-[#0D9488]">
+                {String(index + 1).padStart(2, "0")}
+              </p>
               <h3 className="mt-1 font-heading text-sm font-bold normal-case tracking-normal text-navy">{item.title}</h3>
               <p className="mt-2 text-sm leading-relaxed text-navy/90">{item.body}</p>
             </div>
@@ -407,7 +418,7 @@ export function BlogExhibitBlock({ exhibit }: { exhibit: BlogExhibit }) {
             ))}
           </ol>
         ) : (
-          <ol className="grid gap-4 sm:grid-cols-2">
+          <ol className={exhibitGridClass(exhibit.items.length).replace("gap-3", "gap-4")}>
             {exhibit.items.map((item, index) => (
               <li key={item.title} className="rounded-xl border border-navy/10 bg-white p-5 shadow-sm">
                 <span className="font-heading text-xs font-bold text-[#1E4D8C]">{String(index + 1).padStart(2, "0")}</span>
@@ -525,7 +536,7 @@ export function BlogExhibitBlock({ exhibit }: { exhibit: BlogExhibit }) {
     };
     return (
       <FigureChrome caption={exhibit.caption} source={exhibit.source}>
-        <div className={`grid gap-4 ${exhibit.items.length > 1 ? "md:grid-cols-2" : ""}`}>
+        <div className={exhibitGridClass(exhibit.items.length).replace("gap-3", "gap-4")}>
           {exhibit.items.map((item) => {
             const tone = item.tone ?? "navy";
             return (
@@ -543,9 +554,10 @@ export function BlogExhibitBlock({ exhibit }: { exhibit: BlogExhibit }) {
   }
 
   if (exhibit.kind === "flow") {
+    const showConnectors = exhibit.items.length === 3 || exhibit.items.length === 4;
     return (
       <FigureChrome caption={exhibit.caption} source={exhibit.source}>
-        <ol className="grid gap-3 md:grid-cols-3">
+        <ol className={exhibitGridClass(exhibit.items.length)}>
           {exhibit.items.map((item, index) => (
             <li key={item.title} className="relative rounded-xl border border-navy/10 bg-white p-5 shadow-sm">
               <p className="text-[10px] font-heading font-bold tracking-widest text-[#0D9488]">
@@ -553,9 +565,9 @@ export function BlogExhibitBlock({ exhibit }: { exhibit: BlogExhibit }) {
               </p>
               <h3 className="mt-1 font-heading text-sm font-bold normal-case tracking-normal text-navy">{item.title}</h3>
               <p className="mt-2 text-sm leading-relaxed text-navy/90">{item.body}</p>
-              {index < exhibit.items.length - 1 ? (
+              {showConnectors && index < exhibit.items.length - 1 ? (
                 <span
-                  className="pointer-events-none absolute -right-2 top-1/2 hidden h-px w-4 -translate-y-1/2 bg-navy/20 md:block"
+                  className="pointer-events-none absolute -right-2 top-1/2 hidden h-px w-4 -translate-y-1/2 bg-navy/20 lg:block"
                   aria-hidden="true"
                 />
               ) : null}
@@ -566,10 +578,26 @@ export function BlogExhibitBlock({ exhibit }: { exhibit: BlogExhibit }) {
     );
   }
 
+  if (exhibit.kind === "image") {
+    return (
+      <FigureChrome caption={exhibit.caption} source={exhibit.source}>
+        <div className="overflow-hidden rounded-lg border border-navy/10 bg-white">
+          <img
+            src={exhibit.src}
+            alt={exhibit.alt}
+            className="h-auto w-full object-contain"
+            loading="lazy"
+            decoding="async"
+          />
+        </div>
+      </FigureChrome>
+    );
+  }
+
   if (exhibit.kind === "timeline") {
     return (
       <FigureChrome caption={exhibit.caption} source={exhibit.source}>
-        <ol className="grid gap-3 md:grid-cols-3">
+        <ol className={exhibitGridClass(exhibit.items.length)}>
           {exhibit.items.map((item) => (
             <li key={item.phase} className="rounded-lg border border-navy/10 bg-white p-4">
               <p className="text-[10px] font-heading font-bold tracking-widest text-[#0D9488]">{item.phase}</p>

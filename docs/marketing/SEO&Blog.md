@@ -338,6 +338,7 @@ One primary SEO job per URL  -  avoid making Home compete for every cluster.
 | `plant-detention-tat-yard-gate-india` | Plant Detention and TAT India \| Yard Gate | plant detention / truck TAT / yard gate India | `/contact` quote |
 | `epod-fastag-eway-bill-billing-india` | ePOD and e-Way Bill Compliance India | ePOD / GST e-Way Bill / freight billing India | `/contact` quote |
 | `container-trucking-logistics-india` | Container Trucking India \| JNPT Mundra Backhaul | container trucking India / JNPT Mundra / chassis GVW / return loads / backhaul | Primary `/contact`; mid TMS + TranZfort (Deep research) |
+| `industrial-tms-control-stack-india` | Industrial TMS India \| Gate Weighbridge ePOD | industrial TMS India / plant gate weighbridge / ePOD settlement stack | Mid + end: `/zaftys-tms` (Deep research) |
 
 ### Still to write
 
@@ -370,7 +371,7 @@ One primary SEO job per URL  -  avoid making Home compete for every cluster.
 | `/resources` hub + `/reports` catalog | ✅ Live |
 | Categories UI | ✅ Live |
 | Article pages | ✅ Live (Basics Blog Template) |
-| Published articles | ✅ 11 posts (launch set + TMS + axle + spot + plant TAT + ePOD billing + container deep research) |
+| Published articles | ✅ 12 posts (launch set + TMS + axle + spot + plant TAT + ePOD billing + container deep research + industrial TMS control stack) |
 | Blog sitemap entries | ✅ Hub + posts from `blog-data.ts` |
 | Header / footer / home teaser | ✅ Live |
 | RSS (optional) | ⬜ Later |

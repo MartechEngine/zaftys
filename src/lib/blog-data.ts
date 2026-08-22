@@ -11,6 +11,12 @@ import {
   containerIndiaTakeaways,
   containerIndiaReferences,
 } from "@/lib/blog-exhibits-container-india";
+import {
+  tmsControlStackExhibits,
+  tmsControlStackKpis,
+  tmsControlStackTakeaways,
+  tmsControlStackReferences,
+} from "@/lib/blog-exhibits-tms-control-stack";
 
 export type BlogCategory = "operations" | "industries" | "technology";
 
@@ -104,6 +110,13 @@ export type BlogExhibit =
       caption: string;
       source?: string;
       items: readonly { title: string; body: string }[];
+    }
+  | {
+      kind: "image";
+      caption: string;
+      source?: string;
+      src: string;
+      alt: string;
     };
 
 export type BlogSubsection = {
@@ -190,7 +203,7 @@ export const blogPosts: readonly BlogPost[] = [
       "Plant queues and empty miles stay physical. The system should make them measurable.",
     ],
     midCtaAfterHeading: "How to evaluate before you buy",
-    relatedSlugs: ["tms-evaluation-guide-indian-manufacturers", "epod-fastag-eway-bill-billing-india", "india-axle-load-gvw-limits-heavy-freight", "planning-industrial-shipments"],
+    relatedSlugs: ["tms-evaluation-guide-indian-manufacturers", "industrial-tms-control-stack-india", "epod-fastag-eway-bill-billing-india", "india-axle-load-gvw-limits-heavy-freight", "planning-industrial-shipments"],
     faqs: [
       {
         question: "Is GPS tracking the same as a TMS?",
@@ -1075,6 +1088,7 @@ export const blogPosts: readonly BlogPost[] = [
       "tms-for-heavy-haul",
       "epod-fastag-eway-bill-billing-india",
       "plant-detention-tat-yard-gate-india",
+      "industrial-tms-control-stack-india",
       "spot-market-vs-dedicated-fleet-india",
     ],
     faqs: [
@@ -1223,7 +1237,7 @@ export const blogPosts: readonly BlogPost[] = [
         paragraphs: [
           "Selecting a TMS is not about buying a logo. It is about operational discipline across a manufacturing network: highways, weighbridges, and industrial FTL. We dispatch on [ZAFTYS TMS](/zaftys-tms) and we still run trucks. The product has to survive plant windows, e-POD, and mixed fleet, not only a map pin. Login for operators is at [app.zaftys.com](https://app.zaftys.com).",
           "[TranZfort](/network/tranzfort) is the overflow and backhaul rail when company trucks are not enough. Post or find a load. Matching is AI-powered. Listing and search are free. We charge a broker fee to truckers on booked loads. GST billing stays with ZAFTYS when the trip is contracted through us.",
-          "Bring this checklist to a demo. Ask us to walk gate, weigh, LR, and a spot truck, not a slide of a moving pin. If you want that conversation for a live plant, start from [ZAFTYS TMS](/zaftys-tms) or WhatsApp origin, destination, and vehicle class. Pair it with [planning commercial shipments](/blog/planning-industrial-shipments), [spot vs dedicated fleets](/blog/spot-market-vs-dedicated-fleet-india), and [manufacturing logistics](/industries/manufacturing) so the software is not asked to fix a load that was never specified.",
+          "Bring this checklist to a demo. Ask us to walk gate, weigh, LR, and a spot truck, not a slide of a moving pin. When you need the ops depth after the scorecard - gate → weigh → documents → ePOD → pay - read the [industrial TMS control stack for India](/blog/industrial-tms-control-stack-india). If you want that conversation for a live plant, start from [ZAFTYS TMS](/zaftys-tms) or WhatsApp origin, destination, and vehicle class. Pair it with [planning commercial shipments](/blog/planning-industrial-shipments), [spot vs dedicated fleets](/blog/spot-market-vs-dedicated-fleet-india), and [manufacturing logistics](/industries/manufacturing) so the software is not asked to fix a load that was never specified.",
         ],
       },
       {
@@ -1237,7 +1251,7 @@ export const blogPosts: readonly BlogPost[] = [
           "Ministry of Road Transport and Highways: revised axle load and GVW notifications. Confirm the gazette against the vehicle RC.",
           "Ministry of Commerce and Industry / NCAER logistics cost assessment (2023/2024 framework). Cost context, not a plant KPI.",
           "ZAFTYS operations: dispatch and yard logs on industrial lanes, 2024 to 2026. Directional and site-specific.",
-          "[ZAFTYS TMS](/zaftys-tms) · [TranZfort](https://www.tranzfort.com) · [planning commercial shipments](/blog/planning-industrial-shipments)",
+          "[ZAFTYS TMS](/zaftys-tms) · [TranZfort](https://www.tranzfort.com) · [industrial TMS control stack](/blog/industrial-tms-control-stack-india) · [planning commercial shipments](/blog/planning-industrial-shipments)",
         ],
       },
     ],
@@ -1692,6 +1706,7 @@ export const blogPosts: readonly BlogPost[] = [
       "cement-plant-loading-windows",
       "epod-fastag-eway-bill-billing-india",
       "tms-evaluation-guide-indian-manufacturers",
+      "industrial-tms-control-stack-india",
       "india-axle-load-gvw-limits-heavy-freight",
     ],
     faqs: [
@@ -1872,7 +1887,7 @@ export const blogPosts: readonly BlogPost[] = [
         paragraphs: [
           "We run industrial FTL and we dispatch on [ZAFTYS TMS](/zaftys-tms). Yard and gate stages have to survive a busy morning, not only a slide. Login for operators is at [app.zaftys.com](https://app.zaftys.com).",
           "For plant programs and dedicated capacity, start from [services](/logistics) or [manufacturing logistics](/industries/manufacturing). When company trucks are not enough, [TranZfort](/network/tranzfort) is the overflow rail. Listing and search are free. A broker fee applies on booked loads.",
-          "Bring the checklist to a plant walk. Ask to see a refused early arrival, a typed-weight block, a bay mismatch catch, and a digital exit. Pair it with [cement plant loading windows](/blog/cement-plant-loading-windows), [planning commercial shipments](/blog/planning-industrial-shipments), [spot vs dedicated fleets](/blog/spot-market-vs-dedicated-fleet-india), and the [TMS evaluation guide](/blog/tms-evaluation-guide-indian-manufacturers).",
+          "Bring the checklist to a plant walk. Ask to see a refused early arrival, a typed-weight block, a bay mismatch catch, and a digital exit. Pair it with [cement plant loading windows](/blog/cement-plant-loading-windows), [industrial TMS control stack](/blog/industrial-tms-control-stack-india), [planning commercial shipments](/blog/planning-industrial-shipments), and the [TMS evaluation guide](/blog/tms-evaluation-guide-indian-manufacturers).",
         ],
       },
       {
@@ -1885,7 +1900,7 @@ export const blogPosts: readonly BlogPost[] = [
           "Ministry of Commerce and related logistics cost studies for manufacturing GDP framing. Confirm the edition you cite.",
           "MoRTH FASTag and electronic toll guidance: relevant where gate hardware is installed, not as a universal plant claim.",
           "ZAFTYS operations: plant yard and dispatch logs on industrial lanes, 2024 to 2026. Directional and site-specific.",
-          "[ZAFTYS TMS](/zaftys-tms) · [cement plant loading windows](/blog/cement-plant-loading-windows) · [TMS evaluation guide](/blog/tms-evaluation-guide-indian-manufacturers)",
+          "[ZAFTYS TMS](/zaftys-tms) · [industrial TMS control stack](/blog/industrial-tms-control-stack-india) · [TMS evaluation guide](/blog/tms-evaluation-guide-indian-manufacturers)",
         ],
       },
     ],
@@ -1923,6 +1938,7 @@ export const blogPosts: readonly BlogPost[] = [
       "tms-for-heavy-haul",
       "plant-detention-tat-yard-gate-india",
       "tms-evaluation-guide-indian-manufacturers",
+      "industrial-tms-control-stack-india",
       "planning-industrial-shipments",
     ],
     faqs: [
@@ -2120,7 +2136,7 @@ export const blogPosts: readonly BlogPost[] = [
         paragraphs: [
           "We run industrial FTL and we settle trips on [ZAFTYS TMS](/zaftys-tms). ePOD, e-Way Bill discipline, and invoice match have to survive a busy month-end, not only a slide. Login for operators is at [app.zaftys.com](https://app.zaftys.com).",
           "For dedicated capacity and overflow, start from [services](/logistics) or [TranZfort](/network/tranzfort). Listing and search on TranZfort are free. A broker fee applies on booked loads. GST billing stays with ZAFTYS when the trip is contracted through us.",
-          "Bring the checklist to a finance workshop. Ask to see a same-day ePOD, an e-Way Bill alert, a blocked dirty invoice, a coded exception, and an ERP-ready clean bill. Pair it with [plant detention and TAT](/blog/plant-detention-tat-yard-gate-india), [planning commercial shipments](/blog/planning-industrial-shipments), and the [TMS evaluation guide](/blog/tms-evaluation-guide-indian-manufacturers).",
+          "Bring the checklist to a finance workshop. Ask to see a same-day ePOD, an e-Way Bill alert, a blocked dirty invoice, a coded exception, and an ERP-ready clean bill. Pair it with [plant detention and TAT](/blog/plant-detention-tat-yard-gate-india), [industrial TMS control stack](/blog/industrial-tms-control-stack-india), and the [TMS evaluation guide](/blog/tms-evaluation-guide-indian-manufacturers).",
         ],
       },
       {
@@ -2133,7 +2149,7 @@ export const blogPosts: readonly BlogPost[] = [
           "[NITI Aayog, RMI, and RMI India work on transforming trucking and freight in India](https://rmi.org/insight/transforming-trucking-in-india/).",
           "NPCI FASTag electronic toll guidance: relevant where plaza feeds are integrated, not as a universal delivery proof.",
           "ZAFTYS operations: dispatch and billing logs on industrial lanes, 2024 to 2026. Directional and corridor-specific.",
-          "[ZAFTYS TMS](/zaftys-tms) · [plant detention and TAT](/blog/plant-detention-tat-yard-gate-india) · [TMS evaluation guide](/blog/tms-evaluation-guide-indian-manufacturers)",
+          "[ZAFTYS TMS](/zaftys-tms) · [industrial TMS control stack](/blog/industrial-tms-control-stack-india) · [TMS evaluation guide](/blog/tms-evaluation-guide-indian-manufacturers)",
         ],
       },
     ],
@@ -2440,6 +2456,334 @@ export const blogPosts: readonly BlogPost[] = [
       },
     ],
     cta: { label: "Port and container road", to: "/industries/container-transport" },
+  },
+  {
+    slug: "industrial-tms-control-stack-india",
+    title: "Industrial TMS for India: Gate, Weigh, Documents, Delivery Proof, Then Pay",
+    seoTitle: "Industrial TMS India | Gate Weighbridge ePOD",
+    seoDescription:
+      "Industrial TMS for Indian plants: gate identity, locked weighbridge, e-Way Bill, ePOD, and four-way freight settlement - beyond GPS demos.",
+    category: "technology",
+    publishedAt: "2026-08-22",
+    updatedAt: "2026-08-22",
+    author: "ZAFTYS Operations",
+    template: "deep-research",
+    subtitle:
+      "Industrial plant TMS · gate identity · weighbridge lock · e-Way Bill · ePOD · freight settlement",
+    summary:
+      "Industrial TMS for Indian manufacturing plants is not a highway map. This guide walks the plant control stack - gate, weigh, documents, delivery proof, pay - with inbound vs outbound differences, shortage and settlement visuals, and a demo checklist you can use next week.",
+    readMinutes: 34,
+    heroImage: "/images/blog/industrial-tms-control-stack-india.jpg",
+    heroAlt: "Industrial TMS for India hero: gate, weigh, documents, delivery proof, then pay - plant yard with ZAFTYS TMS | ZAFTYS Blog",
+    kpis: tmsControlStackKpis,
+    takeaways: tmsControlStackTakeaways,
+    references: tmsControlStackReferences,
+    midCtas: [
+      {
+        afterHeading: "Gate: know the truck before the boom opens",
+        eyebrow: "Identity before the boom",
+        title: "Walk your gate exceptions with the desk",
+        body: "Tell us daily truck volume, how many spot hires you take, and whether inbound and outbound share one lane. We map plate cameras, FASTag failover, and order-linked passes without pretending every truck arrives tagged.",
+        cta: { label: "Explore ZAFTYS TMS", to: "/zaftys-tms" },
+      },
+      {
+        afterHeading: "Weighbridge: the plant cash register",
+        eyebrow: "Locked weight before the highway",
+        title: "See how scale lock sits inside ZAFTYS TMS",
+        body: "Bring a typed-weight dispute and your axle mix. We show how locked nets, overload blocks, and gate-out rules land on the same trip record - before anyone celebrates a map.",
+        cta: { label: "Explore ZAFTYS TMS", to: "/zaftys-tms" },
+      },
+      {
+        afterHeading: "Delivery proof without another app war",
+        eyebrow: "Close the trip cleanly",
+        title: "See how delivery proof feeds billing",
+        body: "Bring one shortage dispute and one paper POD pack. We show how a simple link and receiver confirmation land on the same trip finance will match.",
+        cta: { label: "ePOD and e-Way Bill guide", to: "/blog/epod-fastag-eway-bill-billing-india" },
+      },
+      {
+        afterHeading: "How mature is your yard?",
+        eyebrow: "When the gap is control, not trucks",
+        title: "Score Manual vs Under control on your yard",
+        body: "Bring 90 days of gate waits, scale fights, e-Way misses, and invoice cycle days. We rank which seam blocks the next step in ZAFTYS TMS.",
+        cta: { label: "Book a TMS conversation", to: "/contact" },
+      },
+    ],
+    relatedSlugs: [
+      "tms-evaluation-guide-indian-manufacturers",
+      "india-axle-load-gvw-limits-heavy-freight",
+      "plant-detention-tat-yard-gate-india",
+      "epod-fastag-eway-bill-billing-india",
+      "tms-for-heavy-haul",
+    ],
+    faqs: [
+      {
+        question: "What is an industrial TMS for Indian plants?",
+        answer:
+          "An industrial TMS for Indian manufacturing plants runs the control stack from gate identity through locked weighbridge, LR and e-Way Bill, delivery proof (ePOD), and freight settlement - not only a GPS pin on the highway. This post is that ops walk. For buying scorecards, see the [TMS evaluation guide](/blog/tms-evaluation-guide-indian-manufacturers).",
+      },
+      {
+        question: "How is this different from a TMS evaluation checklist?",
+        answer:
+          "The [TMS evaluation guide](/blog/tms-evaluation-guide-indian-manufacturers) helps you score demos. This piece is what must work after you buy: gate identity, locked weight, e-Way Bill clocks, delivery proof, and invoice match.",
+      },
+      {
+        question: "Is FASTag mandatory for plant gates?",
+        answer:
+          "FASTag is mandatory for M and N class vehicles on national electronic toll collection from 1 January 2021. Plants can use it as a second identity signal. Spot trucks still need a logged fallback when the tag fails.",
+      },
+      {
+        question: "What weight ceilings should a TMS encode?",
+        answer:
+          "Many plants plan around MoRTH framing of about 49 tonnes for rigid vehicles and 55 tonnes for tractor-trailers. Encode by axle layout, not one magic number. See our [axle load and GVW guide](/blog/india-axle-load-gvw-limits-heavy-freight).",
+      },
+      {
+        question: "What is the e-Way Bill distance rule?",
+        answer:
+          "Under CGST Rule 138(10), normal cargo gets about one day of validity per 200 km (or part). Oversize cargo uses about one day per 20 km. The useful clock follows the vehicle details (Part B) - confirm current portal behaviour at go-live.",
+      },
+      {
+        question: "Can software auto-extend every e-Way Bill?",
+        answer:
+          "No. Extensions are for exceptional cases and only inside the legal window (within about eight hours of expiry). Build early alerts and human review. Do not sell unlimited auto-extend.",
+      },
+      {
+        question: "Why WhatsApp delivery proof instead of a driver app?",
+        answer:
+          "Many drivers will not install another app for one plant. A WhatsApp or SMS link with a location check and receiver confirmation usually closes more trips. Dedicated fleets can still use a proper app.",
+      },
+      {
+        question: "What is four-way freight matching?",
+        answer:
+          "Before you pay: rate card (including fuel clauses), certified scale net, approved delivery proof minus shortage or damage, and the transporter bill. Mismatches become named exceptions - not silent short-pay fights in chat.",
+      },
+      {
+        question: "Should new plants still build on SAP LE-TRA?",
+        answer:
+          "For new TMS-to-ERP work, prefer SAP S/4HANA Transportation Management over legacy LE-TRA. Confirm support dates with your SAP partner.",
+      },
+      {
+        question: "How do own fleet and network capacity show up?",
+        answer:
+          "The five stages stay the same. Settlement must still label the trip: company-owned, contract-reserved, or partner overflow. Never present labeled overflow as owned fleet.",
+      },
+      {
+        question: "Does the same stack apply to inbound raw material?",
+        answer:
+          "Yes - gate, weigh, documents, proof, pay - but the fights differ. Inbound usually tare-then-gross and purchase-weight disputes. Outbound usually gross-then-tare and overload risk before the highway. Walk both lanes separately.",
+      },
+      {
+        question: "Does every movement need an e-Way Bill?",
+        answer:
+          "No. Value thresholds, some goods, and certain short or exempt cases skip it. Ask tax, then encode skip rules so the TMS does not invent fake bills to complete a workflow.",
+      },
+      {
+        question: "How should shortage be calculated?",
+        answer:
+          "Compare factory net to customer net, apply contract tolerance, then bill only the excess on the same trip. Encode the tolerance and rate once - do not renegotiate in chat. Teaching example is in the shortage exhibit in this post.",
+      },
+      {
+        question: "Where do ULIP and Vahan fit?",
+        answer:
+          "ULIP can expose vehicle and licence data to onboarded applications. Useful at the gate when your agreements are live - not a free public lookup.",
+      },
+    ],
+    sections: [
+      {
+        heading: "Start here",
+        paragraphs: [
+          "If you run a busy Indian plant, you already know this: a glowing map pin does not run the yard. An industrial TMS has to own gate identity, locked weight, documents, delivery proof, and pay. Trucks wait at the gate. Weight gets typed. Papers get updated after the truck left. Delivery photos live in chat. Finance pays late because three files never agree.",
+          "This guide is for plant, logistics, and finance leads who want one trip story from boom open to payment. Time inside the plant is in hours. Weight is in tonnes under MoRTH rules. Money examples are in rupees and teaching-only until your contract says otherwise.",
+          "Look at the five-stage picture first. Then who owns each stage. Then the donut. On many industrial days, a lot of truck time still burns inside the boundary - not on the highway. Bay and loading often eat the largest idle slice. That wait is real - and it belongs with production readiness and yard slots. This guide owns the control seams around it: gate, weigh, documents, delivery proof, and pay. Pair bay work with our [plant detention and TAT](/blog/plant-detention-tat-yard-gate-india) post.",
+        ],
+        exhibits: tmsControlStackExhibits["Start here"],
+      },
+      {
+        heading: "Why yards still leak money",
+        paragraphs: [
+          "RFPs still fall in love with long-haul GPS. On steel, cement, chemical, and manufacturing desks, money often leaks earlier: gate, scale, documents, delivery proof, and accounts payable each keep their own truth.",
+          "Picture 200 to 500 heavy trucks in a day. Security has a register. The weighbridge has a print. GST sits in a browser tab. POD is a WhatsApp photo. The transporter invoice is Excel. Queues stretch. Inventory argues. e-Way Bills lag. Bills sit for weeks.",
+          "One industrial TMS keeps one trip identity through all five stages. Inbound raw material and outbound finished goods use the same spine - but the fights differ. Use both tables below. The idle-hour bars are workshop tools; swap in your last 90 days before anyone talks savings.",
+        ],
+        exhibits: tmsControlStackExhibits["Why yards still leak money"],
+        subsections: [
+          {
+            heading: "Map vs control",
+            paragraphs: [
+              "A map answers where the truck is. Control answers whether the plant may release it. That needs an open order at the gate, locked net weight, vehicle details on the e-Way Bill before exit (when required), proof a receiver will stand behind, and settlement finance can audit without a phone tree.",
+              "If you still need a demo scorecard, use the [TMS evaluation guide](/blog/tms-evaluation-guide-indian-manufacturers). For the short version of 'beyond GPS,' see [TMS for heavy haul](/blog/tms-for-heavy-haul). This piece stays in the yard.",
+            ],
+          },
+          {
+            heading: "Walk one outbound lane next week",
+            paragraphs: [
+              "Take operations and finance together. At each break point ask: who just wrote the record, who can still edit it, and what happens when the next stage disagrees. If the answer is 'we call the transporter,' that stage is still manual - even if a camera exists.",
+              "Do not average the five scores. Clean payment sitting on editable weight is still a broken scale. If your pain is mostly inbound purchase weight, walk an inbound lane the same way - do not assume outbound rules transfer.",
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Gate: know the truck before the boom opens",
+        paragraphs: [
+          "The gate is identity. When guards alone copy plates, check licences, and hunt open indents, you invent the first queue of the day - worse when inbound and outbound share one muddy lane at shift change.",
+          "A solid stack tries more than one path: plate camera at crawl speed, plant RFID where you issue tags, and FASTag as a second chance when the plate is dirty. FASTag has been mandatory on commercial classes for toll since 2021. That helps at the plant gate. It does not mean every spot hire arrives tagged and alive.",
+          "Spot trucks without plant tags still need a logged QR or WhatsApp pass after licence checks. Never a silent paper exception. Ask the vendor what happens when camera and tag both fail at 2 AM. If the answer is 'the guard writes it down,' you bought a camera, not control.",
+        ],
+        exhibits: tmsControlStackExhibits["Gate: know the truck before the boom opens"],
+        subsections: [
+          {
+            heading: "Licence and permit checks",
+            paragraphs: [
+              "Where ULIP or similar authorised links are live, you can check driver and vehicle fitness signals against government masters. That needs onboarding - it is not a free public search.",
+              "Failed checks keep the boom down, alert the desk, and send the truck to staging. Managers can still override for real exceptions - with a log security and finance can replay later.",
+            ],
+          },
+          {
+            heading: "One lane, two directions",
+            paragraphs: [
+              "Plants that reverse inbound and outbound on one approach without sensors invent their own accidents. Directional loops, separate camera profiles, and priority for critical inbound raw materials stop two queues fighting for the same boom.",
+              "Adding one more guard rarely beats a second identity lane or honest slot windows. Your TMS should show queue depth and wait by hour - the same numbers you will freeze when you score maturity.",
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Weighbridge: the plant cash register",
+        paragraphs: [
+          "Every accepted kilogram feeds inventory, cost of goods, and freight pay. Typed weights in a browser invite ghost tare slips and month-end inventory theatre.",
+          "Pull weight from the indicator. Accept only a stable reading. Block capture when the truck is half on the deck. On outbound, force gross then tare. On inbound purchase weighment, tare first then gross - and keep the same anti-cheat rules. Kill old light slips when the truck leaves. Only then compare recorded weight to the legal class for that axle layout before anyone prints a clean gate-out.",
+          "The bar chart shows planning ceilings many plants use. Mid axle configs and full tables live in our [axle load and GVW guide](/blog/india-axle-load-gvw-limits-heavy-freight). Confirm OEM ratings and air suspension before you treat any tonne figure as dispatch law. Blocking overload inside the plant is cheaper than a highway stop.",
+        ],
+        exhibits: tmsControlStackExhibits["Weighbridge: the plant cash register"],
+        subsections: [
+          {
+            heading: "Keep the scale honest",
+            paragraphs: [
+              "Keep Legal Metrology stamps and recalibration dates in the master data. A clever workflow on an unstamped deck still fails audit.",
+              "Common tricks: wheels off the platform, helpers on the deck during tare, recycled light slips, bumper transfer between trucks. Beams, stability windows, camera snaps, and tare expiry beat slogans. Kilogram thresholds are your plant policy - not a national statute.",
+            ],
+          },
+          {
+            heading: "MoRTH ceilings and overload risk",
+            paragraphs: [
+              "S.O. 3467(E) is the axle and GVW framing many yards teach as about 49 tonnes rigid and 55 tonnes tractor-trailer. Air suspension can add where the notification allows - confirm layout before coding a bonus.",
+              "Section 194 frames overload penalties. Many yards also set a small plant tolerance before hard lock. Encode that as policy; do not market it as a legal +5% right.",
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Documents: LR and e-Way Bill",
+        paragraphs: [
+          "Once net weight is locked, bind the carriage paper (LR / bilty) and the GST e-Way Bill when movement needs one. Tax invoice duties sit under Section 31 and Rule 46. E-invoicing under Rule 48 is a different track for notified businesses - do not confuse it with bilty generation.",
+          "Rule 138 is the e-Way engine: Part A for consignment details, Part B for the vehicle. Normal cargo uses about 200 km per day of validity. Oversize work uses about 20 km per day. Not every truck movement needs an e-Way Bill - value thresholds, some goods, and certain short or exempt cases skip it. Ask tax, then encode skip rules so the TMS does not invent fake bills.",
+          "If your dispatch leads cannot explain Part A vs Part B in one minute, automating documents only speeds up confusion. Use the validity picture with them.",
+        ],
+        exhibits: tmsControlStackExhibits["Documents: LR and e-Way Bill"],
+        subsections: [
+          {
+            heading: "Clocks, extensions, multi-drop",
+            paragraphs: [
+              "Do not start movement on Part A alone when an e-Way Bill is required. Put the real vehicle number before gate-out so the distance clock makes sense. If yard wait burns validity, alert early. Software may extend only inside the legal window (within about eight hours of expiry) and only for allowed reasons. Unlimited auto-extend is a compliance risk, not a feature.",
+              "Multi-drop work needs child LRs and separate e-Way Bills per consignee while one registration moves the set. Child weights must still sum to the one certified net. If they do not, you invented a second inventory. Use the multi-drop flow below with dispatch before you automate splits.",
+            ],
+          },
+          {
+            heading: "Night peak without portal lockouts",
+            paragraphs: [
+              "Cement and steel night peaks are when 'integrated GST' either works or fails. Queue vehicle updates. Retry calmly when the portal is busy. Keep a human path for stuck bills. Do not hammer the portal in a tight loop.",
+              "Confirm current GSTN behaviour at go-live. Portals change faster than blog posts.",
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Delivery proof without another app war",
+        paragraphs: [
+          "Delivery is not done when the truck leaves your gate. Proof has to survive shortage, seal, and receiver disputes. Forcing every market driver to install another app usually fails. A WhatsApp or SMS link with a location check closes more trips.",
+          "Simple flow: truck near site, open the link, capture signed paper and seal photos, receiver confirms, compare factory net to customer weight when the commodity needs it. Over contract tolerance becomes a debit on the same trip - not a quiet deduction in month-end.",
+          "Encode shortage and seal rules once with commodity managers. The shortage picture below is a teaching example - swap in your tolerance and rate, then stop renegotiating in chat. Spot-heavy lanes should lead with a link; dedicated fleets can still use an app.",
+        ],
+        exhibits: tmsControlStackExhibits["Delivery proof without another app war"],
+        subsections: [
+          {
+            heading: "Shortage and seals",
+            paragraphs: [
+              "Bulk cargo moves moisture and scale difference. Contracts often allow a small percentage before penalty. Write factory net, customer net, tolerance, and billable shortage into the system. Never mix bags and tonnes silently.",
+              "Seal number mismatch against the LR should hold freight clearance. That one rule prevents many 'delivered but disputed' fights. More billing detail sits in the [ePOD and e-Way Bill guide](/blog/epod-fastag-eway-bill-billing-india).",
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Settlement: fuel, detention, four-way match",
+        paragraphs: [
+          "Settlement turns timestamps and weights into money. Almost every industrial rate card has diesel escalation and plant detention. The two pictures below show the shape - swap in your contract numbers.",
+          "Before you pay: rate card, scale net, approved delivery proof (minus claims), transporter bill. The match table shows what each document must prove and who owns a mismatch. Small variance under finance tolerance can clear with an audit note.",
+          "On SAP landscapes, prefer S/4HANA Transportation Management for new builds over legacy LE-TRA habits. The short object map below is the shape finance and IT should agree on - order, trip with locked weight, goods or service confirm, then invoice match. Confirm transaction names with your SAP partner.",
+        ],
+        exhibits: tmsControlStackExhibits["Settlement: fuel, detention, four-way match"],
+        subsections: [
+          {
+            heading: "Own fleet vs labeled overflow",
+            paragraphs: [
+              "ZAFTYS runs owned heavy vehicles, contract programmes, and labeled partner overflow. The five stages do not change. Settlement must still show which capacity moved the trip so finance never books overflow as company fleet.",
+              "Marketplace listing and search on [TranZfort](/network/tranzfort) stay free; a broker fee applies on booked loads. For one desk on the whole stack, start at [industrial freight](/logistics/industrial-freight) or [contact](/contact).",
+            ],
+          },
+          {
+            heading: "Fuel and detention without folklore",
+            paragraphs: [
+              "Diesel share of road cost is often negotiated around 0.30 to 0.35 - lock the number, the base city, and the index in writing. Detention free time and hourly rates must use the same gate clocks that opened the boom. 'We waited twelve hours' is not an input.",
+              "Post fuel surcharge and detention as separate lines when the contract separates them. Burying both inside base freight is how disputes come back after you thought matching was done.",
+            ],
+          },
+        ],
+      },
+      {
+        heading: "How mature is your yard?",
+        paragraphs: [
+          "Skip vanity scores out of 100. Place gate, weigh, documents, delivery proof, and payment in Manual, Half-digital, or Under control using the last 90 days of proof. A live map with editable weights is still Manual integrity.",
+          "Rank the weakest gap that blocks the next step. Most Indian industrial shippers sit in Half-digital: cameras and portals exist, but one trip identity does not survive into payment.",
+        ],
+        exhibits: tmsControlStackExhibits["How mature is your yard?"],
+        subsections: [
+          {
+            heading: "How to run the review",
+            paragraphs: [
+              "Bring plant, dispatch, procurement, and finance into one room. For each area demand evidence: gate wait chart, scale near-miss log, sample vehicle-update timing, days to delivery proof, exception age in accounts payable. No pack means Half-digital at best.",
+              "Do not average the five areas into one happy label. Clean payment on paper LRs is still Manual cash. Clean maps with no weight lock are still Manual payload risk.",
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Build in the right order",
+        paragraphs: [
+          "Six-week posters stall when the weighbridge vendor, security, and transporters disagree. Keep the order fixed: measure first, fix gate and scale, then documents, then delivery proof and money.",
+          "Pilot one plant corridor with real truck volume. Freeze your denominators - the same units for 90 days: gate wait hours, weight-fight counts, document-miss rate, days to POD, days to pay. Prove you clear exceptions. Then widen. National rollouts of half-wired stacks only multiply chat - and the cost of untangling nets you already paid against.",
+        ],
+        exhibits: tmsControlStackExhibits["Build in the right order"],
+        subsections: [
+          {
+            heading: "Why calendar-first programs stall",
+            paragraphs: [
+              "Teams buy a demo, schedule six weeks, and skip baseline. Or finance demands automated invoices before gate timestamps exist. Or sales promises detention savings while free-time clocks are still verbal.",
+              "Dependency-led builds feel slower in month one and faster by month three because rework drops. Use week bands for planning after IT and plant security say yes - not as a go-live date printed without hardware lead times.",
+            ],
+          },
+        ],
+      },
+      {
+        heading: "What to do next",
+        paragraphs: [
+          "When manufacturers close the five stages, yard waits, shortage fights, document misses, and invoice cycle time usually move in the right direction. Treat any percentage claim as a planning band until your 90-day baseline exists - never as a guaranteed return, and never as 'zero fraud / perfect match' marketing.",
+          "Take the ten demo questions below into the next vendor meeting. Keep reading [plant detention and TAT](/blog/plant-detention-tat-yard-gate-india), [axle load and GVW](/blog/india-axle-load-gvw-limits-heavy-freight), and [ePOD billing](/blog/epod-fastag-eway-bill-billing-india). Operator login for ZAFTYS TMS is at [app.zaftys.com](https://app.zaftys.com).",
+        ],
+        exhibits: tmsControlStackExhibits["What to do next"],
+      },
+    ],
+    cta: { label: "Explore ZAFTYS TMS", to: "/zaftys-tms" },
   },
 ];
 
