@@ -42,7 +42,7 @@ export function isAnalyticsEnabled(): boolean {
   return Boolean(clarityId() || gaMeasurementId());
 }
 
-let bootstrapped = false;
+let vendorsLoaded = false;
 let loadScheduled = false;
 let firstSpaPageviewSkipped = false;
 
@@ -94,8 +94,8 @@ function ensureGaLoaded(id: string): void {
 }
 
 function loadVendors(): void {
-  if (bootstrapped) return;
-  bootstrapped = true;
+  if (vendorsLoaded) return;
+  vendorsLoaded = true;
   const clarity = clarityId();
   const ga = gaMeasurementId();
   if (clarity) loadClarity(clarity);
@@ -129,10 +129,9 @@ export function initAnalytics(): void {
     loadVendors();
   };
 
-  // If GA was injected in <head>, mark bootstrapped path ready for SPA updates immediately.
+  // GA may already be in <head> via vite inject — ensure stub only; do not skip Clarity load.
   if (gaMeasurementId() && window.__ZAFTS_GA_ID__) {
     ensureGtag();
-    bootstrapped = true;
   }
 
   for (const event of events) {
@@ -166,7 +165,7 @@ export function trackPageview(path: string, title?: string): void {
     if (typeof window !== "undefined" && window.__ZAFTS_GA_ID__) return;
   }
 
-  if (!bootstrapped) {
+  if (!vendorsLoaded) {
     loadVendors();
   }
   sendPageview(path, title);
