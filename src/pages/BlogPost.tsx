@@ -19,7 +19,7 @@ const BlogPost = () => {
     breadcrumbSchema([
       { name: "Home", path: "/" },
       { name: "Blog", path: "/blog" },
-      { name: post.seoTitle, path: `/blog/${post.slug}` },
+      { name: post.title, path: `/blog/${post.slug}` },
     ]),
     blogPostingSchema(post),
     faqPageSchema(post.faqs),
@@ -34,6 +34,8 @@ const BlogPost = () => {
         description={post.seoDescription}
         canonical={`/blog/${post.slug}`}
         image={image}
+        imageWidth={post.heroWidth}
+        imageHeight={post.heroHeight}
         type="article"
         publishedTime={post.publishedAt}
         modifiedTime={postModifiedAt(post)}

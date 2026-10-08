@@ -1,7 +1,11 @@
 """Stamp small ZAFTYS footer logo on blog diagram assets (bottom-right).
 
-Run only on clean exports — re-running on already-stamped files stacks logos.
+Run only on clean exports. Re-running on already-stamped files stacks logos.
+Pass filenames to stamp just those files:
+
+    python scripts/stamp-blog-logo.py diesel-formula-rupee-step.png
 """
+import sys
 from pathlib import Path
 
 from PIL import Image
@@ -19,10 +23,10 @@ TARGETS = [
 ]
 
 
-def stamp(path: Path, logo: Image.Image) -> None:
+def stamp(path: Path, logo: Image.Image, max_width: int = 140) -> None:
     img = Image.open(path).convert("RGBA")
     w, h = img.size
-    target_w = max(72, min(140, int(w * 0.07)))
+    target_w = max(72, min(max_width, int(w * 0.07)))
     scale = target_w / logo.width
     target_h = max(1, int(logo.height * scale))
     mark = logo.resize((target_w, target_h), Image.Resampling.LANCZOS)
@@ -44,7 +48,8 @@ def stamp(path: Path, logo: Image.Image) -> None:
 
 def main() -> None:
     logo = Image.open(LOGO).convert("RGBA")
-    for name in TARGETS:
+    names = sys.argv[1:] or TARGETS
+    for name in names:
         path = BLOG / name
         if not path.exists():
             raise SystemExit(f"missing: {path}")

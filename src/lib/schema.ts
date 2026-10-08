@@ -255,10 +255,13 @@ export function blogPostingSchema(post: {
   seoTitle?: string;
   seoDescription: string;
   category?: string;
+  tags?: readonly string[];
   publishedAt: string;
   updatedAt?: string;
   author: string;
   heroImage?: string;
+  heroWidth?: number;
+  heroHeight?: number;
   template?: string;
 }): Record<string, unknown> {
   const image = post.heroImage
@@ -281,8 +284,8 @@ export function blogPostingSchema(post: {
   return {
     "@context": "https://schema.org",
     "@type": articleType,
-    headline: post.seoTitle || post.title,
-    alternativeHeadline: post.title,
+    headline: post.title,
+    alternativeHeadline: post.seoTitle,
     description: post.seoDescription,
     inLanguage: "en-IN",
     datePublished: post.publishedAt,
@@ -293,8 +296,17 @@ export function blogPostingSchema(post: {
       url: BASE,
     },
     publisher: organizationRef,
-    image,
+    image:
+      post.heroWidth && post.heroHeight
+        ? {
+            "@type": "ImageObject",
+            url: image,
+            width: post.heroWidth,
+            height: post.heroHeight,
+          }
+        : image,
     ...(categoryLabel ? { articleSection: categoryLabel } : {}),
+    ...(post.tags?.length ? { keywords: post.tags.join(", ") } : {}),
     mainEntityOfPage: {
       "@type": "WebPage",
       "@id": `${BASE}/blog/${post.slug}`,

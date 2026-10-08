@@ -73,7 +73,7 @@ function MidArticleCta({ band, fallback }: { band: BlogMidCta; fallback: BlogCta
   return (
     <div className="deep-mid-cta my-10 rounded-xl px-6 py-8 md:px-8">
       <p className="text-[10px] font-heading font-bold tracking-widest text-[#0B7F8A]">{band.eyebrow}</p>
-      <h2 className="mt-2 font-heading text-2xl font-bold normal-case tracking-normal text-navy">{band.title}</h2>
+      <h3 className="mt-2 font-heading text-2xl font-bold normal-case tracking-normal text-navy">{band.title}</h3>
       <p className="mt-3 max-w-xl text-sm leading-relaxed text-navy/85">{band.body}</p>
       <div className="mt-6">
         <PostCta cta={cta} accent />
@@ -235,6 +235,18 @@ export function DeepResearchBlogLayout({ post }: DeepResearchBlogLayoutProps) {
                 {post.subtitle ? (
                   <p className="mt-4 max-w-2xl text-sm font-medium leading-relaxed text-cyan">{post.subtitle}</p>
                 ) : null}
+                {post.tags && post.tags.length > 0 ? (
+                  <ul aria-label="Article topics" className="mt-4 flex flex-wrap gap-2">
+                    {post.tags.map((tag) => (
+                      <li
+                        key={tag}
+                        className="rounded-full border border-white/20 bg-white/5 px-3 py-1 text-[11px] font-semibold text-white/80"
+                      >
+                        {tag}
+                      </li>
+                    ))}
+                  </ul>
+                ) : null}
                 <p className="mt-5 max-w-2xl text-base leading-relaxed text-white/85 md:text-lg">{post.summary}</p>
               </div>
 
@@ -243,7 +255,7 @@ export function DeepResearchBlogLayout({ post }: DeepResearchBlogLayoutProps) {
                   <ResponsiveImage
                     src={post.heroImage}
                     alt={post.heroAlt ?? `${post.title} | ZAFTYS Blog`}
-                    aspectRatio="4/3"
+                    aspectRatio={post.heroAspectRatio ?? "4/3"}
                     objectFit="cover"
                     priority
                     className="rounded-none"
@@ -266,7 +278,7 @@ export function DeepResearchBlogLayout({ post }: DeepResearchBlogLayoutProps) {
                     </p>
                     <p className="mt-2 text-xs font-semibold leading-snug text-navy">{kpi.label}</p>
                     {kpi.detail ? (
-                      <p className="mt-1 text-[11px] leading-snug text-navy/60 line-clamp-2">{kpi.detail}</p>
+                      <p className="mt-1 text-[11px] leading-snug text-navy/60">{kpi.detail}</p>
                     ) : null}
                   </div>
                 ))}
@@ -464,7 +476,7 @@ export function DeepResearchBlogLayout({ post }: DeepResearchBlogLayoutProps) {
                           {item.heroImage ? (
                             <ResponsiveImage
                               src={item.heroImage}
-                              alt=""
+                              alt={item.heroAlt ?? item.title}
                               aspectRatio="16/9"
                               objectFit="cover"
                               className="rounded-none"
@@ -536,11 +548,13 @@ export function DeepResearchBlogLayout({ post }: DeepResearchBlogLayoutProps) {
             </p>
             <CTAGroup>
               <PostCta cta={post.cta} onDark />
-              <Link to="/zaftys-tms">
-                <Button size="lg" variant="on-dark-outline">
-                  Explore ZAFTYS TMS
-                </Button>
-              </Link>
+              {post.cta.to !== "/zaftys-tms" ? (
+                <Link to="/zaftys-tms">
+                  <Button size="lg" variant="on-dark-outline">
+                    Explore ZAFTYS TMS
+                  </Button>
+                </Link>
+              ) : null}
               <Link to="/network/tranzfort">
                 <Button size="lg" variant="on-dark-outline">
                   Explore TranZfort

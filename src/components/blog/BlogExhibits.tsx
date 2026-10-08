@@ -436,7 +436,7 @@ export function BlogExhibitBlock({ exhibit }: { exhibit: BlogExhibit }) {
     const max = Math.max(...exhibit.items.map((item) => item.value), 1);
     return (
       <FigureChrome caption={exhibit.caption} source={exhibit.source}>
-        <ul className="space-y-3">
+        <ul className="space-y-3" aria-label={exhibit.caption}>
           {exhibit.items.map((item) => (
             <li key={item.label}>
               <div className="mb-1 flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1 text-sm">

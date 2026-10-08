@@ -23,6 +23,18 @@ import {
   costLeaksTakeaways,
   costLeaksReferences,
 } from "@/lib/blog-exhibits-cost-leaks";
+import {
+  dieselClauseExhibits,
+  dieselClauseKpis,
+  dieselClauseTakeaways,
+  dieselClauseReferences,
+} from "@/lib/blog-exhibits-diesel-clause";
+import {
+  tollGnssExhibits,
+  tollGnssKpis,
+  tollGnssTakeaways,
+  tollGnssReferences,
+} from "@/lib/blog-exhibits-toll-gnss";
 
 export type BlogCategory = "operations" | "industries" | "technology";
 
@@ -147,6 +159,8 @@ export type BlogPost = {
   seoTitle: string;
   seoDescription: string;
   category: BlogCategory;
+  /** Visible topical labels. Also emitted as Article keywords. */
+  tags?: readonly string[];
   publishedAt: string;
   /** ISO date  -  when the guide was last materially revised */
   updatedAt?: string;
@@ -160,6 +174,11 @@ export type BlogPost = {
   /** Deep-researched: exec KPI strip under the hero. */
   kpis?: readonly BlogKpi[];
   heroImage?: string;
+  /** Match the source asset to avoid an editorial crop in the masthead. */
+  heroAspectRatio?: string;
+  /** Source dimensions for social and Article image metadata when verified. */
+  heroWidth?: number;
+  heroHeight?: number;
   /** Image alt when the filename/title is not enough for search. */
   heroAlt?: string;
   /** Four-line box under the hero. */
@@ -1140,7 +1159,7 @@ export const blogPosts: readonly BlogPost[] = [
         paragraphs: [
           "Walk the gate of a steel rolling mill in Chhattisgarh, a cement grinding unit in Rajasthan, a chemical complex in Gujarat, or an FMCG hub near Chakan or Bhiwandi. The picture repeats. A line of 16-wheeler and 18-wheeler trailers sits on the state highway. Drivers sleep in cabs waiting for loading slips. Security scribbles vehicle numbers into a paper register. Dispatch clerks drown in physical LRs.",
           "You can spend crores on SAP or Oracle inside the four walls and still lose the shipment the moment finished goods leave the warehouse bay. ERP knows the sales order. The highway does not. That gap is the TMS job, and it starts before the truck is even allowed through the barrier.",
-          "Without a working plant TMS, the unmanaged bottleneck is a chain. Trucks queue on the road and generate detention. Manual security logs sit on paper. Gross and tare weigh wait in a second queue, with a real tamper risk if a clerk can type a number. Delayed paper LRs and physical PODs then start the finance fight weeks later. None of that is a 'visibility' problem. It is a stage problem.",
+          "Without a working plant TMS, the unmanaged bottleneck is a chain. Trucks queue on the road and generate detention. Manual security logs sit on paper. Gross and tare weigh wait in a second queue, with a real tamper risk if a clerk can type a number. Delayed paper L₹and physical PODs then start the finance fight weeks later. None of that is a 'visibility' problem. It is a stage problem.",
         ],
       },
       {
@@ -1149,7 +1168,7 @@ export const blogPosts: readonly BlogPost[] = [
           "When logistics teams run daily FTL on phone and WhatsApp, four expensive failures show up again and again. They are not software bugs. They are process holes a TMS either closes or ignores.",
           "Uncontrolled plant detention: drivers arrive unannounced, fill the bays in the peak window, and leave the same bays idle at night. Unplanned queueing becomes a detention claim from the transporter. You pay for hours that never produced a loaded truck. Timed slots and a gate that can refuse an early arrival are operational, not decorative.",
           "Spot vehicle visibility blackout: NITI Aayog's Transforming Trucking in India work is widely cited for the structure of the market. A large majority of freight capacity sits with small owner-operators, many with fewer than five goods vehicles. When internal fleet is full and you hire through a local broker, the hardwired GPS box you specified in the IT RFP is not on that truck. If the TMS cannot see that vehicle, your control tower is a dedicated-fleet toy.",
-          "Working capital locked in paper PODs: transporters mail physical LRs to head office on a monthly cycle. One missing stamp or a lost sheet can halt customer invoicing for 45 to 60 days. That is not a courier problem. It is a proof-of-delivery design problem.",
+          "Working capital locked in paper PODs: transporters mail physical L₹to head office on a monthly cycle. One missing stamp or a lost sheet can halt customer invoicing for 45 to 60 days. That is not a courier problem. It is a proof-of-delivery design problem.",
           "e-Way Bill expiry fines: highway checking posts do impound cargo when validity lapses. Dispatch that cannot see remaining distance and time against the GST portal window will miss the extension. A TMS that cannot alert on e-Way Bill clock is not ready for India, no matter how pretty the North American lane board looks.",
         ],
         exhibits: tmsEvalExhibits["What informal coordination actually costs"],
@@ -1561,7 +1580,7 @@ export const blogPosts: readonly BlogPost[] = [
           "Dedicated contract fleets for industrial FTL usually mean 1 to 3 year agreements with established transporters, or a company-owned fleet on core lanes. This is the right tool when volume is predictable, customer SLAs are tight, and you need telematics leverage on assets you can actually govern.",
           "What you typically buy: placement on predictable volume, lane rate cards with diesel escalation, hardwired GPS where the asset relationship allows it, and auditable KYC if you demand it in writing. What you also buy: fixed cost and minimum volume guarantee pressure.",
           "Soft months punish inflated commitments. Write the SLA and the MVG against real plant volume from the last 12 months, not a hopeful annual plan. Empanel more than one transporter with clear quotas so a single breakdown does not own your entire outbound day.",
-          "The clause table below is the conversation you should have with procurement and counsel before the stamp pad comes out. Best effort language and all-India average rates with no diesel clause are how dedicated fleets become expensive theatre.",
+          "The clause table below is the conversation you should have with procurement and counsel before the stamp pad comes out. Use the [diesel surcharge clause guide](/blog/diesel-surcharge-freight-contract-india) to name the city, base date, formula and evidence. Best effort language and all-India average rates with no diesel clause are how dedicated fleets become expensive theatre.",
         ],
         exhibits: spotDedicatedExhibits["Dedicated contract fleets for industrial FTL"],
       },
@@ -1795,7 +1814,7 @@ export const blogPosts: readonly BlogPost[] = [
           "To cut plant detention, stop treating truck turnaround time as one end-to-end number. Break plant TAT into five stages you can timestamp and manage. If a stage has no stamp, it will always win the blame argument in the cabin.",
           "Stage 1 is gate entry and security. Manual plants burn half an hour checking papers by hand. Disciplined plants clear identity, slot window, and e-Way Bill status before the barrier opens. FASTag or QR readers help where hardware is installed. They are not magic on every Indian gate. Ask what is live in the demo.",
           "Stage 2 is tare. Typed empty weights create queues and override risk. Capture from the indicator. Stage 3 is bay or dock loading. This is usually the longest stage. Body-type matching, packing readiness, and real bay assignment matter more than a motivational LED slide.",
-          "Stage 4 is gross weigh with net and GVW checks. Stage 5 is documents and exit. If drivers still walk to a cabin for paper LRs after loading, you have not finished the job. The table below is a workshop shape. Your bay labour and cargo type will move the middle stage. Steel crane time is not FMCG dock time.",
+          "Stage 4 is gross weigh with net and GVW checks. Stage 5 is documents and exit. If drivers still walk to a cabin for paper L₹after loading, you have not finished the job. The table below is a workshop shape. Your bay labour and cargo type will move the middle stage. Steel crane time is not FMCG dock time.",
         ],
         exhibits: plantTatExhibits["Five stages of plant turnaround time (TAT)"],
       },
@@ -1948,6 +1967,7 @@ export const blogPosts: readonly BlogPost[] = [
       "plant-detention-tat-yard-gate-india",
       "industrial-tms-control-stack-india",
       "planning-industrial-shipments",
+      "fastag-mlff-gnss-tolling-india-freight",
     ],
     faqs: [
       {
@@ -2066,7 +2086,7 @@ export const blogPosts: readonly BlogPost[] = [
         heading: "ePOD, FASTag, and e-Way Bill for freight billing",
         paragraphs: [
           "Modern freight billing rests on three pillars that feed one invoice match. First, electronic proof of delivery (ePOD): a photo trail with time and location so invoicing can start when goods land, not when the courier arrives. Second, corridor proof: where available, FASTag toll plaza events or other independent pings support that the truck was on the legal corridor near delivery. Third, GST e-Way Bill discipline: validity watched against progress, with alerts and extension workflows inside the legal window.",
-          "Pillar two is the one vendors oversell. FASTag plaza data is powerful when the feed is real. It does not replace ePOD. It does not cover every village road. Ask which NPCI or plaza integrations are live in the room.",
+          "Pillar two is the one vendors oversell. FASTag plaza data is powerful when the feed is real. It does not replace ePOD. It does not cover every village road. A barrier-free gantry still does not prove delivery, and it does not by itself become satellite billing. The [FASTag, MLFF, and GNSS guide](/blog/fastag-mlff-gnss-tolling-india-freight) separates those three. Ask which NPCI or plaza integrations are live in the room.",
           "All three pillars only matter when they land in three-way freight invoice matching and an exception queue AP can clear. Pretty photos with no rate-card check still leave month-end broken.",
         ],
         exhibits: epodBillingExhibits["ePOD, FASTag, and e-Way Bill for freight billing"],
@@ -2134,7 +2154,7 @@ export const blogPosts: readonly BlogPost[] = [
       {
         heading: "What good billing programs tend to show",
         paragraphs: [
-          "When manufacturers replace paper LRs with trusted ePOD and three-way match, finance metrics move in a directional way. Billing cycles fall from multi-week paper paths toward a few days. e-Way Bill expiry events become rarer when alerts are real. Rate and weight overpays drop. Unverified detention claims shrink when free-time clocks use gate stamps. AP exception clear time moves toward hours when reason codes and evidence packs travel with the bill.",
+          "When manufacturers replace paper L₹with trusted ePOD and three-way match, finance metrics move in a directional way. Billing cycles fall from multi-week paper paths toward a few days. e-Way Bill expiry events become rarer when alerts are real. Rate and weight overpays drop. Unverified detention claims shrink when free-time clocks use gate stamps. AP exception clear time moves toward hours when reason codes and evidence packs travel with the bill.",
           "These are planning bands, not a promise of zero GST penalties or 100% error elimination forever. Measure your last 90 days first. Then decide whether the program is working on cycle time, exception mix, and portal discipline, not on a single vanity percentage.",
         ],
         exhibits: epodBillingExhibits["What good billing programs tend to show"],
@@ -2215,10 +2235,10 @@ export const blogPosts: readonly BlogPost[] = [
       },
     ],
     relatedSlugs: [
+      "diesel-surcharge-freight-contract-india",
       "india-axle-load-gvw-limits-heavy-freight",
       "reduce-empty-return-trips",
       "spot-market-vs-dedicated-fleet-india",
-      "tms-evaluation-guide-indian-manufacturers",
     ],
     faqs: [
       {
@@ -2322,7 +2342,7 @@ export const blogPosts: readonly BlogPost[] = [
             heading: "Direct impact on Indian exporters",
             paragraphs: [
               "Shipping lines prioritize empty repositioning to higher-yield lanes. Inland depots in North and Central India feel dry 20ft and 40ft high-cube shortages first. Exporter payment clocks tied to destination Bill of Lading stretch when the sea leg adds two weeks, pushing micro, small and medium enterprises (MSMEs) onto expensive working capital as days sales outstanding (DSO) rises.",
-              "On domestic highways, diesel still dominates truck cost in Indian rupees. CRISIL-style framing often puts every ₹5 per litre diesel rise near a 2.5% to 2.8% freight rate push. Fuel adjustment factors then lift container truck rates another few percent on major corridors when associations pass costs through.",
+              "On domestic highways, diesel still dominates truck cost in Indian rupees. Crisil's published framing puts a ₹5 per litre diesel rise near a 2.5% to 2.8% freight-rate revision. The signed [fuel adjustment formula](/blog/diesel-surcharge-freight-contract-india), not a headline alone, decides what reaches the container-truck bill.",
             ],
             exhibits: containerIndiaExhibits["Corridor rate bands under disruption"],
           },
@@ -2431,7 +2451,7 @@ export const blogPosts: readonly BlogPost[] = [
             heading: "How to run the maturity review",
             paragraphs: [
               "Bring plant, port liaison, procurement, and finance into one room. For each domain, demand the evidence pack in the tiles: weighbridge near-misses, a sample milestone trail, empty-return percent, and median days from unload to approved invoice. If the pack is missing, the domain is still Partial at best.",
-              "Do not average the five domains into one vanity label. A Controlled settlement path on paper LRs still means Manual cash. A Controlled map with no GVW lock still means Manual payload risk. Rank the weakest Controlled gap that blocks the next build dependency.",
+              "Do not average the five domains into one vanity label. A Controlled settlement path on paper L₹still means Manual cash. A Controlled map with no GVW lock still means Manual payload risk. Rank the weakest Controlled gap that blocks the next build dependency.",
             ],
           },
         ],
@@ -2714,7 +2734,7 @@ export const blogPosts: readonly BlogPost[] = [
             heading: "e-Way Bill Part B before gate-out",
             paragraphs: [
               "Do not start movement on Part A alone when an e-Way Bill is required. Put the real vehicle number before gate-out so the distance clock makes sense. If yard wait burns validity, alert early. Software may extend only inside the legal window (within about eight hours of expiry) and only for allowed reasons. Unlimited auto-extend is a compliance risk, not a feature.",
-              "Multi-drop work needs child LRs and separate e-Way Bills per consignee while one registration moves the set. Child weights must still sum to the one certified net. If they do not, you invented a second inventory. Use the multi-drop flow below with dispatch before you automate splits.",
+              "Multi-drop work needs child L₹and separate e-Way Bills per consignee while one registration moves the set. Child weights must still sum to the one certified net. If they do not, you invented a second inventory. Use the multi-drop flow below with dispatch before you automate splits.",
             ],
           },
           {
@@ -2763,7 +2783,7 @@ export const blogPosts: readonly BlogPost[] = [
           {
             heading: "Fuel and detention without folklore",
             paragraphs: [
-              "Diesel share of road cost is often negotiated around 0.30 to 0.35 - lock the number, the base city, and the index in writing. Detention free time and hourly rates must use the same gate clocks that opened the boom. 'We waited twelve hours' is not an input.",
+              "Derive diesel share from the lane's diesel ₹/km divided by basic freight ₹/km. Then lock that number, the base city, price source and review date in a written [diesel surcharge clause](/blog/diesel-surcharge-freight-contract-india). Detention free time and hourly rates must use the same gate clocks that opened the boom. 'We waited twelve hours' is not an input.",
               "Post fuel surcharge and detention as separate lines when the contract separates them. Burying both inside base freight is how disputes come back after you thought matching was done.",
             ],
           },
@@ -2781,7 +2801,7 @@ export const blogPosts: readonly BlogPost[] = [
             heading: "How to run the review",
             paragraphs: [
               "Bring plant, dispatch, procurement, and finance into one room. For each area demand evidence: gate wait chart, scale near-miss log, sample vehicle-update timing, days to delivery proof, exception age in accounts payable. No pack means Half-digital at best.",
-              "Do not average the five areas into one happy label. Clean payment on paper LRs is still Manual cash. Clean maps with no weight lock are still Manual payload risk.",
+              "Do not average the five areas into one happy label. Clean payment on paper L₹is still Manual cash. Clean maps with no weight lock are still Manual payload risk.",
             ],
           },
         ],
@@ -2867,11 +2887,12 @@ export const blogPosts: readonly BlogPost[] = [
       },
     ],
     relatedSlugs: [
+      "diesel-surcharge-freight-contract-india",
       "industrial-tms-control-stack-india",
       "plant-detention-tat-yard-gate-india",
       "india-axle-load-gvw-limits-heavy-freight",
       "epod-fastag-eway-bill-billing-india",
-      "spot-market-vs-dedicated-fleet-india",
+      "fastag-mlff-gnss-tolling-india-freight",
     ],
     faqs: [
       {
@@ -2912,7 +2933,7 @@ export const blogPosts: readonly BlogPost[] = [
       {
         question: "How does digital ePOD replace physical paper Lorry Receipts (LR)?",
         answer:
-          "Traditional physical paper LRs take 30 to 60 days to return by courier from remote mining or construction sites to corporate accounts desks, delaying invoice clearance. Digital ePOD allows drivers or receivers to capture a high-resolution photo of the signed LR, validated by GPS geofencing (within 50 meters of the delivery site) and receiver OTP, uploading certified proof within 2 hours of delivery.",
+          "Traditional physical paper L₹take 30 to 60 days to return by courier from remote mining or construction sites to corporate accounts desks, delaying invoice clearance. Digital ePOD allows drivers or receivers to capture a high-resolution photo of the signed LR, validated by GPS geofencing (within 50 meters of the delivery site) and receiver OTP, uploading certified proof within 2 hours of delivery.",
       },
       {
         question: "What is the 80/20 capacity allocation model for industrial shippers?",
@@ -2979,7 +3000,7 @@ export const blogPosts: readonly BlogPost[] = [
             heading: "The Fixed and Variable Economics of Long-Haul Trucking",
             paragraphs: [
               "Understanding cost leakage also requires understanding the financial reality of the truck operator. A standard 32ft Multi-Axle Vehicle (MXL) or 49-tonne heavy trailer in India operates under fixed monthly costs of ₹1,10,000 to ₹1,30,000 (comprising vehicle loan EMIs of ₹55,000 to ₹65,000, driver/helper salaries and trip allowances of ₹44,000 to ₹58,000, plus insurance, permits, and fitness amortisation).",
-              "These fixed costs run 24 hours a day, 365 days a year. When a truck sits idle inside a manufacturing plant yard for 6 hours waiting for a loading bay, the transporter loses billable operating hours. To compensate, transporters bake buffer premiums into subsequent contract bids or demand inflated detention charges. Variable operating costs (diesel at ₹19 to ₹24 per km, FASTag tolls at ₹3 to ₹7 per km, and tyre wear at ₹3.50 to ₹5.50 per km) only generate revenue when the vehicle is moving. Fast yard turnaround benefits both shipper and carrier.",
+              "These fixed costs run 24 hours a day, 365 days a year. When a truck sits idle inside a manufacturing plant yard for 6 hours waiting for a loading bay, the transporter loses billable operating hours. To compensate, transporters bake buffer premiums into subsequent contract bids or demand inflated detention charges. Variable operating costs (diesel at ₹19 to ₹24 per km, FASTag tolls at ₹3 to ₹7 per km, and tyre wear at ₹3.50 to ₹5.50 per km) only generate revenue when the vehicle is moving. That toll band is a workshop, not a plaza tariff. The [FASTag and barrier-free tolling guide](/blog/fastag-mlff-gnss-tolling-india-freight) shows what a live gantry changes, and what it does not. Fast yard turnaround benefits both shipper and carrier.",
             ],
           },
         ],
@@ -3135,7 +3156,7 @@ export const blogPosts: readonly BlogPost[] = [
             heading: "The 4-Way Automated Invoice Reconciliation Engine",
             paragraphs: [
               "Modern enterprise TMS platforms eliminate paper audit delays by replacing manual spreadsheet checking with an automated 4-Way Reconciliation Engine that matches four objective digital data sources before releasing payment:",
-              "1. ERP Purchase Order: Confirms agreed contractual freight rates, lane origin/destination, and approved diesel fuel escalation formulas.",
+              "1. ERP Purchase Order: Confirms agreed contractual freight rates, lane origin/destination, and the approved [fuel price variation clause](/blog/diesel-surcharge-freight-contract-india).",
               "2. Automated Gate Timestamps: Ingests FASTag and ANPR gate entry and exit timestamps to audit and validate transporter detention claims down to the exact minute.",
               "3. Certified Weighbridge Record: Verifies the tamper-proof scale net weight to validate billed tonnage and prevent payload inflation.",
               "4. Geo-Stamped Digital ePOD: Captures high-resolution consignee-signed delivery documentation, verified by GPS geofencing and customer OTP.",
@@ -3186,6 +3207,435 @@ export const blogPosts: readonly BlogPost[] = [
       },
     ],
     cta: { label: "Explore ZAFTYS Logistics & TMS", to: "/logistics" },
+  },
+  {
+    slug: "diesel-surcharge-freight-contract-india",
+    title: "How to write a diesel surcharge clause for Indian freight contracts",
+    seoTitle: "Diesel Surcharge Clause for Indian Freight Contracts | ZAFTYS",
+    seoDescription:
+      "Write an auditable diesel surcharge clause for Indian freight contracts with IOCL pricing, three formulas, review dates, worked examples and exclusions.",
+    category: "operations",
+    tags: [
+      "Contract Logistics",
+      "Freight Rates",
+      "Fuel Adjustment Factor",
+      "Diesel Escalation",
+      "Industrial FTL",
+      "India",
+    ],
+    publishedAt: "2026-10-08",
+    updatedAt: "2026-10-08",
+    author: "ZAFTYS Operations & Supply Chain Research",
+    template: "deep-research",
+    subtitle:
+      "Fuel adjustment factor · Diesel escalation clause · IOCL city print · AITWA 0.65 card · Contract freight, not spot",
+    summary:
+      "A diesel surcharge on freight charges should be a calculation, not a month-end negotiation. This guide shows how to write one fuel adjustment factor into an Indian industrial freight contract: which city, which date, which formula, and what stays off the line. Delhi diesel rose ₹4.53 between 15 May and 8 Oct 2026.",
+    readMinutes: 28,
+    heroImage: "/images/blog/diesel-surcharge-freight-contract-india.jpg",
+    heroAspectRatio: "16/9",
+    heroWidth: 1280,
+    heroHeight: 720,
+    heroAlt:
+      "Industrial freight dispatch desk with a rate card, calculator and diesel price board at a plant gate",
+    kpis: dieselClauseKpis,
+    takeaways: dieselClauseTakeaways,
+    references: dieselClauseReferences,
+    midCtas: [
+      {
+        afterHeading: "How to write a fuel adjustment factor clause",
+        eyebrow: "One clause, one lane",
+        title: "Put the fuel line on a contract you can operate",
+        body: "Share the lane, body type, and whether you already have a diesel clause. We read it against placement on contract logistics, not against a national index.",
+        cta: { label: "Contract logistics", to: "/logistics/contract-logistics" },
+      },
+      {
+        afterHeading: "How settlement uses the clause",
+        eyebrow: "Base rate vs fuel line",
+        title: "See lane context without pretending it is a national diesel index",
+        body: "Bring one lane and the diesel city you want in the clause. Owned trucks and overflow stay labeled. The fuel line does not turn a partner truck into a company truck.",
+        cta: { label: "Freight rate intelligence", to: "/intelligence/freight-rates" },
+      },
+    ],
+    relatedSlugs: [
+      "5-hidden-cost-leaks-heavy-industrial-freight-tms-3pl-guide",
+      "spot-market-vs-dedicated-fleet-india",
+      "container-trucking-logistics-india",
+      "reduce-empty-return-trips",
+      "epod-fastag-eway-bill-billing-india",
+      "fastag-mlff-gnss-tolling-india-freight",
+    ],
+    faqs: [
+      {
+        question: "What is a diesel surcharge on an Indian freight contract?",
+        answer:
+          "A written rule that changes only the basic freight when a named diesel price moves against a named base. A diesel surcharge on freight charges is not a new spot rate, a toll claim, or permission to reopen every cost line.",
+      },
+      {
+        question: "What is a fuel adjustment factor on Indian freight?",
+        answer:
+          "A fuel adjustment factor (FAF) is the percent applied to base freight when diesel moves against a named base. The AITWA circular of 19 May 2026 asked for 0.65% of freight per ₹1 of diesel above the 15 May 2026 price, from 20 May 2026, and said the factor should fall if diesel falls. A contract may copy that arithmetic. It does not apply itself.",
+      },
+      {
+        question: "Is the AITWA 0.65% rule the law?",
+        answer:
+          "No. It was reported in May 2026 as an association proposal tied to the 15 May 2026 diesel base. Plant legal still has to write the number into the contract. Trade reporting says many shippers sign 0.40 to 0.50 per ₹1 instead of 0.65.",
+      },
+      {
+        question: "How much does a diesel rise add to truck freight?",
+        answer:
+          "On the AITWA card, each ₹1 per litre is 0.65% of freight, so ₹5 is 3.25%. From 15 May to 8 Oct 2026, Delhi diesel rose ₹4.53 (₹90.67 to ₹95.20). On a workshop ₹48/km and 800 km, that is about ₹1,131 at 0.65, about ₹883 with a lane-derived diesel share of 0.46, and about ₹384 if the clause passes 20% of the diesel percentage change.",
+      },
+      {
+        question: "How should a dead-band work in a diesel surcharge clause?",
+        answer:
+          "An incremental dead-band avoids a cliff. With a ₹2 band, eligible movement is the signed amount beyond ₹2. A +₹4.53 move leaves +₹2.53 eligible; a -₹4.53 move leaves -₹2.53. At 0.45 percentage points per rupee, either direction changes ₹38,400 of basic freight by about ₹437. The contract should say whether a negative amount is deducted on the invoice or issued as a credit note.",
+      },
+      {
+        question: "Should a diesel escalation clause go up and down?",
+        answer:
+          "Yes. A rise-only clause is an escalator. When diesel falls, the shipper keeps paying the peak unless the base rate is rebid. The AITWA text itself said the factor reduces when diesel moderates.",
+      },
+      {
+        question: "Does a falling freight index cancel the diesel surcharge?",
+        answer:
+          "No. CRISFrex was 100.5 in April 2026 (April 2025 = 100), down from 101.4 in March. That describes how easy trucks were to hire. The clause describes diesel versus the contract base. Rebid the base when the index is your evidence. Apply the clause to current bills.",
+      },
+      {
+        question: "Where do tolls go if diesel is in the contract?",
+        answer:
+          "On a FASTag line. Not inside the fuel percent. Tyres, AdBlue, detention, and empty kilometres also stay off the fuel line.",
+      },
+      {
+        question: "Does a diesel clause apply to spot bookings?",
+        answer:
+          "A one-week spot buy is usually an all-in number. The clause matters on contract volume that lives longer than a diesel move. See the spot versus dedicated guide for which volume belongs on contract.",
+      },
+      {
+        question: "What diesel price should a price variation clause use?",
+        answer:
+          "Use one city, high-speed diesel and one published table. Public plant contracts often use the [Indian Oil price page](https://iocl.com/Pages/petrol-diesel-price) for a named city, read on a fixed day. Long lanes can use the [PPAC metro or state tables](https://ppac.gov.in/retail-selling-price-rsp-of-petrol-diesel-and-domestic-lpg/rsp-of-petrol-and-diesel-in-metro-cities-since-16-6-2017), with the weighting written in the contract. Do not use the driver's pump slip.",
+      },
+      {
+        question: "Can ZAFTYS TMS calculate the diesel uplift?",
+        answer:
+          "The useful version stores base rate, base diesel, current diesel, and the formula id on the trip, then shows the uplift as its own bill line. That is an operating choice on ZAFTYS TMS, not a promise that every old spreadsheet will be rewritten.",
+      },
+      {
+        question: "Who should own the diesel clause inside the plant?",
+        answer:
+          "Procurement owns the words. Finance owns the bill test. Dispatch owns the loading date that decides which rate applies. If only legal has the PDF, the clause will not be used.",
+      },
+      {
+        question: "What happens if the freight contract has no diesel clause?",
+        answer:
+          "A general bill-adjustment line may not rescue an omitted escalation term. In [Union of India v Freight Carriers](https://courtkutchehry.com/judgments/union-of-india-uoi-appellant-hash-freight-carriers-respondent), Gauhati High Court, decided 30 April 2008, (2008) 4 Arb LR 443, the court set aside an escalation award under a fixed-rate contract with no price-escalation clause. Have counsel review the wording for your contract.",
+      },
+    ],
+    sections: [
+      {
+        heading: "Why the rate card goes stale in ninety days",
+        paragraphs: [
+          "A plant signs ₹X per tonne or ₹Y per km in April. Diesel moves before the quarter is over. The transporter sends a revised bill. Procurement says the contract is fixed. The transporter says the truck cannot run at April diesel. Dispatch still needs the vehicle on Thursday, so someone approves a round number on WhatsApp and finance discovers it at month-end.",
+          "This is a commercial drafting guide, not legal or tax advice. Use it to prepare the operating brief, then have counsel and finance review the final diesel escalation and de-escalation clause.",
+          "That fight is a missing clause. The contract named a freight number and forgot six things: which city's diesel is the base, which date that price was taken, which published table both sides will open later, the formula that turns a diesel change into a freight change, how often the clause may fire, and what it does not cover. Without those lines, every diesel headline becomes a fresh negotiation. With them, month-end is arithmetic a clerk can check.",
+          "From 15 May 2026 to 8 Oct 2026, Delhi high-speed diesel moved from ₹90.67 to ₹95.20. That is ₹4.53 on a price both sides can look up. Mumbai moved from ₹93.14 to ₹97.83, up ₹4.69. A contract that froze the spring rate and said nothing about diesel has already spent a quarter either arguing, quietly overpaying, or losing the better trucks to someone who will talk about fuel.",
+          "The expensive version of silence shows up at the next tender, not on this month's bill. The transporter folds last quarter's diesel into a higher base rate. Procurement celebrates a 'fixed' card. There is still nothing to audit when the pump moves again. A written clause is how you keep the diesel rupee visible instead of burying it.",
+        ],
+        exhibits: dieselClauseExhibits["Why the rate card goes stale in ninety days"],
+      },
+      {
+        heading: "What actually sits inside a truck rupee",
+        paragraphs: [
+          "Read this before any formula. People who skip it put toll and diesel in the same sentence and then argue for a year. The fuel clause may touch diesel inside base freight. It does not touch FASTag, tyre and repair, detention after free time, or an empty return.",
+          "Those other leaks already have their own pages. Gate hours sit on the plant TAT guide. Deadhead sits on the [empty return guide](/blog/reduce-empty-return-trips). The wider bill, from yard dwell to weighbridge variance, sits on the [cost leaks guide](/blog/5-hidden-cost-leaks-heavy-industrial-freight-tms-3pl-guide). This page is only the diesel line. If you let it swallow the rest, you will not be able to tell a fuel hike from a bad gate.",
+          "A useful way to set the share, before you copy anyone's headline, is litres on your own lane. The earlier workshop bench puts diesel at about ₹19 to ₹24 per km inside a variable band of about ₹26 to ₹37 per km. At a Delhi price near ₹95 per litre, ₹19 per km is about 0.20 litre per km, roughly 5 km per litre. ₹24 per km is about 0.25 litre per km, roughly 4 km per litre. If the contracted rate is ₹48 per km and diesel is ₹22 of that, diesel is about 46% of the rate. That 46% is a candidate for S. It is not 65%, and it is not 42%. Ask the transporter for litres per km on this body and this lane, then write the percent you both can defend.",
+          "Three published shares still get quoted as if they were one number. They are not, and the donut above is not one of them. The donut is only the workshop variable split, and the slices add to 100% of that variable band. The published figures are different pies. NCAER, via Crisil in June 2026, puts fuel at about 42% of road transport cost. Crisil's April 2026 freight note puts fuel at nearly 50% to 60% of a transporter's operating expenses, and says a ₹5 per litre move needs about 2.5% to 2.8% on freight to hold margin. The AITWA circular of 19 May 2026 describes diesel as about 65% of truck running cost. Finance will reach for 42%. The transporter will reach for 65%. The contract has to say which denominator the percent uses.",
+        ],
+        exhibits: dieselClauseExhibits["What actually sits inside a truck rupee"],
+      },
+      {
+        heading: "Three diesel escalation formulas for freight contracts",
+        paragraphs: [
+          "Put all three formulas on the table, with the cards below, then pick one and delete the others from the draft. Stacking them is a second hike. The new rate, whichever formula you pick, is base rate times (1 + fuel uplift percent / 100). Apply that only to the base freight line.",
+          "If you want a card a transporter will recognise from the May 2026 circular, use Formula 1 and negotiate the 0.65 against lane evidence. If you know litres per km and want the percent to follow the diesel price, use Formula 2 and derive S from the lane. If you want the quieter percentage-of-percentage language in archived buyer samples, use Formula 3. The comparison table applies all three to the same Delhi move.",
+        ],
+        subsections: [
+          {
+            heading: "Formula 1: rupee steps (the AITWA card)",
+            paragraphs: [
+              "The All India Transporters Welfare Association circular dated 19 May 2026, reported by Moneylife, India Today, and ABP, asked for a fuel adjustment from 20 May 2026. The arithmetic is simple: fuel uplift percent = 0.65 times (diesel now minus diesel base), with diesel in rupees per litre. If the parties adopt that circular, the base is the named city's price on 15 May 2026.",
+              "Each extra rupee per litre adds 0.65 percentage points of freight. It does not add 0.65% of the diesel price. India Today's reading of the same circular: plus ₹5 is plus 3.25% freight, plus ₹10 is plus 6.5%, plus ₹15 is about plus 10%. The circular also said the factor comes down if diesel comes down. A clause that only rises is an escalator, not a fuel clause.",
+              "This is an association ask, not a statute. ITL Logistics, quoting the association side later, said most customers still accept 0.40 to 0.50 per ₹1, not 0.65. Crisil's ₹5 band of 2.5% to 2.8% is about 0.50 to 0.56 per ₹1. So 0.65 is the opening card. 0.40 to 0.56 is the range a plant can defend with a published source. Write the number you sign. Do not write as per AITWA and hope both sides remember the same circular.",
+            ],
+          },
+          {
+            heading: "Formula 2: share of the diesel percent",
+            paragraphs: [
+              "Fuel uplift percent = S times (diesel now minus diesel base) divided by diesel base, times 100. S is the diesel share of basic freight, written as a decimal.",
+              "Derive S from the lane, not from a cost-share headline. In the workshop, diesel is ₹22 per km and basic freight is ₹48 per km. ₹22 / ₹48 = 0.458, rounded to S = 0.46. The Delhi diesel move is 4.53 / 90.67 = 4.996%, so the uplift is 0.46 x 4.996% = 2.30%. On ₹38,400 of basic freight, that is about ₹883.",
+              "Crisil's 50% to 60% figure describes fuel's share of transporter operating expenses, not automatically its share of the invoiced freight rate. It is a margin-sensitivity benchmark, not a substitute for the lane calculation. Do not set S = 0.65 because AITWA said running cost was 65%, and do not also apply the 0.65 rupee card. That would mix denominators and then hike twice. The [container trucking guide](/blog/container-trucking-logistics-india) retains Crisil's published 2.5% to 2.8% margin band as context.",
+            ],
+          },
+          {
+            heading: "Formula 3: what a large shipper has actually written",
+            paragraphs: [
+              "Public clause samples used by large buyers (BHEL transporter terms, as collected on Law Insider) do something quieter. Diesel comes from the IOCL website for one named city. The samples use Dehradun. The latest IOCL rate available by the 15th applies from the 16th to the 15th of the next month, on goods receipts in that window. The uplift is 20% of the percent change in diesel in one sample, and 30% in another. Up and down.",
+              "A 10% diesel hike with the 20% sample pays 2% extra on basic freight. With the 30% sample it pays 3%. On the Delhi 4.996% move, a 20% pass-through pays about 1.00% of freight. That is far below the AITWA ask. Show it in the negotiation so procurement sees the gap, not only the association headline. Copying 0.20 onto a long lane that burns a lot of diesel will under-recover. Copying 0.65 because a circular said so will overpay if your litres per km are ordinary.",
+              "The new rate, whichever formula you pick, is base rate times (1 + fuel uplift percent / 100). Apply it to the base freight line only.",
+            ],
+          },
+        ],
+        exhibits: dieselClauseExhibits["Three diesel escalation formulas for freight contracts"],
+      },
+      {
+        heading: "How to write a fuel adjustment factor clause",
+        paragraphs: [
+          "Write these as contract sentences, not as a slogan. The template below is a workshop for counsel to edit. It is not a ZAFTYS rate or legal advice.",
+          "Copy-ready structure: Basic freight is [₹/km, ₹/MT or ₹/trip] for [vehicle body] on [origin, destination and mandatory via], calculated on [loaded kilometres only / round-trip kilometres]. Base diesel is [high-speed diesel price] for [city] on [base date], from [IOCL or PPAC URL]. On [review day], both sides read the same table. The signed formula is [write it in full]. The factor is [number]. The adjustment moves up and down and applies to trips loaded from [effective day]. A negative adjustment is shown as [a deduction on the same invoice / a credit note within X days]. Toll, detention, tyre, AdBlue, permits and empty kilometres are excluded unless the signed kilometre basis expressly includes them. The source print must be attached by [deadline], or the basic rate remains payable pending resolution.",
+          "That paragraph already holds the seven lines. Pull them apart so legal does not bury one.",
+          "Base freight: the number, the unit (₹/km, ₹/MT, or ₹/trip), the body type, and the lane, including any mandatory via. One card does not cover a 32 ft truck and a bulker. A tipper and a trailer do not share a diesel burn, so they should not share a factor.",
+          "Base diesel: city, high-speed diesel, and a source both sides can open without calling the driver. IOCL retail for one named city is what the public samples use. PPAC daily state prices suit a long lane that refuels in more than one state, weighted by where the litres are bought. The driver's pump slip is a poor base. It is not shared, and it moves with local stock.",
+          "Formula: one of the three, written in full, with 0.65 or a negotiated 0.40 to 0.50 or S as a number. Do not write 'as per market' or 'as per AITWA' unless the number is copied into the clause. Direction: up and down. Review cadence: one fixed day each month or quarter.",
+          "Trigger: trips whose loading date falls after the review date. Not all open bills since April. A truck that loaded on the 10th does not pick up a price you read on the 15th. Exclusions: toll, tyre, driver bata, detention, ODC permit, and empty kilometres, unless a different clause prices them. Evidence: the diesel print for the review date, attached to the bill. No print, no uplift.",
+          "If the lane is stable enough to contract, put the clause on the [contract logistics](/logistics/contract-logistics) rate card. A [dedicated fleet](/logistics/dedicated-fleet) on a repeating lane should not be rebid every diesel headline. That capacity split is explained in the [spot versus dedicated guide](/blog/spot-market-vs-dedicated-fleet-india).",
+        ],
+        subsections: [
+          {
+            heading: "Dead-band, cap, rounding and reset rules",
+            paragraphs: [
+              "A dead-band must not create a cliff. If B is ₹2 per litre, define eligible diesel movement as sign(delta) x max(0, absolute delta minus B). On a +₹4.53 move, only ₹2.53 is eligible. On a -₹4.53 move, the eligible movement is -₹2.53. If the parties instead want the whole movement to apply once the trigger is crossed, say that expressly and accept the jump at the boundary.",
+              "Write any cap as a ceiling on the fuel adjustment, not as a vague cap on freight. Example: the monthly fuel adjustment cannot exceed +4% or fall below -4%; any unrecovered balance is reviewed at the next quarterly reset. A cap without a reset shifts cost rather than removing it.",
+              "State the rounding rule. A public BHEL rate-contract example uses two decimal places. Also state the non-publication rule: if the review day is a holiday or weekend, or the table is unavailable, use the last published price. Read the next available business-day publication and correct any difference in the next cycle. The contract should name the evidence deadline and a short dispute window.",
+              "Choose the rebasing rule explicitly. The workshop keeps one fixed base diesel during the contract term; a monthly review changes the adjustment, not the base. If the parties want monthly rebasing, the clause must say that the current review price becomes next month's base and explain how any cap balance is handled.",
+              "At renewal, reset both the basic freight and base diesel to the same date, then restart the formula at zero. Otherwise an old base keeps carrying years of fuel history into a newly negotiated rate.",
+            ],
+          },
+        ],
+        exhibits: dieselClauseExhibits["How to write a fuel adjustment factor clause"],
+      },
+      {
+        heading: "Diesel surcharge calculation using Delhi fuel prices",
+        paragraphs: [
+          "The diesel move is real. The freight rate is a workshop, so we do not invent a corridor quote. Base ₹48 per km. One loaded leg of 800 km. That is ₹38,400 of base freight before any fuel line. Delhi retail diesel was ₹90.67 on 15 May 2026 and ₹95.20 on 8 Oct 2026. Difference ₹4.53. Percent change 4.53 / 90.67 = 4.996%. Hold those two numbers. Every example below uses them. Only the factor changes.",
+          "The four-formula comparison below has no dead-band, so the formulas can be compared like for like. The separate dead-band table shows how a ₹2 incremental band changes the invoice.",
+          "Example A, the AITWA card. 0.65 times 4.53 = 2.9445%, which we round to 2.94% on the card. New rate is 48 times 1.029445, about ₹49.41 per km. Extra on 800 km is about ₹1,131. That ₹1,131 is the fuel line only. It is not permission to add a second 'market adjustment' on the same bill. The formula card at the top of the previous chapter is this example drawn out.",
+          "Example B, the lane-derived share. The workshop diesel cost is ₹22 per km against ₹48 per km of basic freight, so S = 22 / 48 = 0.458, rounded to 0.46. Then 0.46 times 4.996% = 2.30%. Extra on 800 km is about ₹883. Change the vehicle, lane or diesel burn and you must recalculate S.",
+          "Example C, the factor many shippers sign. ITLN reported customers on 0.40 to 0.50 rather than 0.65. The midpoint, 0.45, times 4.53 is 2.04%. Extra on 800 km is about ₹783. If your negotiation lands at 0.40, the same trip is about ₹696. At 0.50 it is about ₹870. Write the factor you actually agreed. 'About half a percent per rupee' is how two finance teams reach different bills.",
+          "Example D, the 20% pass-through used in public buyer samples. 0.20 times 4.996% = 1.00%. Extra on 800 km is about ₹384. A 30% sample on the same diesel move would be about 1.50%, or about ₹576. That is still well under the AITWA ask. Show both numbers in the room so nobody thinks 20% of the diesel percent means 20% of freight.",
+          "Same trucks, same diesel, four bills, and a fifth bar at zero if the contract is silent. The gap from ₹384 to ₹1,131 is the negotiation. It is not a rounding error. In [Union of India v Freight Carriers](https://courtkutchehry.com/judgments/union-of-india-uoi-appellant-hash-freight-carriers-respondent), Gauhati High Court, decided 30 April 2008, (2008) 4 Arb LR 443, the court set aside an escalation award where the fixed-rate contract had no price-escalation clause. The practical lesson is to write the operating rule before the diesel move and have counsel approve it.",
+        ],
+        subsections: [
+          {
+            heading: "The freight index did not cancel the pump",
+            paragraphs: [
+              "CRISFrex, Crisil's pan-India freight index with April 2025 set to 100, printed 100.5 in April 2026, down from 101.4 in March. Crisil read the dip as more trucks available after the March dispatch rush. That is a soft patch in freight, not a diesel cut.",
+              "By 8 Oct 2026, Delhi diesel was still ₹4.53 above the 15 May print. Procurement can use the index when the base rate is rebid. Finance uses the clause on this quarter's bills. The index is flat, so ignore diesel is how the better trucks stop coming.",
+              "Crisil's June 2026 note said retail fuel had risen about ₹7.5 per litre since 15 May, with talk of a further move. That is a June macro line. Do not paste ₹7.5 onto the Delhi row for 8 Oct. The contract example uses the city prints above. Prices will move again. The live bill should say as printed on the review date and attach that day's table.",
+            ],
+          },
+        ],
+        exhibits: dieselClauseExhibits["Diesel surcharge calculation using Delhi fuel prices"],
+      },
+      {
+        heading: "What the clause must not do",
+        paragraphs: [
+          "It must not swallow toll. FASTag is a separate, checkable line. The ₹3 to ₹7 per km bench is a teaching range, not your plaza list. Tolls were revised from 1 April 2026. That calendar is not the diesel calendar. What is live at a barrier-free gantry, and what GNSS still is not, sits in the [FASTag and MLFF tolling guide](/blog/fastag-mlff-gnss-tolling-india-freight).",
+          "It must not price empty return. If the lane has a structural empty leg, price it as its own allowance or fix it with a return load. The [empty return guide](/blog/reduce-empty-return-trips) is the place for that.",
+          "It must not be a spot-market escalator. Rate will follow the market is not a formula. Spot versus contract is a capacity decision.",
+          "It must not reset every WhatsApp. One review rhythm. Monthly is enough for most plant contracts. Daily diesel is a spot product.",
+          "It must not cite 65% and 0.65 and 2.8% in the same sentence as if they were one rule. And it must not absorb AdBlue or tyres. Moneylife, reporting the same AITWA note, said diesel exhaust fluid had nearly doubled over two months and tyre prices were up about 5%. Those are real. They are not litres of diesel. A fuel clause that silently absorbs them cannot be audited.",
+        ],
+        exhibits: dieselClauseExhibits["What the clause must not do"],
+      },
+      {
+        heading: "How settlement uses the clause",
+        paragraphs: [
+          "The clause fails if it lives only in the legal PDF. On each bill the transporter should show the base rate from the signed card, diesel base and diesel now from the named table, the formula id, the uplift as arithmetic rather than a lump sum, toll from the FASTag statement if you reimburse it, detention from gate timestamps, and a net that is the sum of those lines.",
+          "[ZAFTYS TMS](/zaftys-tms) is where a trip can already collect gate time, weight, and delivery proof. The fuel line belongs on that same trip record so accounts payable does not keep a side spreadsheet. The [ePOD and freight-billing guide](/blog/epod-fastag-eway-bill-billing-india) shows how that evidence reaches settlement. Storing base rate, base diesel, current diesel, and the formula id is an operating choice. It is not a promise that every old workbook will be rewritten.",
+          "[Freight rate intelligence](/intelligence/freight-rates) is the place to look at the base lane, with the limits of that product stated on the page. It is not a national diesel index and it is not a substitute for the clause. Owned fleet, contract fleet, and labeled network overflow keep their labels through the bill. A fuel clause does not turn a partner truck into a company truck.",
+        ],
+        exhibits: dieselClauseExhibits["How settlement uses the clause"],
+      },
+      {
+        heading: "Nineteen checks before you sign",
+        paragraphs: [
+          "Score the draft in the room with procurement, finance, and dispatch. Sixteen to nineteen, and the clause can go to legal. Under ten, you still have a rate argument waiting for the next diesel headline.",
+          "The checks cover the commercial base and distance basis, one formula, both directions and credit handling, incremental dead-band mechanics, cap and floor, rounding, review rhythm, holiday or missing-publication fallback, fixed or monthly rebasing, loading-date rule, exclusions, evidence and dispute timing, renewal reset, and the trip's own, contract, or overflow label.",
+          "A fuel clause is a small piece of arithmetic with a city, a date, and one formula. Plants that skip it do not save the diesel money. They pay it later inside a fatter base rate, with nothing to audit. If the lane is stable enough to contract, write the clause before the next diesel move, and keep toll, detention, and empty kilometres on their own lines. Start from [contract logistics](/logistics/contract-logistics).",
+        ],
+        exhibits: dieselClauseExhibits["Nineteen checks before you sign"],
+      },
+    ],
+    cta: { label: "Explore contract logistics", to: "/logistics/contract-logistics" },
+  },
+  {
+    slug: "fastag-mlff-gnss-tolling-india-freight",
+    title: "FASTag, barrier-free tolling, and GNSS: what Indian freight should plan for",
+    seoTitle: "FASTag, MLFF and GNSS Tolling for Indian Freight | ZAFTYS",
+    seoDescription:
+      "October 2026 guide to Indian highway tolling: FASTag is live, barrier-free MLFF is at named plazas, and GNSS is not the national billing system.",
+    category: "operations",
+    tags: ["FASTag", "MLFF", "Barrier-Free Tolling", "GNSS Tolling", "Toll Reconciliation", "Freight Audit", "Industrial FTL", "India"],
+    publishedAt: "2026-10-08",
+    updatedAt: "2026-10-08",
+    author: "ZAFTYS Operations & Supply Chain Research",
+    template: "deep-research",
+    subtitle:
+      "FASTag is the national system · MLFF is live at named plazas · GNSS distance billing has no rollout date",
+    summary:
+      "A freight bill can already show a FASTag debit. At a few plazas the truck no longer has to stop. Satellite pay-per-kilometre billing is written in the 2024 fee rules, and in July 2026 the government said it still has no timeline. This guide separates the three.",
+    readMinutes: 28,
+    heroImage: "/images/blog/fastag-mlff-gnss-tolling-india-freight.jpg",
+    heroAspectRatio: "16/9",
+    heroWidth: 1280,
+    heroHeight: 720,
+    heroAlt: "A goods truck passing under a barrier-free highway toll gantry on an Indian national highway",
+    kpis: tollGnssKpis,
+    takeaways: tollGnssTakeaways,
+    references: tollGnssReferences,
+    midCtas: [
+      {
+        afterHeading: "Barrier-free MLFF plazas: what changes on the road",
+        eyebrow: "The boom is not the bill",
+        title: "Check the lane before you rewrite the toll line",
+        body: "Share the corridor and the vehicle class. We will read the live FASTag practice first. A GNSS sentence stays out of the card until that section is actually operating.",
+        cta: { label: "Contract logistics", to: "/logistics/contract-logistics" },
+      },
+      {
+        afterHeading: "FASTag toll reconciliation on a freight bill",
+        eyebrow: "Plaza, class, trip",
+        title: "Put the toll debit on the same trip as the delivery",
+        body: "Bring one FASTag statement and the trip it belongs to. Owned trucks and overflow stay labeled. A gantry does not turn a partner tag into a company tag.",
+        cta: { label: "ZAFTYS TMS", to: "/zaftys-tms" },
+      },
+    ],
+    relatedSlugs: [
+      "diesel-surcharge-freight-contract-india",
+      "epod-fastag-eway-bill-billing-india",
+      "india-axle-load-gvw-limits-heavy-freight",
+      "5-hidden-cost-leaks-heavy-industrial-freight-tms-3pl-guide",
+      "industrial-tms-control-stack-india",
+    ],
+    faqs: [
+      {
+        question: "Is GNSS satellite tolling live on Indian highways?",
+        answer:
+          "No. On 30 July 2026 the government told the Lok Sabha that expert committees had asked for more deliberation on security, privacy, breach, and operational control, and that there was no timeline to replace plazas with satellite tolling. The live barrier-free project is multi-lane free flow, and it still uses FASTag.",
+      },
+      {
+        question: "How should FASTag toll reconciliation look on a freight bill?",
+        answer:
+          "The plaza or gantry, the time, the vehicle class, the issuer debit, and the trip. A round monthly toll allowance is not an audit. Toll also stays outside the diesel percent.",
+      },
+      {
+        question: "Does a barrier-free MLFF plaza charge by the kilometre?",
+        answer:
+          "No. The gantry is built so the vehicle need not stop, slow down, or stay in one lane. The user fee is still the FASTag fee for that plaza and vehicle class.",
+      },
+      {
+        question: "Does the 20 km toll waiver apply to trucks?",
+        answer:
+          "Only inside a GNSS user-fee system, and not to a national permit vehicle. The written rule is zero user fee for up to 20 km in each direction in a day on the same section. It is not a discount on today's plaza bills.",
+      },
+      {
+        question: "Will FASTag stop working when GNSS starts?",
+        answer:
+          "Not on the evidence available on 8 Oct 2026. The 2024 design put GNSS beside FASTag. The system being rolled out now still debits FASTag.",
+      },
+      {
+        question: "Does the ₹3,075 FASTag annual pass cover a commercial trailer?",
+        answer:
+          "No. The pass that took effect on 15 August 2025 is for non-commercial cars, jeeps, and vans. For 2026-27 it costs ₹3,075 and covers one year or 200 national highway plaza crossings, whichever is earlier.",
+      },
+      {
+        question: "What happens if the FASTag has no balance at an MLFF gantry?",
+        answer:
+          "The vehicle may pass, and the missed debit can become an electronic notice. Low balance is an operational failure, not a delay at a cash window.",
+      },
+      {
+        question: "Should a fleet fit AIS-140 NavIC units now for satellite tolls?",
+        answer:
+          "Not because of a current goods-vehicle order. The June 2024 IHMCL design pointed at an AIS-140 location device. The government has not set a fitment deadline for trailers.",
+      },
+    ],
+    sections: [
+      {
+        heading: "Three toll systems, and only one of them is the national default",
+        paragraphs: [
+          "A plant desk can hear three toll stories in one week. The transporter says the boom is gone. A circular says satellites will charge by the kilometre. Finance still has a FASTag statement with a plaza name and a rupee. Those are not the same system.",
+          "This is an operating guide, not legal advice. Use it to read a bill and a contract. Have counsel check any sentence you want to paste into a rate card, especially anything that mentions the 20 km rule.",
+          "On 8 Oct 2026 the national collection rail is still FASTag. The Press Information Bureau said on 22 July 2026 that more than 98% of user fee is collected that way. The Lok Sabha was told on 30 July 2026 that about 6.23 crore FASTags were active in June 2026. A debit runs through the plaza's toll software, the acquirer bank, NPCI as the central clearing house, and the issuer bank. If a bill cannot name that debit, it is not an electronic toll. It is an allowance.",
+          "Barrier-free multi-lane free flow is the change that NHAI and IHMCL are actually switching on. A gantry reads the tag and the number plate. The truck is not required to stop, slow down, or hold a lane. The fee is still the FASTag fee for that plaza. It is not a new per-kilometre law.",
+          "GNSS, the satellite distance system, was written into the National Highways Fee Rules in September 2024. In July 2026 the same ministry said expert committees want more work on security, privacy, breach, and operational control, and that there is no timeline to replace plazas with it. Treat GNSS as a rule you should be able to read. Do not treat it as the bill you are paying this month.",
+          "One exclusion belongs in the first screen. The FASTag annual pass, ₹3,075 for 2026-27, is for non-commercial cars, jeeps, and vans. It covers one year or 200 national-highway plaza crossings, whichever comes first. By June 2026 more than 77 lakh passes had been issued. It does not cover a goods trailer. If a lane proposal leans on that pass, send it back.",
+        ],
+        exhibits: tollGnssExhibits["Three toll systems, and only one of them is the national default"],
+      },
+      {
+        heading: "Why a four kilometre hop can still pay for sixty",
+        paragraphs: [
+          "The argument usually starts with a short diversion. The truck used a few kilometres of a national highway and the statement shows the full plaza fee. That can be correct under today's rules. It feels wrong because the fee is for a section, not for a metre of asphalt.",
+          "The 2008 fee rules, as the 30 July 2026 reply restated them, say another plaza is not normally established within 60 km on the same section in the same direction. The authority can allow a closer plaza if it records the reasons. The 60 km figure is a spacing rule. It is not a measured queue, and it is not a promise that every truck stops every hour.",
+          "Hold one teaching rate so the shape is visible. It is not a 2026 multi-axle tariff. Call the rate R, ₹4.50 per km. Call the notified section 60 km. The section fee is 4.50 times 60, which is ₹270. A truck that uses 4 km of that section and a truck that uses all 60 km can both be charged ₹270 at the open plaza. An MLFF gantry at the same plaza can still charge ₹270. The boom is gone. The section is not.",
+          "A closed expressway that already charges from entry to exit is a different product. Do not force that corridor into the ₹270 example. Read the fee notification for the section you actually use.",
+          "This is also why the diesel clause must leave toll alone. The visual uses one clearly labelled teaching stack: diesel ₹22, toll ₹5, and tyre ₹4.50 per km. It does not claim a national toll share. Detention and the weighbridge stay in the [hidden cost leaks guide](/blog/5-hidden-cost-leaks-heavy-industrial-freight-tms-3pl-guide). The [diesel surcharge guide](/blog/diesel-surcharge-freight-contract-india) carries the wider workshop band and keeps the toll rupee on its own line.",
+        ],
+        exhibits: tollGnssExhibits["Why a four kilometre hop can still pay for sixty"],
+      },
+      {
+        heading: "Distance-based tolling: the GNSS rule, and who the 20 km waiver misses",
+        paragraphs: [
+          "The 2024 amendment is the sentence people quote when they say India has moved to pay-per-kilometre. Read the whole sentence. It applies under a GNSS user-fee system. In October 2026 that system is not the national operating bill.",
+          "As reported from the notification, a mechanical vehicle that is not a national permit vehicle gets zero user fee for up to 20 km of journey in each direction in a day on the same section. If the distance is more than 20 km, the fee follows the actual distance. A national permit vehicle is outside that zero. Most interstate plant trucks are national permit vehicles. The waiver is the wrong prize to put in a freight negotiation.",
+          "On the same workshop rate, write it this way, and only with the label that the section is actually operating as GNSS. A national permit truck pays R times the actual kilometres. Four kilometres is ₹18. Sixty kilometres is ₹270, the same as the old section fee if the whole section is used. Another mechanical vehicle pays R times the kilometres above 20. Four kilometres is ₹0. Twenty-five kilometres is ₹22.50. Sixty kilometres is ₹180.",
+          "The 20 km is not a national daily free slab. It is per direction, per day, on that section. Confirm the gazette, listed in later amendment chains as G.S.R. 556(E) dated 9 September 2024, before a contract copies the number. [Indian Express](https://indianexpress.com/article/business/national-highway-free-travel-up-to-20-km-for-satellite-system-equipped-vehicles-9560711/) and The Hindu reported the rule on 10 September 2024. The Express report also said the tender for free-flow GNSS lanes had not been finalised.",
+          "The same reported rule says a lane may be kept for a vehicle with a valid GNSS on-board unit. A vehicle that enters it without one pays two times the user fee at that plaza. On this workshop section that is ₹540. It is not a new criminal schedule, and it does not apply at a plaza that has no such lane. Do not invent a blacklist fine for a disconnected tracker. The failure mode that exists now is a FASTag with no balance, a dead tag, or the wrong vehicle class.",
+        ],
+        exhibits: tollGnssExhibits["Distance-based tolling: the GNSS rule, and who the 20 km waiver misses"],
+      },
+      {
+        heading: "Barrier-free MLFF plazas: what changes on the road",
+        paragraphs: [
+          "On 30 July 2026 the government said MLFF had been awarded at 17 plazas and was live at five: Choryasi on NH-48 in Gujarat, Mundka on UER-II in Delhi, Gharaunda on NH-44 in Haryana, and Manoharpura and Daulatpura on NH-48 in Rajasthan. Another 104 plazas had been identified. That is a phased list, not a national switch-off.",
+          "The 1 October 2026 release then names a wider live set. It adds Shahjahanpur on the Delhi to Jaipur section and Paranur on the Tambaram to Tindivanam section in Tamil Nadu, and it still names Chorayasi, Mundka, Daulatpura, Manoharpura, and Gharaunda. The July annex had listed Paranur against NH-45. The October note says NH-179B. Cite the date of the note you are using. Do not freeze either highway number into a contract.",
+          "What the driver feels is the missing stop. What finance should feel is the same debit, plus a new way to miss it. The October note tells users to keep a working FASTag with enough balance so the pass does not become an electronic notice. There may be no booth where a low balance can be repaired in cash.",
+          "Do not turn that into a saved-minute or saved-litre claim. The ministry says the aim is less congestion, less fuel, and less delay. It does not publish a litre per stop or a minute per 500 km. A queue that was never there cannot be saved. A queue that was there is a local measurement, not a national constant.",
+          "e-Way Bill validity does not grow because the truck kept its speed. A gantry is not a new expiry law. Vehicle class still matters twice: once for the toll debit, and once for the legal weight in the [axle and GVW guide](/blog/india-axle-load-gvw-limits-heavy-freight).",
+        ],
+        exhibits: tollGnssExhibits["Barrier-free MLFF plazas: what changes on the road"],
+      },
+      {
+        heading: "The GNSS on-board unit that was designed, and not yet ordered",
+        paragraphs: [
+          "In June 2024 NHAI and IHMCL described a hybrid. FASTag lanes and GNSS lanes would run together. A vehicle with an on-board unit would use a free-flow lane. The unit in that design was a fully compliant AIS-140 vehicle-location device, mapped to the existing FASTag, sending anonymised time and location pings. Pings off the tolled highway were meant to be discarded. Cameras stayed in the design because a unit can fail.",
+          "That paper is the source of the NavIC and AIS-140 sentences now circulating in freight decks. It is a design. It is not an order, issued in 2026, to fit every trailer before the next trip. By July 2026 the government had chosen to extend barrier-free FASTag gantries and had declined to give a GNSS timetable.",
+          "Buy the thing the live system can already punish you for missing. One tag per goods vehicle. The class on the tag matching the registration and the body. A balance that survives the lane. A person who owns an electronic notice the day it arrives. Do not buy a special toll unit for the fleet because a 2024 expression of interest described one.",
+        ],
+        exhibits: tollGnssExhibits["The GNSS on-board unit that was designed, and not yet ordered"],
+      },
+      {
+        heading: "FASTag toll reconciliation on a freight bill",
+        paragraphs: [
+          "The clause fails in the same place a diesel clause fails. If the only record is a monthly round number, nobody can tell a real gantry from a guess. The transporter should show the plaza or gantry, the time, the vehicle and class, the issuer debit, and the trip those kilometres belonged to.",
+          "A three-way toll match is the statement, the vehicle class, and the trip. It is not a second copy of the delivery match. FASTag can show that a truck passed a point. It does not show that the customer accepted the goods. The [billing guide](/blog/epod-fastag-eway-bill-billing-india) already draws that line. Keep it.",
+          "[ZAFTYS TMS](/zaftys-tms) is where the debit can sit on the same trip as the weight and the delivery. That is an operating choice. It is not a claim that every Indian gantry already pushes a live feed into the product. Owned fleet, contract fleet, and labeled overflow keep their labels. A partner tag does not become a company tag because the boom was removed.",
+          "If the lane is contracted, write the toll as its own line on the rate card. Say whether it is reimbursed from the statement or included in the rate. Do not write 'toll as per satellite' until the section is named and operating.",
+        ],
+        exhibits: tollGnssExhibits["FASTag toll reconciliation on a freight bill"],
+      },
+      {
+        heading: "Twenty checks: do now, wait, and do not sign",
+        paragraphs: [
+          "Score the first ten with procurement, finance, and the person who tops up the tags. Eight to ten, and the live toll line can go into the contract. Under six, you still have a monthly argument with a better gantry in front of it.",
+          "The second ten are for the day a section is notified and operating as GNSS. Until that day they stay out. A rate card that grants every truck 20 free kilometres, or that demands a NavIC unit next month, is ahead of the system that is billing you.",
+          "Start with the statement you already have. Name the plaza, match the class, and keep toll out of diesel. Add a barrier-free plaza to the lane only when it is on the current live list. Leave the satellite sentence for the gazette, not for this month's bill.",
+          "A freight desk does not need a satellite story to tighten toll. It needs the right tag, the right class, a debit that names the place, and a contract line that keeps toll out of diesel. Fit the clause to the system billing the truck this month.",
+        ],
+        exhibits: tollGnssExhibits["Twenty checks: do now, wait, and do not sign"],
+      },
+    ],
+    cta: { label: "Explore ZAFTYS TMS", to: "/zaftys-tms" },
   },
 ];
 

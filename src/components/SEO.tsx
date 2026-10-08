@@ -5,6 +5,8 @@ interface SEOProps {
   description: string;
   canonical?: string;
   image?: string;
+  imageWidth?: number;
+  imageHeight?: number;
   type?: string;
   schema?: Record<string, unknown> | Record<string, unknown>[];
   noindex?: boolean;
@@ -38,6 +40,8 @@ const SEO = ({
   description,
   canonical,
   image = DEFAULT_OG_IMAGE,
+  imageWidth,
+  imageHeight,
   type = "website",
   schema,
   noindex = false,
@@ -51,6 +55,8 @@ const SEO = ({
   const imageUrl = image.startsWith("http") ? image : `${BASE_URL}${image}`;
   const showCanonical = canonical != null || !robotsContent;
   const isDefaultOg = image === DEFAULT_OG_IMAGE || imageUrl.endsWith(DEFAULT_OG_IMAGE);
+  const resolvedImageWidth = imageWidth ?? (isDefaultOg ? 1200 : undefined);
+  const resolvedImageHeight = imageHeight ?? (isDefaultOg ? 630 : undefined);
 
   return (
     <Helmet>
@@ -66,11 +72,11 @@ const SEO = ({
       <meta property="og:description" content={description} />
       <meta property="og:url" content={showCanonical ? pageUrl : BASE_URL} />
       <meta property="og:image" content={imageUrl} />
-      {isDefaultOg ? (
-        <>
-          <meta property="og:image:width" content="1200" />
-          <meta property="og:image:height" content="630" />
-        </>
+      {resolvedImageWidth ? (
+        <meta property="og:image:width" content={String(resolvedImageWidth)} />
+      ) : null}
+      {resolvedImageHeight ? (
+        <meta property="og:image:height" content={String(resolvedImageHeight)} />
       ) : null}
       {publishedTime ? <meta property="article:published_time" content={publishedTime} /> : null}
       {modifiedTime ? <meta property="article:modified_time" content={modifiedTime} /> : null}
