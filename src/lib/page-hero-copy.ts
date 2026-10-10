@@ -52,9 +52,9 @@ export const pageHeroCopy = {
       "We haul for verticals where the wrong body class or a missed gate costs more than the rate. Transportation first - not a three-product brochure per industry.",
   },
   partner: {
-    badge: "Fleet partners",
-    h1: "Put your trucks on the ZAFTYS Network.",
-    lead: "Join as labeled network capacity. Find loads on corridors you already run via TranZfort. Search is free. Broker fee on booked loads. Verification is not optional: papers, insurance, and a real operating pattern.",
+    badge: "ZAFTYS Partner",
+    h1: "Partner with ZAFTYS. Run loads, or own the truck we help operate.",
+    lead: "Put trucks you already run on TranZfort, or enquire about an operating partnership around a truck you own.",
   },
   about: {
     badge: "About ZAFTYS",

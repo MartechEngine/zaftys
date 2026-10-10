@@ -53,9 +53,9 @@ export const pageSeo = {
       "Vertical desks for plant windows, axle reality, and body classes in India. Quote by industry.",
   },
   partner: {
-    title: "Become a Partner | Register Fleet on ZAFTYS Network | ZAFTYS",
+    title: "Become a Partner | Fleet Network or Truck Ownership | ZAFTYS",
     description:
-      "Verified network capacity in India. TranZfort loads. Search free; broker fee on booked loads.",
+      "Become a ZAFTYS partner in India. Put trucks you already run on TranZfort, or enquire about an operating partnership around a truck you own.",
   },
   about: {
     title: "About ZAFTYS | Industrial Freight Desk, Fleet & TMS | ZAFTYS",

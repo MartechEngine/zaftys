@@ -9,7 +9,7 @@ export const heroMailSubjects = {
   industryQuote: (vertical: string) => `${vertical} logistics quote`,
   about: "Partnership inquiry",
   contact: "General inquiry",
-  partner: "TranZfort partner inquiry",
+  partner: "ZAFTYS partner inquiry",
   careers: "Careers inquiry",
   resources: "Logistics question",
 } as const;
@@ -28,7 +28,7 @@ export const heroMailBodies = {
   about:
     "Hi ZAFTYS,\n\nI'd like to explore working together.\n\nCompany:\nWhat we ship:\n\n",
   partner:
-    "Hi ZAFTYS,\n\nI have a question about joining TranZfort as a transport partner.\n\nCompany:\nFleet size:\nCorridors:\n\n",
+    "Hi ZAFTYS,\n\nI have a question about becoming a ZAFTYS partner (fleet / TranZfort or truck ownership).\n\nPath:\nCompany:\nFleet size or capital band:\nCorridors:\n\n",
   careers:
     "Hi ZAFTYS,\n\nI have a question about careers at ZAFTYS.\n\n",
   resources:
@@ -60,7 +60,7 @@ export const heroCtaGuide = {
   industryDetail: { primary: "Get a Quote → email", secondary: "Talk to Our Team → /contact" },
   about: { primary: "Work With ZAFTYS → email", secondary: "Transportation → /logistics" },
   contact: { primary: "Email Our Team → email", secondary: "Send a Message → form" },
-  partner: { primary: "Register Your Fleet → form", secondary: "Partner Inquiry → email" },
+  partner: { primary: "I already own trucks → #partner-form", secondary: "Explore truck ownership → #partner-form" },
   careers: { primary: "View Open Positions → anchor", secondary: "Email HR Team → email" },
   resources: { primary: "Browse Articles → anchor", secondary: "Ask a Question → email" },
 } as const;
