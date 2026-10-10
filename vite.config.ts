@@ -1,6 +1,45 @@
+import type { IncomingMessage, ServerResponse } from "http";
+import type { Plugin } from "vite";
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react-swc";
 import path from "path";
+
+function readRequestBody(req: IncomingMessage): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const chunks: Buffer[] = [];
+    req.on("data", (chunk) => chunks.push(Buffer.isBuffer(chunk) ? chunk : Buffer.from(chunk)));
+    req.on("end", () => resolve(Buffer.concat(chunks).toString("utf8")));
+    req.on("error", reject);
+  });
+}
+
+/** Vite cannot run PHP. Local POST /api/partner.php otherwise returns source and the form errors. */
+function mockPartnerApiInDev(): Plugin {
+  return {
+    name: "mock-partner-api-dev",
+    configureServer(server) {
+      server.middlewares.use(async (req: IncomingMessage, res: ServerResponse, next) => {
+        const url = req.url?.split("?")[0];
+        if (req.method !== "POST" || url !== "/api/partner.php") {
+          next();
+          return;
+        }
+        res.setHeader("Content-Type", "application/json");
+        try {
+          const raw = await readRequestBody(req);
+          JSON.parse(raw || "{}");
+        } catch {
+          res.statusCode = 400;
+          res.end(JSON.stringify({ success: false, error: "Invalid request" }));
+          return;
+        }
+        console.info("[dev] Partner enquiry accepted locally. Mail is sent only on zaftys.com.");
+        res.statusCode = 200;
+        res.end(JSON.stringify({ success: true, message: "Application submitted" }));
+      });
+    },
+  };
+}
 
 function injectGaSnippet() {
   return {
@@ -30,7 +69,7 @@ export default defineConfig(() => ({
     host: "::",
     port: 5173,
   },
-  plugins: [react(), injectGaSnippet()],
+  plugins: [react(), injectGaSnippet(), mockPartnerApiInDev()],
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),

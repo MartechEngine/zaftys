@@ -91,7 +91,7 @@ export const WHATSAPP_TMS_DEMO_MESSAGE =
   "Hi ZAFTYS, I'd like a ZAFTYS TMS demo.\n\nCompany:\nRole:\nUse case (dispatch / ePOD / shipper portal):\n";
 
 export const WHATSAPP_PARTNER_MESSAGE =
-  "Hi ZAFTYS, I want to register as a transport partner.\n\nCompany:\nFleet size / body classes:\nCorridors:\n";
+  "Hi ZAFTYS, I want to talk about becoming a partner (fleet / TranZfort or truck ownership).\n\nPath:\nCompany:\nFleet size or capital band:\nCorridors:\n";
 
 /** Vertical quote prefills - keep in sync with industry desk language. */
 export const whatsappIndustryPrefill = {
