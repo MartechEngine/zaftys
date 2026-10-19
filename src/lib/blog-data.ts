@@ -254,7 +254,7 @@ export const blogPosts: readonly BlogPost[] = [
         afterHeading: "Eight steps to normalise a quote",
         eyebrow: "One sheet, every bidder",
         title: "Normalise the bids before you crown L1",
-        body: "Send the lane, the vehicle class, and whether toll sits inside the rate. The quotations are lined up on one fuel city, one detention clock, and one hamali rule.",
+        body: "Send the lane, the vehicle class, and whether toll sits inside the rate. The quotations are lined up on one fuel city, one detention clock, and one handling rule.",
         cta: { label: "Contract logistics", to: "/logistics/contract-logistics" },
       },
       {

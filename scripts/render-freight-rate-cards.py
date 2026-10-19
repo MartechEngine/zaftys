@@ -168,10 +168,10 @@ def fixed_card() -> None:
 def backhaul_card() -> None:
     img, draw = new_canvas()
     title_block(draw, "Corridor backhaul multiplier", "TRADE IMBALANCE COEFFICIENT")
-    formula_bar(draw, "beta  =  1  +  (khali probability  x  alpha)", px(176), 100)
+    formula_bar(draw, "beta  =  1  +  (empty probability  x  alpha)", px(176), 100)
     draw.text(
         (px(48), px(300)),
-        "alpha is empty-leg cost as a share of loaded running cost. This dossier uses 0.40 to 0.70.",
+        "Pricing adjustment, not a measured empty-leg invoice. Alpha is an assumed 0.40 to 0.70.",
         font=font(24),
         fill=NAVY,
     )
@@ -193,7 +193,7 @@ def backhaul_card() -> None:
         draw.rounded_rectangle((bar_left, y + px(44), bar_left + bw, y + px(78)), radius=px(8), fill=color)
         draw.text((bar_left + bar_max + px(16), y + px(38)), f"{value:.2f}", font=val_f, fill=NAVY)
         y += px(140)
-    draw.text((px(48), px(920)), "Archetypes only. This article prices Jamshedpur to Pune at beta 1.05, not 1.30.", font=font(24), fill=NAVY)
+    draw.text((px(48), px(920)), "Illustrative pricing factors. This article uses 1.05 for Jamshedpur to Pune, not 1.30.", font=font(24), fill=NAVY)
     save_and_stamp(img, "freight-formula-backhaul.png")
 
 
@@ -218,8 +218,8 @@ def engine_card() -> None:
         draw.text((x0 + (tw - text_width(draw, body, bf)) // 2, top + px(78)), body, font=bf, fill=WHITE)
     lines = [
         "Subtotal   Rs 1,00,266.80",
-        "x  1.12 margin (12%)   =   Rs 1,12,298.82",
-        "x  1.05 backhaul beta   =   Rs 1,17,913.76",
+        "x  1.12 markup on cost   =   Rs 1,12,298.82",
+        "x  1.05 pricing adjustment   =   Rs 1,17,913.76",
     ]
     y = px(370)
     draw.rounded_rectangle((px(48), y, W - px(48), y + px(280)), radius=px(18), fill=NAVY)
@@ -252,7 +252,7 @@ def process_card() -> None:
         ("01", "Base fuel index", "One city. One date.\nAttach the print."),
         ("02", "Toll inclusions", "Named plaza list,\nor FASTag actuals."),
         ("03", "Detention windows", "One free-time clock.\nAdd your gate history."),
-        ("04", "Hamali and lashing", "A schedule.\nNot 'as applicable'."),
+        ("04", "Handling and lashing", "A schedule.\nNot 'as applicable'."),
         ("05", "Transit SLAs", "Locked route\nand a time cap."),
         ("06", "Weight tolerance", "0.2% to 0.3%.\nNot the 5% GVW band."),
         ("07", "Working capital", "Gross up to the day\naccounts payable pays."),
@@ -312,7 +312,7 @@ def waterfall_card() -> None:
     rows = [
         ("B headline", "Rs 2,950 x 34 MT", 0, 100300, BLUE),
         ("+ tolls", "Rs 13,272", 100300, 113572, (194, 65, 12, 255)),
-        ("+ hamali", "Rs 3,400", 113572, 116972, AMBER),
+        ("+ handling", "Rs 3,400", 113572, 116972, AMBER),
         ("+ detention", "Rs 20,000", 116972, 136972, (146, 64, 14, 255)),
         ("+ credit", "Rs 2,307 at 16%", 136972, 139279, (180, 83, 9, 255)),
         ("B landed cost", "After the email extras", 0, 139279, (8, 47, 92, 255)),
