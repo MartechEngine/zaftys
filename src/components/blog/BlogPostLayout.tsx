@@ -107,7 +107,7 @@ export function BlogPostLayout({ post }: BlogPostLayoutProps) {
 
   return (
     <>
-      <article className="section-padding bg-white">
+      <article className="bg-white pb-12 pt-28 md:pb-16 md:pt-32">
         <div className="container mx-auto container-padding max-w-7xl">
           <nav aria-label="Breadcrumb" className="mb-8 text-sm text-muted-foreground">
             <ol className="flex flex-wrap items-center gap-2">

@@ -35,6 +35,12 @@ import {
   tollGnssTakeaways,
   tollGnssReferences,
 } from "@/lib/blog-exhibits-toll-gnss";
+import {
+  freightRateKpis,
+  freightRateReferences,
+  freightRateTakeaways,
+} from "@/lib/blog-exhibits-freight-rates";
+import { freightRateFaqs, freightRateSections } from "@/lib/blog-post-freight-rates";
 
 export type BlogCategory = "operations" | "industries" | "technology";
 
@@ -209,6 +215,69 @@ export const blogCategoryLabels: Record<BlogCategory, string> = {
 };
 
 export const blogPosts: readonly BlogPost[] = [
+  {
+    slug: "truck-freight-rates-india-cost-rate-benchmarking-guide",
+    title: "How to Calculate Truck Freight Rates in India: A Complete Cost and Rate Benchmarking Guide",
+    seoTitle: "Truck Freight Rate per km in India | ZAFTYS",
+    seoDescription:
+      "Work out truck transport charges per km and per tonne for a full truck load in India. Diesel, toll, tyres, and fixed cost, then benchmark the quote.",
+    category: "operations",
+    tags: [
+      "Freight rate per km",
+      "Cost per tonne",
+      "Full truck load",
+      "Truck transport charges",
+      "Freight benchmarking",
+      "Diesel and toll",
+      "Backhaul",
+      "India",
+    ],
+    publishedAt: "2026-10-19",
+    updatedAt: "2026-10-19",
+    author: "ZAFTYS Operations & Supply Chain Research",
+    template: "deep-research",
+    subtitle:
+      "Freight rate calculation · ₹/km, ₹/MT, and lump sum · NHAI toll · Backhaul · Net landed cost per tonne",
+    summary:
+      "A truck freight rate in India is a cost stack plus a lane factor, not the lowest number in an inbox. This dossier prices diesel, AdBlue, toll, tyres, and standing cost, then normalises two Jamshedpur to Pune bids onto one net landed cost.",
+    readMinutes: 32,
+    heroImage: "/images/blog/truck-freight-rates-india-cost-benchmark.jpg",
+    heroAspectRatio: "16/9",
+    heroWidth: 1280,
+    heroHeight: 720,
+    heroAlt: "A multi-axle flatbed loaded with steel coils approaching an Indian highway toll plaza, with a steel plant on the horizon",
+    kpis: freightRateKpis,
+    takeaways: freightRateTakeaways,
+    references: freightRateReferences,
+    midCtas: [
+      {
+        afterHeading: "Eight steps to normalise a quote",
+        eyebrow: "One sheet, every bidder",
+        title: "Normalise the bids before you crown L1",
+        body: "Share the lane, the vehicle class, and whether toll sits inside the rate. We read the quotes against one fuel city, one detention clock, and one hamali rule.",
+        cta: { label: "Contract logistics", to: "/logistics/contract-logistics" },
+      },
+      {
+        afterHeading: "The four-stage rate engine",
+        eyebrow: "Cost, then margin, then the lane",
+        title: "Put the corridor on a card you can rebuild",
+        body: "A dedicated fleet on a repeating lane should carry a rate that still makes sense when the gate slips or diesel moves. Overflow stays labeled.",
+        cta: { label: "Dedicated fleet", to: "/logistics/dedicated-fleet" },
+      },
+    ],
+    relatedSlugs: [
+      "diesel-surcharge-freight-contract-india",
+      "reduce-empty-return-trips",
+      "5-hidden-cost-leaks-heavy-industrial-freight-tms-3pl-guide",
+      "fastag-mlff-gnss-tolling-india-freight",
+      "india-axle-load-gvw-limits-heavy-freight",
+      "container-trucking-logistics-india",
+      "spot-market-vs-dedicated-fleet-india",
+    ],
+    faqs: freightRateFaqs,
+    sections: freightRateSections,
+    cta: { label: "Explore contract logistics", to: "/logistics/contract-logistics" },
+  },
   {
     slug: "tms-for-heavy-haul",
     title: "TMS Beyond GPS: Dispatch, Documents, and Plant Windows",
@@ -996,7 +1065,7 @@ export const blogPosts: readonly BlogPost[] = [
         heading: "Measure before you \"optimise\"",
         paragraphs: [
           "If you don't measure empty kilometres, you'll keep arguing stories. Start with a few simple KPIs:",
-          "A lane can look fine on outbound rate and still lose money once you allocate empty return cost honestly. Practitioners writing about [backhaul optimisation in Indian trucking](https://www.ptccorp.in/backhaul-optimisation-indian-trucking-empty-miles-reduction-ftl-india/) keep coming back to the same idea: track empty km %, then redesign corridors.",
+          "A lane can look fine on outbound rate and still lose money once you allocate empty return cost honestly. Practitioners writing about [backhaul optimisation in Indian trucking](https://www.ptccorp.in/backhaul-optimisation-indian-trucking-empty-miles-reduction-ftl-india/) keep coming back to the same idea: track empty km %, then redesign corridors. The rupee form of that empty leg, beta, is in the [truck freight rate guide](/blog/truck-freight-rates-india-cost-rate-benchmarking-guide).",
         ],
         bullets: [
           "Empty kilometre percentage: empty km divided by total km on a corridor or fleet cohort.",
@@ -1345,7 +1414,7 @@ export const blogPosts: readonly BlogPost[] = [
           "This is a compliance and plant-ops guide for logistics heads, dispatch managers, fleet operators, procurement, and safety officers moving steel, cement, minerals, machinery, and liquid bulk across India. Use it before an RFP rewrite or a weighbridge walk. It is not a licence brochure and not legal advice.",
           "The core failure mode is simple. A trailer can sit under overall gross vehicle weight (GVW) and still fail on a single axle group under India axle load norms. Highway checking posts and RTO checks weigh those groups. The overloading fine is only the start. Offloading, cargo damage, plant re-queuing, and e-Way Bill weight fights follow.",
           "MoRTH revised axle-load framing (commonly referenced via S.O. 3467(E) and S.O. 4353(E)) and Section 194 of the Motor Vehicles (Amendment) Act are the legal rails for heavy freight shippers. Published GVW and axle load bands in this article are starting points for plant talk. The registration certificate and the latest gazette win. Do not hard-code last year's circular as eternal truth.",
-          "Axle load compliance is not a highway surprise. It is a gate, tare, bay, gross, and document loop on heavy FTL. The rest of this guide is how to test that loop, by industry and with a printable checklist.",
+          "Axle load compliance is not a highway surprise. It is a gate, tare, bay, gross, and document loop on heavy FTL. The rest of this guide is how to test that loop, by industry and with a printable checklist. How payload then becomes a rupee per tonne-km is in the [truck freight rate guide](/blog/truck-freight-rates-india-cost-rate-benchmarking-guide).",
         ],
       },
       {
@@ -2784,7 +2853,7 @@ export const blogPosts: readonly BlogPost[] = [
             heading: "Fuel and detention without folklore",
             paragraphs: [
               "Derive diesel share from the lane's diesel ₹/km divided by basic freight ₹/km. Then lock that number, the base city, price source and review date in a written [diesel surcharge clause](/blog/diesel-surcharge-freight-contract-india). Detention free time and hourly rates must use the same gate clocks that opened the boom. 'We waited twelve hours' is not an input.",
-              "Post fuel surcharge and detention as separate lines when the contract separates them. Burying both inside base freight is how disputes come back after you thought matching was done.",
+              "Post fuel surcharge and detention as separate lines when the contract separates them. Burying both inside base freight is how disputes come back after you thought matching was done. The full stack, from diesel to net landed cost per tonne, is in the [truck freight rate guide](/blog/truck-freight-rates-india-cost-rate-benchmarking-guide).",
             ],
           },
         ],
@@ -2976,7 +3045,7 @@ export const blogPosts: readonly BlogPost[] = [
         heading: "The Invisible Drain: Macro Economics of Indian Industrial Freight",
         paragraphs: [
           "In enterprise Indian manufacturing - spanning steel mills, cement plants, mining concessions, chemical refineries, and heavy engineering facilities - logistics is frequently treated as a simple procurement exercise. Sourcing heads negotiate aggressively over freight rates, battling across quarterly tenders to shave ₹30 per tonne or ₹1.50 per kilometre off transporter bids. Yet, when CFOs review the annual financial statements, total logistics spend remains stubbornly high, consuming between 6% and 14% of gross revenue.",
-          "The reason for this persistent gap is straightforward: base freight rates represent only 30% to 40% of the true Total Cost of Logistics (TCL). The remaining 60% to 70% of logistics capital drains away invisibly beneath the surface. It leaks through chaotic plant gate detention, uncalibrated weighbridge shrinkage, in-transit inventory holding costs, unmonitored spot market surge rates, and 45-day paper invoice audit disputes.",
+          "The reason for this persistent gap is straightforward: base freight rates represent only 30% to 40% of the true Total Cost of Logistics (TCL). The remaining 60% to 70% of logistics capital drains away invisibly beneath the surface. It leaks through chaotic plant gate detention, uncalibrated weighbridge shrinkage, in-transit inventory holding costs, unmonitored spot market surge rates, and 45-day paper invoice audit disputes. How that base rate is built, from diesel to net landed cost per tonne, is in the [truck freight rate guide](/blog/truck-freight-rates-india-cost-rate-benchmarking-guide).",
           "Managing heavy industrial logistics by looking only at base freight rates is like steering a vessel by looking only at the tip of an iceberg. To protect operating margins, enterprise supply chain leaders must measure, control, and plug every hidden seam across the physical and digital supply chain.",
         ],
         subsections: [
@@ -3348,7 +3417,7 @@ export const blogPosts: readonly BlogPost[] = [
         heading: "What actually sits inside a truck rupee",
         paragraphs: [
           "Read this before any formula. People who skip it put toll and diesel in the same sentence and then argue for a year. The fuel clause may touch diesel inside base freight. It does not touch FASTag, tyre and repair, detention after free time, or an empty return.",
-          "Those other leaks already have their own pages. Gate hours sit on the plant TAT guide. Deadhead sits on the [empty return guide](/blog/reduce-empty-return-trips). The wider bill, from yard dwell to weighbridge variance, sits on the [cost leaks guide](/blog/5-hidden-cost-leaks-heavy-industrial-freight-tms-3pl-guide). This page is only the diesel line. If you let it swallow the rest, you will not be able to tell a fuel hike from a bad gate.",
+          "Those other leaks already have their own pages. Gate hours sit on the plant TAT guide. Deadhead sits on the [empty return guide](/blog/reduce-empty-return-trips). The wider bill, from yard dwell to weighbridge variance, sits on the [cost leaks guide](/blog/5-hidden-cost-leaks-heavy-industrial-freight-tms-3pl-guide). The lane rate that diesel sits inside is in the [truck freight rate guide](/blog/truck-freight-rates-india-cost-rate-benchmarking-guide). This page is only the diesel line. If you let it swallow the rest, you will not be able to tell a fuel hike from a bad gate.",
           "A useful way to set the share, before you copy anyone's headline, is litres on your own lane. The earlier workshop bench puts diesel at about ₹19 to ₹24 per km inside a variable band of about ₹26 to ₹37 per km. At a Delhi price near ₹95 per litre, ₹19 per km is about 0.20 litre per km, roughly 5 km per litre. ₹24 per km is about 0.25 litre per km, roughly 4 km per litre. If the contracted rate is ₹48 per km and diesel is ₹22 of that, diesel is about 46% of the rate. That 46% is a candidate for S. It is not 65%, and it is not 42%. Ask the transporter for litres per km on this body and this lane, then write the percent you both can defend.",
           "Three published shares still get quoted as if they were one number. They are not, and the donut above is not one of them. The donut is only the workshop variable split, and the slices add to 100% of that variable band. The published figures are different pies. NCAER, via Crisil in June 2026, puts fuel at about 42% of road transport cost. Crisil's April 2026 freight note puts fuel at nearly 50% to 60% of a transporter's operating expenses, and says a ₹5 per litre move needs about 2.5% to 2.8% on freight to hold margin. The AITWA circular of 19 May 2026 describes diesel as about 65% of truck running cost. Finance will reach for 42%. The transporter will reach for 65%. The contract has to say which denominator the percent uses.",
         ],
@@ -3579,7 +3648,7 @@ export const blogPosts: readonly BlogPost[] = [
           "The 2008 fee rules, as the 30 July 2026 reply restated them, say another plaza is not normally established within 60 km on the same section in the same direction. The authority can allow a closer plaza if it records the reasons. The 60 km figure is a spacing rule. It is not a measured queue, and it is not a promise that every truck stops every hour.",
           "Hold one teaching rate so the shape is visible. It is not a 2026 multi-axle tariff. Call the rate R, ₹4.50 per km. Call the notified section 60 km. The section fee is 4.50 times 60, which is ₹270. A truck that uses 4 km of that section and a truck that uses all 60 km can both be charged ₹270 at the open plaza. An MLFF gantry at the same plaza can still charge ₹270. The boom is gone. The section is not.",
           "A closed expressway that already charges from entry to exit is a different product. Do not force that corridor into the ₹270 example. Read the fee notification for the section you actually use.",
-          "This is also why the diesel clause must leave toll alone. The visual uses one clearly labelled teaching stack: diesel ₹22, toll ₹5, and tyre ₹4.50 per km. It does not claim a national toll share. Detention and the weighbridge stay in the [hidden cost leaks guide](/blog/5-hidden-cost-leaks-heavy-industrial-freight-tms-3pl-guide). The [diesel surcharge guide](/blog/diesel-surcharge-freight-contract-india) carries the wider workshop band and keeps the toll rupee on its own line.",
+          "This is also why the diesel clause must leave toll alone. The visual uses one clearly labelled teaching stack: diesel ₹22, toll ₹5, and tyre ₹4.50 per km. It does not claim a national toll share. Detention and the weighbridge stay in the [hidden cost leaks guide](/blog/5-hidden-cost-leaks-heavy-industrial-freight-tms-3pl-guide). The [diesel surcharge guide](/blog/diesel-surcharge-freight-contract-india) carries the wider workshop band and keeps the toll rupee on its own line. How that toll rupee enters a full trip rate is in the [truck freight rate guide](/blog/truck-freight-rates-india-cost-rate-benchmarking-guide).",
         ],
         exhibits: tollGnssExhibits["Why a four kilometre hop can still pay for sixty"],
       },

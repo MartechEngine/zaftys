@@ -193,7 +193,7 @@ export function DeepResearchBlogLayout({ post }: DeepResearchBlogLayoutProps) {
     <DeepResearchExhibitProvider>
       <div className="deep-research-blog min-w-0">
         <header className="deep-masthead text-white">
-          <div className="container mx-auto container-padding max-w-7xl pb-16 pt-10 md:pb-20 md:pt-12">
+          <div className="container mx-auto container-padding max-w-7xl pb-16 pt-28 md:pb-20 md:pt-32">
             <nav aria-label="Breadcrumb" className="mb-8 text-sm text-white/65">
               <ol className="flex flex-wrap items-center gap-2">
                 <li>
