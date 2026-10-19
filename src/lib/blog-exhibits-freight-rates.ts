@@ -7,15 +7,15 @@ import type { BlogExhibit, BlogKpi } from "@/lib/blog-data";
 export const freightRateKpis: readonly BlogKpi[] = [
   {
     value: "₹1.60-2.35",
-    label: "Workshop PTKM, long heavy haul",
+    label: "Illustrative PTKM window",
     detail:
-      "Net rupees per tonne-kilometre for a loaded multi-axle trip longer than 800 km, after a fair margin, on a corridor that is not a dead end. Not a ZAFTYS national index.",
+      "A planning window around this workshop, not a surveyed index. The 49T engine is ₹74.63/km after 12% and β 1.05, which is ₹2.19 on 34 tonnes. The edges are not fitted to a national sample.",
   },
   {
-    value: "48-56%",
-    label: "Diesel and DEF in this workshop",
+    value: "50.8%",
+    label: "Diesel plus DEF in this example",
     detail:
-      "Diesel plus DEF on the ₹63.46 pre-margin stack. The donut's 50 paise is diesel alone. Diesel plus DEF is about 51 paise. The 48% to 56% band is that pair. Crisil's 50% to 60% and AITWA's 65% are different pies.",
+      "₹32.21 of the ₹63.46 pre-margin rupee (₹31.73 diesel plus ₹0.48 DEF). The donut rounds diesel alone to 50 paise. Crisil and AITWA use other denominators.",
   },
   {
     value: "₹9.03/L",
@@ -47,18 +47,18 @@ export const freightRateTakeaways = [
   "A ₹/km bid, a ₹/MT bid, and a lump sum are not the same product. Normalise toll, detention, hamali, and credit before you rank them.",
   "On 19 Oct 2026 Delhi diesel was ₹95.20/L and Hyderabad was ₹104.23/L. Name the origin city. Do not freeze a tender on a pre-May ₹87 print.",
   "NHAI's 2007-08 base for a 4-to-6 axle vehicle is ₹3.45/km. The rupee on your FASTag file is the plaza notification after WPI, not that base.",
-  "Standing cost on the workshop pool is ₹13.15/km at 9,500 km a month and ₹20.82/km at 6,000 km. A 48-hour gate moves the rate before diesel does.",
-  "On the Jamshedpur to Pune workshop, the ₹2,950/MT bid looked ₹17,700 cheaper and landed ₹19,727 higher once toll, hamali, detention, and 60-day credit were put back.",
+  "The same ₹1,24,925 pool is ₹13.15/km at 9,500 km a month and ₹20.82/km at 6,000 km. Fewer kilometres raise fixed cost per kilometre. This is not a measured effect of one gate delay.",
+  "On the Jamshedpur to Pune workshop, B looked ₹17,700 cheaper and landed ₹19,727 higher. That gap holds only with this example's toll, hamali, 20-hour detention, and 16% credit.",
 ] as const;
 
 export const freightRateReferences = [
-  "Diesel prints for 19 Oct 2026: Delhi ₹95.20/L and Mumbai ₹97.83/L in the PPAC / IOCL metro series as republished that day ([fuelprice.co.in, 19 Oct 2026](https://fuelprice.co.in/news/petrol-diesel-prices-october-19-2026)). Hyderabad diesel ₹104.23/L the same day ([The Hindu BusinessLine](https://www.thehindubusinessline.com/fuel-prices/diesel-price-today/KbzeCKFB/hyderabad/), [Times of India](https://timesofindia.indiatimes.com/business/fuel-price/diesel-price/diesel-price-in-hyderabad)). Re-read the table on bill day.",
+  "Delhi diesel ₹95.20/L on 19 Oct 2026 is PPAC's own note, RSP at an IOCL outlet ([PPAC important news, 19 Oct 2026](https://ppac.gov.in/all-imp-news)). That figure is the observation date, not a permanent benchmark. Mumbai ₹97.83/L is a secondary reprint of the metro series the same day ([fuelprice.co.in](https://fuelprice.co.in/news/petrol-diesel-prices-october-19-2026)), not a second PPAC page. Hyderabad ₹104.23/L is a city retail reprint ([The Hindu BusinessLine](https://www.thehindubusinessline.com/fuel-prices/diesel-price-today/KbzeCKFB/hyderabad/), [Times of India](https://timesofindia.indiatimes.com/business/fuel-price/diesel-price/diesel-price-in-hyderabad)). Re-read the official table on bill day.",
   "[MoRTH S.O. 3467(E), 16 July 2018](https://taxguru.in/corporate-law/maximum-safe-axle-weight-transport-vehicles.html): safe axle weights under section 58 of the Motor Vehicles Act, 1988. GVW ceiling 49 tonnes rigid and 55 tonnes for semi-articulated trailers and truck-trailers. 5% GVW tolerance for section 113(3). Pneumatic suspension: +1 tonne per axle where marked.",
   "[National Highways Fee Rules, 2008, rule 4](https://indiankanoon.org/doc/61639226/) and [PIB restatement](https://www.pib.gov.in/PressReleasePage.aspx?PRID=1983060): 2007-08 base per km on a four-lane NH. Two-axle ₹2.20, three-axle ₹2.40, MAV (4 to 6 axles) ₹3.45, seven or more axles ₹4.20. Expressway multiple 1.25. Annual revision each 1 April under rule 5.",
   "Ganga Expressway toll from 29 Apr 2026, as stated by the UPEDA chief engineer and reported the same day: multi-axle ₹12.60/km, oversized ₹16.10/km, bus and truck ₹8.20/km. A state expressway tariff, not the NHAI base table.",
   "[CGST Rules, rule 138(10)](https://taxinformation.cbic.gov.in/content/html/tax_repository/gst/rules/cgst_rules/active/chapter16/rule138_v1.00.html): e-way bill validity is one day up to 200 km, then one more day per 200 km or part, for ordinary cargo. Over-dimensional cargo uses 20 km per day.",
   "[Carriage by Road Act, 2007](https://indiankanoon.org/doc/53171702/): goods forwarding note (section 8), common-carrier liability for loss, damage, and delay (sections 10 to 12). The Act does not set a hamali tariff.",
-  "Crisil, April 2026: fuel nearly 50% to 60% of transporter operating expenses. AITWA circular, 19 May 2026, as reported: diesel about 65% of running cost. Use one denominator. The diesel clause itself is in the diesel surcharge guide.",
+  "Crisil, April 2026, as reported in the trade press: fuel nearly 50% to 60% of transporter operating expenses. AITWA circular, 19 May 2026, as reported: diesel about 65% of running cost. Those are other denominators. This article does not reproduce the original Crisil note or the AITWA circular. The diesel clause itself is in the diesel surcharge guide.",
 ] as const;
 
 export const freightRateExhibits: Record<string, readonly BlogExhibit[]> = {
@@ -66,7 +66,7 @@ export const freightRateExhibits: Record<string, readonly BlogExhibit[]> = {
     {
       kind: "flow",
       caption: "Two rooms price the same truck. A contract card is the third room.",
-      source: "Operating picture for industrial FTL. The 8% to 15% broker band is a desk range, not a statutory cap.",
+      source: "Operating picture for industrial full truckload. An 8% to 15% broker illustration is unverified. It is not a measured average and not a statutory cap.",
       items: [
         {
           title: "Cost-plus",
@@ -99,7 +99,7 @@ export const freightRateExhibits: Record<string, readonly BlogExhibit[]> = {
         },
         {
           title: "Broker cut, if any",
-          body: "Two tiers can add 8% to 15% without supplying the trailer. Name the owner or label the 3PL.",
+          body: "An unverified illustration: two tiers at 8% to 15% without supplying the trailer. Name the owner or label the 3PL.",
           tone: "warm",
         },
       ],
@@ -123,7 +123,7 @@ export const freightRateExhibits: Record<string, readonly BlogExhibit[]> = {
       kind: "donut",
       caption: "What sits inside one pre-margin rupee on the 49T workshop. 100 paise, one denominator.",
       source:
-        "Rounded shares of ₹63.46 per km before margin. The 50 slice is diesel only (₹31.73 at Delhi on 19 Oct 2026, 3.0 km/L). Diesel plus DEF is about 51 paise of the same rupee. Standing ₹13.15. Toll ₹8.40. Tyre ₹3.40 plus maintenance ₹2.80. Bhatta ₹3.50 plus DEF ₹0.48. Not a Crisil pie and not a national index.",
+        "Rounded shares of this example's ₹63.46 per km before margin. The 50 slice is diesel only (₹31.73). Diesel plus DEF is ₹32.21, which is 50.8% of the same rupee. Standing ₹13.15. Toll ₹8.40. Tyre ₹3.40 plus maintenance ₹2.80. Bhatta ₹3.50 plus DEF ₹0.48. Not a Crisil pie, not a ZAFTYS fleet file, and not a national average.",
       slices: [
         { label: "Diesel", value: 50, color: zaftysViz.navy },
         { label: "Standing cost", value: 21, color: zaftysViz.primary },
@@ -136,7 +136,7 @@ export const freightRateExhibits: Record<string, readonly BlogExhibit[]> = {
       kind: "bars",
       caption: "Published fuel shares. Different denominators, so they are bars, not a second donut.",
       source:
-        "Crisil, April 2026: fuel nearly 50% to 60% of transporter operating expenses. AITWA circular, 19 May 2026: diesel about 65% of running cost. Do not average them into the 50 paise slice above.",
+        "Reported figures, other denominators. Crisil, April 2026: fuel nearly 50% to 60% of operating expenses. AITWA, 19 May 2026: diesel about 65% of running cost. Do not average them into the 50.8% of this example.",
       unit: "%",
       items: [
         { label: "Crisil operating expenses, low", value: 50 },
@@ -220,12 +220,12 @@ export const freightRateExhibits: Record<string, readonly BlogExhibit[]> = {
   "Why the same route gets different bids": [
     {
       kind: "tiles",
-      caption: "Four reasons a 30% spread can be honest and still be unauditable.",
-      source: "Desk pattern. The 14% to 18% credit rate is a workshop for unsecured transporter receivables, not an RBI scheme rate.",
+      caption: "Four causes that can hide inside one headline. The 30% spread below is a hypothetical.",
+      source: "Illustration, not a surveyed bid sample. The 14% to 18% credit rate is a workshop for unsecured receivables, not an RBI scheme rate.",
       items: [
         {
           title: "Who owns the asset",
-          body: "Owner, broker, and managed 3PL are different products. An 8% to 15% commission layer does not buy a trailer.",
+          body: "Owner, broker, and managed 3PL are different products. An unverified 8% to 15% layer does not buy a trailer.",
         },
         {
           title: "Where the truck goes next",
@@ -233,7 +233,7 @@ export const freightRateExhibits: Record<string, readonly BlogExhibit[]> = {
         },
         {
           title: "When you pay",
-          body: "₹1,18,000 at 16% for 75 extra days is about ₹3,893. It decides a close bid. It does not explain a 30% gap alone.",
+          body: "₹1,18,000 at 16% for 75 extra days is about ₹3,893. It can decide a close bid. It does not, alone, explain a hypothetical 30% gap.",
         },
         {
           title: "What your gate feels like",
@@ -247,7 +247,7 @@ export const freightRateExhibits: Record<string, readonly BlogExhibit[]> = {
       kind: "image",
       caption: "β = 1 + khali probability × α. The bars are the uplift above a full return load.",
       source:
-        "α is 0.40 to 0.70 of loaded running cost. Balanced trunk β 1.05 (p 0.10, α 0.50). Industrial headhaul β 1.30 (p 0.50, α 0.60). Deficit β 1.63 (p 0.90, α 0.70). The Jamshedpur engine uses β 1.05, not the 1.30 bar.",
+        "Simplified model. α is an assumed 0.40 to 0.70 of loaded running cost, not a measured empty-leg invoice. Balanced trunk β 1.05 (p 0.10, α 0.50). Industrial headhaul β 1.30. Deficit β 1.63. Jamshedpur uses 1.05. β is not a discount off the invoice, and it does not add a second toll file.",
       src: "/images/blog/freight-formula-backhaul.png",
       alt: "Backhaul formula beta equals 1 plus khali probability times alpha, with corridor results 1.05, 1.30, and 1.63",
     },
@@ -274,14 +274,14 @@ export const freightRateExhibits: Record<string, readonly BlogExhibit[]> = {
     {
       kind: "steps",
       caption: "Run every bid through the same eight steps. Rank NLCT, not the email subject.",
-      source: "Procurement SOP. Free time of 24 h load and 24 h unload is the standard this dossier writes down. Your plant may use another pair. It may not use a different pair per bidder.",
+      source: "Worked tender rules. Free time of 24 h load and 24 h unload is this example's contract pair, not a national plant standard. Do not give bidders different clocks.",
       items: [
         { title: "Origin fuel", body: "One city, one date, IOCL or PPAC. Attach the print." },
         { title: "Toll", body: "All-in on a named plaza list, or FASTag actuals. Not both, and not neither." },
         { title: "Detention", body: "One free-time clock and one ₹/hour. Add your own gate history." },
         { title: "Hamali", body: "Labour, lashing, tarpaulin, dunnage. As applicable is not a schedule." },
         { title: "Corridor", body: "Locked route, kilometre cap, transit cap that fits the e-way bill." },
-        { title: "Shortage", body: "0.2% to 0.3% of dispatch weight. Not the 5% GVW enforcement band." },
+        { title: "Shortage", body: "This example uses 0.2% to 0.3% of dispatch weight. A commercial clause, not a statute or an industry standard." },
         { title: "Credit", body: "Gross every bid up to the day accounts payable actually pays." },
         { title: "NLCT", body: "Normalised trip rupees divided by billed tonnes. Keep PTKM beside it." },
       ],
@@ -292,7 +292,7 @@ export const freightRateExhibits: Record<string, readonly BlogExhibit[]> = {
       kind: "image",
       caption: "B's headline, then the costs the email left off, then A's landed trip.",
       source:
-        "Workshop. Toll ₹13,272 is 26 planning plazas, not a counted gazette. Hamali ₹3,400. Detention is 20 hours at ₹1,000. Credit at 16% a year for 45 extra days on ₹1,16,972 is ₹2,307. A's normalised trip is ₹1,19,552. B lands at ₹1,39,279, which is ₹19,727 (14.2%) higher.",
+        "Illustrative workshop, not a market result. Toll ₹13,272 is 26 planning plazas, not a counted gazette. Hamali ₹3,400. Detention is 20 hours at ₹1,000, past this example's 24-hour free time. Credit at 16% for 30 extra days on A is ₹1,552, and for 45 extra days on ₹1,16,972 is ₹2,307. A lands at ₹1,19,552. B lands at ₹1,39,279, which is ₹19,727 higher. Change the assumptions and the gap moves.",
       src: "/images/blog/freight-bid-waterfall.png",
       alt: "Waterfall from Transporter B headline Rs 1,00,300 through toll, hamali, detention, and credit to Rs 1,39,279, beside Transporter A at Rs 1,19,552",
     },
@@ -307,8 +307,8 @@ export const freightRateExhibits: Record<string, readonly BlogExhibit[]> = {
     },
     {
       kind: "table",
-      caption: "Jamshedpur engine. Output ₹1,17,914, within ₹86 of Transporter A's lump sum.",
-      source: "Delhi ₹95.20, 3.0 km/L, DEF 3.6% at ₹40/L, toll ₹8.40/km, bhatta ₹3.50, tyre ₹3.40, maintenance ₹2.80, pool ₹1,24,925 over 9,500 km, 1,580 km, margin 12%, β 1.05.",
+      caption: "Illustrative Jamshedpur engine. Output ₹1,17,914, within ₹86 of Transporter A's lump sum. Not a fleet cost file.",
+      source: "Workshop inputs, not national averages: Delhi ₹95.20 on 19 Oct 2026, 3.0 km/L, DEF 3.6% at ₹40/L, outbound toll ₹8.40/km, bhatta ₹3.50, tyre ₹3.40, maintenance ₹2.80, pool ₹1,24,925 over 9,500 km, 1,580 km, margin 12%, β 1.05.",
       headers: ["Stage", "₹/km", "₹ on 1,580 km"],
       rows: [
         ["Fuel", "31.73", "50,133.40"],

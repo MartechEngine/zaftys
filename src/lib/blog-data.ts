@@ -218,9 +218,9 @@ export const blogPosts: readonly BlogPost[] = [
   {
     slug: "truck-freight-rates-india-cost-rate-benchmarking-guide",
     title: "How to Calculate Truck Freight Rates in India: A Complete Cost and Rate Benchmarking Guide",
-    seoTitle: "Truck Freight Rate per km in India | ZAFTYS",
+    seoTitle: "Truck Freight Rates in India per km | ZAFTYS",
     seoDescription:
-      "Work out truck transport charges per km and per tonne for a full truck load in India. Diesel, toll, tyres, and fixed cost, then benchmark the quote.",
+      "Compare full truckload freight quotations in India. Truck transport charges per kilometre and freight cost per tonne, from diesel, toll, and fixed cost.",
     category: "operations",
     tags: [
       "Freight rate per km",
@@ -233,13 +233,13 @@ export const blogPosts: readonly BlogPost[] = [
       "India",
     ],
     publishedAt: "2026-10-19",
-    updatedAt: "2026-10-19",
+    updatedAt: "2026-10-20",
     author: "ZAFTYS Operations & Supply Chain Research",
     template: "deep-research",
     subtitle:
       "Freight rate calculation · ₹/km, ₹/MT, and lump sum · NHAI toll · Backhaul · Net landed cost per tonne",
     summary:
-      "A truck freight rate in India is a cost stack plus a lane factor, not the lowest number in an inbox. This dossier prices diesel, AdBlue, toll, tyres, and standing cost, then normalises two Jamshedpur to Pune bids onto one net landed cost.",
+      "A truck freight rate in India is a cost stack plus a lane factor, not the lowest quotation in an inbox. This illustrative workshop prices diesel, AdBlue, toll, tyres, and standing cost, then normalises two Jamshedpur to Pune bids. It is not a national rate index.",
     readMinutes: 32,
     heroImage: "/images/blog/truck-freight-rates-india-cost-benchmark.jpg",
     heroAspectRatio: "16/9",
@@ -254,14 +254,14 @@ export const blogPosts: readonly BlogPost[] = [
         afterHeading: "Eight steps to normalise a quote",
         eyebrow: "One sheet, every bidder",
         title: "Normalise the bids before you crown L1",
-        body: "Share the lane, the vehicle class, and whether toll sits inside the rate. We read the quotes against one fuel city, one detention clock, and one hamali rule.",
+        body: "Send the lane, the vehicle class, and whether toll sits inside the rate. The quotations are lined up on one fuel city, one detention clock, and one hamali rule.",
         cta: { label: "Contract logistics", to: "/logistics/contract-logistics" },
       },
       {
         afterHeading: "The four-stage rate engine",
         eyebrow: "Cost, then margin, then the lane",
         title: "Put the corridor on a card you can rebuild",
-        body: "A dedicated fleet on a repeating lane should carry a rate that still makes sense when the gate slips or diesel moves. Overflow stays labeled.",
+        body: "A dedicated fleet on a repeating lane needs a card you can rebuild when diesel moves. Overflow stays labeled as overflow.",
         cta: { label: "Dedicated fleet", to: "/logistics/dedicated-fleet" },
       },
     ],
