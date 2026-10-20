@@ -303,64 +303,52 @@ def process_card() -> None:
 
 def waterfall_card() -> None:
     img, draw = new_canvas()
-    draw.rectangle((0, 0, W, px(148)), fill=NAVY)
-    center_text(draw, "Unmasking the L1 bid", px(28), font(46), WHITE)
-    draw.line((px(620), px(92), px(916), px(92)), fill=TEAL, width=px(8))
-    center_text(draw, "Jamshedpur to Pune workshop. 34 MT. 1,580 km.", px(104), font(22), (186, 230, 232, 255))
+    center_text(draw, "Unmasking the L1 bid", px(20), font(52))
+    draw.line((px(560), px(92), px(976), px(92)), fill=TEAL, width=px(8))
+    center_text(draw, "Jamshedpur to Pune workshop. 34 tonnes. 1,580 km.", px(108), font(28))
 
-    # (label, note, start, end, fill). Floating adds sit on the running total.
+    # (label, note, start, end, bar). Running total stays on the right.
     rows = [
-        ("B headline", "Rs 2,950 x 34 MT", 0, 100300, BLUE),
-        ("+ tolls", "Rs 13,272", 100300, 113572, (194, 65, 12, 255)),
-        ("+ handling", "Rs 3,400", 113572, 116972, AMBER),
-        ("+ detention", "Rs 20,000", 116972, 136972, (146, 64, 14, 255)),
-        ("+ credit", "Rs 2,307 at 16%", 136972, 139279, (180, 83, 9, 255)),
-        ("B landed cost", "After the email extras", 0, 139279, (8, 47, 92, 255)),
+        ("B headline", "Rs 2,950 x 34 tonnes", 0, 100300, BLUE),
+        ("Plus tolls", "Adds Rs 13,272", 100300, 113572, AMBER),
+        ("Plus handling", "Adds Rs 3,400", 113572, 116972, AMBER),
+        ("Plus detention", "Adds Rs 20,000", 116972, 136972, AMBER),
+        ("Plus credit", "Adds Rs 2,307", 136972, 139279, AMBER),
+        ("B landed cost", "Headline plus the extras", 0, 139279, NAVY),
         ("A normalised", "Lump sum plus credit", 0, 119552, TEAL),
     ]
     scale_max = 150000
-    y = px(168)
-    row_h = px(92)
-    bar_left = px(520)
-    bar_max = px(640)
-    label_f = font(24)
-    note_f = font(18)
+    y = px(156)
+    row_h = px(100)
+    bar_left = px(560)
+    bar_max = px(560)
+    label_f = font(32)
+    note_f = font(26)
+    val_f = font(32)
     for label, note, start, end, color in rows:
-        draw.rounded_rectangle((px(36), y, W - px(36), y + row_h), radius=px(16), fill=color)
-        draw.text((px(56), y + px(16)), label, font=label_f, fill=WHITE)
-        draw.text((px(56), y + px(50)), note, font=note_f, fill=(255, 255, 255, 230))
-        track_y0 = y + px(28)
-        track_y1 = y + px(64)
-        draw.rounded_rectangle((bar_left, track_y0, bar_left + bar_max, track_y1), radius=px(8), fill=(0, 0, 0, 80))
+        draw.rounded_rectangle((px(36), y, W - px(36), y + row_h), radius=px(16), outline=NAVY, width=px(3), fill=WHITE)
+        draw.text((px(56), y + px(14)), label, font=label_f, fill=NAVY)
+        draw.text((px(56), y + px(56)), note, font=note_f, fill=color if start else NAVY)
+        track_y0 = y + px(36)
+        track_y1 = y + px(68)
+        draw.rounded_rectangle((bar_left, track_y0, bar_left + bar_max, track_y1), radius=px(8), fill=TRACK)
         x0 = bar_left + int(bar_max * start / scale_max)
         x1 = bar_left + int(bar_max * end / scale_max)
-        if x1 - x0 < px(18):
-            x1 = x0 + px(18)
-        gold = (255, 214, 102, 255)
+        if x1 - x0 < px(16):
+            x1 = x0 + px(16)
         if start > 0:
-            draw.rounded_rectangle((bar_left, track_y0, x0, track_y1), radius=px(8), fill=(255, 255, 255, 70))
-            draw.rectangle((x0, track_y0, x1, track_y1), fill=gold)
+            draw.rounded_rectangle((bar_left, track_y0, x0, track_y1), radius=px(8), fill=(203, 213, 225, 255))
+            draw.rectangle((max(bar_left, x0 - px(4)), track_y0, x1, track_y1), fill=AMBER)
         else:
-            draw.rounded_rectangle((bar_left, track_y0, x1, track_y1), radius=px(8), fill=gold)
-        amount = f"Rs {end:,}"
-        val_f = font(22)
-        draw.text((bar_left + bar_max + px(18), y + px(30)), amount, font=val_f, fill=WHITE)
+            draw.rounded_rectangle((bar_left, track_y0, x1, track_y1), radius=px(8), fill=color)
+        draw.text((bar_left + bar_max + px(20), y + px(30)), f"Rs {end:,}", font=val_f, fill=NAVY)
         y += row_h + px(8)
-
-    tiles = [
-        ("A landed", "Rs 1,19,552", TEAL),
-        ("B landed", "Rs 1,39,279", (8, 47, 92, 255)),
-        ("A is under B", "Rs 19,727  ·  14.2%", (194, 65, 12, 255)),
-    ]
-    gap = px(16)
-    left = px(36)
-    tile_w = (px(1280) - left - gap * 2) // 3
-    top = y + px(12)
-    for index, (head, body, color) in enumerate(tiles):
-        x0 = left + index * (tile_w + gap)
-        draw.rounded_rectangle((x0, top, x0 + tile_w, top + px(118)), radius=px(16), fill=color)
-        draw.text((x0 + px(18), top + px(16)), head, font=font(18), fill=(255, 255, 255, 230))
-        draw.text((x0 + px(18), top + px(52)), body, font=font(26), fill=WHITE)
+    draw.text(
+        (px(40), px(960)),
+        "A is Rs 19,727 (14.2%) under B. Illustrative workshop. Before GST.",
+        font=font(26),
+        fill=NAVY,
+    )
     save_and_stamp(img, "freight-bid-waterfall.png")
 
 
