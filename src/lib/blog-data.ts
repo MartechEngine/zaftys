@@ -41,6 +41,16 @@ import {
   freightRateTakeaways,
 } from "@/lib/blog-exhibits-freight-rates";
 import { freightRateFaqs, freightRateSections } from "@/lib/blog-post-freight-rates";
+import {
+  hazchemKpis,
+  hazchemReferences,
+  hazchemTakeaways,
+} from "@/lib/blog-exhibits-hazchem";
+import { hazchemFaqs, hazchemSections } from "@/lib/blog-post-hazchem";
+import { odcKpis, odcReferences, odcTakeaways } from "@/lib/blog-exhibits-odc";
+import { odcFaqs, odcSections } from "@/lib/blog-post-odc";
+import { railKpis, railReferences, railTakeaways } from "@/lib/blog-exhibits-rail";
+import { railFaqs, railSections } from "@/lib/blog-post-rail";
 
 export type BlogCategory = "operations" | "industries" | "technology";
 
@@ -215,6 +225,189 @@ export const blogCategoryLabels: Record<BlogCategory, string> = {
 };
 
 export const blogPosts: readonly BlogPost[] = [
+  {
+    slug: "rail-rakes-vs-road-ftl-india-dedicated-freight-corridor",
+    title: "Rail Freight vs Road Freight in India: Dedicated Freight Corridors and Break-even Distance",
+    seoTitle: "Rail Freight vs Road Freight in India | DFC | ZAFTYS",
+    seoDescription:
+      "Rail freight vs road freight in India for steel, cement, and bulk. The crossing-point formula, DFC feeders, wagon type, and railway demurrage.",
+    category: "operations",
+    tags: [
+      "Rail freight vs road freight",
+      "Dedicated freight corridor",
+      "Rake break-even distance",
+      "Railway demurrage",
+      "Steel coil rake",
+      "Private freight terminal",
+      "India",
+    ],
+    publishedAt: "2026-10-28",
+    updatedAt: "2026-10-28",
+    author: "ZAFTYS Operations & Supply Chain Research",
+    template: "deep-research",
+    subtitle:
+      "Break-even distance · Dedicated freight corridor · 34 t payload · Demurrage and wharfage · One 1,400 km workshop",
+    summary:
+      "Rail freight vs road freight in India is railway freight plus both truck ends, not a corridor slogan. Divide those ends by the gap between the two rates per tonne-kilometre. There is no national distance at which rail wins. A 3,000-tonne rake is 89 trucks at 34 tonnes payable payload, not a count that treats 49 tonnes as payload.",
+    readMinutes: 40,
+    heroImage: "/images/blog/rail-rakes-vs-road-ftl-india-hero.jpg",
+    heroAspectRatio: "16/9",
+    heroWidth: 1280,
+    heroHeight: 720,
+    heroAlt:
+      "A rake of flat wagons loaded with tarped steel coils beside a covered truck at an Indian steel-plant siding",
+    kpis: railKpis,
+    takeaways: railTakeaways,
+    references: railReferences,
+    midCtas: [
+      {
+        afterHeading: "A 1,400 km steel workshop",
+        eyebrow: "The truck is still in the case",
+        title: "Price the road ends before you shift the lane",
+        body: "A rake that looks cheap on base haulage still needs a truck at the plant and a truck at the customer. Those short hauls are ordinary full truckload.",
+        cta: { label: "Industrial freight", to: "/logistics/industrial-freight" },
+      },
+      {
+        afterHeading: "Demurrage, wharfage, and FOIS",
+        eyebrow: "One trip file",
+        title: "Hold the railway receipt next to the truck indents",
+        body: "FOIS shows the rake. The road legs and the document pack still need a trip record. This is not a live FOIS integration.",
+        cta: { label: "ZAFTYS TMS", to: "/zaftys-tms" },
+      },
+    ],
+    relatedSlugs: [
+      "truck-freight-rates-india-cost-rate-benchmarking-guide",
+      "steel-coil-transport-basics",
+      "odc-cargo-india-morth-hydraulic-trailer-route-survey-permits",
+      "chemical-hazchem-transportation-india-peso-trem-tanker-safety",
+      "container-trucking-logistics-india",
+    ],
+    faqs: railFaqs,
+    sections: railSections,
+    cta: { label: "Dedicated fleet", to: "/logistics/dedicated-fleet" },
+  },
+  {
+    slug: "odc-cargo-india-morth-hydraulic-trailer-route-survey-permits",
+    title: "Over Dimensional Cargo Guidelines India: MoRTH Rules, Hydraulic Trailers, and Permits",
+    seoTitle: "Over Dimensional Cargo Guidelines India | MoRTH ODC | ZAFTYS",
+    seoDescription:
+      "Over dimensional cargo guidelines in India: MoRTH hydraulic-trailer permission, the route survey, axle-line sizing, and how to price a project move.",
+    category: "operations",
+    tags: [
+      "Over dimensional cargo guidelines",
+      "ODC cargo rules MoRTH",
+      "Hydraulic axle trailer",
+      "ODC route survey",
+      "Project cargo transport",
+      "HT permission",
+      "India",
+    ],
+    publishedAt: "2026-10-28",
+    updatedAt: "2026-10-28",
+    author: "ZAFTYS Operations & Supply Chain Research",
+    template: "deep-research",
+    subtitle:
+      "Rule 93 · HT-1 to HT-13 · Route survey · Axle lines · Permission letter · Empty return",
+    summary:
+      "Over dimensional cargo guidelines India are Rule 93 plus the permission in force, not a per-km hire. The 27 October 2025 circular lists HT-1 to HT-13 at not more than 18 tonnes per axle row, with gross weight stated without the puller. This guide sizes a 120-tonne workshop at 9 axle lines, or 11 if a bridge is posted lower, and splits the quote into hire, fuel, civil work, and empty return.",
+    readMinutes: 38,
+    heroImage: "/images/blog/odc-cargo-india-hero.jpg",
+    heroAspectRatio: "16/9",
+    heroWidth: 1280,
+    heroHeight: 720,
+    heroAlt:
+      "A ballast tractor and a modular multi-axle trailer carrying a large transformer at an Indian plant, with a surveyor beside the cab",
+    kpis: odcKpis,
+    takeaways: odcTakeaways,
+    references: odcReferences,
+    midCtas: [
+      {
+        afterHeading: "How to price a project move",
+        eyebrow: "A repeating heavy piece",
+        title: "Name the fleet before you name a per-km rate",
+        body: "A project move is hire, a puller, fuel, civil work, and empty return. A spot trailer from an open board is the wrong tool when the survey is part of the job.",
+        cta: { label: "Dedicated fleet", to: "/logistics/dedicated-fleet" },
+      },
+      {
+        afterHeading: "What the dispatch file must hold",
+        eyebrow: "Letter, survey, utility",
+        title: "Hold the permission next to the survey",
+        body: "A portal screenshot is not the letter, and the letter is not a promise about the wire. The trip record should show which document is still missing.",
+        cta: { label: "ZAFTYS TMS", to: "/zaftys-tms" },
+      },
+    ],
+    relatedSlugs: [
+      "chemical-hazchem-transportation-india-peso-trem-tanker-safety",
+      "india-axle-load-gvw-limits-heavy-freight",
+      "rail-rakes-vs-road-ftl-india-dedicated-freight-corridor",
+      "truck-freight-rates-india-cost-rate-benchmarking-guide",
+      "fastag-mlff-gnss-tolling-india-freight",
+    ],
+    faqs: odcFaqs,
+    sections: odcSections,
+    cta: { label: "Dedicated fleet", to: "/logistics/dedicated-fleet" },
+  },
+  {
+    slug: "chemical-hazchem-transportation-india-peso-trem-tanker-safety",
+    title: "Chemical Transportation Rules in India: PESO, TREM Cards, and Tanker Safety",
+    seoTitle: "Chemical Transportation Rules in India | PESO and TREM | ZAFTYS",
+    seoDescription:
+      "PESO approval, the TREM card, and the emergency panel for chemical tankers in India. Ullage maths, a 15-point plant gate, and what belongs in the carrier agreement.",
+    category: "operations",
+    tags: [
+      "Chemical transportation rules",
+      "TREM card",
+      "PESO tank lorry",
+      "Emergency information panel",
+      "Tanker ullage",
+      "Hazchem code",
+      "India",
+    ],
+    publishedAt: "2026-10-28",
+    updatedAt: "2026-10-28",
+    author: "ZAFTYS Operations & Supply Chain Research",
+    template: "deep-research",
+    subtitle:
+      "CMVR Rules 129 to 137 · Petroleum Rules 64 to 76 · Emergency panel · Ullage and load mass · 15-point plant gate",
+    summary:
+      "A chemical tanker in India is cleared by the road rules, the vessel approval, and the plant gate, not by one national permit. This guide measures the emergency panel, separates petroleum Class A, B, and C from the UN classes, and works a methanol ullage sum through to 15,193 kg. It is not a PESO licence and not an incident database.",
+    readMinutes: 38,
+    heroImage: "/images/blog/chemical-hazchem-transport-india-hero.jpg",
+    heroAspectRatio: "16/9",
+    heroWidth: 1280,
+    heroHeight: 720,
+    heroAlt:
+      "A stainless-steel chemical road tanker seen from the side at an Indian plant, with the driver beside the cab",
+    kpis: hazchemKpis,
+    takeaways: hazchemTakeaways,
+    references: hazchemReferences,
+    midCtas: [
+      {
+        afterHeading: "The plant gate",
+        eyebrow: "Same vehicle, every week",
+        title: "Put the tanker on a named fleet",
+        body: "A repeating chemical lane needs the approval, the card, and the wash certificate on the same registration. A spot tanker is the wrong tool when a valve failure becomes an environmental case.",
+        cta: { label: "Dedicated fleet", to: "/logistics/dedicated-fleet" },
+      },
+      {
+        afterHeading: "The carrier agreement",
+        eyebrow: "The trip record",
+        title: "Hold the UN number on the dispatch",
+        body: "The gate should match the order, the panel, and the card to one trip record. A photocopy from the previous product is how the wrong load leaves.",
+        cta: { label: "ZAFTYS TMS", to: "/zaftys-tms" },
+      },
+    ],
+    relatedSlugs: [
+      "odc-cargo-india-morth-hydraulic-trailer-route-survey-permits",
+      "rail-rakes-vs-road-ftl-india-dedicated-freight-corridor",
+      "india-axle-load-gvw-limits-heavy-freight",
+      "truck-freight-rates-india-cost-rate-benchmarking-guide",
+      "spot-market-vs-dedicated-fleet-india",
+    ],
+    faqs: hazchemFaqs,
+    sections: hazchemSections,
+    cta: { label: "Dedicated fleet", to: "/logistics/dedicated-fleet" },
+  },
   {
     slug: "truck-freight-rates-india-cost-rate-benchmarking-guide",
     title: "How to Calculate Truck Freight Rates in India: A Complete Cost and Rate Benchmarking Guide",
@@ -499,7 +692,7 @@ export const blogPosts: readonly BlogPost[] = [
       {
         heading: "Start with the load profile",
         paragraphs: [
-          "Steel coils, plates, billets, and structurals don't behave the same on the road. Coil diameter, weight, and centre of gravity drive bed choice and securement. Calling for a generic \"open body\" is how quiet failures start.",
+          "Steel coils, plates, billets, and structurals don't behave the same on the road. Coil diameter, weight, and centre of gravity drive bed choice and securement. Calling for a generic \"open body\" is how quiet failures start. A full rake of coils is a different batch, and the road legs at each end still use this securement. That comparison is in [rail freight vs road freight](/blog/rail-rakes-vs-road-ftl-india-dedicated-freight-corridor).",
           "Confirm before vehicles are assigned:",
           "Axle planning after loading is already too late.",
         ],
@@ -1404,7 +1597,7 @@ export const blogPosts: readonly BlogPost[] = [
       {
         question: "How should ODC and modular trailers be handled?",
         answer:
-          "Do not force them into a standard rigid GVW row. Confirm MoRTH modular or special permits, axle-line ratings, and route clearances before gate-out. If the paperwork is missing, the gate should stay closed.",
+          "Do not force them into a standard rigid GVW row. Confirm MoRTH modular or special permits, axle-line ratings, and route clearances before gate-out. If the paperwork is missing, the gate should stay closed. The permission path and the axle-line sum are in the [over dimensional cargo guidelines](/blog/odc-cargo-india-morth-hydraulic-trailer-route-survey-permits).",
       },
     ],
     sections: [
@@ -1414,7 +1607,7 @@ export const blogPosts: readonly BlogPost[] = [
           "This is a compliance and plant-ops guide for logistics heads, dispatch managers, fleet operators, procurement, and safety officers moving steel, cement, minerals, machinery, and liquid bulk across India. Use it before an RFP rewrite or a weighbridge walk. It is not a licence brochure and not legal advice.",
           "The core failure mode is simple. A trailer can sit under overall gross vehicle weight (GVW) and still fail on a single axle group under India axle load norms. Highway checking posts and RTO checks weigh those groups. The overloading fine is only the start. Offloading, cargo damage, plant re-queuing, and e-Way Bill weight fights follow.",
           "MoRTH revised axle-load framing (commonly referenced via S.O. 3467(E) and S.O. 4353(E)) and Section 194 of the Motor Vehicles (Amendment) Act are the legal rails for heavy freight shippers. Published GVW and axle load bands in this article are starting points for plant talk. The registration certificate and the latest gazette win. Do not hard-code last year's circular as eternal truth.",
-          "Axle load compliance is not a highway surprise. It is a gate, tare, bay, gross, and document loop on heavy FTL. The rest of this guide is how to test that loop, by industry and with a printable checklist. How payload then becomes a rupee per tonne-km is in the [truck freight rate guide](/blog/truck-freight-rates-india-cost-rate-benchmarking-guide).",
+          "Axle load compliance is not a highway surprise. It is a gate, tare, bay, gross, and document loop on heavy FTL. The rest of this guide is how to test that loop, by industry and with a printable checklist. How payload then becomes a rupee per tonne-km is in the [truck freight rate guide](/blog/truck-freight-rates-india-cost-rate-benchmarking-guide). A petroleum or chemical tanker still has to pass these axle groups. The panel, the card, and the fill limit are in the [chemical transportation rules](/blog/chemical-hazchem-transportation-india-peso-trem-tanker-safety). A modular hydraulic trailer leaves this envelope only with a permission. The axle-line sum and the letter are in the [over dimensional cargo guidelines](/blog/odc-cargo-india-morth-hydraulic-trailer-route-survey-permits).",
         ],
       },
       {
@@ -1617,7 +1810,7 @@ export const blogPosts: readonly BlogPost[] = [
       {
         heading: "How to use this guide",
         paragraphs: [
-          "This is a freight procurement guide for supply chain VPs, logistics sourcing managers, fleet directors, and plant dispatch leads comparing spot market vs dedicated contract fleets for industrial full truckload (FTL) in manufacturing, steel, cement, chemicals, and FMCG. Use it before you rewrite rate cards or open another broker WhatsApp group.",
+          "This is a freight procurement guide for supply chain VPs, logistics sourcing managers, fleet directors, and plant dispatch leads comparing spot market vs dedicated contract fleets for industrial full truckload (FTL) in manufacturing, steel, cement, chemicals, and FMCG. Use it before you rewrite rate cards or open another broker WhatsApp group. A chemical tanker is the lane where an open-board truck is the wrong default. The gate rules are in the [chemical transportation guide](/blog/chemical-hazchem-transportation-india-peso-trem-tanker-safety).",
           "The core tension is simple. Dedicated contract fleets buy placement and compliance on baseline lanes. They also lock cost when production dips. Traditional spot brokers and spot freight rates buy flexibility. They also buy rate spikes, weak KYC, and phone-call tracking in peak weeks.",
           "Corridor freight rates on major Indian trunk routes move with harvest seasons, diesel, and festive demand. Industry reports often discuss corridor rate swings in a wide band across the year. Empty return kilometres still inflate round-trip pricing on many lanes. Public work on Indian trucking often discusses empty runs in a wide band (sometimes around one-quarter to one-third of truck kilometres). Measure your corridors before anyone sells a savings guarantee.",
           "The rest of this guide is how to compare channels, write contract clauses that survive a soft month, cut empty returns, size a hybrid freight strategy from indent data, and settle overflow without a paper chase. For the software scorecard that sits under that view, see the [TMS evaluation guide for Indian manufacturers](/blog/tms-evaluation-guide-indian-manufacturers). For the booking brief before any truck is called, see [planning commercial shipments](/blog/planning-industrial-shipments).",
@@ -2447,7 +2640,7 @@ export const blogPosts: readonly BlogPost[] = [
       {
         heading: "Western gateway trailer surge at JNPT and Mundra",
         paragraphs: [
-          "Public 2026 market patterns around India's western gateways made a blunt point: yards can stack while berths still look productive. Import evacuation and empty reposition need container trailers and drivers. When placement thins after vessel bunching, rake discharge, CFS backlog clearance, or empty high-cube reposition orders, detention clocks start even if the ocean box exists.",
+          "Public 2026 market patterns around India's western gateways made a blunt point: yards can stack while berths still look productive. Import evacuation and empty reposition need container trailers and drivers. When placement thins after vessel bunching, rake discharge, CFS backlog clearance, or empty high-cube reposition orders, detention clocks start even if the ocean box exists. A dedicated freight corridor changes the rail leg of that box. It does not remove this chassis move. The comparison is in [rail freight vs road freight](/blog/rail-rakes-vs-road-ftl-india-dedicated-freight-corridor).",
           "Treat this as trailer scarcity, not a generic 'container shortage.' Hybrid programmes keep a stable base of empaneled trailers for repeating weekly EXIM work, then buy same-week overflow for surge days. [TranZfort](/network/tranzfort) listing and search are free; a broker fee applies on booked loads. Size the year-round fleet to the base, not to the worst week.",
           "The exhibits below show base versus surge, four common triggers, the evacuation cycle, a teaching split of planned versus overflow trips, and the productivity levers operators reach for when pools tighten. Figures are teaching aids. Confirm live terminal and CFS conditions before budgeting.",
         ],
@@ -2456,7 +2649,7 @@ export const blogPosts: readonly BlogPost[] = [
       {
         heading: "Chassis configurations and axle norms",
         paragraphs: [
-          "Wrong chassis choice wastes cubic capacity or invites Motor Vehicles Act Section 194 overloading exposure. Dense engineering goods want 20ft ISO capacity. High-volume domestic packaged FTL often wants 32ft single-axle (SXL) or multi-axle (MXL) rigid bodies. EXIM ocean work lives on 40ft and 40ft high-cube (HQ) tractor-trailers. Reefers and over-dimensional cargo (ODC) need their own tare weight and permit math.",
+          "Wrong chassis choice wastes cubic capacity or invites Motor Vehicles Act Section 194 overloading exposure. Dense engineering goods want 20ft ISO capacity. High-volume domestic packaged FTL often wants 32ft single-axle (SXL) or multi-axle (MXL) rigid bodies. EXIM ocean work lives on 40ft and 40ft high-cube (HQ) tractor-trailers. Reefers and over-dimensional cargo (ODC) need their own tare weight and permit math. That permit path is in the [over dimensional cargo guidelines](/blog/odc-cargo-india-morth-hydraulic-trailer-route-survey-permits).",
           "Ministry of Road Transport and Highways (MoRTH) gazette notifications define legal gross vehicle weight (GVW) by axle and tyre layout, in metric tonnes. A 32ft SXL on six tyres is not a 40ft HQ on eighteen tyres. Weighbridge lock before the highway is cheaper than roadside offloading.",
           "Use the payload bar chart as a planning aid, not a dispatch plate. Confirm OEM ratings and state Regional Transport Office (RTO) practice. When in doubt, treat the lower payload band as the working limit and keep a buffer for dunnage, twist locks, and fuel.",
         ],
@@ -2743,7 +2936,7 @@ export const blogPosts: readonly BlogPost[] = [
       {
         heading: "Gate: know the truck before the boom opens",
         paragraphs: [
-          "The gate is identity. When guards alone copy plates, check licences, and hunt open indents, you invent the first queue of the day - worse when inbound and outbound share one muddy lane at shift change.",
+          "The gate is identity. When guards alone copy plates, check licences, and hunt open indents, you invent the first queue of the day - worse when inbound and outbound share one muddy lane at shift change. On a chemical tanker that identity includes the emergency panel, the transport emergency card, and the vessel certificate. Those checks are in the [chemical transportation rules](/blog/chemical-hazchem-transportation-india-peso-trem-tanker-safety).",
           "A solid stack tries more than one path: plate camera at crawl speed, plant RFID where you issue tags, and FASTag as a second chance when the plate is dirty. FASTag has been mandatory on commercial classes for toll since 2021. That helps at the plant gate. It does not mean every spot hire arrives tagged and alive.",
           "Spot trucks without plant tags still need a logged QR or WhatsApp pass after licence checks. Never a silent paper exception. Ask the vendor what happens when camera and tag both fail at 2 AM. If the answer is 'the guard writes it down,' you bought a camera, not control.",
         ],
@@ -3012,7 +3205,7 @@ export const blogPosts: readonly BlogPost[] = [
       {
         question: "What are the e-Way Bill validity distance rules under GST?",
         answer:
-          "Under CGST Rule 138(10), regular commercial freight receives 1 day of e-Way Bill validity for every 200 km (or part thereof). For Over-Dimensional Cargo (ODC) or multimodal movements involving ship/rail, the validity is 1 day for every 20 km. Updating Part B (vehicle registration number) before gate-out is mandatory to maintain legal validity during highway transit.",
+          "Under CGST Rule 138(10), regular commercial freight receives 1 day of e-Way Bill validity for every 200 km (or part thereof). Over-dimensional cargo, and a multimodal shipment with at least one leg by ship, receives 1 day for every 20 km (or part). A rail leg by itself is not that ship leg. Updating Part B (vehicle registration number) before gate-out is mandatory to maintain legal validity during highway transit. The permission and the axle-line sum for a hydraulic trailer are in the [over dimensional cargo guidelines](/blog/odc-cargo-india-morth-hydraulic-trailer-route-survey-permits). A non-ODC rake is in the [rail freight guide](/blog/rail-rakes-vs-road-ftl-india-dedicated-freight-corridor).",
       },
       {
         question: "How does in-transit delay increase working capital costs?",
@@ -3123,7 +3316,7 @@ export const blogPosts: readonly BlogPost[] = [
               "Different industrial verticals require specialized rolling stock that unorganized spot brokers rarely maintain with proper safety compliance:",
               "Steel & Metals: Heavy steel coils require flatbed trailers engineered with recessed coil-wells, heavy-duty timber dunnage, and certified high-tensile chain lashing. Loading coils onto flat wooden beds without wells leads to shifting loads, axle overloading, and catastrophic highway roll-overs. Shippers should partner with dedicated [Steel Transportation Services](/industries/steel-metals) to ensure specialized trailers.",
               "Cement & Construction: Transporting bulk cement requires pneumatic bulkers equipped with certified air compressors for fluidised pneumatic discharge into destination silos. Substandard spot bulkers with worn discharge lines cause compressor failures, severe unloading delays, and moisture contamination. Explore [Cement Logistics Solutions](/industries/cement).",
-              "Chemicals & Hazardous Cargo: Liquid chemicals demand PESO/CCOE-certified ISO tank containers with 316L stainless steel linings, emergency shutoff valves, and drivers trained in Transport Emergency Cards (TREM cards) and HAZCHEM protocols. Explore [Chemical Logistics](/industries/chemicals).",
+              "Chemicals and hazardous cargo: match the shell to the product, then check the panel, the transport emergency card, and the vessel certificate before the boom opens. A single stainless ISO tank is not the rule for every liquid. The gate list is in the [chemical transportation rules](/blog/chemical-hazchem-transportation-india-peso-trem-tanker-safety). The commercial home is [chemical logistics](/industries/chemicals).",
               "Coal & Mining Ores: Mining haulage requires heavy-duty 3-axle tipper trailers with reinforced Hardox wear plates and anti-roll hydraulic tipping cylinders capable of enduring 24/7 off-road pit cycles. Explore [Mining Logistics](/industries/coal-mining).",
             ],
           },
@@ -3235,7 +3428,7 @@ export const blogPosts: readonly BlogPost[] = [
           {
             heading: "e-Way Bill Compliance and Part B Timing",
             paragraphs: [
-              "A critical component of modern freight settlement is maintaining strict GST e-Way Bill compliance. Under CGST Rule 138(10), regular cargo receives 1 day of validity for every 200 km (or part thereof), while Over-Dimensional Cargo (ODC) receives 1 day for every 20 km.",
+              "A critical component of modern freight settlement is maintaining strict GST e-Way Bill compliance. Under CGST Rule 138(10), regular cargo receives 1 day of validity for every 200 km (or part thereof). Over-dimensional cargo, and a multimodal shipment with at least one leg by ship, receives 1 day for every 20 km (or part). A rail leg by itself is not that ship leg.",
               "Operating an unmonitored fleet frequently leads to expired e-Way Bills when vehicles encounter unexpected highway delays. Under GST laws, transporting goods with an expired e-Way Bill triggers penalties equal to 100% of the applicable tax value (or 200% under Section 129). Enterprise TMS platforms continuously monitor e-Way Bill validity against live vehicle GPS/FASTag progress, alerting dispatchers 8 hours before expiry to trigger timely legal extensions. Read our detailed guide on [ePOD, FASTag, and e-Way Bill Compliance](/blog/epod-fastag-eway-bill-billing-india).",
             ],
           },
