@@ -146,13 +146,13 @@ def demurrage_card() -> None:
         y += px(128)
     draw.text(
         (px(48), px(820)),
-        "April 2024 compendium. Ordinary slab ends at three times the base.",
+        "Corrigendum 61, 13 Mar 2026. Base Rs 150 from 1 Apr 2026 to 31 Mar 2027.",
         font=font(22),
         fill=NAVY,
     )
     draw.text(
         (px(48), px(858)),
-        "Corrigendum 56, 19 Mar 2025. Congestion can be notified up to six times after 24 hours' notice.",
+        "This card is the first-band unit. Beyond 96 hours the rate is six times the base.",
         font=font(22),
         fill=NAVY,
     )

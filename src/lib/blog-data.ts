@@ -230,7 +230,7 @@ export const blogPosts: readonly BlogPost[] = [
     title: "Rail Freight vs Road Freight in India: Dedicated Freight Corridors and Break-even Distance",
     seoTitle: "Rail Freight vs Road Freight in India | DFC | ZAFTYS",
     seoDescription:
-      "Rail freight vs road freight in India for steel, cement, and bulk. The crossing-point formula, DFC feeders, wagon type, and railway demurrage.",
+      "Rail freight vs road freight in India: break-even distance, dedicated freight corridor feeders, full truckload ends, and dated railway demurrage and wharfage.",
     category: "operations",
     tags: [
       "Rail freight vs road freight",
@@ -291,7 +291,7 @@ export const blogPosts: readonly BlogPost[] = [
     title: "Over Dimensional Cargo Guidelines India: MoRTH Rules, Hydraulic Trailers, and Permits",
     seoTitle: "Over Dimensional Cargo Guidelines India | MoRTH ODC | ZAFTYS",
     seoDescription:
-      "Over dimensional cargo guidelines in India: MoRTH hydraulic-trailer permission, the route survey, axle-line sizing, and how to price a project move.",
+      "Over dimensional cargo transportation in India: Rule 93, the MoRTH hydraulic-trailer permission, overweight cargo, the route survey, and a project-move quotation.",
     category: "operations",
     tags: [
       "Over dimensional cargo guidelines",
@@ -309,7 +309,7 @@ export const blogPosts: readonly BlogPost[] = [
     subtitle:
       "Rule 93 · HT-1 to HT-13 · Route survey · Axle lines · Permission letter · Empty return",
     summary:
-      "Over dimensional cargo guidelines India are Rule 93 plus the permission in force, not a per-km hire. The 27 October 2025 circular lists HT-1 to HT-13 at not more than 18 tonnes per axle row, with gross weight stated without the puller. This guide sizes a 120-tonne workshop at 9 axle lines, or 11 if a bridge is posted lower, and splits the quote into hire, fuel, civil work, and empty return.",
+      "Over dimensional cargo guidelines India are Rule 93 plus the permission in force, not a per-km hire. The 27 October 2025 circular lists HT-1 to HT-13 at not more than 18 tonnes per axle row, with gross weight stated without the puller. A 120-tonne workshop screens at 9 axle lines, or 11 if a bridge is posted at 15 tonnes. That is arithmetic. The portal and the survey decide the class. The quote is split into hire, fuel, civil work, and empty return.",
     readMinutes: 38,
     heroImage: "/images/blog/odc-cargo-india-hero.jpg",
     heroAspectRatio: "16/9",
@@ -352,7 +352,7 @@ export const blogPosts: readonly BlogPost[] = [
     title: "Chemical Transportation Rules in India: PESO, TREM Cards, and Tanker Safety",
     seoTitle: "Chemical Transportation Rules in India | PESO and TREM | ZAFTYS",
     seoDescription:
-      "PESO approval, the TREM card, and the emergency panel for chemical tankers in India. Ullage maths, a 15-point plant gate, and what belongs in the carrier agreement.",
+      "Chemical transportation rules in India: the emergency panel, the TREM card, PESO petroleum tanker rules, and a plant gate that separates statute from practice.",
     category: "operations",
     tags: [
       "Chemical transportation rules",

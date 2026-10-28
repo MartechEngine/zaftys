@@ -19,7 +19,7 @@ export const railKpis: readonly BlogKpi[] = [
     value: "₹150",
     label: "Base, per eight-wheeler-hour",
     detail:
-      "April 2024 compendium, reconfirm. The step-up starts after 6 hours. One hour on 58 wagons is ₹8,700 in the body of this guide.",
+      "Corrigendum 61 of 13 March 2026, from 1 April 2026 to 31 March 2027. Beyond 96 hours the rate is six times the base. One hour on 58 wagons is ₹8,700 in the body. That is one hour, not the placement.",
   },
   {
     value: "Not one number",
@@ -45,16 +45,16 @@ export const railTakeaways = [
   "Rail wins only when railway freight plus both road ends plus handling plus the stock locked in a rake is cheaper than the road fleet you would have sent.",
   "Distance equals the two road ends divided by the gap between the two rates per tonne-kilometre. There is no national distance at which rail wins.",
   "Size the road fleet on payable payload. On the 34-tonne example in the rate guide, 3,000 tonnes is 89 trucks. 49 tonnes is a gross vehicle weight cap, not coil payload.",
-  "Demurrage is the wagon. Wharfage is the goods on railway land. Detention is the road truck. The April 2024 compendium base is ₹150 per eight-wheeler-hour. Corrigendum 56 of 19 March 2025 removed automatic penal demurrage. A notified congestion rate can still go up to six times the base after 24 hours' notice.",
+  "Demurrage is the wagon. Wharfage is the goods on railway land. Detention is the road truck. From 1 April 2026 to 31 March 2027 the base is ₹150 per eight-wheeler-hour. Beyond 96 hours the rate is six times the base. The April 2024 compendium still holds the free-time hours and the wharfage groups.",
   "A dedicated freight corridor changes the rail leg on the sections that are open, including double-stack where that section allows it. It does not remove the truck at each end.",
   "A rake that is not over-dimensional, and that has no leg by ship, uses one day of e-way bill validity per 200 km or part. The 20 km clock is not a rail rule.",
 ] as const;
 
 export const railReferences = [
   "Railways Act, 1989. The goods tariff, the commodity class, and the composition circular for the wagon you will indent are the booking documents. This article does not reprint a class rate.",
-  "[Rates Master Circular compendium, April 2024](https://ccai.co.in/wp-content/uploads/2024/04/MoR-Notice-dtd-03.04.2024.pdf), restating Corrigendum No. 32 of 13 September 2022. Base demurrage Rs 150 per eight-wheeled wagon per hour or part, then 10 percent higher after 6 hours, 25 percent after 12, 50 percent after 24, twice the base after 48, and three times after 72. [Corrigendum No. 56 of 19 March 2025](https://nfr.indianrailways.gov.in/railwayboard/uploads/directorate/traffic_comm/Review%20of%20Demurrage%20and%20Penal%20Demurrage%20%28Corrigendum%20No_56%29%20dated%2019_03_2025.pdf) removed automatic penal demurrage. The same letter allows a notified congestion rate, after 24 hours' notice, up to six times the base. A 13 March 2026 notice on the same subject is listed and should be read before this table is treated as the last word.",
-  "Free time at a non-engine-on-load goods shed, same compendium. Open wagons such as BOXN: manual load and unload 9 hours, mechanised load 5 hours, mechanised unload 7 hours. Flat wagons such as BFNS: manual 8 hours load and 8 hours unload, mechanised load 6 hours. One late wagon demurrages every wagon in the group. Engine-on-load terminals are a different table.",
-  "Wharfage in that compendium is a different charge: Group I Rs 150, Group II Rs 120, Group III Rs 75 per wagon per hour. Do not call it demurrage.",
+  "[Corrigendum No. 61, 13 March 2026](https://rb.indianrailways.gov.in/uploads/directorate/traffic_comm/2026/Review%20of%20Demurrage%20Penal%20Demurrage_001.pdf), in force from 1 April 2026 to 31 March 2027. Base Rs 150 per eight-wheeled wagon per hour or part. Then plus 10 percent beyond 6 hours, plus 25 percent beyond 12, plus 50 percent beyond 24, twice beyond 48, three times beyond 72 and up to 96, and six times beyond 96 hours. That last band is the penal demurrage rate. Corrigendum No. 56 of 19 March 2025 ended on 31 March 2026. The 5 March 2026 letter is waiver and write-off, not this rate. The [April 2024 compendium](https://ccai.co.in/wp-content/uploads/2024/04/MoR-Notice-dtd-03.04.2024.pdf) still holds free time and wharfage. It is not the rate table from 1 April 2026.",
+  "Free time at a non-engine-on-load goods shed, same compendium. Open wagons such as BOXN: manual load and unload 9 hours, mechanised load 5 hours, mechanised unload 7 hours. Flat wagons such as BFNS: manual 8 hours load and 8 hours unload, mechanised load 6 hours. Corrigendum No. 14 of 21 October 2020 may permit one extra hour per rake for covering open wagons with tarpaulins during loading of a loose or bulk commodity, including at an engine-on-load siding. A [3 December 2024 letter](https://rb.indianrailways.gov.in/uploads/directorate/traffic_comm/Rates_Master_Circulars/2024/Additional%20free%20time%20for%20covering%20wagons%20with%20tarpaulins%20during%20loading%20of%20loose%20bulk%20commodities%20dated%2003_12_2024.pdf) says open wagons means top-open stock such as BOXN and BOBRN. That hour is not drawn on the bars. It is not an uncovering hour and not a coil flat. A 10 September 2026 letter says the existing guidelines hold. Engine-on-load terminals are a different table.",
+  "Wharfage in the April 2024 compendium is a different charge: Group I Rs 150, Group II Rs 120, Group III Rs 75 per wagon per hour. Corrigendum No. 61 does not reset it. Do not call it demurrage.",
   "National Logistics Policy, 2022, for the policy aim of a higher rail share. It is not a freight rate. Dedicated Freight Corridor Corporation of India section status for the Western and Eastern corridors should be checked the month you move. This article does not freeze a commissioned kilometre.",
   "[MoRTH S.O. 3467(E), 16 July 2018](https://taxguru.in/corporate-law/maximum-safe-axle-weight-transport-vehicles.html): the road ends of a rake stay inside axle law. The freight-rate guide uses 34 tonnes payable payload on a heavy articulated example. Do not divide a rake by the 49-tonne gross vehicle weight.",
   "[Central Goods and Services Tax Rules, 2017, Rule 138(10)](https://taxinformation.cbic.gov.in/content/html/tax_repository/gst/rules/cgst_rules/active/chapter16/rule138_v1.00.html): one day per 200 km or part for ordinary cargo, including a rake that is not over-dimensional and has no leg by ship. One day per 20 km or part for over-dimensional cargo, and for a multimodal shipment with at least one leg by ship.",
@@ -153,6 +153,23 @@ export const railExhibits: Record<string, readonly BlogExhibit[]> = {
         ["Road FTL", "₹2.20 per t-km × 1,400 km", "3,080"],
       ],
     },
+    {
+      kind: "table",
+      caption: "What this workshop includes. Invented inputs. Not a quotation.",
+      source: "Hot-rolled coil, 3,000 tonnes, 1,400 km between invented railheads. Transit time is not stated. Shunting, insurance, damage, and empty return are excluded.",
+      headers: ["Field", "In this workshop", "What it is not"],
+      rows: [
+        ["Shipment", "3,000 t hot-rolled coil", "A ZAFTYS lane or a national index"],
+        ["Road line-haul", "₹2.20 per t-km, ₹3,080 per tonne", "A current market quote"],
+        ["Rail line-haul", "₹0.90 per t-km, ₹1,260 per tonne", "The goods tariff for your class"],
+        ["First and last mile", "₹140 plus ₹175 per tonne", "Included in the railway receipt"],
+        ["Handling", "₹180 allowance", "A crane tariff"],
+        ["Demurrage", "₹40, and only if free time is met", "The bill if a wagon is late"],
+        ["Inventory", "₹54 per tonne, six extra days", "A treasury standard"],
+        ["Rail total", "₹1,849 per tonne", "A price you can book"],
+        ["Excluded", "Shunting, insurance, damage, empty return", "Zero because they are missing"],
+      ],
+    },
   ],
   "When to keep the trucks": [
     {
@@ -164,7 +181,7 @@ export const railExhibits: Record<string, readonly BlogExhibit[]> = {
         ["Rate gap", "Rail is not cheaper per tonne-kilometre", "No crossing point. Do not divide by zero"],
         ["The two ends", "Fixed ends are large for the lane", "Workshop A crosses at 650 km. Workshop B at about 1,385 km"],
         ["The batch", "The customer does not want the rake at once", "Six extra days in the sketch is about ₹54 per tonne"],
-        ["The siding and the wagon", "Free time will be missed, or the piece will not fit", "One hour on 58 wagons is ₹8,700 at the April 2024 base"],
+        ["The siding and the wagon", "Free time will be missed, or the piece will not fit", "One hour on 58 wagons is ₹8,700. That is 58 times the base, not the placement"],
       ],
     },
   ],
@@ -172,7 +189,7 @@ export const railExhibits: Record<string, readonly BlogExhibit[]> = {
     {
       kind: "bars",
       caption: "Free time in hours. Non-engine-on-load goods shed.",
-      source: "April 2024 compendium. Open wagon: manual 9 and 9, mechanised load 5, mechanised unload 7. Flat wagon: manual 8 and 8, mechanised load 6. Engine-on-load terminals are a different table.",
+      source: "April 2024 compendium. Corrigendum 61 does not replace these hours. Open wagon: manual 9 and 9, mechanised load 5, mechanised unload 7. Flat wagon: manual 8 and 8, mechanised load 6. One extra hour for covering top-open wagons during loading is not drawn here. Uncovering at unload is not that hour. Engine-on-load is a different table.",
       unit: "hours",
       items: [
         { label: "Open wagon, manual load", value: 9 },
@@ -187,15 +204,16 @@ export const railExhibits: Record<string, readonly BlogExhibit[]> = {
     {
       kind: "bars",
       caption: "Demurrage step-up on the base rate. Reconfirm the circular.",
-      source: "Times the base of ₹150 per eight-wheeled wagon per hour. After 6 hours, 12, 24, 48, and 72. Corrigendum 56 of 19 March 2025 keeps this ordinary top at three times the base. A notified congestion rate can go up to six times after 24 hours' notice.",
+      source: "Corrigendum 61 of 13 March 2026, from 1 April 2026 to 31 March 2027. Base ₹150 per eight-wheeled wagon per hour or part. Six times the base applies only beyond 96 hours.",
       unit: "× base",
       items: [
-        { label: "First 6 hours", value: 1 },
-        { label: "After 6 hours", value: 1.1 },
-        { label: "After 12 hours", value: 1.25 },
-        { label: "After 24 hours", value: 1.5 },
-        { label: "After 48 hours", value: 2 },
-        { label: "After 72 hours", value: 3 },
+        { label: "Up to 6 hours", value: 1 },
+        { label: "Beyond 6, up to 12", value: 1.1 },
+        { label: "Beyond 12, up to 24", value: 1.25 },
+        { label: "Beyond 24, up to 48", value: 1.5 },
+        { label: "Beyond 48, up to 72", value: 2 },
+        { label: "Beyond 72, up to 96", value: 3 },
+        { label: "Beyond 96 hours", value: 6 },
       ],
     },
     {
@@ -208,7 +226,7 @@ export const railExhibits: Record<string, readonly BlogExhibit[]> = {
     {
       kind: "table",
       caption: "Wharfage is the goods. It is not demurrage.",
-      source: "Same April 2024 compendium, per wagon per hour. Confirm the group before the invoice.",
+      source: "April 2024 compendium, per wagon per hour. Corrigendum 61 of 13 March 2026 does not reset these wharfage groups. Confirm the group before the invoice.",
       headers: ["Group", "₹ per wagon-hour", "What it is not"],
       rows: [
         ["I", "150", "Not the wagon detention charge"],

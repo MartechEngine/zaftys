@@ -113,8 +113,9 @@ def fit_font(draw, text: str, target_h: int) -> ImageFont.FreeTypeFont:
 def panel_card() -> None:
     """Rule 134 sizes at one scale: 2 logical pixels per millimetre.
 
-    The 100 mm figure is the UN class number (the digit). The class label
-    is the 260 mm square. The four-digit UN number is not that 100 mm line.
+    The class label follows the English text of G.S.R. 590(E), 2 June 1989:
+    not less than 260 mm square. The Hindi text of that notification says 250.
+    The 50 mm lines are the technical name and the emergency telephone.
     """
     img, draw = new_canvas()
     center_text(draw, "The class label is the large mark", px(18), font(44))
@@ -143,7 +144,6 @@ def panel_card() -> None:
     draw.text((x0, y0 + sq + px(14)), "Class label. 260 mm square.", font=font(26), fill=TEAL)
 
     samples = [
-        (100, "3", "UN class number. 100 mm. The digit, not UN 1230."),
         (50, "NAME", "Technical name. 50 mm high."),
         (50, "PHONE", "Emergency telephone. 50 mm. The consignor line matches it."),
     ]
@@ -162,7 +162,7 @@ def panel_card() -> None:
 
     draw.text(
         (px(36), px(860)),
-        "A 250 mm label is short of this rule. The four-digit UN number is not the 100 mm line.",
+        "English Gazette, 2 June 1989: not less than 260 mm square. The Hindi text of the same notification says 250.",
         font=font(22),
         fill=NAVY,
     )

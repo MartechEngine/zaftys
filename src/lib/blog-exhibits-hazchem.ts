@@ -7,7 +7,7 @@ export const hazchemKpis: readonly BlogKpi[] = [
     value: "Rule 134",
     label: "Emergency panel, three faces",
     detail:
-      "CMVR rule 134: technical name at least 50 mm, UN class number (the digit) at least 100 mm, class label at least 260 mm square, on both sides and the rear.",
+      "English Gazette, 2 June 1989: class label not less than 260 mm square. The Hindi text of the same notification says 250. Name and emergency lines at least 50 mm. Both sides and the rear.",
   },
   {
     value: "10 kg + 1 kg",
@@ -19,7 +19,7 @@ export const hazchemKpis: readonly BlogKpi[] = [
     value: "5 yr / 2 yr",
     label: "SMPV vessel retest",
     detail:
-      "SMPV (Unfired) Rules, 2016, rule 19. Hydraulic test within five years, or two years if the gas is corrosive or toxic. Relief valves: at least yearly.",
+      "SMPV rule 19: hydraulic test within five years, or two years if the gas is corrosive or toxic. Rule 18(xiii): relief valves tested at least yearly. Rule 18(xiv): on a road tanker for a flammable, toxic, or corrosive gas, those valves are also replaced at least every ten years. The replacement does not replace the yearly test.",
   },
   {
     value: "685 L",
@@ -51,9 +51,9 @@ export const hazchemTakeaways = [
 ] as const;
 
 export const hazchemReferences = [
-  "Central Motor Vehicles Rules, 1989, Rules 129 to 137. Rule 133: the driver keeps the written TREM card in the cab. Rule 134: emergency information panel on both sides and the rear, with the minimum letter sizes in the KPI strip.",
+  "Central Motor Vehicles Rules, 1989, Rules 129 to 137. Rule 133: the driver keeps the written TREM card in the cab. Rule 134, English text of [G.S.R. 590(E), 2 June 1989](https://archive.org/download/in.gazette.csl_extraordinary.1989-06-02.E-0618-1989-0287-26479/E-0618-1989-0287-26479.pdf): class label not less than 260 mm square, technical name and emergency lines not less than 50 mm, panel on both sides and the rear. The Hindi text of that notification says 250 mm square. [G.S.R. 338(E), 26 March 1993](https://archive.org/download/in.gazette.csl_extraordinary.1993-03-26.E-0455-1993-0114-17467/E-0455-1993-0114-17467.pdf) adds the trip sticker and does not change the size. The Gazette drawing is an 800 mm by 600 mm panel and marks the UN number line at 15 mm.",
   "[Petroleum Rules, 2002](https://peso.gov.in/web/en/petroleum-rules-2002): rule 63 (tank vehicle to the Third Schedule and Chief Controller approval), rule 70 (spark arrestor), rule 71 (24 volt circuit and battery isolator), rule 72 (10 kg and 1 kg extinguishers), rule 73 (attendance), rule 74 (do not park within 9 metres of a fire), rule 75 (licence for Class A and Class B in bulk).",
-  "[SMPV (Unfired) Rules, 2016, rule 19](https://indiankanoon.org/doc/143409438/): periodic hydraulic test not more than every five years, or every two years for corrosive or toxic gas. Rule 18: relief valves tested at least once a year. PESO road-tanker proformas also show a half-yearly examination under rule 44(2). Confirm that rule before a standard operating procedure says every six months for every tanker.",
+  "[SMPV (Unfired) Rules, 2016](https://peso.gov.in/web/sites/default/files/2019-12/SMPV_RULES_2016_bilingual.pdf), rule 19(1)(a): periodic hydraulic test not more than every five years after the first test, or every two years for a vessel containing corrosive or toxic gas. Rule 19(2): the Chief Controller may permit a pneumatic test where the vessel cannot safely be filled with water. Rule 18(xiii): relief valves tested by a competent person at least once a year, with a record. Rule 18(xiv): on a road tanker carrying a flammable, toxic, or corrosive gas, those relief valves are replaced with new valves every ten years, or sooner if found defective in operation or at a test, whichever is earlier. The ten-year replacement does not take the place of the yearly test. Rule 44 makes the licensee responsible for keeping the vehicle road-worthy. The 2016 text does not set a six-month examination, and it has no sub-rule 44(2).",
   "Manufacture, Storage and Import of Hazardous Chemical Rules, 1989, under the Environment (Protection) Act, 1986. Plant occupier duties. They do not replace the card in the cab.",
   "[MoRTH S.O. 3467(E), 16 July 2018](https://taxguru.in/corporate-law/maximum-safe-axle-weight-transport-vehicles.html): axle weights and the 49 tonne and 55 tonne GVW caps still apply to the tanker. Petroleum Rules rule 64(4) points the tank vehicle back to that weight limit.",
   "Petroleum Rules, 2002, rule 64: net carrying capacity is 97 percent of gross for petroleum Class A and Class B, and 98 percent for Class C. A tank truck or tank semi-trailer shall not exceed 25 kilolitres net, an aircraft refueller 50 kilolitres, a tank trailer 5 kilolitres. Rule 66: a tank truck plus tank trailer shall not exceed 15 kilolitres, and no tank trailer is attached to a tank truck whose net capacity exceeds 12 kilolitres. Rule 124(4) is a fixed storage tank: air space not less than 5 percent of capacity, or the approved code, whichever is less. It is not the road-tanker fill.",
@@ -78,9 +78,9 @@ export const hazchemExhibits: Record<string, readonly BlogExhibit[]> = {
     {
       kind: "image",
       caption: "Rule 134 sizes at one scale. The large mark is the class label.",
-      source: "Technical name at least 50 mm. The UN class number, the digit, at least 100 mm. Class label at least 260 mm square. The four-digit UN number is not that 100 mm line. Both sides and the rear.",
+      source: "English text of G.S.R. 590(E), 2 June 1989: class label not less than 260 mm square. Technical name and emergency lines not less than 50 mm. The Hindi text of the same notification says 250 mm square. The Gazette drawing is 800 mm by 600 mm and marks the UN number line at 15 mm. The India Code 100 mm class digit is not that drawing.",
       src: "/images/blog/hazchem-panel-eip.png",
-      alt: "Scale drawing of CMVR rule 134: a 260 millimetre class label beside a 100 millimetre class number and 50 millimetre name",
+      alt: "Scale drawing of CMVR rule 134: a 260 millimetre class label beside a 50 millimetre technical name and a 50 millimetre emergency line",
     },
     {
       kind: "table",
