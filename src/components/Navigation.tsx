@@ -3,14 +3,9 @@ import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Menu, X, UserCircle, ChevronDown } from "lucide-react";
 import logoHeader from "@/assets/logo-zaftys.webp";
-import { mailtoCompany } from "@/lib/constants";
-import { heroMailBodies, heroMailSubjects } from "@/lib/hero-ctas";
-import { trackEvent } from "@/lib/analytics";
 import { cn } from "@/lib/utils";
 import { headerNav, type NavDropdown } from "@/lib/nav-config";
 import { paths } from "@/lib/site-paths";
-
-const quoteMailto = mailtoCompany(heroMailSubjects.quote, heroMailBodies.quote);
 
 function pathMatches(pathname: string, path: string): boolean {
   if (pathname === path) return true;
@@ -188,16 +183,11 @@ const Navigation = () => {
 
           <div className="hidden xl:flex items-center space-x-2 shrink-0">
             <Link to={paths.login}>
-              <Button variant="ghost" size="sm" className="gap-1.5 font-semibold">
+              <Button variant="accent" size="sm" className="gap-1.5 font-semibold uppercase tracking-wide text-xs">
                 <UserCircle size={18} />
                 Login
               </Button>
             </Link>
-            <Button asChild size="sm" variant="accent" className="font-semibold uppercase tracking-wide text-xs">
-              <a href={quoteMailto} onClick={() => trackEvent("cta_mailto", { placement: "nav", intent: "quote" })}>
-                Request Transportation
-              </a>
-            </Button>
           </div>
 
           <button
@@ -282,18 +272,13 @@ const Navigation = () => {
                   </div>
                 );
               })}
-              <div className="pt-4 space-y-3 px-4 border-t border-gray-100 mt-2">
+              <div className="pt-4 px-4 border-t border-gray-100 mt-2">
                 <Link to={paths.login} className="block">
-                  <Button variant="outline" className="w-full justify-start gap-2">
+                  <Button variant="accent" className="w-full justify-center gap-2 font-semibold uppercase tracking-wide">
                     <UserCircle size={18} />
                     Login
                   </Button>
                 </Link>
-                <Button asChild className="w-full font-semibold uppercase tracking-wide" variant="accent">
-                  <a href={quoteMailto} onClick={() => trackEvent("cta_mailto", { placement: "nav", intent: "quote" })}>
-                    Request Transportation
-                  </a>
-                </Button>
               </div>
             </div>
           </div>

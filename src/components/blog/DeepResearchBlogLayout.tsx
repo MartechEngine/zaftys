@@ -71,7 +71,7 @@ function MidArticleCta({ band, fallback }: { band: BlogMidCta; fallback: BlogCta
   return (
     <div className="deep-mid-cta my-10 rounded-xl px-6 py-8 md:px-8">
       <p className="text-[10px] font-heading font-bold tracking-widest text-[#0B7F8A]">{band.eyebrow}</p>
-      <h3 className="mt-2 font-heading text-2xl font-bold normal-case tracking-normal text-navy">{band.title}</h3>
+      <p className="mt-2 font-heading text-2xl font-bold normal-case tracking-normal text-navy">{band.title}</p>
       <p className="mt-3 max-w-xl text-sm leading-relaxed text-navy/85">{band.body}</p>
       <div className="mt-6">
         <PostCta cta={cta} accent />
@@ -184,13 +184,14 @@ function TocTree({
             {item.chapter != null ? (
               <span
                 className={cn(
-                  "mr-1.5 font-heading font-bold text-[#0B7F8A]",
+                  "mr-2 font-heading font-bold text-[#0B7F8A]",
                   compact ? "text-xs" : "text-[10px]",
                 )}
               >
                 {String(item.chapter).padStart(2, "0")}
               </span>
             ) : null}
+            {item.chapter != null ? " " : null}
             {item.label}
           </a>
           {item.children && item.children.length > 0 ? (

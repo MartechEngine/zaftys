@@ -114,10 +114,9 @@ export const hazchemExhibits: Record<string, readonly BlogExhibit[]> = {
     },
     {
       kind: "table",
-      variant: "compare",
       caption: "Dedicated road tanker versus an ISO tank on a chassis.",
       source: "T11 is a typical liquid tank container. T14 or T20 when the pressure spec requires it. Price the lane.",
-      headers: ["", "Road tanker", "ISO tank"],
+      headers: ["Line", "Road tanker", "ISO tank"],
       rows: [
         ["Best use", "A repeating plant lane", "A lane that also has rail or a port"],
         ["Legal extra", "PESO approval for this vehicle", "Tank approval plus a chassis rated for the loaded tank"],
