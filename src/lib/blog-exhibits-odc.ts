@@ -34,7 +34,7 @@ export const odcKpis: readonly BlogKpi[] = [
   },
   {
     value: "₹1,200",
-    label: "Lowest fee band, per 50 km",
+    label: "National highways and MPRDC, per 50 km",
     detail:
       "Paragraph 13 of the 27 October 2025 circular, for the national-highway journey: HT-1 to HT-3 ₹1,200, HT-4 to HT-6 ₹2,400, HT-7 to HT-9 ₹3,600, HT-10 to HT-13 ₹4,800 per 50 km or part, when gross combination weight including the puller stays inside the permitted limit. The Madhya Pradesh order of 14 July 2025 uses the same four bands on MPRDC roads. Neither figure is a trailer hire rate.",
   },
@@ -45,7 +45,7 @@ export const odcTakeaways = [
   "Rule 93 after GSR 414(E) is the ordinary envelope. An N3 goods vehicle is 2.6 m by 12 m by 4.0 m. A semi-trailer with a tractor is 2.6 m by 18.75 m by 4.0 m. A modular hydraulic trailer with a puller is 3.0 m by 29 m by 4.75 m. An indivisible load on an N2 or N3 may be up to 4.75 m high.",
   "The 27 October 2025 circular draws HT-1 to HT-13 at not more than 18 tonnes per axle row. The gross weights in that table are without the puller. HT-10 to HT-13 count the attachment weight inside gross vehicle weight.",
   "The permission letter sets speed, hours, and escort. If the regional office does not update the bridge list within 7 days, the portal opens the fee. The letter still issues only after payment.",
-  "There is no honest national trailer-hire rate per km. The portal fee is a separate published band per 50 km. Split hire, puller, fuel, civil work, permissions, toll, empty return, and waiting.",
+  "There is no honest national trailer-hire rate per km. The same four bands per 50 km are the national-highway fee and, separately, the MPRDC-road fee. Split hire, puller, fuel, civil work, permissions, toll, empty return, and waiting.",
   "A MoRTH letter is a national-highway permission. State roads, a utility shutdown, a railway span, and a loaded height above 4.75 m are separate problems. The 2012 bridge study does not cover a limit-state bridge under IRC 6 or IRC 112.",
 ] as const;
 

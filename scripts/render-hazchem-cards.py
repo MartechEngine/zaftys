@@ -171,7 +171,7 @@ def panel_card() -> None:
 
 def mass_card() -> None:
     img, draw = new_canvas()
-    center_text(draw, "What 685 litres of vapour does to the load", px(24), font(42))
+    center_text(draw, "What 685 litres of expansion does to the load", px(24), font(42))
     draw.line((px(400), px(92), px(1136), px(92)), fill=TEAL, width=px(8))
     center_text(draw, "Methanol workshop. Confirm density on the MSDS.", px(108), font(26))
     bar = "Mass  =  (V shell  -  V ullage)  x  density"

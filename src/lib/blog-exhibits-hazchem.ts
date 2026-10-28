@@ -45,7 +45,7 @@ export const hazchemTakeaways = [
   "The consignor owns the UN number. The carrier owns the TREM card in the cab and the panel on the vehicle.",
   "A petroleum tank vehicle needs a PESO approval for that registration, a spark arrestor, a battery isolator, and the rule 72 extinguishers.",
   "Do not print a national gate-rejection rate or an incident pie. Count rejects at your own gate.",
-  "Ullage is the approved drawing, checked with the expansion sum. The methanol workshop is 685 litres of vapour and 15,193 kg. Petroleum's 97 percent net is a different rule.",
+  "Ullage is the approved drawing, checked with the expansion sum. The methanol workshop is approximately 685 litres of liquid-volume expansion under the stated assumptions, and 15,193 kg. Petroleum's 97 percent net is a different rule.",
   "A spot tanker is the wrong tool when a valve failure becomes an environmental case. Name the fleet and the wash certificate.",
   "An in-gauge chemical tanker uses one day of e-way bill validity per 200 km or part. The 20 km clock is over-dimensional cargo, or a multimodal shipment with a ship leg.",
 ] as const;
