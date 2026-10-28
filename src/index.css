@@ -327,6 +327,56 @@ All colors MUST be HSL.
   }
 }
 
+@media (max-width: 767px) {
+  .exhibit-data-table {
+    min-width: 0;
+  }
+
+  .exhibit-data-table thead {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+  }
+
+  .exhibit-data-table,
+  .exhibit-data-table tbody,
+  .exhibit-data-table tr,
+  .exhibit-data-table td {
+    display: block;
+    width: 100%;
+    min-width: 0;
+  }
+
+  .exhibit-data-table tr {
+    margin-bottom: 0.75rem;
+    overflow: hidden;
+    border: 1px solid rgba(11, 28, 54, 0.1);
+    border-radius: 0.5rem;
+    background: #fff;
+  }
+
+  .exhibit-data-table td {
+    border-top: 1px solid rgba(11, 28, 54, 0.1);
+  }
+
+  .exhibit-data-table td:first-child {
+    border-top: 0;
+    background: rgba(11, 28, 54, 0.04);
+  }
+
+  .exhibit-data-table td::before {
+    content: attr(data-label);
+    display: block;
+    margin-bottom: 0.15rem;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: rgba(11, 28, 54, 0.5);
+  }
+}
+
 @keyframes fadeInUp {
   from {
     opacity: 0;

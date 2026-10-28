@@ -317,59 +317,38 @@ export function BlogExhibitBlock({ exhibit }: { exhibit: BlogExhibit }) {
         ) : exhibit.variant === "compare" ? (
           <CompareTable headers={exhibit.headers} rows={exhibit.rows} />
         ) : (
-          <>
-            <div className="space-y-3 md:hidden">
-              {exhibit.rows.map((row, rowIndex) => (
-                <div key={rowIndex} className="overflow-hidden rounded-lg border border-navy/10 bg-white">
-                  {row.map((cell, cellIndex) => (
-                    <div
-                      key={`${rowIndex}-${cellIndex}`}
-                      className={cn(
-                        "px-3 py-2.5",
-                        cellIndex === 0 ? "bg-navy/[0.04]" : "border-t border-navy/10",
-                      )}
-                    >
-                      <p className="text-[10px] font-heading font-bold tracking-widest text-navy/50">
-                        {exhibit.headers[cellIndex]}
-                      </p>
-                      <p className="mt-0.5 break-words text-sm leading-relaxed text-navy/90">{cell}</p>
-                    </div>
+          <div className="min-w-0 overflow-x-auto">
+            <table className="exhibit-data-table w-full border-collapse text-left text-sm md:min-w-[36rem]">
+              <thead>
+                <tr className="border-b border-navy/15 bg-white">
+                  {exhibit.headers.map((header) => (
+                    <th key={header} className="px-3 py-2 font-heading text-xs font-bold normal-case tracking-normal text-navy">
+                      {header}
+                    </th>
                   ))}
-                </div>
-              ))}
-            </div>
-            <div className="hidden min-w-0 overflow-x-auto md:block">
-              <table className="w-full min-w-[36rem] border-collapse text-left text-sm">
-                <thead>
-                  <tr className="border-b border-navy/15 bg-white">
-                    {exhibit.headers.map((header) => (
-                      <th key={header} className="px-3 py-2 font-heading text-xs font-bold normal-case tracking-normal text-navy">
-                        {header}
-                      </th>
+                </tr>
+              </thead>
+              <tbody>
+                {exhibit.rows.map((row, rowIndex) => (
+                  <tr key={rowIndex} className={rowIndex % 2 === 0 ? "bg-white/70" : "bg-[#EEF3F8]"}>
+                    {row.map((cell, cellIndex) => (
+                      <td
+                        key={`${rowIndex}-${cellIndex}`}
+                        data-label={exhibit.headers[cellIndex]}
+                        className={`px-3 py-2.5 align-top leading-relaxed text-navy/90 ${
+                          cellIndex === row.length - 1 && exhibit.headers[cellIndex] === "Score"
+                            ? "w-16 border-l border-dashed border-navy/20"
+                            : ""
+                        }`}
+                      >
+                        {cell}
+                      </td>
                     ))}
                   </tr>
-                </thead>
-                <tbody>
-                  {exhibit.rows.map((row, rowIndex) => (
-                    <tr key={rowIndex} className={rowIndex % 2 === 0 ? "bg-white/70" : "bg-[#EEF3F8]"}>
-                      {row.map((cell, cellIndex) => (
-                        <td
-                          key={`${rowIndex}-${cellIndex}`}
-                          className={`px-3 py-2.5 align-top leading-relaxed text-navy/90 ${
-                            cellIndex === row.length - 1 && exhibit.headers[cellIndex] === "Score"
-                              ? "w-16 border-l border-dashed border-navy/20"
-                              : ""
-                          }`}
-                        >
-                          {cell}
-                        </td>
-                      ))}
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </>
+                ))}
+              </tbody>
+            </table>
+          </div>
         )}
       </FigureChrome>
     );

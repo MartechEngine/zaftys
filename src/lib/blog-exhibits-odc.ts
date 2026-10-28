@@ -243,14 +243,34 @@ export const odcExhibits: Record<string, readonly BlogExhibit[]> = {
   ],
   "What the dispatch file must hold": [
     {
-      kind: "flow",
-      caption: "Four papers before the trailer rolls. A missing one stops the move.",
-      source: "The letter is not the utility shutdown, and the utility shutdown is not the insurance survey.",
+      kind: "steps",
+      caption: "Six papers before the trailer rolls. A missing one stops the move.",
+      source: "Annexure-VI of the 27 October 2025 circular is the conditions sheet on the letter. A utility shutdown and a surveyor sign-off apply when that letter or the insurance slip requires them.",
       items: [
-        { title: "Permission letter", body: "Speed, hours, escort, and the route the portal accepted." },
-        { title: "Survey pack", body: "Measurements, photographs, and the engineer named for any bridge that is not an obvious pass." },
-        { title: "Utility job", body: "The shutdown or the lift, if a wire is in the loaded height." },
-        { title: "Lashing plan", body: "The pattern the cargo drawing allows. No invented lugs on a transformer." },
+        {
+          title: "Permission letter",
+          body: "The portal letter, including the Annexure-VI conditions: speed, hours, escort, and the route that was accepted.",
+        },
+        {
+          title: "Route survey",
+          body: "Measurements and photographs for the loaded path. Name the engineer where a bridge is not an obvious pass.",
+        },
+        {
+          title: "Cargo drawing",
+          body: "Dimensions, and the centre of gravity if the manufacturer issued it. The lashing plan has to match that drawing.",
+        },
+        {
+          title: "Puller and trailer papers",
+          body: "Registrations for the puller and the modular lines, and the drivers checked on Sarathi.",
+        },
+        {
+          title: "Utility and escort",
+          body: "The wire shutdown, or the police escort receipt, when the survey or the letter requires it. Not on every move.",
+        },
+        {
+          title: "Route warranty",
+          body: "The insurance slip for the surveyed route, and the named surveyor's lashing sign-off if the slip requires it.",
+        },
       ],
     },
   ],

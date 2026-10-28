@@ -5,6 +5,7 @@ import {
   COMPANY_PHONE_DISPLAY,
   companyAddress,
 } from "@/lib/constants";
+import { stripMarkdownLinks } from "@/lib/markdown-links";
 
 const BASE = "https://zaftys.com";
 const ORG_ID = `${BASE}/#organization`;
@@ -335,7 +336,7 @@ export function faqPageSchema(
   faqs: readonly { question: string; answer: string }[],
 ): Record<string, unknown> {
   const stripMdLinks = (text: string) =>
-    text.replace(/\[([^\]]+)\]\([^)]+\)/g, "$1").replace(/\*\*([^*]+)\*\*/g, "$1");
+    stripMarkdownLinks(text);
 
   return {
     "@context": "https://schema.org",

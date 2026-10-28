@@ -15,6 +15,7 @@ import {
   relatedPosts,
   sectionAnchor,
 } from "@/lib/blog-data";
+import { splitMarkdownLinks } from "@/lib/markdown-links";
 
 /** Renders one post with the Basics Blog Template (wide shell, TOC rail, takeaways, exhibits, mid-CTA). */
 type BlogPostLayoutProps = {
@@ -39,29 +40,26 @@ function PostCta({ post, onDark = false }: { post: BlogPost; onDark?: boolean })
 }
 
 function RichText({ text }: { text: string }) {
-  const parts = text.split(/(\[[^\]]+\]\([^)]+\))/g);
   return (
     <>
-      {parts.map((part, index) => {
-        const match = part.match(/^\[([^\]]+)\]\(([^)]+)\)$/);
-        if (!match) return <span key={index}>{part}</span>;
-        const [, label, href] = match;
-        if (href.startsWith("http")) {
+      {splitMarkdownLinks(text).map((part, index) => {
+        if (part.kind === "text" || !part.href) return <span key={index}>{part.value}</span>;
+        if (part.href.startsWith("http")) {
           return (
             <a
               key={index}
-              href={href}
+              href={part.href}
               target="_blank"
               rel="noopener noreferrer"
               className="font-semibold text-primary hover:underline"
             >
-              {label}
+              {part.value}
             </a>
           );
         }
         return (
-          <Link key={index} to={href} className="font-semibold text-primary hover:underline">
-            {label}
+          <Link key={index} to={part.href} className="font-semibold text-primary hover:underline">
+            {part.value}
           </Link>
         );
       })}

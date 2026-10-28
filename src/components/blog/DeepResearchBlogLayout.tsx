@@ -18,6 +18,7 @@ import {
   relatedPosts,
   sectionAnchor,
 } from "@/lib/blog-data";
+import { splitMarkdownLinks, stripMarkdownLinks } from "@/lib/markdown-links";
 import { cn } from "@/lib/utils";
 
 type DeepResearchBlogLayoutProps = {
@@ -38,29 +39,26 @@ function PostCta({ cta, onDark = false, accent = false }: { cta: BlogCta; onDark
 }
 
 function RichText({ text }: { text: string }) {
-  const parts = text.split(/(\[[^\]]+\]\([^)]+\))/g);
   return (
     <>
-      {parts.map((part, index) => {
-        const match = part.match(/^\[([^\]]+)\]\(([^)]+)\)$/);
-        if (!match) return <span key={index}>{part}</span>;
-        const [, label, href] = match;
-        if (href.startsWith("http")) {
+      {splitMarkdownLinks(text).map((part, index) => {
+        if (part.kind === "text" || !part.href) return <span key={index}>{part.value}</span>;
+        if (part.href.startsWith("http")) {
           return (
             <a
               key={index}
-              href={href}
+              href={part.href}
               target="_blank"
               rel="noopener noreferrer"
               className="font-semibold text-[#0B7F8A] hover:underline"
             >
-              {label}
+              {part.value}
             </a>
           );
         }
         return (
-          <Link key={index} to={href} className="font-semibold text-[#0B7F8A] hover:underline">
-            {label}
+          <Link key={index} to={part.href} className="font-semibold text-[#0B7F8A] hover:underline">
+            {part.value}
           </Link>
         );
       })}
@@ -136,26 +134,90 @@ function SectionBody({ section, post }: { section: BlogSection; post: BlogPost }
   );
 }
 
-type TocItem = { id: string; label: string; depth: 1 | 2; chapter?: number };
+type TocItem = { id: string; label: string; chapter?: number; children?: TocItem[] };
 
 function buildToc(post: BlogPost): TocItem[] {
-  const items: TocItem[] = [];
-  post.sections.forEach((section, index) => {
-    items.push({
-      id: sectionAnchor(section.heading),
-      label: section.heading,
-      depth: 1,
-      chapter: index + 1,
-    });
-    for (const sub of section.subsections ?? []) {
-      items.push({ id: sectionAnchor(sub.heading), label: sub.heading, depth: 2 });
-    }
-  });
-  items.push({ id: "faqs", label: "FAQs", depth: 1 });
+  const items: TocItem[] = post.sections.map((section, index) => ({
+    id: sectionAnchor(section.heading),
+    label: section.heading,
+    chapter: index + 1,
+    children: (section.subsections ?? []).map((sub) => ({
+      id: sectionAnchor(sub.heading),
+      label: sub.heading,
+    })),
+  }));
+  items.push({ id: "faqs", label: "FAQs" });
   if (post.references && post.references.length > 0) {
-    items.push({ id: "references", label: "References", depth: 1 });
+    items.push({ id: "references", label: "References" });
   }
   return items;
+}
+
+function tocIds(items: readonly TocItem[]): string[] {
+  return items.flatMap((item) => [item.id, ...(item.children ?? []).map((child) => child.id)]);
+}
+
+function TocTree({
+  items,
+  activeId,
+  compact = false,
+}: {
+  items: readonly TocItem[];
+  activeId: string;
+  compact?: boolean;
+}) {
+  return (
+    <ol className={compact ? "mt-3 space-y-2" : "mt-3 max-h-[46vh] space-y-1 overflow-y-auto pr-1"}>
+      {items.map((item) => (
+        <li key={item.id}>
+          <a
+            href={`#${item.id}`}
+            className={cn(
+              "block rounded-md px-2 py-1.5 leading-snug transition-colors",
+              compact ? "text-sm text-[#0B7F8A] hover:underline" : "text-[13px]",
+              !compact &&
+                (activeId === item.id
+                  ? "bg-[var(--deep-cyan-soft)] font-semibold text-navy"
+                  : "text-navy/75 hover:bg-navy/5 hover:text-navy"),
+            )}
+          >
+            {item.chapter != null ? (
+              <span
+                className={cn(
+                  "mr-1.5 font-heading font-bold text-[#0B7F8A]",
+                  compact ? "text-xs" : "text-[10px]",
+                )}
+              >
+                {String(item.chapter).padStart(2, "0")}
+              </span>
+            ) : null}
+            {item.label}
+          </a>
+          {item.children && item.children.length > 0 ? (
+            <ol className="mt-1 space-y-0.5 border-l border-navy/10 pl-3">
+              {item.children.map((child) => (
+                <li key={child.id}>
+                  <a
+                    href={`#${child.id}`}
+                    className={cn(
+                      "block rounded-md px-2 py-1 leading-snug",
+                      compact ? "text-[13px] text-[#0B7F8A] hover:underline" : "text-[12px]",
+                      !compact &&
+                        (activeId === child.id
+                          ? "bg-[var(--deep-cyan-soft)] font-semibold text-navy"
+                          : "text-navy/65 hover:bg-navy/5 hover:text-navy"),
+                    )}
+                  >
+                    {child.label}
+                  </a>
+                </li>
+              ))}
+            </ol>
+          ) : null}
+        </li>
+      ))}
+    </ol>
+  );
 }
 
 function useActiveHash(ids: readonly string[]) {
@@ -187,7 +249,7 @@ export function DeepResearchBlogLayout({ post }: DeepResearchBlogLayoutProps) {
   const { previous, next } = adjacentPosts(post);
   const toc = buildToc(post);
   const chapterCount = post.sections.length;
-  const activeId = useActiveHash(toc.map((item) => item.id));
+  const activeId = useActiveHash(tocIds(toc));
 
   return (
     <DeepResearchExhibitProvider>
@@ -297,29 +359,7 @@ export function DeepResearchBlogLayout({ post }: DeepResearchBlogLayoutProps) {
                     className="rounded-xl border border-navy/10 bg-white/90 p-4 shadow-sm backdrop-blur"
                   >
                     <p className="text-[10px] font-heading font-bold tracking-widest text-[#0B7F8A]">Dossier chapters</p>
-                    <ol className="mt-3 max-h-[46vh] space-y-1 overflow-y-auto pr-1">
-                      {toc.map((item) => (
-                        <li key={item.id} className={item.depth === 2 ? "pl-3" : ""}>
-                          <a
-                            href={`#${item.id}`}
-                            className={cn(
-                              "block rounded-md px-2 py-1.5 leading-snug transition-colors",
-                              item.depth === 2 ? "text-[12px]" : "text-[13px]",
-                              activeId === item.id
-                                ? "bg-[var(--deep-cyan-soft)] font-semibold text-navy"
-                                : "text-navy/75 hover:bg-navy/5 hover:text-navy",
-                            )}
-                          >
-                            {item.chapter != null ? (
-                              <span className="mr-1.5 font-heading text-[10px] font-bold text-[#0B7F8A]">
-                                {String(item.chapter).padStart(2, "0")}
-                              </span>
-                            ) : null}
-                            {item.label}
-                          </a>
-                        </li>
-                      ))}
-                    </ol>
+                    <TocTree items={toc} activeId={activeId} />
                   </nav>
 
                   {post.references && post.references.length > 0 ? (
@@ -328,7 +368,7 @@ export function DeepResearchBlogLayout({ post }: DeepResearchBlogLayoutProps) {
                       <ul className="mt-3 space-y-2 text-[11px] leading-snug text-navy/75">
                         {post.references.slice(0, 4).map((item) => (
                           <li key={item} className="line-clamp-2 border-l-2 border-cyan/60 pl-2">
-                            {item.replace(/\[([^\]]+)\]\([^)]+\)/g, "$1")}
+                            {stripMarkdownLinks(item)}
                           </li>
                         ))}
                       </ul>
@@ -383,16 +423,7 @@ export function DeepResearchBlogLayout({ post }: DeepResearchBlogLayoutProps) {
                   className="mb-10 rounded-xl border border-navy/10 bg-white p-4 xl:hidden"
                 >
                   <p className="text-[10px] font-heading font-bold tracking-widest text-[#0B7F8A]">Chapters</p>
-                  <ol className="mt-3 columns-1 gap-x-6 sm:columns-2">
-                    {toc.map((item) => (
-                      <li key={item.id} className="mb-1.5 break-inside-avoid">
-                        <a href={`#${item.id}`} className="text-sm text-[#0B7F8A] hover:underline">
-                          {item.chapter != null ? `${String(item.chapter).padStart(2, "0")} ` : ""}
-                          {item.label}
-                        </a>
-                      </li>
-                    ))}
-                  </ol>
+                  <TocTree items={toc} activeId={activeId} compact />
                 </nav>
 
                 <div className="space-y-8">
