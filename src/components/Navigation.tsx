@@ -113,7 +113,7 @@ const Navigation = () => {
                     key={entry.id}
                     to={entry.path}
                     className={cn(
-                      "px-2 py-2 rounded-md text-xs font-bold transition-colors uppercase tracking-wide",
+                      "px-2 py-2 rounded-md text-sm font-bold transition-colors uppercase tracking-wide",
                       active ? "text-accent" : "text-navy hover:text-accent hover:bg-navy/5",
                     )}
                   >
@@ -136,7 +136,7 @@ const Navigation = () => {
                     <Link
                       to={entry.hubPath}
                       className={cn(
-                        "pl-2 pr-1 py-2 rounded-l-md text-xs font-bold transition-colors uppercase tracking-wide",
+                        "pl-2 pr-1 py-2 rounded-l-md text-sm font-bold transition-colors uppercase tracking-wide",
                         active ? "text-accent" : "text-navy hover:text-accent hover:bg-navy/5",
                       )}
                     >
