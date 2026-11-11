@@ -24,7 +24,17 @@ type DeepResearchBlogLayoutProps = {
   post: BlogPost;
 };
 
-function PostCta({ cta, onDark = false, accent = false }: { cta: BlogCta; onDark?: boolean; accent?: boolean }) {
+function PostCta({
+  cta,
+  onDark = false,
+  accent = false,
+  fallbackMessage,
+}: {
+  cta: BlogCta;
+  onDark?: boolean;
+  accent?: boolean;
+  fallbackMessage?: string;
+}) {
   if ("to" in cta) {
     return (
       <Link to={cta.to}>
@@ -34,7 +44,7 @@ function PostCta({ cta, onDark = false, accent = false }: { cta: BlogCta; onDark
       </Link>
     );
   }
-  return <WhatsAppButton label={cta.label} />;
+  return <WhatsAppButton label={cta.label} message={cta.message ?? fallbackMessage} intent="blog-deep-research" />;
 }
 
 function RichText({ text }: { text: string }) {
@@ -45,7 +55,7 @@ function RichText({ text }: { text: string }) {
         const match = part.match(/^\[([^\]]+)\]\(([^)]+)\)$/);
         if (!match) return <span key={index}>{part}</span>;
         const [, label, href] = match;
-        if (href.startsWith("http")) {
+        if (href.startsWith("http") || /\.(pdf|png|jpe?g|webp|zip)(?:[?#]|$)/i.test(href)) {
           return (
             <a
               key={index}
@@ -68,7 +78,15 @@ function RichText({ text }: { text: string }) {
   );
 }
 
-function MidArticleCta({ band, fallback }: { band: BlogMidCta; fallback: BlogCta }) {
+function MidArticleCta({
+  band,
+  fallback,
+  whatsappMessage,
+}: {
+  band: BlogMidCta;
+  fallback: BlogCta;
+  whatsappMessage?: string;
+}) {
   const cta = band.cta ?? fallback;
   return (
     <div className="deep-mid-cta my-10 rounded-xl px-6 py-8 md:px-8">
@@ -76,7 +94,7 @@ function MidArticleCta({ band, fallback }: { band: BlogMidCta; fallback: BlogCta
       <h3 className="mt-2 font-heading text-2xl font-bold normal-case tracking-normal text-navy">{band.title}</h3>
       <p className="mt-3 max-w-xl text-sm leading-relaxed text-navy/85">{band.body}</p>
       <div className="mt-6">
-        <PostCta cta={cta} accent />
+        <PostCta cta={cta} accent fallbackMessage={whatsappMessage} />
       </div>
     </div>
   );
@@ -130,7 +148,12 @@ function SectionBody({ section, post }: { section: BlogSection; post: BlogPost }
         </div>
       ))}
       {midCtasForSection(post, section.heading).map((band) => (
-        <MidArticleCta key={`${band.afterHeading}-${band.title}`} band={band} fallback={post.cta} />
+        <MidArticleCta
+          key={`${band.afterHeading}-${band.title}`}
+          band={band}
+          fallback={post.cta}
+          whatsappMessage={post.whatsappMessage}
+        />
       ))}
     </>
   );
@@ -343,7 +366,9 @@ export function DeepResearchBlogLayout({ post }: DeepResearchBlogLayoutProps) {
 
                   {"to" in post.cta ? (
                     <div className="rounded-xl bg-navy p-4 text-white">
-                      <p className="text-[10px] font-heading font-bold tracking-widest text-cyan">Next step</p>
+                      <p className="text-[10px] font-heading font-bold tracking-widest text-cyan">
+                        {post.ctaBand?.eyebrow ?? "Next step"}
+                      </p>
                       <p className="mt-2 text-sm leading-snug text-white/85">{post.cta.label}</p>
                       <Link
                         to={post.cta.to}
@@ -539,16 +564,26 @@ export function DeepResearchBlogLayout({ post }: DeepResearchBlogLayoutProps) {
 
         <section className="section-padding bg-navy text-white">
           <div className="container mx-auto container-padding max-w-3xl text-center">
-            <p className="mb-3 text-[10px] font-heading font-bold tracking-widest text-cyan">Deep research next step</p>
-            <h2 className="mb-4 font-heading text-3xl font-bold normal-case tracking-normal">Need trucks first?</h2>
+            <p className="mb-3 text-[10px] font-heading font-bold tracking-widest text-cyan">
+              {post.ctaBand?.eyebrow ?? "Deep research next step"}
+            </p>
+            <h2 className="mb-4 font-heading text-3xl font-bold normal-case tracking-normal">
+              {post.ctaBand?.title ?? "Need trucks first?"}
+            </h2>
             <p className="mb-8 text-gray-300">
-              Most readers need corridor capacity, not a new login. Share your gateway, inland plant, container mix, and
-              weekly volume on the contact form. We place trailers as your transport partner. Need software or a load
-              board afterward? Use the links below.
+              {post.ctaBand?.body ??
+                "Most readers need corridor capacity, not a new login. Share your gateway, inland plant, container mix, and weekly volume on the contact form. We place trailers as your transport partner. Need software or a load board afterward? Use the links below."}
             </p>
             <CTAGroup>
-              <PostCta cta={post.cta} onDark />
-              {post.cta.to !== "/zaftys-tms" ? (
+              <PostCta cta={post.cta} onDark fallbackMessage={post.whatsappMessage} />
+              {post.whatsappMessage && "to" in post.cta ? (
+                <WhatsAppButton
+                  label="WhatsApp liability desk"
+                  message={post.whatsappMessage}
+                  intent="blog-deep-research-end"
+                />
+              ) : null}
+              {"to" in post.cta && post.cta.to !== "/zaftys-tms" ? (
                 <Link to="/zaftys-tms">
                   <Button size="lg" variant="on-dark-outline">
                     Explore ZAFTYS TMS

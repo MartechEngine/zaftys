@@ -149,14 +149,14 @@ const Blog = () => {
                   : "border-border hover:border-primary/40",
               )}
             >
-              <div className="grid grid-cols-1 lg:grid-cols-2">
+              <div className="grid grid-cols-1 lg:grid-cols-2 lg:items-center">
                 {featured.heroImage ? (
                   <ResponsiveImage
                     src={featured.heroImage}
                     alt={`${featured.title} | ZAFTYS Blog`}
                     aspectRatio="16/10"
                     objectFit="cover"
-                    className="h-full min-h-[220px]"
+                    className="min-h-[220px] lg:min-h-0"
                   />
                 ) : (
                   <div className="bg-muted min-h-[220px]" />
@@ -209,7 +209,6 @@ const Blog = () => {
                         alt={`${post.title} | ZAFTYS Blog`}
                         aspectRatio="16/10"
                         objectFit="cover"
-                        className="rounded-t-xl"
                       />
                       {isDeepResearch(post) ? (
                         <span className="absolute left-3 top-3 rounded bg-navy px-2.5 py-1 text-[10px] font-heading font-bold uppercase tracking-widest text-cyan shadow-sm">

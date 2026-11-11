@@ -51,6 +51,13 @@ import { odcKpis, odcReferences, odcTakeaways } from "@/lib/blog-exhibits-odc";
 import { odcFaqs, odcSections } from "@/lib/blog-post-odc";
 import { railKpis, railReferences, railTakeaways } from "@/lib/blog-exhibits-rail";
 import { railFaqs, railSections } from "@/lib/blog-post-rail";
+import {
+  transitDamageKpis,
+  transitDamageReferences,
+  transitDamageTakeaways,
+} from "@/lib/blog-exhibits-transit-damage-insurance";
+import { transitDamageFaqs, transitDamageSections } from "@/lib/blog-post-transit-damage-insurance";
+import { WHATSAPP_TRANSIT_DAMAGE_MESSAGE } from "@/lib/constants";
 
 export type BlogCategory = "operations" | "industries" | "technology";
 
@@ -59,7 +66,14 @@ export type BlogTemplate = "basics" | "deep-research";
 
 export type BlogCta =
   | { label: string; to: string }
-  | { label: string; whatsapp: true };
+  | { label: string; whatsapp: true; message?: string };
+
+/** Optional deep-research footer band copy (overrides the generic capacity CTA). */
+export type BlogCtaBand = {
+  eyebrow: string;
+  title: string;
+  body: string;
+};
 
 export type BlogDonutSlice = {
   label: string;
@@ -209,6 +223,10 @@ export type BlogPost = {
   faqs: readonly { question: string; answer: string }[];
   sections: readonly BlogSection[];
   cta: BlogCta;
+  /** Deep-researched: custom end-band copy when the generic capacity CTA is wrong. */
+  ctaBand?: BlogCtaBand;
+  /** Prefill for WhatsApp CTAs on this post (end band and whatsapp mid-CTAs without their own message). */
+  whatsappMessage?: string;
 };
 
 export function sectionAnchor(heading: string): string {
@@ -225,6 +243,89 @@ export const blogCategoryLabels: Record<BlogCategory, string> = {
 };
 
 export const blogPosts: readonly BlogPost[] = [
+  {
+    slug: "transit-damage-shortage-cargo-insurance-india-carrier-liability-guide",
+    title: "Transit Damage & Shortage Claims in India: Carrier Liability, Clean LR, and Cargo Insurance",
+    seoTitle: "Transit Damage & Shortage Claims India | Carrier Liability | ZAFTYS",
+    seoDescription:
+      "Transit damage claims India, weighbridge shortage tolerance, Carriage by Road Act 2007 Rule 12 liability, clean vs qualified lorry receipt, and marine cargo ITC-A claim process for industrial freight.",
+    category: "operations",
+    tags: [
+      "Transit Damage Claims",
+      "Carrier Liability",
+      "Carriage by Road Act 2007",
+      "Weighbridge Shortage",
+      "Lorry Receipt",
+      "Marine Cargo Insurance",
+      "Contract Logistics",
+      "India",
+    ],
+    publishedAt: "2026-11-11",
+    updatedAt: "2026-11-11",
+    author: "ZAFTYS Operations & Risk Management Research",
+    template: "deep-research",
+    subtitle:
+      "Carriage by Road Act 2007 · Rule 12 liability caps · Marine cargo ITC-A · Clean vs qualified lorry receipt · Weighbridge shortage tolerances · 24-hour surveyor protocol",
+    summary:
+      "How Indian plants recover transit damage and weighbridge shortage: Rule 12 declared value, clean vs qualified lorry receipt, ITC-A claim steps, and contract clauses that survive a surveyor.",
+    readMinutes: 34,
+    heroImage: "/images/blog/transit-damage-shortage-cargo-insurance-india.jpg",
+    heroAspectRatio: "16/9",
+    heroWidth: 1280,
+    heroHeight: 720,
+    heroAlt:
+      "Warehouse racks with packed industrial goods ready for full truckload dispatch, where transit damage and shortage claims begin at the dock",
+    kpis: transitDamageKpis,
+    takeaways: transitDamageTakeaways,
+    references: transitDamageReferences,
+    midCtas: [
+      {
+        afterHeading: "Carriage by Road Act 2007 and Rule 12 carrier liability caps",
+        eyebrow: "Registered common carrier",
+        title: "Put liability on a contract you can enforce",
+        body: "Share the lane, cargo value band, and whether value is declared on the goods receipt today. We place industrial full truckload with owned fleet first and labeled overflow, under paperwork that survives a surveyor.",
+        cta: { label: "Contract logistics", to: "/logistics/contract-logistics" },
+      },
+      {
+        afterHeading: "Weighbridge shortage tolerance in Indian freight contracts",
+        eyebrow: "Weighbridge shortage rules",
+        title: "Quote industrial freight with shortage rules written in",
+        body: "Tell us commodity, net-weight basis, and the tolerance you already use. Steel, cement, and machinery corridors need different shortage bands and body classes.",
+        cta: { label: "Industrial freight", to: "/logistics/industrial-freight" },
+      },
+      {
+        afterHeading: "24-hour transit damage claim and surveyor SOP",
+        eyebrow: "Evidence on the trip",
+        title: "Capture geo photos and qualified ePOD remarks",
+        body: "Bring one damaged-delivery example from the last quarter. We map which seals, timestamps, and delivery remarks ZAFTYS TMS should hold on contracted moves.",
+        cta: { label: "Explore ZAFTYS TMS", to: "/zaftys-tms" },
+      },
+      {
+        afterHeading: "Master transporter contract clauses: enforceable liability provisions",
+        eyebrow: "Low-friction next step",
+        title: "Send your shortage clause or last rejected claim pack",
+        body: "WhatsApp the clause PDF, one repudiation letter, or say you have neither. We reply on the corridors you run - not a national claims speech.",
+        cta: { label: "WhatsApp the pack", whatsapp: true },
+      },
+    ],
+    relatedSlugs: [
+      "spot-market-vs-dedicated-fleet-india",
+      "steel-coil-transport-basics",
+      "truck-freight-rates-india-cost-rate-benchmarking-guide",
+      "epod-fastag-eway-bill-billing-india",
+      "5-hidden-cost-leaks-heavy-industrial-freight-tms-3pl-guide",
+      "diesel-surcharge-freight-contract-india",
+    ],
+    faqs: transitDamageFaqs,
+    sections: transitDamageSections,
+    cta: { label: "Get a liability clause review", to: "/contact" },
+    ctaBand: {
+      eyebrow: "After the audit",
+      title: "Get a liability clause review on your lanes",
+      body: "Send your current shortage and certificate language, or say you have none. We start from the corridors you actually run - registered carrier placement, declared-value discipline, and evidence that survives a surveyor.",
+    },
+    whatsappMessage: WHATSAPP_TRANSIT_DAMAGE_MESSAGE,
+  },
   {
     slug: "rail-rakes-vs-road-ftl-india-dedicated-freight-corridor",
     title: "Rail Freight vs Road Freight in India: Dedicated Freight Corridors and Break-even Distance",
@@ -466,6 +567,7 @@ export const blogPosts: readonly BlogPost[] = [
       "india-axle-load-gvw-limits-heavy-freight",
       "container-trucking-logistics-india",
       "spot-market-vs-dedicated-fleet-india",
+      "transit-damage-shortage-cargo-insurance-india-carrier-liability-guide",
     ],
     faqs: freightRateFaqs,
     sections: freightRateSections,
@@ -669,7 +771,13 @@ export const blogPosts: readonly BlogPost[] = [
       "Align shipper, mill, and transporter on the profile before the vehicle is called.",
     ],
     midCtaAfterHeading: "Axle discipline and the weighbridge",
-    relatedSlugs: ["india-axle-load-gvw-limits-heavy-freight", "plant-detention-tat-yard-gate-india", "planning-industrial-shipments", "spot-market-vs-dedicated-fleet-india"],
+    relatedSlugs: [
+      "india-axle-load-gvw-limits-heavy-freight",
+      "plant-detention-tat-yard-gate-india",
+      "planning-industrial-shipments",
+      "spot-market-vs-dedicated-fleet-india",
+      "transit-damage-shortage-cargo-insurance-india-carrier-liability-guide",
+    ],
     faqs: [
       {
         question: "Which vehicles are used for steel coil transport?",
@@ -677,7 +785,7 @@ export const blogPosts: readonly BlogPost[] = [
       },
       {
         question: "Why do mill windows matter so much?",
-        answer: "Mill dispatch runs on tight slots. Late vehicles or incomplete documentation create detention, rescheduling, and downstream risk.",
+        answer: "Mill dispatch runs on tight slots. Late vehicles or incomplete documentation create detention, rescheduling, and downstream risk. Damaged coil or shortage recovery steps sit in [transit damage and shortage claims](/blog/transit-damage-shortage-cargo-insurance-india-carrier-liability-guide).",
       },
       {
         question: "How does ZAFTYS support steel freight?",
@@ -1758,12 +1866,13 @@ export const blogPosts: readonly BlogPost[] = [
       "reduce-empty-return-trips",
       "tms-evaluation-guide-indian-manufacturers",
       "planning-industrial-shipments",
+      "transit-damage-shortage-cargo-insurance-india-carrier-liability-guide",
     ],
     faqs: [
       {
         question: "Spot market vs dedicated fleet: which is better for Indian manufacturers?",
         answer:
-          "Neither alone. Dedicated contract fleets fit stable full truckload (FTL) lanes and tight SLAs. Spot freight fits surplus, soft months, and trial corridors. Most industrial plants run a hybrid freight strategy sized from indent data. See this guide and [TranZfort](/network/tranzfort) for verified overflow.",
+          "Neither alone. Dedicated contract fleets fit stable full truckload (FTL) lanes and tight SLAs. Spot freight fits surplus, soft months, and trial corridors. Most industrial plants run a hybrid freight strategy sized from indent data. See this guide and [TranZfort](/network/tranzfort) for verified overflow. For liability and clean claims when spot brokers fail a surveyor, see [transit damage and shortage claims](/blog/transit-damage-shortage-cargo-insurance-india-carrier-liability-guide).",
       },
       {
         question: "What is a hybrid freight sourcing strategy for industrial FTL?",
@@ -2230,6 +2339,7 @@ export const blogPosts: readonly BlogPost[] = [
       "industrial-tms-control-stack-india",
       "planning-industrial-shipments",
       "fastag-mlff-gnss-tolling-india-freight",
+      "transit-damage-shortage-cargo-insurance-india-carrier-liability-guide",
     ],
     faqs: [
       {
@@ -2260,7 +2370,7 @@ export const blogPosts: readonly BlogPost[] = [
       {
         question: "Is a photo ePOD enough for customer invoicing in India?",
         answer:
-          "Many finance teams accept digital POD trails when policy and customer contracts allow it. Electronic records are widely used under IT Act and GST practice, but your customer AP rules and counsel still win. Pair photo ePOD with location and corridor evidence where available.",
+          "Many finance teams accept digital POD trails when policy and customer contracts allow it. Electronic records are widely used under IT Act and GST practice, but your customer AP rules and counsel still win. Pair photo ePOD with location and corridor evidence where available. For damage or shortage, a generic delivered click is weak - use qualified remarks as in [transit damage and shortage claims](/blog/transit-damage-shortage-cargo-insurance-india-carrier-liability-guide).",
       },
       {
         question: "How should we baseline freight billing before buying software?",
@@ -3137,7 +3247,7 @@ export const blogPosts: readonly BlogPost[] = [
         afterHeading: "Leak #4: Weighbridge Manipulation and Axle Discrepancies",
         eyebrow: "Scale Integrity & Compliance",
         title: "Lock plant weighbridges into your TMS software",
-        body: "Prevent scale fraud, weight typing overrides, and highway overload fines. Connect scale indicators directly to ZAFTYS TMS with automated MoRTH axle tolerance checks.",
+        body: "Prevent scale fraud, weight typing overrides, and highway overload fines. Shortage recovery and clean-vs-qualified LR steps are in [transit damage and shortage claims](/blog/transit-damage-shortage-cargo-insurance-india-carrier-liability-guide). Connect scale indicators directly to ZAFTYS TMS with automated MoRTH axle tolerance checks.",
         cta: { label: "Explore ZAFTYS TMS", to: "/zaftys-tms" },
       },
       {
@@ -3154,7 +3264,8 @@ export const blogPosts: readonly BlogPost[] = [
       "plant-detention-tat-yard-gate-india",
       "india-axle-load-gvw-limits-heavy-freight",
       "epod-fastag-eway-bill-billing-india",
-      "fastag-mlff-gnss-tolling-india-freight",
+      "fastag-mlff-gnss-tolling-india-freight",,
+      "transit-damage-shortage-cargo-insurance-india-carrier-liability-guide",
     ],
     faqs: [
       {
@@ -3525,7 +3636,8 @@ export const blogPosts: readonly BlogPost[] = [
       "container-trucking-logistics-india",
       "reduce-empty-return-trips",
       "epod-fastag-eway-bill-billing-india",
-      "fastag-mlff-gnss-tolling-india-freight",
+      "fastag-mlff-gnss-tolling-india-freight",,
+      "transit-damage-shortage-cargo-insurance-india-carrier-liability-guide",
     ],
     faqs: [
       {

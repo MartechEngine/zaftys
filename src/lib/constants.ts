@@ -93,6 +93,9 @@ export const WHATSAPP_TMS_DEMO_MESSAGE =
 export const WHATSAPP_PARTNER_MESSAGE =
   "Hi ZAFTYS, I want to talk about becoming a partner (fleet / TranZfort or truck ownership).\n\nPath:\nCompany:\nFleet size or capital band:\nCorridors:\n";
 
+export const WHATSAPP_TRANSIT_DAMAGE_MESSAGE =
+  "Hi ZAFTYS - transit damage / shortage / LR liability.\n\nCompany:\nCorridors:\nIssue (damage / weighbridge shortage / clean LR / insurance repudiation):\nI can share: shortage clause / last rejected claim pack / neither yet:\n";
+
 /** Vertical quote prefills - keep in sync with industry desk language. */
 export const whatsappIndustryPrefill = {
   cement:

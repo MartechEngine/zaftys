@@ -52,6 +52,7 @@ Each **report** is a **200+ page PDF** (gated download) plus a **1,000–1,500 w
 | Plant Detention and TAT: Yard and Gate Guide | `plant-detention-tat-yard-gate-india` |
 | ePOD, FASTag, and e-Way Bill Compliance in India | `epod-fastag-eway-bill-billing-india` |
 | **Container Trucking in India: Ports, Chassis, and Backhaul** *(depth reference)* | `container-trucking-logistics-india` |
+| Transit Damage, Shortage, and Cargo Insurance in Indian Freight | `transit-damage-shortage-cargo-insurance-india-carrier-liability-guide` |
 
 ### Reports (2) — `/reports`
 
