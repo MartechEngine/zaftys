@@ -57,7 +57,9 @@ import {
   transitDamageTakeaways,
 } from "@/lib/blog-exhibits-transit-damage-insurance";
 import { transitDamageFaqs, transitDamageSections } from "@/lib/blog-post-transit-damage-insurance";
-import { WHATSAPP_TRANSIT_DAMAGE_MESSAGE } from "@/lib/constants";
+import { ftlVsPtlKpis, ftlVsPtlReferences, ftlVsPtlTakeaways } from "@/lib/blog-exhibits-ftl-vs-ptl";
+import { ftlVsPtlFaqs, ftlVsPtlSections } from "@/lib/blog-post-ftl-vs-ptl";
+import { WHATSAPP_FTL_VS_PTL_MESSAGE, WHATSAPP_TRANSIT_DAMAGE_MESSAGE } from "@/lib/constants";
 
 export type BlogCategory = "operations" | "industries" | "technology";
 
@@ -244,6 +246,90 @@ export const blogCategoryLabels: Record<BlogCategory, string> = {
 
 export const blogPosts: readonly BlogPost[] = [
   {
+    slug: "ftl-vs-ptl-freight-services-india-cost-break-even-guide",
+    title: "FTL vs PTL in India: Break-Even Weight, Cost & Damage",
+    seoTitle: "FTL vs PTL Freight India | Cost Break-Even Guide | ZAFTYS",
+    seoDescription:
+      "PTL often wins under ~3 t; above ~3.5-6 t landed FTL usually wins. Break-even math, 10 lbs/CFT volumetric trap, capacity bands, and when to book a dedicated truck in India.",
+    category: "operations",
+    tags: [
+      "FTL Transport Services India",
+      "Full Truck Load vs Part Truck Load",
+      "LTL vs FTL India",
+      "Break-Even Weight",
+      "Volumetric Weight",
+      "PTL Transit Damage",
+      "Dedicated Truck",
+      "Industrial FTL",
+      "India",
+    ],
+    publishedAt: "2026-11-12",
+    updatedAt: "2026-11-12",
+    author: "ZAFTYS Operations & Freight Strategy Research",
+    template: "deep-research",
+    subtitle:
+      "FTL vs PTL break-even · Volumetric weight (10 lbs/CFT) · Capacity-% bands · PTL surcharge stack · e-Way Bill Part B · Working capital velocity",
+    summary:
+      "PTL / LTL / sundry vs dedicated FTL: capacity bands, volumetric traps, lane density, and landed-cost break-even - when to stay on parcel and when to book a dedicated truck.",
+    readMinutes: 34,
+    heroImage: "/images/blog/ftl-vs-ptl-freight-services-india.jpg",
+    heroAspectRatio: "16/9",
+    heroWidth: 1280,
+    heroHeight: 720,
+    heroAlt:
+      "Sealed closed-body truck loading palletized industrial cartons at a factory dispatch dock for dedicated full truckload versus part truckload sundry freight",
+    kpis: ftlVsPtlKpis,
+    takeaways: ftlVsPtlTakeaways,
+    references: ftlVsPtlReferences,
+    midCtas: [
+      {
+        afterHeading: "The physical journey: how goods move through PTL networks vs dedicated FTL",
+        eyebrow: "Point-to-point industrial FTL",
+        title: "Stop paying for hub touches your cargo cannot survive",
+        body: "Share origin, destination, weekly tonnes, and whether goods are crush- or water-sensitive. We place dedicated sealed trucks first.",
+        cta: { label: "Dedicated fleet", to: "/logistics/dedicated-fleet" },
+      },
+      {
+        afterHeading: "How to calculate FTL vs PTL break-even weight",
+        eyebrow: "Landed cost, not sticker ₹/kg",
+        title: "Rebuild one lane on break-even maths",
+        body: "Send your PTL tariff annex and one FTL trip quote. We line up FOV, ODA, crating, and damage so the desk can decide.",
+        cta: { label: "Contract logistics", to: "/logistics/contract-logistics" },
+      },
+      {
+        afterHeading: "Statutory and documentation compliance: e-Way Bill Part B multi-vehicle updating",
+        eyebrow: "Clean Part B on the trip",
+        title: "Capture seals and ePOD on contracted moves",
+        body: "Bring one PTL interception or delayed bilty example. We map which documents ZAFTYS TMS should hold on dedicated FTL.",
+        cta: { label: "Explore ZAFTYS TMS", to: "/zaftys-tms" },
+      },
+      {
+        afterHeading: "When PTL still beats dedicated FTL (and when to switch)",
+        eyebrow: "Low-friction next step",
+        title: "WhatsApp your consolidation lanes",
+        body: "Origin, destination, kg or tonnes per week, and cube if known. We reply with a dedicated FTL quote path - not a sundry docket speech.",
+        cta: { label: "WhatsApp FTL quote", whatsapp: true },
+      },
+    ],
+    relatedSlugs: [
+      "transit-damage-shortage-cargo-insurance-india-carrier-liability-guide",
+      "truck-freight-rates-india-cost-rate-benchmarking-guide",
+      "5-hidden-cost-leaks-heavy-industrial-freight-tms-3pl-guide",
+      "spot-market-vs-dedicated-fleet-india",
+      "epod-fastag-eway-bill-billing-india",
+      "planning-industrial-shipments",
+    ],
+    faqs: ftlVsPtlFaqs,
+    sections: ftlVsPtlSections,
+    cta: { label: "Get a dedicated FTL quote", to: "/logistics/dedicated-fleet" },
+    ctaBand: {
+      eyebrow: "After the break-even math",
+      title: "Move industrial tonnes onto dedicated FTL",
+      body: "Share the lanes that should leave sundry networks. ZAFTYS places sealed point-to-point trucks, cuts hub handling damage, and closes with ePOD - owned fleet first, labeled overflow when needed.",
+    },
+    whatsappMessage: WHATSAPP_FTL_VS_PTL_MESSAGE,
+  },
+  {
     slug: "transit-damage-shortage-cargo-insurance-india-carrier-liability-guide",
     title: "Transit Damage & Shortage Claims in India: Carrier Liability, Clean LR, and Cargo Insurance",
     seoTitle: "Transit Damage & Shortage Claims India | Carrier Liability | ZAFTYS",
@@ -314,7 +400,8 @@ export const blogPosts: readonly BlogPost[] = [
       "truck-freight-rates-india-cost-rate-benchmarking-guide",
       "epod-fastag-eway-bill-billing-india",
       "5-hidden-cost-leaks-heavy-industrial-freight-tms-3pl-guide",
-      "diesel-surcharge-freight-contract-india",
+      "diesel-surcharge-freight-contract-india",,
+      "ftl-vs-ptl-freight-services-india-cost-break-even-guide",
     ],
     faqs: transitDamageFaqs,
     sections: transitDamageSections,
@@ -567,7 +654,8 @@ export const blogPosts: readonly BlogPost[] = [
       "india-axle-load-gvw-limits-heavy-freight",
       "container-trucking-logistics-india",
       "spot-market-vs-dedicated-fleet-india",
-      "transit-damage-shortage-cargo-insurance-india-carrier-liability-guide",
+      "transit-damage-shortage-cargo-insurance-india-carrier-liability-guide",,
+      "ftl-vs-ptl-freight-services-india-cost-break-even-guide",
     ],
     faqs: freightRateFaqs,
     sections: freightRateSections,
@@ -1141,7 +1229,7 @@ export const blogPosts: readonly BlogPost[] = [
       "Scale with a corridor plan and TranZfort overflow, not a new vendor every peak week.",
     ],
     midCtaAfterHeading: "One-page checklist (use before every industrial booking)",
-    relatedSlugs: ["spot-market-vs-dedicated-fleet-india", "reduce-empty-return-trips", "plant-detention-tat-yard-gate-india", "tms-for-heavy-haul"],
+    relatedSlugs: ["spot-market-vs-dedicated-fleet-india", "reduce-empty-return-trips", "plant-detention-tat-yard-gate-india", "tms-for-heavy-haul", "ftl-vs-ptl-freight-services-india-cost-break-even-guide"],
     faqs: [
       {
         question: "What should be confirmed before requesting a truck?",
@@ -1866,7 +1954,8 @@ export const blogPosts: readonly BlogPost[] = [
       "reduce-empty-return-trips",
       "tms-evaluation-guide-indian-manufacturers",
       "planning-industrial-shipments",
-      "transit-damage-shortage-cargo-insurance-india-carrier-liability-guide",
+      "transit-damage-shortage-cargo-insurance-india-carrier-liability-guide",,
+      "ftl-vs-ptl-freight-services-india-cost-break-even-guide",
     ],
     faqs: [
       {
@@ -3265,7 +3354,8 @@ export const blogPosts: readonly BlogPost[] = [
       "india-axle-load-gvw-limits-heavy-freight",
       "epod-fastag-eway-bill-billing-india",
       "fastag-mlff-gnss-tolling-india-freight",,
-      "transit-damage-shortage-cargo-insurance-india-carrier-liability-guide",
+      "transit-damage-shortage-cargo-insurance-india-carrier-liability-guide",,
+      "ftl-vs-ptl-freight-services-india-cost-break-even-guide",
     ],
     faqs: [
       {

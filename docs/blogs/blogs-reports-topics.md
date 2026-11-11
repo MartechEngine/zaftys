@@ -54,6 +54,12 @@ Each **report** is a **200+ page PDF** (gated download) plus a **1,000–1,500 w
 | **Container Trucking in India: Ports, Chassis, and Backhaul** *(depth reference)* | `container-trucking-logistics-india` |
 | Transit Damage, Shortage, and Cargo Insurance in Indian Freight | `transit-damage-shortage-cargo-insurance-india-carrier-liability-guide` |
 
+### Pointer drafts (next to port)
+
+| Title | Slug | Pointer MD |
+|-------|------|------------|
+| FTL vs PTL in India: Break-Even Weight, Cost & Damage | `ftl-vs-ptl-freight-services-india-cost-break-even-guide` | Implemented locally + improvement pass 11 Nov 2026 (Start here, capacity bands, worksheet PDF) |
+
 ### Reports (2) — `/reports`
 
 | Title | Slug |
@@ -125,6 +131,7 @@ Extends the flagship Container post — do not rehash it.
 | 13 | Contract logistics for Indian plants | Reserved capacity, SLA windows, labeled overflow |
 | 14 | Dedicated fleet vs “dedicated on paper” | Assigned assets, crew learning curves, surge rules |
 | 15 | FTL 3PL execution vs broker allotment | Trip ownership, POD close, GST billing |
+| **15b** | **FTL vs PTL cost break-even & damage risk** | **Live-ready locally 11 Nov 2026** — short H1, Start here, capacity bands, worksheet PDF, LinkedIn abstract; CTA `/logistics/dedicated-fleet` |
 
 ### G. FMCG / DC
 

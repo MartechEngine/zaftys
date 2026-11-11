@@ -12,6 +12,7 @@ Images live in `public/images/blog/`.
 | container-trucking-logistics-india | `/images/blog/container-trucking-logistics-india.jpg` | Generated for ZAFTYS blog (port hinterland containers) |
 | truck-freight-rates-india-cost-rate-benchmarking-guide | `/images/blog/truck-freight-rates-india-cost-benchmark.jpg` | Generated for ZAFTYS blog (steel coils, Indian highway toll plaza). Not stamped. |
 | transit-damage-shortage-cargo-insurance-india-carrier-liability-guide | `/images/blog/transit-damage-shortage-cargo-insurance-india.jpg` | Temporary reuse of planning-industrial-shipments warehouse hero pending a dedicated dock / claim-scene photo. Formula boards: `transit-rule12-ten-times-freight.png`, `transit-billable-shortage-equation.png` (rendered + stamped via `scripts/render-transit-damage-cards.py`). |
+| ftl-vs-ptl-freight-services-india-cost-break-even-guide | `/images/blog/ftl-vs-ptl-freight-services-india.jpg` | Generated for ZAFTYS blog (sealed closed-body FTL loading at factory dock). Formula / waterfall boards via `scripts/render-ftl-vs-ptl-cards.py`. |
 
 ## Scripts
 

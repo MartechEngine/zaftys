@@ -96,6 +96,9 @@ export const WHATSAPP_PARTNER_MESSAGE =
 export const WHATSAPP_TRANSIT_DAMAGE_MESSAGE =
   "Hi ZAFTYS - transit damage / shortage / LR liability.\n\nCompany:\nCorridors:\nIssue (damage / weighbridge shortage / clean LR / insurance repudiation):\nI can share: shortage clause / last rejected claim pack / neither yet:\n";
 
+export const WHATSAPP_FTL_VS_PTL_MESSAGE =
+  "Hi ZAFTYS - FTL vs PTL consolidation quote.\n\nCompany:\nOrigin:\nDestination:\nCargo / kg or tonnes per week:\nCube (CBM) if known:\nCurrently on PTL / sundry? (yes/no):\n";
+
 /** Vertical quote prefills - keep in sync with industry desk language. */
 export const whatsappIndustryPrefill = {
   cement:
