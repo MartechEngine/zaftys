@@ -338,6 +338,7 @@ export function DeepResearchBlogLayout({ post }: DeepResearchBlogLayoutProps) {
                                 {String(item.chapter).padStart(2, "0")}
                               </span>
                             ) : null}
+                            {item.chapter != null ? " " : null}
                             {item.label}
                           </a>
                         </li>
