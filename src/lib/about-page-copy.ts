@@ -5,9 +5,20 @@
 export const aboutPageCopy = {
   hero: {
     badge: "About ZAFTYS",
-    h1: "One desk for industrial freight across India.",
+    h1: "ZAFTYS. One desk for industrial freight across India.",
     lead:
-      "Family corridor experience, a formal company since 2024. Own trucks when we have the right vehicle, ZAFTYS TMS on every trip we run, and TranZfort when you need more capacity - always labeled, never blended.",
+      "Family corridor experience, formal operations since 2024. Own trucks when we have the right vehicle, ZAFTYS TMS on every trip we run, and TranZfort when you need more capacity - always labeled, never blended.",
+  },
+  /** Knowledge Graph / entity facts - keep NAP + Shop Act language honest. */
+  entity: {
+    eyebrow: "Brand entity",
+    h2: "Who ZAFTYS is",
+    brand: "ZAFTYS is the public brand for our industrial freight desk.",
+    legal:
+      "Operated as ZAFTYS Logistics under Shop and Establishment registration (GST-compliant operations). Private Limited registration is in progress and will be reflected here when live.",
+    hq: "Headquartered in Old Town, Badnera, Amravati, Maharashtra 444701.",
+    scope:
+      "Asset-backed 3PL, owned fleet, contract logistics, and a digital dispatch network powered by TranZfort across Western, Central, Eastern, and Southern India corridors.",
   },
   story: {
     eyebrow: "Who we are",
@@ -31,9 +42,9 @@ export const aboutPageCopy = {
   },
   heritage: {
     eyebrow: "Our journey",
-    h2: "Three generations on the corridor - formal company, modern stack",
+    h2: "Three generations on the corridor - formal desk, modern stack",
     lead:
-      "Trucking experience came first. ZAFTYS Logistics was incorporated in 2024; owned heavy assets, TranZfort, and TMS scaled from there.",
+      "Trucking experience came first. ZAFTYS Logistics was established under Shop and Establishment in 2024; owned heavy assets, TranZfort, and TMS scaled from there.",
   },
   milestones: [
     {
@@ -43,8 +54,8 @@ export const aboutPageCopy = {
     },
     {
       year: "2024",
-      title: "Company formed",
-      desc: "ZAFTYS Logistics formally established. TranZfort product work begins.",
+      title: "ZAFTYS Logistics established",
+      desc: "Shop and Establishment registration as ZAFTYS Logistics. TranZfort product work begins. Public brand: ZAFTYS.",
     },
     {
       year: "2025",
@@ -126,6 +137,10 @@ export const aboutPageCopy = {
       {
         title: "HQ you can reach",
         body: "Old Town, Badnera, Amravati. Phone and WhatsApp hit the same operations desk that runs the lane.",
+      },
+      {
+        title: "Corridors we serve",
+        body: "Clients across Surat, Hazira, Chandrapur, Nagpur, Pune, and Mumbai. Owned trucks on named Western and Central lanes; TranZfort for pan-India network cover. See Routes & Corridors for the full map.",
       },
     ],
     ctaPrimary: "Talk to the desk",

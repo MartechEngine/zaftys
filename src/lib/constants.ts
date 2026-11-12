@@ -11,7 +11,11 @@ export const COMPANY_EMAIL = "info@zaftys.com";
 export const CONTACT_FORM_EMAIL = "contact@zaftys.com";
 export const SUBSCRIBERS_EMAIL = "subscribers@zaftys.com";
 
-/** Public legal positioning  -  GST-compliant operations; not a Pvt Ltd entity */
+/**
+ * Operating / Shop Act name (current). Public brand is brandEntity.brandName = ZAFTYS.
+ * Pvt Ltd application in progress - flip legalEntity.name only after MCA registration
+ * (see docs/Geo-SEO.md Phase 6). Do not publish Pvt Ltd early.
+ */
 export const legalEntity = {
   name: "ZAFTYS Logistics",
   credentialsShort: "GST compliant",
@@ -47,11 +51,17 @@ export const brandEntity = {
   napLine: `${companyAddress.line1}, ${companyAddress.line2}, ${companyAddress.line3}`,
   phonePrimary: COMPANY_PHONE_DISPLAY,
   email: COMPANY_EMAIL,
-  categoriesGbp: ["Transportation service", "Logistics service"] as const,
+  categoriesGbp: [
+    "Logistics service",
+    "Transportation service",
+    "Freight forwarding agency",
+    "Trucking company",
+  ] as const,
   gbpNamePreferred: "ZAFTYS",
   gbpNameAlt: "ZAFTYS - Industrial Logistics & Fleet",
+  /** Keep 1:1 with live Google Business Profile description. */
   gbpDescription:
-    "ZAFTYS moves industrial and commercial freight in India with owned fleet first, labeled network overflow, ZAFTYS TMS, and TranZfort matching. Desk in Amravati, Maharashtra.",
+    "ZAFTYS is a technology-driven 3PL, transportation, and contract logistics provider offering heavy freight transportation across Maharashtra, Gujarat, West Bengal, and pan-India industrial corridors. Powered by our owned fleet and the extensive Tranzfort carrier network, we run regular full truckload (FTL) and contract logistics on key routes including Kolkata-Mumbai, Haldia-Surat/Mumbai, Hazira/Surat to Nagpur & Chandrapur, Pune-Nagpur-Chandrapur round trips, as well as South corridors to Hyderabad, Bengaluru, and Chennai. We specialize in heavy cargo, industrial dispatches, and multi-axle freight with transparent, digital dispatch tracking.",
 } as const;
 
 /** Paste into email signatures, LinkedIn, and outbound WhatsApp (team → contacts). */
@@ -114,10 +124,25 @@ export const whatsappIndustryPrefill = {
 } as const;
 
 export const externalLinks = {
-  tranzfort: "https://tranzfort.com",
+  tranzfort: "https://www.tranzfort.com",
+  tranzfortAlt: "https://tranzfort.com",
   app: "https://app.zaftys.com",
   linkedin: "https://www.linkedin.com/company/zaftys",
+  /** Add to organizationSameAs only after the Crunchbase org page is live. */
+  crunchbase: "https://www.crunchbase.com/organization/zaftys",
+  /** Channel display name: ZAFTYS Logistics · handle @ZAFTYS */
+  youtube: "https://www.youtube.com/@ZAFTYS",
+  /** X (Twitter) · @zaftyslogistics */
+  x: "https://x.com/zaftyslogistics",
 } as const;
+
+/** Organization schema sameAs - only live third-party entity profiles. */
+export const organizationSameAs = [
+  externalLinks.linkedin,
+  externalLinks.youtube,
+  externalLinks.x,
+  externalLinks.tranzfort,
+] as const;
 
 /** Marketplace claims locked with legal + product (Aug 2026). */
 export const tranzfortCopy = {

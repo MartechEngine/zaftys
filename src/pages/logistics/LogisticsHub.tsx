@@ -155,6 +155,17 @@ const LogisticsHub = () => {
             </div>
             <p className="max-w-xl text-sm leading-relaxed text-muted-foreground md:text-right">{strip.note}</p>
           </div>
+          <div className="mt-6 flex flex-wrap items-center gap-3 border-t border-border pt-6">
+            <p className="text-sm text-muted-foreground">
+              Named FTL lanes across Maharashtra, Gujarat, West Bengal, and South corridors.
+            </p>
+            <Link
+              to={paths.logistics.corridors}
+              className="inline-flex items-center gap-2 text-sm font-semibold text-primary hover:underline"
+            >
+              Routes & Corridors <ArrowRight size={14} />
+            </Link>
+          </div>
         </div>
       </section>
 

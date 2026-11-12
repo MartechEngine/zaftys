@@ -1,3 +1,4 @@
+import { footerCorridorLinks } from "@/lib/corridors-data";
 import { paths } from "@/lib/site-paths";
 
 export type NavLink = { name: string; path: string };
@@ -25,7 +26,8 @@ export type HeaderNavEntry = NavDropdown | NavFlatLink;
  * Order: Logistics → Platform → Network (flat) → Intelligence → Industries → Company → Resources
  * No "Overview" rows in any dropdown.
  *
- * Logistics (locked 20 Aug 2026): Transportation + Our Fleet only in header.
+ * Logistics (locked): Transportation + Our Fleet only in header (Option B).
+ * Routes & Corridors live under /logistics/corridors - footer + hub/body links only.
  * Service SKUs are rich leaves under /logistics/* - also linked from hub + footer.
  * Network: flat hub at `/network`. TranZfort + capacity leaves are hub / footer deep links.
  * Platform: TMS modules + TranZfort (also reachable via Network hub).
@@ -109,6 +111,13 @@ export const footerColumns = [
       { name: "Industrial Freight", path: paths.logistics.industrial },
       { name: "Container Transportation", path: paths.logistics.container },
       { name: "Our Fleet", path: paths.fleet },
+    ],
+  },
+  {
+    title: "Routes & Corridors",
+    links: [
+      { name: "All corridors", path: paths.logistics.corridors },
+      ...footerCorridorLinks,
     ],
   },
   {

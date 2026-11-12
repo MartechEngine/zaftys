@@ -55,6 +55,41 @@ const About = () => {
         </CTAGroup>
       </PageHero>
 
+      {/* Entity facts for Knowledge Graph / brand recognition */}
+      <section aria-labelledby="about-entity-heading" className="border-t border-border bg-surface">
+        <div className="mx-auto w-full max-w-[90rem] px-5 py-12 md:px-10 md:py-14 lg:px-14">
+          <div className="mx-auto max-w-3xl text-center">
+            <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-primary">
+              {c.entity.eyebrow}
+            </p>
+            <h2
+              id="about-entity-heading"
+              className="font-heading text-2xl font-bold text-navy md:text-3xl"
+            >
+              {c.entity.h2}
+            </h2>
+          </div>
+          <dl className="mx-auto mt-8 grid max-w-4xl gap-4 sm:grid-cols-2">
+            <div className="border border-border bg-white p-5 text-left">
+              <dt className="font-heading text-sm font-bold text-navy">Brand</dt>
+              <dd className="mt-2 text-sm leading-relaxed text-muted-foreground">{c.entity.brand}</dd>
+            </div>
+            <div className="border border-border bg-white p-5 text-left">
+              <dt className="font-heading text-sm font-bold text-navy">Operating name</dt>
+              <dd className="mt-2 text-sm leading-relaxed text-muted-foreground">{c.entity.legal}</dd>
+            </div>
+            <div className="border border-border bg-white p-5 text-left">
+              <dt className="font-heading text-sm font-bold text-navy">Headquarters</dt>
+              <dd className="mt-2 text-sm leading-relaxed text-muted-foreground">{c.entity.hq}</dd>
+            </div>
+            <div className="border border-border bg-white p-5 text-left">
+              <dt className="font-heading text-sm font-bold text-navy">Scope</dt>
+              <dd className="mt-2 text-sm leading-relaxed text-muted-foreground">{c.entity.scope}</dd>
+            </div>
+          </dl>
+        </div>
+      </section>
+
       {/* Who we are */}
       <section className="border-t border-border bg-white">
         <div className="mx-auto w-full max-w-[90rem] px-5 py-12 md:px-10 md:py-16 lg:px-14">
@@ -190,7 +225,7 @@ const About = () => {
             <p className="mt-3 text-muted-foreground">{c.desk.lead}</p>
           </div>
 
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {c.desk.points.map((point, i) => (
               <article
                 key={point.title}
@@ -228,6 +263,9 @@ const About = () => {
 
           <CTAGroup className="mt-8 justify-center">
             <WhatsAppButton label={c.desk.ctaPrimary} placement="about-desk" />
+            <Link to={paths.logistics.corridors}>
+              <Button variant="outline-brand">Routes & Corridors</Button>
+            </Link>
             <Link to={paths.fleet}>
               <Button variant="outline-brand">{c.desk.ctaSecondary}</Button>
             </Link>

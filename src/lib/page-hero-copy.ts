@@ -58,14 +58,14 @@ export const pageHeroCopy = {
   },
   about: {
     badge: "About ZAFTYS",
-    h1: "One desk for industrial freight across India.",
+    h1: "ZAFTYS. One desk for industrial freight across India.",
     lead:
-      "Family corridor experience, a formal company since 2024. Own trucks when we have the right vehicle, ZAFTYS TMS on every trip we run, and TranZfort when you need more capacity - always labeled, never blended.",
+      "Family corridor experience, formal operations since 2024. Own trucks when we have the right vehicle, ZAFTYS TMS on every trip we run, and TranZfort when you need more capacity - always labeled, never blended.",
   },
   contact: {
     badge: "Contact",
     h1: "Freight quote, TMS demo, or Network partner.",
-    lead: "Shippers: WhatsApp or the form for capacity. TMS walkthrough by email or form. Fleet owners: partner registration or TranZfort. Desk in Amravati, Maharashtra.",
+    lead: "Shippers: WhatsApp or the form for capacity across Mumbai, Pune, Nagpur, Surat, Hazira, Chandrapur and our named corridors. TMS walkthrough by email or form. Fleet owners: partner registration or TranZfort. Desk in Amravati, Maharashtra.",
   },
   careers: {
     badge: "Join the team",

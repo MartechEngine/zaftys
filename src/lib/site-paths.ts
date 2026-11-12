@@ -8,6 +8,8 @@ export const paths = {
     dedicated: "/logistics/dedicated-fleet",
     industrial: "/logistics/industrial-freight",
     container: "/logistics/container-transportation",
+    /** Geo-SEO corridors hub + leaves under /logistics/corridors */
+    corridors: "/logistics/corridors",
   },
   network: {
     hub: "/network",
@@ -54,4 +56,8 @@ export function reportReadPath(slug: string): string {
 
 export function industryPath(slug: string): string {
   return `${paths.industries}/${slug}`;
+}
+
+export function corridorPath(slug: string): string {
+  return `${paths.logistics.corridors}/${slug}`;
 }

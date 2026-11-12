@@ -4,13 +4,28 @@ import {
   COMPANY_EMAIL,
   COMPANY_PHONE_DISPLAY,
   companyAddress,
+  organizationSameAs,
 } from "@/lib/constants";
+import {
+  gbpBusinessDescription,
+  gbpServiceCities,
+  gbpServiceStates,
+  type CorridorDef,
+} from "@/lib/corridors-data";
 import { stripMarkdownLinks } from "@/lib/markdown-links";
 
 const BASE = "https://zaftys.com";
 const ORG_ID = `${BASE}/#organization`;
+const LOCAL_ID = `${BASE}/#localbusiness`;
 
 const organizationRef = { "@id": ORG_ID };
+
+/** GBP-aligned geo entities for Organization / LocalBusiness / LogisticsService. */
+export const schemaAreaServed = [
+  { "@type": "Country", name: "India" },
+  ...gbpServiceStates.map((name) => ({ "@type": "State", name })),
+  ...gbpServiceCities.map((name) => ({ "@type": "City", name })),
+];
 
 export const organizationSchema = {
   "@context": "https://schema.org",
@@ -18,14 +33,11 @@ export const organizationSchema = {
   "@id": ORG_ID,
   name: "ZAFTYS",
   legalName: "ZAFTYS Logistics",
-  alternateName: ["ZAFTYS Logistics", "ZAFTYS TMS", "TranZfort"],
+  alternateName: ["ZAFTYS Logistics", "Zaftys"],
   url: BASE,
   logo: `${BASE}/logo-header.png`,
-  sameAs: [
-    "https://www.linkedin.com/company/zaftys",
-    "https://tranzfort.com",
-    "https://app.zaftys.com",
-  ],
+  description: gbpBusinessDescription,
+  sameAs: [...organizationSameAs],
   contactPoint: {
     "@type": "ContactPoint",
     telephone: COMPANY_PHONE_DISPLAY,
@@ -42,13 +54,14 @@ export const organizationSchema = {
     postalCode: companyAddress.postalCode,
     addressCountry: "IN",
   },
+  areaServed: schemaAreaServed,
 };
 
 export const websiteSchema = {
   "@context": "https://schema.org",
   "@type": "WebSite",
   name: "ZAFTYS",
-  alternateName: ["ZAFTYS Logistics", "ZAFTYS TMS", "TranZfort"],
+  alternateName: ["ZAFTYS Logistics", "Zaftys"],
   url: BASE,
   publisher: organizationRef,
   inLanguage: "en-IN",
@@ -57,7 +70,7 @@ export const websiteSchema = {
 export const localBusinessSchema = {
   "@context": "https://schema.org",
   "@type": "LocalBusiness",
-  "@id": `${BASE}/#localbusiness`,
+  "@id": LOCAL_ID,
   name: "ZAFTYS",
   legalName: "ZAFTYS Logistics",
   alternateName: ["ZAFTYS Logistics", "Zaftys"],
@@ -65,6 +78,7 @@ export const localBusinessSchema = {
   url: BASE,
   telephone: COMPANY_PHONE_DISPLAY,
   email: COMPANY_EMAIL,
+  description: gbpBusinessDescription,
   address: {
     "@type": "PostalAddress",
     streetAddress: companyAddress.streetAddress,
@@ -73,21 +87,32 @@ export const localBusinessSchema = {
     postalCode: companyAddress.postalCode,
     addressCountry: "IN",
   },
-  areaServed: { "@type": "Country", name: "India" },
+  areaServed: schemaAreaServed,
+  knowsAbout: [
+    "Logistics service",
+    "Transportation service",
+    "Freight forwarding agency",
+    "Trucking company",
+    "Full Truckload (FTL) Pan-India Transport",
+    "Contract Logistics & Dedicated Fleet Services",
+    "JNPT / Nhava Sheva Port Haulage & Container Transport",
+    "Mundra Port EXIM Freight & Dedicated Trailer Services",
+  ],
   parentOrganization: organizationRef,
 };
 
 export const logisticsServiceSchema = {
   "@context": "https://schema.org",
   "@type": "LogisticsService",
-  name: "ZAFTYS Logistics",
+  name: "ZAFTYS",
+  alternateName: ["ZAFTYS Logistics", "Zaftys"],
   url: BASE,
   image: `${BASE}/og-image.png`,
-  description:
-    "Commercial transport, a transport management system, and TranZfort, an AI-powered freight marketplace in India.",
+  description: gbpBusinessDescription,
   provider: organizationRef,
-  areaServed: { "@type": "Country", name: "India" },
-  serviceType: "Commercial freight transport, TMS software, and freight marketplace",
+  areaServed: schemaAreaServed,
+  serviceType:
+    "Commercial freight transport, FTL, contract logistics, TMS software, and freight marketplace",
 };
 
 export const truckingServiceSchema = {
@@ -95,7 +120,7 @@ export const truckingServiceSchema = {
   "@type": "Service",
   serviceType: "Commercial trucking and logistics",
   provider: organizationRef,
-  areaServed: { "@type": "Country", name: "India" },
+  areaServed: schemaAreaServed,
   description:
     "FTL and contract transport across LCV, open truck, trailer, container, bulker, tanker, tipper, reefer, parcel, and ODC, plus TranZfort marketplace capacity.",
 };
@@ -171,7 +196,45 @@ export function logisticsServiceLeafSchema(opts: {
     url: path,
     serviceType: opts.serviceType,
     provider: organizationRef,
-    areaServed: { "@type": "Country", name: "India" },
+    areaServed: schemaAreaServed,
+  };
+}
+
+/** Corridor / lane Service + DeliveryService JSON-LD (geo-SEO leaves). */
+export function corridorServiceSchema(corridor: CorridorDef): Record<string, unknown> {
+  const pageUrl = `${BASE}/logistics/corridors/${corridor.slug}`;
+  const placeNames = [...new Set([...corridor.origins, ...corridor.destinations])];
+
+  return {
+    "@context": "https://schema.org",
+    "@type": ["Service", "DeliveryService"],
+    "@id": `${pageUrl}#service`,
+    name: corridor.title,
+    description: corridor.seoDescription,
+    url: pageUrl,
+    serviceType: corridor.title,
+    provider: organizationRef,
+    areaServed: placeNames.map((name) => ({ "@type": "City", name })),
+    offers: {
+      "@type": "Offer",
+      priceCurrency: "INR",
+      description: "Contact ZAFTYS for a corridor freight quote",
+      url: `${BASE}/contact`,
+      availability: "https://schema.org/InStock",
+    },
+  };
+}
+
+export function corridorsHubCollectionSchema(): Record<string, unknown> {
+  return {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    name: "ZAFTYS Routes & Corridors",
+    description:
+      "Industrial FTL corridors operated by ZAFTYS: Gujarat-Vidarbha, Pune round-trips, Mumbai long-haul, Haldia westbound, JNPT, Mundra, and South India lanes.",
+    url: `${BASE}/logistics/corridors`,
+    publisher: organizationRef,
+    about: schemaAreaServed,
   };
 }
 

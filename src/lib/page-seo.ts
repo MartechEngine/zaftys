@@ -3,14 +3,19 @@ import { COMPANY_PHONE_DISPLAY } from "@/lib/constants";
 
 export const pageSeo = {
   home: {
-    title: "3PL & Contract Logistics India | ZAFTYS",
+    title: "ZAFTYS | 3PL & Contract Logistics India",
     description:
-      "Industrial and commercial FTL in India. Owned fleet first, labeled network overflow, TMS on trips we run. Request transportation.",
+      "ZAFTYS is a technology-enabled 3PL and contract logistics company in India. Owned fleet first, labeled network overflow, TMS on trips we run. Request transportation.",
   },
   logistics: {
     title: "FTL Logistics Services India | 3PL & Contract | ZAFTYS",
     description:
       "3PL, contract and dedicated fleet, industrial freight, container road legs in India. One desk. Get a freight quote.",
+  },
+  corridors: {
+    title: "FTL Routes & Corridors India | ZAFTYS",
+    description:
+      "Owned FTL corridors: Surat-Hazira to Nagpur/Chandrapur, Pune round-trips, Mumbai-Kolkata, Haldia westbound, JNPT, Mundra, South India. Quote the Amravati desk.",
   },
   networkHub: {
     title: "Transportation Network India | Own Fleet & Partners | ZAFTYS",
@@ -58,14 +63,14 @@ export const pageSeo = {
       "Become a ZAFTYS partner in India. Put trucks you already run on TranZfort, or enquire about an operating partnership around a truck you own.",
   },
   about: {
-    title: "About ZAFTYS | Industrial Freight Desk, Fleet & TMS | ZAFTYS",
+    title: "About ZAFTYS | Contract Logistics & Fleet Operations",
     description:
-      "Own trucks, TMS, labeled TranZfort overflow. Company profile on request.",
+      "ZAFTYS is headquartered in Badnera, Amravati. Operated as ZAFTYS Logistics under Shop and Establishment. Asset-backed 3PL, owned fleet, contract logistics, and TranZfort across India corridors.",
   },
   contact: {
     title: "Contact ZAFTYS | Freight Quote, TMS Demo, Partner | ZAFTYS",
     description:
-      `WhatsApp or form. Amravati desk, Maharashtra. Phone: ${COMPANY_PHONE_DISPLAY}.`,
+      `WhatsApp or form. Amravati desk covering Mumbai, Pune, Nagpur, Surat, Chandrapur corridors. Phone: ${COMPANY_PHONE_DISPLAY}.`,
   },
   careers: {
     title: "Careers at ZAFTYS | Fleet, Dispatch, TMS | ZAFTYS",

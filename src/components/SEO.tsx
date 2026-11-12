@@ -24,7 +24,13 @@ const BRAND_SUFFIX = "ZAFTYS";
 const DEFAULT_OG_IMAGE = "/og-image.png";
 
 function brandedTitle(title: string): string {
-  if (title === BRAND_SUFFIX || /\|\s*ZAFTYS\s*$/.test(title)) {
+  // Already ends with "| ZAFTYS", leads with "ZAFTYS |", or includes brand + pipe (e.g. About ZAFTYS | …).
+  if (
+    title === BRAND_SUFFIX ||
+    /\|\s*ZAFTYS\s*$/.test(title) ||
+    /^ZAFTYS(\s*\||$)/i.test(title) ||
+    (/\bZAFTYS\b/.test(title) && title.includes("|"))
+  ) {
     return title;
   }
   return `${title} | ${BRAND_SUFFIX}`;

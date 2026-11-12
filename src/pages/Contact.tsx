@@ -163,6 +163,32 @@ const Contact = () => {
         </div>
       </section>
 
+      <section aria-labelledby="contact-corridors-heading" className="border-b border-border bg-surface">
+        <div className="container mx-auto container-padding py-12 md:py-14">
+          <div className="mx-auto flex max-w-4xl flex-col items-start justify-between gap-6 md:flex-row md:items-center">
+            <div className="max-w-2xl">
+              <p className="mb-2 text-sm font-semibold uppercase tracking-widest text-primary">
+                Routes we run
+              </p>
+              <h2
+                id="contact-corridors-heading"
+                className="mb-3 font-heading text-2xl font-bold text-navy md:text-3xl"
+              >
+                Named industrial corridors from the Amravati desk
+              </h2>
+              <p className="text-muted-foreground">
+                Surat and Hazira to Nagpur and Chandrapur, Pune round-trips, Mumbai long-haul,
+                Haldia westbound, JNPT, Mundra, and South corridors. Owned fleet on core lanes;
+                labeled TranZfort network for wider India cover.
+              </p>
+            </div>
+            <Button asChild variant="outline-brand" className="shrink-0">
+              <Link to={paths.logistics.corridors}>View routes & corridors</Link>
+            </Button>
+          </div>
+        </div>
+      </section>
+
       {/* Map Section */}
       <section className="section-padding bg-navy text-white">
         <div className="container mx-auto container-padding">

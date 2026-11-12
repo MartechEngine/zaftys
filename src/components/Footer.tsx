@@ -113,7 +113,7 @@ const Footer = () => {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-7 gap-10 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-8 gap-10 mb-12">
           <div className="lg:col-span-1">
             <h4 className="text-lg font-bold text-white mb-6 font-heading uppercase tracking-wider">Contact</h4>
             <ul className="space-y-4">
@@ -207,9 +207,8 @@ const Footer = () => {
         <div className="container mx-auto container-padding py-6">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <p className="text-sm text-gray-500">
-              © {new Date().getFullYear()} {legalEntity.name}. {legalEntity.credentialsLong}. All rights reserved.
-              {" · "}
-              <span className="text-gray-400">{brandEntity.googleSearchCue}</span>
+              © {new Date().getFullYear()} {brandEntity.brandName}. Operated as {legalEntity.name}.{" "}
+              {legalEntity.credentialsLong}. All rights reserved.
             </p>
             <div className="flex flex-wrap gap-6 text-sm text-gray-500">
               {legal.map((item) => (

@@ -52,6 +52,8 @@ const IndustrialFreight = lazy(() =>
 const ContainerTransportation = lazy(() =>
   import("./pages/logistics/LogisticsSolutions").then((m) => ({ default: m.ContainerTransportation })),
 );
+const CorridorsHub = lazy(() => import("./pages/logistics/CorridorsHub"));
+const CorridorLeaf = lazy(() => import("./pages/logistics/CorridorLeaf"));
 
 const NetworkHub = lazy(() => import("./pages/network/NetworkHub"));
 const TransporterNetwork = lazy(() => import("./pages/network/TransporterNetworkPage"));
@@ -133,6 +135,8 @@ const AppShell = () => {
         <Route path={paths.logistics.dedicated} element={<LazyPage><DedicatedFleet /></LazyPage>} />
         <Route path={paths.logistics.industrial} element={<LazyPage><IndustrialFreight /></LazyPage>} />
         <Route path={paths.logistics.container} element={<LazyPage><ContainerTransportation /></LazyPage>} />
+        <Route path={paths.logistics.corridors} element={<LazyPage><CorridorsHub /></LazyPage>} />
+        <Route path={`${paths.logistics.corridors}/:slug`} element={<LazyPage><CorridorLeaf /></LazyPage>} />
         {/* Network */}
         <Route path={paths.network.hub} element={<LazyPage><NetworkHub /></LazyPage>} />
         <Route path={paths.network.tranzfort} element={<LazyPage><Network /></LazyPage>} />

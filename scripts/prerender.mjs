@@ -17,8 +17,8 @@ const dist = path.join(root, "dist");
 const PORT = 4173;
 const ORIGIN = `http://127.0.0.1:${PORT}`;
 const CONCURRENCY = 3;
-const HOME_TITLE =
-  "ZAFTYS | 3PL Transportation and Contract Logistics";
+/** Must match live homepage document.title (pageSeo.home + SEO brandedTitle). */
+const HOME_TITLE = "ZAFTYS | 3PL & Contract Logistics India";
 
 function routesFromSitemap() {
   const xml = fs.readFileSync(path.join(dist, "sitemap.xml"), "utf8");
