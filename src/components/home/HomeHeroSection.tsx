@@ -1,9 +1,7 @@
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
 import { CTAGroup } from "@/components/CTAGroup";
 import { HeroEmailButton } from "@/components/HeroEmailButton";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
-import { MarketingEyebrow } from "@/components/marketing/MarketingChrome";
+import { TranZfortAppCta } from "@/components/TranZfortAppCta";
 import { homeCopy, homeQuoteEmail } from "@/lib/home-copy";
 import { homeTrustStrip } from "@/lib/constants";
 
@@ -69,11 +67,7 @@ export function HomeHeroSection() {
                   body={homeQuoteEmail.body}
                 />
                 <WhatsAppButton label="Chat on WhatsApp" />
-                <a href="#operating-model">
-                  <Button size="lg" variant="on-dark-outline">
-                    How we operate
-                  </Button>
-                </a>
+                <TranZfortAppCta placement="home-hero" variant="on-dark-outline" />
               </CTAGroup>
             </div>
           </div>

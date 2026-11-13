@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { LazyTranZfortScreensCarousel } from "@/components/LazyTranZfortScreensCarousel";
 import { CTAGroup } from "@/components/CTAGroup";
+import { TranZfortAppCta } from "@/components/TranZfortAppCta";
 import { MarketingEyebrow } from "@/components/marketing/MarketingChrome";
 import { homeCopy } from "@/lib/home-copy";
 import { externalLinks } from "@/lib/constants";
@@ -40,12 +41,13 @@ export function HomeNetworkSection() {
                 {network.tranzfort.lead}
               </p>
               <CTAGroup className="mt-6 justify-start">
-                <Button asChild variant="accent">
+                <TranZfortAppCta placement="home" />
+                <Button asChild variant="on-dark-outline">
                   <a
                     href={externalLinks.tranzfort}
                     target="_blank"
                     rel="noopener noreferrer"
-                    onClick={() => trackEvent("cta_tranzfort", { placement: "home" })}
+                    onClick={() => trackEvent("cta_tranzfort", { placement: "home", intent: "website" })}
                   >
                     Open TranZfort
                   </a>

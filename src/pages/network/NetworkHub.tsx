@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import SEO from "@/components/SEO";
 import { PageHero } from "@/components/PageHero";
 import { CTAGroup } from "@/components/CTAGroup";
+import { TranZfortAppCta } from "@/components/TranZfortAppCta";
 import {
   IntelligenceProductShot,
   IntelligenceStatusLabel,
@@ -133,6 +134,9 @@ const NetworkHub = () => (
                     ))}
                   </ul>
                   <div className="mt-8 flex flex-wrap gap-3">
+                    {module.id === "tranzfort" ? (
+                      <TranZfortAppCta placement="network-hub" variant="accent" size="default" />
+                    ) : null}
                     <Link to={module.cta.path}>
                       <Button variant="outline-brand">
                         {module.cta.label} <ArrowRight className="ml-2" size={16} />

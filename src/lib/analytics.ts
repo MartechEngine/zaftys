@@ -7,6 +7,7 @@ export type AnalyticsEvent =
   | "cta_demo"
   | "cta_partner"
   | "cta_tranzfort"
+  | "cta_social"
   | "form_contact_success"
   | "form_partner_start"
   | "form_partner_success"

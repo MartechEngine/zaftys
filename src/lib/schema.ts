@@ -4,6 +4,7 @@ import {
   COMPANY_EMAIL,
   COMPANY_PHONE_DISPLAY,
   companyAddress,
+  externalLinks,
   organizationSameAs,
 } from "@/lib/constants";
 import {
@@ -176,6 +177,42 @@ export const softwareApplicationSchema = {
       "@type": "ImageObject",
       url: `${BASE}/images/tms/network.webp`,
       caption: "ZAFTYS TMS network view for partner capacity and lane coverage",
+    },
+  ],
+};
+
+/** TranZfort Android marketplace app - downloadUrl = Google Play. */
+export const tranzfortSoftwareApplicationSchema = {
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  name: "TranZfort",
+  applicationCategory: "BusinessApplication",
+  operatingSystem: "Android",
+  featureList: [
+    "Post loads for free",
+    "Find loads for free",
+    "AI-powered corridor and vehicle matching",
+    "Verified trucker onboarding",
+    "Hindi and English on the road",
+  ],
+  offers: {
+    "@type": "Offer",
+    price: "0",
+    priceCurrency: "INR",
+    description:
+      "Listing and search are free. Broker fee to truckers on booked loads.",
+  },
+  description:
+    "Freight marketplace for shippers and truckers in India. Post or find a load for free. AI matching on corridor, vehicle class, and timing.",
+  provider: organizationRef,
+  url: `${BASE}/network/tranzfort`,
+  downloadUrl: externalLinks.tranzfortPlayStore,
+  installUrl: externalLinks.tranzfortPlayStore,
+  screenshot: [
+    {
+      "@type": "ImageObject",
+      url: `${BASE}/images/tranzfort/browse.jpg`,
+      caption: "TranZfort marketplace browse screen",
     },
   ],
 };

@@ -20,7 +20,7 @@ export const pageSeo = {
   networkHub: {
     title: "Transportation Network India | Own Fleet & Partners | ZAFTYS",
     description:
-      "Owned fleet first. Verified partner overflow. TranZfort for digital matching. Labels stay honest across Indian freight corridors.",
+      "Owned fleet first. Verified partner overflow. TranZfort for digital matching. Download the TranZfort app on Google Play. Labels stay honest across Indian freight corridors.",
   },
   technologyHub: {
     title: "ZAFTYS TMS | Transport Management System India | ZAFTYS",
@@ -45,7 +45,7 @@ export const pageSeo = {
   network: {
     title: "TranZfort | Freight Marketplace India | ZAFTYS",
     description:
-      "Post or find a load in India for free. AI matching. Broker fee to truckers on booked loads. Download the app.",
+      "Post or find a load in India for free. AI matching. Broker fee to truckers on booked loads. Download TranZfort on Google Play for shippers and truckers.",
   },
   technology: {
     title: "ZAFTYS TMS | Transport Management System India | ZAFTYS",
@@ -60,7 +60,7 @@ export const pageSeo = {
   partner: {
     title: "Become a Partner | Fleet Network or Truck Ownership | ZAFTYS",
     description:
-      "Become a ZAFTYS partner in India. Put trucks you already run on TranZfort, or enquire about an operating partnership around a truck you own.",
+      "Become a ZAFTYS partner in India. Put trucks you already run on TranZfort, download the app to find loads, or enquire about an operating partnership around a truck you own.",
   },
   about: {
     title: "About ZAFTYS | Contract Logistics & Fleet Operations",

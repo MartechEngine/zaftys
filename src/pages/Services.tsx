@@ -5,12 +5,12 @@ import { Link } from "react-router-dom";
 import SEO from "@/components/SEO";
 import { HeroEmailButton } from "@/components/HeroEmailButton";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
+import { TranZfortAppCta } from "@/components/TranZfortAppCta";
 import { CTAGroup } from "@/components/CTAGroup";
 import ImageContentCard from "@/components/ImageContentCard";
 import { LazyTmsScreensCarousel } from "@/components/LazyTmsScreensCarousel";
 import { LazyTranZfortScreensCarousel } from "@/components/LazyTranZfortScreensCarousel";
-import { externalLinks, vehicleClasses, materialTypes } from "@/lib/constants";
-import { trackEvent } from "@/lib/analytics";
+import { vehicleClasses, materialTypes } from "@/lib/constants";
 import { pageSeo } from "@/lib/page-seo";
 import { TransportationExplorer } from "@/components/TransportationExplorer";
 import { heroMailBodies, heroMailSubjects } from "@/lib/hero-ctas";
@@ -239,16 +239,7 @@ const Services = () => {
                 Post on TranZfort. Listing and search are free. We charge a broker fee to truckers on booked loads. Matching is AI-powered.
               </p>
               <CTAGroup>
-                <Button asChild size="lg" variant="accent">
-                  <a
-                    href={externalLinks.tranzfort}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    onClick={() => trackEvent("cta_tranzfort", { placement: "services" })}
-                  >
-                    Download TranZfort
-                  </a>
-                </Button>
+                <TranZfortAppCta placement="services" />
                 <Link to="/network/tranzfort">
                   <Button size="lg" variant="on-dark-outline">How matching works</Button>
                 </Link>

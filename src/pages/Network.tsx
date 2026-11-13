@@ -1,5 +1,4 @@
 import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 import {
   Network,
   Smartphone,
@@ -7,16 +6,15 @@ import {
   Shield,
   Route,
   Users,
-  ArrowRight,
   CheckCircle2,
   X,
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import SEO from "@/components/SEO";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
+import { TranZfortAppCta } from "@/components/TranZfortAppCta";
 import { CTAGroup } from "@/components/CTAGroup";
-import { externalLinks, networkHighlights, WHATSAPP_POST_LOAD_MESSAGE } from "@/lib/constants";
-import { trackEvent } from "@/lib/analytics";
+import { networkHighlights, WHATSAPP_POST_LOAD_MESSAGE } from "@/lib/constants";
 import { pageSeo } from "@/lib/page-seo";
 import heroNetwork from "@/assets/hero-network.webp";
 import { pageHeroAlts } from "@/lib/page-heroes";
@@ -24,7 +22,11 @@ import { PageHero } from "@/components/PageHero";
 import { pageHeroCopy } from "@/lib/page-hero-copy";
 import { LazyTranZfortScreensCarousel } from "@/components/LazyTranZfortScreensCarousel";
 import { paths } from "@/lib/site-paths";
-import { breadcrumbSchema, organizationSchema } from "@/lib/schema";
+import {
+  breadcrumbSchema,
+  organizationSchema,
+  tranzfortSoftwareApplicationSchema,
+} from "@/lib/schema";
 
 const highlightIcons = [Route, Mic, Smartphone, Shield, Network, Users] as const;
 
@@ -138,6 +140,7 @@ const NetworkPage = () => {
         canonical={paths.network.tranzfort}
         schema={[
           organizationSchema,
+          tranzfortSoftwareApplicationSchema,
           breadcrumbSchema([
             { name: "Home", path: "/" },
             { name: "Network", path: paths.network.hub },
@@ -154,16 +157,7 @@ const NetworkPage = () => {
         imageAlt={pageHeroAlts.network}
       >
         <CTAGroup className="justify-start sm:justify-start">
-          <Button asChild size="lg" variant="accent">
-            <a
-              href={externalLinks.tranzfort}
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={() => trackEvent("cta_tranzfort", { placement: "hero" })}
-            >
-              Download TranZfort <ArrowRight className="ml-2" size={18} />
-            </a>
-          </Button>
+          <TranZfortAppCta placement="hero" showArrow />
           <WhatsAppButton
             label="Post a load"
             message={WHATSAPP_POST_LOAD_MESSAGE}
@@ -196,6 +190,9 @@ const NetworkPage = () => {
             <p className="text-muted-foreground">
               Join, search, browse, and book. Download the live app when you are ready to post or find a load.
             </p>
+            <div className="mt-6 flex justify-center">
+              <TranZfortAppCta placement="explore-app" variant="outline-brand" />
+            </div>
           </div>
           <LazyTranZfortScreensCarousel surface="light" />
         </div>
@@ -355,16 +352,7 @@ const NetworkPage = () => {
             .
           </p>
           <CTAGroup>
-            <Button asChild size="lg" variant="accent">
-              <a
-                href={externalLinks.tranzfort}
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={() => trackEvent("cta_tranzfort", { placement: "cta" })}
-              >
-                Download TranZfort <ArrowRight className="ml-2" size={18} />
-              </a>
-            </Button>
+            <TranZfortAppCta placement="cta" showArrow />
             <WhatsAppButton
               label="Post a load"
               message={WHATSAPP_POST_LOAD_MESSAGE}

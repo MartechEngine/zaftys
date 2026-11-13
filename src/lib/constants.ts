@@ -126,8 +126,12 @@ export const whatsappIndustryPrefill = {
 export const externalLinks = {
   tranzfort: "https://www.tranzfort.com",
   tranzfortAlt: "https://tranzfort.com",
+  /** Google Play listing for the TranZfort Android app. */
+  tranzfortPlayStore: "https://play.google.com/store/apps/details?id=com.tranzfort.app",
   app: "https://app.zaftys.com",
   linkedin: "https://www.linkedin.com/company/zaftys",
+  facebook: "https://www.facebook.com/zaftys",
+  instagram: "https://www.instagram.com/zaftys_/",
   /** Add to organizationSameAs only after the Crunchbase org page is live. */
   crunchbase: "https://www.crunchbase.com/organization/zaftys",
   /** Channel display name: ZAFTYS Logistics · handle @ZAFTYS */
@@ -136,9 +140,19 @@ export const externalLinks = {
   x: "https://x.com/zaftyslogistics",
 } as const;
 
+/** Footer social icons (order shown left → right). */
+export const footerSocialLinks = [
+  { id: "linkedin", label: "ZAFTYS on LinkedIn", href: externalLinks.linkedin },
+  { id: "facebook", label: "ZAFTYS on Facebook", href: externalLinks.facebook },
+  { id: "instagram", label: "ZAFTYS on Instagram", href: externalLinks.instagram },
+  { id: "youtube", label: "ZAFTYS on YouTube", href: externalLinks.youtube },
+] as const;
+
 /** Organization schema sameAs - only live third-party entity profiles. */
 export const organizationSameAs = [
   externalLinks.linkedin,
+  externalLinks.facebook,
+  externalLinks.instagram,
   externalLinks.youtube,
   externalLinks.x,
   externalLinks.tranzfort,

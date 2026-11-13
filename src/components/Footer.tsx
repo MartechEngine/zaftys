@@ -1,6 +1,17 @@
 import { useState, type ChangeEvent, type FormEvent } from "react";
 import { Link } from "react-router-dom";
-import { Mail, Phone, MapPin, Linkedin, ArrowRight, MessageCircle } from "lucide-react";
+import {
+  Mail,
+  Phone,
+  MapPin,
+  Linkedin,
+  Facebook,
+  Instagram,
+  Youtube,
+  ArrowRight,
+  MessageCircle,
+  type LucideIcon,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import logoFooter from "@/assets/logo-footer.webp";
@@ -8,6 +19,7 @@ import { useToast } from "@/hooks/use-toast";
 import { footerColumns } from "@/lib/nav-config";
 import {
   externalLinks,
+  footerSocialLinks,
   whatsappUrl,
   companyAddress,
   legalEntity,
@@ -19,6 +31,14 @@ import {
 } from "@/lib/constants";
 import { subscribeNewsletter } from "@/lib/newsletter";
 import { trackEvent } from "@/lib/analytics";
+import { TranZfortPlayBadge } from "@/components/TranZfortAppCta";
+
+const socialIcons: Record<(typeof footerSocialLinks)[number]["id"], LucideIcon> = {
+  linkedin: Linkedin,
+  facebook: Facebook,
+  instagram: Instagram,
+  youtube: Youtube,
+};
 
 const Footer = () => {
   const { toast } = useToast();
@@ -84,8 +104,8 @@ const Footer = () => {
               href={externalLinks.tranzfort}
               target="_blank"
               rel="noopener noreferrer"
-              onClick={() => trackEvent("cta_tranzfort", { placement: "footer" })}
-              className="inline-flex items-center gap-2 mt-4 text-accent hover:text-accent-light text-sm font-semibold transition-colors"
+              onClick={() => trackEvent("cta_tranzfort", { placement: "footer", intent: "website" })}
+              className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-accent transition-colors hover:text-accent-light"
             >
               Explore TranZfort marketplace <ArrowRight size={14} />
             </a>
@@ -180,7 +200,9 @@ const Footer = () => {
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-gray-400 hover:text-accent transition-colors"
-                      onClick={() => trackEvent("cta_tranzfort", { placement: "footer-links" })}
+                      onClick={() =>
+                        trackEvent("cta_tranzfort", { placement: "footer-links", intent: "website" })
+                      }
                     >
                       tranzfort.com
                     </a>
@@ -188,15 +210,34 @@ const Footer = () => {
                 ) : null}
               </ul>
               {index === footerColumns.length - 1 ? (
-                <a
-                  href={externalLinks.linkedin}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="mt-6 w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-gray-400 hover:bg-accent hover:text-white transition-all duration-300"
-                  aria-label="ZAFTYS on LinkedIn"
-                >
-                  <Linkedin size={20} />
-                </a>
+                <div className="mt-6 space-y-4">
+                  <div className="flex flex-wrap items-center gap-2" aria-label="ZAFTYS on social media">
+                    {footerSocialLinks.map((item) => {
+                      const Icon = socialIcons[item.id];
+                      return (
+                        <a
+                          key={item.id}
+                          href={item.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex h-10 w-10 items-center justify-center rounded-full bg-white/5 text-gray-400 transition-all duration-300 hover:bg-accent hover:text-white"
+                          aria-label={item.label}
+                          onClick={() =>
+                            trackEvent("cta_social", { placement: `footer-${item.id}` })
+                          }
+                        >
+                          <Icon size={20} />
+                        </a>
+                      );
+                    })}
+                  </div>
+                  <div>
+                    <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-gray-500">
+                      TranZfort app
+                    </p>
+                    <TranZfortPlayBadge placement="footer-social" />
+                  </div>
+                </div>
               ) : null}
             </div>
           ))}

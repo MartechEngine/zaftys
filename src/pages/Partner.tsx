@@ -9,10 +9,11 @@ import { pageHeroAlts } from "@/lib/page-heroes";
 import { heroMailBodies, heroMailSubjects } from "@/lib/hero-ctas";
 import { HeroEmailButton } from "@/components/HeroEmailButton";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
+import { TranZfortAppCta } from "@/components/TranZfortAppCta";
 import { CTAGroup } from "@/components/CTAGroup";
 import { PartnerEnquiryForm } from "@/components/partner/PartnerEnquiryForm";
 import { trackEvent } from "@/lib/analytics";
-import { externalLinks, WHATSAPP_PARTNER_MESSAGE } from "@/lib/constants";
+import { WHATSAPP_PARTNER_MESSAGE } from "@/lib/constants";
 import { pageSeo } from "@/lib/page-seo";
 import { breadcrumbSchema } from "@/lib/schema";
 import { pageHeroCopy } from "@/lib/page-hero-copy";
@@ -73,6 +74,7 @@ const Partner = () => {
               Explore truck ownership
             </a>
           </Button>
+          <TranZfortAppCta placement="partner-hero" variant="on-dark-outline" />
         </CTAGroup>
       </PageHero>
 
@@ -149,16 +151,7 @@ const Partner = () => {
               subject={heroMailSubjects.partner}
               body={heroMailBodies.partner}
             />
-            <Button asChild size="lg" variant="on-dark-outline">
-              <a
-                href={externalLinks.tranzfort}
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={() => trackEvent("cta_tranzfort", { placement: "partner" })}
-              >
-                Open TranZfort
-              </a>
-            </Button>
+            <TranZfortAppCta placement="partner" variant="on-dark-outline" />
           </CTAGroup>
           <p className="mt-8 text-sm text-gray-300">
             Learn about{" "}
