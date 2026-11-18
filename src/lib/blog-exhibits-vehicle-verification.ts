@@ -2,70 +2,92 @@
  * Pure TypeScript. Zero em-dashes or en-dashes; spaced hyphens only.
  * Workshop / orientation. Confirm bare statutes and insurer warranties before a claim memo.
  */
-import { zaftysViz } from "@/lib/blog-exhibits-tms-eval";
 import type { BlogExhibit, BlogKpi } from "@/lib/blog-data";
 
 export const vehicleVerificationKpis: readonly BlogKpi[] = [
   {
-    value: "~Rs 12k Cr*",
-    label: "Broader cargo-theft commentary",
+    value: "Design goal",
+    label: "Automated registry check cycle",
     detail:
-      "*Industry commentary often cites ~Rs 12,000 Cr annual cargo-theft drag on Indian logistics - not an official MoRTH audited series. This guide's teaching cases focus on identity-fraud / bogus-truck diversions inside that broader risk.",
+      "Target architecture for enterprise TMS gate workflows via authorized Vahan / Sarathi / ULIP paths where live. Not a published ZAFTYS measured p50/p95 benchmark. Publish measured timings only with a dated test report.",
   },
   {
-    value: "44%*",
-    label: "WhatsApp / broker (dalal) teaching slice",
+    value: "Lookup != clearance",
+    label: "What a registry check proves",
     detail:
-      "*Workshop pie slice only inside this guide's teaching denominator - not a published national crime share. Soften before board packs.",
-  },
-  {
-    value: "45 sec",
-    label: "Automated gate API validation",
-    detail:
-      "Target cycle for enterprise TMS (ZAFTYS) via ULIP / Vahan / Sarathi handshakes to check RC, fitness, permit, and commercial DL at plant gate-in.",
+      "An official vehicle or licence lookup can support consistency of recorded particulars. It does not by itself prove identity fraud, cargo theft, or that the truck is safe to load.",
   },
   {
     value: "100%",
     label: "Chassis pencil-rub mandate",
     detail:
-      "Non-negotiable physical protocol: embossed chassis impression on tracing paper before outward loading slip - digital RC alone is not ground truth.",
+      "Non-negotiable physical protocol where lawful and practical: embossed chassis impression on tracing paper before outward loading slip - digital RC alone is not ground truth.",
   },
   {
-    value: "72 hours",
-    label: "Golden recovery window",
+    value: "Signal only",
+    label: "FASTag / movement mismatch",
     detail:
-      "Critical post-dispatch window before diverted trucks are often repainted, stripped, and fitted with fresh counterfeit plates. After that, recovery odds collapse.",
+      "Impossible speed or opposite-corridor toll trails are risk signals. They require independent checks. They do not prove identity fraud or diversion by themselves.",
   },
   {
-    value: "Zero payout",
-    label: "Insurance repudiation risk",
+    value: "Hold + escalate",
+    label: "Mismatch response",
     detail:
-      "Underwriters commonly repudiate when surveyors find expired / forged RC or permit and a breach of registered-carrier due-diligence warranties on the marine policy.",
+      "Pause loading, verify independently, document, and escalate. Do not automatically accuse the driver or carrier of a crime from a single discrepancy.",
+  },
+  {
+    value: "Zero payout risk",
+    label: "Insurance due-diligence gap",
+    detail:
+      "Marine policies often carry registered-carrier warranties. Surveyors ask for gate evidence after diversion. Orientation only - insurer wording controls.",
   },
 ] as const;
 
 export const vehicleVerificationTakeaways = [
   "Fake / bogus trucks (farzi gaadi) pair scrap or totaled chassis with cloned plates and forged RCs, then hunt spot loads through WhatsApp groups and roadside brokers (dalals).",
   "Physical paper checks fail when Transport Nagar print shops produce laminated RCs, Form 48 permits, and QR codes that open spoofed verification pages.",
-  "Vahan 4.0 and Sarathi via ULIP let ZAFTYS TMS validate RC, fitness, permit, and commercial DL in about 45 seconds - then chassis pencil rubbing still confirms the frame.",
-  "FASTag history is a clone detector: impossible speed or opposite-corridor tolls mean the plate at your gate is not the truck that cleared the highway.",
-  "A Dahej copper-rod workshop diversion can write off Rs 2.15 Cr when marine cover repudiates for unvetted carrier due diligence - prevent at gate, do not litigate later.",
-  "TranZfort replaces anonymous broker groups with OTP, PAN, and RC-reviewed capacity; ZAFTYS hard-blocks expired fitness and blacklisted chassis at the weighbridge.",
+  "Public Parivahan lookups and authorized Vahan / Sarathi / ULIP integrations (where available) support consistency checks - then chassis pencil rubbing still confirms the frame. Do not promise every field or a fixed response time without a dated test report.",
+  "FASTag / movement anomalies are risk signals, not proof of fraud. Pair them with independent identity and custody checks.",
+  "A Dahej copper-rod workshop diversion (hypothetical composite) can write off Rs 2.15 Cr when marine cover repudiates for unvetted carrier due diligence - prevent at gate, do not litigate later.",
+  "TranZfort replaces anonymous broker groups with OTP, PAN, and commercial RC review on the matching rail; plant gates still need independent Vahan / Sarathi / chassis controls. Do not imply TMS automates checks it does not currently perform.",
 ] as const;
 
 export const vehicleVerificationReferences = [
   "[Motor Vehicles Act, 1988](https://www.indiacode.nic.in/handle/123456789/1797?locale=en) - Sections 3, 4, 39, 56, 66, and 113 (licensing, registration, fitness, permits, weight limits). Confirm bare text.",
   "[Central Motor Vehicles Rules (CMVR), 1989](https://www.indiacode.nic.in/handle/123456789/1798?locale=en) - Rules 9, 32, 47, 50 (HSRP), and 93. Confirm amendments.",
-  "[Bharatiya Nyaya Sanhita (BNS), 2023](https://www.indiacode.nic.in/handle/123456789/20062?locale=en) - Section 316 (criminal breach of trust by carrier / warehouse-keeper lineage) and Section 318 (cheating). Orientation; counsel owns charging strategy. Former IPC 405/407 and 415/420 framing for historical files.",
-  "[Carriage by Road Act, 2007](https://www.indiacode.nic.in/handle/123456789/2043?locale=en) - common carrier registration and goods receipt practice under Section 3 and related rules.",
-  "MoRTH Vahan 4.0 / Sarathi and ULIP API documentation - live field availability varies by integration path (see morth.nic.in / ULIP docs).",
-  "Cargo-theft scale orientation: industry commentary often cites ~Rs 12,000 Cr annual Indian cargo-theft drag and high Asia share for India - not an official MoRTH audited series; treat as context, not ZAFTYS data.",
+  "[Bharatiya Nyaya Sanhita (BNS), 2023](https://www.indiacode.nic.in/handle/123456789/20062?locale=en) - Section 316 (criminal breach of trust by carrier / warehouse-keeper lineage) and Section 318 (cheating). Orientation; counsel owns charging strategy.",
+  "[Carriage by Road Act, 2007](https://www.indiacode.nic.in/handle/123456789/2043?locale=en) - common carrier registration, goods forwarding note / goods receipt, and liability framing. Cite the specific section that supports each claim.",
+  "[Parivahan - Know Your Vehicle Details](https://parivahan.gov.in/parivahan//en/content/know-your-vehicle-details) - public vehicle-detail starting point. Not a universal API and not every registry field.",
+  "MoRTH Vahan / Sarathi and ULIP documentation - live field availability depends on authorization, provider, and access path.",
+  "Methodology: teaching scenarios and hypothetical composites in this guide are labelled as such. No national cargo-theft percentage is asserted as an audited MoRTH statistic.",
   "Product: [TranZfort](https://www.tranzfort.com) · [TranZfort marketplace](/network/tranzfort).",
   "Internal cluster: [transit damage and insurance](/blog/transit-damage-shortage-cargo-insurance-india-carrier-liability-guide), [spot vs dedicated](/blog/spot-market-vs-dedicated-fleet-india), [industrial TMS](/blog/industrial-tms-control-stack-india), [cost leaks](/blog/5-hidden-cost-leaks-heavy-industrial-freight-tms-3pl-guide), [load marketplaces](/blog/online-truck-load-marketplaces-india-freight-apps-guide), [freight rates](/blog/truck-freight-rates-india-cost-rate-benchmarking-guide).",
 ] as const;
 
 export const vehicleVerificationExhibits: Record<string, readonly BlogExhibit[]> = {
   "The underworld of highway freight theft in India": [
+    {
+      kind: "callout",
+      caption: "Quick answer",
+      source: "Primary query framing for commercial vehicle verification in India.",
+      items: [
+        {
+          title: "What to verify",
+          body: "Registration consistency, chassis/engine identity, fitness/permit/tax status, driver licence class, substitution events, movement signals, and cargo custody.",
+          tone: "navy",
+        },
+        {
+          title: "What a lookup is",
+          body: "A consistency check - not proof of fraud and not a full loading clearance.",
+          tone: "teal",
+        },
+        {
+          title: "Corrections",
+          body: "Report factual errors to contact@zaftys.com with the article URL.",
+          tone: "warm",
+        },
+      ],
+    },
     {
       kind: "callout",
       caption: "Key definitions (quotable)",
@@ -89,15 +111,27 @@ export const vehicleVerificationExhibits: Record<string, readonly BlogExhibit[]>
       ],
     },
     {
-      kind: "donut",
-      caption: "Vulnerabilities in freight sourcing: where cargo theft begins",
+      kind: "tiles",
+      caption: "Hypothetical risk ranking: where gate controls usually fail first",
       source:
-        "Single-denominator workshop pie (100%). Teaching pattern for industrial desks - not a ZAFTYS audited national crime index and not a published government share table.",
-      slices: [
-        { label: "Unverified spot via WhatsApp / roadside brokers (dalals) (workshop)", value: 44, color: zaftysViz.warm },
-        { label: "Counterfeit document acceptance (workshop)", value: 26, color: zaftysViz.navy },
-        { label: "Driver impersonation / missing endorsements (workshop)", value: 18, color: zaftysViz.primary },
-        { label: "In-transit divergence at unmonitored dhabas (workshop)", value: 12, color: zaftysViz.teal },
+        "Teaching ranking only - not a national crime share, not MoRTH data, and not a ZAFTYS audited sample. Use it to prioritise SOP coverage, not to quote percentages externally.",
+      items: [
+        {
+          title: "1. Unverified spot sourcing",
+          body: "Anonymous WhatsApp groups and roadside brokers (dalals) bring trucks the plant has never identity-checked.",
+        },
+        {
+          title: "2. Counterfeit document acceptance",
+          body: "Torch-light laminate checks without a live registry query accept forged RC, fitness, and permit packs.",
+        },
+        {
+          title: "3. Driver impersonation",
+          body: "Missing commercial badges, lost-licence reuse, or handover drivers after a clean gate-in photo.",
+        },
+        {
+          title: "4. In-transit custody break",
+          body: "Phone dark at an unmonitored dhaba after the plant already treated gate paper as enough.",
+        },
       ],
     },
     {
@@ -163,31 +197,75 @@ export const vehicleVerificationExhibits: Record<string, readonly BlogExhibit[]>
   "Digital verification: Vahan 4.0, Sarathi, and ULIP integration": [
     {
       kind: "table",
-      caption: "Vahan and Sarathi fields the gate must match",
-      source: "MoRTH registry orientation. Live API field names vary by ULIP product path.",
-      headers: ["System", "Must-match fields", "Gate action if mismatch"],
+      caption: "Verification matrix: what each check proves and how to respond",
+      source: "Educational matrix. A database lookup is not a complete security clearance. No single signal proves identity, authority, and custody together.",
+      headers: ["Check", "Evidence / method", "What it establishes", "Mismatch response"],
       rows: [
-        ["Vahan 4.0", "Maker/model, tare, GVW, engine, chassis", "Hold - do not load"],
-        ["Vahan 4.0", "Fitness expiry, road tax, goods permit", "Hold - do not load"],
-        ["Sarathi", "Name, photo, licence status active", "Hold - do not load"],
-        ["Sarathi", "Authorized classes (TRANS/HGMV), commercial badge", "Hold - do not load"],
-        ["Sarathi", "Hazchem endorsement when cargo needs it", "Hold - do not load"],
+        ["Registration number", "Official vehicle lookup + physical plate", "Whether recorded particulars appear consistent", "Pause loading; verify independently"],
+        ["Chassis / engine IDs", "RC/authorized record + physical stamp where lawful", "Whether identifiers match the vehicle record", "Document and escalate discrepancy"],
+        ["GVW / configuration", "RC and approved vehicle record", "Recorded configuration / weight particulars", "Reassess suitability and compliance"],
+        ["Fitness, insurance, permit, tax", "Official record or valid document", "Status of the specific requirement checked", "Resolve the specific deficiency"],
+        ["Driver licence", "Available official verification + physical ID", "Licence status/class to the extent the service confirms", "Reverify before dispatch"],
+        ["Driver substitution", "Original vs replacement driver records", "Whether the change is documented", "Recheck replacement driver"],
+        ["FASTag / movement", "Authorized available transaction data", "Limited corridor evidence only", "Treat as signal, not proof of fraud"],
+        ["Cargo custody", "Seal, photos, weighbridge, ePOD, timestamps", "Handover / chain-of-custody evidence", "Preserve records and escalate"],
       ],
     },
     {
       kind: "callout",
-      caption: "ULIP bridge into ZAFTYS TMS",
-      source: "Product capability framing - ~45 second multi-point validation target.",
+      caption: "What a registry check proves / does not prove",
+      source: "Capability framing for public Parivahan lookups and authorized integrations.",
       items: [
         {
-          title: "Instant handshake",
-          body: "Enterprise TMS queries ULIP-connected Vahan/Sarathi at gate-in so bribery and torch-light errors stop being the control.",
+          title: "Proves (at most)",
+          body: "Consistency of recorded vehicle or licence particulars against the registry extract available on that access path.",
           tone: "teal",
         },
         {
-          title: "Hard block",
-          body: "Expired fitness, suspended permit, or blacklisted chassis never receives a loading slip.",
+          title: "Does not prove",
+          body: "Identity fraud, cargo theft, that the truck is safe to load, or that every MoRTH field is live on every plant path.",
+          tone: "warm",
+        },
+        {
+          title: "Integration evidence",
+          body: "Publish field list, auth path, test date, success/fail counts, and p50/p95 only with a dated test report. Otherwise treat TMS automation as recommended architecture.",
           tone: "navy",
+        },
+      ],
+    },
+    {
+      kind: "table",
+      caption: "Mismatch escalation (neutral process)",
+      source: "Do not automatically accuse the driver or carrier of a crime from a single discrepancy.",
+      headers: ["Stage", "Action"],
+      rows: [
+        ["1. Hold", "Pause loading and keep the vehicle in a controlled area"],
+        ["2. Re-verify", "Repeat registry/physical checks with a second verifier where practical"],
+        ["3. Document", "Photo, extract, timestamps, approving person for exceptions"],
+        ["4. Escalate", "Notify dispatch / security lead; involve transporter contact"],
+        ["5. Decide", "Clear, reject, or refer - never load on unresolved hard fails"],
+        ["6. Retain", "Keep an auditable record with access controls and retention rules"],
+      ],
+    },
+    {
+      kind: "callout",
+      caption: "Authorized registry path into ZAFTYS TMS",
+      source: "Recommended architecture where credentials exist. Not a published response-time guarantee.",
+      items: [
+        {
+          title: "Where credentials exist",
+          body: "Enterprise TMS can query authorized Vahan/Sarathi / ULIP paths at gate-in so bribery and torch-light errors stop being the control.",
+          tone: "teal",
+        },
+        {
+          title: "Hard block + fallback",
+          body: "Expired fitness, suspended permit, or blacklisted chassis never receives a loading slip. When the service is down, hold and escalate - do not auto-clear.",
+          tone: "navy",
+        },
+        {
+          title: "Privacy / retention",
+          body: "Collect only lawful fields; restrict access to gate and compliance roles; retain verification artifacts per plant policy and insurer requirements.",
+          tone: "warm",
         },
       ],
     },
@@ -317,7 +395,7 @@ export const vehicleVerificationExhibits: Record<string, readonly BlogExhibit[]>
         ["Chassis rub", "Skipped in evening congestion", "Mandatory pencil rubbing"],
         ["Tracking", "Phone off near Valsad 9:30 PM", "FASTag + milestone TMS"],
         ["Insurance", "Repudiated - due diligence warranty", "Registered carrier + gate evidence"],
-        ["Outcome", "Rs 2.15 Cr write-off", "~45-90 sec gate block"],
+        ["Outcome", "Rs 2.15 Cr write-off", "Hold-first gate block before load"],
       ],
     },
   ],
@@ -378,17 +456,19 @@ export const vehicleVerificationExhibits: Record<string, readonly BlogExhibit[]>
     },
     {
       kind: "steps",
-      caption: "8-stage gate protocol (desk copy)",
-      source: "Same sequence as the process board.",
+      caption: "10-stage gate protocol (desk copy)",
+      source: "Aligned to the master gate-security checklist. Image above is illustrative process art - follow this sequence.",
       items: [
-        { title: "01 Visual plate audit", body: "HSRP screws, font, commercial yellow plate integrity." },
-        { title: "02 Vahan API", body: "Active RC, fitness, tax, permit, tare, GVW." },
-        { title: "03 Sarathi DL", body: "Photo, status, HGMV/TRANS, Hazchem if needed." },
-        { title: "04 FASTag history", body: "Corridor plausibility vs declared origin." },
-        { title: "05 Chassis pencil rub", body: "Frame stamp vs Vahan extract." },
-        { title: "06 Driver live ID", body: "Plate photo, masked Aadhaar / biometric." },
-        { title: "07 Breathalyzer + EHS", body: "Zero BAC; tyres, lights, isolator." },
-        { title: "08 Gate pass + seal", body: "Issue pass; record seal on e-Way Bill Part B." },
+        { title: "01 Record arrival", body: "Time, registration, vehicle type, transporter." },
+        { title: "02 Compare identifiers", body: "Lawful registry lookup + physical plate / RC consistency." },
+        { title: "03 Driver identity + licence", body: "Available lawful verification methods only." },
+        { title: "04 Document status", body: "Fitness, insurance, permit, tax / expiry." },
+        { title: "05 Cargo suitability", body: "GVW, body, endorsements match the order." },
+        { title: "06 Substitution re-check", body: "Any driver/vehicle change is re-verified." },
+        { title: "07 Custody record", body: "Loading ref, seal, photos where permitted, weighbridge, departure." },
+        { title: "08 Exception approver", body: "Named person for any override." },
+        { title: "09 Mismatch hold", body: "Hold, re-verify, escalate - do not auto-accuse." },
+        { title: "10 Retain audit trail", body: "Access-controlled retention of verification artifacts." },
       ],
     },
   ],
@@ -408,7 +488,7 @@ export const vehicleVerificationExhibits: Record<string, readonly BlogExhibit[]>
           body: "Dock, loading, consignment note / LR (bilty), seal, and POD photos create an auditable chain of custody.",
         },
         {
-          title: "ZAFTYS ULIP gate",
+          title: "ZAFTYS gate controls (where live)",
           body: "Vahan/Sarathi embedded at weighbridge; auto-block expired fitness and blacklisted chassis.",
         },
       ],

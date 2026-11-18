@@ -7,28 +7,28 @@ import type { BlogExhibit, BlogKpi } from "@/lib/blog-data";
 
 export const loadMarketplaceKpis: readonly BlogKpi[] = [
   {
-    value: "8% - 15%*",
-    label: "Brokerage leakage (dalali)",
+    value: "Multi-tier*",
+    label: "Brokerage stack (dalali)",
     detail:
-      "*Workshop band only - not a national audit index. Multi-tier roadside commission between consignor budget and driver pocket; corridor and freight-market (mandi) specific.",
+      "*Hypothetical teaching band only - not a national audit index. Some corridors show booking commission, placement fees, and diesel-slip kickbacks that can consume a material share of the shipper-to-driver gap. Measure your lane before quoting a percentage.",
   },
   {
-    value: "48 - 72 hrs",
-    label: "Average return dwell",
+    value: "Define dwell",
+    label: "Return-load idle time",
     detail:
-      "Idle staging time an uncontracted commercial truck often spends in a regional Transport Nagar waiting for a return load - empty truck (khali gaadi). Workshop band.",
+      "Return-load dwell = clock time from empty after unload until the next paid load is accepted. Do not confuse with transit time or plant detention. Workshop examples often use 48-72 hour Nagar waits - lane-specific, not a national average.",
   },
   {
-    value: "Rs 2.5k - 5k",
-    label: "Per-trip arbitrage",
+    value: "Like-for-like",
+    label: "Quote comparison rule",
     detail:
-      "Typical spread between the spot rate the factory supplier pays and the trip advance the truck owner actually receives on traditional broker lanes.",
+      "Compare only matched vehicle capacity, route, cargo, service level, transit time, and included costs. A lower sticker rate is not automatically a saving.",
   },
   {
-    value: "65% - 70%",
-    label: "Cash advance on loading",
+    value: "Rs 54k maths*",
+    label: "Hypothetical corridor floor",
     detail:
-      "Standard highway payment milestone paid at loading (fuel card or cash). Balance settlement in manual systems often stretches 30 to 60 days.",
+      "*Raipur to Bhiwandi teaching arithmetic only - truck operating floor near Rs 54,000. Not an audited ZAFTYS trip file or national rate card.",
   },
   {
     value: "100%",
@@ -40,30 +40,53 @@ export const loadMarketplaceKpis: readonly BlogKpi[] = [
     value: "Zero",
     label: "Freight commission cut",
     detail:
-      "Modern open marketplace standard (TranZfort): suppliers post loads free; truckers find loads free; rate is negotiated direct with no platform freight markup.",
+      "TranZfort open marketplace: suppliers post loads free; truckers find loads free; rate is negotiated direct with no platform freight markup. Other platforms may price differently - compare product features, not slogans.",
   },
 ] as const;
 
 export const loadMarketplaceTakeaways = [
-  "Transport Nagar brokerage commission (dalali) is a multi-tier stack - booking commission, placement fees, and diesel-slip kickbacks - that can extract 8% to 15% between the consignor budget and the driver's pocket.",
-  "Closed digital aggregators often moved the same arbitrage online as a 5% to 10% hidden spread. Open zero-commission marketplaces (TranZfort) let suppliers and truckers negotiate the trip rate with no platform freight cut.",
-  "On the Raipur to Bhiwandi 25 T workshop corridor, brokerage can lift a Rs 54,000 truck floor to a Rs 62,000 shipper invoice while the trucker still leaves underpaid; direct matching near Rs 55,800 saves about Rs 6,200 for the shipper.",
+  "Transport Nagar brokerage commission (dalali) is a multi-tier stack - booking commission, placement fees, and diesel-slip kickbacks. Treat any 8% to 15% figure as a workshop assumption until your corridor is measured.",
+  "Closed aggregators can recreate intermediation online as a hidden spread; open zero-commission marketplaces (TranZfort) let parties negotiate the trip rate with no platform freight cut. Do not cite competitor prospectus numbers without the exact passage.",
+  "Hypothetical Raipur to Bhiwandi maths: a Rs 54,000 truck floor can become a Rs 62,000 shipper invoice under brokerage, versus a direct match near Rs 55,800 - only valid as teaching arithmetic for matched assumptions.",
   "High-converting load posts need industrial pin codes, body type, net payload, commodity, loading window, and advance terms - vague WhatsApp forwards waste bidding cycles and invite ghost trucks.",
   "Four trust layers before gate-in: Vahan RC (chassis, tare, GVW), commercial DL, PAN / GSTIN business identity, and verified trip history - a JPEG of an RC is not verification.",
   "Enterprises keep dedicated fleets on ZAFTYS web TMS for gate-to-pay control and publish only labeled overflow into TranZfort when contracts cannot place or season volume spikes.",
 ] as const;
 
 export const loadMarketplaceReferences = [
-  "[Carriage by Road Act, 2007](https://www.indiacode.nic.in/handle/123456789/2043?locale=en) and Carriage by Road Rules, 2011 - common carrier definition and goods receipt framing.",
+  "[Carriage by Road Act, 2007](https://www.indiacode.nic.in/handle/123456789/2043?locale=en) and Carriage by Road Rules, 2011 - common carrier definition and goods receipt framing. Cite the specific section that supports each claim.",
   "[Information Technology Act, 2000](https://www.indiacode.nic.in/handle/123456789/1999?locale=en) - legal validity of electronic records, in-app contracts, and digital signatures (orientation; counsel owns litigation strategy).",
   "[Central Motor Vehicles Rules (CMVR), 1989](https://www.indiacode.nic.in/handle/123456789/1798?locale=en) - Rules 9 and 138A framing for electronic transport documentation. Confirm bare text before a legal memo.",
   "[CGST Act, 2017](https://www.indiacode.nic.in/handle/123456789/11537?locale=en) / Rules - Rule 138 e-Way Bill Part B updates when the vehicle moves. GTA tax detail: [GST on GTA guide](/blog/gst-on-gta-rcm-forward-charge-consignment-note-rules-guide).",
+  "Methodology: corridor economics, brokerage percentages, and dwell bands in this guide are hypothetical teaching maths unless a documented lane sample is cited. Competitor commission claims are omitted unless an exact primary-source passage is located.",
   "Product: [TranZfort](https://www.tranzfort.com) · [TranZfort marketplace](/network/tranzfort).",
   "Internal cluster: [truck freight rates](/blog/truck-freight-rates-india-cost-rate-benchmarking-guide), [spot vs dedicated](/blog/spot-market-vs-dedicated-fleet-india), [transit damage claims](/blog/transit-damage-shortage-cargo-insurance-india-carrier-liability-guide), [FTL vs PTL](/blog/ftl-vs-ptl-freight-services-india-cost-break-even-guide), [5 hidden cost leaks](/blog/5-hidden-cost-leaks-heavy-industrial-freight-tms-3pl-guide), [industrial TMS control stack](/blog/industrial-tms-control-stack-india).",
 ] as const;
 
 export const loadMarketplaceExhibits: Record<string, readonly BlogExhibit[]> = {
   "The Indian truck brokerage landscape: how Transport Nagars really work": [
+    {
+      kind: "callout",
+      caption: "Quick answer",
+      source: "Primary query framing for online truck-load marketplaces in India.",
+      items: [
+        {
+          title: "What a marketplace does",
+          body: "Matches shipper/supplier demand with truck capacity, with identity, evidence, and optionally a TMS handoff - pricing models differ.",
+          tone: "navy",
+        },
+        {
+          title: "Brokerage vs open matching",
+          body: "Traditional stacks can be opaque; open zero-commission rails negotiate trip rates direct. Treat percentage leakage bands as workshop assumptions until measured.",
+          tone: "teal",
+        },
+        {
+          title: "Corrections",
+          body: "Report factual errors to contact@zaftys.com with the article URL.",
+          tone: "warm",
+        },
+      ],
+    },
     {
       kind: "callout",
       caption: "Key definitions (quotable)",
@@ -76,7 +99,7 @@ export const loadMarketplaceExhibits: Record<string, readonly BlogExhibit[]> = {
         },
         {
           title: "Closed aggregator vs open marketplace",
-          body: "Aggregator resells a landed rate with a hidden spread. Open marketplace lets parties negotiate direct with no platform cut on freight.",
+          body: "Aggregator resells a landed rate that can embed a spread. Open marketplace lets parties negotiate direct with no platform cut on freight when that product policy applies.",
           tone: "navy",
         },
         {
@@ -142,7 +165,7 @@ export const loadMarketplaceExhibits: Record<string, readonly BlogExhibit[]> = {
         {
           phase: "02",
           title: "Closed digital brokers / aggregators",
-          body: "App UI with venture-backed acquisition. Pricing stays closed. Often 5% to 10% hidden spread between shipper bid and carrier pay.",
+          body: "App UI with controlled supply. Pricing stays closed. Any hidden-spread percentage is a workshop assumption until measured with like-for-like quotes.",
         },
         {
           phase: "03",
@@ -195,18 +218,73 @@ export const loadMarketplaceExhibits: Record<string, readonly BlogExhibit[]> = {
     {
       kind: "image",
       caption: "Idle dwell opportunity cost - the empty return run (khali phera) drain [FLEET UTILIZATION LOSS]",
-      source: "Workshop. Contrast 3 days Transport Nagar idle vs instant return booking via app.",
+      source: "Illustrative teaching graphic. Return-load dwell is a variable to measure - not a published national average.",
       src: "/images/blog/load-marketplace-idle-dwell-cost.png",
-      alt: "Formula board for daily capital burn while parked waiting for return load, contrasting Rs 9800 three-day idle loss with instant app booking",
+      alt: "Formula board for daily capital burn while parked waiting for return load, contrasting idle loss with faster return booking",
+    },
+    {
+      kind: "table",
+      caption: "Hypothetical return-load economics (labelled assumptions)",
+      source: "Illustrative only. Replace every assumption with your lane data before board use. A return load is not always available.",
+      headers: ["Input / output", "Assumed value", "Notes"],
+      rows: [
+        ["Loaded km (outbound)", "1,150 km", "Raipur-Bhiwandi teaching corridor class"],
+        ["Empty km before backhaul", "80 km", "Reposition assumption"],
+        ["Assumed fuel efficiency", "3.5 km/l", "Assumption - not a measured fleet average"],
+        ["Assumed diesel price", "Rs 90 / litre", "Placeholder - insert dated pump price"],
+        ["Fuel litres (1,230 km / 3.5)", "~351 l", "Fuel = total km / km per litre"],
+        ["Fuel cost", "~Rs 31,600", "Litres x diesel price"],
+        ["Toll + driver + trip expenses (assumed)", "Rs 12,000", "Bundle assumption - split when you have data"],
+        ["Outbound freight revenue (assumed)", "Rs 55,800", "Direct-match teaching price"],
+        ["Return freight revenue (assumed)", "Rs 28,000", "Only if a return load is actually secured"],
+        ["Waiting / dwell before return accept", "Measure - do not assume", "Start: empty after unload; end: return load accepted"],
+        ["Contribution formulas", "Outbound: revenue - trip costs; Backhaul: return revenue - incremental return costs", "Not all return revenue is incremental profit"],
+      ],
+    },
+    {
+      kind: "table",
+      caption: "Neutral sourcing-model comparison",
+      source: "Educational compare. Confirm each platform's live terms before relying on a cell.",
+      headers: ["Dimension", "Traditional broker", "Closed aggregator / fleet network", "Open digital marketplace", "Direct shipper-carrier"],
+      rows: [
+        ["Who sets price", "Broker / chain", "Platform or controlled supply", "Parties negotiate", "Contract negotiation"],
+        ["Commission / spread disclosed", "Often opaque", "Often embedded in landed rate", "Should state platform fee policy", "Usually none beyond contract"],
+        ["Verification approach", "Relationship / paper", "Platform KYC + fleet rules", "Profile + docs + plant gate", "Known fleet + plant gate"],
+        ["Payment responsibility", "Often broker-mediated", "Per platform terms", "Per post / in-app terms", "Per MSA"],
+        ["POD / dispute workflow", "Phone + paper", "App milestones vary", "In-app milestones when used", "MSA + ePOD"],
+        ["Role of intermediary", "Intermediary", "Often contracting / controlling party", "Matching tool vs intermediary - read terms", "Usually none"],
+      ],
+    },
+    {
+      kind: "callout",
+      caption: "What 'free' and 'zero commission' mean on TranZfort",
+      source: "Product orientation. Confirm current app terms before commercial reliance - terms can change.",
+      items: [
+        {
+          title: "Zero commission on freight",
+          body: "No platform cut of the negotiated trip freight for the described open matching use.",
+          tone: "teal",
+        },
+        {
+          title: "Free posting / search",
+          body: "Load posts and truck search are positioned as free for eligible users. Enterprise TMS seats and optional services can be paid separately.",
+          tone: "navy",
+        },
+        {
+          title: "Still verify offline",
+          body: "Identity, vehicle suitability, tax path, and plant gate controls remain the user's responsibility.",
+          tone: "warm",
+        },
+      ],
     },
     {
       kind: "callout",
       caption: "Raipur to Bhiwandi teaching proof (1,200 km class, 25 T)",
-      source: "Teaching ledger only. Not a ZAFTYS audited trip file.",
+      source: "Teaching ledger only. Not a ZAFTYS audited trip file. Rs 54,000 floor is not component-broken here because no audited trip file supports a line-item split.",
       items: [
         {
           title: "Truck operating floor",
-          body: "Rs 54,000 direct operating need for the asset owner.",
+          body: "Rs 54,000 assumed direct operating need for the asset owner under teaching inputs.",
           tone: "navy",
         },
         {
@@ -351,13 +429,13 @@ export const loadMarketplaceExhibits: Record<string, readonly BlogExhibit[]> = {
       kind: "table",
       caption: "Line-item reconciliation: 25 MT structural steel / billets",
       source: "Corridor ~1,150 km. 12-wheeler, 35 T GVW, 25 T net legal payload. Workshop teaching ledger.",
-      headers: ["Line", "Model A Mandi", "Model B 5% platform", "Model C Zero-commission"],
+      headers: ["Line", "Model A Mandi (hyp.)", "Model B closed landed-rate (hyp.)", "Model C open zero-commission (hyp.)"],
       rows: [
         ["Shipper base freight", "Rs 62,000", "Rs 58,800", "Rs 55,800"],
         ["Broker / platform take", "~Rs 8,000 stack", "~Rs 2,940 (5%)", "Rs 0"],
         ["Net to truck owner (workshop)", "~Rs 54,000", "~Rs 55,860", "~Rs 55,800"],
         ["Cash advance at loading", "65% - 70%", "65% - 70%", "Contracted ~70%"],
-        ["Return dwell (workshop)", "48 - 72 hrs", "24 - 48 hrs", "Near-instant post"],
+        ["Return dwell (measure; do not average without data)", "Variable - define start/end events", "Variable", "Variable - faster discovery is the claim to test"],
         ["Shipper vs direct", "+Rs 6,200", "+Rs 3,000", "Baseline"],
       ],
     },

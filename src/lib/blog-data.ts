@@ -310,15 +310,15 @@ export const blogPosts: readonly BlogPost[] = [
       "ZAFTYS TMS",
     ],
     publishedAt: "2026-11-18",
-    updatedAt: "2026-11-19",
+    updatedAt: "2026-11-18",
     author: "ZAFTYS Operations & Supply Chain Governance Research",
     reviewNote:
-      "Last reviewed: 19 Nov 2026. Orientation for plant logistics desks - not legal advice. Confirm Contract Act clauses with counsel before debit practice.",
+      "Last reviewed: 18 Nov 2026. Methodology: scorecard targets and worked examples are hypothetical or proposed until calibrated on plant data. No named legal reviewer has signed this page - confirm Contract Act clauses with counsel before debit practice. Factual corrections: contact@zaftys.com.",
     template: "deep-research",
     subtitle:
-      "Indent-to-Gate Placement Ratios · Compound OTIF Formulation · Dynamic L1/L2 Cascading Engines · Section 73 Contract Act Risk Purchase · 100-Point Transporter Scorecard · ZAFTYS Web Dispatch Board · TranZfort Safety-Valve Capacity",
+      "Placement Rate vs OTIF · Denominator Rules · Dynamic L1/L2 Cascading Engines · Section 73 Contract Act Risk Purchase · Configurable Transporter Scorecard · ZAFTYS Web Dispatch Board · TranZfort Safety-Valve Capacity",
     summary:
-      "Fix morning indent dropouts: compound OTIF, automated L1/L2 cascading, Section 73 risk-purchase debits, 100-point scorecards, plant TAT linkage, and ZAFTYS-to-TranZfort safety valves.",
+      "Fix morning indent failures: define placement and OTIF with denominators, automate L1/L2 cascading, counsel-reviewed risk-purchase differentials, configurable scorecards, plant TAT linkage, and ZAFTYS-to-TranZfort safety valves.",
     readMinutes: 34,
     heroImage: "/images/blog/transporter-indent-management-otif-india.jpg",
     heroAspectRatio: "16/9",
@@ -401,15 +401,15 @@ export const blogPosts: readonly BlogPost[] = [
       "ZAFTYS TMS",
     ],
     publishedAt: "2026-11-18",
-    updatedAt: "2026-11-19",
+    updatedAt: "2026-11-18",
     author: "ZAFTYS Operations & Supply Chain Risk Research",
     reviewNote:
-      "Last reviewed: 19 Nov 2026. Orientation for plant security and logistics - not legal advice. Confirm bare BNS / MV Act text before an FIR strategy memo.",
+      "Last reviewed: 18 Nov 2026. Methodology: teaching scenarios and composites are labelled hypothetical. Registry timings are design goals unless a dated test report is cited. No named legal reviewer has signed this page - confirm bare BNS / MV Act text before an FIR strategy memo. Factual corrections: contact@zaftys.com.",
     template: "deep-research",
     subtitle:
-      "Vahan 4.0 API Authentication · Sarathi Commercial DL Endorsement · Physical Chassis Pencil Rubbing · FASTag Historical Corridor Verification · Section 316 BNS Criminal Breach of Trust · Plant Gate Security SOP · TranZfort Document Vetting Layer",
+      "Parivahan / Vahan Registry Checks · Sarathi Commercial DL Endorsement · Physical Chassis Pencil Rubbing · FASTag Movement Signals · Section 316 BNS Criminal Breach of Trust · Plant Gate Security SOP · TranZfort Document Vetting Layer",
     summary:
-      "Stop fake / bogus trucks (farzi gaadi) and cloned plates at the plant gate: Vahan/Sarathi ULIP checks, chassis pencil rubbing, FASTag plausibility, driver chain of custody, and marketplace-to-TMS verification.",
+      "Stop fake / bogus trucks (farzi gaadi) and cloned plates at the plant gate: authorized Vahan/Sarathi checks where live, chassis pencil rubbing, FASTag risk signals, driver chain of custody, and marketplace-to-TMS verification.",
     readMinutes: 34,
     heroImage: "/images/blog/commercial-vehicle-verification-india.jpg",
     heroAspectRatio: "16/9",
@@ -423,9 +423,9 @@ export const blogPosts: readonly BlogPost[] = [
     midCtas: [
       {
         afterHeading: "Digital verification: Vahan 4.0, Sarathi, and ULIP integration",
-        eyebrow: "45-second gate handshake",
+        eyebrow: "Registry checks at the gate",
         title: "Embed Vahan and Sarathi hard-blocks in ZAFTYS",
-        body: "Share how your gate checks RC today. We map ULIP validation into the weighbridge workflow.",
+        body: "Share how your gate checks RC today. We map authorized registry validation into the weighbridge workflow where credentials exist.",
         cta: { label: "Explore ZAFTYS TMS", to: "/zaftys-tms" },
       },
       {
@@ -492,15 +492,15 @@ export const blogPosts: readonly BlogPost[] = [
       "ZAFTYS TMS",
     ],
     publishedAt: "2026-11-18",
-    updatedAt: "2026-11-19",
+    updatedAt: "2026-11-18",
     author: "ZAFTYS Engineering & Fleet Intelligence",
     reviewNote:
-      "Last reviewed: 19 Nov 2026. Workshop payload and CFT bands - confirm RC GVW, measured tare, and live CMVR Rule 93 text before a tender promise.",
+      "Last reviewed: 18 Nov 2026. Methodology: payload and CFT figures are calculated or hypothetical unless a measured RC/weighbridge file is cited. OEM class names are orientation only - not dated manufacturer datasheets. No named engineering reviewer has signed this page. Confirm RC GVW, measured tare, and live CMVR height categories before a tender promise. Factual corrections: contact@zaftys.com.",
     template: "deep-research",
     subtitle:
-      "Single Axle (SXL) vs Multi-Axle (MXL) · 1,850 to 2,250 Cubic Feet (CFT) · High Cube (HQ) 10-Ft Height Norms · CMVR Rule 93 Height Framing (4.0 / 4.52 m) · Cube-Out vs Weigh-Out Thresholds · TranZfort In-App Container Sourcing · ZAFTYS Web TMS Fleet Allocation",
+      "Single Axle (SXL) vs Multi-Axle (MXL) · Payload = GVW - Tare · Geometric CFT Examples · High Cube (HQ) Height Norms · CMVR Height Categories (3.8 / 4.20 / 4.52 m) · Cube-Out vs Weigh-Out Thresholds · TranZfort In-App Container Sourcing · ZAFTYS Web TMS Fleet Allocation",
     summary:
-      "Right-size 32-ft closed containers: SXL vs MXL payload after tare, CFT and High Cube maths, density thresholds, pallet layouts, Section 113 / 194 traps, and marketplace / TMS sourcing.",
+      "Right-size 32-ft closed containers: SXL vs MXL payload after tare, reproducible CFT maths, CMVR height categories, density thresholds, pallet layouts, Section 113 / 194 traps, and marketplace / TMS sourcing.",
     readMinutes: 32,
     heroImage: "/images/blog/32-feet-container-truck-sxl-mxl-india.jpg",
     heroAspectRatio: "16/9",
@@ -585,15 +585,15 @@ export const blogPosts: readonly BlogPost[] = [
       "TranZfort",
     ],
     publishedAt: "2026-11-18",
-    updatedAt: "2026-11-19",
+    updatedAt: "2026-11-18",
     author: "ZAFTYS Operations & Indirect Tax Research",
     reviewNote:
-      "Last reviewed: 19 Nov 2026. Orientation for logistics and finance desks - not tax advice. Confirm bare CGST notifications and portal advisories before a demand reply.",
+      "Last reviewed: 18 Nov 2026. Methodology: rate arithmetic is illustrative; decision tree is educational. Not tax advice. No named GST professional has signed this page - confirm bare CGST notifications, GST Council FAQ, and portal advisories with a qualified GST professional before a demand reply. Factual corrections: contact@zaftys.com.",
     template: "deep-research",
     subtitle:
-      "Section 9(3) CGST Act · Reverse Charge Mechanism (RCM) · 18% Forward Charge with ITC (from 22 Sep 2025) · Statutory Consignment Note (Rule 4B) · Annexure V Portal Declarations · Withdrawal of Rs 750 / Rs 1,500 Exemptions · TMS Freight Ledger Automation",
+      "Section 9(3) CGST Act · Reverse Charge Mechanism (RCM) · 18% Forward Charge with ITC (from 22 Sep 2025) · Tax-Route Decision Aid · Statutory Consignment Note · Annexure V Portal Declarations · Notification Register · TMS Freight Ledger Automation",
     summary:
-      "GTA taxation for industrial freight desks: 5% RCM vs 18% forward charge with ITC, consignment-note litmus, Annexure V elections, post-2022 exemption withdrawal, and TMS-led GSTR-2B / cash-ledger reconciliation.",
+      "GTA taxation for industrial freight desks: decision aid for 5% RCM vs 18% forward charge with ITC, consignment-note litmus, Annexure V elections, post-2022 exemption withdrawal, and TMS-led GSTR-2B / cash-ledger reconciliation.",
     readMinutes: 34,
     heroImage: "/images/blog/gst-on-gta-rcm-forward-charge-india.jpg",
     heroAspectRatio: "16/9",
@@ -676,15 +676,15 @@ export const blogPosts: readonly BlogPost[] = [
       "ZAFTYS TMS",
     ],
     publishedAt: "2026-11-18",
-    updatedAt: "2026-11-19",
+    updatedAt: "2026-11-18",
     author: "ZAFTYS Operations & Marketplace Research",
     reviewNote:
-      "Last reviewed: 19 Nov 2026. Workshop corridor maths and commission bands - not a national rate index. Confirm bare Carriage by Road / IT Act text before a claims memo.",
+      "Last reviewed: 18 Nov 2026. Methodology: corridor economics, brokerage percentages, and dwell bands are hypothetical teaching maths unless a documented lane sample is cited. Not a national rate index. No named marketplace auditor has signed this page. Confirm bare Carriage by Road / IT Act text and current TranZfort terms before a claims memo. Factual corrections: contact@zaftys.com.",
     template: "deep-research",
     subtitle:
-      "Digital freight matching · Zero-commission marketplaces · Transport Nagar brokerage commission (dalali) breakdown · In-app trip milestones · Document verification (Vahan / PAN) · ZAFTYS web TMS to TranZfort integration",
+      "Digital freight matching · Zero-commission marketplaces · Brokerage stack orientation · Return-load dwell definition · In-app trip milestones · Document verification (Vahan / PAN) · ZAFTYS web TMS to TranZfort integration",
     summary:
-      "How Indian truck load marketplaces work: Transport Nagar commission stacks, zero-commission direct matching on TranZfort, Vahan vetting, trip milestones, and enterprise overflow from ZAFTYS TMS.",
+      "How Indian truck load marketplaces work: Transport Nagar commission stacks (labelled assumptions), zero-commission direct matching on TranZfort, Vahan vetting, trip milestones, and enterprise overflow from ZAFTYS TMS.",
     readMinutes: 32,
     heroImage: "/images/blog/online-truck-load-marketplaces-india.jpg",
     heroAspectRatio: "16/9",

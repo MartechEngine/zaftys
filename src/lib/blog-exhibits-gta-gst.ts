@@ -56,19 +56,38 @@ export const gtaGstTakeaways = [
 export const gtaGstReferences = [
   "[CGST Act, 2017](https://www.indiacode.nic.in/handle/123456789/11537?locale=en) - Sections 2(98), 9(1), 9(3), 16(2), 31, and 50. Confirm bare text and amendments before a demand reply.",
   "IGST Act, 2017 - Section 5(3) for inter-State reverse charge framing on notified services.",
-  "[Notification No. 11/2017-Central Tax (Rate)](https://cbic-gst.gov.in/pdf/central-tax-rate/Notification11-CGST.pdf) as amended (including Notification No. 03/2022-Central Tax (Rate)) - GTA rate entries and forward-charge option.",
+  "[GST Council - September 2025 FAQ](https://www.gstcouncil.gov.in/sites/default/files/2025-09/faq_0.pdf) - official FAQ discussing GTA 5% without ITC and 18% with full eligible ITC framing from 22 Sep 2025.",
+  "[GST Council - September 2025 press release](https://gstcouncil.gov.in/sites/default/files/2025-09/press_release_press_information_bureau_0.pdf) - Council recommendations context; rate cards still follow notified text.",
+  "[CBIC Notification No. 11/2017-Central Tax (Rate)](https://taxinformation.cbic.gov.in/view-pdf/1000997/ENG/Notifications) as amended - GTA rate entries and forward-charge option (confirm subsequent amendments).",
   "[Notification No. 15/2025-Central Tax (Rate)](https://gst.karnataka.gov.in/Documents/NOTIFICATIONS/CTR1518925.pdf) (17 Sep 2025) - with-ITC forward-charge central tax raised so the option is 18% from 22 Sep 2025 (was 12% until 21 Sep 2025).",
   "[Notification No. 12/2017-Central Tax (Rate)](https://cbic-gst.gov.in/pdf/central-tax-rate/Notification12-CGST.pdf) as amended - exemption entries for GTA commodities.",
   "[Notification No. 04/2022-Central Tax (Rate)](https://cbic-gst.gov.in/pdf/central-tax-rate/04_2022-ctr-eng.pdf) (13 Jul 2022; effective 18 Jul 2022) - withdrawal of Entry 21 threshold exemptions for single carriage ≤ Rs 1,500 and single consignee ≤ Rs 750.",
   "[Notification No. 13/2017-Central Tax (Rate)](https://cbic-gst.gov.in/pdf/central-tax-rate/Notification13-CGST.pdf) - principal RCM notification listing GTA among notified services and specified recipients.",
-  "Service Tax Rules, 1994 - Rule 4B consignment-note particulars (historical grounding still cited in GST practice).",
-  "GST Council recommendations (47th / 50th) on GTA rate flexibility - orientation only; rate cards follow notified text. Annexure V / VI timing: follow live GST portal advisories (commonly 1 Jan to 31 Mar of the preceding year).",
+  "Service Tax Rules, 1994 - Rule 4B consignment-note particulars (historical grounding; not standalone GST authority - explain only where current GST law still supports the proposition).",
+  "Methodology: rate arithmetic tables are illustrative only and do not determine the applicable route for a shipment. Have a qualified GST professional approve the decision table before relying on it.",
   "Product: [TranZfort](https://www.tranzfort.com) · [TranZfort marketplace](/network/tranzfort).",
   "Internal cluster: [truck freight rates](/blog/truck-freight-rates-india-cost-rate-benchmarking-guide), [ePOD billing](/blog/epod-fastag-eway-bill-billing-india), [spot vs dedicated](/blog/spot-market-vs-dedicated-fleet-india), [transit damage](/blog/transit-damage-shortage-cargo-insurance-india-carrier-liability-guide), [industrial TMS](/blog/industrial-tms-control-stack-india), [cost leaks](/blog/5-hidden-cost-leaks-heavy-industrial-freight-tms-3pl-guide), [load marketplaces](/blog/online-truck-load-marketplaces-india-freight-apps-guide).",
 ] as const;
 
 export const gtaGstExhibits: Record<string, readonly BlogExhibit[]> = {
   "What legally constitutes a Goods Transport Agency under GST": [
+    {
+      kind: "callout",
+      caption: "Methodology and corrections",
+      source: "Editorial standard for this guide.",
+      items: [
+        {
+          title: "Illustrative vs legal",
+          body: "Rate arithmetic and decision aids are educational. Notifications and portal text control. No named GST professional has signed this page.",
+          tone: "warm",
+        },
+        {
+          title: "Corrections",
+          body: "Report a factual or citation error to contact@zaftys.com with the article URL and the claim to check.",
+          tone: "teal",
+        },
+      ],
+    },
     {
       kind: "callout",
       caption: "Key definitions (quotable)",
@@ -172,6 +191,21 @@ export const gtaGstExhibits: Record<string, readonly BlogExhibit[]> = {
 
   "The master tax matrix: 5% RCM vs 5% forward vs 18% forward charge": [
     {
+      kind: "flow",
+      caption: "Educational tax-route decision aid (not tax advice)",
+      source: "Exact treatment depends on transaction facts and current law. Have a qualified GST professional approve before coding AP.",
+      items: [
+        { title: "1. Road goods transport?", body: "If not, stop applying GTA rate cards." },
+        { title: "2. Is the supplier a GTA?", body: "Consignment-note / Section 2(98) litmus - else classify the actual service." },
+        { title: "3. Non-GTA path?", body: "If not GTA, determine the correct classification - do not auto-apply GTA treatment." },
+        { title: "4. Recipient / RCM?", body: "Check Notification 13/2017 conditions before assuming reverse charge." },
+        { title: "5. Forward charge?", body: "Verify Annexure V election and invoice endorsement conditions." },
+        { title: "6. Rate + payer", body: "Confirm applicable rate, tax-payment responsibility, and invoice treatment." },
+        { title: "7. ITC last", body: "Assess ITC only after eligibility, documentation, and blocked-credit rules." },
+        { title: "8. Audit trail", body: "Record notification, entry/paragraph, and date of conclusion." },
+      ],
+    },
+    {
       kind: "table",
       caption: "Three operating tax routes for commercial road freight (workshop)",
       source: "Rate entries under Notification No. 11/2017 as amended by Notification No. 15/2025-CT (Rate). Confirm current rate schedule.",
@@ -198,9 +232,48 @@ export const gtaGstExhibits: Record<string, readonly BlogExhibit[]> = {
       ],
     },
     {
+      kind: "table",
+      caption: "Illustrative GST arithmetic only (does not choose the route)",
+      source: "Assumes the displayed freight is the taxable value. Excludes separate commercial charges. ITC timing and eligibility are separate questions.",
+      headers: ["Illustrative taxable freight", "5% arithmetic", "18% arithmetic"],
+      rows: [
+        ["Rs 10,000", "Rs 500", "Rs 1,800"],
+        ["Rs 50,000", "Rs 2,500", "Rs 9,000"],
+        ["Rs 1,00,000", "Rs 5,000", "Rs 18,000"],
+      ],
+    },
+    {
+      kind: "table",
+      caption: "Notification register (verify before reliance)",
+      source: "Orientation register. Last reviewed 18 Nov 2026 against linked official PDFs - re-check amendments and exact entries before a demand reply. Not a substitute for consolidated law.",
+      headers: ["Notification / instrument", "Authority", "What it frames", "Effective / note", "Subsequent amendments", "Source"],
+      rows: [
+        ["11/2017-CT (Rate)", "CBIC / Central Tax (Rate)", "GTA rate entries / forward option", "2017 base; confirm live", "Incl. 03/2022 and later rate edits", "CBIC taxinformation link"],
+        ["13/2017-CT (Rate)", "CBIC / Central Tax (Rate)", "RCM on notified GTA services / recipients", "Confirm live annex", "Recipient-list amendments over time", "cbic-gst.gov.in PDF"],
+        ["12/2017-CT (Rate)", "CBIC / Central Tax (Rate)", "Exemption entries", "Commodity-specific", "Amended incl. 04/2022 threshold withdrawal", "cbic-gst.gov.in PDF"],
+        ["04/2022-CT (Rate)", "CBIC / Central Tax (Rate)", "Withdraws Rs 750 / Rs 1,500 thresholds", "Effective 18 Jul 2022", "Confirm no later reintroduction for your facts", "cbic-gst.gov.in PDF"],
+        ["15/2025-CT (Rate)", "CBIC / Central Tax (Rate)", "With-ITC option to 18%", "From 22 Sep 2025", "Confirm any later CT Rate edits", "State GST / CBIC hosted PDF"],
+        ["GST Council Sep 2025 FAQ", "GST Council", "Public explanation of 5% / 18% framing", "Sep 2025 FAQ", "Orientation only; notifications control", "gstcouncil.gov.in FAQ PDF"],
+      ],
+    },
+    {
+      kind: "table",
+      caption: "Hypothetical Rs 50,000 freight invoice checklist",
+      source: "Illustrative reconciliation aid. Does not determine which rate or payer applies.",
+      headers: ["Item", "RCM 5% scenario (if applicable)", "Forward 18% scenario (if applicable)"],
+      rows: [
+        ["Taxable freight value", "Rs 50,000", "Rs 50,000"],
+        ["GST arithmetic", "Rs 2,500", "Rs 9,000"],
+        ["Who pays tax (if that route applies)", "Liable specified recipient in cash", "Supplier invoices and deposits"],
+        ["Shipper cash to vendor", "Rs 50,000 freight", "Rs 59,000 freight + GST"],
+        ["Documents to match", "Contract, consignment note, e-Way Bill where applicable, tax invoice/self-invoice path, GSTIN, payment evidence, ledger", "Same + Annexure V endorsement on invoice"],
+        ["ITC", "Conditional after eligibility / Table 4 framing", "Conditional after GSTR-2B and blocked-credit rules"],
+      ],
+    },
+    {
       kind: "callout",
       caption: "Shipper cash-flow lens",
-      source: "Workshop. Working-capital timing differs even when net GST is recoverable.",
+      source: "Workshop. Working-capital timing differs even when net GST is recoverable. Full ITC is not automatic eligibility for every expense.",
       items: [
         {
           title: "5% RCM",
@@ -370,7 +443,7 @@ export const gtaGstExhibits: Record<string, readonly BlogExhibit[]> = {
         },
         {
           title: "Organized fleet",
-          body: "Asset ITC can support about 2% to 4% lower base freight versus an RCM carrier that cannot recover truck and tyre tax.",
+          body: "Eligible asset ITC can change a carrier's cost base versus an RCM path with no GTA-service ITC - treat any freight-rate gap as a negotiation hypothesis, not a measured national discount.",
           tone: "navy",
         },
       ],

@@ -7,56 +7,57 @@ import type { BlogExhibit, BlogKpi } from "@/lib/blog-data";
 
 export const indentOtifKpis: readonly BlogKpi[] = [
   {
-    value: "22% - 35%*",
-    label: "Morning indent dropouts (workshop)",
+    value: "Hypothetical*",
+    label: "Morning indent dropouts",
     detail:
-      "*Workshop coaching band only - not a national dropout index. Share of verbally confirmed morning indents that fail afternoon gate cutoff; lane and season specific.",
+      "*Planning assumption only - not a national dropout index. Some desks see roughly one-in-five to one-in-three verbally confirmed morning indents miss afternoon gate cutoff; measure your own lane before quoting a percentage.",
   },
   {
-    value: "18% - 25%",
-    label: "Emergency spot premium",
+    value: "Lane-specific",
+    label: "Emergency replacement premium",
     detail:
-      "Freight markup when dispatch is forced into uncontracted roadside spot trucks to clear choked packing docks after contracted placement collapses.",
+      "Do not publish a universal 18-25% premium. Compare like-for-like quotes on the same vehicle, route, cargo, and service level. Label any example as hypothetical.",
   },
   {
-    value: "2 hours",
-    label: "L1 cascading SLA window",
+    value: "2 hours*",
+    label: "Proposed L1 cascading window",
     detail:
-      "Operational benchmark for L1 contracted carriers to accept or reject daily indents before the TMS auto-triggers L2 cascading.",
+      "*Configurable recommendation, not an industry standard. Define start, stop, escalation, and exceptions before writing it into an MSA.",
   },
   {
-    value: "Rs 1.5k - 2.5k",
-    label: "Daily placement penalty band",
+    value: "Proposed 92%*",
+    label: "Placement scorecard target",
     detail:
-      "Common contractual liquidated damages for unfulfilled indents - often too small alone unless paired with a risk-purchase debit clause.",
+      "*Proposed desk target until calibrated by plant, lane, vehicle type, and season. Not a verified industry benchmark.",
   },
   {
-    value: "68% vs 92%",
-    label: "Manual vs TMS OTIF desk targets",
+    value: "500-indent maths*",
+    label: "Placement vs OTIF example",
     detail:
-      "Workshop coaching bands only - not a published national OTIF index. Contrast unorganized phone/WhatsApp indent plants with digitized desks running automated cascading and scorecards.",
+      "*Hypothetical: 450/500 placed (90%), 420/500 on-time placed (84%), 390/500 OTIF (78%). Different denominators, different metrics.",
   },
   {
     value: "Zero commission",
     label: "Marketplace safety valve",
     detail:
-      "Unfulfilled enterprise indents publish from ZAFTYS web TMS into TranZfort open driver networks without a platform cut on the trip rate.",
+      "Unfulfilled enterprise indents can publish from ZAFTYS web TMS into TranZfort open driver networks without a platform cut on the trip rate.",
   },
 ] as const;
 
 export const indentOtifTakeaways = [
-  "Morning verbal confirms are not placement. 22% to 35% of confirmed indents still fail the afternoon gate cutoff when transporters chase spot arbitrage.",
-  "OTIF is compound: on-time gate placement, in-full vehicle specification, and on-time delivery - a 90% placement boast can hide a ~62% to 64% true OTIF.",
-  "Automate the indent waterfall: L1 2-hour window, L2 cascade, backup pool, then TranZfort open push - identify shortfalls by 11:30 AM, not 4:00 PM.",
-  "Static Rs 1,000 penalties fail when spot diversion earns Rs 4,000 more. Section 73 risk-purchase debit notes make non-placement expensive.",
-  "Sub-120-minute plant TAT buys placement loyalty; 36-48 hour detention makes good carriers systematically deprioritize your morning indents.",
+  "Morning verbal confirms are not placement. Measure placement rate and on-time placement rate with explicit denominators before debating transporter blame.",
+  "OTIF is compound: on-time gate placement, in-full vehicle specification, and on-time delivery. Placement rate and delivery OTIF are not interchangeable.",
+  "Automate the indent waterfall: proposed L1 2-hour window, L2 cascade, backup pool, then TranZfort open push - identify shortfalls by late morning, not 4:00 PM.",
+  "Static Rs 1,000 penalties often fail when diversion earns more. Section 73 style risk-purchase differentials need counsel-reviewed wording and like-for-like replacement quotes.",
+  "Sub-120-minute plant TAT buys placement loyalty; multi-day detention makes good carriers systematically deprioritize your morning indents.",
   "ZAFTYS runs the multi-seat cascading desk; TranZfort is the zero-commission safety valve - booked overflow returns into the same gate-to-pay ledger.",
 ] as const;
 
 export const indentOtifReferences = [
   "[Indian Contract Act, 1872](https://www.indiacode.nic.in/handle/123456789/2187?locale=en) - Section 73 (compensation for loss or damage caused by breach of contract) and Section 74 (liquidated damages). Confirm bare text with counsel before debit practice.",
-  "[Carriage by Road Act, 2007](https://www.indiacode.nic.in/handle/123456789/2043?locale=en) - Section 9 framing for common carrier liability on non-delivery and delay (orientation).",
+  "[Carriage by Road Act, 2007](https://www.indiacode.nic.in/handle/123456789/2043?locale=en) - common carrier liability framing for non-delivery and delay (cite the specific section that supports each claim).",
   "[CGST Act / Rules](https://www.indiacode.nic.in/handle/123456789/11537?locale=en) - Rule 138(10) e-Way Bill validity linked to vehicle dispatch timing. Confirm live bare rules.",
+  "Methodology: placement/OTIF worked examples and scorecard targets in this guide are hypothetical or proposed until calibrated on documented plant data.",
   "Product: [TranZfort](https://www.tranzfort.com) · [TranZfort marketplace](/network/tranzfort).",
   "Internal cluster: [spot vs dedicated](/blog/spot-market-vs-dedicated-fleet-india), [plant detention TAT](/blog/plant-detention-tat-yard-gate-india), [truck freight rates](/blog/truck-freight-rates-india-cost-rate-benchmarking-guide), [5 hidden cost leaks](/blog/5-hidden-cost-leaks-heavy-industrial-freight-tms-3pl-guide), [industrial TMS](/blog/industrial-tms-control-stack-india), [load marketplaces](/blog/online-truck-load-marketplaces-india-freight-apps-guide).",
 ] as const;
@@ -65,18 +66,62 @@ export const indentOtifExhibits: Record<string, readonly BlogExhibit[]> = {
   "The 9:00 AM dispatch crisis: anatomy of an indent failure": [
     {
       kind: "callout",
-      caption: "Key definitions (quotable)",
-      source: "Desk vocabulary for this guide. Measure from gate timestamps, not transporter self-reports.",
+      caption: "Quick answer",
+      source: "Direct definitions for the primary query. Measure from gate timestamps, not transporter self-reports.",
       items: [
         {
-          title: "OTIF",
-          body: "On-Time In-Full: on-time gate placement + in-full vehicle allocation + on-time consignee delivery, as a share of indented dispatches.",
+          title: "Indent management",
+          body: "The process of creating, cascading, confirming, placing, and closing vehicle requests for a stated lane, cargo, capacity, and placement deadline.",
+          tone: "navy",
+        },
+        {
+          title: "Placement rate",
+          body: "Eligible indents successfully placed divided by eligible indents. Confirmation alone is not placement.",
           tone: "teal",
         },
+        {
+          title: "OTIF",
+          body: "On-Time In-Full: share of the agreed OTIF population that is simultaneously on-time placed, in-full allocated, and on-time delivered.",
+          tone: "warm",
+        },
+      ],
+    },
+    {
+      kind: "callout",
+      caption: "Methodology",
+      source: "Editorial standard for this guide.",
+      items: [
+        {
+          title: "What is hypothetical",
+          body: "Worked 500-indent maths, proposed scorecard targets, and commercial replacement examples are illustrative until calibrated on your plant data.",
+          tone: "warm",
+        },
+        {
+          title: "What is not claimed",
+          body: "No figure here is a national Indian OTIF benchmark or a measured ZAFTYS client KPI unless a dated dataset is cited.",
+          tone: "navy",
+        },
+        {
+          title: "Corrections",
+          body: "Report a factual error to contact@zaftys.com with the article URL and the claim to check.",
+          tone: "teal",
+        },
+      ],
+    },
+    {
+      kind: "callout",
+      caption: "Key definitions (quotable)",
+      source: "Desk vocabulary for this guide.",
+      items: [
         {
           title: "OTP",
           body: "On-Time Placement only - vehicle crossed the plant gate inside the assigned window. Necessary but not sufficient for OTIF.",
           tone: "navy",
+        },
+        {
+          title: "In-full",
+          body: "Correct body, payload class, and compliance. Partial tonnage, wrong body, or rejected vehicle is not in-full.",
+          tone: "teal",
         },
         {
           title: "Indent cascading",
@@ -154,18 +199,32 @@ export const indentOtifExhibits: Record<string, readonly BlogExhibit[]> = {
       ],
     },
     {
+      kind: "table",
+      caption: "Hypothetical 500-indent month (reproducible arithmetic)",
+      source: "Illustrative only - not a ZAFTYS audited result and not an Indian industry benchmark. Definitions and denominators control the answer.",
+      headers: ["Metric", "Numerator / denominator", "Result"],
+      rows: [
+        ["Eligible indents", "Agreed reporting population", "500"],
+        ["Placement rate", "450 placed / 500 eligible", "90%"],
+        ["Placement shortfall", "(500 - 450) / 500", "10%"],
+        ["On-time placement rate", "420 by deadline / 500 eligible", "84%"],
+        ["OTIF (eligible population)", "390 meet OTIF / 500 eligible", "78%"],
+        ["OTIF among placed only", "390 / 450 placed", "86.7% (different metric)"],
+      ],
+    },
+    {
       kind: "callout",
-      caption: "The 90% placement myth",
-      source: "Teaching contrast.",
+      caption: "Denominator rules",
+      source: "Write these into the SLA before the first scorecard argument.",
       items: [
         {
-          title: "Superficial placement",
-          body: "Transporter boasts 90% vehicles placed - ignoring late slots and gate rejections.",
+          title: "Do not silently drop failures",
+          body: "State treatment of cancellations, duplicates, force majeure, rejected vehicles, and late changes - include or exclude with named ownership.",
           tone: "warm",
         },
         {
-          title: "True OTIF",
-          body: "After punctuality and in-full filters, the same month can land near 62% to 64% OTIF.",
+          title: "Placement != OTIF",
+          body: "A high placement rate can still hide late slots, wrong trucks, and corridor misses. Report both metrics.",
           tone: "teal",
         },
       ],
@@ -235,15 +294,58 @@ export const indentOtifExhibits: Record<string, readonly BlogExhibit[]> = {
   "The 100-point industrial transporter performance scorecard": [
     {
       kind: "table",
+      caption: "Configurable SLA scorecard (proposed targets until validated)",
+      source: "Educational starting sheet. Targets are recommendations, not verified industry benchmarks. Evidence from gate logs, weighbridge, ePOD. Reporting frequency default: daily ops + monthly vendor pack.",
+      headers: ["Metric", "Definition / formula", "Proposed target", "Evidence", "Owner / escalate", "Exception handling"],
+      rows: [
+        ["Placement rate", "Placed / eligible indents", "Calibrate (often ~92% start)", "Gate acceptance log", "Dispatch head -> L2 cascade", "Document client cancel / force majeure exclusions"],
+        ["On-time placement rate", "On-time placed / eligible", "Calibrate by lane/season", "Gate-in vs deadline", "Slot owner -> transporter AM", "Late indent changes restart the clock if MSA says so"],
+        ["Vehicle rejection rate", "Rejected / reported at gate", "Track by reason code", "Security reject ticket", "Hold load; re-verify", "Rejected units count as placement failure unless rule says otherwise"],
+        ["OTIF", "Meet OTIF defs / OTIF population", "Calibrate after TAT clean", "Gate + ePOD + transit SLA", "Monthly vendor review", "Partials/damaged/cancelled: state include vs exclude"],
+        ["Detention vs free time", "Hours beyond agreed free time", "Track by plant and bay", "Gate-out / loading end stamps", "Yard owner -> reciprocal credit", "Plant-caused delay is not transporter OTIF failure"],
+        ["Cancellation rate", "Cancels / eligible, by actor+reason", "Track separately by party", "Cancel timestamp + reason", "Procurement + dispatch", "Never silently drop from denominator"],
+        ["POD submission time", "Hours from unload to stamped POD", "Propose <=24 hrs", "ePOD upload timestamp", "Billing block if overdue", "Illegible stamps = exception queue"],
+        ["Invoice / doc exception rate", "Exception invoices / total invoices", "Track and trend down", "AP exception codes", "Finance + ops", "Missing LR / tax code blocks pay"],
+        ["Emergency replacement delta", "Like-for-like quote - contracted", "Document only; counsel owns recovery", "Booking evidence", "Risk-purchase debit path", "Incomparable quotes do not auto-debit"],
+      ],
+    },
+    {
+      kind: "flow",
+      caption: "Escalation workflow when placement fails",
+      source: "Configurable recommendation. Align start/stop times to plant shift and MSA.",
+      items: [
+        { title: "T0 Indent broadcast", body: "Eligible indent created with deadline, vehicle, lane, cargo." },
+        { title: "L1 window", body: "Proposed 2-hour accept/reject. Silence = timeout, not placement." },
+        { title: "L2 cascade", body: "Auto-reallocate at contracted differential; log actor and time." },
+        { title: "Backup / marketplace", body: "Publish labeled overflow; capture replacement quote evidence." },
+        { title: "Debit path", body: "Counsel-reviewed risk-purchase differential only on like-for-like evidence." },
+        { title: "Scorecard close", body: "Record exception flags; do not rewrite the denominator after the fact." },
+      ],
+    },
+    {
+      kind: "table",
+      caption: "Operational data model (fields to capture for a real benchmark)",
+      source: "Future measurement schema. Disclose period, sample, lanes, and missing-data treatment before publishing any plant study.",
+      headers: ["Field group", "Minimum fields"],
+      rows: [
+        ["Indent", "Indent ID, create timestamp, plant, lane, vehicle/body/capacity, placement deadline"],
+        ["Acceptance", "Transporter accept timestamp, vehicle/driver assignment timestamp"],
+        ["Gate", "Gate-in timestamp, accept/reject + reason, loading start/end, dispatch timestamp"],
+        ["Delivery", "Appointment, actual delivery, POD timestamp"],
+        ["Commercial", "Contracted rate, replacement rate, cancel actor/reason/time, exception flags"],
+      ],
+    },
+    {
+      kind: "table",
       caption: "100-point industrial transporter performance rubric",
-      source: "Data from weighbridge timestamps, gate logs, and ePOD. Workshop weights - tune to your tender.",
+      source: "Data from weighbridge timestamps, gate logs, and ePOD. Workshop weights - tune to your tender. Targets are proposed.",
       headers: ["Pillar", "Points", "Metric", "Target benchmark"],
       rows: [
-        ["Indent placement ratio", "35", "(Placed / Indented) x 35", "Minimum ~92%"],
-        ["Gate-in punctuality / slot", "20", "Arrival inside assigned 2-hour slot", ">=90% on-slot"],
-        ["Vehicle quality / compliance", "15", "Zero reject for tarp, floor, tyres, fitness", ">=98% pass"],
-        ["En-route transit SLA", "20", "GPS corridor time vs contracted SLA", ">=90% on-SLA"],
-        ["ePOD and billing cleanliness", "10", "Stamped POD upload within 24 hours", ">=95% clean"],
+        ["Indent placement ratio", "35", "(Placed / Indented) x 35", "Proposed target ~92% (calibrate)"],
+        ["Gate-in punctuality / slot", "20", "Arrival inside assigned 2-hour slot", "Proposed >=90% on-slot"],
+        ["Vehicle quality / compliance", "15", "Zero reject for tarp, floor, tyres, fitness", "Proposed >=98% pass"],
+        ["En-route transit SLA", "20", "GPS corridor time vs contracted SLA", "Proposed >=90% on-SLA"],
+        ["ePOD and billing cleanliness", "10", "Stamped POD upload within 24 hours", "Proposed >=95% clean"],
       ],
     },
     {

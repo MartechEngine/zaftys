@@ -7,63 +7,87 @@ import type { BlogExhibit, BlogKpi } from "@/lib/blog-data";
 
 export const container32ftKpis: readonly BlogKpi[] = [
   {
-    value: "7.0 - 8.5 T",
+    value: "7.0 - 8.5 T*",
     label: "32-ft SXL net legal payload",
     detail:
-      "Workshop band for a standard 32-foot single-axle (2-axle / 6-wheeler) enclosed container after heavy body tare on an ~18.5 T GVW chassis. Confirm unladen weight on the RC and weighbridge.",
+      "*Calculated workshop band for assumed ~18.5 T GVW minus ~10.0 to 11.2 T enclosed-body tare. Confirm unladen weight on the RC and weighbridge.",
   },
   {
-    value: "14.5 - 16.5 T",
+    value: "14.5 - 16.2 T*",
     label: "32-ft MXL net legal payload",
     detail:
-      "Workshop band for a 32-foot multi-axle (3-axle / 10-wheeler) container on a ~28 T GVW chassis after enclosed-body tare. Not a national guarantee - chassis and body build control.",
+      "*Calculated workshop band for assumed ~28 T GVW minus ~11.8 to 13.5 T enclosed-body tare. Not a national guarantee - RC GVW, axle limits, and measured tare control.",
   },
   {
-    value: "1,850 - 2,250 CFT",
-    label: "Usable internal volume band",
+    value: "~1,966 CFT*",
+    label: "Example geometric volume",
     detail:
-      "Directional cubic capacity from standard ~8.0-8.5 ft internal height boxes to specialized ~9.5-10 ft High Cube (HQ) variants before CMVR ground-to-roof limits bind.",
+      "*Hypothetical: 31.5 x 7.8 x 8.0 ft = 1,965.6 CFT. Geometric volume is not usable loading volume. Doors, wheel housings, and restraints reduce practical capacity.",
   },
   {
     value: "16 - 18",
     label: "Single-tier industrial pallets",
     detail:
-      "Floor count for 1200 x 1000 mm industrial pallets inside a 32-ft box (straight / pinwheel layouts). Nested turns can reach 18 when clear width allows.",
+      "Example floor count for 1200 x 1000 mm industrial pallets inside a 32-ft box (straight / pinwheel layouts). Nested turns can reach 18 when clear width allows. Layout-specific only.",
   },
   {
-    value: "25% - 35%",
+    value: "25% - 35%*",
     label: "Dead-freight premium risk",
     detail:
-      "Workshop cost hit when a desk hires an MXL multi-axle for low-density cargo that cubes out under ~7 tonnes - paying for axle capacity the volume never uses.",
+      "*Workshop cost hit when a desk hires an MXL multi-axle for low-density cargo that cubes out under ~7 tonnes - paying for axle capacity the volume never uses. Hypothetical corridor maths.",
   },
   {
-    value: "4.0 / 4.52 m",
-    label: "CMVR height framing",
+    value: "3.8 / 4.20 / 4.52 m",
+    label: "CMVR height categories",
     detail:
-      "Rule 93 CMVR: many N2/N3 builds sit under a 4.0 m overall height framing; closed load bodies / fabricated containers commonly use the higher 4.52 m proviso when the bare amendment applies. Confirm RC, body plate, and live CMVR text before HQ builds.",
+      "MoRTH CMVR Chapter V orientation: general vehicle height 3.8 m; tractor-trailer goods vehicle 4.20 m; laden trailer with ISO Series 1 or fabricated containerized motor vehicle 4.52 m when that exception applies. Not every 32-ft box qualifies for 4.52 m. Confirm live consolidated rule.",
   },
 ] as const;
 
 export const container32ftTakeaways = [
   '"32 feet" is a length class, not a payload class. SXL (~18.5 T GVW) and MXL (~28 T GVW) share the box length and diverge on legal tonnes.',
-  "Enclosed body tare (steel, aluminium, or PUF panels) routinely eats 10 to 13.5 tonnes of GVW - always subtract measured tare before promising payload to sales.",
+  "Available payload = registered GVW minus actual tare, subject to axle-load and other legal constraints. Always subtract measured tare before promising tonnes to sales.",
   "Cube-out vs weigh-out is the selection engine: density under ~4.5 kg/CFT usually wants SXL; density above ~6.0 kg/CFT usually needs MXL.",
-  "High Cube height buys CFT but still collides with CMVR ground-to-roof framing (4.0 m base / 4.52 m closed-body proviso when applicable) - low-deck chassis and low-profile tyres are not optional cosmetics.",
-  "Wrong chassis on the Pune to Delhi workshop corridor can waste ~Rs 20,000 per trip (about 25%) when light packaging is booked on an MXL rate card.",
+  "High Cube height buys CFT but still collides with CMVR height categories (3.8 m general / 4.20 m tractor-trailer / 4.52 m specified containerized exception when applicable) and route clearances - do not assume every HQ build is legal at 4.52 m.",
+  "Wrong chassis on the Pune to Delhi workshop corridor can waste ~Rs 20,000 per trip (about 25%) when light packaging is booked on an MXL rate card - labelled hypothetical.",
   "Post exact specs (32ft SXL HQ / 32ft MXL) on TranZfort; run volumetric SKU matching and dedicated fleets on ZAFTYS TMS - verify RC GVW before gate-in.",
 ] as const;
 
 export const container32ftReferences = [
-  "[Central Motor Vehicles Rules (CMVR), 1989](https://www.indiacode.nic.in/handle/123456789/1798?locale=en) - Rule 93 overall dimensions (height, length, overhang framing). Confirm bare text and amendments including closed-body height provisos.",
+  "[MoRTH - CMVR Chapter V PDF](https://morth.gov.in/sites/default/files/CMVR-chapter5.pdf) - overall dimensions including height categories (3.8 m / 4.20 m / 4.52 m framing). Confirm current consolidated text and amendments before a tender.",
+  "[Central Motor Vehicles Rules (CMVR), 1989](https://www.indiacode.nic.in/handle/123456789/1798?locale=en) - Rule 93 overall dimensions (height, length, overhang framing). Confirm bare text.",
   "MoRTH Notification S.O. 3467(E) - safe axle load / GVW ratings for 2-axle and 3-axle commercial transport vehicles (orientation; verify live gazette on morth.nic.in).",
   "[Motor Vehicles Act, 1988](https://www.indiacode.nic.in/handle/123456789/1797?locale=en) - Section 113 (limits of weight and limitations on use), Section 114 (power to have vehicle weighed), and Section 194 (penalties for contravention of Section 113 / 114 weight limits).",
   "Automotive Industry Standard AIS-093 - code of practice for construction and approval of commercial vehicle truck bodies (body builder orientation).",
+  "Methodology: payload and CFT examples in this guide are calculated or hypothetical unless a measured RC/weighbridge file is cited.",
   "Product: [TranZfort](https://www.tranzfort.com) · [TranZfort marketplace](/network/tranzfort).",
   "Internal cluster: [planning industrial shipments](/blog/planning-industrial-shipments), [axle load and GVW](/blog/india-axle-load-gvw-limits-heavy-freight), [truck freight rates](/blog/truck-freight-rates-india-cost-rate-benchmarking-guide), [FTL vs PTL](/blog/ftl-vs-ptl-freight-services-india-cost-break-even-guide), [5 hidden cost leaks](/blog/5-hidden-cost-leaks-heavy-industrial-freight-tms-3pl-guide), [industrial TMS](/blog/industrial-tms-control-stack-india), [container trucking India](/blog/container-trucking-logistics-india).",
 ] as const;
 
 export const container32ftExhibits: Record<string, readonly BlogExhibit[]> = {
   "The workhorse of Indian high-cube logistics": [
+    {
+      kind: "callout",
+      caption: "Quick answer",
+      source: "Primary query framing. Payload = registered GVW - actual tare (subject to axle limits).",
+      items: [
+        {
+          title: "SXL vs MXL",
+          body: "Same ~32-ft box length; different GVW classes. Workshop calculated bands: SXL ~7.0-8.5 T; MXL ~14.5-16.2 T under assumed tare.",
+          tone: "navy",
+        },
+        {
+          title: "Height",
+          body: "CMVR categories orient around 3.8 / 4.20 / 4.52 m - not every 32-ft box is 4.52 m legal.",
+          tone: "teal",
+        },
+        {
+          title: "Corrections",
+          body: "Report factual errors to contact@zaftys.com with the article URL.",
+          tone: "warm",
+        },
+      ],
+    },
     {
       kind: "callout",
       caption: "Key definitions (quotable)",
@@ -76,7 +100,7 @@ export const container32ftExhibits: Record<string, readonly BlogExhibit[]> = {
         },
         {
           title: "32-ft MXL",
-          body: "Same length class on a multi-axle (~28 T GVW / 3-axle) chassis - typical net payload ~14.5 to 16.5 T after tare.",
+          body: "Same length class on a multi-axle (~28 T GVW / 3-axle) chassis - calculated workshop net payload ~14.5 to 16.2 T after assumed tare.",
           tone: "teal",
         },
         {
@@ -127,6 +151,18 @@ export const container32ftExhibits: Record<string, readonly BlogExhibit[]> = {
   "32-foot SXL vs 32-foot MXL: engineering architecture": [
     {
       kind: "table",
+      caption: "Payload formula and illustrative arithmetic",
+      source: "Calculated teaching examples only. Available payload = registered GVW - actual tare, subject to axle limits. Inputs are assumptions, not a specific RC.",
+      headers: ["Assumed inputs", "Arithmetic", "Resulting payload"],
+      rows: [
+        ["SXL GVW 18.5 T, tare 10.0 T", "18.5 - 10.0", "8.5 T"],
+        ["SXL GVW 18.5 T, tare 11.2 T", "18.5 - 11.2", "7.3 T"],
+        ["MXL GVW 28.0 T, tare 11.8 T", "28.0 - 11.8", "16.2 T"],
+        ["MXL GVW 28.0 T, tare 13.5 T", "28.0 - 13.5", "14.5 T"],
+      ],
+    },
+    {
+      kind: "table",
       caption: "Chassis architecture workshop bands (confirm RC and body builder plate)",
       source: "Teaching bands for common Indian OEM platforms. Individual builds vary with steel vs aluminium vs PUF bodies.",
       headers: ["Parameter", "32-ft SXL (2-axle / 6W)", "32-ft MXL (3-axle / 10W)"],
@@ -164,7 +200,7 @@ export const container32ftExhibits: Record<string, readonly BlogExhibit[]> = {
     {
       kind: "image",
       caption: "High-cube volumetric CFT calculator [CUBIC CAPACITY ENGINE]",
-      source: "Workshop internals. Measure the empty box; brochure CFT often overstates usable cube.",
+      source: "Hypothetical geometric example: 31.5 x 7.8 x 8.0 ft = 1,965.6 CFT. Measure the empty box; brochure CFT often overstates usable cube.",
       src: "/images/blog/32ft-container-cft-calculator.png",
       alt: "Formula board for cubic feet as internal length times width times height in inches divided by 1728, contrasting standard and high cube 32-ft boxes",
     },
@@ -174,25 +210,37 @@ export const container32ftExhibits: Record<string, readonly BlogExhibit[]> = {
       source: "Illustrative internals. Door frame and wheel-arch intrusion reduce usable cube further.",
       headers: ["Variant", "Approx internals (L x W x H)", "Workshop CFT", "Workshop CBM"],
       rows: [
-        ["32-ft standard height", "31.5 x 7.8 x 8.0 ft", "~1,960 CFT", "~55.5 CBM"],
+        ["32-ft standard height (example)", "31.5 x 7.8 x 8.0 ft", "1,965.6 CFT geometric", "~55.6 CBM"],
         ["32-ft High Cube (HQ)", "31.5 x 7.8 x 9.5 to 10.0 ft", "~2,300 to 2,450 CFT", "~65 to 69 CBM"],
       ],
     },
     {
       kind: "callout",
-      caption: "CMVR Rule 93 height and low-deck reality",
-      source: "Rule 93 height framing - confirm bare CMVR text and amendments for your vehicle class.",
+      caption: "CMVR height categories and low-deck reality",
+      source: "MoRTH CMVR Chapter V orientation - confirm current consolidated text. Not every 32-ft box qualifies for 4.52 m.",
       items: [
         {
-          title: "4.0 m / 4.52 m framing",
-          body: "Many N2/N3 builds are framed at 4.0 m overall height; closed load bodies and fabricated containers commonly use a higher 4.52 m proviso when the amendment applies. Confirm RC and body plate - do not assume either number blindly.",
+          title: "3.8 / 4.20 / 4.52 m",
+          body: "General vehicle height 3.8 m; tractor-trailer goods vehicle 4.20 m; laden trailer with ISO Series 1 or fabricated containerized motor vehicle 4.52 m when that exception applies. Match category to the exact configuration on the RC.",
           tone: "navy",
         },
         {
-          title: "Low-deck + low-profile tyres",
-          body: "10-ft HQ boxes typically need low chassis and 295/80 R22.5 or 275/70 R22.5 class packages to clear toll canopies and overpasses even when the 4.52 m closed-body proviso is available.",
+          title: "Low-deck + route clearance",
+          body: "10-ft HQ boxes typically need low chassis and low-profile tyre packages. Legal overall height and physical overpass / toll-canopy clearance are separate constraints.",
           tone: "teal",
         },
+      ],
+    },
+    {
+      kind: "table",
+      caption: "Height category checklist (confirm before HQ tender)",
+      source: "Educational aid. Re-check MoRTH CMVR Chapter V and amendments before publication.",
+      headers: ["Configuration", "Height framing (orientation)", "Evidence required"],
+      rows: [
+        ["General goods vehicle (default)", "3.8 m overall", "RC + body plate + live CMVR text"],
+        ["Tractor-trailer goods vehicle", "4.20 m overall", "RC configuration + trailer registration"],
+        ["Laden ISO Series 1 / fabricated containerized exception", "4.52 m when exception applies", "Prove the legal category - do not assume for every 32-ft box"],
+        ["Route / structure clearance", "Separate from statutory height", "Corridor survey / toll canopy notes"],
       ],
     },
   ],
@@ -233,6 +281,33 @@ export const container32ftExhibits: Record<string, readonly BlogExhibit[]> = {
           title: "Above ~6.0 kg/CFT",
           body: "Oil drums, paint, fasteners, dense liquids - MXL is usually mandatory. SXL overloads the rear axle fast.",
         },
+      ],
+    },
+    {
+      kind: "table",
+      caption: "Hypothetical cargo binding test (which limit hits first)",
+      source: "Illustrative only. Density = kg / usable CFT. Stacking assumed only where crush strength allows.",
+      headers: ["Cargo example", "Mass", "Usable CFT", "Density", "Binds first"],
+      rows: [
+        ["Light packaging (bulky)", "6,800 kg", "1,900 CFT", "3.6 kg/CFT", "Volume (cube-out) - SXL usually enough"],
+        ["Dense drums / fasteners", "14,000 kg", "1,600 CFT", "8.8 kg/CFT", "Mass (weigh-out) - MXL usually required"],
+        ["Borderline SKU mix", "9,500 kg", "1,900 CFT", "5.0 kg/CFT", "Grey band - quote both; recompute after tare"],
+      ],
+    },
+    {
+      kind: "table",
+      caption: "Pre-booking vehicle-selection checklist",
+      source: "Operational checklist before posting or accepting a 32-ft indent. Marketplace labels do not guarantee compliance.",
+      headers: ["#", "Check"],
+      rows: [
+        ["1", "Confirm exact axle class and body type (SXL vs MXL; standard vs HQ)"],
+        ["2", "Request RC GVW and approved body details"],
+        ["3", "Confirm actual tare or recent weighbridge empty weight"],
+        ["4", "Confirm applicable axle limits for the configuration"],
+        ["5", "Measure usable internals, door clearance, and loading height"],
+        ["6", "Check cargo dimensions, density, pallet footprint, stacking limits"],
+        ["7", "Check route / structure clearances where HQ height is planned"],
+        ["8", "Confirm legal height category for that vehicle (3.8 / 4.20 / 4.52 m framing)"],
       ],
     },
   ],
@@ -284,7 +359,7 @@ export const container32ftExhibits: Record<string, readonly BlogExhibit[]> = {
         },
         {
           title: "Penalty band (workshop)",
-          body: "Section 194 sets the cash fine for contravening Section 113 weight limits - commonly framed around Rs 20,000 base plus about Rs 2,000 per excess tonne - plus offloading delays at RTO weighbridges. Confirm bare Act text and state schedules.",
+          body: "Section 194 sets the cash fine for contravening Section 113 weight limits, plus offloading delays at RTO weighbridges. Confirm bare Act text and state schedules before quoting rupees - this guide does not assert an unverified fine schedule.",
         },
         {
           title: "Impound risk",
@@ -360,7 +435,7 @@ export const container32ftExhibits: Record<string, readonly BlogExhibit[]> = {
         { title: "02 Measure total CFT", body: "Sum package L x W x H in inches / 1728." },
         { title: "03 Calculate density", body: "Total kg divided by total CFT." },
         { title: "04 Select SXL vs MXL", body: "Under ~4.5 kg/CFT lean SXL; above lean MXL." },
-        { title: "05 Verify height / HQ", body: "Check stack vs 9.5-10 ft HQ and CMVR 4.0 / 4.52 m framing." },
+        { title: "05 Verify height / HQ", body: "Check stack vs 9.5-10 ft HQ and CMVR 3.8 / 4.20 / 4.52 m categories." },
         { title: "06 Post exact spec", body: "Publish 32ft SXL HQ or 32ft MXL on TranZfort / ZAFTYS." },
         { title: "07 Inspect at gate-in", body: "Door gaskets, locking rods, floor flatness." },
         { title: "08 Tare, load, seal", body: "Record tare weigh; apply numbered bolt seal." },
