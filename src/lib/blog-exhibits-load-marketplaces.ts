@@ -7,50 +7,50 @@ import type { BlogExhibit, BlogKpi } from "@/lib/blog-data";
 
 export const loadMarketplaceKpis: readonly BlogKpi[] = [
   {
-    value: "Multi-tier*",
-    label: "Brokerage stack (dalali)",
+    value: "8-10%*",
+    label: "Offline broker commission (RHP cite)",
     detail:
-      "*Hypothetical teaching band only - not a national audit index. Some corridors show booking commission, placement fees, and diesel-slip kickbacks that can consume a material share of the shipper-to-driver gap. Measure your lane before quoting a percentage.",
+      "*Industry estimate cited in BlackBuck / Zinka Logistics Solutions Red Herring Prospectus (7 Nov 2024) for offline marketplaces/brokers connecting shippers and truck operators. Not a universal tariff or corridor census.",
   },
   {
     value: "Define dwell",
     label: "Return-load idle time",
     detail:
-      "Return-load dwell = clock time from empty after unload until the next paid load is accepted. Do not confuse with transit time or plant detention. Workshop examples often use 48-72 hour Nagar waits - lane-specific, not a national average.",
+      "Return-load dwell = clock time from empty after unload until the next paid load is accepted. Measure with start/end events - do not publish a national average without a dataset.",
   },
   {
     value: "Like-for-like",
     label: "Quote comparison rule",
     detail:
-      "Compare only matched vehicle capacity, route, cargo, service level, transit time, and included costs. A lower sticker rate is not automatically a saving.",
+      "Compare only matched vehicle capacity, route, cargo, service level, transit time, taxes, and included costs. A lower sticker rate is not automatically a saving.",
   },
   {
     value: "Rs 54k maths*",
-    label: "Hypothetical corridor floor",
+    label: "Hypothetical scenario floor",
     detail:
-      "*Raipur to Bhiwandi teaching arithmetic only - truck operating floor near Rs 54,000. Not an audited ZAFTYS trip file or national rate card.",
+      "*Hypothetical ZAFTYS Intelligence scenario: floor Rs 54,000; brokered invoice Rs 62,000; alternative Rs 55,800; difference Rs 6,200 (10% of Rs 62,000). Assumptions only - not an audited trip. Do not invent component rupees without source documents.",
   },
   {
-    value: "100%",
-    label: "In-app trip traceability",
+    value: "Free*",
+    label: "Trucker & transporter matching",
     detail:
-      "Digital milestones - Gate-In, Loading, LR upload, In-Transit, Unloading, Clean POD - replace manual telephone check-calls when the desk runs on a marketplace timeline.",
+      "*Marketplace find/post/chat matching is free for truckers and transporters. Charges apply only when a transporter uses ZAFTYS TMS services - confirm live terms at tranzfort.com/legal/.",
   },
   {
-    value: "Zero",
-    label: "Freight commission cut",
+    value: "Play Store",
+    label: "Download + legal",
     detail:
-      "TranZfort open marketplace: suppliers post loads free; truckers find loads free; rate is negotiated direct with no platform freight markup. Other platforms may price differently - compare product features, not slogans.",
+      "App: play.google.com/store/apps/details?id=com.tranzfort.app · Legal hub: https://tranzfort.com/legal/ · Overview: /network/tranzfort.",
   },
 ] as const;
 
 export const loadMarketplaceTakeaways = [
-  "Transport Nagar brokerage commission (dalali) is a multi-tier stack - booking commission, placement fees, and diesel-slip kickbacks. Treat any 8% to 15% figure as a workshop assumption until your corridor is measured.",
-  "Closed aggregators can recreate intermediation online as a hidden spread; open zero-commission marketplaces (TranZfort) let parties negotiate the trip rate with no platform freight cut. Do not cite competitor prospectus numbers without the exact passage.",
-  "Hypothetical Raipur to Bhiwandi maths: a Rs 54,000 truck floor can become a Rs 62,000 shipper invoice under brokerage, versus a direct match near Rs 55,800 - only valid as teaching arithmetic for matched assumptions.",
-  "High-converting load posts need industrial pin codes, body type, net payload, commodity, loading window, and advance terms - vague WhatsApp forwards waste bidding cycles and invite ghost trucks.",
-  "Four trust layers before gate-in: Vahan RC (chassis, tare, GVW), commercial DL, PAN / GSTIN business identity, and verified trip history - a JPEG of an RC is not verification.",
-  "Enterprises keep dedicated fleets on ZAFTYS web TMS for gate-to-pay control and publish only labeled overflow into TranZfort when contracts cannot place or season volume spikes.",
+  "BlackBuck's November 2024 Red Herring Prospectus cites an estimated 8-10% commission range for offline brokers connecting shippers and truck operators - an industry estimate, not a universal tariff.",
+  "Do not treat 8-15% leakage or 5-10% hidden aggregator spread as audited national averages without matching primary evidence.",
+  "Hypothetical ZAFTYS Intelligence scenario: floor Rs 54,000; brokered invoice Rs 62,000; alternative invoice Rs 55,800; difference Rs 6,200 (10% of Rs 62,000) - assumptions for calculation literacy, not measured savings or a real customer trip.",
+  "High-converting load posts need industrial pin codes, body type, net payload, commodity, loading window, and advance terms.",
+  "TranZfort walkthrough: open app, create/post a load, find loads, review details, chat/call - verify vehicle suitability before agreeing.",
+  "Matching is free for truckers and transporters; TMS seats are the paid path for transporters who need enterprise control. Legal: https://tranzfort.com/legal/.",
 ] as const;
 
 export const loadMarketplaceReferences = [
@@ -58,8 +58,9 @@ export const loadMarketplaceReferences = [
   "[Information Technology Act, 2000](https://www.indiacode.nic.in/handle/123456789/1999?locale=en) - legal validity of electronic records, in-app contracts, and digital signatures (orientation; counsel owns litigation strategy).",
   "[Central Motor Vehicles Rules (CMVR), 1989](https://www.indiacode.nic.in/handle/123456789/1798?locale=en) - Rules 9 and 138A framing for electronic transport documentation. Confirm bare text before a legal memo.",
   "[CGST Act, 2017](https://www.indiacode.nic.in/handle/123456789/11537?locale=en) / Rules - Rule 138 e-Way Bill Part B updates when the vehicle moves. GTA tax detail: [GST on GTA guide](/blog/gst-on-gta-rcm-forward-charge-consignment-note-rules-guide).",
-  "Methodology: corridor economics, brokerage percentages, and dwell bands in this guide are hypothetical teaching maths unless a documented lane sample is cited. Competitor commission claims are omitted unless an exact primary-source passage is located.",
-  "Product: [TranZfort](https://www.tranzfort.com) · [TranZfort marketplace](/network/tranzfort).",
+  "[Zinka Logistics Solutions Limited - Red Herring Prospectus (7 Nov 2024)](https://www.sebi.gov.in/sebi_data/attachdocs/nov-2024/1731409759538.PDF) - Industry Overview / Redseer-sourced industry estimate that offline marketplaces and brokers charge commission in about the 8-10% range for connecting shippers and truck operators. Limitations: not an audited national average; not every corridor/commodity; online platforms need not charge the same; distinguish broker commission from shipper-bill vs carrier-pay spreads.",
+  "Methodology (ZAFTYS Intelligence): AI-assisted research. The Rs 54k / Rs 62k / Rs 55.8k figures are a labelled hypothetical freight-cost scenario - not an audited trip. Dwell examples are hypothetical unless a documented lane sample is cited. Internal notes: docs/zaftys-blog-evidence-register.csv · docs/zaftys-intelligence-methodology.md.",
+  "Product: [TranZfort](https://www.tranzfort.com) · [TranZfort marketplace](/network/tranzfort) · [Play Store](https://play.google.com/store/apps/details?id=com.tranzfort.app) · [Legal hub](https://tranzfort.com/legal/) (Privacy Policy and Terms of Service).",
   "Internal cluster: [truck freight rates](/blog/truck-freight-rates-india-cost-rate-benchmarking-guide), [spot vs dedicated](/blog/spot-market-vs-dedicated-fleet-india), [transit damage claims](/blog/transit-damage-shortage-cargo-insurance-india-carrier-liability-guide), [FTL vs PTL](/blog/ftl-vs-ptl-freight-services-india-cost-break-even-guide), [5 hidden cost leaks](/blog/5-hidden-cost-leaks-heavy-industrial-freight-tms-3pl-guide), [industrial TMS control stack](/blog/industrial-tms-control-stack-india).",
 ] as const;
 
@@ -77,7 +78,7 @@ export const loadMarketplaceExhibits: Record<string, readonly BlogExhibit[]> = {
         },
         {
           title: "Brokerage vs open matching",
-          body: "Traditional stacks can be opaque; open zero-commission rails negotiate trip rates direct. Treat percentage leakage bands as workshop assumptions until measured.",
+          body: "Traditional stacks can be opaque; open rails let parties negotiate trip rates direct. Treat percentage leakage bands as estimates until measured.",
           tone: "teal",
         },
         {
@@ -169,8 +170,8 @@ export const loadMarketplaceExhibits: Record<string, readonly BlogExhibit[]> = {
         },
         {
           phase: "03",
-          title: "Open zero-commission marketplaces",
-          body: "TranZfort model: free load posts, free truck search, in-app chat, direct rate. No platform cut on freight.",
+          title: "Open digital marketplaces",
+          body: "TranZfort model: free find/post/chat matching for truckers and transporters; paid path is ZAFTYS TMS for transporters who need enterprise control. Legal: tranzfort.com/legal/.",
         },
       ],
     },
@@ -257,51 +258,150 @@ export const loadMarketplaceExhibits: Record<string, readonly BlogExhibit[]> = {
     },
     {
       kind: "callout",
-      caption: "What 'free' and 'zero commission' mean on TranZfort",
-      source: "Product orientation. Confirm current app terms before commercial reliance - terms can change.",
+      caption: "What 'free' means on TranZfort (current product rule)",
+      source: "Product confirmation 18 Nov 2026. Live legal hub: https://tranzfort.com/legal/. Terms can change - re-check before commercial reliance.",
       items: [
         {
-          title: "Zero commission on freight",
-          body: "No platform cut of the negotiated trip freight for the described open matching use.",
+          title: "Free for truckers and transporters",
+          body: "Marketplace matching - find loads, post loads, chat, and call - is free for truckers and transporters.",
           tone: "teal",
         },
         {
-          title: "Free posting / search",
-          body: "Load posts and truck search are positioned as free for eligible users. Enterprise TMS seats and optional services can be paid separately.",
+          title: "Paid path: TMS",
+          body: "Charges apply when a transporter uses ZAFTYS TMS services for enterprise gate-to-pay control - not as a cut of the negotiated trip freight on open matching.",
           tone: "navy",
         },
         {
-          title: "Still verify offline",
-          body: "Identity, vehicle suitability, tax path, and plant gate controls remain the user's responsibility.",
+          title: "Legal documents",
+          body: "Privacy Policy and Terms of Service live under https://tranzfort.com/legal/ (also linked from in-app Settings → Legal).",
           tone: "warm",
         },
       ],
     },
     {
       kind: "callout",
-      caption: "Raipur to Bhiwandi teaching proof (1,200 km class, 25 T)",
-      source: "Teaching ledger only. Not a ZAFTYS audited trip file. Rs 54,000 floor is not component-broken here because no audited trip file supports a line-item split.",
+      caption: "Hypothetical ZAFTYS Intelligence freight-cost scenario",
+      source:
+        "Assumptions for demonstrating calculation only - not measured market savings and not a real customer transaction. Matched route, cargo, vehicle, service, and payment terms are required before any comparison claim.",
       items: [
         {
-          title: "Truck operating floor",
-          body: "Rs 54,000 assumed direct operating need for the asset owner under teaching inputs.",
+          title: "Scenario numbers",
+          body: "Illustrative operating-cost floor Rs 54,000; illustrative brokered freight invoice Rs 62,000; illustrative alternative freight invoice Rs 55,800; invoice difference Rs 6,200; proportion of Rs 62,000 = 10%.",
           tone: "navy",
         },
         {
-          title: "After brokerage stack",
-          body: "Primary +Rs 4,500, sub-broker +Rs 2,000, advance discounting -Rs 1,500 on the driver side. Shipper invoice lands near Rs 62,000.",
+          title: "What this does not prove",
+          body: "It does not prove Rs 54,000 is a real trip's operating cost, or that the alternative invoices are commercially comparable without matched assumptions.",
           tone: "warm",
         },
         {
-          title: "Who loses",
-          body: "Trucker underpaid about Rs 3,500. Shipper overpays about Rs 8,000 on the same truck.",
+          title: "Broker commission context",
+          body: "Separately, BlackBuck's Nov 2024 RHP cites an estimated 8-10% offline broker commission range - an industry estimate, not this scenario's measured spread.",
           tone: "teal",
         },
+      ],
+    },
+    {
+      kind: "table",
+      caption: "Editable trip-cost breakdown framework (no invented component amounts)",
+      source:
+        "Fill only from source documents. Leave cells blank rather than inventing rupees. Sum of filled components still may not equal a commercial 'floor' if fixed costs or profit are excluded.",
+      headers: ["Cost component", "Your amount (Rs)", "Source / notes"],
+      rows: [
+        ["Fuel / diesel", "", "Litres x pump price; date the receipt"],
+        ["Tolls", "", "Plaza receipts or FASTag statement"],
+        ["Driver expenses / allowance", "", "Trip sheet or MSA schedule"],
+        ["Loading / unloading", "", "Labour, equipment, or detention-linked charges"],
+        ["Empty running (khali phera)", "", "Empty km x cost basis you define"],
+        ["Maintenance / wear allocation", "", "Only if your policy allocates trip share"],
+        ["Waiting / detention time", "", "Clock events and free-time rules"],
+        ["Other (specify)", "", "Insurance trip share, parking, etc. - name it"],
+        ["Illustrative scenario floor (reference only)", "54,000", "Hypothetical teaching number - replace with your sum"],
       ],
     },
   ],
 
   "How digital load matching works: direct in-app discovery and negotiation": [
+    {
+      kind: "imageGrid",
+      caption: "TranZfort walkthrough (1/2) - find and open a load",
+      source:
+        "Current Android production screenshots (masked test account). Rates, routes, and earnings figures are example UI values - not binding quotes. Captured for this guide 18-19 Nov 2026.",
+      columns: 2,
+      items: [
+        {
+          src: "/images/blog/tranzfort-walkthrough/01-trucker-home-find.png",
+          alt: "TranZfort Android trucker dashboard with Find loads button and origin destination city fields",
+          caption: "1. Trucker home / Find Loads",
+        },
+        {
+          src: "/images/blog/tranzfort-walkthrough/02-supplier-home-post-load.jpeg",
+          alt: "TranZfort Android supplier home with Post Load button and recent loads list",
+          caption: "2. Supplier home - Post Load",
+        },
+        {
+          src: "/images/blog/tranzfort-walkthrough/03-find-loads-list.jpg",
+          alt: "TranZfort Find Loads list with Mumbai to Noida steel coils card showing rate tags Call View details and Chat",
+          caption: "3. Find Loads list - route, rate, tags",
+        },
+        {
+          src: "/images/blog/tranzfort-walkthrough/04-load-detail.jpg",
+          alt: "TranZfort Load Detail earnings estimate with fare expense diesel toll breakdown and Book This Load CTA",
+          caption: "4. Load detail - estimate & book",
+        },
+      ],
+    },
+    {
+      kind: "imageGrid",
+      caption: "TranZfort walkthrough (2/2) - post, chat, and legal",
+      source:
+        "Current Android production screenshots and live legal page. Personal identity remains on the counterparty profile the user already sees in-app. Legal hub: https://tranzfort.com/legal/.",
+      columns: 2,
+      items: [
+        {
+          src: "/images/blog/tranzfort-walkthrough/07-create-supplier-load.jpg",
+          alt: "TranZfort create supplier load form with Hazira to Nagpur route distance estimate and coal cargo field",
+          caption: "5. Create supplier load",
+        },
+        {
+          src: "/images/blog/tranzfort-walkthrough/06-in-app-chat.png",
+          alt: "TranZfort in-app chat negotiating per-ton rate on an active Mangaluru to Ahmedabad load",
+          caption: "6. In-app chat - negotiate rate",
+        },
+        {
+          src: "/images/blog/tranzfort-walkthrough/08-settings-legal.jpg",
+          alt: "TranZfort Settings screen showing Privacy Policy Terms of Service and support email entries",
+          caption: "7. Settings - Legal links",
+        },
+        {
+          src: "/images/blog/tranzfort-walkthrough/09-privacy-policy-web.jpg",
+          alt: "TranZfort Privacy Policy web page on tranzfort.com showing last updated date and table of contents",
+          caption: "8. Live legal hub (web)",
+        },
+      ],
+    },
+    {
+      kind: "callout",
+      caption: "Commercial terms - what to verify before agreeing",
+      source: "Product confirmation 18 Nov 2026. Re-check https://tranzfort.com/legal/ before commercial reliance.",
+      items: [
+        {
+          title: "Download",
+          body: "Play Store: play.google.com/store/apps/details?id=com.tranzfort.app · Overview: /network/tranzfort",
+          tone: "teal",
+        },
+        {
+          title: "Fees",
+          body: "Free for truckers and transporters on marketplace matching. Paid path is ZAFTYS TMS for transporters who need enterprise TMS services.",
+          tone: "navy",
+        },
+        {
+          title: "Still verify offline",
+          body: "RC, fitness, driver licence, cargo suitability, tax path, and plant gate controls remain the user's responsibility. Chat does not replace gate checks.",
+          tone: "warm",
+        },
+      ],
+    },
     {
       kind: "tiles",
       caption: "Anatomy of a high-converting load post",
@@ -421,22 +521,22 @@ export const loadMarketplaceExhibits: Record<string, readonly BlogExhibit[]> = {
       kind: "image",
       caption: "Unmasking the middleman markup (Raipur to Bhiwandi workshop)",
       source:
-        "Teaching waterfall: truck floor Rs 54,000 to traditional landed Rs 62,000 vs direct match Rs 55,800. Not a ZAFTYS audited trip file.",
+        "Hypothetical ZAFTYS Intelligence scenario waterfall: floor Rs 54,000; brokered invoice Rs 62,000; alternative invoice Rs 55,800 (difference Rs 6,200 = 10% of Rs 62,000). Not an audited trip file.",
       src: "/images/blog/load-marketplace-middleman-waterfall.png",
-      alt: "Stepped waterfall from trucker operating floor Rs 54000 through placement and broker margins to traditional shipper invoice Rs 62000 beside direct zero-commission match at Rs 55800",
+      alt: "Stepped waterfall from trucker operating floor Rs 54000 through placement and broker margins to traditional shipper invoice Rs 62000 beside direct free-match at Rs 55800",
     },
     {
       kind: "table",
-      caption: "Line-item reconciliation: 25 MT structural steel / billets",
-      source: "Corridor ~1,150 km. 12-wheeler, 35 T GVW, 25 T net legal payload. Workshop teaching ledger.",
-      headers: ["Line", "Model A Mandi (hyp.)", "Model B closed landed-rate (hyp.)", "Model C open zero-commission (hyp.)"],
+      caption: "Hypothetical scenario ledger (labelled assumptions)",
+      source:
+        "ZAFTYS Intelligence teaching ledger only. Corridor class ~1,150 km / 25 T payload assumptions are illustrative. Do not treat as measured savings.",
+      headers: ["Line", "Brokered invoice path (hyp.)", "Alternative invoice path (hyp.)", "Notes"],
       rows: [
-        ["Shipper base freight", "Rs 62,000", "Rs 58,800", "Rs 55,800"],
-        ["Broker / platform take", "~Rs 8,000 stack", "~Rs 2,940 (5%)", "Rs 0"],
-        ["Net to truck owner (workshop)", "~Rs 54,000", "~Rs 55,860", "~Rs 55,800"],
-        ["Cash advance at loading", "65% - 70%", "65% - 70%", "Contracted ~70%"],
-        ["Return dwell (measure; do not average without data)", "Variable - define start/end events", "Variable", "Variable - faster discovery is the claim to test"],
-        ["Shipper vs direct", "+Rs 6,200", "+Rs 3,000", "Baseline"],
+        ["Illustrative shipper freight invoice", "Rs 62,000", "Rs 55,800", "Assumed invoices for arithmetic"],
+        ["Illustrative operating-cost floor", "Rs 54,000", "Rs 54,000", "Same assumed floor on both paths"],
+        ["Invoice difference vs Rs 62,000", "Rs 0 (baseline)", "Rs 6,200 (10% of Rs 62,000)", "Difference = 62000 - 55800"],
+        ["Component rupee split", "Not invented here", "Not invented here", "Use the editable framework; leave blank without sources"],
+        ["Comparability gate", "Must match", "Must match", "Route, cargo, vehicle, service, payment terms"],
       ],
     },
     {
@@ -448,17 +548,22 @@ export const loadMarketplaceExhibits: Record<string, readonly BlogExhibit[]> = {
     },
     {
       kind: "callout",
-      caption: "Workshop finding on this corridor",
-      source: "Teaching result. Confirm with your live quotes.",
+      caption: "How to use this hypothetical scenario",
+      source: "ZAFTYS Intelligence. Replace every assumption with live quotes before board or tender use.",
       items: [
         {
-          title: "Manufacturer",
-          body: "Direct zero-commission matching saves about Rs 6,200 per trip vs traditional freight-market (mandi) landed.",
+          title: "What the arithmetic shows",
+          body: "Under matched assumptions, Rs 62,000 vs Rs 55,800 differs by Rs 6,200 (10% of Rs 62,000). That is illustration, not measured market savings.",
           tone: "teal",
         },
         {
-          title: "Truck owner",
-          body: "About Rs 1,800 to Rs 3,800 more net revenue lands with the asset owner once brokerage commission (dalali) and opaque advances shrink - model dependent.",
+          title: "What you must still match",
+          body: "Same route, cargo, vehicle specification, service level, and payment terms - or the comparison is invalid.",
+          tone: "warm",
+        },
+        {
+          title: "Broker commission context",
+          body: "BlackBuck Nov 2024 RHP cites an estimated 8-10% offline broker commission range as an industry estimate - not this scenario's audited spread.",
           tone: "navy",
         },
       ],

@@ -208,6 +208,18 @@ export type BlogExhibit =
       source?: string;
       src: string;
       alt: string;
+    }
+  | {
+      kind: "imageGrid";
+      caption: string;
+      source?: string;
+      /** Desktop/tablet columns; mobile stays 2 for phone-screenshot galleries. Default 2. */
+      columns?: 2 | 3;
+      items: readonly {
+        src: string;
+        alt: string;
+        caption?: string;
+      }[];
     };
 
 export type BlogSubsection = {
@@ -311,9 +323,9 @@ export const blogPosts: readonly BlogPost[] = [
     ],
     publishedAt: "2026-11-18",
     updatedAt: "2026-11-18",
-    author: "ZAFTYS Operations & Supply Chain Governance Research",
+    author: "ZAFTYS Intelligence",
     reviewNote:
-      "Last reviewed: 18 Nov 2026. Methodology: scorecard targets and worked examples are hypothetical or proposed until calibrated on plant data. No named legal reviewer has signed this page - confirm Contract Act clauses with counsel before debit practice. Factual corrections: contact@zaftys.com.",
+      "Institutional byline: ZAFTYS Intelligence. AI-assisted research and analysis for logistics readers - not a named individual author and not CA, legal, engineering, or independent expert review. Worked OTIF examples are hypothetical until calibrated on your plant data. Confirm Contract Act clauses with counsel before debit practice. Corrections: contact@zaftys.com.",
     template: "deep-research",
     subtitle:
       "Placement Rate vs OTIF · Denominator Rules · Dynamic L1/L2 Cascading Engines · Section 73 Contract Act Risk Purchase · Configurable Transporter Scorecard · ZAFTYS Web Dispatch Board · TranZfort Safety-Valve Capacity",
@@ -353,9 +365,9 @@ export const blogPosts: readonly BlogPost[] = [
       },
       {
         afterHeading: "System architecture: connecting ZAFTYS web TMS to TranZfort mobile capacity",
-        eyebrow: "Zero-commission safety valve",
+        eyebrow: "Free matching safety valve",
         title: "Publish unfulfilled indents to TranZfort in one click",
-        body: "Verified truckers fill the gap; bookings return into the same gate-to-pay ledger.",
+        body: "Verified truckers fill the gap on free marketplace matching; bookings return into the same gate-to-pay TMS ledger.",
         cta: { label: "Open TranZfort", to: "/network/tranzfort" },
       },
     ],
@@ -402,9 +414,9 @@ export const blogPosts: readonly BlogPost[] = [
     ],
     publishedAt: "2026-11-18",
     updatedAt: "2026-11-18",
-    author: "ZAFTYS Operations & Supply Chain Risk Research",
+    author: "ZAFTYS Intelligence",
     reviewNote:
-      "Last reviewed: 18 Nov 2026. Methodology: teaching scenarios and composites are labelled hypothetical. Registry timings are design goals unless a dated test report is cited. No named legal reviewer has signed this page - confirm bare BNS / MV Act text before an FIR strategy memo. Factual corrections: contact@zaftys.com.",
+      "Institutional byline: ZAFTYS Intelligence. AI-assisted research and analysis for fleet-compliance readers - not a named individual author and not CA, legal, engineering, or independent expert review. ULIP is described as a government access pathway with a readiness assessment only; no measured ZAFTYS p50/p95 latency claim is published. Confirm bare BNS / MV Act text before an FIR strategy memo. Corrections: contact@zaftys.com.",
     template: "deep-research",
     subtitle:
       "Parivahan / Vahan Registry Checks · Sarathi Commercial DL Endorsement · Physical Chassis Pencil Rubbing · FASTag Movement Signals · Section 316 BNS Criminal Breach of Trust · Plant Gate Security SOP · TranZfort Document Vetting Layer",
@@ -493,14 +505,14 @@ export const blogPosts: readonly BlogPost[] = [
     ],
     publishedAt: "2026-11-18",
     updatedAt: "2026-11-18",
-    author: "ZAFTYS Engineering & Fleet Intelligence",
+    author: "ZAFTYS Intelligence",
     reviewNote:
-      "Last reviewed: 18 Nov 2026. Methodology: payload and CFT figures are calculated or hypothetical unless a measured RC/weighbridge file is cited. OEM class names are orientation only - not dated manufacturer datasheets. No named engineering reviewer has signed this page. Confirm RC GVW, measured tare, and live CMVR height categories before a tender promise. Factual corrections: contact@zaftys.com.",
+      "Institutional byline: ZAFTYS Intelligence. AI-assisted research and analysis for commercial-vehicle readers - not a named individual author and not CA, legal, engineering, or independent expert review. SXL/MXL are commercial desk terms; payload depends on chassis, GVW, body, and RC. OEM table rows cite manufacturer-published values only; blanks mean not stated in the cited source. Confirm RC GVW, measured tare, and live CMVR height categories. Corrections: contact@zaftys.com.",
     template: "deep-research",
     subtitle:
-      "Single Axle (SXL) vs Multi-Axle (MXL) · Payload = GVW - Tare · Geometric CFT Examples · High Cube (HQ) Height Norms · CMVR Height Categories (3.8 / 4.20 / 4.52 m) · Cube-Out vs Weigh-Out Thresholds · TranZfort In-App Container Sourcing · ZAFTYS Web TMS Fleet Allocation",
+      "Deck Length vs Internal Cube · Payload = GVW - Tare · OEM Model-Specific Rows · Geometric CFT Examples · CMVR Height Categories (3.8 / 4.20 / 4.52 m) · Cube-Out vs Weigh-Out · TranZfort Spec Posting · ZAFTYS TMS Allocation",
     summary:
-      "Right-size 32-ft closed containers: SXL vs MXL payload after tare, reproducible CFT maths, CMVR height categories, density thresholds, pallet layouts, Section 113 / 194 traps, and marketplace / TMS sourcing.",
+      "Right-size ~32-ft closed bodies using GVW minus tare, OEM model rows where sourced, CMVR height categories, density thresholds, and marketplace posting that never treats listing labels as compliance.",
     readMinutes: 32,
     heroImage: "/images/blog/32-feet-container-truck-sxl-mxl-india.jpg",
     heroAspectRatio: "16/9",
@@ -586,9 +598,9 @@ export const blogPosts: readonly BlogPost[] = [
     ],
     publishedAt: "2026-11-18",
     updatedAt: "2026-11-18",
-    author: "ZAFTYS Operations & Indirect Tax Research",
+    author: "ZAFTYS Intelligence",
     reviewNote:
-      "Last reviewed: 18 Nov 2026. Methodology: rate arithmetic is illustrative; decision tree is educational. Not tax advice. No named GST professional has signed this page - confirm bare CGST notifications, GST Council FAQ, and portal advisories with a qualified GST professional before a demand reply. Factual corrections: contact@zaftys.com.",
+      "Institutional byline: ZAFTYS Intelligence. AI-assisted research and analysis for indirect-tax orientation - not a named individual author and not CA, legal, or independent expert review. Rate arithmetic and decision aids are educational only. Confirm bare CGST notifications, GST Council FAQ, and portal advisories before a demand reply. Corrections: contact@zaftys.com.",
     template: "deep-research",
     subtitle:
       "Section 9(3) CGST Act · Reverse Charge Mechanism (RCM) · 18% Forward Charge with ITC (from 22 Sep 2025) · Tax-Route Decision Aid · Statutory Consignment Note · Annexure V Portal Declarations · Notification Register · TMS Freight Ledger Automation",
@@ -657,17 +669,17 @@ export const blogPosts: readonly BlogPost[] = [
   {
     slug: "online-truck-load-marketplaces-india-freight-apps-guide",
     title:
-      "Online Truck Load Marketplaces in India: How Digital Freight Platforms Work, Broker Commission vs. Zero-Commission Models, and Load Booking SOPs",
-    seoTitle: "Truck Load Booking App India | Zero-Commission | ZAFTYS",
+      "Online Truck Load Marketplaces in India: How Digital Freight Platforms Work, Broker Commission vs. Free Matching, and Load Booking SOPs",
+    seoTitle: "Truck Load Booking App India | Free Matching | ZAFTYS",
     seoDescription:
-      "How Indian truck load marketplaces work: brokerage stacks, zero-commission matching, Vahan vetting, trip milestones, and TMS overflow to TranZfort.",
+      "How Indian truck load marketplaces work: brokerage stacks, free TranZfort matching for truckers/transporters, Vahan vetting, trip milestones, and TMS overflow.",
     category: "technology",
     tags: [
       "truck load booking app India",
       "post truck load online India",
       "best truck load apps in India",
       "find FTL freight online",
-      "zero commission transport app",
+      "free truck load matching app",
       "how to find return load for truck",
       "digital freight marketplace India",
       "transport nagar broker commission rates",
@@ -677,14 +689,14 @@ export const blogPosts: readonly BlogPost[] = [
     ],
     publishedAt: "2026-11-18",
     updatedAt: "2026-11-18",
-    author: "ZAFTYS Operations & Marketplace Research",
+    author: "ZAFTYS Intelligence",
     reviewNote:
-      "Last reviewed: 18 Nov 2026. Methodology: corridor economics, brokerage percentages, and dwell bands are hypothetical teaching maths unless a documented lane sample is cited. Not a national rate index. No named marketplace auditor has signed this page. Confirm bare Carriage by Road / IT Act text and current TranZfort terms before a claims memo. Factual corrections: contact@zaftys.com.",
+      "Institutional byline: ZAFTYS Intelligence. AI-assisted research and analysis for freight-marketplace readers - not a named individual author and not CA, legal, engineering, or independent expert review. Offline 8-10% broker commission is attributed to the BlackBuck / Zinka Nov 2024 RHP industry estimate with limitations. The Rs 54,000 / Rs 62,000 / Rs 55,800 corridor figures are a labelled hypothetical ZAFTYS Intelligence scenario, not an audited trip. TranZfort matching is free for truckers and transporters; TMS is the paid path. Legal: https://tranzfort.com/legal/. Corrections: contact@zaftys.com.",
     template: "deep-research",
     subtitle:
-      "Digital freight matching · Zero-commission marketplaces · Brokerage stack orientation · Return-load dwell definition · In-app trip milestones · Document verification (Vahan / PAN) · ZAFTYS web TMS to TranZfort integration",
+      "Digital freight matching · Free trucker/transporter matching · Brokerage stack orientation · Return-load dwell definition · In-app trip milestones · Document verification (Vahan / PAN) · ZAFTYS web TMS to TranZfort integration",
     summary:
-      "How Indian truck load marketplaces work: Transport Nagar commission stacks (labelled assumptions), zero-commission direct matching on TranZfort, Vahan vetting, trip milestones, and enterprise overflow from ZAFTYS TMS.",
+      "How Indian truck load marketplaces work: Transport Nagar commission stacks (labelled assumptions), free TranZfort matching for truckers and transporters, Vahan vetting, trip milestones, and enterprise overflow into ZAFTYS TMS.",
     readMinutes: 32,
     heroImage: "/images/blog/online-truck-load-marketplaces-india.jpg",
     heroAspectRatio: "16/9",
@@ -698,9 +710,9 @@ export const blogPosts: readonly BlogPost[] = [
     midCtas: [
       {
         afterHeading: "The evolution of digital freight: from closed aggregators to open marketplaces",
-        eyebrow: "Zero-commission Android matching",
+        eyebrow: "Free matching for truckers",
         title: "Post a load or find a return truck without brokerage commission (dalali)",
-        body: "Indie suppliers and fleet owners use TranZfort free. Share origin, destination, body type, and loading window.",
+        body: "Matching is free for truckers and transporters. Share origin, destination, body type, and loading window. Live terms: tranzfort.com/legal/.",
         cta: { label: "Open TranZfort", to: "/network/tranzfort" },
       },
       {
@@ -713,7 +725,7 @@ export const blogPosts: readonly BlogPost[] = [
       {
         afterHeading: "Worked financial case: 25-tonne industrial freight corridor",
         eyebrow: "Rebuild one corridor",
-        title: "Compare freight market (mandi), platform fee, and zero-commission on your lane",
+        title: "Compare freight-market (mandi) vs direct-match arithmetic on your lane",
         body: "Send origin, destination, tonnes, and last three trip invoices. We line up the leakage without a sales pitch.",
         cta: { label: "Contract logistics", to: "/logistics/contract-logistics" },
       },
@@ -721,7 +733,7 @@ export const blogPosts: readonly BlogPost[] = [
         afterHeading: "Enterprise integration: connecting web TMS to open mobile marketplaces",
         eyebrow: "Web TMS + open marketplace",
         title: "Run contract fleets on ZAFTYS, overflow on TranZfort",
-        body: "Multi-plant desks keep gate-to-pay on web TMS and publish unfulfilled indents into the Android marketplace.",
+        body: "Multi-plant desks keep gate-to-pay on paid ZAFTYS TMS and publish unfulfilled indents into free TranZfort matching.",
         cta: { label: "Explore ZAFTYS TMS", to: "/zaftys-tms" },
       },
     ],
@@ -742,8 +754,8 @@ export const blogPosts: readonly BlogPost[] = [
     cta: { label: "See TranZfort + ZAFTYS hybrid", to: "/network/tranzfort" },
     ctaBand: {
       eyebrow: "After the marketplace math",
-      title: "Run corporate fleets on ZAFTYS. Tap open-market trucks on TranZfort.",
-      body: "Keep dedicated capacity on the web TMS. When contracts cannot place, publish overflow into the zero-commission Android marketplace - same gate-to-pay audit trail.",
+      title: "Run corporate fleets on ZAFTYS TMS. Match open-market trucks free on TranZfort.",
+      body: "Keep dedicated capacity on the paid web TMS. When contracts cannot place, publish overflow into free TranZfort matching for truckers and transporters - same gate-to-pay audit trail. Legal: https://tranzfort.com/legal/.",
     },
     whatsappMessage: WHATSAPP_LOAD_MARKETPLACE_MESSAGE,
   },

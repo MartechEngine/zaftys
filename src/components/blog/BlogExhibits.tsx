@@ -560,15 +560,46 @@ export function BlogExhibitBlock({ exhibit }: { exhibit: BlogExhibit }) {
   if (exhibit.kind === "image") {
     return (
       <FigureChrome caption={exhibit.caption} source={exhibit.source}>
-        <div className="overflow-hidden rounded-lg border border-navy/10 bg-white">
+        <div className="overflow-hidden rounded-lg border border-navy/10 bg-[#F1F5F9]">
           <img
             src={exhibit.src}
             alt={exhibit.alt}
-            className="h-auto w-full object-contain"
+            className="mx-auto h-auto max-h-[min(70vh,36rem)] w-full object-contain"
             loading="lazy"
             decoding="async"
           />
         </div>
+      </FigureChrome>
+    );
+  }
+
+  if (exhibit.kind === "imageGrid") {
+    const cols = exhibit.columns ?? 2;
+    return (
+      <FigureChrome caption={exhibit.caption} source={exhibit.source}>
+        <ul
+          className={cn(
+            "grid gap-3 sm:gap-4",
+            cols === 3 ? "grid-cols-2 md:grid-cols-3" : "grid-cols-2",
+          )}
+        >
+          {exhibit.items.map((item) => (
+            <li key={item.src} className="min-w-0">
+              <div className="overflow-hidden rounded-lg border border-navy/10 bg-[#F1F5F9]">
+                <img
+                  src={item.src}
+                  alt={item.alt}
+                  className="mx-auto h-auto max-h-[min(38vh,18rem)] w-full object-contain sm:max-h-[min(42vh,20rem)]"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+              {item.caption ? (
+                <p className="mt-1.5 text-[11px] leading-snug text-navy/75 sm:text-xs">{item.caption}</p>
+              ) : null}
+            </li>
+          ))}
+        </ul>
       </FigureChrome>
     );
   }

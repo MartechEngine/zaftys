@@ -50,14 +50,14 @@ export const indentOtifTakeaways = [
   "Automate the indent waterfall: proposed L1 2-hour window, L2 cascade, backup pool, then TranZfort open push - identify shortfalls by late morning, not 4:00 PM.",
   "Static Rs 1,000 penalties often fail when diversion earns more. Section 73 style risk-purchase differentials need counsel-reviewed wording and like-for-like replacement quotes.",
   "Sub-120-minute plant TAT buys placement loyalty; multi-day detention makes good carriers systematically deprioritize your morning indents.",
-  "ZAFTYS runs the multi-seat cascading desk; TranZfort is the zero-commission safety valve - booked overflow returns into the same gate-to-pay ledger.",
+  "ZAFTYS runs the multi-seat cascading desk; TranZfort is the free matching safety valve - booked overflow returns into the same gate-to-pay ledger.",
 ] as const;
 
 export const indentOtifReferences = [
   "[Indian Contract Act, 1872](https://www.indiacode.nic.in/handle/123456789/2187?locale=en) - Section 73 (compensation for loss or damage caused by breach of contract) and Section 74 (liquidated damages). Confirm bare text with counsel before debit practice.",
   "[Carriage by Road Act, 2007](https://www.indiacode.nic.in/handle/123456789/2043?locale=en) - common carrier liability framing for non-delivery and delay (cite the specific section that supports each claim).",
   "[CGST Act / Rules](https://www.indiacode.nic.in/handle/123456789/11537?locale=en) - Rule 138(10) e-Way Bill validity linked to vehicle dispatch timing. Confirm live bare rules.",
-  "Methodology: placement/OTIF worked examples and scorecard targets in this guide are hypothetical or proposed until calibrated on documented plant data.",
+  "Methodology (ZAFTYS Intelligence): AI-assisted research. Placement/OTIF worked examples and scorecard targets are hypothetical or proposed until calibrated on documented plant data. Not CA/legal/engineering expert review.",
   "Product: [TranZfort](https://www.tranzfort.com) · [TranZfort marketplace](/network/tranzfort).",
   "Internal cluster: [spot vs dedicated](/blog/spot-market-vs-dedicated-fleet-india), [plant detention TAT](/blog/plant-detention-tat-yard-gate-india), [truck freight rates](/blog/truck-freight-rates-india-cost-rate-benchmarking-guide), [5 hidden cost leaks](/blog/5-hidden-cost-leaks-heavy-industrial-freight-tms-3pl-guide), [industrial TMS](/blog/industrial-tms-control-stack-india), [load marketplaces](/blog/online-truck-load-marketplaces-india-freight-apps-guide).",
 ] as const;
@@ -240,7 +240,7 @@ export const indentOtifExhibits: Record<string, readonly BlogExhibit[]> = {
         { title: "L1 primary", body: "Tender quota lane share. Strict 2-hour digital accept/reject." },
         { title: "L2 secondary", body: "Auto re-allocate on L1 timeout at contracted differential." },
         { title: "Backup pool / 3PL", body: "Pre-vetted regional reserve if L2 times out by ~1:00 PM." },
-        { title: "TranZfort open", body: "Unplaced indents publish to verified truckers with zero commission." },
+        { title: "TranZfort open", body: "Unplaced indents publish to verified truckers on free matching." },
       ],
     },
     {
@@ -475,7 +475,7 @@ export const indentOtifExhibits: Record<string, readonly BlogExhibit[]> = {
         },
         {
           title: "Layer 2 - TranZfort safety valve",
-          body: "One-click broadcast of unfulfilled indents to verified truckers with zero commission when contracts fail or season spikes.",
+          body: "One-click broadcast of unfulfilled indents to verified truckers on free matching when contracts fail or season spikes.",
         },
         {
           title: "Closed governance loop",

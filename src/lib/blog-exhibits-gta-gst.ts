@@ -245,7 +245,7 @@ export const gtaGstExhibits: Record<string, readonly BlogExhibit[]> = {
     {
       kind: "table",
       caption: "Notification register (verify before reliance)",
-      source: "Orientation register. Last reviewed 18 Nov 2026 against linked official PDFs - re-check amendments and exact entries before a demand reply. Not a substitute for consolidated law.",
+      source: "Orientation register (ZAFTYS Intelligence). Cross-check linked official PDFs and live amendments before a demand reply. Not a substitute for consolidated law or CA advice.",
       headers: ["Notification / instrument", "Authority", "What it frames", "Effective / note", "Subsequent amendments", "Source"],
       rows: [
         ["11/2017-CT (Rate)", "CBIC / Central Tax (Rate)", "GTA rate entries / forward option", "2017 base; confirm live", "Incl. 03/2022 and later rate edits", "CBIC taxinformation link"],

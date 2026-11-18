@@ -6,10 +6,10 @@ import type { BlogExhibit, BlogKpi } from "@/lib/blog-data";
 
 export const vehicleVerificationKpis: readonly BlogKpi[] = [
   {
-    value: "Design goal",
-    label: "Automated registry check cycle",
+    value: "Readiness only",
+    label: "ULIP assessment (not a latency report)",
     detail:
-      "Target architecture for enterprise TMS gate workflows via authorized Vahan / Sarathi / ULIP paths where live. Not a published ZAFTYS measured p50/p95 benchmark. Publish measured timings only with a dated test report.",
+      "ZAFTYS Intelligence AI-assisted readiness note: official ULIP onboarding + VAHAN/SARATHI pathway. No measured ZAFTYS p50/p95. Synthetic latency examples are labelled as such.",
   },
   {
     value: "Lookup != clearance",
@@ -46,7 +46,7 @@ export const vehicleVerificationKpis: readonly BlogKpi[] = [
 export const vehicleVerificationTakeaways = [
   "Fake / bogus trucks (farzi gaadi) pair scrap or totaled chassis with cloned plates and forged RCs, then hunt spot loads through WhatsApp groups and roadside brokers (dalals).",
   "Physical paper checks fail when Transport Nagar print shops produce laminated RCs, Form 48 permits, and QR codes that open spoofed verification pages.",
-  "Public Parivahan lookups and authorized Vahan / Sarathi / ULIP integrations (where available) support consistency checks - then chassis pencil rubbing still confirms the frame. Do not promise every field or a fixed response time without a dated test report.",
+  "Public Parivahan lookups and authorized Vahan / Sarathi / ULIP integrations (where available) support consistency checks - then chassis pencil rubbing still confirms the frame. ZAFTYS Intelligence publishes a ULIP readiness assessment only - not measured p50/p95 unless a dated authorised test report exists.",
   "FASTag / movement anomalies are risk signals, not proof of fraud. Pair them with independent identity and custody checks.",
   "A Dahej copper-rod workshop diversion (hypothetical composite) can write off Rs 2.15 Cr when marine cover repudiates for unvetted carrier due diligence - prevent at gate, do not litigate later.",
   "TranZfort replaces anonymous broker groups with OTP, PAN, and commercial RC review on the matching rail; plant gates still need independent Vahan / Sarathi / chassis controls. Do not imply TMS automates checks it does not currently perform.",
@@ -58,8 +58,11 @@ export const vehicleVerificationReferences = [
   "[Bharatiya Nyaya Sanhita (BNS), 2023](https://www.indiacode.nic.in/handle/123456789/20062?locale=en) - Section 316 (criminal breach of trust by carrier / warehouse-keeper lineage) and Section 318 (cheating). Orientation; counsel owns charging strategy.",
   "[Carriage by Road Act, 2007](https://www.indiacode.nic.in/handle/123456789/2043?locale=en) - common carrier registration, goods forwarding note / goods receipt, and liability framing. Cite the specific section that supports each claim.",
   "[Parivahan - Know Your Vehicle Details](https://parivahan.gov.in/parivahan//en/content/know-your-vehicle-details) - public vehicle-detail starting point. Not a universal API and not every registry field.",
-  "MoRTH Vahan / Sarathi and ULIP documentation - live field availability depends on authorization, provider, and access path.",
-  "Methodology: teaching scenarios and hypothetical composites in this guide are labelled as such. No national cargo-theft percentage is asserted as an audited MoRTH statistic.",
+  "[ULIP - Data Access & Onboarding](http://ulipdocs.nldsl.in/docs/getting-started/data-access) - register, data request, screening, NDA, IP whitelist, compliance, staging then production.",
+  "[ULIP - Authentication](http://ulipdocs.nldsl.in/docs/getting-started/authentication) - token-based HTTPS login for approved users.",
+  "[ULIP - MoRTH services](http://ulipdocs.nldsl.in/docs/ministry/ministry-of-road-transport-and-highways) - documented VAHAN / SARATHI (and related) endpoints; approved field scope still controls what you receive.",
+  "[goulip.in](https://goulip.in) - ULIP portal entry for registration.",
+  "Methodology (ZAFTYS Intelligence): AI-assisted research. Teaching scenarios and hypothetical composites are labelled as such. No national cargo-theft percentage is asserted as an audited MoRTH statistic. No fabricated ULIP latency test.",
   "Product: [TranZfort](https://www.tranzfort.com) · [TranZfort marketplace](/network/tranzfort).",
   "Internal cluster: [transit damage and insurance](/blog/transit-damage-shortage-cargo-insurance-india-carrier-liability-guide), [spot vs dedicated](/blog/spot-market-vs-dedicated-fleet-india), [industrial TMS](/blog/industrial-tms-control-stack-india), [cost leaks](/blog/5-hidden-cost-leaks-heavy-industrial-freight-tms-3pl-guide), [load marketplaces](/blog/online-truck-load-marketplaces-india-freight-apps-guide), [freight rates](/blog/truck-freight-rates-india-cost-rate-benchmarking-guide).",
 ] as const;
@@ -249,23 +252,96 @@ export const vehicleVerificationExhibits: Record<string, readonly BlogExhibit[]>
     },
     {
       kind: "callout",
-      caption: "Authorized registry path into ZAFTYS TMS",
-      source: "Recommended architecture where credentials exist. Not a published response-time guarantee.",
+      caption: "ZAFTYS Intelligence: ULIP Integration Readiness Assessment",
+      source:
+        "AI-assisted assessment from official ULIP docs (checked 19 Nov 2026). Not a live ZAFTYS API test, access approval, or measured latency report.",
       items: [
         {
-          title: "Where credentials exist",
-          body: "Enterprise TMS can query authorized Vahan/Sarathi / ULIP paths at gate-in so bribery and torch-light errors stop being the control.",
+          title: "Accurate claim",
+          body: "ULIP can provide approved access to datasets including VAHAN and SARATHI after onboarding. Field availability depends on approval conditions ([ULIP data access](http://ulipdocs.nldsl.in/docs/getting-started/data-access)).",
           tone: "teal",
         },
         {
-          title: "Hard block + fallback",
-          body: "Expired fitness, suspended permit, or blacklisted chassis never receives a loading slip. When the service is down, hold and escalate - do not auto-clear.",
+          title: "Not claimed here",
+          body: "No ZAFTYS API access status, field list, instant verification, or measured p50/p95 latency. No fabricated request logs or sample sizes.",
+          tone: "warm",
+        },
+        {
+          title: "Plant practice now",
+          body: "Use public Parivahan lookups and physical checks. Treat TMS automation as recommended architecture until a dated authorised test report exists.",
+          tone: "navy",
+        },
+      ],
+    },
+    {
+      kind: "steps",
+      caption: "Official ULIP onboarding pathway (requirements)",
+      source: "http://ulipdocs.nldsl.in/docs/getting-started/data-access - paraphrase of published steps; confirm live docs before filing a request.",
+      items: [
+        {
+          title: "Register and request",
+          body: "Create an account on goulip.in; submit company details, use-case, and the source systems / fields needed.",
+        },
+        {
+          title: "Screening and NDA",
+          body: "ULIP review finalises scope; complete the Non-Disclosure Agreement.",
+        },
+        {
+          title: "Technical controls",
+          body: "Whitelist the data-centre public IP; keep the consuming app login-based; retain access logs; plan yearly security audit.",
+        },
+        {
+          title: "Staging then production",
+          body: "Test on staging, submit a test report, then receive production APIs if approved.",
+        },
+      ],
+    },
+    {
+      kind: "table",
+      caption: "Integration requirements and verification risks",
+      source: "ZAFTYS Intelligence readiness framing. Risks are operational - not evidence that ZAFTYS is already integrated.",
+      headers: ["Topic", "What to plan for", "Risk if ignored"],
+      rows: [
+        ["Authorisation scope", "Only approved VAHAN / SARATHI (and other) fields for the use-case", "Expecting fields you were never granted"],
+        ["Identity vs clearance", "Registry match is consistency evidence, not a load-safety clearance", "Skipping chassis rubbing after a green lookup"],
+        ["Downtime / fallback", "Document hold rules when ULIP or Parivahan is unavailable", "Guards accept laminates under congestion"],
+        ["Logging and audit", "Retain request/response metadata per ULIP compliance expectations", "Cannot prove due diligence after a claim"],
+        ["Latency at the gate", "Measure only after authorised access with a dated test plan", "Publishing invented 'instant' timings"],
+      ],
+    },
+    {
+      kind: "table",
+      caption: "p50 / p95 meaning and reproducible future-test method",
+      source: "Methodology only. Do not publish measured ZAFTYS timings until this protocol is run on authorised credentials.",
+      headers: ["Item", "Definition / rule"],
+      rows: [
+        ["p50 (median)", "Half of successful timed requests finish at or below this duration"],
+        ["p95", "95% of successful timed requests finish at or below this duration; captures the slow tail guards feel"],
+        ["Clock start / stop", "Start when the client sends the authorised request; stop when a final success or hard-fail response is received (exclude UI render)"],
+        ["Sample design", "Pre-register N, time window, environments (staging vs production), endpoints, and success criteria before the run"],
+        ["Exclusions", "Separate auth/login time from data-call time; log timeouts and HTTP errors as fails, not as latency samples"],
+        ["Publish bar", "Field list returned, N, success/fail counts, p50, p95, test date, environment - or publish nothing as 'measured'"],
+      ],
+    },
+    {
+      kind: "callout",
+      caption: "SYNTHETIC latency examples only - not measured ZAFTYS performance",
+      source: "Invented teaching numbers for methodology literacy. Do not cite as ZAFTYS ULIP results.",
+      items: [
+        {
+          title: "Synthetic example A",
+          body: "Suppose 100 successful staging calls: p50 = 1.2 s, p95 = 4.8 s. These figures are synthetic - not from ZAFTYS logs.",
+          tone: "warm",
+        },
+        {
+          title: "Synthetic example B",
+          body: "Suppose the same endpoint under peak load: p50 = 2.5 s, p95 = 12.0 s. Still synthetic. A plant SOP must use measured percentiles after authorised testing.",
           tone: "navy",
         },
         {
-          title: "Privacy / retention",
-          body: "Collect only lawful fields; restrict access to gate and compliance roles; retain verification artifacts per plant policy and insurer requirements.",
-          tone: "warm",
+          title: "How to use them",
+          body: "Use only to explain why p95 (not average) drives gate staffing. Replace with real percentiles before any commercial or ops claim.",
+          tone: "teal",
         },
       ],
     },

@@ -7,59 +7,67 @@ import type { BlogExhibit, BlogKpi } from "@/lib/blog-data";
 
 export const container32ftKpis: readonly BlogKpi[] = [
   {
-    value: "7.0 - 8.5 T*",
-    label: "32-ft SXL net legal payload",
+    value: "GVW - tare",
+    label: "Payload formula (any config)",
     detail:
-      "*Calculated workshop band for assumed ~18.5 T GVW minus ~10.0 to 11.2 T enclosed-body tare. Confirm unladen weight on the RC and weighbridge.",
+      "Available payload = registered GVW minus actual tare, subject to axle-load and other legal constraints. '32 feet' alone never sets tonnes.",
   },
   {
-    value: "14.5 - 16.2 T*",
-    label: "32-ft MXL net legal payload",
+    value: "Multi-OEM*",
+    label: "32-ft OEM evidence table",
     detail:
-      "*Calculated workshop band for assumed ~28 T GVW minus ~11.8 to 13.5 T enclosed-body tare. Not a national guarantee - RC GVW, axle limits, and measured tare control.",
+      "*ZAFTYS Intelligence rows checked 19 Nov 2026 (Tata, Ashok Leyland, Eicher). Publish only manufacturer-stated GVW/deck/payload; blanks stay 'Not stated in the cited source.' Not a universal SXL/MXL tonne band.",
   },
   {
     value: "~1,966 CFT*",
     label: "Example geometric volume",
     detail:
-      "*Hypothetical: 31.5 x 7.8 x 8.0 ft = 1,965.6 CFT. Geometric volume is not usable loading volume. Doors, wheel housings, and restraints reduce practical capacity.",
+      "*Hypothetical internals: 31.5 x 7.8 x 8.0 ft = 1,965.6 CFT. Geometric volume is not usable loading volume. Deck length != internal cargo length.",
   },
   {
-    value: "16 - 18",
-    label: "Single-tier industrial pallets",
+    value: "SXL / MXL",
+    label: "Commercial desk labels",
     detail:
-      "Example floor count for 1200 x 1000 mm industrial pallets inside a 32-ft box (straight / pinwheel layouts). Nested turns can reach 18 when clear width allows. Layout-specific only.",
-  },
-  {
-    value: "25% - 35%*",
-    label: "Dead-freight premium risk",
-    detail:
-      "*Workshop cost hit when a desk hires an MXL multi-axle for low-density cargo that cubes out under ~7 tonnes - paying for axle capacity the volume never uses. Hypothetical corridor maths.",
+      "Used on Indian desks for single-axle vs multi-axle 32-ft closed boxes. Not universal engineering standards with fixed tare and payload. Always write axle class + RC GVW.",
   },
   {
     value: "3.8 / 4.20 / 4.52 m",
     label: "CMVR height categories",
     detail:
-      "MoRTH CMVR Chapter V orientation: general vehicle height 3.8 m; tractor-trailer goods vehicle 4.20 m; laden trailer with ISO Series 1 or fabricated containerized motor vehicle 4.52 m when that exception applies. Not every 32-ft box qualifies for 4.52 m. Confirm live consolidated rule.",
+      "MoRTH CMVR Chapter V orientation: general 3.8 m; tractor-trailer goods 4.20 m; specified laden ISO / fabricated containerized exception 4.52 m when that text applies. Not every 32-ft box qualifies for 4.52 m.",
+  },
+  {
+    value: "Verify RC",
+    label: "Before promising tonnes",
+    detail:
+      "Marketplace listing labels and OEM deck options do not guarantee legal compliance. Confirm RC GVW, measured tare, body approval, height category, and route clearances.",
   },
 ] as const;
 
 export const container32ftTakeaways = [
-  '"32 feet" is a length class, not a payload class. SXL (~18.5 T GVW) and MXL (~28 T GVW) share the box length and diverge on legal tonnes.',
-  "Available payload = registered GVW minus actual tare, subject to axle-load and other legal constraints. Always subtract measured tare before promising tonnes to sales.",
-  "Cube-out vs weigh-out is the selection engine: density under ~4.5 kg/CFT usually wants SXL; density above ~6.0 kg/CFT usually needs MXL.",
-  "High Cube height buys CFT but still collides with CMVR height categories (3.8 m general / 4.20 m tractor-trailer / 4.52 m specified containerized exception when applicable) and route clearances - do not assume every HQ build is legal at 4.52 m.",
-  "Wrong chassis on the Pune to Delhi workshop corridor can waste ~Rs 20,000 per trip (about 25%) when light packaging is booked on an MXL rate card - labelled hypothetical.",
-  "Post exact specs (32ft SXL HQ / 32ft MXL) on TranZfort; run volumetric SKU matching and dedicated fleets on ZAFTYS TMS - verify RC GVW before gate-in.",
+  '"32 feet" is a length / deck class, not a payload class. Actual tonnes depend on chassis, axle group, registered GVW, body construction, and measured tare.',
+  "SXL and MXL are commercial desk labels for single-axle vs multi-axle closed boxes - not fixed OEM standards with one national tare and payload.",
+  "Available payload = registered GVW minus actual tare, subject to axle limits. Prefer OEM model rows and RC weighbridge evidence over folklore tonne bands.",
+  "Keep three measurements separate: OEM deck length, internal usable cargo dimensions, and legal payload for that configuration.",
+  "High Cube height still collides with CMVR height categories (3.8 / 4.20 / 4.52 m) and route clearances - do not assume every HQ build is legal at 4.52 m.",
+  "Post exact specs on TranZfort and allocate fleets in ZAFTYS TMS - listing language never replaces RC and tare checks.",
 ] as const;
 
 export const container32ftReferences = [
-  "[MoRTH - CMVR Chapter V PDF](https://morth.gov.in/sites/default/files/CMVR-chapter5.pdf) - overall dimensions including height categories (3.8 m / 4.20 m / 4.52 m framing). Confirm current consolidated text and amendments before a tender.",
-  "[Central Motor Vehicles Rules (CMVR), 1989](https://www.indiacode.nic.in/handle/123456789/1798?locale=en) - Rule 93 overall dimensions (height, length, overhang framing). Confirm bare text.",
-  "MoRTH Notification S.O. 3467(E) - safe axle load / GVW ratings for 2-axle and 3-axle commercial transport vehicles (orientation; verify live gazette on morth.nic.in).",
-  "[Motor Vehicles Act, 1988](https://www.indiacode.nic.in/handle/123456789/1797?locale=en) - Section 113 (limits of weight and limitations on use), Section 114 (power to have vehicle weighed), and Section 194 (penalties for contravention of Section 113 / 114 weight limits).",
-  "Automotive Industry Standard AIS-093 - code of practice for construction and approval of commercial vehicle truck bodies (body builder orientation).",
-  "Methodology: payload and CFT examples in this guide are calculated or hypothetical unless a measured RC/weighbridge file is cited.",
+  "[Tata Motors - Azura T.19 product context](https://trucks.tatamotors.com/blogs/tata-azura-t19-built-for-the-festive-rush) - OEM orientation for the T.19 / 19 T class and deck options that can include 32 ft. Confirm payload on the live brochure/datasheet.",
+  "[Tata Motors - Ultra Ex 1918.T](https://trucks.tatamotors.com/blog/getting-to-know-your-tata-ultra-ex-1918-t) - OEM blog: deck lengths 20 / 24 / 32 ft; GVW printed as 18500 (unit wording on page needs live datasheet confirm).",
+  "[Tata Motors - LPT/SIGNA 3525.T](https://trucks.tatamotors.com/product/tata-signa-3525t) - OEM product page: GVW 35,000 kg; load span options include 32 ft. Payload/unladen not stated on the page checked.",
+  "[Tata Motors - LPT/SIGNA 4932.T](https://trucks.tatamotors.com/product/tata-signa-4932t) - OEM product page / brochure: GVW 49,000 kg; deck lengths include 32 ft. Absolute payload not stated on the materials checked.",
+  "[Ashok Leyland - Haulage 4x2 GVW 19T](https://ashokleyland.com/in/trucks/haulage/haulage-4x2gvw-19t) - OEM page: GVW 18.5 T; loading span 6.8 to 9.7 m. Payload/unladen not stated on the page checked.",
+  "[Eicher Pro 3015 L32](https://www.eichertrucksandbuses.com/light-medium-duty-trucks/medium-duty/pro-3015-l32) - OEM page: GVW 16,371 kg; 32 ft cargo body; internal length listed 9,750 mm. Payload/unladen not stated on the page checked.",
+  "[Tata Motors Azura range PDF (Azura 1918)](https://trucks.tatamotors.com/assets/trucks/files/2026-01/azura-range.pdf) - Official brochure checked 19 Nov 2026: GVW 18,500 kg; payload 12,600 kg; load-body options 17-24 ft only - not entered as a 32-ft row.",
+  "[Tata Motors commercial trucks](https://trucks.tatamotors.com/) - starting point for other model pages; do not mix GVW from one model with tare from another.",
+  "[MoRTH - CMVR Chapter V PDF](https://morth.gov.in/sites/default/files/CMVR-chapter5.pdf) - overall dimensions including height categories (3.8 m / 4.20 m / 4.52 m framing). Confirm current consolidated text.",
+  "[Central Motor Vehicles Rules (CMVR), 1989](https://www.indiacode.nic.in/handle/123456789/1798?locale=en) - Rule 93 overall dimensions. Confirm bare text.",
+  "MoRTH Notification S.O. 3467(E) - safe axle load / GVW ratings orientation; verify live gazette on morth.nic.in.",
+  "[Motor Vehicles Act, 1988](https://www.indiacode.nic.in/handle/123456789/1797?locale=en) - Sections 113, 114, and 194. Confirm bare text before quoting fines.",
+  "Automotive Industry Standard AIS-093 - commercial vehicle truck-body construction orientation.",
+  "Methodology (ZAFTYS Intelligence): AI-assisted research. CFT examples are hypothetical geometric maths. OEM table cells are manufacturer-published only; inventing blanks is forbidden. Workshop SXL/MXL tonne bands are withdrawn as universal facts until each range has matching configuration-specific OEM or RC evidence.",
   "Product: [TranZfort](https://www.tranzfort.com) · [TranZfort marketplace](/network/tranzfort).",
   "Internal cluster: [planning industrial shipments](/blog/planning-industrial-shipments), [axle load and GVW](/blog/india-axle-load-gvw-limits-heavy-freight), [truck freight rates](/blog/truck-freight-rates-india-cost-rate-benchmarking-guide), [FTL vs PTL](/blog/ftl-vs-ptl-freight-services-india-cost-break-even-guide), [5 hidden cost leaks](/blog/5-hidden-cost-leaks-heavy-industrial-freight-tms-3pl-guide), [industrial TMS](/blog/industrial-tms-control-stack-india), [container trucking India](/blog/container-trucking-logistics-india).",
 ] as const;
@@ -95,12 +103,12 @@ export const container32ftExhibits: Record<string, readonly BlogExhibit[]> = {
       items: [
         {
           title: "32-ft SXL",
-          body: "About 32-ft closed box on a single rear-axle (~18.5 T GVW / 2-axle) chassis - typical net payload ~7.0 to 8.5 T after enclosed-body tare.",
+          body: "Commercial desk label for a ~32-ft closed box on a single rear-axle (2-axle) story. Payload is not fixed by the label - read RC GVW and measured tare.",
           tone: "navy",
         },
         {
           title: "32-ft MXL",
-          body: "Same length class on a multi-axle (~28 T GVW / 3-axle) chassis - calculated workshop net payload ~14.5 to 16.2 T after assumed tare.",
+          body: "Commercial desk label for the same length class on a multi-axle (3-axle) story. Still not a universal OEM payload standard.",
           tone: "teal",
         },
         {
@@ -151,28 +159,93 @@ export const container32ftExhibits: Record<string, readonly BlogExhibit[]> = {
   "32-foot SXL vs 32-foot MXL: engineering architecture": [
     {
       kind: "table",
-      caption: "Payload formula and illustrative arithmetic",
-      source: "Calculated teaching examples only. Available payload = registered GVW - actual tare, subject to axle limits. Inputs are assumptions, not a specific RC.",
-      headers: ["Assumed inputs", "Arithmetic", "Resulting payload"],
+      caption: "Payload formula (use before any tonne promise)",
+      source: "Method only. Inputs must come from the RC / weighbridge for that vehicle - not from a length label.",
+      headers: ["Step", "Rule"],
       rows: [
-        ["SXL GVW 18.5 T, tare 10.0 T", "18.5 - 10.0", "8.5 T"],
-        ["SXL GVW 18.5 T, tare 11.2 T", "18.5 - 11.2", "7.3 T"],
-        ["MXL GVW 28.0 T, tare 11.8 T", "28.0 - 11.8", "16.2 T"],
-        ["MXL GVW 28.0 T, tare 13.5 T", "28.0 - 13.5", "14.5 T"],
+        ["1", "Read registered GVW from the RC for the exact vehicle"],
+        ["2", "Measure or obtain actual tare including body and permanent equipment"],
+        ["3", "Payload = GVW - tare, then check axle-group limits"],
+        ["4", "Do not paste OEM deck-length payload onto a heavier enclosed container without re-weighing"],
       ],
     },
     {
       kind: "table",
-      caption: "Chassis architecture workshop bands (confirm RC and body builder plate)",
-      source: "Teaching bands for common Indian OEM platforms. Individual builds vary with steel vs aluminium vs PUF bodies.",
-      headers: ["Parameter", "32-ft SXL (2-axle / 6W)", "32-ft MXL (3-axle / 10W)"],
+      caption: "OEM model-specific 32-ft configurations (manufacturer-published values only)",
+      source:
+        "ZAFTYS Intelligence source check 19 Nov 2026. Each row is model-specific - not a universal SXL/MXL payload band. Deck/body length is not usable internal cargo cube. 'Not stated in the cited source' means the public page/brochure checked did not publish that figure for the stated configuration. Re-open each URL before a tender.",
+      headers: ["OEM / model", "GVW (published)", "Payload (published)", "Deck / body length", "Unladen / tare", "Source URL"],
       rows: [
-        ["Typical GVW class", "~18.5 tonnes", "~28.0 tonnes"],
-        ["Example platforms", "Tata LPT 1918, AL 1820, Eicher Pro 6019 class", "Tata Signa 2818/2823, AL 2820, BharatBenz 2823 class"],
-        ["Unladen tare (workshop)", "~10.0 to 11.2 T", "~11.8 to 13.5 T"],
-        ["Net legal payload (workshop)", "~7.0 to 8.5 T", "~14.5 to 16.2 T"],
-        ["Rear axle story", "Single rear drive axle", "Tandem / multi rear axle group"],
-        ["Toll category (typical)", "2-axle commercial", "3-axle / MAV band"],
+        [
+          "Tata Motors Azura T.19",
+          "About 18,500 kg (orientation from Tata public materials / 19 T class listings)",
+          "About 13,100 kg appears on secondary CV listings for T.19 - confirm against the live Tata brochure/datasheet for the exact variant before a tender (not every enclosed 32-ft body after container tare)",
+          "Materials / listings cite deck options that can include 32 ft",
+          "Not stated in the cited primary page as one figure for every body",
+          "https://trucks.tatamotors.com/blogs/tata-azura-t19-built-for-the-festive-rush",
+        ],
+        [
+          "Tata Motors Ultra Ex 1918.T",
+          "18,500 kg class (OEM blog text literally prints '18500 tons'; treat as the Ultra 19 T class and reconfirm live datasheet)",
+          "Not stated in the cited source",
+          "20 ft / 24 ft / 32 ft",
+          "Not stated in the cited source",
+          "https://trucks.tatamotors.com/blog/getting-to-know-your-tata-ultra-ex-1918-t",
+        ],
+        [
+          "Tata Motors LPT / SIGNA 3525.T",
+          "35,000 kg",
+          "Not stated in the cited source",
+          "22 ft / 24 ft / 28 ft / 32 ft",
+          "Not stated in the cited source",
+          "https://trucks.tatamotors.com/product/tata-signa-3525t",
+        ],
+        [
+          "Tata Motors LPT / SIGNA 4932.T",
+          "49,000 kg",
+          "Not stated as an absolute payload in the cited product page / brochure (relative marketing claims are not entered here)",
+          "28 ft / 30 ft / 32 ft (product page); confirm exact brochure variant",
+          "Not stated in the cited source",
+          "https://trucks.tatamotors.com/product/tata-signa-4932t",
+        ],
+        [
+          "Ashok Leyland Haulage 4x2 GVW 19T",
+          "18.5 T",
+          "Not stated in the cited source",
+          "Loading span 6.8 m to 9.7 m (max span is ~32 ft class; confirm exact body build)",
+          "Not stated in the cited source",
+          "https://ashokleyland.com/in/trucks/haulage/haulage-4x2gvw-19t",
+        ],
+        [
+          "Eicher Pro 3015 L32",
+          "16,371 kg",
+          "Not stated in the cited source",
+          "32 ft cargo body (internal length listed 9,750 mm on OEM page)",
+          "Not stated in the cited source",
+          "https://www.eichertrucksandbuses.com/light-medium-duty-trucks/medium-duty/pro-3015-l32",
+        ],
+      ],
+    },
+    {
+      kind: "callout",
+      caption: "How to read the OEM table",
+      source: "ZAFTYS Intelligence methodology. Manufacturer values vs plant calculation.",
+      items: [
+        {
+          title: "Commercial labels",
+          body: "SXL and MXL help desks name axle class. They are not OEM-standardised fixed tare/payload engineering rows.",
+          tone: "navy",
+        },
+        {
+          title: "Published vs calculated",
+          body: "Cells above are manufacturer-published only. Calculated payload = registered GVW minus measured tare for that completed vehicle - never invent component numbers to fill blanks.",
+          tone: "warm",
+        },
+        {
+          title: "What to publish on an indent",
+          body: "OEM/model where known + RC GVW + measured tare + axle class - not '32ft' alone.",
+          tone: "teal",
+        },
       ],
     },
     {
