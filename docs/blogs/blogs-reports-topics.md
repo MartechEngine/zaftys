@@ -161,6 +161,8 @@ Extends the flagship Container post — do not rehash it.
 
 **Optional swap:** Replace #18 or #20 with *Digital freight matching on Indian corridors: what actually books* (corridor reality, not app promo) if TranZfort SEO is prioritized.
 
+**Drafted live:** `/blog/online-truck-load-marketplaces-india-freight-apps-guide` (deep-research, 18 Nov 2026) - Transport Nagar dalali vs zero-commission TranZfort + ZAFTYS overflow.
+
 ---
 
 ## 10 new reports (200+ pages each)

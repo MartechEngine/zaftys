@@ -245,6 +245,12 @@ export function DeepResearchBlogLayout({ post }: DeepResearchBlogLayoutProps) {
                     {blogCategoryLabels[post.category]}
                   </span>
                   <time dateTime={post.publishedAt}>{formatPostDate(post.publishedAt)}</time>
+                  {post.updatedAt && post.updatedAt !== post.publishedAt ? (
+                    <>
+                      <span aria-hidden="true">·</span>
+                      <time dateTime={post.updatedAt}>Updated {formatPostDate(post.updatedAt)}</time>
+                    </>
+                  ) : null}
                   <span aria-hidden="true">·</span>
                   <span>{post.readMinutes} min</span>
                   <span aria-hidden="true">·</span>
@@ -252,6 +258,9 @@ export function DeepResearchBlogLayout({ post }: DeepResearchBlogLayoutProps) {
                   <span aria-hidden="true">·</span>
                   <span>{post.author}</span>
                 </div>
+                {post.reviewNote ? (
+                  <p className="mb-4 max-w-3xl text-xs leading-relaxed text-white/65 md:text-[13px]">{post.reviewNote}</p>
+                ) : null}
                 <h1 className="max-w-3xl break-words text-3xl font-heading font-bold leading-tight normal-case tracking-normal text-white md:text-4xl lg:text-[2.75rem]">
                   {post.title}
                 </h1>

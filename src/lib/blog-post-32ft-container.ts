@@ -1,0 +1,154 @@
+import type { BlogSection } from "@/lib/blog-data";
+import { container32ftExhibits } from "@/lib/blog-exhibits-32ft-container";
+
+export const container32ftFaqs = [
+  {
+    question: "Can a 32-foot container truck legally carry 20 tonnes of cargo in India?",
+    answer:
+      "Almost never on a standard domestic 32-ft enclosed container. A 32-ft SXL on an ~18.5 T GVW chassis typically retains only about 7.0 to 8.5 T net payload after body tare. A 32-ft MXL on an ~28 T GVW chassis typically retains about 14.5 to 16.5 T. Twenty tonnes implies a heavier multi-axle / tractor-trailer combination outside this body class. Confirm registered GVW and measured tare on the RC and weighbridge. Axle law detail: [India axle load and GVW limits](/blog/india-axle-load-gvw-limits-heavy-freight).",
+  },
+  {
+    question: "What is the difference between a 32-ft SXL and a 32-ft Multi-Axle (MXL) truck?",
+    answer:
+      "Both are roughly 32 feet long closed boxes. SXL means a single rear axle (2-axle / 6-wheeler) on an ~18.5 T GVW class chassis with roughly 7 to 8.5 T net payload after typical enclosed-body tare. MXL means a multi-axle / tandem rear group (3-axle / 10-wheeler) on an ~28 T GVW class chassis with roughly 14.5 to 16.5 T net payload. From the dock they look similar. On the rate card, toll class, and highway weighbridge they are different vehicles. Always write SXL or MXL on the indent.",
+  },
+  {
+    question: "How do you calculate cubic feet (CFT) for a 32-ft container?",
+    answer:
+      "Measure usable internal length, width, and height in inches, multiply them, and divide by 1,728. A workshop standard box near 31.5 x 7.8 x 8.0 ft lands around 1,960 CFT before door-frame and lining loss. High Cube internals near 9.5 to 10.0 ft height often land nearer 2,300 to 2,450 CFT on paper. Do not trust brochure stickers that ignore wheel-arch intrusion.",
+  },
+  {
+    question: "When should a desk choose 32-ft SXL versus 32-ft MXL?",
+    answer:
+      "Use density: total cargo kilograms divided by usable CFT. Workshop rule of thumb - under about 4.5 kg/CFT (foam, snacks, empty bottles, light packaging) usually wants SXL; above about 6.0 kg/CFT (oil drums, paint, fasteners, dense liquids) usually needs MXL. Between 4.5 and 6.0, quote both and recompute after tare weigh. Hiring MXL for cube-out cargo is classic dead-freight.",
+  },
+  {
+    question: "Why are 32-foot High Cube (HQ) container trucks priced higher than standard height containers?",
+    answer:
+      "HQ boxes buy usable cubic feet - often moving from ~1,960 CFT toward ~2,300 to 2,450 CFT - but they need low-deck chassis packages, low-profile tyres, and tighter CMVR ground-to-roof discipline under the 4.0 m base / 4.52 m closed-body height framing. Capital cost, specialised fleet scarcity, and higher empty tare can all lift the trip rate. Pay the premium only when stack height or cube-out density actually needs the extra headroom.",
+  },
+  {
+    question: "How many standard wooden pallets can fit inside a 32-foot container?",
+    answer:
+      "For 1200 x 1000 mm industrial pallets, plan on 16 in a straight side-by-side / pinwheel floor layout (8 rows of 2). Nested turn arrangements can reach 18 when clear internal width allows. High Cube double-stacking can reach 32 to 36 pallets only if crush strength and legal payload both survive. Measure clear internals; brochure widths lie after lining and corrugation.",
+  },
+  {
+    question: "What is the statutory height limit for closed container trucks under CMVR Rule 93?",
+    answer:
+      "Rule 93 frames overall height from ground to roof. Many N2/N3 commercial builds sit under a 4.0 m framing; closed load bodies and fabricated / ISO-series containers commonly use a higher 4.52 m proviso when the bare CMVR amendment applies. Confirm your RC, body-builder plate, and live rule text before specifying a nominal '10-ft' HQ box. Even with the higher proviso, HQ builds usually need a low deck and low-profile tyre package to clear toll canopies and overpasses. Body construction practice also references AIS-093.",
+  },
+  {
+    question: "What fine applies if a 32-ft SXL is overloaded under Indian motor vehicle law?",
+    answer:
+      "Section 113 of the Motor Vehicles Act sets weight limits and limitations on use. Section 194 sets the penalty for contravening those limits. Workshop fine framing often cited in ops briefings is around Rs 20,000 base plus about Rs 2,000 per excess tonne, plus offloading delays and detention - confirm bare Act text and state compounding schedules before a legal memo. Visual space left in the box is not a defence when axle or GVW caps are breached.",
+  },
+  {
+    question: "How should a 32-ft container load be posted on a digital marketplace?",
+    answer:
+      "Never publish only '32ft container.' Write the axle class and height variant explicitly - for example '32ft SXL HQ 2200 CFT' or '32ft MXL standard height' - plus pin codes, commodity, net kg, and loading window. Wrong-language posts attract the wrong chassis. Matching context: [online truck load marketplaces](/blog/online-truck-load-marketplaces-india-freight-apps-guide); product path: [TranZfort](https://www.tranzfort.com).",
+  },
+] as const;
+
+export const container32ftSections: readonly BlogSection[] = [
+  {
+    heading: "The workhorse of Indian high-cube logistics",
+    paragraphs: [
+      "Composite from corridor practice (details changed). A Pune packaging dispatcher booked 'one 32-foot container' for folded cartons to Noida because that was the phrase every broker understood. The truck that arrived was a 10-wheeler MXL. The cargo cubed out at 6.8 tonnes. The plant paid a 28-tonne chassis rate for air. The next week the same desk forced an SXL and tried to load 11 tonnes of denser SKUs 'because the box is big.' The highway weighbridge disagreed. Same length label. Two opposite failures.",
+      "The 32-foot closed container became the workhorse of Indian high-cube logistics because open wooden trucks failed the modern cargo brief. FMCG secondaries, white goods, pharmaceuticals, packaging materials, automotive plastic components, and retail e-commerce need weather protection, pilferage resistance, tamper-evident bolt sealing, and dock-to-dock pallet loading that a tarpaulin cannot honestly provide.",
+      "Enclosed steel or aluminium bodies plus rear double doors created a standardised unit that warehouse teams could plan around. That standardisation is valuable. It is also dangerous when language collapses. On Indian desks, '32 feet' is routinely treated as a payload promise. It is only a length class. The expensive confusion is assuming one weight capacity while the yard quietly mixes 2-axle SXL and 3-axle MXL chassis under identical box silhouettes.",
+      "Body-type selection sits upstream of rate shopping. If you are still choosing among open, container, flatbed, and bulker for the SKU family, start with [planning industrial shipments](/blog/planning-industrial-shipments). This dossier assumes you already know you need a closed 32-ft box - and need to stop hiring the wrong axle under it.",
+    ],
+    exhibits: container32ftExhibits["The workhorse of Indian high-cube logistics"],
+  },
+  {
+    heading: "32-foot SXL vs 32-foot MXL: engineering architecture",
+    paragraphs: [
+      "Deconstruct the vehicle the way a body builder and an RTO inspector do: chassis GVW first, enclosed-body tare second, net legal payload last. Marketing photos that show only the box are how procurement gets lied to.",
+      "A 32-foot SXL (single axle / 2-axle / 6-wheeler) is typically built on an ~18.5-tonne GVW chassis - Tata LPT 1918 class, Ashok Leyland 1820 class, Eicher Pro 6019 class, and peers. Cabin, chassis, heavy steel subframe, corrugated walls, and rear double-door lock assemblies commonly push unladen tare into the ~10.0 to 11.2 tonne band. Net legal payload that remains is a workshop band of about 7.0 to 8.5 tonnes - not the '15 tonnes' folklore that still circulates on WhatsApp groups.",
+      "A 32-foot MXL (multi-axle / 3-axle / 10-wheeler) is typically built on an ~28.0-tonne GVW chassis - Tata Signa 2818/2823 class, Ashok Leyland 2820 class, BharatBenz 2823 class, and peers. Tare often lands ~11.8 to 13.5 tonnes. Net legal payload workshop band is about 14.5 to 16.2 tonnes. You paid for the extra axle group. Use it only when mass needs it.",
+      "Tare is not a constant. Steel corrugated sheets, lightweight aluminium composites, and PUF-insulated sandwich panels change empty weight by tonnes on the same external length. Insulated pharma secondaries and heavy lock gear add more. The only honest payload number is GVW minus measured empty weight on your weighbridge - the same discipline expanded in [axle load and GVW limits](/blog/india-axle-load-gvw-limits-heavy-freight).",
+    ],
+    exhibits: container32ftExhibits["32-foot SXL vs 32-foot MXL: engineering architecture"],
+  },
+  {
+    heading: "Internal dimensions, height variants, and cubic feet mathematics",
+    paragraphs: [
+      "Volume is where high-cube shippers live. A workshop standard 32-foot container often measures about 31.5 ft internal length by 7.8 ft width by 8.0 ft height - roughly 1,960 cubic feet (~55.5 CBM) before door frames and lining steal cube. High Cube (HQ) variants push internal height toward 9.5 to 10.0 ft and land nearer 2,300 to 2,450 CFT (~65 to 69 CBM) on paper.",
+      "Compute CFT the way the warehouse should: convert internal inches, multiply length by width by height, divide by 1,728. Do not trust brochure '2,500 CFT' stickers that ignore wheel-arch intrusion, plywood lining, and door-frame loss. The formula board in this chapter is the desk calculator.",
+      "CMVR Rule 93 height restrictions bind the dream of endless HQ. Many N2/N3 commercial builds are framed at 4.0 meters (about 13.12 feet) from ground to top of roof; closed load bodies and fabricated containers commonly use a higher 4.52 m proviso when the amendment applies. Confirm bare CMVR text for the vehicle class - do not treat 4.0 m as an absolute for every closed box, and do not assume 4.52 m without checking the RC and body plate. A nominal 10-foot box on a high chassis with standard tyre radius will still violate the live envelope or scrape toll plaza canopies and highway overpasses.",
+      "That is why serious HQ fleets specify low-deck chassis and low-profile tyre packages - commonly 295/80 R22.5 or 275/70 R22.5 class - to keep the roof legal. Height is an engineering package, not a body-builder vanity option. Port and hinterland container context beyond domestic 32-ft boxes sits in [container trucking logistics India](/blog/container-trucking-logistics-india).",
+    ],
+    exhibits: container32ftExhibits["Internal dimensions, height variants, and cubic feet mathematics"],
+  },
+  {
+    heading: "The physics of cube-out vs weigh-out",
+    paragraphs: [
+      "Every closed-body dispatch is a competition between air and mass. Cube-out means the container's physical volume is full while total cargo mass remains well below legal carrying capacity. Weigh-out means cargo mass has hit the GVW / axle cap while cubic space remains empty. Hiring decisions that ignore which limit binds first are how dead-freight and Section 113 overload / Section 194 fine exposure are born.",
+      "Critical density is the selection engine. Density equals total cargo kilograms divided by usable internal cubic feet. Workshop SXL threshold: about 8,000 kg over 2,000 CFT equals roughly 4.0 kg per cubic foot (~141 kg/CBM). Workshop MXL threshold: about 15,000 kg over 2,000 CFT equals roughly 7.5 kg per cubic foot (~265 kg/CBM).",
+      "Decision rule for the wall. If cargo density sits under about 4.5 kg/CFT - foam, packaged snacks, empty bottles, plastic bumpers, light packaging - SXL is usually mandatory; hiring MXL pays for axle capacity the cube cannot use. If density sits above about 6.0 kg/CFT - lubricating oil drums, paint buckets, automotive fasteners, dense liquids - MXL is usually mandatory; forcing SXL creates immediate highway overload exposure.",
+      "Between 4.5 and 6.0 kg/CFT, quote both, recompute after tare weigh, and check whether HQ height changes pallet stack count. Related mode choice - when even a right-sized FTL container loses to PTL on tiny consignments - sits in [FTL vs PTL](/blog/ftl-vs-ptl-freight-services-india-cost-break-even-guide). Dead-freight as a cost leak is also framed in [5 hidden cost leaks](/blog/5-hidden-cost-leaks-heavy-industrial-freight-tms-3pl-guide).",
+    ],
+    exhibits: container32ftExhibits["The physics of cube-out vs weigh-out"],
+  },
+  {
+    heading: "Pallet loading mathematics and floor space optimization",
+    paragraphs: [
+      "Indian industrial logistics mostly plans on 1200 x 1000 mm (48 x 40 inch) pallets. Euro 1200 x 800 mm units appear in some automotive and retail networks. The floor geometry inside a 32-foot box is tighter than brochure drawings: usable length near 9,600 mm and usable width near 2,380 mm after corrugation and lining.",
+      "Straight side-by-side or pinwheel layouts with 1200 x 1000 mm pallets typically yield exactly 16 floor positions - eight rows of two. Nested turn arrangements can reach 18 when clear width approaches 2,400 mm. If your lined width is 2,350 mm, stop promising 18 on the sales call.",
+      "Vertical double-stacking is where HQ earns its keep - and where crush failures begin. When packaging crush-test strength allows, a 32-ft HQ can hold 32 to 36 pallets. That number is worthless if bottom cartons collapse or if total mass exceeds SXL or MXL legal payload. Height without strength is expensive air.",
+      "Transit damage risk from poor stack design is not a separate topic for later. Seal the planning loop with packing and claim hygiene from [transit damage and shortage claims](/blog/transit-damage-shortage-cargo-insurance-india-carrier-liability-guide) when the cargo is crush- or water-sensitive.",
+    ],
+    exhibits: container32ftExhibits["Pallet loading mathematics and floor space optimization"],
+  },
+  {
+    heading: "Regulatory compliance: axle weights, CMVR norms, and weighbridge traps",
+    paragraphs: [
+      "Section 113 of the Motor Vehicles Act is the trap that catches 'the box still had space' loading. A factory supervisor who puts about 11 tonnes into a 32-ft SXL is not using free cube. That mass routinely exceeds the single rear drive axle limit even when visual space remains above the cargo. Highway RTO weighbridges exist to find exactly that pattern.",
+      "Statutory overloading consequences are cash and time. Section 194 sets the penalty for contravening Section 113 / 114 weight limits. Workshop fine framing often cited in ops briefings is a base around Rs 20,000 plus about Rs 2,000 per additional excess tonne, plus offloading delays, detention, and customer OTIF damage. Confirm bare Act text and state compounding schedules before a legal memo - but do not wait for counsel to install a gross weighbridge step in the SOP.",
+      "CMVR Rule 93 also polices geometry. Rear body overhang framed under Rule 93(6) generally cannot exceed 60% of vehicle wheelbase. Illegal extensions of 32-ft boxes to 34-ft or 36-ft to steal cube are a favourite body-builder shortcut and an RTO impoundment magnet. AIS-093 body construction practice is the builder-side counterpart to those dimensional rules.",
+      "MoRTH Notification S.O. 3467(E) axle-load ratings are the quantitative backbone for why SXL and MXL are not interchangeable. Full plant-facing explanation of axle groups, bridge formula thinking, and weighbridge SOPs sits in [Understanding India's axle load norms and GVW limits](/blog/india-axle-load-gvw-limits-heavy-freight).",
+    ],
+    exhibits: container32ftExhibits["Regulatory compliance: axle weights, CMVR norms, and weighbridge traps"],
+  },
+  {
+    heading: "Worked financial case: packaging manufacturer Pune to Delhi corridor",
+    paragraphs: [
+      "Workshop only - not a ZAFTYS audited trip file. A corrugated box and packaging manufacturer dispatches from Chakan (Pune) to Greater Noida (Delhi-NCR), about 1,450 km. Consignment: 1,900 CFT of folded corrugated cartons at 6,800 kg (6.8 MT) actual weight. Density is about 3.6 kg/CFT - deep in cube-out territory.",
+      "Model A: the desk erroneously hires a 32-ft MXL container. The transporter quotes Rs 78,000 because the rate card is built on 28 T chassis running costs, higher empty weight, and 3-axle / MAV toll class. The cargo never uses the extra payload. Model B: right-sized 32-ft SXL High Cube contracted via open matching at Rs 58,000 for the same cube and window.",
+      "Reconcile landed cost, not sticker folklore. Fuel burn on a 3-axle chassis exceeds a 2-axle for the same light load. NHAI toll workshop bands used here - about Rs 5.20 per km for 2-axle commercial versus about Rs 6.35 per km for 3-axle MAV across 1,450 km - widen the gap further. Net: SXL saves about Rs 20,000 per trip (~25.6%). At two trucks weekly, that is roughly Rs 4.8 lakh annual recovery before you count fewer overload near-misses.",
+      "The third failure mode in the waterfall is worse than oversizing: forcing ~12 MT onto an SXL 'to save freight.' Base trip plus Section 194 fine framing (for a Section 113 breach) and demurrage can land near Rs 89,000 - more expensive than the MXL you were trying to avoid, with legal risk attached. Rebuild diesel and standing-cost logic with the [truck freight rates guide](/blog/truck-freight-rates-india-cost-rate-benchmarking-guide) before locking either model into a contract annex.",
+    ],
+    exhibits: container32ftExhibits["Worked financial case: packaging manufacturer Pune to Delhi corridor"],
+  },
+  {
+    heading: "Standard operating procedure: the 8-step container selection protocol",
+    paragraphs: [
+      "Plant dispatchers, warehouse leads, and transport procurement need one protocol that survives shift handover. Eight stages. No 'book any 32-footer.'",
+      "Step 01: calculate total consignment mass in kilograms from actual scale tickets or verified SKU weights - not sales estimates. Step 02: calculate total consignment volume as the sum of package length times width times height in inches, divided by 1,728, to get total CFT. Step 03: compute average bulk density as total kg over total CFT. Step 04: determine axle requirement - density under ~4.5 kg/CFT leans SXL; density above leans MXL; grey band quotes both.",
+      "Step 05: check vertical clearance and pallet stacking limits - decide whether 9.5-ft / 10-ft HQ is required and whether the CMVR 4.0 m / 4.52 m height framing still holds on the available chassis. Step 06: publish the verified spec into TranZfort or ZAFTYS as '32ft SXL HQ' or '32ft MXL,' never as ambiguous '32ft container.' Step 07: at gate-in, inspect door gaskets, locking rods, and floor flatness before loading begins. Step 08: record tare weight, load, and apply a numbered bolt seal with photo on the trip record.",
+      "Print the process board. When a timeline breaks - density skipped, RC GVW unread, seal missing - the exception is owned. Pair this SOP with gate-to-pay discipline in the [industrial TMS control stack](/blog/industrial-tms-control-stack-india).",
+    ],
+    exhibits: container32ftExhibits["Standard operating procedure: the 8-step container selection protocol"],
+  },
+  {
+    heading: "How modern marketplaces and enterprise TMS streamline container sourcing",
+    paragraphs: [
+      "Wrong chassis thrives in vague language. Open marketplaces fix that only when the post is exact. On TranZfort, independent suppliers and factory phones publish free load cards with explicit container specifications - for example '32ft SXL HQ 2200 CFT' or '32ft MXL standard height' - so truckers who own the matching body can bid without a freight-market (mandi) translator.",
+      "In-app chat keeps rate, advance, and loading window on one thread. Document vetting must include reading the commercial RC to confirm whether the registered vehicle is an ~18.5 T (SXL) or ~28 T (MXL) chassis before the dock opens. A beautiful 32-ft box on the wrong GVW class is still the wrong truck. Zero commission on the trip rate means the savings from right-sizing are not clawed back as platform brokerage.",
+      "High-volume manufacturers still need a web command centre. ZAFTYS TMS embeds volumetric calculation against sales-order manifests, recommends chassis class from SKU weight and cube, allocates dedicated high-cube fleets, and tracks door-to-door milestones with digital ePOD. Spot overflow published into TranZfort returns into the same ledger so finance does not reconcile two universes.",
+      "That hybrid - marketplace precision for indie and surge capacity, TMS control for enterprise fleets - is the same architecture argued in the [online truck load marketplaces guide](/blog/online-truck-load-marketplaces-india-freight-apps-guide). Sizing science without sourcing discipline still leaves the plant paying for air.",
+    ],
+    exhibits: container32ftExhibits["How modern marketplaces and enterprise TMS streamline container sourcing"],
+  },
+  {
+    heading: "The 20-point container sizing and fleet audit matrix and FAQs",
+    paragraphs: [
+      "Score the diagnostic with dispatch, warehouse, and fleet in one room. Rate each line 1 to 5 across chassis selection, documents, sourcing, and gate inspection. Skip equals 0. A team that still raises indents as '32ft container' without SXL/MXL has already failed the first control.",
+      "Interpret by block. Strong chassis scores with weak gate scores still produce Section 113 near-misses. Strong marketplace posting with unread RC GVW still loads the wrong axle. Re-score after thirty days of tare-weigh data, not after the training lunch.",
+      "The master specification matrix below compares 24-ft and 32-ft SXL/MXL standard and HQ variants on length, cube, GVW, tare, payload, toll class, and ideal cargo. Treat it as a workshop wall chart. Measure your empty fleet before you paste brochure CFT into a customer promise.",
+      "FAQs cover the 20-tonne myth, SXL vs MXL differences, HQ price premiums, pallet counts, and the CMVR 4.0 m / 4.52 m height framing. Statutory orientation: CMVR Rule 93; MoRTH S.O. 3467(E); Motor Vehicles Act Sections 113, 114, and 194; AIS-093. Confirm bare text before a demand letter or body-builder dispute.",
+      "Next step: eliminate dead-freight by posting right-sized 32-ft specs on [TranZfort](https://www.tranzfort.com) (also [TranZfort marketplace](/network/tranzfort)) and running volumetric fleet allocation on [ZAFTYS TMS](/zaftys-tms).",
+    ],
+    exhibits: container32ftExhibits["The 20-point container sizing and fleet audit matrix and FAQs"],
+  },
+];

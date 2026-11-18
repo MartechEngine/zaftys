@@ -109,6 +109,21 @@ export const WHATSAPP_TRANSIT_DAMAGE_MESSAGE =
 export const WHATSAPP_FTL_VS_PTL_MESSAGE =
   "Hi ZAFTYS - FTL vs PTL consolidation quote.\n\nCompany:\nOrigin:\nDestination:\nCargo / kg or tonnes per week:\nCube (CBM) if known:\nCurrently on PTL / sundry? (yes/no):\n";
 
+export const WHATSAPP_LOAD_MARKETPLACE_MESSAGE =
+  "Hi ZAFTYS - truck load marketplace / TranZfort + ZAFTYS hybrid.\n\nCompany:\nRole (shipper / fleet / dispatcher):\nOrigin:\nDestination:\nTruck body / tonnes:\nNeed: post load / find return load / TMS overflow:\n";
+
+export const WHATSAPP_GTA_GST_MESSAGE =
+  "Hi ZAFTYS - GTA GST / RCM vs forward charge desk help.\n\nCompany:\nRole (CFO / AP / logistics):\nMonthly freight band:\nCurrent route (5% RCM / 18% forward with ITC / 5% forward no ITC / mixed / unsure):\nIssue (Annexure V / consignment note / 2B / TMS automation):\n";
+
+export const WHATSAPP_32FT_CONTAINER_MESSAGE =
+  "Hi ZAFTYS - 32ft container sizing (SXL vs MXL).\n\nCompany:\nOrigin:\nDestination:\nCargo / approx kg:\nApprox CFT or pallet count:\nNeed: SXL / MXL / HQ / unsure:\n";
+
+export const WHATSAPP_VEHICLE_VERIFICATION_MESSAGE =
+  "Hi ZAFTYS - commercial vehicle verification / gate SOP.\n\nCompany:\nPlants / corridors:\nIssue (bogus truck / cloned plate / insurance repudiation / gate automation):\nCurrent checks (paper only / mParivahan / TMS API / none):\n";
+
+export const WHATSAPP_INDENT_OTIF_MESSAGE =
+  "Hi ZAFTYS - transporter indent / OTIF cascading desk.\n\nCompany:\nPlant / corridors:\nDaily truck band:\nIssue (dropouts / OTIF / risk-purchase / TMS cascade):\nCurrent process (WhatsApp / Excel / TMS):\n";
+
 /** Vertical quote prefills - keep in sync with industry desk language. */
 export const whatsappIndustryPrefill = {
   cement:

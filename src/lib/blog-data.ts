@@ -59,7 +59,48 @@ import {
 import { transitDamageFaqs, transitDamageSections } from "@/lib/blog-post-transit-damage-insurance";
 import { ftlVsPtlKpis, ftlVsPtlReferences, ftlVsPtlTakeaways } from "@/lib/blog-exhibits-ftl-vs-ptl";
 import { ftlVsPtlFaqs, ftlVsPtlSections } from "@/lib/blog-post-ftl-vs-ptl";
-import { WHATSAPP_FTL_VS_PTL_MESSAGE, WHATSAPP_TRANSIT_DAMAGE_MESSAGE } from "@/lib/constants";
+import {
+  loadMarketplaceKpis,
+  loadMarketplaceReferences,
+  loadMarketplaceTakeaways,
+} from "@/lib/blog-exhibits-load-marketplaces";
+import { loadMarketplaceFaqs, loadMarketplaceSections } from "@/lib/blog-post-load-marketplaces";
+import {
+  gtaGstKpis,
+  gtaGstReferences,
+  gtaGstTakeaways,
+} from "@/lib/blog-exhibits-gta-gst";
+import { gtaGstFaqs, gtaGstSections } from "@/lib/blog-post-gta-gst";
+import {
+  container32ftKpis,
+  container32ftReferences,
+  container32ftTakeaways,
+} from "@/lib/blog-exhibits-32ft-container";
+import { container32ftFaqs, container32ftSections } from "@/lib/blog-post-32ft-container";
+import {
+  vehicleVerificationKpis,
+  vehicleVerificationReferences,
+  vehicleVerificationTakeaways,
+} from "@/lib/blog-exhibits-vehicle-verification";
+import {
+  vehicleVerificationFaqs,
+  vehicleVerificationSections,
+} from "@/lib/blog-post-vehicle-verification";
+import {
+  indentOtifKpis,
+  indentOtifReferences,
+  indentOtifTakeaways,
+} from "@/lib/blog-exhibits-indent-otif";
+import { indentOtifFaqs, indentOtifSections } from "@/lib/blog-post-indent-otif";
+import {
+  WHATSAPP_32FT_CONTAINER_MESSAGE,
+  WHATSAPP_FTL_VS_PTL_MESSAGE,
+  WHATSAPP_GTA_GST_MESSAGE,
+  WHATSAPP_INDENT_OTIF_MESSAGE,
+  WHATSAPP_LOAD_MARKETPLACE_MESSAGE,
+  WHATSAPP_TRANSIT_DAMAGE_MESSAGE,
+  WHATSAPP_VEHICLE_VERIFICATION_MESSAGE,
+} from "@/lib/constants";
 
 export type BlogCategory = "operations" | "industries" | "technology";
 
@@ -197,6 +238,8 @@ export type BlogPost = {
   /** ISO date  -  when the guide was last materially revised */
   updatedAt?: string;
   author: string;
+  /** Visible orientation line under the byline (tax / legal / ops caveats). */
+  reviewNote?: string;
   summary: string;
   readMinutes: number;
   /** Defaults to Basics Blog Template. */
@@ -245,6 +288,465 @@ export const blogCategoryLabels: Record<BlogCategory, string> = {
 };
 
 export const blogPosts: readonly BlogPost[] = [
+  {
+    slug: "transporter-indent-management-otif-india-placement-sla-guide",
+    title:
+      "Transporter Indent Management and OTIF in India: How Industrial Plants Fix Placement Shortfalls, Cascading Rules, and Vendor SLAs",
+    seoTitle: "Transporter Indent Management | OTIF SLA | ZAFTYS",
+    seoDescription:
+      "Fix transporter indent dropouts in India: OTIF maths, L1/L2 cascading, risk-purchase debits, scorecards, and TMS-to-marketplace safety valves.",
+    category: "operations",
+    tags: [
+      "transporter indent management system",
+      "transporter placement ratio India",
+      "OTIF calculation Indian freight",
+      "transporter performance scorecard",
+      "non-placement penalty transport contract",
+      "automated indent cascading TMS",
+      "daily truck dispatch planning",
+      "risk purchase clause freight contract",
+      "plant gate TAT and truck placement",
+      "TranZfort",
+      "ZAFTYS TMS",
+    ],
+    publishedAt: "2026-11-18",
+    updatedAt: "2026-11-19",
+    author: "ZAFTYS Operations & Supply Chain Governance Research",
+    reviewNote:
+      "Last reviewed: 19 Nov 2026. Orientation for plant logistics desks - not legal advice. Confirm Contract Act clauses with counsel before debit practice.",
+    template: "deep-research",
+    subtitle:
+      "Indent-to-Gate Placement Ratios · Compound OTIF Formulation · Dynamic L1/L2 Cascading Engines · Section 73 Contract Act Risk Purchase · 100-Point Transporter Scorecard · ZAFTYS Web Dispatch Board · TranZfort Safety-Valve Capacity",
+    summary:
+      "Fix morning indent dropouts: compound OTIF, automated L1/L2 cascading, Section 73 risk-purchase debits, 100-point scorecards, plant TAT linkage, and ZAFTYS-to-TranZfort safety valves.",
+    readMinutes: 34,
+    heroImage: "/images/blog/transporter-indent-management-otif-india.jpg",
+    heroAspectRatio: "16/9",
+    heroWidth: 1280,
+    heroHeight: 720,
+    heroAlt:
+      "Indian plant dispatch desk with monitors and trucks staged at a factory gate illustrating transporter indent placement and OTIF control",
+    kpis: indentOtifKpis,
+    takeaways: indentOtifTakeaways,
+    references: indentOtifReferences,
+    midCtas: [
+      {
+        afterHeading: "The indent waterfall: designing an automated cascading engine",
+        eyebrow: "Stop 4:00 PM panic",
+        title: "Automate L1/L2 cascading on ZAFTYS",
+        body: "Share your daily truck band and current confirm process. We map a 2-hour digital window into the dispatch board.",
+        cta: { label: "Explore ZAFTYS TMS", to: "/zaftys-tms" },
+      },
+      {
+        afterHeading: "Contractual SLAs and penalties: making non-placement enforceable",
+        eyebrow: "Beyond Rs 1,000 penalties",
+        title: "Draft risk-purchase debit into the freight ledger",
+        body: "Send your current non-placement clause. We line up Section 73 style differentials with reciprocal detention credits.",
+        cta: { label: "WhatsApp indent desk", whatsapp: true },
+      },
+      {
+        afterHeading: "Worked financial case: the cost of a 10-truck placement failure",
+        eyebrow: "Contain the month-end scramble",
+        title: "Rebuild one failure day on cascade maths",
+        body: "Missing trucks, spot premiums paid, and LD hit. We contrast manual scramble versus automated safety valve.",
+        cta: { label: "Contract logistics", to: "/logistics/contract-logistics" },
+      },
+      {
+        afterHeading: "System architecture: connecting ZAFTYS web TMS to TranZfort mobile capacity",
+        eyebrow: "Zero-commission safety valve",
+        title: "Publish unfulfilled indents to TranZfort in one click",
+        body: "Verified truckers fill the gap; bookings return into the same gate-to-pay ledger.",
+        cta: { label: "Open TranZfort", to: "/network/tranzfort" },
+      },
+    ],
+    relatedSlugs: [
+      "spot-market-vs-dedicated-fleet-india",
+      "plant-detention-tat-yard-gate-india",
+      "truck-freight-rates-india-cost-rate-benchmarking-guide",
+      "5-hidden-cost-leaks-heavy-industrial-freight-tms-3pl-guide",
+      "industrial-tms-control-stack-india",
+      "online-truck-load-marketplaces-india-freight-apps-guide",
+      "commercial-vehicle-verification-india-bogus-trucks-fraud-prevention",
+      "gst-on-gta-rcm-forward-charge-consignment-note-rules-guide",
+    ],
+    faqs: indentOtifFaqs,
+    sections: indentOtifSections,
+    cta: { label: "Run indent cascading on ZAFTYS", to: "/zaftys-tms" },
+    ctaBand: {
+      eyebrow: "After the OTIF maths",
+      title: "Eliminate morning dispatch failures. Cascade on ZAFTYS. Open TranZfort when contracts miss.",
+      body: "Automate L1/L2 windows, enforce risk-purchase debits, score carriers on gate timestamps, and publish unfulfilled indents to verified truckers - without losing gate-to-pay control.",
+    },
+    whatsappMessage: WHATSAPP_INDENT_OTIF_MESSAGE,
+  },
+  {
+    slug: "commercial-vehicle-verification-india-bogus-trucks-fraud-prevention",
+    title:
+      "Commercial Vehicle Verification in India: How Industrial Shippers Prevent Bogus Trucks, Cloned Plates, and Stolen Freight",
+    seoTitle: "Truck RC Verification India | Bogus Truck Fraud | ZAFTYS",
+    seoDescription:
+      "Verify commercial trucks in India: Vahan/Sarathi checks, chassis rubbing, FASTag clone detection, and gate SOPs against fake / bogus trucks (farzi gaadi).",
+    category: "operations",
+    tags: [
+      "truck verification vahan commercial vehicle",
+      "bogus truck fraud in logistics India",
+      "how to verify truck RC and driver license",
+      "sarathi driving license verification API",
+      "stolen cargo in transit India",
+      "transporter background check checklist",
+      "plant security truck gate in SOP",
+      "chassis number rubbing verification",
+      "commercial vehicle fraud prevention",
+      "TranZfort",
+      "ZAFTYS TMS",
+    ],
+    publishedAt: "2026-11-18",
+    updatedAt: "2026-11-19",
+    author: "ZAFTYS Operations & Supply Chain Risk Research",
+    reviewNote:
+      "Last reviewed: 19 Nov 2026. Orientation for plant security and logistics - not legal advice. Confirm bare BNS / MV Act text before an FIR strategy memo.",
+    template: "deep-research",
+    subtitle:
+      "Vahan 4.0 API Authentication · Sarathi Commercial DL Endorsement · Physical Chassis Pencil Rubbing · FASTag Historical Corridor Verification · Section 316 BNS Criminal Breach of Trust · Plant Gate Security SOP · TranZfort Document Vetting Layer",
+    summary:
+      "Stop fake / bogus trucks (farzi gaadi) and cloned plates at the plant gate: Vahan/Sarathi ULIP checks, chassis pencil rubbing, FASTag plausibility, driver chain of custody, and marketplace-to-TMS verification.",
+    readMinutes: 34,
+    heroImage: "/images/blog/commercial-vehicle-verification-india.jpg",
+    heroAspectRatio: "16/9",
+    heroWidth: 1280,
+    heroHeight: 720,
+    heroAlt:
+      "Plant security guard verifying commercial truck registration plate and documents at an Indian factory gate before loading",
+    kpis: vehicleVerificationKpis,
+    takeaways: vehicleVerificationTakeaways,
+    references: vehicleVerificationReferences,
+    midCtas: [
+      {
+        afterHeading: "Digital verification: Vahan 4.0, Sarathi, and ULIP integration",
+        eyebrow: "45-second gate handshake",
+        title: "Embed Vahan and Sarathi hard-blocks in ZAFTYS",
+        body: "Share how your gate checks RC today. We map ULIP validation into the weighbridge workflow.",
+        cta: { label: "Explore ZAFTYS TMS", to: "/zaftys-tms" },
+      },
+      {
+        afterHeading: "FASTag plausibility audits: the digital footprint check",
+        eyebrow: "Clone detector",
+        title: "Flag impossible toll trajectories before loading",
+        body: "Send one corridor where spot trucks arrive with soft rates. We design the FASTag plausibility rule.",
+        cta: { label: "WhatsApp gate SOP", whatsapp: true },
+      },
+      {
+        afterHeading: "Worked case study: copper wire rods diverted on the Gujarat-Maharashtra belt",
+        eyebrow: "After a near-miss or write-off",
+        title: "Rebuild due diligence before the next high-value spot load",
+        body: "Commodity, invoice band, and current gate checklist. We close the verification gaps insurers ask for.",
+        cta: { label: "Contract logistics", to: "/logistics/contract-logistics" },
+      },
+      {
+        afterHeading: "How TranZfort and ZAFTYS eliminate sourcing vulnerabilities and the 20-point audit",
+        eyebrow: "Leave anonymous WhatsApp groups",
+        title: "Source verified capacity on TranZfort",
+        body: "OTP, PAN, and RC-reviewed truckers with trip photo timelines - then the same trucks face ZAFTYS gate blocks.",
+        cta: { label: "Open TranZfort", to: "/network/tranzfort" },
+      },
+    ],
+    relatedSlugs: [
+      "transit-damage-shortage-cargo-insurance-india-carrier-liability-guide",
+      "spot-market-vs-dedicated-fleet-india",
+      "industrial-tms-control-stack-india",
+      "5-hidden-cost-leaks-heavy-industrial-freight-tms-3pl-guide",
+      "online-truck-load-marketplaces-india-freight-apps-guide",
+      "truck-freight-rates-india-cost-rate-benchmarking-guide",
+      "transporter-indent-management-otif-india-placement-sla-guide",
+      "32-feet-container-truck-dimensions-payload-sxl-mxl-guide",
+    ],
+    faqs: vehicleVerificationFaqs,
+    sections: vehicleVerificationSections,
+    cta: { label: "Automate gate verification in ZAFTYS", to: "/zaftys-tms" },
+    ctaBand: {
+      eyebrow: "After the fake / bogus truck (farzi gaadi) playbook",
+      title: "Eliminate bogus trucks at the gate. Source verified capacity on TranZfort.",
+      body: "Run Vahan, Sarathi, FASTag, and chassis controls in ZAFTYS TMS. Pull open-market trucks from TranZfort with identity and trip photo trails - so soft freight never bypasses due diligence.",
+    },
+    whatsappMessage: WHATSAPP_VEHICLE_VERIFICATION_MESSAGE,
+  },
+  {
+    slug: "32-feet-container-truck-dimensions-payload-sxl-mxl-guide",
+    title:
+      "32-Foot Container Trucks in India: SXL vs. MXL Dimensions, Payload Capacity, Volumetric Weight, and Sizing Guide",
+    seoTitle: "32 Feet Container Truck Capacity | SXL vs MXL | ZAFTYS",
+    seoDescription:
+      "32-ft SXL vs MXL container trucks in India: payload after tare, CFT and High Cube maths, CMVR height framing, and density-based chassis selection.",
+    category: "operations",
+    tags: [
+      "32 feet container truck capacity in tons",
+      "32 feet container truck dimensions",
+      "32 feet single axle container capacity",
+      "32 feet multi axle container payload",
+      "cubic feet capacity 32 feet truck",
+      "high cube container truck India",
+      "volumetric freight calculation 32ft",
+      "32 ft sxl vs mxl difference",
+      "pallet capacity 32 feet truck",
+      "TranZfort",
+      "ZAFTYS TMS",
+    ],
+    publishedAt: "2026-11-18",
+    updatedAt: "2026-11-19",
+    author: "ZAFTYS Engineering & Fleet Intelligence",
+    reviewNote:
+      "Last reviewed: 19 Nov 2026. Workshop payload and CFT bands - confirm RC GVW, measured tare, and live CMVR Rule 93 text before a tender promise.",
+    template: "deep-research",
+    subtitle:
+      "Single Axle (SXL) vs Multi-Axle (MXL) · 1,850 to 2,250 Cubic Feet (CFT) · High Cube (HQ) 10-Ft Height Norms · CMVR Rule 93 Height Framing (4.0 / 4.52 m) · Cube-Out vs Weigh-Out Thresholds · TranZfort In-App Container Sourcing · ZAFTYS Web TMS Fleet Allocation",
+    summary:
+      "Right-size 32-ft closed containers: SXL vs MXL payload after tare, CFT and High Cube maths, density thresholds, pallet layouts, Section 113 / 194 traps, and marketplace / TMS sourcing.",
+    readMinutes: 32,
+    heroImage: "/images/blog/32-feet-container-truck-sxl-mxl-india.jpg",
+    heroAspectRatio: "16/9",
+    heroWidth: 1280,
+    heroHeight: 720,
+    heroAlt:
+      "Long 32-foot enclosed multi-axle container truck with corrugated body and rear locking rods parked at an Indian factory loading dock",
+    kpis: container32ftKpis,
+    takeaways: container32ftTakeaways,
+    references: container32ftReferences,
+    midCtas: [
+      {
+        afterHeading: "The physics of cube-out vs weigh-out",
+        eyebrow: "Stop paying for unused axles",
+        title: "Post exact 32ft SXL or MXL specs - not vague '32ft'",
+        body: "Share cargo kg, CFT or pallet count, and lane. We right-size the chassis before the rate card argues.",
+        cta: { label: "Open TranZfort", to: "/network/tranzfort" },
+      },
+      {
+        afterHeading: "Regulatory compliance: axle weights, CMVR norms, and weighbridge traps",
+        eyebrow: "Weigh before highway",
+        title: "Build Section 113 / 194 checks into gate-out",
+        body: "Send how you capture tare and gross today. We map axle limits into the dispatch SOP.",
+        cta: { label: "WhatsApp sizing desk", whatsapp: true },
+      },
+      {
+        afterHeading: "Worked financial case: packaging manufacturer Pune to Delhi corridor",
+        eyebrow: "Recover dead-freight",
+        title: "Rebuild one cube-out lane on SXL vs MXL maths",
+        body: "Origin, destination, kg, and CFT. We line up trip rate, toll class, and annual waste.",
+        cta: { label: "Contract logistics", to: "/logistics/contract-logistics" },
+      },
+      {
+        afterHeading: "How modern marketplaces and enterprise TMS streamline container sourcing",
+        eyebrow: "Volumetric fleet allocation",
+        title: "Match SKU weight and cube to chassis in ZAFTYS",
+        body: "Enterprise desks need automated recommendations, dedicated HQ fleets, and ePOD - not brochure CFT stickers.",
+        cta: { label: "Explore ZAFTYS TMS", to: "/zaftys-tms" },
+      },
+    ],
+    relatedSlugs: [
+      "planning-industrial-shipments",
+      "india-axle-load-gvw-limits-heavy-freight",
+      "truck-freight-rates-india-cost-rate-benchmarking-guide",
+      "ftl-vs-ptl-freight-services-india-cost-break-even-guide",
+      "5-hidden-cost-leaks-heavy-industrial-freight-tms-3pl-guide",
+      "industrial-tms-control-stack-india",
+      "container-trucking-logistics-india",
+      "online-truck-load-marketplaces-india-freight-apps-guide",
+      "commercial-vehicle-verification-india-bogus-trucks-fraud-prevention",
+    ],
+    faqs: container32ftFaqs,
+    sections: container32ftSections,
+    cta: { label: "Book right-sized 32ft containers", to: "/network/tranzfort" },
+    ctaBand: {
+      eyebrow: "After the density maths",
+      title: "Eliminate dead-freight. Book right-sized 32-ft SXL or MXL containers.",
+      body: "Post exact specs on TranZfort for verified container fleets. Run volumetric SKU matching and dedicated high-cube contracts on ZAFTYS TMS - weigh tare, seal, and settle on one audit trail.",
+    },
+    whatsappMessage: WHATSAPP_32FT_CONTAINER_MESSAGE,
+  },
+  {
+    slug: "gst-on-gta-rcm-forward-charge-consignment-note-rules-guide",
+    title:
+      "GST on Goods Transport Agencies (GTA) in India: 5% RCM vs. 18% Forward Charge, Consignment Notes, and Freight Invoicing Rules",
+    seoTitle: "GST on GTA 2026 | 5% RCM vs 18% Forward | ZAFTYS",
+    seoDescription:
+      "GTA GST in India: 5% RCM vs 18% forward charge with ITC from 22 Sep 2025, consignment notes, Annexure V elections, and freight tax ledger controls.",
+    category: "operations",
+    tags: [
+      "GST on GTA rules 2026",
+      "RCM on freight 5 vs 18",
+      "GTA 18% GST forward charge",
+      "consignment note under GST GTA",
+      "GTA declaration format annexure V",
+      "reverse charge mechanism road transport",
+      "GST on truck hire charges",
+      "e-invoicing for transporters India",
+      "GTA input tax credit eligibility",
+      "freight tax invoice format",
+      "ZAFTYS TMS",
+      "TranZfort",
+    ],
+    publishedAt: "2026-11-18",
+    updatedAt: "2026-11-19",
+    author: "ZAFTYS Operations & Indirect Tax Research",
+    reviewNote:
+      "Last reviewed: 19 Nov 2026. Orientation for logistics and finance desks - not tax advice. Confirm bare CGST notifications and portal advisories before a demand reply.",
+    template: "deep-research",
+    subtitle:
+      "Section 9(3) CGST Act · Reverse Charge Mechanism (RCM) · 18% Forward Charge with ITC (from 22 Sep 2025) · Statutory Consignment Note (Rule 4B) · Annexure V Portal Declarations · Withdrawal of Rs 750 / Rs 1,500 Exemptions · TMS Freight Ledger Automation",
+    summary:
+      "GTA taxation for industrial freight desks: 5% RCM vs 18% forward charge with ITC, consignment-note litmus, Annexure V elections, post-2022 exemption withdrawal, and TMS-led GSTR-2B / cash-ledger reconciliation.",
+    readMinutes: 34,
+    heroImage: "/images/blog/gst-on-gta-rcm-forward-charge-india.jpg",
+    heroAspectRatio: "16/9",
+    heroWidth: 1280,
+    heroHeight: 720,
+    heroAlt:
+      "Finance and logistics desk reviewing freight tax invoices, consignment notes, and GST portal filings for Goods Transport Agency compliance in India",
+    kpis: gtaGstKpis,
+    takeaways: gtaGstTakeaways,
+    references: gtaGstReferences,
+    midCtas: [
+      {
+        afterHeading: "The consignment note: statutory structure, legal role, and evidentiary weight",
+        eyebrow: "Evidence before assessment",
+        title: "Keep digital LR and POD on one trip timeline",
+        body: "Marketplace overflow still needs a consignment-note trail. Capture LR photos before cash moves.",
+        cta: { label: "Open TranZfort", to: "/network/tranzfort" },
+      },
+      {
+        afterHeading: "Statutory declarations: Annexure V, Annexure VI, and invoice endorsements",
+        eyebrow: "Stop missing endorsements",
+        title: "Block AP when forward-charge text is absent",
+        body: "Share how you check Annexure V today. We map declaration gates into the freight tax SOP.",
+        cta: { label: "WhatsApp GTA desk", whatsapp: true },
+      },
+      {
+        afterHeading: "Worked financial case: 5% RCM vs 18% forward charge on Rs 10 lakh monthly freight",
+        eyebrow: "Rebuild one freight tax month",
+        title: "Compare RCM cash vs 18% forward on your ledger",
+        body: "Send monthly freight band and current vendor mix. We line up cash timing and ITC dependency.",
+        cta: { label: "Contract logistics", to: "/logistics/contract-logistics" },
+      },
+      {
+        afterHeading: "Freight invoicing, e-invoicing, and GSTR-2B audit reconciliation",
+        eyebrow: "TMS freight tax automation",
+        title: "Validate GSTIN, Annexure V, and ledger split in ZAFTYS",
+        body: "Enterprise desks need one audit trail for RCM cash liability and forward-charge vendor payout.",
+        cta: { label: "Explore ZAFTYS TMS", to: "/zaftys-tms" },
+      },
+    ],
+    relatedSlugs: [
+      "truck-freight-rates-india-cost-rate-benchmarking-guide",
+      "epod-fastag-eway-bill-billing-india",
+      "spot-market-vs-dedicated-fleet-india",
+      "transit-damage-shortage-cargo-insurance-india-carrier-liability-guide",
+      "industrial-tms-control-stack-india",
+      "5-hidden-cost-leaks-heavy-industrial-freight-tms-3pl-guide",
+      "online-truck-load-marketplaces-india-freight-apps-guide",
+      "transporter-indent-management-otif-india-placement-sla-guide",
+    ],
+    faqs: gtaGstFaqs,
+    sections: gtaGstSections,
+    cta: { label: "Automate freight tax in ZAFTYS TMS", to: "/zaftys-tms" },
+    ctaBand: {
+      eyebrow: "After the GTA tax matrix",
+      title: "Automate freight tax compliance on ZAFTYS. Keep LR evidence on TranZfort.",
+      body: "Validate Annexure V, split RCM cash vs forward-charge payout, and store digital consignment notes with POD - contract fleets and marketplace overflow on one ledger.",
+    },
+    whatsappMessage: WHATSAPP_GTA_GST_MESSAGE,
+  },
+  {
+    slug: "online-truck-load-marketplaces-india-freight-apps-guide",
+    title:
+      "Online Truck Load Marketplaces in India: How Digital Freight Platforms Work, Broker Commission vs. Zero-Commission Models, and Load Booking SOPs",
+    seoTitle: "Truck Load Booking App India | Zero-Commission | ZAFTYS",
+    seoDescription:
+      "How Indian truck load marketplaces work: brokerage stacks, zero-commission matching, Vahan vetting, trip milestones, and TMS overflow to TranZfort.",
+    category: "technology",
+    tags: [
+      "truck load booking app India",
+      "post truck load online India",
+      "best truck load apps in India",
+      "find FTL freight online",
+      "zero commission transport app",
+      "how to find return load for truck",
+      "digital freight marketplace India",
+      "transport nagar broker commission rates",
+      "online truck booking for suppliers",
+      "TranZfort",
+      "ZAFTYS TMS",
+    ],
+    publishedAt: "2026-11-18",
+    updatedAt: "2026-11-19",
+    author: "ZAFTYS Operations & Marketplace Research",
+    reviewNote:
+      "Last reviewed: 19 Nov 2026. Workshop corridor maths and commission bands - not a national rate index. Confirm bare Carriage by Road / IT Act text before a claims memo.",
+    template: "deep-research",
+    subtitle:
+      "Digital freight matching · Zero-commission marketplaces · Transport Nagar brokerage commission (dalali) breakdown · In-app trip milestones · Document verification (Vahan / PAN) · ZAFTYS web TMS to TranZfort integration",
+    summary:
+      "How Indian truck load marketplaces work: Transport Nagar commission stacks, zero-commission direct matching on TranZfort, Vahan vetting, trip milestones, and enterprise overflow from ZAFTYS TMS.",
+    readMinutes: 32,
+    heroImage: "/images/blog/online-truck-load-marketplaces-india.jpg",
+    heroAspectRatio: "16/9",
+    heroWidth: 1280,
+    heroHeight: 720,
+    heroAlt:
+      "Indian commercial trucks and dispatch phones at a freight yard illustrating digital truck load marketplace matching versus Transport Nagar brokerage",
+    kpis: loadMarketplaceKpis,
+    takeaways: loadMarketplaceTakeaways,
+    references: loadMarketplaceReferences,
+    midCtas: [
+      {
+        afterHeading: "The evolution of digital freight: from closed aggregators to open marketplaces",
+        eyebrow: "Zero-commission Android matching",
+        title: "Post a load or find a return truck without brokerage commission (dalali)",
+        body: "Indie suppliers and fleet owners use TranZfort free. Share origin, destination, body type, and loading window.",
+        cta: { label: "Open TranZfort", to: "/network/tranzfort" },
+      },
+      {
+        afterHeading: "Document verification and trust architecture: vetting before loading",
+        eyebrow: "Vahan before gate-in",
+        title: "Do not load on a screenshot RC",
+        body: "Share how you vet vehicles today. We map RC, DL, and PAN checks into the booking SOP.",
+        cta: { label: "WhatsApp vetting SOP", whatsapp: true },
+      },
+      {
+        afterHeading: "Worked financial case: 25-tonne industrial freight corridor",
+        eyebrow: "Rebuild one corridor",
+        title: "Compare freight market (mandi), platform fee, and zero-commission on your lane",
+        body: "Send origin, destination, tonnes, and last three trip invoices. We line up the leakage without a sales pitch.",
+        cta: { label: "Contract logistics", to: "/logistics/contract-logistics" },
+      },
+      {
+        afterHeading: "Enterprise integration: connecting web TMS to open mobile marketplaces",
+        eyebrow: "Web TMS + open marketplace",
+        title: "Run contract fleets on ZAFTYS, overflow on TranZfort",
+        body: "Multi-plant desks keep gate-to-pay on web TMS and publish unfulfilled indents into the Android marketplace.",
+        cta: { label: "Explore ZAFTYS TMS", to: "/zaftys-tms" },
+      },
+    ],
+    relatedSlugs: [
+      "truck-freight-rates-india-cost-rate-benchmarking-guide",
+      "spot-market-vs-dedicated-fleet-india",
+      "transit-damage-shortage-cargo-insurance-india-carrier-liability-guide",
+      "ftl-vs-ptl-freight-services-india-cost-break-even-guide",
+      "5-hidden-cost-leaks-heavy-industrial-freight-tms-3pl-guide",
+      "industrial-tms-control-stack-india",
+      "gst-on-gta-rcm-forward-charge-consignment-note-rules-guide",
+      "transporter-indent-management-otif-india-placement-sla-guide",
+      "commercial-vehicle-verification-india-bogus-trucks-fraud-prevention",
+      "32-feet-container-truck-dimensions-payload-sxl-mxl-guide",
+    ],
+    faqs: loadMarketplaceFaqs,
+    sections: loadMarketplaceSections,
+    cta: { label: "See TranZfort + ZAFTYS hybrid", to: "/network/tranzfort" },
+    ctaBand: {
+      eyebrow: "After the marketplace math",
+      title: "Run corporate fleets on ZAFTYS. Tap open-market trucks on TranZfort.",
+      body: "Keep dedicated capacity on the web TMS. When contracts cannot place, publish overflow into the zero-commission Android marketplace - same gate-to-pay audit trail.",
+    },
+    whatsappMessage: WHATSAPP_LOAD_MARKETPLACE_MESSAGE,
+  },
   {
     slug: "ftl-vs-ptl-freight-services-india-cost-break-even-guide",
     title: "FTL vs PTL in India: Break-Even Weight, Cost & Damage",
@@ -300,7 +802,7 @@ export const blogPosts: readonly BlogPost[] = [
         afterHeading: "Statutory and documentation compliance: e-Way Bill Part B multi-vehicle updating",
         eyebrow: "Clean Part B on the trip",
         title: "Capture seals and ePOD on contracted moves",
-        body: "Bring one PTL interception or delayed bilty example. We map which documents ZAFTYS TMS should hold on dedicated FTL.",
+        body: "Bring one PTL interception or delayed consignment note / LR (bilty) example. We map which documents ZAFTYS TMS should hold on dedicated FTL.",
         cta: { label: "Explore ZAFTYS TMS", to: "/zaftys-tms" },
       },
       {
@@ -3185,7 +3687,7 @@ export const blogPosts: readonly BlogPost[] = [
       {
         heading: "Documents: LR and e-Way Bill",
         paragraphs: [
-          "Once net weight is locked, bind the carriage paper (LR / bilty) and the GST e-Way Bill when movement needs one. Tax invoice duties sit under Section 31 and Rule 46. E-invoicing under Rule 48 is a different track for notified businesses - do not confuse it with bilty generation.",
+          "Once net weight is locked, bind the carriage paper - consignment note / LR (bilty) and the GST e-Way Bill when movement needs one. Tax invoice duties sit under Section 31 and Rule 46. E-invoicing under Rule 48 is a different track for notified businesses - do not confuse it with consignment note / LR (bilty) generation.",
           "Rule 138 is the e-Way engine: Part A for consignment details, Part B for the vehicle. Normal cargo uses about 200 km per day of validity. Oversize work uses about 20 km per day. Not every truck movement needs an e-Way Bill - value thresholds, some goods, and certain short or exempt cases skip it. Ask tax, then encode skip rules so the TMS does not invent fake bills.",
           "If your dispatch leads cannot explain Part A vs Part B in one minute, automating documents only speeds up confusion. Use the validity picture with them.",
         ],
