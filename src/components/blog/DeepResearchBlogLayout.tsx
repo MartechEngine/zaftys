@@ -178,6 +178,7 @@ function buildToc(post: BlogPost): TocItem[] {
   if (post.references && post.references.length > 0) {
     items.push({ id: "references", label: "References", depth: 1 });
   }
+  items.push({ id: "about-this-guide", label: "About this guide", depth: 1 });
   return items;
 }
 
@@ -258,9 +259,6 @@ export function DeepResearchBlogLayout({ post }: DeepResearchBlogLayoutProps) {
                   <span aria-hidden="true">·</span>
                   <span>{post.author}</span>
                 </div>
-                {post.reviewNote ? (
-                  <p className="mb-4 max-w-3xl text-xs leading-relaxed text-white/65 md:text-[13px]">{post.reviewNote}</p>
-                ) : null}
                 <h1 className="max-w-3xl break-words text-3xl font-heading font-bold leading-tight normal-case tracking-normal text-white md:text-4xl lg:text-[2.75rem]">
                   {post.title}
                 </h1>
@@ -495,6 +493,29 @@ export function DeepResearchBlogLayout({ post }: DeepResearchBlogLayoutProps) {
                     </ol>
                   </div>
                 ) : null}
+
+                <aside
+                  id="about-this-guide"
+                  className="mt-8 scroll-mt-28 rounded-xl border border-navy/10 bg-white px-5 py-6 md:px-8"
+                  aria-label="About this guide"
+                >
+                  <p className="text-[10px] font-heading font-bold tracking-widest text-[#0B7F8A]">Methodology</p>
+                  <h2 className="mb-2 font-heading text-lg font-bold normal-case tracking-normal text-navy">
+                    About this guide
+                  </h2>
+                  <p className="max-w-3xl text-sm leading-relaxed text-navy/75">
+                    Prepared by {post.author} for industrial logistics readers. Educational research and analysis
+                    only - not legal, tax, engineering, or professional advice. Confirm primary sources and counsel
+                    before operational use. Corrections:{" "}
+                    <a href="mailto:contact@zaftys.com" className="font-semibold text-[#0B7F8A] hover:underline">
+                      contact@zaftys.com
+                    </a>
+                    .
+                  </p>
+                  {post.reviewNote ? (
+                    <p className="mt-3 max-w-3xl text-sm leading-relaxed text-navy/70">{post.reviewNote}</p>
+                  ) : null}
+                </aside>
 
                 {related.length > 0 ? (
                   <div className="mt-10">

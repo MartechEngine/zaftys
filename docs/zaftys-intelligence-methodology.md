@@ -1,11 +1,16 @@
 # ZAFTYS Intelligence — editorial methodology
 
-Institutional byline for deep-research blog pages: **ZAFTYS Intelligence**.
+Institutional author for deep-research blog pages where set: **ZAFTYS Intelligence**.
+
+## On-page presentation
+
+- Hero shows author name only (no long disclaimer above the title).
+- Every deep-research page ends with a shared **About this guide** footer in `DeepResearchBlogLayout`.
+- Optional `reviewNote` is a short **topic note** under that footer (not an AI disclosure banner).
 
 ## What this means
 
-- Content is **AI-assisted research and analysis** prepared for ZAFTYS readers.
-- It is **not** a named individual author byline.
+- Content is research and analysis prepared for ZAFTYS readers.
 - It does **not** claim CA, legal, engineering, or independent third-party expert review.
 - Fabricated human credentials and fabricated “last reviewed by [person]” dates are forbidden.
 

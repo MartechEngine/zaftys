@@ -325,7 +325,7 @@ export const blogPosts: readonly BlogPost[] = [
     updatedAt: "2026-11-18",
     author: "ZAFTYS Intelligence",
     reviewNote:
-      "Institutional byline: ZAFTYS Intelligence. AI-assisted research and analysis for logistics readers - not a named individual author and not CA, legal, engineering, or independent expert review. Worked OTIF examples are hypothetical until calibrated on your plant data. Confirm Contract Act clauses with counsel before debit practice. Corrections: contact@zaftys.com.",
+      "Topic note: worked OTIF examples are hypothetical until calibrated on your plant data. Confirm Contract Act clauses with counsel before debit practice.",
     template: "deep-research",
     subtitle:
       "Placement Rate vs OTIF · Denominator Rules · Dynamic L1/L2 Cascading Engines · Section 73 Contract Act Risk Purchase · Configurable Transporter Scorecard · ZAFTYS Web Dispatch Board · TranZfort Safety-Valve Capacity",
@@ -416,7 +416,7 @@ export const blogPosts: readonly BlogPost[] = [
     updatedAt: "2026-11-18",
     author: "ZAFTYS Intelligence",
     reviewNote:
-      "Institutional byline: ZAFTYS Intelligence. AI-assisted research and analysis for fleet-compliance readers - not a named individual author and not CA, legal, engineering, or independent expert review. ULIP is described as a government access pathway with a readiness assessment only; no measured ZAFTYS p50/p95 latency claim is published. Confirm bare BNS / MV Act text before an FIR strategy memo. Corrections: contact@zaftys.com.",
+      "Topic note: ULIP is described as a government access pathway with a readiness assessment only - no measured ZAFTYS p50/p95 latency is published. Confirm bare BNS / MV Act text before an FIR strategy memo.",
     template: "deep-research",
     subtitle:
       "Parivahan / Vahan Registry Checks · Sarathi Commercial DL Endorsement · Physical Chassis Pencil Rubbing · FASTag Movement Signals · Section 316 BNS Criminal Breach of Trust · Plant Gate Security SOP · TranZfort Document Vetting Layer",
@@ -507,7 +507,7 @@ export const blogPosts: readonly BlogPost[] = [
     updatedAt: "2026-11-18",
     author: "ZAFTYS Intelligence",
     reviewNote:
-      "Institutional byline: ZAFTYS Intelligence. AI-assisted research and analysis for commercial-vehicle readers - not a named individual author and not CA, legal, engineering, or independent expert review. SXL/MXL are commercial desk terms; payload depends on chassis, GVW, body, and RC. OEM table rows cite manufacturer-published values only; blanks mean not stated in the cited source. Confirm RC GVW, measured tare, and live CMVR height categories. Corrections: contact@zaftys.com.",
+      "Topic note: SXL/MXL are commercial desk terms. OEM table rows cite manufacturer-published values only; blanks mean not stated in the cited source. Confirm RC GVW, measured tare, and live CMVR height categories.",
     template: "deep-research",
     subtitle:
       "Deck Length vs Internal Cube · Payload = GVW - Tare · OEM Model-Specific Rows · Geometric CFT Examples · CMVR Height Categories (3.8 / 4.20 / 4.52 m) · Cube-Out vs Weigh-Out · TranZfort Spec Posting · ZAFTYS TMS Allocation",
@@ -600,7 +600,7 @@ export const blogPosts: readonly BlogPost[] = [
     updatedAt: "2026-11-18",
     author: "ZAFTYS Intelligence",
     reviewNote:
-      "Institutional byline: ZAFTYS Intelligence. AI-assisted research and analysis for indirect-tax orientation - not a named individual author and not CA, legal, or independent expert review. Rate arithmetic and decision aids are educational only. Confirm bare CGST notifications, GST Council FAQ, and portal advisories before a demand reply. Corrections: contact@zaftys.com.",
+      "Topic note: rate arithmetic and decision aids are educational only. Confirm bare CGST notifications, GST Council FAQ, and portal advisories before a demand reply.",
     template: "deep-research",
     subtitle:
       "Section 9(3) CGST Act · Reverse Charge Mechanism (RCM) · 18% Forward Charge with ITC (from 22 Sep 2025) · Tax-Route Decision Aid · Statutory Consignment Note · Annexure V Portal Declarations · Notification Register · TMS Freight Ledger Automation",
@@ -691,7 +691,7 @@ export const blogPosts: readonly BlogPost[] = [
     updatedAt: "2026-11-18",
     author: "ZAFTYS Intelligence",
     reviewNote:
-      "Institutional byline: ZAFTYS Intelligence. AI-assisted research and analysis for freight-marketplace readers - not a named individual author and not CA, legal, engineering, or independent expert review. Offline 8-10% broker commission is attributed to the BlackBuck / Zinka Nov 2024 RHP industry estimate with limitations. The Rs 54,000 / Rs 62,000 / Rs 55,800 corridor figures are a labelled hypothetical ZAFTYS Intelligence scenario, not an audited trip. TranZfort matching is free for truckers and transporters; TMS is the paid path. Legal: https://tranzfort.com/legal/. Corrections: contact@zaftys.com.",
+      "Topic note: the Rs 54,000 / Rs 62,000 / Rs 55,800 figures are a labelled hypothetical cost scenario, not an audited trip. Offline 8-10% broker commission is attributed to the BlackBuck / Zinka Nov 2024 RHP with limitations. TranZfort matching is free for truckers and transporters; TMS is the paid path (tranzfort.com/legal/).",
     template: "deep-research",
     subtitle:
       "Digital freight matching · Free trucker/transporter matching · Brokerage stack orientation · Return-load dwell definition · In-app trip milestones · Document verification (Vahan / PAN) · ZAFTYS web TMS to TranZfort integration",
